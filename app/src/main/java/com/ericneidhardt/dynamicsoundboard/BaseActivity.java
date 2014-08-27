@@ -1,36 +1,56 @@
 package com.ericneidhardt.dynamicsoundboard;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
-public class BaseActivity extends Activity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
-    }
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.OnMediaPlayersRetrievedCallback;
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.base, menu);
-        return true;
-    }
+public class BaseActivity extends Activity
+{
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	private boolean isActivityVisible = true;
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		this.setContentView(R.layout.activity_base);
+	}
+
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		this.isActivityVisible = true;
+
+		this.openSoundFragment("test");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		this.isActivityVisible = false;
+	}
+
+	private void openSoundFragment(String fragmentId)
+	{
+		if (!this.isActivityVisible)
+			return;
+
+		FragmentManager fragmentManager = this.getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+		SoundFragment fragment = (SoundFragment) fragmentManager.findFragmentByTag(fragmentId);
+		if (fragment != null)
+			transaction.replace(R.id.main_frame, fragment, fragmentId);
+		else
+			transaction.replace(R.id.main_frame, SoundFragment.getNewInstance(fragmentId), fragmentId);
+
+		transaction.commit();
+		fragmentManager.executePendingTransactions();
+	}
 }

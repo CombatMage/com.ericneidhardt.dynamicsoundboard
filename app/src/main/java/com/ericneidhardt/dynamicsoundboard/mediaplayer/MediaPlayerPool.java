@@ -1,7 +1,13 @@
 package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 
+import android.app.Application;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
+
+import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
+import com.ericneidhardt.dynamicsoundboard.dao.DaoMaster;
+import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +17,23 @@ import java.util.List;
  */
 public class MediaPlayerPool
 {
-
-	private static MediaPlayerPool instance;
-
-	private Context context;
+	private DaoSession daoSession;
 	private List<MediaPlayer> mediaPlayers;
 
-	public static MediaPlayerPool getInstance(Context context)
+	public MediaPlayerPool(String poolId)
 	{
-		if (instance == null)
-			instance = new MediaPlayerPool();
-		instance.context = context;
-		return instance;
+		if (poolId == null)
+			throw new NullPointerException("Can not create instance of MediaPlayerPool, poolId ist null");
+
+		this.setupDatabase(DynamicSoundboardApplication.getContext(), poolId);
+	}
+
+	public void setupDatabase(Context context, String dbName)
+	{
+		DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, dbName, null);
+		SQLiteDatabase db = helper.getWritableDatabase();
+		DaoMaster daoMaster = new DaoMaster(db);
+		this.daoSession = daoMaster.newSession();
 	}
 
 	public void add(MediaPlayer mediaPlayer)
@@ -57,13 +68,23 @@ public class MediaPlayerPool
 		this.mediaPlayers.clear();
 	}
 
-	public void getMediaPlayersAsync(OnMediaPlayersRetrievedCallback callback)
+	public void getMediaPlayersAsync(final OnMediaPlayersRetrievedCallback callback)
 	{
-		if (this.mediaPlayers != null)
-		{
-			if (callback != null)
-				callback.onMediaPlayersRetrieved(this.mediaPlayers);
+		if (this.mediaPlayers != null) {
+			callback.onMediaPlayersRetrieved(this.mediaPlayers);
+			return;
 		}
 
+		OnMediaPlayersRetrievedCallback callbackMediaPlayerPool = new OnMediaPlayersRetrievedCallback() {
+			@Override
+			public void onMediaPlayersRetrieved(List<MediaPlayer> mediaPlayers) {
+				MediaPlayerPool.this.mediaPlayers = mediaPlayers;
+				callback.onMediaPlayersRetrieved(mediaPlayers);
+			}
+		};
+
+
+
 	}
+
 }

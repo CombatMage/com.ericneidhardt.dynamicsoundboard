@@ -1,27 +1,24 @@
 package com.ericneidhardt.dynamicsoundboard;
 
 import android.app.Application;
-
-import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
-import com.ericneidhardt.dynamicsoundboard.storage.Storage;
+import android.content.Context;
 
 /**
  * Created by eric.neidhardt on 27.08.2014.
  */
 public class DynamicSoundboardApplication extends Application
 {
-
-	private DaoSession daoSession;
+	private static Context applicationContext;
 
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
-		this.daoSession = Storage.setupDatabase(this);
+		this.applicationContext = this;
 	}
 
-	public DaoSession getDaoSession()
+	public static Context getContext()
 	{
-		return this.daoSession;
+		return applicationContext;
 	}
 }
