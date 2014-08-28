@@ -35,7 +35,7 @@ public class MediaPlayerPool
 		this.setupDatabase(DynamicSoundboardApplication.getContext(), poolId);
 	}
 
-	public void setupDatabase(Context context, String dbName)
+	private void setupDatabase(Context context, String dbName)
 	{
 		DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, dbName, null);
 		SQLiteDatabase db = helper.getWritableDatabase();
@@ -48,7 +48,7 @@ public class MediaPlayerPool
 		if (this.mediaPlayers == null)
 			this.mediaPlayers = new ArrayList<MediaPlayer>();
 		this.mediaPlayers.add(mediaPlayer);
-		StoreMediaPlayersTask task = new StoreMediaPlayersTask(mediaPlayer);
+		SafeAsyncTask task = new StoreMediaPlayersTask(mediaPlayer);
 		task.execute();
 	}
 
@@ -57,7 +57,7 @@ public class MediaPlayerPool
 		if (this.mediaPlayers == null)
 			this.mediaPlayers = new ArrayList<MediaPlayer>();
 		this.mediaPlayers.addAll(mediaPlayers);
-		StoreMediaPlayersTask task = new StoreMediaPlayersTask(mediaPlayers);
+		SafeAsyncTask task = new StoreMediaPlayersTask(mediaPlayers);
 		task.execute();
 	}
 
@@ -99,7 +99,8 @@ public class MediaPlayerPool
 			}
 		};
 
-		// TODO start Task with callback
+		SafeAsyncTask task = new LoadMediaPlayersTask(callback);
+		task.execute();
 	}
 
 	private class StoreMediaPlayersTask extends SafeAsyncTask<Void>
@@ -154,8 +155,11 @@ public class MediaPlayerPool
 		@Override
 		public List<MediaPlayer> call() throws Exception
 		{
-			// TODO load media players
-			return null;
+			List<MediaPlayerData> storedMediaPlayers = daoSession.getMediaPlayerDataDao().queryBuilder().list();
+			List<MediaPlayer> loadedMediaPlayers = new ArrayList<MediaPlayer>(storedMediaPlayers.size());
+			for (MediaPlayerData storedMediaPlayer : storedMediaPlayers)
+				loadedMediaPlayers.add(new EnhancedMediaPlayer(storedMediaPlayer));
+			return loadedMediaPlayers;
 		}
 
 		@Override
