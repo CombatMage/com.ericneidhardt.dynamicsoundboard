@@ -52,7 +52,7 @@ public class MediaPlayerPool
 		task.execute();
 	}
 
-	public void addAll(List<MediaPlayer> mediaPlayers)
+	public void add(List<MediaPlayer> mediaPlayers)
 	{
 		if (this.mediaPlayers == null)
 			this.mediaPlayers = new ArrayList<MediaPlayer>();
