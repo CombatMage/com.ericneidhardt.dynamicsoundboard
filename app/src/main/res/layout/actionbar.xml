@@ -2,8 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="@android:color/holo_blue_light">
+	android:layout_height="match_parent">
 
 	<ImageButton
 		android:id="@+id/ib_add_sound_dir"
@@ -11,7 +10,8 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
-		android:layout_marginRight="@dimen/margin_default"
+		android:layout_marginLeft="@dimen/margin_small"
+		android:layout_marginRight="@dimen/margin_small"
 		android:background="@android:color/transparent"
 		android:scaleType="centerInside"
 		android:src="@drawable/ic_action_add_sound_dir"/>
@@ -22,7 +22,8 @@
 		android:layout_height="wrap_content"
 		android:layout_toLeftOf="@id/ib_add_sound_dir"
 		android:layout_centerVertical="true"
-		android:layout_marginRight="@dimen/margin_default"
+		android:layout_marginLeft="@dimen/margin_small"
+		android:layout_marginRight="@dimen/margin_small"
 		android:background="@android:color/transparent"
 		android:scaleType="centerInside"
 		android:src="@drawable/ic_action_add_sound"/>

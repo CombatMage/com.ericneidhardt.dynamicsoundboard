@@ -1,8 +1,19 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+		<item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+		<item name="android:titleTextStyle">@style/TitleTextColor</item>
+
+		<item name="android:actionBarItemBackground">@drawable/selectable_background_dynamic_soundboard</item>
+		<item name="android:popupMenuStyle">@style/PopupMenu.Dynamic_soundboard</item>
+		<item name="android:dropDownListViewStyle">@style/DropDownListView.Dynamic_soundboard</item>
+		<item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Dynamic_soundboard</item>
+		<item name="android:actionDropDownStyle">@style/DropDownNav.Dynamic_soundboard</item>
+		<item name="android:actionBarStyle">@style/ActionBar.Solid.Dynamic_soundboard</item>
+		<item name="android:actionModeBackground">@drawable/cab_background_top_dynamic_soundboard</item>
+		<item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_dynamic_soundboard</item>
+		<item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dynamic_soundboard</item>
     </style>
 
 </resources>

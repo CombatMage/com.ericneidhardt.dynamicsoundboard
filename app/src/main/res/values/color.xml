@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="text_secondary">#a8000000</color>
+	
+	<color name="primary_500">#259b24</color>
+	<color name="primary_700">#0a7e07</color>
+	<color name="primary_100">#a3e9a4</color>
+
+	<color name="accent_100">#f9bdbb</color>
+	<color name="accent_400">#e84e40</color>
 </resources>
