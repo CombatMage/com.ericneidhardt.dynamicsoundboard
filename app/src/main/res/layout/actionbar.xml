@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	android:background="@android:color/holo_blue_light">
 
-	<TextView
+	<ImageButton
+		android:id="@+id/ib_add_sound_dir"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="testing this stuff"/>
-</LinearLayout>
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:layout_marginRight="@dimen/margin_default"
+		android:background="@android:color/transparent"
+		android:scaleType="centerInside"
+		android:src="@drawable/ic_action_add_sound_dir"/>
+
+	<ImageButton
+		android:id="@+id/ib_add_sound"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toLeftOf="@id/ib_add_sound_dir"
+		android:layout_centerVertical="true"
+		android:layout_marginRight="@dimen/margin_default"
+		android:background="@android:color/transparent"
+		android:scaleType="centerInside"
+		android:src="@drawable/ic_action_add_sound"/>
+
+</RelativeLayout>
