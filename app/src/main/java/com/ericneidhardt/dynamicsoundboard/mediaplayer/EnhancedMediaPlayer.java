@@ -2,6 +2,7 @@ package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 
 import android.media.MediaPlayer;
 
+import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 
 import java.io.IOException;
@@ -23,6 +24,18 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 	}
 
 	private State currentState;
+
+	public EnhancedMediaPlayer(MediaPlayerData data)
+	{
+		super();
+		// TODO build player from greendao object
+	}
+
+	public static MediaPlayerData getMediaPlayerData(MediaPlayer mediaPlayer)
+	{
+		// TODO build greendao object from player
+		return new MediaPlayerData();
+	}
 
 	public boolean playSound()
 	{

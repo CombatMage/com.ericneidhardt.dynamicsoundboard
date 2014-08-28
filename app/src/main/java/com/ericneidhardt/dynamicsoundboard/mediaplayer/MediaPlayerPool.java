@@ -1,6 +1,5 @@
 package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 
-import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
@@ -8,6 +7,10 @@ import android.media.MediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoMaster;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
+import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
+import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,9 @@ import java.util.List;
  */
 public class MediaPlayerPool
 {
+	private static final String TAG = MediaPlayerPool.class.getSimpleName();
+
+	private String poolId;
 	private DaoSession daoSession;
 	private List<MediaPlayer> mediaPlayers;
 
@@ -25,6 +31,7 @@ public class MediaPlayerPool
 		if (poolId == null)
 			throw new NullPointerException("Can not create instance of MediaPlayerPool, poolId ist null");
 
+		this.poolId = poolId;
 		this.setupDatabase(DynamicSoundboardApplication.getContext(), poolId);
 	}
 
@@ -41,7 +48,8 @@ public class MediaPlayerPool
 		if (this.mediaPlayers == null)
 			this.mediaPlayers = new ArrayList<MediaPlayer>();
 		this.mediaPlayers.add(mediaPlayer);
-		// TODO add MediaPlayer to database
+		StoreMediaPlayersTask task = new StoreMediaPlayersTask(mediaPlayer);
+		task.execute();
 	}
 
 	public void addAll(List<MediaPlayer> mediaPlayers)
@@ -49,23 +57,31 @@ public class MediaPlayerPool
 		if (this.mediaPlayers == null)
 			this.mediaPlayers = new ArrayList<MediaPlayer>();
 		this.mediaPlayers.addAll(mediaPlayers);
-		// TODO add all MediaPlayer to database
+		StoreMediaPlayersTask task = new StoreMediaPlayersTask(mediaPlayers);
+		task.execute();
 	}
 
 	public void remove(MediaPlayer mediaPlayer)
 	{
 		if (this.mediaPlayers == null)
 			throw new IllegalArgumentException("trying to remove MediaPlayer, but pool is empty");
-		// TODO dispose MediaPlayer, and remove from database
+
+		mediaPlayer.release();
 		this.mediaPlayers.remove(mediaPlayer);
+		this.daoSession.getMediaPlayerDataDao().queryBuilder()
+				.where(MediaPlayerDataDao.Properties.Hash.eq(mediaPlayer.hashCode()))
+				.buildDelete().executeDeleteWithoutDetachingEntities();
 	}
 
 	public void clear()
 	{
 		if (this.mediaPlayers == null)
 			throw new IllegalArgumentException("trying to remove MediaPlayer, but pool is empty");
-		// TODO dispose all MediaPlayer, and remove from database
+
+		for (MediaPlayer mediaPlayer : this.mediaPlayers)
+			mediaPlayer.release();
 		this.mediaPlayers.clear();
+		this.daoSession.getMediaPlayerDataDao().deleteAll();
 	}
 
 	public void getMediaPlayersAsync(final OnMediaPlayersRetrievedCallback callback)
@@ -78,13 +94,84 @@ public class MediaPlayerPool
 		OnMediaPlayersRetrievedCallback callbackMediaPlayerPool = new OnMediaPlayersRetrievedCallback() {
 			@Override
 			public void onMediaPlayersRetrieved(List<MediaPlayer> mediaPlayers) {
-				MediaPlayerPool.this.mediaPlayers = mediaPlayers;
-				callback.onMediaPlayersRetrieved(mediaPlayers);
+				MediaPlayerPool.this.mediaPlayers.addAll(mediaPlayers);
+				callback.onMediaPlayersRetrieved(MediaPlayerPool.this.mediaPlayers);
 			}
 		};
 
+		// TODO start Task with callback
+	}
 
+	private class StoreMediaPlayersTask extends SafeAsyncTask<Void>
+	{
+		private List<MediaPlayer> mediaPlayers;
 
+		private StoreMediaPlayersTask(MediaPlayer mediaPlayer)
+		{
+			this.mediaPlayers = new ArrayList<MediaPlayer>();
+			this.mediaPlayers.add(mediaPlayer);
+		}
+
+		private StoreMediaPlayersTask(List<MediaPlayer> mediaPlayers)
+		{
+			this.mediaPlayers = mediaPlayers;
+		}
+
+		@Override
+		public Void call() throws Exception
+		{
+			daoSession.runInTx(new Runnable()
+			{
+				@Override
+				public void run() {
+					for (MediaPlayer mediaPlayer : mediaPlayers)
+					{
+						MediaPlayerData data = EnhancedMediaPlayer.getMediaPlayerData(mediaPlayer);
+						daoSession.getMediaPlayerDataDao().insert(data);
+					}
+				}
+			});
+			return null;
+		}
+
+		@Override
+		protected void onException(Exception e) throws RuntimeException
+		{
+			super.onException(e);
+			Logger.e(TAG + ": " + poolId, e.getMessage());
+		}
+	}
+
+	private class LoadMediaPlayersTask extends SafeAsyncTask<List<MediaPlayer>>
+	{
+		private OnMediaPlayersRetrievedCallback callback;
+
+		private LoadMediaPlayersTask(OnMediaPlayersRetrievedCallback callback)
+		{
+			this.callback = callback;
+		}
+
+		@Override
+		public List<MediaPlayer> call() throws Exception
+		{
+			// TODO load media players
+			return null;
+		}
+
+		@Override
+		protected void onSuccess(List<MediaPlayer> mediaPlayers) throws Exception
+		{
+			super.onSuccess(mediaPlayers);
+			if (this.callback != null)
+				this.callback.onMediaPlayersRetrieved(mediaPlayers);
+		}
+
+		@Override
+		protected void onException(Exception e) throws RuntimeException
+		{
+			super.onException(e);
+			Logger.e(TAG + ": " + poolId, e.getMessage());
+		}
 	}
 
 }

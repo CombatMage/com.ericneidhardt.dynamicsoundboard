@@ -24,6 +24,7 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Hash = new Property(1, String.class, "hash", false, "HASH");
     };
 
 
@@ -39,7 +40,8 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'MEDIA_PLAYER_DATA' (" + //
-                "'_id' INTEGER PRIMARY KEY );"); // 0: id
+                "'_id' INTEGER PRIMARY KEY ," + // 0: id
+                "'HASH' TEXT UNIQUE );"); // 1: hash
     }
 
     /** Drops the underlying database table. */
@@ -57,6 +59,11 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
+ 
+        String hash = entity.getHash();
+        if (hash != null) {
+            stmt.bindString(2, hash);
+        }
     }
 
     /** @inheritdoc */
@@ -69,7 +76,8 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     @Override
     public MediaPlayerData readEntity(Cursor cursor, int offset) {
         MediaPlayerData entity = new MediaPlayerData( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0) // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // hash
         );
         return entity;
     }
@@ -78,6 +86,7 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     @Override
     public void readEntity(Cursor cursor, MediaPlayerData entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setHash(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
      }
     
     /** @inheritdoc */
