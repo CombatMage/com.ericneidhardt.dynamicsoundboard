@@ -118,7 +118,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 				soundLayoutController.openDialogAddNewSoundLayout(this);
 				break;
 			case R.id.action_add_sound:
-				this.soundLayoutController.add("test " + this.soundLayoutController.getItemCount());
 				Toast.makeText(this, "action_add_sound", Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.action_add_sound_dir:

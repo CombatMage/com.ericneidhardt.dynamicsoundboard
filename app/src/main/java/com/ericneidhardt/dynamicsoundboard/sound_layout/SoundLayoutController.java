@@ -27,12 +27,12 @@ public class SoundLayoutController extends RecyclerView.Adapter<SoundLayoutContr
 		this.soundLayoutIds = new ArrayList<String>();
 	}
 
-	public void add(String fragmentId) {
+	public void addFragmentWithId(String fragmentId) {
 		this.soundLayoutIds.add(fragmentId);
 		this.notifyItemInserted(this.soundLayoutIds.size());
 	}
 
-	public void remove(String fragmentId) {
+	public void removeFragmentWithId(String fragmentId) {
 		int position = this.soundLayoutIds.indexOf(fragmentId);
 		this.soundLayoutIds.remove(position);
 		this.notifyItemRemoved(position);
@@ -61,8 +61,7 @@ public class SoundLayoutController extends RecyclerView.Adapter<SoundLayoutContr
 			public void onClick(View v)
 			{
 				String newSoundLayoutId = ((EditText)dialogView.findViewById(R.id.et_input)).getText().toString();
-				add(newSoundLayoutId);
-				dialog.dismiss();
+				addFragmentWithId(newSoundLayoutId);
 			}
 		});
 
@@ -72,7 +71,8 @@ public class SoundLayoutController extends RecyclerView.Adapter<SoundLayoutContr
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int position)
 	{
-		return new ViewHolder(new TextView(parent.getContext()));
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.navigation_drawer_item, parent, false);
+		return new ViewHolder(view);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class SoundLayoutController extends RecyclerView.Adapter<SoundLayoutContr
 
 		public ViewHolder(View itemView) {
 			super(itemView);
-			this.textView = (TextView)itemView;
+			this.textView = (TextView)itemView.findViewById(R.id.tv_label);
 		}
 	}
 
