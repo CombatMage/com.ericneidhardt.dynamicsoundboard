@@ -4,10 +4,16 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
@@ -19,12 +25,15 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 	private boolean isActivityVisible = true;
 
+	private DrawerLayout navigationDrawerLayout;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_base);
 		this.createActionbar();
+		this.createNavigationDrawer();
 	}
 
 	@Override
@@ -50,6 +59,28 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		this.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 	}
 
+	private void createNavigationDrawer()
+	{
+		this.navigationDrawerLayout = (DrawerLayout)this.findViewById(R.id.root_layout);
+		this.navigationDrawerLayout.setScrimColor(Color.TRANSPARENT);
+
+		DrawerLayout.DrawerListener onNavigationToggleListener = new ActionBarDrawerToggle(this, this.navigationDrawerLayout, R.color.primary_500, R.string.blank, R.string.blank)
+		{
+			@Override
+			public void onDrawerOpened(View drawerView)
+			{
+				findViewById(R.id.action_open_navigation).setSelected(true);
+			}
+
+			@Override
+			public void onDrawerClosed(View drawerView)
+			{
+				findViewById(R.id.action_open_navigation).setSelected(false);
+			}
+		};
+		this.navigationDrawerLayout.setDrawerListener(onNavigationToggleListener);
+	}
+
 	@Override
 	protected void onResume()
 	{
@@ -71,7 +102,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		switch (view.getId())
 		{
 			case R.id.action_open_navigation:
-				Toast.makeText(this, "action_open_navigation", Toast.LENGTH_SHORT).show();
+				this.toggleNavigationDrawer();
 				break;
 			case R.id.action_new_sound_layout:
 				Toast.makeText(this, "action_new_sound_layout", Toast.LENGTH_SHORT).show();
@@ -97,6 +128,16 @@ public class BaseActivity extends Activity implements View.OnClickListener
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
+		}
+	}
+	private void toggleNavigationDrawer() {
+		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START)) {
+			this.findViewById(R.id.action_open_navigation).setSelected(false);
+			this.navigationDrawerLayout.closeDrawer(Gravity.START);
+		}
+		else {
+			this.findViewById(R.id.action_open_navigation).setSelected(true);
+			this.navigationDrawerLayout.openDrawer(Gravity.START);
 		}
 	}
 

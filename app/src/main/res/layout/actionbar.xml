@@ -15,7 +15,8 @@
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
 		android:background="@drawable/selectable_background_actionbar"
-		android:src="@drawable/ic_action_menu"/>
+		android:contentDescription="@string/action_menu"
+		android:src="@drawable/selector_ic_action_menu"/>
 
 	<ImageButton
 		android:id="@+id/action_add_sound_dir"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- misc -->
+	<string name="app_name">DynamicSoundboard</string>
+	<string name="blank"></string>
+
+	<!-- actionbar -->
+	<string name="action_menu">Sound Layouts öffnen</string>
+	<string name="action_settings">Einstellungen</string>
+
+
+</resources>
