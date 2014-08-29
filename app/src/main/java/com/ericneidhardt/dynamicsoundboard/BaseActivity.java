@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.sound_layout.SoundFragment;
 import com.ericneidhardt.dynamicsoundboard.sound_layout.SoundLayoutController;
+import com.ericneidhardt.dynamicsoundboard.sound_layout.SoundLayoutControllerFragment;
 
 
 public class BaseActivity extends Activity implements View.OnClickListener
@@ -30,7 +31,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	private boolean isActivityVisible = true;
 
 	private DrawerLayout navigationDrawerLayout;
-	private static SoundLayoutController soundLayoutController = new SoundLayoutController();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -39,6 +39,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		this.setContentView(R.layout.activity_base);
 		this.createActionbar();
 		this.createNavigationDrawer();
+
+		this.openSoundLayoutControllerFragment();
 	}
 
 	@Override
@@ -59,7 +61,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		actionBar.setCustomView(R.layout.actionbar);
 
 		this.findViewById(R.id.action_open_navigation).setOnClickListener(this);
-		this.findViewById(R.id.action_new_sound_layout).setOnClickListener(this);
 		this.findViewById(R.id.action_add_sound).setOnClickListener(this);
 		this.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 	}
@@ -68,13 +69,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	{
 		this.navigationDrawerLayout = (DrawerLayout)this.findViewById(R.id.root_layout);
 		this.navigationDrawerLayout.setScrimColor(Color.TRANSPARENT);
-
-		RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.rv_navigation);
-		// TODO add divider
-		//recyclerView.addItemDecoration(new SoundLayoutController.ItemDivider());
-		recyclerView.setAdapter(this.soundLayoutController);
-		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 		DrawerLayout.DrawerListener onNavigationToggleListener = new ActionBarDrawerToggle(this, this.navigationDrawerLayout, R.color.primary_500, R.string.blank, R.string.blank)
 		{
@@ -116,9 +110,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 			case R.id.action_open_navigation:
 				this.toggleNavigationDrawer();
 				break;
-			case R.id.action_new_sound_layout:
-				soundLayoutController.openDialogAddNewSoundLayout(this);
-				break;
 			case R.id.action_add_sound:
 				Toast.makeText(this, "action_add_sound", Toast.LENGTH_SHORT).show();
 				break;
@@ -153,6 +144,20 @@ public class BaseActivity extends Activity implements View.OnClickListener
 			this.findViewById(R.id.action_open_navigation).setSelected(true);
 			this.navigationDrawerLayout.openDrawer(Gravity.START);
 		}
+	}
+
+	private void openSoundLayoutControllerFragment()
+	{
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+		SoundLayoutControllerFragment fragment = (SoundLayoutControllerFragment) fragmentManager.findFragmentByTag(SoundLayoutControllerFragment.TAG);
+		if (fragment == null)
+			fragment = new SoundLayoutControllerFragment();
+
+		transaction.add(fragment, SoundLayoutControllerFragment.TAG);
+		transaction.commit();
+		fragmentManager.executePendingTransactions();
 	}
 
 	private void openSoundFragment(String fragmentId)
