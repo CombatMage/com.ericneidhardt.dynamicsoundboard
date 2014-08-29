@@ -28,6 +28,7 @@
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
 		android:background="@drawable/selectable_background_actionbar"
+		android:contentDescription="@string/action_add_new_layout"
 		android:src="@drawable/ic_action_add_sound_dir"/>
 
 	<ImageButton

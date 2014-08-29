@@ -2,21 +2,22 @@ package com.ericneidhardt.dynamicsoundboard;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.misc.custom_dialog.CustomDialogBuilder;
 
 
 public class BaseActivity extends Activity implements View.OnClickListener
@@ -95,7 +96,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		super.onPause();
 		this.isActivityVisible = false;
 	}
-	
+
 	@Override
 	public void onClick(View view)
 	{
@@ -105,7 +106,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 				this.toggleNavigationDrawer();
 				break;
 			case R.id.action_new_sound_layout:
-				Toast.makeText(this, "action_new_sound_layout", Toast.LENGTH_SHORT).show();
+				this.addNewSoundLayout();
 				break;
 			case R.id.action_add_sound:
 				Toast.makeText(this, "action_add_sound", Toast.LENGTH_SHORT).show();
@@ -130,15 +131,25 @@ public class BaseActivity extends Activity implements View.OnClickListener
 				return super.onOptionsItemSelected(item);
 		}
 	}
-	private void toggleNavigationDrawer() {
+	private void toggleNavigationDrawer()
+	{
 		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START)) {
 			this.findViewById(R.id.action_open_navigation).setSelected(false);
 			this.navigationDrawerLayout.closeDrawer(Gravity.START);
 		}
-		else {
+		else
+		{
 			this.findViewById(R.id.action_open_navigation).setSelected(true);
 			this.navigationDrawerLayout.openDrawer(Gravity.START);
 		}
+	}
+
+	private void addNewSoundLayout()
+	{
+		AlertDialog.Builder inputNameDialog = new AlertDialog.Builder(this);
+		inputNameDialog.setView(this.getLayoutInflater().inflate(R.layout.dialog_add_new_sound_layout, null));
+
+		inputNameDialog.create().show();
 	}
 
 	private void openSoundFragment(String fragmentId)

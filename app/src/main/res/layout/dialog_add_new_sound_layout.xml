@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/primary_100">
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/height_title"
+		android:gravity="center_vertical"
+		android:paddingLeft="@dimen/margin_default"
+		android:paddingRight="@dimen/margin_default"
+		android:textColor="@color/text_content_headline"
+		android:textSize="@dimen/text_headline"
+		android:text="@string/dialog_add_new_layout_title"/>
+
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/margin_default"
+		android:textColor="@color/text_content_body"
+		android:textSize="@dimen/text_body"
+		android:text="das ist ein Hinweis"/>
+
+</LinearLayout>
