@@ -9,6 +9,7 @@
 		android:id="@+id/et_input"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:inputType="textNoSuggestions"
 		android:textColor="@color/text_content_secondary"
 		android:textSize="@dimen/text_body"
 		android:background="@android:color/transparent"/>
@@ -17,4 +18,5 @@
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/stroke"
 		android:background="@color/accent_200"/>
+
 </LinearLayout>

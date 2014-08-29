@@ -29,6 +29,12 @@ public class CustomEditText extends LinearLayout
 		this.input = (EditText) this.findViewById(R.id.et_input);
 	}
 
+	public void setText(String text)
+	{
+		if (this.input != null)
+			this.input.setText(text);
+	}
+
 	public Editable getText()
 	{
 		if (this.input == null)

@@ -1,12 +1,12 @@
-package com.ericneidhardt.dynamicsoundboard;
+package com.ericneidhardt.dynamicsoundboard.sound_layout;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
 
 /**
