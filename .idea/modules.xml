@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DynamicSoundboard.iml" filepath="$PROJECT_DIR$/DynamicSoundboard.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/dao_generator/dao_generator.iml" filepath="$PROJECT_DIR$/dao_generator/dao_generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dynamic_soundboard_rebrush.iml" filepath="$PROJECT_DIR$/dynamic_soundboard_rebrush.iml" />
     </modules>
   </component>
 </project>

@@ -41,6 +41,9 @@ public class BaseActivity extends Activity
 		actionBar.setDisplayShowCustomEnabled(true);
 
 		actionBar.setCustomView(R.layout.actionbar);
+
+		actionBar.findViewById(R.id.ib_add_sound).setOnClickListener(this);
+		actionBar.findViewById(R.id.ib_add_sound_dir).setOnClickListener(this);
 	}
 
 	@Override
@@ -56,6 +59,11 @@ public class BaseActivity extends Activity
 	protected void onPause() {
 		super.onPause();
 		this.isActivityVisible = false;
+	}
+	
+	@Override
+	public void onClick(View view)
+	{
 	}
 
 	private void openSoundFragment(String fragmentId)
