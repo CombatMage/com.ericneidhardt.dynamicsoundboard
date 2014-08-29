@@ -2,10 +2,11 @@
 <resources>
 	<color name="text_secondary">#a8000000</color>
 	
-	<color name="primary_500">#259b24</color>
-	<color name="primary_700">#0a7e07</color>
-	<color name="primary_100">#a3e9a4</color>
+	<color name="primary_500">#3f51b5</color>
+	<color name="primary_700">#303f9f</color>
+	<color name="primary_100">#c5cae9</color>
 
-	<color name="accent_100">#f9bdbb</color>
-	<color name="accent_400">#e84e40</color>
+	<color name="accent_200">#ff4081</color>
+	<color name="accent_100">#ff80ab</color>
+	<color name="accent_400">#f50057</color>
 </resources>

@@ -2,29 +2,30 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	android:background="@color/primary_500">
 
 	<ImageButton
 		android:id="@+id/ib_add_sound_dir"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
-		android:layout_marginLeft="@dimen/margin_small"
-		android:layout_marginRight="@dimen/margin_small"
-		android:background="@android:color/transparent"
+		android:paddingLeft="@dimen/margin_small"
+		android:paddingRight="@dimen/margin_small"
+		android:background="@drawable/selectable_background_actionbar"
 		android:scaleType="centerInside"
 		android:src="@drawable/ic_action_add_sound_dir"/>
 
 	<ImageButton
 		android:id="@+id/ib_add_sound"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:layout_toLeftOf="@id/ib_add_sound_dir"
 		android:layout_centerVertical="true"
-		android:layout_marginLeft="@dimen/margin_small"
-		android:layout_marginRight="@dimen/margin_small"
-		android:background="@android:color/transparent"
+		android:paddingLeft="@dimen/margin_small"
+		android:paddingRight="@dimen/margin_small"
+		android:background="@drawable/selectable_background_actionbar"
 		android:scaleType="centerInside"
 		android:src="@drawable/ic_action_add_sound"/>
 

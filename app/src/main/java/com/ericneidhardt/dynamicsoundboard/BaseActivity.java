@@ -9,11 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.OnMediaPlayersRetrievedCallback;
 
 
-public class BaseActivity extends Activity
+public class BaseActivity extends Activity implements View.OnClickListener
 {
 	private boolean isActivityVisible = true;
 
@@ -42,8 +43,8 @@ public class BaseActivity extends Activity
 
 		actionBar.setCustomView(R.layout.actionbar);
 
-		actionBar.findViewById(R.id.ib_add_sound).setOnClickListener(this);
-		actionBar.findViewById(R.id.ib_add_sound_dir).setOnClickListener(this);
+		this.findViewById(R.id.ib_add_sound).setOnClickListener(this);
+		this.findViewById(R.id.ib_add_sound_dir).setOnClickListener(this);
 	}
 
 	@Override
@@ -64,6 +65,11 @@ public class BaseActivity extends Activity
 	@Override
 	public void onClick(View view)
 	{
+		int id = view.getId();
+		if (id == R.id.ib_add_sound)
+			Toast.makeText(this, "ib_add_sound", Toast.LENGTH_SHORT);
+		else if (id == R.id.ib_add_sound_dir)
+			Toast.makeText(this, "ib_add_sound_dir", Toast.LENGTH_SHORT);
 	}
 
 	private void openSoundFragment(String fragmentId)
