@@ -2,6 +2,7 @@ package com.ericneidhardt.dynamicsoundboard.sound_layout;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,7 @@ public class SoundLayoutController extends RecyclerView.Adapter<SoundLayoutContr
 			{
 				String newSoundLayoutId = ((EditText)dialogView.findViewById(R.id.et_input)).getText().toString();
 				addFragmentWithId(newSoundLayoutId);
+				dialog.dismiss();
 			}
 		});
 
@@ -95,6 +97,16 @@ public class SoundLayoutController extends RecyclerView.Adapter<SoundLayoutContr
 		public ViewHolder(View itemView) {
 			super(itemView);
 			this.textView = (TextView)itemView.findViewById(R.id.tv_label);
+		}
+	}
+
+	public static class ItemDivider extends RecyclerView.ItemDecoration
+	{
+		@Override
+		public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent)
+		{
+			super.getItemOffsets(outRect, itemPosition, parent);
+			outRect.set(0, 1, parent.getRight(), 0);
 		}
 	}
 

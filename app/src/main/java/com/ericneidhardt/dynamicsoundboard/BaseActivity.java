@@ -70,6 +70,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		this.navigationDrawerLayout.setScrimColor(Color.TRANSPARENT);
 
 		RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.rv_navigation);
+		// TODO add divider
+		//recyclerView.addItemDecoration(new SoundLayoutController.ItemDivider());
 		recyclerView.setAdapter(this.soundLayoutController);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
