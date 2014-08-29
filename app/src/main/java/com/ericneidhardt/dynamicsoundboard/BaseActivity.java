@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.ericneidhardt.dynamicsoundboard.mediaplayer.OnMediaPlayersRetrievedCallback;
+import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 
 
 public class BaseActivity extends Activity implements View.OnClickListener
 {
+	private static final String TAG = BaseActivity.class.getSimpleName();
+
 	private boolean isActivityVisible = true;
 
 	@Override
@@ -43,8 +44,10 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 		actionBar.setCustomView(R.layout.actionbar);
 
-		this.findViewById(R.id.ib_add_sound).setOnClickListener(this);
-		this.findViewById(R.id.ib_add_sound_dir).setOnClickListener(this);
+		this.findViewById(R.id.action_open_navigation).setOnClickListener(this);
+		this.findViewById(R.id.action_new_sound_layout).setOnClickListener(this);
+		this.findViewById(R.id.action_add_sound).setOnClickListener(this);
+		this.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 	}
 
 	@Override
@@ -65,11 +68,36 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	@Override
 	public void onClick(View view)
 	{
-		int id = view.getId();
-		if (id == R.id.ib_add_sound)
-			Toast.makeText(this, "ib_add_sound", Toast.LENGTH_SHORT);
-		else if (id == R.id.ib_add_sound_dir)
-			Toast.makeText(this, "ib_add_sound_dir", Toast.LENGTH_SHORT);
+		switch (view.getId())
+		{
+			case R.id.action_open_navigation:
+				Toast.makeText(this, "action_open_navigation", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.action_new_sound_layout:
+				Toast.makeText(this, "action_new_sound_layout", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.action_add_sound:
+				Toast.makeText(this, "action_add_sound", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.action_add_sound_dir:
+				Toast.makeText(this, "action_add_sound_dir", Toast.LENGTH_SHORT).show();
+				break;
+			default:
+				Logger.e(TAG, "unknown item clicked " + view);
+		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case R.id.action_settings:
+				Toast.makeText(this, "action_settings", Toast.LENGTH_SHORT).show();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private void openSoundFragment(String fragmentId)

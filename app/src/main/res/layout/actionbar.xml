@@ -6,27 +6,51 @@
 	android:background="@color/primary_500">
 
 	<ImageButton
-		android:id="@+id/ib_add_sound_dir"
+		android:id="@+id/action_open_navigation"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
-		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
+		android:layout_alignParentLeft="true"
 		android:paddingLeft="@dimen/margin_small"
 		android:paddingRight="@dimen/margin_small"
-		android:background="@drawable/selectable_background_actionbar"
 		android:scaleType="centerInside"
+		android:background="@drawable/selectable_background_actionbar"
+		android:src="@drawable/ic_action_menu"/>
+
+	<ImageButton
+		android:id="@+id/action_add_sound_dir"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_centerVertical="true"
+		android:layout_alignParentRight="true"
+		android:paddingLeft="@dimen/margin_small"
+		android:paddingRight="@dimen/margin_small"
+		android:scaleType="centerInside"
+		android:background="@drawable/selectable_background_actionbar"
 		android:src="@drawable/ic_action_add_sound_dir"/>
 
 	<ImageButton
-		android:id="@+id/ib_add_sound"
+		android:id="@+id/action_add_sound"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
-		android:layout_toLeftOf="@id/ib_add_sound_dir"
 		android:layout_centerVertical="true"
+		android:layout_toLeftOf="@id/action_add_sound_dir"
 		android:paddingLeft="@dimen/margin_small"
 		android:paddingRight="@dimen/margin_small"
-		android:background="@drawable/selectable_background_actionbar"
 		android:scaleType="centerInside"
+		android:background="@drawable/selectable_background_actionbar"
 		android:src="@drawable/ic_action_add_sound"/>
+
+	<ImageButton
+		android:id="@+id/action_new_sound_layout"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_centerVertical="true"
+		android:layout_toLeftOf="@id/action_add_sound"
+		android:paddingLeft="@dimen/margin_small"
+		android:paddingRight="@dimen/margin_small"
+		android:scaleType="centerInside"
+		android:background="@drawable/selectable_background_actionbar"
+		android:src="@drawable/ic_action_new_sound_layout"/>
 
 </RelativeLayout>
