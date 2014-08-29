@@ -32,18 +32,18 @@ public class SoundLayoutControllerFragment extends Fragment implements View.OnCl
 	}
 
 	@Override
-	public void onAttach(Activity activity)
+	public void onResume()
 	{
-		super.onAttach(activity);
-		RecyclerView recyclerView = (RecyclerView) activity.findViewById(R.id.rv_navigation);
+		super.onResume();
+		RecyclerView recyclerView = (RecyclerView) this.getActivity().findViewById(R.id.rv_navigation);
 
 		// TODO add divider
 		//recyclerView.addItemDecoration(new SoundLayoutController.ItemDivider());
 		recyclerView.setAdapter(this.soundLayoutController);
-		recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+		recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-		activity.findViewById(R.id.action_new_sound_layout).setOnClickListener(this);
+		this.getActivity().findViewById(R.id.action_new_sound_layout).setOnClickListener(this);
 	}
 
 	@Override

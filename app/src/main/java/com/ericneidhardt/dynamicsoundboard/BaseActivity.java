@@ -2,16 +2,12 @@ package com.ericneidhardt.dynamicsoundboard;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +16,6 @@ import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.sound_layout.SoundFragment;
-import com.ericneidhardt.dynamicsoundboard.sound_layout.SoundLayoutController;
 import com.ericneidhardt.dynamicsoundboard.sound_layout.SoundLayoutControllerFragment;
 
 
@@ -40,7 +35,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		this.createActionbar();
 		this.createNavigationDrawer();
 
-		this.openSoundLayoutControllerFragment();
+		this.addSoundLayoutControllerFragment();
 	}
 
 	@Override
@@ -146,7 +141,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		}
 	}
 
-	private void openSoundLayoutControllerFragment()
+	private void addSoundLayoutControllerFragment()
 	{
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
