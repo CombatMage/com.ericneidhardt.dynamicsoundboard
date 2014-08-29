@@ -11,6 +11,9 @@
 	<string name="action_settings">Einstellungen</string>
 
 	<!-- dialog -->
+	<string name="dialog_ok">OK</string>
+	<string name="dialog_cancel">Abbrechen</string>
 	<string name="dialog_add_new_layout_title">Name des Layouts?</string>
+	<string name="dialog_add_new_layout_message">Dem SoundBoard wird ein neues SoundLayout mit diesem Namen hinzugefügt. Der Name kann später noch geändert werden.</string>
 
 </resources>

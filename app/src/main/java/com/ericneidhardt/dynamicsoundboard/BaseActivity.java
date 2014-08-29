@@ -10,14 +10,12 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
-import com.ericneidhardt.dynamicsoundboard.misc.custom_dialog.CustomDialogBuilder;
 
 
 public class BaseActivity extends Activity implements View.OnClickListener

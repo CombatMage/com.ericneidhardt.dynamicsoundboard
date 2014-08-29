@@ -8,6 +8,7 @@
 	<color name="accent_100">#ff80ab</color>
 	<color name="accent_400">#f50057</color>
 
-	<color name="text_content_headline">#de000000</color>
-	<color name="text_content_body">#a8000000</color>
+	<color name="text_content_primary">#de000000</color>
+	<color name="text_content_secondary">#a8000000</color>
+	<color name="text_accent">#ff4081</color>
 </resources>

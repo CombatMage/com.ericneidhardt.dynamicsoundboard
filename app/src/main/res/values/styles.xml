@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
 	<style name="Theme.AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
-		<item name="android:actionBarItemBackground">@drawable/selectable_background_actionbar</item>
+		<item name="android:actionBarItemBackground">@drawable/selector_background_actionbar_item</item>
 		<item name="android:popupMenuStyle">@style/PopupMenu.Actionbar</item>
 		<item name="android:dropDownListViewStyle">@style/DropDownListView.Actionbar</item>
 		<item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Actionbar</item>
