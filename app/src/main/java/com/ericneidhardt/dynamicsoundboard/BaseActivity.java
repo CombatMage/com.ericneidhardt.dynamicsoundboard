@@ -2,6 +2,7 @@ package com.ericneidhardt.dynamicsoundboard;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
@@ -144,15 +145,14 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	private void addSoundLayoutControllerFragment()
 	{
 		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-		SoundLayoutControllerFragment fragment = (SoundLayoutControllerFragment) fragmentManager.findFragmentByTag(SoundLayoutControllerFragment.TAG);
+		Fragment fragment =  fragmentManager.findFragmentByTag(SoundLayoutControllerFragment.TAG);
 		if (fragment == null)
+		{
 			fragment = new SoundLayoutControllerFragment();
-
-		transaction.add(fragment, SoundLayoutControllerFragment.TAG);
-		transaction.commit();
-		fragmentManager.executePendingTransactions();
+			fragmentManager.beginTransaction().add(fragment, SoundLayoutControllerFragment.TAG).commit();
+			fragmentManager.executePendingTransactions();
+		}
 	}
 
 	private void openSoundFragment(String fragmentId)

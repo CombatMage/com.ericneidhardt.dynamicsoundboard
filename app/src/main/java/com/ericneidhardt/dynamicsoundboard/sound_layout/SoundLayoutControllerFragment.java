@@ -32,9 +32,10 @@ public class SoundLayoutControllerFragment extends Fragment implements View.OnCl
 	}
 
 	@Override
-	public void onResume()
+	public void onActivityCreated(Bundle savedInstanceState)
 	{
-		super.onResume();
+		super.onActivityCreated(savedInstanceState);
+
 		RecyclerView recyclerView = (RecyclerView) this.getActivity().findViewById(R.id.rv_navigation);
 
 		// TODO add divider
