@@ -88,8 +88,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	{
 		super.onResume();
 		this.isActivityVisible = true;
-
-		this.openSoundFragment("test");
 	}
 
 	@Override

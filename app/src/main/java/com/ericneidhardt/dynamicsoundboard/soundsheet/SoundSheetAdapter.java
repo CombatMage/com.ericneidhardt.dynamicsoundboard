@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -74,13 +75,22 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		holder.textView.setText(label);
 	}
 
-	public static class ViewHolder extends RecyclerView.ViewHolder
+	public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 	{
 		private TextView textView;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
+
 			this.textView = (TextView)itemView.findViewById(R.id.tv_label);
+
+			itemView.setOnClickListener(this);
+		}
+
+		@Override
+		public void onClick(View view)
+		{
+			Toast.makeText(view.getContext(), "ViewHolder.onClick " + this.getPosition(), Toast.LENGTH_SHORT).show();
 		}
 	}
 
