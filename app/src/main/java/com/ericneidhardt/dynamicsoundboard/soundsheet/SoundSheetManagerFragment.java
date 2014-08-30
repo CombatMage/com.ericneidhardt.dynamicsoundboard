@@ -1,15 +1,11 @@
-package com.ericneidhardt.dynamicsoundboard.sound_layout;
+package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
@@ -17,17 +13,17 @@ import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 /**
  * Created by Eric Neidhardt on 29.08.2014.
  */
-public class SoundLayoutControllerFragment extends Fragment implements View.OnClickListener
+public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener
 {
-	public static final String TAG = SoundLayoutControllerFragment.class.getSimpleName();
+	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
-	private SoundLayoutController soundLayoutController;
+	private SoundSheetAdapter soundLayoutController;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
-		this.soundLayoutController = new SoundLayoutController();
+		this.soundLayoutController = new SoundSheetAdapter();
 		// TODO load stored sound layout list
 	}
 
@@ -39,7 +35,7 @@ public class SoundLayoutControllerFragment extends Fragment implements View.OnCl
 		RecyclerView recyclerView = (RecyclerView) this.getActivity().findViewById(R.id.rv_navigation);
 
 		// TODO add divider
-		//recyclerView.addItemDecoration(new SoundLayoutController.ItemDivider());
+		//recyclerView.addItemDecoration(new SoundSheetAdapter.ItemDivider());
 		recyclerView.setAdapter(this.soundLayoutController);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());

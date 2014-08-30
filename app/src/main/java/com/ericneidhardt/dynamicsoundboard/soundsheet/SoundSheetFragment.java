@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.sound_layout;
+package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,16 +12,16 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
 /**
  * Created by eric.neidhardt on 27.08.2014.
  */
-public class SoundFragment extends Fragment
+public class SoundSheetFragment extends Fragment
 {
-	private static final String KEY_FRAGMENT_ID = "SoundFragment.fragment_id";
+	private static final String KEY_FRAGMENT_ID = "SoundSheetFragment.fragment_id";
 
 	private String fragmentId;
 	private MediaPlayerPool mediaPlayerPool;
 
-	public static SoundFragment getNewInstance(String fragmentId)
+	public static SoundSheetFragment getNewInstance(String fragmentId)
 	{
-		SoundFragment fragment = new SoundFragment();
+		SoundSheetFragment fragment = new SoundSheetFragment();
 		Bundle args = new Bundle();
 		args.putString(KEY_FRAGMENT_ID, fragmentId);
 		fragment.setArguments(args);

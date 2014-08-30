@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.sound_layout;
+package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ericneidhardt.dynamicsoundboard.R;
-import com.ericneidhardt.dynamicsoundboard.ui_components.CustomEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +18,11 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 29.08.2014.
  */
-public class SoundLayoutController extends RecyclerView.Adapter<SoundLayoutController.ViewHolder>
+public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.ViewHolder>
 {
 	private List<String> soundLayoutIds;
 
-	public SoundLayoutController()
+	public SoundSheetAdapter()
 	{
 		this.soundLayoutIds = new ArrayList<String>();
 	}

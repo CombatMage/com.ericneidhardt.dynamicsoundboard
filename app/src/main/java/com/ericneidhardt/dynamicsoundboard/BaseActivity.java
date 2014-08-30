@@ -16,8 +16,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
-import com.ericneidhardt.dynamicsoundboard.sound_layout.SoundFragment;
-import com.ericneidhardt.dynamicsoundboard.sound_layout.SoundLayoutControllerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
 
 public class BaseActivity extends Activity implements View.OnClickListener
@@ -146,11 +146,11 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	{
 		FragmentManager fragmentManager = getFragmentManager();
 
-		Fragment fragment =  fragmentManager.findFragmentByTag(SoundLayoutControllerFragment.TAG);
+		Fragment fragment =  fragmentManager.findFragmentByTag(SoundSheetManagerFragment.TAG);
 		if (fragment == null)
 		{
-			fragment = new SoundLayoutControllerFragment();
-			fragmentManager.beginTransaction().add(fragment, SoundLayoutControllerFragment.TAG).commit();
+			fragment = new SoundSheetManagerFragment();
+			fragmentManager.beginTransaction().add(fragment, SoundSheetManagerFragment.TAG).commit();
 			fragmentManager.executePendingTransactions();
 		}
 	}
@@ -163,11 +163,11 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		FragmentManager fragmentManager = this.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-		SoundFragment fragment = (SoundFragment) fragmentManager.findFragmentByTag(fragmentId);
+		SoundSheetFragment fragment = (SoundSheetFragment) fragmentManager.findFragmentByTag(fragmentId);
 		if (fragment != null)
 			transaction.replace(R.id.main_frame, fragment, fragmentId);
 		else
-			transaction.replace(R.id.main_frame, SoundFragment.getNewInstance(fragmentId), fragmentId);
+			transaction.replace(R.id.main_frame, SoundSheetFragment.getNewInstance(fragmentId), fragmentId);
 
 		transaction.commit();
 		fragmentManager.executePendingTransactions();
