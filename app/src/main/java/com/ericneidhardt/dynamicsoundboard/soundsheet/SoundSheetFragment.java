@@ -50,9 +50,4 @@ public class SoundSheetFragment extends Fragment
 		return fragmentView;
 	}
 
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-	}
 }

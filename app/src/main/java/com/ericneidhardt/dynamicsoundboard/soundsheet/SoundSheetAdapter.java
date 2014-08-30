@@ -1,16 +1,13 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,53 +17,47 @@ import java.util.List;
  */
 public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.ViewHolder>
 {
-	private List<String> soundLayoutIds;
+	private List<SoundSheet> soundSheets;
 
 	public SoundSheetAdapter()
 	{
-		this.soundLayoutIds = new ArrayList<String>();
+		this.soundSheets = new ArrayList<SoundSheet>();
 	}
 
-	public void addFragmentWithId(String fragmentId) {
-		this.soundLayoutIds.add(fragmentId);
-		this.notifyItemInserted(this.soundLayoutIds.size());
+	public void add(SoundSheet soundSheet)
+	{
+		this.soundSheets.add(soundSheet);
+		this.notifyItemInserted(this.soundSheets.size());
 	}
 
-	public void removeFragmentWithId(String fragmentId) {
-		int position = this.soundLayoutIds.indexOf(fragmentId);
-		this.soundLayoutIds.remove(position);
+	public void addAll(List<SoundSheet> soundSheets)
+	{
+		this.soundSheets.addAll(soundSheets);
+		this.notifyDataSetChanged();
+	}
+
+	public void removeFragmentWithId(SoundSheet soundSheet)
+	{
+		int position = this.soundSheets.indexOf(soundSheet);
+		this.soundSheets.remove(position);
 		this.notifyItemRemoved(position);
 	}
 
-	public void openDialogAddNewSoundLayout(Context context)
+	public void clear()
 	{
-		final View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_new_sound_layout, null);
-		((EditText)dialogView.findViewById(R.id.et_input)).setText("test" + this.soundLayoutIds.size());
+		this.soundSheets.clear();
+		this.notifyDataSetChanged();
+	}
 
-		AlertDialog.Builder inputNameDialog = new AlertDialog.Builder(context);
-		inputNameDialog.setView(dialogView);
+	public List<SoundSheet> getValues()
+	{
+		return this.soundSheets;
+	}
 
-		final AlertDialog dialog = inputNameDialog.create();
-		dialogView.findViewById(R.id.b_cancel).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				dialog.dismiss();
-			}
-		});
-		dialogView.findViewById(R.id.b_ok).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				String newSoundLayoutId = ((EditText)dialogView.findViewById(R.id.et_input)).getText().toString();
-				addFragmentWithId(newSoundLayoutId);
-				dialog.dismiss();
-			}
-		});
-
-		dialog.show();
+	@Override
+	public int getItemCount()
+	{
+		return this.soundSheets.size();
 	}
 
 	@Override
@@ -79,14 +70,8 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		String fragmentId = this.soundLayoutIds.get(position);
-		holder.textView.setText(fragmentId);
-	}
-
-	@Override
-	public int getItemCount()
-	{
-		return this.soundLayoutIds.size();
+		String label = this.soundSheets.get(position).getLabel();
+		holder.textView.setText(label);
 	}
 
 	public static class ViewHolder extends RecyclerView.ViewHolder

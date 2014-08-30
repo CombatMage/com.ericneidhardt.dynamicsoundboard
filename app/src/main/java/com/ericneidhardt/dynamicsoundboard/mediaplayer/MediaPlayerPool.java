@@ -10,6 +10,7 @@ import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 
 import java.util.ArrayList;
@@ -32,15 +33,7 @@ public class MediaPlayerPool
 			throw new NullPointerException("Can not create instance of MediaPlayerPool, poolId ist null");
 
 		this.poolId = poolId;
-		this.setupDatabase(DynamicSoundboardApplication.getContext(), poolId);
-	}
-
-	private void setupDatabase(Context context, String dbName)
-	{
-		DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, dbName, null);
-		SQLiteDatabase db = helper.getWritableDatabase();
-		DaoMaster daoMaster = new DaoMaster(db);
-		this.daoSession = daoMaster.newSession();
+		this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getContext(), poolId);
 	}
 
 	public void add(MediaPlayer mediaPlayer)
