@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
@@ -153,7 +154,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		}
 	}
 
-	private void openSoundFragment(String fragmentId)
+	public void openSoundFragment(SoundSheet soundSheet)
 	{
 		if (!this.isActivityVisible)
 			return;
@@ -161,11 +162,11 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		FragmentManager fragmentManager = this.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-		SoundSheetFragment fragment = (SoundSheetFragment) fragmentManager.findFragmentByTag(fragmentId);
+		SoundSheetFragment fragment = (SoundSheetFragment) fragmentManager.findFragmentByTag(soundSheet.getFragmentTag());
 		if (fragment != null)
-			transaction.replace(R.id.main_frame, fragment, fragmentId);
+			transaction.replace(R.id.main_frame, fragment, soundSheet.getFragmentTag());
 		else
-			transaction.replace(R.id.main_frame, SoundSheetFragment.getNewInstance(fragmentId), fragmentId);
+			transaction.replace(R.id.main_frame, SoundSheetFragment.getNewInstance(soundSheet), soundSheet.getFragmentTag());
 
 		transaction.commit();
 		fragmentManager.executePendingTransactions();

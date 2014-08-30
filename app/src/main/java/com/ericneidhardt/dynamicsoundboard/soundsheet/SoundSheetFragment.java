@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
 
 /**
@@ -14,16 +15,16 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
  */
 public class SoundSheetFragment extends Fragment
 {
-	private static final String KEY_FRAGMENT_ID = "SoundSheetFragment.fragment_id";
+	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
-	private String fragmentId;
+	private String fragmentTag;
 	private MediaPlayerPool mediaPlayerPool;
 
-	public static SoundSheetFragment getNewInstance(String fragmentId)
+	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
 	{
 		SoundSheetFragment fragment = new SoundSheetFragment();
 		Bundle args = new Bundle();
-		args.putString(KEY_FRAGMENT_ID, fragmentId);
+		args.putString(KEY_FRAGMENT_TAG, soundSheet.getFragmentTag());
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -33,8 +34,8 @@ public class SoundSheetFragment extends Fragment
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
-		this.fragmentId = this.getArguments().getString(KEY_FRAGMENT_ID);
-		this.mediaPlayerPool = new MediaPlayerPool(this.fragmentId);
+		this.fragmentTag = this.getArguments().getString(KEY_FRAGMENT_TAG);
+		this.mediaPlayerPool = new MediaPlayerPool(this.fragmentTag);
 	}
 
 	@Override

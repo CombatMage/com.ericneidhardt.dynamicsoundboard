@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
@@ -26,7 +28,7 @@ import java.util.Random;
 /**
  * Created by Eric Neidhardt on 29.08.2014.
  */
-public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener
+public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickedListener
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
@@ -36,7 +38,8 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	private DaoSession daoSession;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
 
@@ -91,6 +94,15 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 				break;
 			default:
 				Logger.e(TAG, "unknown item clicked " + view);
+		}
+	}
+
+	@Override
+	public void onItemClicked(View view, SoundSheet data, int position)
+	{
+		if (this.getActivity() != null)
+		{
+			((BaseActivity)this.getActivity()).openSoundFragment(data);
 		}
 	}
 

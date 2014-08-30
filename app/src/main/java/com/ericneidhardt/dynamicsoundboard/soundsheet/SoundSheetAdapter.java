@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -19,10 +18,16 @@ import java.util.List;
 public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.ViewHolder>
 {
 	private List<SoundSheet> soundSheets;
+	private OnItemClickedListener onItemClickListener;
 
 	public SoundSheetAdapter()
 	{
 		this.soundSheets = new ArrayList<SoundSheet>();
+	}
+
+	public void setOnItemClickedListener(OnItemClickedListener onItemClickListener)
+	{
+		this.onItemClickListener = onItemClickListener;
 	}
 
 	public void add(SoundSheet soundSheet)
@@ -75,7 +80,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		holder.textView.setText(label);
 	}
 
-	public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 	{
 		private TextView textView;
 
@@ -90,8 +95,15 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		@Override
 		public void onClick(View view)
 		{
-			Toast.makeText(view.getContext(), "ViewHolder.onClick " + this.getPosition(), Toast.LENGTH_SHORT).show();
+			int position = this.getPosition();
+			if (onItemClickListener != null)
+				onItemClickListener.onItemClicked(view, soundSheets.get(position), position);
 		}
+	}
+
+	public static interface OnItemClickedListener
+	{
+		public void onItemClicked(View view, SoundSheet data, int position);
 	}
 
 }
