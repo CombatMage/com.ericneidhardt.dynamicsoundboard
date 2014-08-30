@@ -61,6 +61,8 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 		this.getActivity().findViewById(R.id.action_new_sound_sheet).setOnClickListener(this);
+
+		this.soundSheetAdapter.setOnItemClickedListener(this);
 	}
 
 	@Override
@@ -102,7 +104,9 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	{
 		if (this.getActivity() != null)
 		{
-			((BaseActivity)this.getActivity()).openSoundFragment(data);
+			BaseActivity activity = (BaseActivity)this.getActivity();
+			activity.toggleNavigationDrawer();
+			activity.openSoundFragment(data);
 		}
 	}
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -47,6 +48,8 @@ public class SoundSheetFragment extends Fragment
 		View fragmentView = inflater.inflate(R.layout.fragment_sound, container, false);
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		fragmentView.setLayoutParams(params);
+
+		((TextView)fragmentView.findViewById(R.id.tv_label)).setText(this.fragmentTag);
 
 		return fragmentView;
 	}

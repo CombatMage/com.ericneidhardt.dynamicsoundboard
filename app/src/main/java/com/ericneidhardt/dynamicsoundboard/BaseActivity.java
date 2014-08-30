@@ -128,7 +128,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 				return super.onOptionsItemSelected(item);
 		}
 	}
-	private void toggleNavigationDrawer()
+
+	public void toggleNavigationDrawer()
 	{
 		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START)) {
 			this.findViewById(R.id.action_open_navigation).setSelected(false);
