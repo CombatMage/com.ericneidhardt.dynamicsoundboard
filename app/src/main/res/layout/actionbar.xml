@@ -28,7 +28,7 @@
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
 		android:background="@drawable/selector_background_actionbar_item"
-		android:contentDescription="@string/action_add_new_layout"
+		android:contentDescription="@string/action_add_new_sound_sheet"
 		android:src="@drawable/ic_action_add_sound_dir"/>
 
 	<ImageButton
@@ -44,7 +44,7 @@
 		android:src="@drawable/ic_action_add_sound"/>
 
 	<ImageButton
-		android:id="@+id/action_new_sound_layout"
+		android:id="@+id/action_new_sound_sheet"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_centerVertical="true"

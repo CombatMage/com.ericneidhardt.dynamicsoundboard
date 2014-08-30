@@ -9,9 +9,10 @@ public class DynamicSoundboardDaoGenerator
 
     public static void main(String args[]) throws Exception
 	{
-		Schema schema = new Schema(3, "com.ericneidhardt.dynamicsoundboard.dao");
+		Schema schema = new Schema(4, "com.ericneidhardt.dynamicsoundboard.dao");
 
 		addMediaPlayerEntity(schema);
+		addSoundSheetEntity(schema);
 
 		new DaoGenerator().generateAll(schema, args[0]);
     }
@@ -21,5 +22,13 @@ public class DynamicSoundboardDaoGenerator
 		Entity sound = schema.addEntity("MediaPlayerData");
 		sound.addIdProperty();
 		sound.addStringProperty("hash").unique();
+	}
+
+	private static void addSoundSheetEntity(Schema schema)
+	{
+		Entity soundSheet = schema.addEntity("SoundSheet");
+		soundSheet.addIdProperty();
+		soundSheet.addStringProperty("fragmentTag");
+		soundSheet.addStringProperty("label");
 	}
 }

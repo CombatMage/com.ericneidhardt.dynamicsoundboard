@@ -99,14 +99,4 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		}
 	}
 
-	public static class ItemDivider extends RecyclerView.ItemDecoration
-	{
-		@Override
-		public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent)
-		{
-			super.getItemOffsets(outRect, itemPosition, parent);
-			outRect.set(0, 1, parent.getRight(), 0);
-		}
-	}
-
 }

@@ -7,13 +7,14 @@
 
 	<!-- actionbar -->
 	<string name="action_menu">Sound Layouts öffnen</string>
-	<string name="action_add_new_layout">Ein neues Sound Layout hinzufügen</string>
+	<string name="action_add_new_sound_sheet">Eine neue Sound Liste hinzufügen</string>
+	<string name="action_clear_sound_sheets">Alle Sound Listen löschen</string>
 	<string name="action_settings">Einstellungen</string>
 
 	<!-- dialog -->
 	<string name="dialog_ok">OK</string>
 	<string name="dialog_cancel">Abbrechen</string>
-	<string name="dialog_add_new_layout_title">Name des Layouts?</string>
-	<string name="dialog_add_new_layout_message">Dem SoundBoard wird ein neues SoundLayout mit diesem Namen hinzugefügt. Der Name kann später noch geändert werden.</string>
+	<string name="dialog_add_new_layout_title">Name der Sound Liste?</string>
+	<string name="dialog_add_new_layout_message">Dem SoundBoard wird ein neue Sound Liste mit diesem Namen hinzugefügt. Der Name kann später noch geändert werden.</string>
 
 </resources>
