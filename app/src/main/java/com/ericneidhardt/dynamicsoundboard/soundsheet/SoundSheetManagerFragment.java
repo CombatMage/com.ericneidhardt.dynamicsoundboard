@@ -65,6 +65,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	{
 		super.onPause();
 		StoreSoundSheetsTask task = new StoreSoundSheetsTask(this.soundSheetAdapter.getValues());
+		task.execute();
 	}
 
 	@Override
