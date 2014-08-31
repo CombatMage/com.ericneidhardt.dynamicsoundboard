@@ -59,24 +59,15 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-/*
+
 		RecyclerView recyclerView = (RecyclerView) this.getActivity().findViewById(R.id.rv_navigation);
 		recyclerView.setAdapter(this.soundSheetAdapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
-*/
+
 		this.getActivity().findViewById(R.id.action_new_sound_sheet).setOnClickListener(this);
 
 		this.soundSheetAdapter.setOnItemClickedListener(this);
-	}
-
-	private void createTabPager()
-	{
-		TabPagerAdapter adapter = new TabPagerAdapter();
-		this.tabHost = (TabHost)this.getActivity().findViewById(R.id.th_navigation_drawer_tab_bar);
-		this.viewPager = (ViewPager)this.getActivity().findViewById(R.id.vp_navigation_drawer);
-
-		tabHost.setOnTabChangedListener(this);
 	}
 
 	@Override
