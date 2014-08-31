@@ -69,7 +69,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int position)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.navigation_drawer_item, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sound_sheet_item, parent, false);
 		return new ViewHolder(view);
 	}
 
