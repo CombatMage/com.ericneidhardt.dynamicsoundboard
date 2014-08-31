@@ -6,7 +6,7 @@
 	<string name="blank"></string>
 
 	<!-- navigation drawer -->
-	<string name="tab_sound_sheets">Sound Listen</string>
+	<string name="tab_sound_sheets">Soundliste</string>
 	<string name="tab_play_list">Playliste</string>
 
 	<!-- actionbar -->

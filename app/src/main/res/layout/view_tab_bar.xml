@@ -4,20 +4,28 @@
 	android:orientation="horizontal"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="@color/primary_500">
+	android:background="@color/primary_100">
 
 	<RadioButton
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
-		style="@style/ActionBarTabStyle.Actionbar"
-		android:text="@string/tab_sound_sheets"/>
+		android:gravity="center_horizontal"
+		android:padding="@dimen/margin_small"
+		android:text="@string/tab_sound_sheets"
+		android:textSize="@dimen/text_subheading"
+		android:button="@android:color/transparent"
+		android:background="@drawable/selector_tab"/>
 
 	<RadioButton
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
-		style="@style/ActionBarTabStyle.Actionbar"
-		android:text="@string/tab_play_list"/>
+		android:gravity="center_horizontal"
+		android:padding="@dimen/margin_small"
+		android:text="@string/tab_play_list"
+		android:textSize="@dimen/text_subheading"
+		android:button="@android:color/transparent"
+		android:background="@drawable/selector_tab"/>
 
 </RadioGroup>
