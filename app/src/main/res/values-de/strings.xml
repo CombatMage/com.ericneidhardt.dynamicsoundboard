@@ -5,6 +5,10 @@
 	<string name="app_name">DynamicSoundboard</string>
 	<string name="blank"></string>
 
+	<!-- navigation drawer -->
+	<string name="tab_sound_sheets">Sound Listen</string>
+	<string name="tab_play_list">Playliste</string>
+
 	<!-- actionbar -->
 	<string name="action_menu">Sound Layouts öffnen</string>
 	<string name="action_add_new_sound_sheet">Eine neue Sound Liste hinzufügen</string>
@@ -12,7 +16,7 @@
 	<string name="action_settings">Einstellungen</string>
 
 	<!-- dialog -->
-	<string name="dialog_ok">OK</string>
+	<string name="dialog_ok">Hinzufügen</string>
 	<string name="dialog_cancel">Abbrechen</string>
 	<string name="dialog_add_new_layout_title">Name der Sound Liste?</string>
 	<string name="dialog_add_new_layout_message">Dem SoundBoard wird ein neue Sound Liste mit diesem Namen hinzugefügt. Der Name kann später noch geändert werden.</string>

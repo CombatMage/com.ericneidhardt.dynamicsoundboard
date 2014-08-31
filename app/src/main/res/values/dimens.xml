@@ -2,7 +2,9 @@
 
 	<dimen name="height_title">48dp</dimen>
 	<dimen name="height_list_item">72dp</dimen>
-	
+
+	<dimen name="width_dialog_button">72dp</dimen>
+
 	<dimen name="margin_default">16dp</dimen>
 	<dimen name="margin_small">8dp</dimen>
 
