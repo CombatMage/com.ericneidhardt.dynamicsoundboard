@@ -7,17 +7,27 @@
 	android:layout_gravity="start"
 	android:orientation="vertical">
 
-	<com.ericneidhardt.dynamicsoundboard.customview.TabBar
+	<com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout
+		android:id="@+id/layout_tab"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="@color/primary_100"/>
 
-	<View
+	<android.support.v4.view.ViewPager
+		android:id="@+id/vp_tab_content"
 		android:layout_width="match_parent"
-		android:layout_height="@dimen/stroke"
-		android:background="@color/accent_200"/>
+		android:layout_height="match_parent"
+		android:background="@color/background">
 
-	<include
-		layout="@layout/view_sound_sheets"/>
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/rv_sound_sheets"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+
+		<include
+			android:id="@+id/lv_playlist"
+			layout="@layout/view_playlist"/>
+
+	</android.support.v4.view.ViewPager>
 
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,13 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TabHost;
-import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
@@ -26,21 +25,20 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 
 import java.util.List;
-import java.util.Random;
+import java.util.Vector;
 
 /**
  * Created by Eric Neidhardt on 29.08.2014.
  */
-public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickedListener, TabHost.OnTabChangeListener
+public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickedListener
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
 	private static final String DB_SOUND_SHEETS = "com.ericneidhardt.dynamicsoundboard.db_sound_sheets";
 
-	private ViewPager viewPager;
-	private TabHost tabHost;
 	private SoundSheetAdapter soundSheetAdapter;
 	private DaoSession daoSession;
+	private TabContentAdapter tabContentAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -48,8 +46,10 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
 
-		this.soundSheetAdapter = new SoundSheetAdapter();
 		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUND_SHEETS);
+		this.soundSheetAdapter = new SoundSheetAdapter();
+		this.soundSheetAdapter.setOnItemClickedListener(this);
+		this.tabContentAdapter = new TabContentAdapter();
 
 		LoadSoundSheetsTask task = new LoadSoundSheetsTask();
 		task.execute();
@@ -60,14 +60,22 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		RecyclerView recyclerView = (RecyclerView) this.getActivity().findViewById(R.id.rv_navigation);
-		recyclerView.setAdapter(this.soundSheetAdapter);
-		recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-		recyclerView.setItemAnimator(new DefaultItemAnimator());
-
 		this.getActivity().findViewById(R.id.action_new_sound_sheet).setOnClickListener(this);
+		this.buildNavigationDrawerTabLayout();
+	}
 
-		this.soundSheetAdapter.setOnItemClickedListener(this);
+	private void buildNavigationDrawerTabLayout()
+	{
+		ViewPager tabContent = (ViewPager) this.getActivity().findViewById(R.id.vp_tab_content);
+		tabContent.setAdapter(this.tabContentAdapter);
+
+		SlidingTabLayout tabLayout = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
+		tabLayout.setViewPager(tabContent);
+
+		RecyclerView listSoundSheets = (RecyclerView)this.getActivity().findViewById(R.id.rv_sound_sheets);
+		listSoundSheets.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+		listSoundSheets.setItemAnimator(new DefaultItemAnimator());
+		listSoundSheets.setAdapter(this.soundSheetAdapter);
 	}
 
 	@Override
@@ -115,13 +123,6 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		}
 	}
 
-	@Override
-	public void onTabChanged(String s)
-	{
-		int position = this.tabHost.getCurrentTab();
-		this.viewPager.setCurrentItem(position, true);
-	}
-
 	private void openDialogAddNewSoundLayout()
 	{
 		final View dialogView = LayoutInflater.from(this.getActivity()).inflate(R.layout.dialog_add_new_sound_layout, null);
@@ -154,8 +155,14 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		dialog.show();
 	}
 
-	private class TabPagerAdapter extends PagerAdapter
+	private class TabContentAdapter extends PagerAdapter
 	{
+		@Override
+		public CharSequence getPageTitle(int position)
+		{
+			return "test " + position;
+		}
+
 		@Override
 		public int getCount()
 		{
@@ -163,9 +170,24 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		}
 
 		@Override
-		public boolean isViewFromObject(View view, Object o)
+		public boolean isViewFromObject(View view, Object object)
 		{
-			return false;
+			return view.equals(object);
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container, int position)
+		{
+			int resId = 0;
+			switch (position) {
+				case 0:
+					resId = R.id.rv_sound_sheets;
+					break;
+				case 1:
+					resId = R.id.lv_playlist;
+					break;
+			}
+			return getActivity().findViewById(resId);
 		}
 	}
 
