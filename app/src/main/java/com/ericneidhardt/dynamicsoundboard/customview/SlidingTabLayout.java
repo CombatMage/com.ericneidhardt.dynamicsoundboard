@@ -29,7 +29,9 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -223,7 +225,9 @@ public class SlidingTabLayout extends HorizontalScrollView {
 			tabTitleView.setText(adapter.getPageTitle(i));
 			tabView.setOnClickListener(tabClickListener);
 
-			mTabStrip.addView(tabView);
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+			params.weight = 1;
+			mTabStrip.addView(tabView, params);
 		}
 	}
 

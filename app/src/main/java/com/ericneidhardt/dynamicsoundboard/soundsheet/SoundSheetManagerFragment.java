@@ -25,7 +25,6 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by Eric Neidhardt on 29.08.2014.
@@ -71,6 +70,23 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 
 		SlidingTabLayout tabLayout = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
 		tabLayout.setViewPager(tabContent);
+		tabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer()
+		{
+			@Override
+			public int getIndicatorColor(int position)
+			{
+				if (position == 0)
+					return getResources().getColor(R.color.accent_200);
+				else
+					return getResources().getColor(R.color.primary_500);
+			}
+
+			@Override
+			public int getDividerColor(int position)
+			{
+				return getResources().getColor(R.color.primary_500);
+			}
+		});
 
 		RecyclerView listSoundSheets = (RecyclerView)this.getActivity().findViewById(R.id.rv_sound_sheets);
 		listSoundSheets.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -160,7 +176,10 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		@Override
 		public CharSequence getPageTitle(int position)
 		{
-			return "test " + position;
+			if (position == 0)
+				return getResources().getString(R.string.tab_sound_sheets);
+			else
+				return getResources().getString(R.string.tab_play_list);
 		}
 
 		@Override
