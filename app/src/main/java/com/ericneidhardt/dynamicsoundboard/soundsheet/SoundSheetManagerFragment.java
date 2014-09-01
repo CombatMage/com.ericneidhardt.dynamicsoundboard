@@ -84,7 +84,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			@Override
 			public int getDividerColor(int position)
 			{
-				return getResources().getColor(R.color.primary_500);
+				return 0;
 			}
 		});
 
