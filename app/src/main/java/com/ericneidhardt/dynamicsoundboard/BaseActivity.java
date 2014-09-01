@@ -65,7 +65,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	private void createNavigationDrawer()
 	{
 		this.navigationDrawerLayout = (DrawerLayout)this.findViewById(R.id.root_layout);
-		this.navigationDrawerLayout.setScrimColor(Color.TRANSPARENT);
 
 		DrawerLayout.DrawerListener onNavigationToggleListener = new ActionBarDrawerToggle(this, this.navigationDrawerLayout, R.color.primary_500, R.string.blank, R.string.blank)
 		{
