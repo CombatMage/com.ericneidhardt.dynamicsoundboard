@@ -2,7 +2,6 @@ package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,7 @@ public class SoundSheetFragment extends Fragment
 		if (container == null)
 			return null;
 
-		View fragmentView = inflater.inflate(R.layout.fragment_sound, container, false);
+		View fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false);
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		fragmentView.setLayoutParams(params);
 

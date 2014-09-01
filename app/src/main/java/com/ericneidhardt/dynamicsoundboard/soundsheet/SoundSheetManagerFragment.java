@@ -90,6 +90,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		});
 
 		RecyclerView listSoundSheets = (RecyclerView)this.getActivity().findViewById(R.id.rv_sound_sheets);
+		listSoundSheets.addItemDecoration(new SoundSheetAdapter.DividerItemDecoration(this.getActivity(), SoundSheetAdapter.DividerItemDecoration.VERTICAL_LIST));
 		listSoundSheets.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		listSoundSheets.setItemAnimator(new DefaultItemAnimator());
 		listSoundSheets.setAdapter(this.soundSheetAdapter);
