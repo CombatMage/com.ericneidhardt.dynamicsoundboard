@@ -2,9 +2,11 @@ package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -17,8 +19,10 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
 public class SoundSheetFragment extends Fragment
 {
 	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
+	private static final String KEY_FRAGMENT_LABEL = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.label";
 
 	private String fragmentTag;
+	private String label;
 	private MediaPlayerPool mediaPlayerPool;
 
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
@@ -26,6 +30,7 @@ public class SoundSheetFragment extends Fragment
 		SoundSheetFragment fragment = new SoundSheetFragment();
 		Bundle args = new Bundle();
 		args.putString(KEY_FRAGMENT_TAG, soundSheet.getFragmentTag());
+		args.putString(KEY_FRAGMENT_LABEL, soundSheet.getLabel());
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -52,6 +57,15 @@ public class SoundSheetFragment extends Fragment
 		((TextView)fragmentView.findViewById(R.id.tv_label)).setText(this.fragmentTag);
 
 		return fragmentView;
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+
+		EditText editLabel = (EditText)this.getActivity().findViewById(R.id.et_set_label);
+		editLabel.setText(this.label);
 	}
 
 }
