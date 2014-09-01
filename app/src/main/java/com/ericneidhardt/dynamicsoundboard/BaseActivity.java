@@ -118,13 +118,14 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
+		super.onOptionsItemSelected(item);
 		switch (item.getItemId())
 		{
 			case R.id.action_settings:
 				Toast.makeText(this, "action_settings", Toast.LENGTH_SHORT).show();
 				return true;
 			default:
-				return super.onOptionsItemSelected(item);
+				return false;
 		}
 	}
 

@@ -44,6 +44,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
+		this.setHasOptionsMenu(true);
 
 		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUND_SHEETS);
 		this.soundSheetAdapter = new SoundSheetAdapter();
@@ -105,13 +106,14 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
+		super.onOptionsItemSelected(item);
 		switch (item.getItemId())
 		{
 			case R.id.action_clear_sound_sheets:
 				this.soundSheetAdapter.clear();
 				return true;
 			default:
-				return super.onOptionsItemSelected(item);
+				return false;
 		}
 	}
 
