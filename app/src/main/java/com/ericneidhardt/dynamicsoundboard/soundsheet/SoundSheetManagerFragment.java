@@ -86,9 +86,9 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		ViewPager tabContent = (ViewPager) this.getActivity().findViewById(R.id.vp_tab_content);
 		tabContent.setAdapter(this.tabContentAdapter);
 
-		SlidingTabLayout tabLayout = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
-		tabLayout.setViewPager(tabContent);
-		tabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer()
+		SlidingTabLayout tabBar = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
+		tabBar.setViewPager(tabContent);
+		tabBar.setCustomTabColorizer(new SlidingTabLayout.TabColorizer()
 		{
 			@Override
 			public int getIndicatorColor(int position)
