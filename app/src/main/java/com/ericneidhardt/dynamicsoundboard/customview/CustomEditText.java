@@ -14,7 +14,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
  */
 public class CustomEditText extends LinearLayout
 {
-	private EditText input;
+	protected EditText input;
 
 	public CustomEditText(Context context, AttributeSet attrs)
 	{
