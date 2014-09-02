@@ -8,11 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
@@ -61,7 +63,22 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		super.onActivityCreated(savedInstanceState);
 
 		this.getActivity().findViewById(R.id.action_new_sound_sheet).setOnClickListener(this);
+		this.setEditLabelAction();
 		this.buildNavigationDrawerTabLayout();
+	}
+
+	private void setEditLabelAction()
+	{
+		final EditText editText = (EditText)this.getActivity().findViewById(R.id.et_set_label);
+		editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				String newLabel = editText.getText().toString();
+
+				// TODO update label
+				return false;
+			}
+		});
 	}
 
 	private void buildNavigationDrawerTabLayout()
