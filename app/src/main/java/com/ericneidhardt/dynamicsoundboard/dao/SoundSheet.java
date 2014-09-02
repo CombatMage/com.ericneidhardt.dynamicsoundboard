@@ -9,6 +9,7 @@ public class SoundSheet {
     private Long id;
     private String fragmentTag;
     private String label;
+    private Boolean isSelected;
 
     public SoundSheet() {
     }
@@ -17,10 +18,11 @@ public class SoundSheet {
         this.id = id;
     }
 
-    public SoundSheet(Long id, String fragmentTag, String label) {
+    public SoundSheet(Long id, String fragmentTag, String label, Boolean isSelected) {
         this.id = id;
         this.fragmentTag = fragmentTag;
         this.label = label;
+        this.isSelected = isSelected;
     }
 
     public Long getId() {
@@ -45,6 +47,14 @@ public class SoundSheet {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public Boolean getIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(Boolean isSelected) {
+        this.isSelected = isSelected;
     }
 
 }

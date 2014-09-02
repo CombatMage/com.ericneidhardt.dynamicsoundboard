@@ -9,7 +9,7 @@ public class DynamicSoundboardDaoGenerator
 
     public static void main(String args[]) throws Exception
 	{
-		Schema schema = new Schema(4, "com.ericneidhardt.dynamicsoundboard.dao");
+		Schema schema = new Schema(5, "com.ericneidhardt.dynamicsoundboard.dao");
 
 		addMediaPlayerEntity(schema);
 		addSoundSheetEntity(schema);
@@ -30,5 +30,6 @@ public class DynamicSoundboardDaoGenerator
 		soundSheet.addIdProperty();
 		soundSheet.addStringProperty("fragmentTag");
 		soundSheet.addStringProperty("label");
+		soundSheet.addBooleanProperty("isSelected");
 	}
 }

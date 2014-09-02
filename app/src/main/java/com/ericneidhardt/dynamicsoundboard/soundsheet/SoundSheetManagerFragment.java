@@ -136,6 +136,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	{
 		if (this.getActivity() != null)
 		{
+			this.soundSheetAdapter.setSelectedItem(position);
 			BaseActivity activity = (BaseActivity)this.getActivity();
 			activity.toggleNavigationDrawer();
 			activity.openSoundFragment(data);
@@ -166,7 +167,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			{
 				String label = ((EditText)dialogView.findViewById(R.id.et_input)).getText().toString();
 				String tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode());
-				soundSheetAdapter.add(new SoundSheet(null, tag, label));
+				soundSheetAdapter.add(new SoundSheet(null, tag, label, false));
 				dialog.dismiss();
 			}
 		});

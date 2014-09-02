@@ -36,7 +36,7 @@
     </style>
 
     <style name="DropDownListView.Actionbar" parent="@android:style/Widget.Holo.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selector_background_actionbar_item</item>
+        <item name="android:listSelector">@drawable/selector_background</item>
     </style>
 
     <style name="ActionBarTabStyle.Actionbar" parent="@android:style/Widget.Holo.ActionBar.TabView">
@@ -46,7 +46,7 @@
     <style name="DropDownNav.Actionbar" parent="@android:style/Widget.Holo.Spinner">
         <item name="android:background">@drawable/spinner_background_ab_actionbar</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_actionbar</item>
-        <item name="android:dropDownSelector">@drawable/selector_background_actionbar_item</item>
+        <item name="android:dropDownSelector">@drawable/selector_background</item>
     </style>
     
     <style name="ProgressBar.Actionbar" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">

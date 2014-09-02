@@ -14,7 +14,7 @@
 		android:paddingLeft="@dimen/margin_small"
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
-		android:background="@drawable/selector_background_actionbar_item"
+		android:background="@drawable/selector_background"
 		android:contentDescription="@string/action_menu"
 		android:src="@drawable/selector_ic_action_menu"/>
 
@@ -27,7 +27,7 @@
 		android:paddingLeft="@dimen/margin_small"
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
-		android:background="@drawable/selector_background_actionbar_item"
+		android:background="@drawable/selector_background"
 		android:contentDescription="@string/action_add_new_sound_sheet"
 		android:src="@drawable/ic_action_add_sound_dir"/>
 
@@ -40,7 +40,7 @@
 		android:paddingLeft="@dimen/margin_small"
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
-		android:background="@drawable/selector_background_actionbar_item"
+		android:background="@drawable/selector_background"
 		android:src="@drawable/ic_action_add_sound"/>
 
 	<ImageButton
@@ -52,7 +52,7 @@
 		android:paddingLeft="@dimen/margin_small"
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
-		android:background="@drawable/selector_background_actionbar_item"
+		android:background="@drawable/selector_background"
 		android:src="@drawable/ic_action_new_sound_layout"/>
 
 	<EditText

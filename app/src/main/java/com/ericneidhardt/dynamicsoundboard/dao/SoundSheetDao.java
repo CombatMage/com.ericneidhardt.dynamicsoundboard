@@ -26,6 +26,7 @@ public class SoundSheetDao extends AbstractDao<SoundSheet, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property FragmentTag = new Property(1, String.class, "fragmentTag", false, "FRAGMENT_TAG");
         public final static Property Label = new Property(2, String.class, "label", false, "LABEL");
+        public final static Property IsSelected = new Property(3, Boolean.class, "isSelected", false, "IS_SELECTED");
     };
 
 
@@ -43,7 +44,8 @@ public class SoundSheetDao extends AbstractDao<SoundSheet, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'SOUND_SHEET' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
                 "'FRAGMENT_TAG' TEXT," + // 1: fragmentTag
-                "'LABEL' TEXT);"); // 2: label
+                "'LABEL' TEXT," + // 2: label
+                "'IS_SELECTED' INTEGER);"); // 3: isSelected
     }
 
     /** Drops the underlying database table. */
@@ -71,6 +73,11 @@ public class SoundSheetDao extends AbstractDao<SoundSheet, Long> {
         if (label != null) {
             stmt.bindString(3, label);
         }
+ 
+        Boolean isSelected = entity.getIsSelected();
+        if (isSelected != null) {
+            stmt.bindLong(4, isSelected ? 1l: 0l);
+        }
     }
 
     /** @inheritdoc */
@@ -85,7 +92,8 @@ public class SoundSheetDao extends AbstractDao<SoundSheet, Long> {
         SoundSheet entity = new SoundSheet( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // fragmentTag
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // label
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // label
+            cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0 // isSelected
         );
         return entity;
     }
@@ -96,6 +104,7 @@ public class SoundSheetDao extends AbstractDao<SoundSheet, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setFragmentTag(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setLabel(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setIsSelected(cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0);
      }
     
     /** @inheritdoc */

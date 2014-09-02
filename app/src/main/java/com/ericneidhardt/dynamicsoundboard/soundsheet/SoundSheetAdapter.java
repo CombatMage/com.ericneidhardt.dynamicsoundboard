@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -48,7 +49,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		this.notifyDataSetChanged();
 	}
 
-	public void removeFragmentWithId(SoundSheet soundSheet)
+	public void remove(SoundSheet soundSheet)
 	{
 		int position = this.soundSheets.indexOf(soundSheet);
 		this.soundSheets.remove(position);
@@ -58,6 +59,16 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	public void clear()
 	{
 		this.soundSheets.clear();
+		this.notifyDataSetChanged();
+	}
+
+	public void setSelectedItem(int position)
+	{
+		for (int i = 0; i < this.soundSheets.size(); i++)
+		{
+			boolean isSelected = i == position ? true : false;
+			this.soundSheets.get(i).setIsSelected(isSelected);
+		}
 		this.notifyDataSetChanged();
 	}
 
@@ -82,18 +93,21 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		String label = this.soundSheets.get(position).getLabel();
-		holder.textView.setText(label);
+		SoundSheet data = this.soundSheets.get(position);
+		holder.textView.setText(data.getLabel());
+		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 	{
 		private TextView textView;
+		private ImageView selectionIndicator;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
 
 			this.textView = (TextView)itemView.findViewById(R.id.tv_label);
+			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
 
 			itemView.setOnClickListener(this);
 		}

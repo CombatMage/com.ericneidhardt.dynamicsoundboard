@@ -48,7 +48,7 @@
 			android:text="@string/dialog_cancel"
 			android:textSize="@dimen/text_subheading"
 			android:textColor="@color/text_content_primary"
-			android:background="@drawable/selector_background_button"/>
+			android:background="@drawable/selector_background_accent"/>
 
 		<Button
 			android:id="@+id/b_ok"
@@ -58,7 +58,7 @@
 			android:text="@string/dialog_ok"
 			android:textSize="@dimen/text_subheading"
 			android:textColor="@color/text_accent"
-			android:background="@drawable/selector_background_button"/>
+			android:background="@drawable/selector_background_accent"/>
 
 	</LinearLayout>
 
