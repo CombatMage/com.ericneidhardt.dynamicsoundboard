@@ -1,6 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.customview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.text.Editable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -14,17 +15,22 @@ import com.ericneidhardt.dynamicsoundboard.R;
  */
 public class CustomEditText extends LinearLayout
 {
+	protected int layoutId = R.layout.view_edittext;
+
 	protected EditText input;
 
 	public CustomEditText(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
-		this.inflateLayout(context);
+		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
+		int layoutToInflate = array.getResourceId(R.styleable.CustomEditText_layout, R.layout.view_edittext);
+
+		this.inflateLayout(context, layoutToInflate);
 	}
 
-	private void inflateLayout(Context context)
+	protected void inflateLayout(Context context, int layoutToInflate)
 	{
-		LayoutInflater.from(context).inflate(R.layout.view_edittext, this, true);
+		LayoutInflater.from(context).inflate(layoutToInflate, this, true);
 		this.input = (EditText) this.findViewById(R.id.et_input);
 	}
 
@@ -34,10 +40,4 @@ public class CustomEditText extends LinearLayout
 			this.input.setText(text);
 	}
 
-	public Editable getText()
-	{
-		if (this.input == null)
-			return null;
-		return this.input.getText();
-	}
 }

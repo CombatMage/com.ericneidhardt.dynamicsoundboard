@@ -23,6 +23,7 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	public ActionbarEditText(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+
 		super.input.setOnEditorActionListener(this);
 		super.input.setOnClickListener(this);
 
