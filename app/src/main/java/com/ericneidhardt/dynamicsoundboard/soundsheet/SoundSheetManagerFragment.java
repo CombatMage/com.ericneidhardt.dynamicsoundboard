@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -31,7 +32,7 @@ import java.util.List;
 /**
  * Created by Eric Neidhardt on 29.08.2014.
  */
-public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickedListener
+public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickedListener, ActionbarEditText.OnTextEditedListener
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
@@ -61,24 +62,10 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
+		this.buildNavigationDrawerTabLayout();
 
 		this.getActivity().findViewById(R.id.action_new_sound_sheet).setOnClickListener(this);
-		this.setEditLabelAction();
-		this.buildNavigationDrawerTabLayout();
-	}
-
-	private void setEditLabelAction()
-	{
-		final EditText editText = (EditText)this.getActivity().findViewById(R.id.et_set_label);
-		editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				String newLabel = editText.getText().toString();
-
-				// TODO update label
-				return false;
-			}
-		});
+		((ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label)).setOnTextEditedListener(this);
 	}
 
 	private void buildNavigationDrawerTabLayout()
@@ -154,10 +141,19 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		if (this.getActivity() != null)
 		{
 			this.soundSheetAdapter.setSelectedItem(position);
-			BaseActivity activity = (BaseActivity)this.getActivity();
-			activity.toggleNavigationDrawer();
-			activity.openSoundFragment(data);
+			this.openSoundSheetFragment(data);
 		}
+	}
+
+	@Override
+	public void onTextEdited(String text)
+	{
+		SoundSheet currentActiveSoundSheet = this.soundSheetAdapter.getSelectedItem();
+		if (currentActiveSoundSheet == null)
+			throw new NullPointerException("sound sheet label was edited, but no sound sheet is selected");
+
+		currentActiveSoundSheet.setLabel(text);
+		this.soundSheetAdapter.notifyDataSetChanged();
 	}
 
 	private void openDialogAddNewSoundLayout()
@@ -190,6 +186,15 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		});
 
 		dialog.show();
+	}
+
+	private void openSoundSheetFragment(SoundSheet soundSheet)
+	{
+		BaseActivity activity = (BaseActivity)this.getActivity();
+		activity.closeNavigationDrawer();
+		activity.openSoundFragment(soundSheet);
+		ActionbarEditText soundSheetLabel = (ActionbarEditText)activity.findViewById(R.id.et_set_label);
+		soundSheetLabel.setText(soundSheet.getLabel());
 	}
 
 	private class TabContentAdapter extends PagerAdapter
@@ -244,6 +249,8 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		{
 			super.onSuccess(soundSheets);
 			soundSheetAdapter.addAll(soundSheets);
+			SoundSheet currentActiveSoundSheet = soundSheetAdapter.getSelectedItem();
+			openSoundSheetFragment(currentActiveSoundSheet);
 		}
 
 		@Override

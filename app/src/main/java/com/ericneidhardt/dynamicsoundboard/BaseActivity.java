@@ -131,7 +131,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 	public void toggleNavigationDrawer()
 	{
-		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START)) {
+		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START))
+		{
 			this.findViewById(R.id.action_open_navigation).setSelected(false);
 			this.navigationDrawerLayout.closeDrawer(Gravity.START);
 		}
@@ -139,6 +140,15 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		{
 			this.findViewById(R.id.action_open_navigation).setSelected(true);
 			this.navigationDrawerLayout.openDrawer(Gravity.START);
+		}
+	}
+
+	public void closeNavigationDrawer()
+	{
+		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START))
+		{
+			this.findViewById(R.id.action_open_navigation).setSelected(false);
+			this.navigationDrawerLayout.closeDrawer(Gravity.START);
 		}
 	}
 

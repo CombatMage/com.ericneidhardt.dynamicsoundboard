@@ -58,13 +58,4 @@ public class SoundSheetFragment extends Fragment
 		return fragmentView;
 	}
 
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-
-		EditText editLabel = (EditText)this.getActivity().findViewById(R.id.et_set_label);
-		editLabel.setText(this.label);
-	}
-
 }

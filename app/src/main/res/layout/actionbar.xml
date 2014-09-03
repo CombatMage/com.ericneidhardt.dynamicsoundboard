@@ -55,9 +55,9 @@
 		android:background="@drawable/selector_background"
 		android:src="@drawable/ic_action_new_sound_layout"/>
 
-	<EditText
+	<com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText
 		android:id="@+id/et_set_label"
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/action_open_navigation"
 		android:layout_toLeftOf="@id/action_new_sound_sheet"/>

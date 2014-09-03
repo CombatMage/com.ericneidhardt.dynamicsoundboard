@@ -72,6 +72,16 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		this.notifyDataSetChanged();
 	}
 
+	public SoundSheet getSelectedItem()
+	{
+		for (SoundSheet soundSheet : this.soundSheets)
+		{
+			if (soundSheet.getIsSelected())
+				return soundSheet;
+		}
+		return null;
+	}
+
 	public List<SoundSheet> getValues()
 	{
 		return this.soundSheets;
