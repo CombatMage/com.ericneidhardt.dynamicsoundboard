@@ -20,6 +20,8 @@ import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
+import java.util.List;
+
 
 public class BaseActivity extends Activity implements View.OnClickListener
 {
@@ -60,6 +62,9 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		this.findViewById(R.id.action_open_navigation).setOnClickListener(this);
 		this.findViewById(R.id.action_add_sound).setOnClickListener(this);
 		this.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
+
+		this.findViewById(R.id.et_set_label).setVisibility(View.GONE);
+		this.findViewById(R.id.tv_app_name).setVisibility(View.VISIBLE);
 	}
 
 	private void createNavigationDrawer()
@@ -163,6 +168,21 @@ public class BaseActivity extends Activity implements View.OnClickListener
 			fragmentManager.beginTransaction().add(fragment, SoundSheetManagerFragment.TAG).commit();
 			fragmentManager.executePendingTransactions();
 		}
+	}
+
+	public void removeSoundFragment(List<SoundSheet> soundSheets)
+	{
+		if (soundSheets == null || soundSheets.size() == 0)
+			return;
+
+		FragmentManager fragmentManager = this.getFragmentManager();
+		for (SoundSheet soundSheet : soundSheets)
+		{
+			Fragment fragment = fragmentManager.findFragmentByTag(soundSheet.getFragmentTag());
+			if (fragment != null)
+				fragmentManager.beginTransaction().remove(fragment).commit();
+		}
+		fragmentManager.executePendingTransactions();
 	}
 
 	public void removeSoundFragment(SoundSheet soundSheet)

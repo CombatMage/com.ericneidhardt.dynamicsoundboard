@@ -22,7 +22,7 @@
 		android:src="@drawable/selector_ic_action_menu"/>
 
 	<ImageButton
-		android:id="@+id/action_add_sound_dir"
+		android:id="@+id/action_add_sound_sheet"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_centerVertical="true"
@@ -31,15 +31,14 @@
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
 		android:background="@drawable/selector_background"
-		android:contentDescription="@string/action_add_new_sound_sheet"
-		android:src="@drawable/ic_action_add_sound_dir"/>
+		android:src="@drawable/ic_action_new_sound_layout"/>
 
 	<ImageButton
 		android:id="@+id/action_add_sound"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_centerVertical="true"
-		android:layout_toLeftOf="@id/action_add_sound_dir"
+		android:layout_toLeftOf="@id/action_add_sound_sheet"
 		android:paddingLeft="@dimen/margin_small"
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
@@ -47,7 +46,7 @@
 		android:src="@drawable/ic_action_add_sound"/>
 
 	<ImageButton
-		android:id="@+id/action_new_sound_sheet"
+		android:id="@+id/action_add_sound_dir"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_centerVertical="true"
@@ -56,7 +55,20 @@
 		android:paddingRight="@dimen/margin_small"
 		android:scaleType="centerInside"
 		android:background="@drawable/selector_background"
-		android:src="@drawable/ic_action_new_sound_layout"/>
+		android:contentDescription="@string/action_add_new_sound_sheet"
+		android:src="@drawable/ic_action_add_sound_dir"/>
+
+	<TextView
+		android:id="@+id/tv_app_name"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_toRightOf="@id/action_open_navigation"
+		android:layout_toLeftOf="@id/action_add_sound_dir"
+		android:gravity="center_horizontal"
+		android:text="@string/app_name"
+		android:textColor="@color/text_header"
+		android:textSize="@dimen/text_title"/>
 
 	<com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText
 		android:id="@+id/et_set_label"
@@ -64,7 +76,7 @@
 		android:layout_height="wrap_content"
 		android:layout_centerVertical="true"
 		android:layout_toRightOf="@id/action_open_navigation"
-		android:layout_toLeftOf="@id/action_new_sound_sheet"
+		android:layout_toLeftOf="@id/action_add_sound_dir"
 		custom:layout="@layout/view_actionbar_edittext"/>
 
 </RelativeLayout>

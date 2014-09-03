@@ -2,6 +2,7 @@ package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -63,7 +64,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		super.onActivityCreated(savedInstanceState);
 		this.buildNavigationDrawerTabLayout();
 
-		this.getActivity().findViewById(R.id.action_new_sound_sheet).setOnClickListener(this);
+		this.getActivity().findViewById(R.id.action_add_sound_sheet).setOnClickListener(this);
 		((ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label)).setOnTextEditedListener(this);
 	}
 
@@ -114,6 +115,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		switch (item.getItemId())
 		{
 			case R.id.action_clear_sound_sheets:
+				((BaseActivity)this.getActivity()).removeSoundFragment(this.soundSheetAdapter.getValues());
 				this.soundSheetAdapter.clear();
 				return true;
 			default:
@@ -126,7 +128,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	{
 		switch (view.getId())
 		{
-			case R.id.action_new_sound_sheet:
+			case R.id.action_add_sound_sheet:
 				this.openDialogAddNewSoundLayout();
 				break;
 			default:

@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,6 +42,32 @@ public class SoundSheetFragment extends Fragment
 		this.setRetainInstance(true);
 		this.fragmentTag = this.getArguments().getString(KEY_FRAGMENT_TAG);
 		this.mediaPlayerPool = new MediaPlayerPool(this.fragmentTag);
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		this.setSoundSheetActionsEnable(true);
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		this.setSoundSheetActionsEnable(false);
+	}
+
+	private void setSoundSheetActionsEnable(boolean enable)
+	{
+		Activity activity = this.getActivity();
+		int viewState = enable ? View.VISIBLE : View.GONE;
+		activity.findViewById(R.id.action_add_sound).setVisibility(viewState);
+		activity.findViewById(R.id.action_add_sound_dir).setVisibility(viewState);
+		activity.findViewById(R.id.et_set_label).setVisibility(viewState);
+
+		viewState = !enable ? View.VISIBLE : View.GONE;
+		activity.findViewById(R.id.tv_app_name).setVisibility(viewState);
 	}
 
 	@Override
