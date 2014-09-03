@@ -8,13 +8,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
@@ -32,7 +30,7 @@ import java.util.List;
 /**
  * Created by Eric Neidhardt on 29.08.2014.
  */
-public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickedListener, ActionbarEditText.OnTextEditedListener
+public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickedListener, SoundSheetAdapter.OnItemDeleteListener, ActionbarEditText.OnTextEditedListener
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
@@ -52,6 +50,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUND_SHEETS);
 		this.soundSheetAdapter = new SoundSheetAdapter();
 		this.soundSheetAdapter.setOnItemClickedListener(this);
+		this.soundSheetAdapter.setOnItemDeleteListener(this);
 		this.tabContentAdapter = new TabContentAdapter();
 
 		LoadSoundSheetsTask task = new LoadSoundSheetsTask();
@@ -142,6 +141,27 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		{
 			this.soundSheetAdapter.setSelectedItem(position);
 			this.openSoundSheetFragment(data);
+		}
+	}
+
+	@Override
+	public void onItemDelete(View view, SoundSheet data, int position)
+	{
+		this.soundSheetAdapter.remove(data);
+		if (this.getActivity() != null)
+		{
+			((BaseActivity)this.getActivity()).removeSoundFragment(data);
+
+			if (data.getIsSelected())
+			{
+				List<SoundSheet> soundSheets = this.soundSheetAdapter.getValues();
+				if (soundSheets.size() > 0)
+				{
+					int positionOfNewSelectedSoundSheet = (position > 0) ? position - 1 : 1;
+					this.soundSheetAdapter.setSelectedItem(positionOfNewSelectedSoundSheet);
+					this.openSoundSheetFragment(soundSheets.get(positionOfNewSelectedSoundSheet));
+				}
+			}
 		}
 	}
 

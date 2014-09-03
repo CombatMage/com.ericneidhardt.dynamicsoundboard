@@ -165,6 +165,15 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		}
 	}
 
+	public void removeSoundFragment(SoundSheet soundSheet)
+	{
+		FragmentManager fragmentManager = this.getFragmentManager();
+		Fragment fragment = fragmentManager.findFragmentByTag(soundSheet.getFragmentTag());
+		if (fragment != null)
+			fragmentManager.beginTransaction().remove(fragment).commit();
+		fragmentManager.executePendingTransactions();
+	}
+
 	public void openSoundFragment(SoundSheet soundSheet)
 	{
 		if (!this.isActivityVisible)

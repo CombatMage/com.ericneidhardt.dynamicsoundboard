@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 {
 	private List<SoundSheet> soundSheets;
 	private OnItemClickedListener onItemClickListener;
+	private OnItemDeleteListener onItemDeleteListener;
 
 	public SoundSheetAdapter()
 	{
@@ -35,6 +37,11 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	public void setOnItemClickedListener(OnItemClickedListener onItemClickListener)
 	{
 		this.onItemClickListener = onItemClickListener;
+	}
+
+	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener)
+	{
+		this.onItemDeleteListener = onItemDeleteListener;
 	}
 
 	public void add(SoundSheet soundSheet)
@@ -112,22 +119,33 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	{
 		private TextView textView;
 		private ImageView selectionIndicator;
+		private ImageButton deleteItem;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
 
 			this.textView = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
+			this.deleteItem = (ImageButton)itemView.findViewById(R.id.ib_delete_sound_sheet);
 
 			itemView.setOnClickListener(this);
+			this.deleteItem.setOnClickListener(this);
 		}
 
 		@Override
 		public void onClick(View view)
 		{
 			int position = this.getPosition();
-			if (onItemClickListener != null)
-				onItemClickListener.onItemClicked(view, soundSheets.get(position), position);
+			if (view.getId() == R.id.ib_delete_sound_sheet)
+			{
+				if (onItemDeleteListener != null)
+					onItemDeleteListener.onItemDelete(view, soundSheets.get(position), position);
+			}
+			else
+			{
+				if (onItemClickListener != null)
+					onItemClickListener.onItemClicked(view, soundSheets.get(position), position);
+			}
 		}
 	}
 
@@ -213,6 +231,11 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	public static interface OnItemClickedListener
 	{
 		public void onItemClicked(View view, SoundSheet data, int position);
+	}
+
+	public static interface OnItemDeleteListener
+	{
+		public void onItemDelete(View view, SoundSheet data, int position);
 	}
 
 }
