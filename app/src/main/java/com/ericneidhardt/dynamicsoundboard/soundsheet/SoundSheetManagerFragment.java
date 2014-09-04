@@ -19,6 +19,7 @@ import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
+import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -94,7 +95,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		});
 
 		RecyclerView listSoundSheets = (RecyclerView)this.getActivity().findViewById(R.id.rv_sound_sheets);
-		listSoundSheets.addItemDecoration(new SoundSheetAdapter.DividerItemDecoration(this.getActivity(), SoundSheetAdapter.DividerItemDecoration.VERTICAL_LIST));
+		listSoundSheets.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
 		listSoundSheets.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		listSoundSheets.setItemAnimator(new DefaultItemAnimator());
 		listSoundSheets.setAdapter(this.soundSheetAdapter);
