@@ -3,6 +3,8 @@ package com.ericneidhardt.dynamicsoundboard.soundsheet;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
@@ -67,6 +70,15 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 
 		this.getActivity().findViewById(R.id.action_add_sound_sheet).setOnClickListener(this);
 		((ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label)).setOnTextEditedListener(this);
+
+		this.handleIntent(getActivity().getIntent());
+	}
+
+	private void handleIntent(Intent intent)
+	{
+		if (intent.getAction().equals(Intent.ACTION_VIEW)
+				&& intent.getData() != null)
+		this.openDialogAddNewSoundToLayout(intent.getData());
 	}
 
 	private void buildNavigationDrawerTabLayout()
@@ -209,6 +221,12 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		});
 
 		dialog.show();
+	}
+
+	private void openDialogAddNewSoundToLayout(Uri uri)
+	{
+
+		Toast.makeText(getActivity(), "openDialogAddNewSoundToLayout", Toast.LENGTH_SHORT).show();
 	}
 
 	private void openSoundSheetFragment(SoundSheet soundSheet)
