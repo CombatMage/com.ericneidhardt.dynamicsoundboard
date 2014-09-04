@@ -272,6 +272,8 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			super.onSuccess(soundSheets);
 			soundSheetAdapter.addAll(soundSheets);
 			SoundSheet currentActiveSoundSheet = soundSheetAdapter.getSelectedItem();
+			int indexSelectedItem = soundSheetAdapter.getValues().indexOf(currentActiveSoundSheet); // make sure only one item is selected on startup
+			soundSheetAdapter.setSelectedItem(indexSelectedItem);
 			openSoundSheetFragment(currentActiveSoundSheet);
 		}
 
@@ -295,7 +297,8 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		@Override
 		public Void call() throws Exception
 		{
-			daoSession.getSoundSheetDao().insertOrReplaceInTx(soundSheets);
+			daoSession.getSoundSheetDao().deleteAll();
+			daoSession.getSoundSheetDao().insertInTx(soundSheets);
 			return null;
 		}
 

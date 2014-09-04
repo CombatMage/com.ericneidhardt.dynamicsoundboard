@@ -69,6 +69,10 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		this.notifyDataSetChanged();
 	}
 
+	/**
+	 * Set the item with this position selected and all other items deselected
+	 * @param position
+	 */
 	public void setSelectedItem(int position)
 	{
 		for (int i = 0; i < this.soundSheets.size(); i++)
@@ -81,6 +85,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 
 	public SoundSheet getSelectedItem()
 	{
+
 		for (SoundSheet soundSheet : this.soundSheets)
 		{
 			if (soundSheet.getIsSelected())

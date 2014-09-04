@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard;
 
+import android.animation.LayoutTransition;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -9,10 +10,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -211,4 +214,5 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		transaction.commit();
 		fragmentManager.executePendingTransactions();
 	}
+
 }
