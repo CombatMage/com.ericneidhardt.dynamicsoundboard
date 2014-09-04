@@ -24,7 +24,6 @@ public class MediaPlayerPool
 	private static final String TAG = MediaPlayerPool.class.getSimpleName();
 
 	private String poolId;
-	private DaoSession daoSession;
 	private List<MediaPlayer> mediaPlayers;
 
 	public MediaPlayerPool(String poolId)
@@ -33,7 +32,6 @@ public class MediaPlayerPool
 			throw new NullPointerException("Can not create instance of MediaPlayerPool, poolId ist null");
 
 		this.poolId = poolId;
-		this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getContext(), poolId);
 	}
 
 	public void add(MediaPlayer mediaPlayer)
@@ -61,7 +59,9 @@ public class MediaPlayerPool
 
 		mediaPlayer.release();
 		this.mediaPlayers.remove(mediaPlayer);
-		this.daoSession.getMediaPlayerDataDao().queryBuilder()
+
+		DaoSession daoSession = DynamicSoundboardApplication.getDatabase(this.poolId);
+		daoSession.getMediaPlayerDataDao().queryBuilder()
 				.where(MediaPlayerDataDao.Properties.Hash.eq(mediaPlayer.hashCode()))
 				.buildDelete().executeDeleteWithoutDetachingEntities();
 	}
@@ -74,7 +74,9 @@ public class MediaPlayerPool
 		for (MediaPlayer mediaPlayer : this.mediaPlayers)
 			mediaPlayer.release();
 		this.mediaPlayers.clear();
-		this.daoSession.getMediaPlayerDataDao().deleteAll();
+
+		DaoSession daoSession = DynamicSoundboardApplication.getDatabase(this.poolId);
+		daoSession.getMediaPlayerDataDao().deleteAll();
 	}
 
 	public void getMediaPlayersAsync(final OnMediaPlayersRetrievedCallback callback)
@@ -114,6 +116,7 @@ public class MediaPlayerPool
 		@Override
 		public Void call() throws Exception
 		{
+			final DaoSession daoSession = DynamicSoundboardApplication.getDatabase(poolId);
 			daoSession.runInTx(new Runnable()
 			{
 				@Override
@@ -148,6 +151,8 @@ public class MediaPlayerPool
 		@Override
 		public List<MediaPlayer> call() throws Exception
 		{
+			DaoSession daoSession = DynamicSoundboardApplication.getDatabase(poolId);
+
 			List<MediaPlayerData> storedMediaPlayers = daoSession.getMediaPlayerDataDao().queryBuilder().list();
 			List<MediaPlayer> loadedMediaPlayers = new ArrayList<MediaPlayer>(storedMediaPlayers.size());
 			for (MediaPlayerData storedMediaPlayer : storedMediaPlayers)
