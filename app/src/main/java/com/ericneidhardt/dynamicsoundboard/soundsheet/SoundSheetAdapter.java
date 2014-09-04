@@ -20,7 +20,8 @@ import java.util.List;
 public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.ViewHolder>
 {
 	private List<SoundSheet> soundSheets;
-	private OnItemClickedListener onItemClickListener;
+	private OnItemClickListener onItemClickListener;
+	private OnItemLongClickListener onItemLongClickListener;
 	private OnItemDeleteListener onItemDeleteListener;
 
 	public SoundSheetAdapter()
@@ -28,9 +29,14 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		this.soundSheets = new ArrayList<SoundSheet>();
 	}
 
-	public void setOnItemClickedListener(OnItemClickedListener onItemClickListener)
+	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
 		this.onItemClickListener = onItemClickListener;
+	}
+
+	public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener)
+	{
+		this.onItemLongClickListener = onItemLongClickListener;
 	}
 
 	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener)
@@ -114,7 +120,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 	}
 
-	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
 	{
 		private TextView textView;
 		private ImageView selectionIndicator;
@@ -128,6 +134,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 			this.deleteItem = (ImageButton)itemView.findViewById(R.id.ib_delete_sound_sheet);
 
 			itemView.setOnClickListener(this);
+			itemView.setOnLongClickListener(this);
 			this.deleteItem.setOnClickListener(this);
 		}
 
@@ -143,19 +150,33 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 			else
 			{
 				if (onItemClickListener != null)
-					onItemClickListener.onItemClicked(view, soundSheets.get(position), position);
+					onItemClickListener.onItemClick(view, soundSheets.get(position), position);
 			}
 		}
 
+		@Override
+		public boolean onLongClick(View view)
+		{
+			int position = this.getPosition();
+			if (onItemLongClickListener != null)
+				return onItemLongClickListener.onItemLongClick(view, soundSheets.get(position), position);
+			return false;
+		}
 	}
 
-	public static interface OnItemClickedListener
+	public static interface OnItemClickListener
 	{
-		public void onItemClicked(View view, SoundSheet data, int position);
+		public void onItemClick(View view, SoundSheet data, int position);
+	}
+
+	public static interface OnItemLongClickListener
+	{
+		public boolean onItemLongClick(View view, SoundSheet data, int position);
 	}
 
 	public static interface OnItemDeleteListener
 	{
 		public void onItemDelete(View view, SoundSheet data, int position);
 	}
+
 }

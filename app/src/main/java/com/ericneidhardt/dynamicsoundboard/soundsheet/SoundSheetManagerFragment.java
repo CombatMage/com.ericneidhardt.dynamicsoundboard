@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Created by Eric Neidhardt on 29.08.2014.
  */
-public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickedListener, SoundSheetAdapter.OnItemDeleteListener, ActionbarEditText.OnTextEditedListener
+public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickListener, SoundSheetAdapter.OnItemDeleteListener, ActionbarEditText.OnTextEditedListener
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
@@ -51,7 +51,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 
 		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUND_SHEETS);
 		this.soundSheetAdapter = new SoundSheetAdapter();
-		this.soundSheetAdapter.setOnItemClickedListener(this);
+		this.soundSheetAdapter.setOnItemClickListener(this);
 		this.soundSheetAdapter.setOnItemDeleteListener(this);
 		this.tabContentAdapter = new TabContentAdapter();
 
@@ -138,7 +138,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	}
 
 	@Override
-	public void onItemClicked(View view, SoundSheet data, int position)
+	public void onItemClick(View view, SoundSheet data, int position)
 	{
 		if (this.getActivity() != null)
 		{
