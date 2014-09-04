@@ -40,4 +40,11 @@ public class CustomEditText extends LinearLayout
 			this.input.setText(text);
 	}
 
+	public Editable getText()
+	{
+		if (this.input != null)
+			return this.input.getText();
+		return null;
+	}
+
 }

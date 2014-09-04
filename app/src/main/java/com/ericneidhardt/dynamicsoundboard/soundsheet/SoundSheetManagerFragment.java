@@ -1,8 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,11 +10,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
@@ -26,6 +23,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
@@ -79,7 +77,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	{
 		if (intent.getAction().equals(Intent.ACTION_VIEW)
 				&& intent.getData() != null)
-		this.openDialogAddNewSoundToLayout(intent.getData());
+		this.openDialogAddNewSoundFromIntent(intent.getData());
 	}
 
 	private void buildNavigationDrawerTabLayout()
@@ -194,10 +192,10 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 
 	private void openDialogAddNewSoundLayout()
 	{
-		AddNewSoundSheetDialog.show(this.getActivity(), "test" + this.soundSheetAdapter.getItemCount(), new AddNewSoundSheetDialog.OnAddClickListener()
+		AddNewSoundSheetDialog.show(this.getActivity(), this.getSuggestedSoundSheetName(), new AddNewSoundSheetDialog.OnAddSoundSheetListener()
 		{
 			@Override
-			public void onClick(String label)
+			public void onAddSoundSheet(String label)
 			{
 				String tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode());
 				soundSheetAdapter.add(new SoundSheet(null, tag, label, false));
@@ -205,10 +203,21 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		});
 	}
 
-	private void openDialogAddNewSoundToLayout(Uri uri)
+	private void openDialogAddNewSoundFromIntent(Uri uri)
 	{
+		AddNewSoundFromIntent.show(this.getActivity(),  uri, this.getSuggestedSoundSheetName(), new AddNewSoundFromIntent.OnAddSoundFromIntentListener()
+		{
+			@Override
+			public void onAddSoundFromIntent(String soundName, String soundSheet, boolean addNewSoundSheet)
+			{
 
-		Toast.makeText(getActivity(), "openDialogAddNewSoundToLayout", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
+	private String getSuggestedSoundSheetName()
+	{
+		return this.getActivity().getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheetAdapter.getItemCount();
 	}
 
 	private void openSoundSheetFragment(SoundSheet soundSheet)

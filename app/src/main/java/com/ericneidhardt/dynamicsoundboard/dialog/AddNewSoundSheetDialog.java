@@ -13,15 +13,15 @@ import com.ericneidhardt.dynamicsoundboard.R;
  */
 public class AddNewSoundSheetDialog
 {
-	public static void show(Context context, String suggestedName, final OnAddClickListener onClickListener)
+	public static void show(Context context, String suggestedName, final OnAddSoundSheetListener listener)
 	{
 		final View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_new_sound_layout, null);
 		((EditText)dialogView.findViewById(R.id.et_input)).setText(suggestedName);
 
 		AlertDialog.Builder inputNameDialog = new AlertDialog.Builder(context);
 		inputNameDialog.setView(dialogView);
-
 		final AlertDialog dialog = inputNameDialog.create();
+
 		dialogView.findViewById(R.id.b_cancel).setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -36,7 +36,7 @@ public class AddNewSoundSheetDialog
 			public void onClick(View v)
 			{
 				String label = ((EditText)dialogView.findViewById(R.id.et_input)).getText().toString();
-				onClickListener.onClick(label);
+				listener.onAddSoundSheet(label);
 				dialog.dismiss();
 			}
 		});
@@ -44,8 +44,8 @@ public class AddNewSoundSheetDialog
 		dialog.show();
 	}
 
-	public interface OnAddClickListener
+	public interface OnAddSoundSheetListener
 	{
-		public void onClick(String label);
+		public void onAddSoundSheet(String label);
 	}
 }

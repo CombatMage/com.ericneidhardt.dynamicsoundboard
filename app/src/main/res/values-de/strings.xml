@@ -4,6 +4,7 @@
 	<!-- misc -->
 	<string name="app_name">DynamicSoundboard</string>
 	<string name="blank"></string>
+	<string name="suggested_sound_sheet_name">Kategorie</string>
 
 	<!-- navigation drawer -->
 	<string name="tab_sound_sheets">Gruppen</string>
@@ -18,7 +19,11 @@
 	<!-- dialog -->
 	<string name="dialog_ok">Hinzufügen</string>
 	<string name="dialog_cancel">Abbrechen</string>
+
 	<string name="dialog_add_new_layout_title">Name der Sound Liste?</string>
 	<string name="dialog_add_new_layout_message">Dem SoundBoard wird ein neue Gruppe mit diesem Namen hinzugefügt. Der Name kann später noch geändert werden.</string>
+
+	<string name="dialog_add_new_sound_from_intent_title">Sound hinzufügen</string>
+	<string name="dialog_add_new_sound_from_intent_message">Es wurden noch keine Kategorien für Sounds angelegt. Soll eine neue Kategorie angelegt werden?</string>
 
 </resources>

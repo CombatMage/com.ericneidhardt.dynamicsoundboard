@@ -14,7 +14,7 @@
 		android:textStyle="bold"
 		android:textColor="@color/text_content_primary"
 		android:textSize="@dimen/text_headline"
-		android:text="Sound hinzufügen"/>
+		android:text="@string/dialog_add_new_sound_from_intent_title"/>
 
 	<com.ericneidhardt.dynamicsoundboard.customview.CustomEditText
 		android:id="@+id/et_name_file"
@@ -29,14 +29,7 @@
 		android:paddingRight="@dimen/margin_default"
 		android:textColor="@color/text_content_secondary"
 		android:textSize="@dimen/text_body"
-		android:text="Welcher Kategorie soll der Sound hinzugefügt werden?/Noch keine Vorhanden"/>
-
-	<ListView
-		android:id="@+id/lv_sound_sheets"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:visibility="visible"
-		android:padding="@dimen/margin_default"/>
+		android:text="@string/dialog_add_new_sound_from_intent_message"/>
 
 	<com.ericneidhardt.dynamicsoundboard.customview.CustomEditText
 		android:id="@+id/et_name_new_sound_sheet"
