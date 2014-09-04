@@ -4,6 +4,7 @@
 	<!-- misc -->
 	<string name="app_name">DynamicSoundboard</string>
 	<string name="blank"></string>
+	<string name="suggested_sound_sheet_name">Kategorie</string>
 
 	<!-- navigation drawer -->
 	<string name="tab_sound_sheets">Gruppen</string>
