@@ -26,6 +26,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
@@ -172,7 +173,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 				List<SoundSheet> soundSheets = this.soundSheetAdapter.getValues();
 				if (soundSheets.size() > 0)
 				{
-					int positionOfNewSelectedSoundSheet = (position > 0) ? position - 1 : 1;
+					int positionOfNewSelectedSoundSheet = (position > 0) ? position - 1 : 0;
 					this.soundSheetAdapter.setSelectedItem(positionOfNewSelectedSoundSheet);
 					this.openSoundSheetFragment(soundSheets.get(positionOfNewSelectedSoundSheet));
 				}
@@ -193,34 +194,15 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 
 	private void openDialogAddNewSoundLayout()
 	{
-		final View dialogView = LayoutInflater.from(this.getActivity()).inflate(R.layout.dialog_add_new_sound_layout, null);
-		((EditText)dialogView.findViewById(R.id.et_input)).setText("test" + this.soundSheetAdapter.getItemCount());
-
-		AlertDialog.Builder inputNameDialog = new AlertDialog.Builder(this.getActivity());
-		inputNameDialog.setView(dialogView);
-
-		final AlertDialog dialog = inputNameDialog.create();
-		dialogView.findViewById(R.id.b_cancel).setOnClickListener(new View.OnClickListener()
+		AddNewSoundSheetDialog.show(this.getActivity(), "test" + this.soundSheetAdapter.getItemCount(), new AddNewSoundSheetDialog.OnAddClickListener()
 		{
 			@Override
-			public void onClick(View v)
+			public void onClick(String label)
 			{
-				dialog.dismiss();
-			}
-		});
-		dialogView.findViewById(R.id.b_ok).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				String label = ((EditText)dialogView.findViewById(R.id.et_input)).getText().toString();
 				String tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode());
 				soundSheetAdapter.add(new SoundSheet(null, tag, label, false));
-				dialog.dismiss();
 			}
 		});
-
-		dialog.show();
 	}
 
 	private void openDialogAddNewSoundToLayout(Uri uri)

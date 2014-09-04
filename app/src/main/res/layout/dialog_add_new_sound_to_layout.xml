@@ -39,7 +39,7 @@
 		android:padding="@dimen/margin_default"/>
 
 	<com.ericneidhardt.dynamicsoundboard.customview.CustomEditText
-		android:id="@+id/et_name_new _sound_sheet"
+		android:id="@+id/et_name_new_sound_sheet"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/margin_default"/>
