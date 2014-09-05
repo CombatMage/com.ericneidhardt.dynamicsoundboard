@@ -44,6 +44,8 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	private DaoSession daoSession;
 	private TabContentAdapter tabContentAdapter;
 
+	private boolean hasPendingLoadSoundSheetsTask = false;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -70,14 +72,20 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		this.getActivity().findViewById(R.id.action_add_sound_sheet).setOnClickListener(this);
 		((ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label)).setOnTextEditedListener(this);
 
-		this.handleIntent(getActivity().getIntent());
+		this.handleIntent(getActivity().getIntent(), false);
 	}
 
-	private void handleIntent(Intent intent)
+	private void handleIntent(Intent intent, boolean fromLoadingTask)
 	{
+		if (this.hasPendingLoadSoundSheetsTask && !fromLoadingTask) // data loading must be completed, before intents can be processed
+			return;
+
 		if (intent.getAction().equals(Intent.ACTION_VIEW)
 				&& intent.getData() != null)
-		this.openDialogAddNewSoundFromIntent(intent.getData());
+		{
+			this.openDialogAddNewSoundFromIntent(intent.getData());
+			this.getActivity().setIntent(null);
+		}
 	}
 
 	private void buildNavigationDrawerTabLayout()
@@ -274,6 +282,11 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 
 	private class LoadSoundSheetsTask extends SafeAsyncTask<List<SoundSheet>>
 	{
+		public LoadSoundSheetsTask()
+		{
+			hasPendingLoadSoundSheetsTask = true;
+		}
+
 		@Override
 		public List<SoundSheet> call() throws Exception
 		{
@@ -284,11 +297,16 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		protected void onSuccess(List<SoundSheet> soundSheets) throws Exception
 		{
 			super.onSuccess(soundSheets);
+
 			soundSheetAdapter.addAll(soundSheets);
 			SoundSheet currentActiveSoundSheet = soundSheetAdapter.getSelectedItem();
 			int indexSelectedItem = soundSheetAdapter.getValues().indexOf(currentActiveSoundSheet); // make sure only one item is selected on startup
-			soundSheetAdapter.setSelectedItem(indexSelectedItem);
+			soundSheetAdapter.setSelectedItem(indexSelectedItem); // set selection for this item and remove all other selections
 			openSoundSheetFragment(currentActiveSoundSheet);
+
+			handleIntent(getActivity().getIntent(), true); //check for intent to handle, they require that all sound sheets are loaded
+
+			hasPendingLoadSoundSheetsTask = false;
 		}
 
 		@Override
@@ -296,6 +314,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		{
 			super.onException(e);
 			Logger.e(TAG, e.getMessage());
+			hasPendingLoadSoundSheetsTask = false;
 		}
 	}
 
