@@ -298,14 +298,16 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		{
 			super.onSuccess(soundSheets);
 
-			soundSheetAdapter.addAll(soundSheets);
-			SoundSheet currentActiveSoundSheet = soundSheetAdapter.getSelectedItem();
-			int indexSelectedItem = soundSheetAdapter.getValues().indexOf(currentActiveSoundSheet); // make sure only one item is selected on startup
-			soundSheetAdapter.setSelectedItem(indexSelectedItem); // set selection for this item and remove all other selections
-			openSoundSheetFragment(currentActiveSoundSheet);
+			if (soundSheets.size() > 0)
+			{
+				soundSheetAdapter.addAll(soundSheets);
+				SoundSheet currentActiveSoundSheet = soundSheetAdapter.getSelectedItem();
+				int indexSelectedItem = soundSheetAdapter.getValues().indexOf(currentActiveSoundSheet); // make sure only one item is selected on startup
+				soundSheetAdapter.setSelectedItem(indexSelectedItem); // set selection for this item and remove all other selections
+				openSoundSheetFragment(currentActiveSoundSheet);
+			}
 
 			handleIntent(getActivity().getIntent(), true); //check for intent to handle, they require that all sound sheets are loaded
-
 			hasPendingLoadSoundSheetsTask = false;
 		}
 
