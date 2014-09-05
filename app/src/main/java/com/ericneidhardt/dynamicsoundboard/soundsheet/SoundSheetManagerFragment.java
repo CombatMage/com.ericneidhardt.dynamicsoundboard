@@ -218,7 +218,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			{
 				if (newSoundSheetName != null)
 				{
-					SoundSheet newCreatedSoundSheet = getNewSoundSheet(newSoundSheetName):
+					SoundSheet newCreatedSoundSheet = getNewSoundSheet(newSoundSheetName);
 					soundSheetAdapter.add(newCreatedSoundSheet);
 					// TODO add sound to SoundSheet
 				}
