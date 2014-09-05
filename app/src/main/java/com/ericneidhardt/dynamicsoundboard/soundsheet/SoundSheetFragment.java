@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
@@ -45,26 +46,14 @@ public class SoundSheetFragment extends Fragment
 	public void onResume()
 	{
 		super.onResume();
-		this.setSoundSheetActionsEnable(true);
+		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
 	}
 
 	@Override
 	public void onPause()
 	{
 		super.onPause();
-		this.setSoundSheetActionsEnable(false);
-	}
-
-	private void setSoundSheetActionsEnable(boolean enable)
-	{
-		Activity activity = this.getActivity();
-		int viewState = enable ? View.VISIBLE : View.GONE;
-		activity.findViewById(R.id.action_add_sound).setVisibility(viewState);
-		activity.findViewById(R.id.action_add_sound_dir).setVisibility(viewState);
-		activity.findViewById(R.id.et_set_label).setVisibility(viewState);
-
-		viewState = !enable ? View.VISIBLE : View.GONE;
-		activity.findViewById(R.id.tv_app_name).setVisibility(viewState);
+		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(false);
 	}
 
 	@Override

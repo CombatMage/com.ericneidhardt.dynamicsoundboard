@@ -97,12 +97,25 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	{
 		super.onResume();
 		this.isActivityVisible = true;
+		this.setSoundSheetActionsEnable(false);
 	}
 
 	@Override
-	protected void onPause() {
+	protected void onPause()
+	{
 		super.onPause();
 		this.isActivityVisible = false;
+	}
+
+	public void setSoundSheetActionsEnable(boolean enable)
+	{
+		int viewState = enable ? View.VISIBLE : View.GONE;
+		this.findViewById(R.id.action_add_sound).setVisibility(viewState);
+		this.findViewById(R.id.action_add_sound_dir).setVisibility(viewState);
+		this.findViewById(R.id.et_set_label).setVisibility(viewState);
+
+		viewState = !enable ? View.VISIBLE : View.GONE;
+		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
 	}
 
 	@Override
