@@ -42,7 +42,6 @@ public class AddNewSoundFromIntent
 			@Override
 			public void onClick(View v)
 			{
-				((BaseActivity)activity).setIntentHandled();
 				dialog.dismiss();
 			}
 		});
@@ -56,7 +55,6 @@ public class AddNewSoundFromIntent
 				String sheet = soundSheetName.getDisplayedText().toString();
 				listener.onAddSoundFromIntent(name, sheet, null);
 
-				((BaseActivity)activity).setIntentHandled();
 				dialog.dismiss();
 			}
 		});
@@ -103,7 +101,6 @@ public class AddNewSoundFromIntent
 			@Override
 			public void onClick(View v)
 			{
-				((BaseActivity)activity).setIntentHandled();
 				dialog.dismiss();
 			}
 		});
@@ -122,7 +119,6 @@ public class AddNewSoundFromIntent
 				else
 					listener.onAddSoundFromIntent(name, null, selectedSoundSheet);
 
-				((BaseActivity)activity).setIntentHandled();
 				dialog.dismiss();
 			}
 		});

@@ -1,22 +1,17 @@
 package com.ericneidhardt.dynamicsoundboard;
 
-import android.animation.LayoutTransition;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -30,8 +25,6 @@ import java.util.List;
 public class BaseActivity extends Activity implements View.OnClickListener
 {
 	private static final String TAG = BaseActivity.class.getSimpleName();
-
-	private static final String EXTRA_INTENT_DONE = "com.ericneidhardt.dynamicsoundboard.BaseActivity.EXTRA_INTENT_DONE";
 
 	private boolean isActivityVisible = true;
 
@@ -118,14 +111,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 		viewState = !enable ? View.VISIBLE : View.GONE;
 		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
-	}
-
-	public Intent getUnhandledIntent()
-	{
-		Intent intent = this.getIntent();
-		if (intent != null && !intent.getBooleanExtra(EXTRA_INTENT_DONE, false))
-			return intent;
-		return null;
 	}
 
 	@Override

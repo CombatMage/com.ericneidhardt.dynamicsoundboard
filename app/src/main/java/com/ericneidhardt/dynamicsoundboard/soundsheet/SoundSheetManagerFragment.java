@@ -332,7 +332,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 				openSoundSheetFragment(currentActiveSoundSheet);
 			}
 
-			handleIntent(((BaseActivity)getActivity()).getUnhandledIntent(), true); //check for intent to handle, they require that all sound sheets are loaded
+			handleIntent(getActivity().getIntent(), true); //check for intent to handle, they require that all sound sheets are loaded
 			hasPendingLoadSoundSheetsTask = false;
 		}
 
