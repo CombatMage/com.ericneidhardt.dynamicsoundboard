@@ -216,8 +216,9 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		AddNewSoundFromIntent.OnAddSoundFromIntentListener listener = new AddNewSoundFromIntent.OnAddSoundFromIntentListener()
 		{
 			@Override
-			public void onAddSoundFromIntent(String soundName, String soundSheet, boolean addNewSoundSheet)
+			public void onAddSoundFromIntent(String soundName, String newSoundSheet, SoundSheet addToSoundSheet)
 			{
+				// TODO
 				Toast.makeText(getActivity(), "onAddSoundFromIntent", Toast.LENGTH_SHORT).show();
 			}
 		};
