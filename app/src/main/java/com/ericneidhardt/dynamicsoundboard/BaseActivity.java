@@ -128,13 +128,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		return null;
 	}
 
-	public void setIntentHandled()
-	{
-		Intent intent = this.getIntent();
-		intent.putExtra(EXTRA_INTENT_DONE, true);
-		this.setIntent(intent);
-	}
-
 	@Override
 	public void onClick(View view)
 	{

@@ -71,8 +71,6 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 
 		this.getActivity().findViewById(R.id.action_add_sound_sheet).setOnClickListener(this);
 		((ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label)).setOnTextEditedListener(this);
-
-		this.handleIntent(((BaseActivity)getActivity()).getUnhandledIntent(), false);
 	}
 
 	private void buildNavigationDrawerTabLayout()
