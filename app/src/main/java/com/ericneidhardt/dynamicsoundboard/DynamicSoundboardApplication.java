@@ -22,10 +22,10 @@ import java.util.Random;
 )
 public class DynamicSoundboardApplication extends Application
 {
+	private static final String database_prefix = "db";
+
 	private static Random random;
-
 	private static Context applicationContext;
-
 	private static Map<String, DaoSession> databases;
 
 	@Override
@@ -46,6 +46,7 @@ public class DynamicSoundboardApplication extends Application
 
 	public static DaoSession getDatabase(String id)
 	{
+		id = database_prefix + id;
 		DaoSession database = databases.get(id);
 		if (database == null)
 		{

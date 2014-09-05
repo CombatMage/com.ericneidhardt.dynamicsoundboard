@@ -1,6 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
  */
 public class AddNewSoundSheetDialog
 {
-	public static void show(Context context, String suggestedName, final OnAddSoundSheetListener listener)
+	public static Dialog create(Context context, String suggestedName, final OnAddSoundSheetListener listener)
 	{
 		final View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_new_sound_layout, null);
 		((CustomEditText)dialogView.findViewById(R.id.et_name_new_sound_sheet)).setHint(suggestedName);
@@ -42,7 +43,7 @@ public class AddNewSoundSheetDialog
 			}
 		});
 
-		dialog.show();
+		return dialog;
 	}
 
 	public interface OnAddSoundSheetListener

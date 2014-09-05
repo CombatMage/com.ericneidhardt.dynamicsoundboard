@@ -1,13 +1,15 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
+import android.app.Dialog;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomSpinner;
@@ -22,16 +24,16 @@ import java.util.List;
  */
 public class AddNewSoundFromIntent
 {
-	public static void show(Context context, Uri uri, String suggestedName, final OnAddSoundFromIntentListener listener)
+	public static Dialog create(final Activity activity, Uri uri, String suggestedName, final OnAddSoundFromIntentListener listener)
 	{
-		final View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_new_sound_from_intent, null);
+		final View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_add_new_sound_from_intent, null);
 		final CustomEditText soundName = (CustomEditText)dialogView.findViewById(R.id.et_name_file);
 		final CustomEditText soundSheetName = (CustomEditText)dialogView.findViewById(R.id.et_name_new_sound_sheet);
 
 		soundName.setText(Util.getFileNameFromUri(uri));
 		soundSheetName.setHint(suggestedName);
 
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
 		dialogBuilder.setView(dialogView);
 		final AlertDialog dialog = dialogBuilder.create();
 
@@ -40,6 +42,7 @@ public class AddNewSoundFromIntent
 			@Override
 			public void onClick(View v)
 			{
+				((BaseActivity)activity).setIntentHandled();
 				dialog.dismiss();
 			}
 		});
@@ -52,15 +55,17 @@ public class AddNewSoundFromIntent
 				String name = soundName.getText().toString();
 				String sheet = soundSheetName.getDisplayedText().toString();
 				listener.onAddSoundFromIntent(name, sheet, null);
+
+				((BaseActivity)activity).setIntentHandled();
 				dialog.dismiss();
 			}
 		});
-		dialog.show();
+		return dialog;
 	}
 
-	public static void show(Context context, Uri uri, String suggestedName, final List<SoundSheet> availableSoundSheets, final OnAddSoundFromIntentListener listener)
+	public static Dialog create(final Activity activity, Uri uri, String suggestedName, final List<SoundSheet> availableSoundSheets, final OnAddSoundFromIntentListener listener)
 	{
-		final View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null);
+		final View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null);
 		final CustomEditText soundName = (CustomEditText)dialogView.findViewById(R.id.et_name_file);
 		final CustomEditText soundSheetName = (CustomEditText)dialogView.findViewById(R.id.et_name_new_sound_sheet);
 		final CustomSpinner soundSheetSpinner = (CustomSpinner)dialogView.findViewById(R.id.s_sound_sheets);
@@ -89,7 +94,7 @@ public class AddNewSoundFromIntent
 			}
 		});
 
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
 		dialogBuilder.setView(dialogView);
 		final AlertDialog dialog = dialogBuilder.create();
 
@@ -98,6 +103,7 @@ public class AddNewSoundFromIntent
 			@Override
 			public void onClick(View v)
 			{
+				((BaseActivity)activity).setIntentHandled();
 				dialog.dismiss();
 			}
 		});
@@ -116,10 +122,11 @@ public class AddNewSoundFromIntent
 				else
 					listener.onAddSoundFromIntent(name, null, selectedSoundSheet);
 
+				((BaseActivity)activity).setIntentHandled();
 				dialog.dismiss();
 			}
 		});
-		dialog.show();
+		return dialog;
 	}
 
 	private static List<String> getKeyValueMap(List<SoundSheet> soundSheets)

@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
@@ -43,6 +43,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	private DaoSession daoSession;
 	private TabContentAdapter tabContentAdapter;
 
+	private Dialog pendingDialog;
 	private boolean hasPendingLoadSoundSheetsTask = false;
 
 	@Override
@@ -71,20 +72,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		this.getActivity().findViewById(R.id.action_add_sound_sheet).setOnClickListener(this);
 		((ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label)).setOnTextEditedListener(this);
 
-		this.handleIntent(getActivity().getIntent(), false);
-	}
-
-	private void handleIntent(Intent intent, boolean fromLoadingTask)
-	{
-		if (this.hasPendingLoadSoundSheetsTask && !fromLoadingTask) // data loading must be completed, before intents can be processed
-			return;
-
-		if (intent.getAction().equals(Intent.ACTION_VIEW)
-				&& intent.getData() != null)
-		{
-			this.openDialogAddNewSoundFromIntent(intent.getData());
-			this.getActivity().setIntent(null);
-		}
+		this.handleIntent(((BaseActivity)getActivity()).getUnhandledIntent(), false);
 	}
 
 	private void buildNavigationDrawerTabLayout()
@@ -123,6 +111,8 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	public void onPause()
 	{
 		super.onPause();
+		if (this.pendingDialog != null && this.pendingDialog.isShowing())
+			this.pendingDialog.dismiss();
 		StoreSoundSheetsTask task = new StoreSoundSheetsTask(this.soundSheetAdapter.getValues());
 		task.execute();
 	}
@@ -197,9 +187,27 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		this.soundSheetAdapter.notifyDataSetChanged();
 	}
 
+	private void handleIntent(Intent intent, boolean fromLoadingTask)
+	{
+		if (intent == null)
+			return;
+
+		if (this.hasPendingLoadSoundSheetsTask && !fromLoadingTask) // data loading must be completed, before intents can be processed
+			return;
+
+		if (intent.getAction().equals(Intent.ACTION_VIEW)
+				&& intent.getData() != null)
+		{
+			this.openDialogAddNewSoundFromIntent(intent.getData());
+			this.getActivity().setIntent(null);
+		}
+	}
+
 	private void openDialogAddNewSoundLayout()
 	{
-		AddNewSoundSheetDialog.show(this.getActivity(), this.getSuggestedSoundSheetName(), new AddNewSoundSheetDialog.OnAddSoundSheetListener()
+		if (this.pendingDialog != null && this.pendingDialog.isShowing())
+			this.pendingDialog.dismiss();
+		this.pendingDialog = AddNewSoundSheetDialog.create(this.getActivity(), this.getSuggestedSoundSheetName(), new AddNewSoundSheetDialog.OnAddSoundSheetListener()
 		{
 			@Override
 			public void onAddSoundSheet(String label)
@@ -207,6 +215,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 				soundSheetAdapter.add(getNewSoundSheet(label));
 			}
 		});
+		this.pendingDialog.show();
 	}
 
 	private void openDialogAddNewSoundFromIntent(Uri uri)
@@ -228,10 +237,15 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 				}
 			}
 		};
+		if (this.pendingDialog != null && this.pendingDialog.isShowing())
+			this.pendingDialog.dismiss();
+
 		if (this.soundSheetAdapter.getItemCount() == 0)
-			AddNewSoundFromIntent.show(this.getActivity(),  uri, this.getSuggestedSoundSheetName(), listener);
+			this.pendingDialog = AddNewSoundFromIntent.create(this.getActivity(), uri, this.getSuggestedSoundSheetName(), listener);
 		else
-			AddNewSoundFromIntent.show(this.getActivity(),  uri, this.getSuggestedSoundSheetName(), this.soundSheetAdapter.getValues(), listener);
+			this.pendingDialog = AddNewSoundFromIntent.create(this.getActivity(), uri, this.getSuggestedSoundSheetName(), this.soundSheetAdapter.getValues(), listener);
+
+		this.pendingDialog.show();
 	}
 
 	private String getSuggestedSoundSheetName()
@@ -320,7 +334,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 				openSoundSheetFragment(currentActiveSoundSheet);
 			}
 
-			handleIntent(getActivity().getIntent(), true); //check for intent to handle, they require that all sound sheets are loaded
+			handleIntent(((BaseActivity)getActivity()).getUnhandledIntent(), true); //check for intent to handle, they require that all sound sheets are loaded
 			hasPendingLoadSoundSheetsTask = false;
 		}
 

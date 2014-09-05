@@ -31,6 +31,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 {
 	private static final String TAG = BaseActivity.class.getSimpleName();
 
+	private static final String EXTRA_INTENT_DONE = "com.ericneidhardt.dynamicsoundboard.BaseActivity.EXTRA_INTENT_DONE";
+
 	private boolean isActivityVisible = true;
 
 	private DrawerLayout navigationDrawerLayout;
@@ -116,6 +118,21 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 		viewState = !enable ? View.VISIBLE : View.GONE;
 		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
+	}
+
+	public Intent getUnhandledIntent()
+	{
+		Intent intent = this.getIntent();
+		if (intent != null && !intent.getBooleanExtra(EXTRA_INTENT_DONE, false))
+			return intent;
+		return null;
+	}
+
+	public void setIntentHandled()
+	{
+		Intent intent = this.getIntent();
+		intent.putExtra(EXTRA_INTENT_DONE, true);
+		this.setIntent(intent);
 	}
 
 	@Override
