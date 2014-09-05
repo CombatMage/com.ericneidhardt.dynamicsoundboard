@@ -26,4 +26,7 @@
 	<string name="dialog_add_new_sound_from_intent_title">Sound hinzufügen</string>
 	<string name="dialog_add_new_sound_from_intent_message">Es wurden noch keine Kategorien für Sounds angelegt. Soll eine neue Kategorie angelegt werden?</string>
 
+	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_message">Welcher Kategorie soll der Sound hinzugefügt werden, oder soll eine neue Kategorie angelegt werden?</string>
+	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_checkbox">Eine neue Katagorie anlegen</string>
+
 </resources>

@@ -5,7 +5,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Spinner;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
@@ -13,9 +14,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.CustomSpinner;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by eric.neidhardt on 04.09.2014.
@@ -64,10 +63,30 @@ public class AddNewSoundFromIntent
 		final CustomEditText soundName = (CustomEditText)dialogView.findViewById(R.id.et_name_file);
 		final CustomEditText soundSheetName = (CustomEditText)dialogView.findViewById(R.id.et_name_new_sound_sheet);
 		final CustomSpinner soundSheetSpinner = (CustomSpinner)dialogView.findViewById(R.id.s_sound_sheets);
+		final CheckBox addNewSoundSheet = (CheckBox)dialogView.findViewById(R.id.cb_add_new_sound_sheet);
 
 		soundName.setText(uri.toString());
 		soundSheetName.setHint(suggestedName);
 		soundSheetSpinner.setItems(getKeyValueMap(availableSoundSheets));
+
+		soundSheetName.setVisibility(View.GONE);
+		addNewSoundSheet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				if (isChecked)
+				{
+					soundSheetName.setVisibility(View.VISIBLE);
+					soundSheetSpinner.setVisibility(View.GONE);
+				}
+				else
+				{
+					soundSheetName.setVisibility(View.GONE);
+					soundSheetSpinner.setVisibility(View.VISIBLE);
+				}
+			}
+		});
 
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
 		dialogBuilder.setView(dialogView);
