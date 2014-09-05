@@ -106,11 +106,14 @@ public class AddNewSoundFromIntent
 			@Override
 			public void onClick(View v)
 			{
-				// TODO trigger listener
-
 				String name = soundName.getText().toString();
+				String newSoundSheet = soundSheetName.getDisplayedText().toString();
 				SoundSheet selectedSoundSheet = availableSoundSheets.get(soundSheetSpinner.getSelectedItemPosition());
 
+				if (addNewSoundSheet.isChecked())
+					listener.onAddSoundFromIntent(name, newSoundSheet, null);
+				else
+					listener.onAddSoundFromIntent(name, null, selectedSoundSheet);
 
 				dialog.dismiss();
 			}
