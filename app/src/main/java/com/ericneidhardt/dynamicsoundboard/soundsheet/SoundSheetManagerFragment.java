@@ -1,7 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -205,8 +204,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			@Override
 			public void onAddSoundSheet(String label)
 			{
-				String tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode());
-				soundSheetAdapter.add(new SoundSheet(null, tag, label, false));
+				soundSheetAdapter.add(getNewSoundSheet(label));
 			}
 		});
 	}
@@ -216,10 +214,18 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		AddNewSoundFromIntent.OnAddSoundFromIntentListener listener = new AddNewSoundFromIntent.OnAddSoundFromIntentListener()
 		{
 			@Override
-			public void onAddSoundFromIntent(String soundName, String newSoundSheet, SoundSheet addToSoundSheet)
+			public void onAddSoundFromIntent(String soundName, String newSoundSheetName, SoundSheet addToSoundSheet)
 			{
-				// TODO
-				Toast.makeText(getActivity(), "onAddSoundFromIntent", Toast.LENGTH_SHORT).show();
+				if (newSoundSheetName != null)
+				{
+					SoundSheet newCreatedSoundSheet = getNewSoundSheet(newSoundSheetName):
+					soundSheetAdapter.add(newCreatedSoundSheet);
+					// TODO add sound to SoundSheet
+				}
+				else if (addToSoundSheet != null)
+				{
+					// TODO add sound to SoundSheet
+				}
 			}
 		};
 		if (this.soundSheetAdapter.getItemCount() == 0)
@@ -240,6 +246,12 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		activity.openSoundFragment(soundSheet);
 		ActionbarEditText soundSheetLabel = (ActionbarEditText)activity.findViewById(R.id.et_set_label);
 		soundSheetLabel.setText(soundSheet.getLabel());
+	}
+
+	private SoundSheet getNewSoundSheet(String label)
+	{
+		String tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode());
+		return new SoundSheet(null, tag, label, false);
 	}
 
 	private class TabContentAdapter extends PagerAdapter

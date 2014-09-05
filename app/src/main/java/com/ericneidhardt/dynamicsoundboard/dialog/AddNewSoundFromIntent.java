@@ -12,6 +12,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomSpinner;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.misc.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class AddNewSoundFromIntent
 		final CustomEditText soundName = (CustomEditText)dialogView.findViewById(R.id.et_name_file);
 		final CustomEditText soundSheetName = (CustomEditText)dialogView.findViewById(R.id.et_name_new_sound_sheet);
 
-		soundName.setText(uri.toString());
+		soundName.setText(Util.getFileNameFromUri(uri));
 		soundSheetName.setHint(suggestedName);
 
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
@@ -65,7 +66,7 @@ public class AddNewSoundFromIntent
 		final CustomSpinner soundSheetSpinner = (CustomSpinner)dialogView.findViewById(R.id.s_sound_sheets);
 		final CheckBox addNewSoundSheet = (CheckBox)dialogView.findViewById(R.id.cb_add_new_sound_sheet);
 
-		soundName.setText(uri.toString());
+		soundName.setText(Util.getFileNameFromUri(uri));
 		soundSheetName.setHint(suggestedName);
 		soundSheetSpinner.setItems(getKeyValueMap(availableSoundSheets));
 

@@ -2,6 +2,7 @@ package com.ericneidhardt.dynamicsoundboard.misc;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import com.ericneidhardt.dynamicsoundboard.dao.DaoMaster;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
@@ -17,5 +18,10 @@ public class Util
 		SQLiteDatabase db = helper.getWritableDatabase();
 		DaoMaster daoMaster = new DaoMaster(db);
 		return daoMaster.newSession();
+	}
+
+	public static String getFileNameFromUri(Uri uri)
+	{
+		return uri.getLastPathSegment().toString();
 	}
 }
