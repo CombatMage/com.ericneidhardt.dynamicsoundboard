@@ -40,19 +40,25 @@
 		android:layout_margin="@dimen/margin_default"
 		android:textColor="@color/text_content_secondary"
 		android:textSize="@dimen/text_body"
-		android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_checkbox"/>
+		android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_checkbox"
+		android:button="@drawable/selector_ic_checkbox"/>
 
 	<com.ericneidhardt.dynamicsoundboard.customview.CustomSpinner
 		android:id="@+id/s_sound_sheets"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/margin_default"/>
+		android:layout_height="@dimen/height_input_field"
+		android:layout_marginLeft="@dimen/margin_default"
+		android:layout_marginRight="@dimen/margin_default"
+		android:layout_marginBottom="@dimen/margin_default"/>
 
 	<com.ericneidhardt.dynamicsoundboard.customview.CustomEditText
 		android:id="@+id/et_name_new_sound_sheet"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/margin_default"/>
+		android:layout_height="@dimen/height_input_field"
+		android:layout_marginLeft="@dimen/margin_default"
+		android:layout_marginRight="@dimen/margin_default"
+		android:layout_marginBottom="@dimen/margin_default"
+		android:paddingTop="@dimen/margin_default"/>
 
 	<LinearLayout
 		android:layout_width="wrap_content"

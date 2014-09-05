@@ -77,8 +77,8 @@ public class AddNewSoundFromIntent
 			{
 				if (isChecked)
 				{
-					soundSheetName.setVisibility(View.VISIBLE);
 					soundSheetSpinner.setVisibility(View.GONE);
+					soundSheetName.setVisibility(View.VISIBLE);
 				}
 				else
 				{

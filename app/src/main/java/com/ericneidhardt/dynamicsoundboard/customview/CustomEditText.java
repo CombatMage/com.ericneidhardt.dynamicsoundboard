@@ -29,7 +29,7 @@ public class CustomEditText extends LinearLayout
 	protected void inflateLayout(Context context, int layoutToInflate)
 	{
 		LayoutInflater.from(context).inflate(layoutToInflate, this, true);
-		this.input = (EditText) this.findViewById(R.id.et_input);
+		this.input = (EditText) this.findViewById(R.id.edittext);
 	}
 
 	public void setText(String text)
