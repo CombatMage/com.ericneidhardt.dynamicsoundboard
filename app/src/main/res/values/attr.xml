@@ -2,6 +2,5 @@
 <resources>
 	<declare-styleable name="CustomEditText">
 		<attr name="layout" format="reference" />
-		<attr name="clearSuggestionOnClick" format="boolean" />
 	</declare-styleable>
 </resources>

@@ -15,8 +15,6 @@ import com.ericneidhardt.dynamicsoundboard.R;
  */
 public class CustomEditText extends LinearLayout
 {
-	protected int layoutId = R.layout.view_edittext;
-
 	protected EditText input;
 
 	public CustomEditText(Context context, AttributeSet attrs)
@@ -44,6 +42,27 @@ public class CustomEditText extends LinearLayout
 	{
 		if (this.input != null)
 			return this.input.getText();
+		return null;
+	}
+
+	public String getDisplayedText()
+	{
+		String userInput = this.getText().toString();
+		if (userInput != null && !userInput.isEmpty())
+			return userInput;
+		return this.getHint().toString();
+	}
+
+	public void setHint(String hint)
+	{
+		if (this.input != null)
+			this.input.setHint(hint);
+	}
+
+	public CharSequence getHint()
+	{
+		if (this.input != null)
+			return this.input.getHint();
 		return null;
 	}
 

@@ -21,8 +21,6 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	private OnTextEditedListener callback;
 	private KeyListener editTextKeyListener;
 
-	private boolean clearSuggestionOnClick = false;
-
 	public ActionbarEditText(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
@@ -32,9 +30,6 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 
 		this.divider = this.findViewById(R.id.v_divider);
 		this.disableEditText();
-
-		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
-		this.clearSuggestionOnClick = array.getBoolean(R.styleable.CustomEditText_clearSuggestionOnClick, false);
 	}
 
 	public void setOnTextEditedListener(OnTextEditedListener listener)
