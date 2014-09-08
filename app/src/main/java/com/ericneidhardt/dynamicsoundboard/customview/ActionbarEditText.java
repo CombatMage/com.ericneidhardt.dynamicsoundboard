@@ -70,6 +70,7 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	public void onImeBack(EditTextBackEvent ctrl, String text)
 	{
 		super.input.setText(this.previousText);
+		this.disableEditText();
 	}
 
 	private void disableEditText()
