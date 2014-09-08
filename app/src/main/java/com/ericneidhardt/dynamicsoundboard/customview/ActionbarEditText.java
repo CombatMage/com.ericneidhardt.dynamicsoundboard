@@ -1,7 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.customview;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.text.method.KeyListener;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -15,7 +14,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 /**
  * Created by eric.neidhardt on 02.09.2014.
  */
-public class ActionbarEditText extends CustomEditText implements TextView.OnEditorActionListener, View.OnClickListener
+public class ActionbarEditText extends CustomEditText implements TextView.OnEditorActionListener, View.OnClickListener, EditTextBackEvent.EditTextImeBackListener
 {
 	private View divider;
 	private OnTextEditedListener callback;
@@ -29,6 +28,8 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 
 		super.input.setOnEditorActionListener(this);
 		super.input.setOnClickListener(this);
+
+		super.input.setOnEditTextImeBackListener(this);
 
 		this.divider = this.findViewById(R.id.v_divider);
 		this.disableEditText();
@@ -66,13 +67,9 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	}
 
 	@Override
-	public boolean onKeyPreIme(int keyCode, KeyEvent event)
+	public void onImeBack(EditTextBackEvent ctrl, String text)
 	{
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
-			super.input.setText(this.previousText);
-
-		}
-		return false;
+		super.input.setText(this.previousText);
 	}
 
 	private void disableEditText()
