@@ -32,6 +32,12 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 		this.disableEditText();
 	}
 
+	@Override
+	protected int getLayoutId()
+	{
+		return R.layout.view_actionbar_edittext;
+	}
+
 	public void setOnTextEditedListener(OnTextEditedListener listener)
 	{
 		this.callback = listener;

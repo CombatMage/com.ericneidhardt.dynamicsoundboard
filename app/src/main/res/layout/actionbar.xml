@@ -76,7 +76,6 @@
 		android:layout_height="wrap_content"
 		android:layout_centerVertical="true"
 		android:layout_toRightOf="@id/action_open_navigation"
-		android:layout_toLeftOf="@id/action_add_sound_dir"
-		custom:layout="@layout/view_actionbar_edittext"/>
+		android:layout_toLeftOf="@id/action_add_sound_dir"/>
 
 </RelativeLayout>

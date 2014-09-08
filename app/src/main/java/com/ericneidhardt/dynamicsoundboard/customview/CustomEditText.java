@@ -13,18 +13,17 @@ import com.ericneidhardt.dynamicsoundboard.R;
 /**
  * Created by eric.neidhardt on 29.08.2014.
  */
-public class CustomEditText extends LinearLayout
+public abstract class CustomEditText extends LinearLayout
 {
 	protected EditText input;
 
 	public CustomEditText(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
-		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
-		int layoutToInflate = array.getResourceId(R.styleable.CustomEditText_layout, R.layout.view_edittext);
-
-		this.inflateLayout(context, layoutToInflate);
+		this.inflateLayout(context, this.getLayoutId());
 	}
+
+	protected abstract int getLayoutId();
 
 	protected void inflateLayout(Context context, int layoutToInflate)
 	{

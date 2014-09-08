@@ -31,4 +31,5 @@
 
 	<string name="dialog_add_new_sound_title">Sound hinzufügen</string>
 
+	<string name="dialog_add_new_sound_message">Einen weiteren Sound auswählen</string>
 </resources>

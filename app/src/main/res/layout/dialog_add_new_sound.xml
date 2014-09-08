@@ -17,11 +17,37 @@
 		android:textSize="@dimen/text_headline"
 		android:text="@string/dialog_add_new_sound_title"/>
 
-	<com.ericneidhardt.dynamicsoundboard.customview.CustomEditText
-		android:id="@+id/et_name_file"
+	<LinearLayout
+		android:id="@+id/layout_sounds_to_add"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/margin_default"/>
+		android:orientation="vertical"
+		android:animateLayoutChanges="true"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:paddingLeft="@dimen/margin_default"
+			android:paddingRight="@dimen/margin_default"
+			android:textColor="@color/text_content_secondary"
+			android:textSize="@dimen/text_body"
+			android:text="@string/dialog_add_new_sound_message"/>
+
+		<ImageButton
+			android:id="@+id/b_add_another_sound"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:background="@android:color/transparent"
+			android:src="@drawable/selector_ic_add_sound"/>
+
+	</LinearLayout>
 
 	<include layout="@layout/dialog_button_bar"/>
 
