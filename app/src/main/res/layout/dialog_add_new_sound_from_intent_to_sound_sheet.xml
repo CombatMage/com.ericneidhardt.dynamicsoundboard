@@ -18,7 +18,7 @@
 		android:textSize="@dimen/text_headline"
 		android:text="@string/dialog_add_new_sound_from_intent_title"/>
 
-	<com.ericneidhardt.dynamicsoundboard.customview.CustomEditText
+	<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
 		android:id="@+id/et_name_file"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
 		android:layout_marginRight="@dimen/margin_default"
 		android:layout_marginBottom="@dimen/margin_default"/>
 
-	<com.ericneidhardt.dynamicsoundboard.customview.CustomEditText
+	<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
 		android:id="@+id/et_name_new_sound_sheet"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/height_input_field"
