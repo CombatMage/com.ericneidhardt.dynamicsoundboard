@@ -21,6 +21,8 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	private OnTextEditedListener callback;
 	private KeyListener editTextKeyListener;
 
+	private String previousText;
+
 	public ActionbarEditText(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
@@ -47,6 +49,7 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	public void onClick(View v)
 	{
 		this.enableEditText();
+		this.previousText = super.input.getText().toString();
 		super.input.setText("");
 	}
 
@@ -58,6 +61,16 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 			if (this.callback != null)
 				this.callback.onTextEdited(super.input.getText().toString());
 			this.disableEditText();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onKeyPreIme(int keyCode, KeyEvent event)
+	{
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+			super.input.setText(this.previousText);
+
 		}
 		return false;
 	}
