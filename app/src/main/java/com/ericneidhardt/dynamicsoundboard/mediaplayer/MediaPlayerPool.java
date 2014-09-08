@@ -1,16 +1,12 @@
 package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
-import com.ericneidhardt.dynamicsoundboard.dao.DaoMaster;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
-import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 
 import java.util.ArrayList;
@@ -99,14 +95,6 @@ public class MediaPlayerPool
 			return;
 		}
 
-		OnMediaPlayersRetrievedCallback callbackMediaPlayerPool = new OnMediaPlayersRetrievedCallback() {
-			@Override
-			public void onMediaPlayersRetrieved(List<MediaPlayer> mediaPlayers) {
-				MediaPlayerPool.this.mediaPlayers.addAll(mediaPlayers);
-				callback.onMediaPlayersRetrieved(MediaPlayerPool.this.mediaPlayers);
-			}
-		};
-
 		SafeAsyncTask task = new LoadMediaPlayersTask(callback);
 		task.execute();
 	}
@@ -177,8 +165,13 @@ public class MediaPlayerPool
 		protected void onSuccess(List<MediaPlayer> mediaPlayers) throws Exception
 		{
 			super.onSuccess(mediaPlayers);
+			if (MediaPlayerPool.this.mediaPlayers == null)
+				MediaPlayerPool.this.mediaPlayers = new ArrayList<MediaPlayer>();
+
+			MediaPlayerPool.this.mediaPlayers.addAll(mediaPlayers);
+
 			if (this.callback != null)
-				this.callback.onMediaPlayersRetrieved(mediaPlayers);
+				this.callback.onMediaPlayersRetrieved(MediaPlayerPool.this.mediaPlayers);
 		}
 
 		@Override
@@ -186,6 +179,7 @@ public class MediaPlayerPool
 		{
 			super.onException(e);
 			Logger.e(TAG + ": " + poolId, e.getMessage());
+			throw new RuntimeException(e);
 		}
 	}
 

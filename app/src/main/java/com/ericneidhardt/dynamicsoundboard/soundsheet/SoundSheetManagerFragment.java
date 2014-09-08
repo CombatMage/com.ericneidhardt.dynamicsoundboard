@@ -352,6 +352,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			super.onException(e);
 			Logger.e(TAG, e.getMessage());
 			hasPendingLoadSoundSheetsTask = false;
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -377,6 +378,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		{
 			super.onException(e);
 			Logger.e(TAG, e.getMessage());
+			throw new RuntimeException(e);
 		}
 	}
 }
