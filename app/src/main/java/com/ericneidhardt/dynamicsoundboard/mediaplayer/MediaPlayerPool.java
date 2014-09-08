@@ -34,6 +34,10 @@ public class MediaPlayerPool
 		this.poolId = poolId;
 	}
 
+	/**
+	 * Adds the media player to this pool and stores it in a database.
+	 * @param mediaPlayer
+	 */
 	public void add(MediaPlayer mediaPlayer)
 	{
 		if (this.mediaPlayers == null)
@@ -43,6 +47,10 @@ public class MediaPlayerPool
 		task.execute();
 	}
 
+	/**
+	 * Adds all media players to this pool and stores them in a database.
+	 * @param mediaPlayers
+	 */
 	public void add(List<MediaPlayer> mediaPlayers)
 	{
 		if (this.mediaPlayers == null)
@@ -62,7 +70,7 @@ public class MediaPlayerPool
 
 		DaoSession daoSession = DynamicSoundboardApplication.getDatabase(this.poolId);
 		daoSession.getMediaPlayerDataDao().queryBuilder()
-				.where(MediaPlayerDataDao.Properties.Hash.eq(mediaPlayer.hashCode()))
+				.where(MediaPlayerDataDao.Properties.PlayerId.eq(mediaPlayer.hashCode()))
 				.buildDelete().executeDeleteWithoutDetachingEntities();
 	}
 
@@ -77,6 +85,11 @@ public class MediaPlayerPool
 
 		DaoSession daoSession = DynamicSoundboardApplication.getDatabase(this.poolId);
 		daoSession.getMediaPlayerDataDao().deleteAll();
+	}
+
+	public List<MediaPlayer> getMediaPlayers()
+	{
+		return this.mediaPlayers;
 	}
 
 	public void getMediaPlayersAsync(final OnMediaPlayersRetrievedCallback callback)

@@ -7,7 +7,9 @@ package com.ericneidhardt.dynamicsoundboard.dao;
 public class MediaPlayerData {
 
     private Long id;
-    private String hash;
+    private String playerId;
+    private String label;
+    private String uri;
 
     public MediaPlayerData() {
     }
@@ -16,9 +18,11 @@ public class MediaPlayerData {
         this.id = id;
     }
 
-    public MediaPlayerData(Long id, String hash) {
+    public MediaPlayerData(Long id, String playerId, String label, String uri) {
         this.id = id;
-        this.hash = hash;
+        this.playerId = playerId;
+        this.label = label;
+        this.uri = uri;
     }
 
     public Long getId() {
@@ -29,12 +33,28 @@ public class MediaPlayerData {
         this.id = id;
     }
 
-    public String getHash() {
-        return hash;
+    public String getPlayerId() {
+        return playerId;
     }
 
-    public void setHash(String hash) {
-        this.hash = hash;
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
 }

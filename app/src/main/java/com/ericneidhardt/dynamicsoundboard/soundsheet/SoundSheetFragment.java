@@ -2,6 +2,7 @@ package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +13,16 @@ import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.OnMediaPlayersRetrievedCallback;
+
+import java.util.List;
 
 /**
  * Created by eric.neidhardt on 27.08.2014.
  */
-public class SoundSheetFragment extends Fragment
+public class SoundSheetFragment extends Fragment implements OnMediaPlayersRetrievedCallback
 {
 	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
@@ -40,6 +45,7 @@ public class SoundSheetFragment extends Fragment
 		this.setRetainInstance(true);
 		this.fragmentTag = this.getArguments().getString(KEY_FRAGMENT_TAG);
 		this.mediaPlayerPool = new MediaPlayerPool(this.fragmentTag);
+		this.mediaPlayerPool.getMediaPlayersAsync(this);
 	}
 
 	@Override
@@ -57,6 +63,12 @@ public class SoundSheetFragment extends Fragment
 	}
 
 	@Override
+	public void onMediaPlayersRetrieved(List<MediaPlayer> mediaPlayers)
+	{
+		((TextView)this.getView().findViewById(R.id.tv_count)).setText(Integer.toString(mediaPlayers.size()));
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		if (container == null)
@@ -68,7 +80,24 @@ public class SoundSheetFragment extends Fragment
 
 		((TextView)fragmentView.findViewById(R.id.tv_label)).setText(this.fragmentTag);
 
+		this.showMediaPlayers(fragmentView);
+
 		return fragmentView;
+	}
+
+	public void showMediaPlayers(View fragmentView)
+	{
+		// TODO load mediaplayers from pool and add to ui
+		TextView tv = (TextView)fragmentView.findViewById(R.id.tv_count);
+		List<MediaPlayer> mediaPlayers = this.mediaPlayerPool.getMediaPlayers();
+		tv.setText(Integer.toString(mediaPlayers == null ? 0 : mediaPlayers.size()));
+	}
+
+	public void addMediaPlayer(EnhancedMediaPlayer mediaPlayer)
+	{
+		this.mediaPlayerPool.add(mediaPlayer);
+		TextView tv = (TextView)this.getView().findViewById(R.id.tv_count);
+		tv.setText(Integer.toString(this.mediaPlayerPool.getMediaPlayers().size()));
 	}
 
 }

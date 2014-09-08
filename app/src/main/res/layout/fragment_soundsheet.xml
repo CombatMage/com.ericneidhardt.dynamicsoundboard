@@ -12,4 +12,10 @@
 		android:layout_height="wrap_content"
 		android:text="nothing of interest"/>
 
+	<TextView
+		android:id="@+id/tv_count"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="0"/>
+
 </LinearLayout>

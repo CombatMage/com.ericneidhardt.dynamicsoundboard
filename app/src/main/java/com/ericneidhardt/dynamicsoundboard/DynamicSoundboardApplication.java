@@ -2,8 +2,12 @@ package com.ericneidhardt.dynamicsoundboard;
 
 import android.app.Application;
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.net.Uri;
 
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 
 import org.acra.ACRA;
@@ -37,6 +41,12 @@ public class DynamicSoundboardApplication extends Application
 		databases = new HashMap<String, DaoSession>();
 		random = new Random();
 		applicationContext = this;
+	}
+
+	public static void storeSoundInDatabase(String id, MediaPlayer player)
+	{
+		MediaPlayerPool pool = new MediaPlayerPool(id);
+		pool.add(player);
 	}
 
 	public static Context getContext()

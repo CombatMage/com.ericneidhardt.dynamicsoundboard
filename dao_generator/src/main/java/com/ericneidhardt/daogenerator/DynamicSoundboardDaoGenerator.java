@@ -21,7 +21,9 @@ public class DynamicSoundboardDaoGenerator
 	{
 		Entity sound = schema.addEntity("MediaPlayerData");
 		sound.addIdProperty();
-		sound.addStringProperty("hash").unique();
+		sound.addStringProperty("playerId").unique();
+		sound.addStringProperty("label").unique();
+		sound.addStringProperty("uri").unique();
 	}
 
 	private static void addSoundSheetEntity(Schema schema)

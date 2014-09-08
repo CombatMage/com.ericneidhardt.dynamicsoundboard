@@ -24,6 +24,7 @@ import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
@@ -216,22 +217,28 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		this.pendingDialog.show();
 	}
 
-	private void openDialogAddNewSoundFromIntent(Uri uri)
+	private void openDialogAddNewSoundFromIntent(final Uri soundUri)
 	{
 		AddNewSoundFromIntent.OnAddSoundFromIntentListener listener = new AddNewSoundFromIntent.OnAddSoundFromIntentListener()
 		{
 			@Override
-			public void onAddSoundFromIntent(String soundName, String newSoundSheetName, SoundSheet addToSoundSheet)
+			public void onAddSoundFromIntent(String soundLabel, String newSoundSheetName, SoundSheet existingSoundSheet)
 			{
+				// TODO init MediaPlayer jus for storage is bad for performance
+				EnhancedMediaPlayer player = new EnhancedMediaPlayer(soundUri, soundLabel);
 				if (newSoundSheetName != null)
 				{
 					SoundSheet newCreatedSoundSheet = getNewSoundSheet(newSoundSheetName);
 					soundSheetAdapter.add(newCreatedSoundSheet);
 					// TODO add sound to SoundSheet
 				}
-				else if (addToSoundSheet != null)
+				else if (existingSoundSheet != null)
 				{
-					// TODO add sound to SoundSheet
+					Fragment addSoundToThisFragment = getActivity().getFragmentManager().findFragmentByTag(existingSoundSheet.getFragmentTag());
+					if (addSoundToThisFragment == null)
+						DynamicSoundboardApplication.storeSoundInDatabase(existingSoundSheet.getFragmentTag(), player);
+					else
+						((SoundSheetFragment)addSoundToThisFragment).addMediaPlayer(player);
 				}
 			}
 		};
@@ -239,9 +246,9 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			this.pendingDialog.dismiss();
 
 		if (this.soundSheetAdapter.getItemCount() == 0)
-			this.pendingDialog = AddNewSoundFromIntent.create(this.getActivity(), uri, this.getSuggestedSoundSheetName(), listener);
+			this.pendingDialog = AddNewSoundFromIntent.create(this.getActivity(), soundUri, this.getSuggestedSoundSheetName(), listener);
 		else
-			this.pendingDialog = AddNewSoundFromIntent.create(this.getActivity(), uri, this.getSuggestedSoundSheetName(), this.soundSheetAdapter.getValues(), listener);
+			this.pendingDialog = AddNewSoundFromIntent.create(this.getActivity(), soundUri, this.getSuggestedSoundSheetName(), this.soundSheetAdapter.getValues(), listener);
 
 		this.pendingDialog.show();
 	}

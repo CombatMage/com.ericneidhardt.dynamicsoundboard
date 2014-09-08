@@ -24,7 +24,9 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Hash = new Property(1, String.class, "hash", false, "HASH");
+        public final static Property PlayerId = new Property(1, String.class, "playerId", false, "PLAYER_ID");
+        public final static Property Label = new Property(2, String.class, "label", false, "LABEL");
+        public final static Property Uri = new Property(3, String.class, "uri", false, "URI");
     };
 
 
@@ -41,7 +43,9 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'MEDIA_PLAYER_DATA' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'HASH' TEXT UNIQUE );"); // 1: hash
+                "'PLAYER_ID' TEXT UNIQUE ," + // 1: playerId
+                "'LABEL' TEXT UNIQUE ," + // 2: label
+                "'URI' TEXT UNIQUE );"); // 3: uri
     }
 
     /** Drops the underlying database table. */
@@ -60,9 +64,19 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
             stmt.bindLong(1, id);
         }
  
-        String hash = entity.getHash();
-        if (hash != null) {
-            stmt.bindString(2, hash);
+        String playerId = entity.getPlayerId();
+        if (playerId != null) {
+            stmt.bindString(2, playerId);
+        }
+ 
+        String label = entity.getLabel();
+        if (label != null) {
+            stmt.bindString(3, label);
+        }
+ 
+        String uri = entity.getUri();
+        if (uri != null) {
+            stmt.bindString(4, uri);
         }
     }
 
@@ -77,7 +91,9 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     public MediaPlayerData readEntity(Cursor cursor, int offset) {
         MediaPlayerData entity = new MediaPlayerData( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // hash
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // playerId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // label
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // uri
         );
         return entity;
     }
@@ -86,7 +102,9 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     @Override
     public void readEntity(Cursor cursor, MediaPlayerData entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setHash(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setPlayerId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setLabel(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setUri(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     /** @inheritdoc */

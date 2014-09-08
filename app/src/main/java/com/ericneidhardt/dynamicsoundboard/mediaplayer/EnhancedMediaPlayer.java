@@ -1,6 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 
 import android.media.MediaPlayer;
+import android.net.Uri;
 
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
@@ -24,6 +25,12 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 	}
 
 	private State currentState;
+
+	public EnhancedMediaPlayer(Uri uri, String label)
+	{
+		super();
+		// TODO build player from params
+	}
 
 	public EnhancedMediaPlayer(MediaPlayerData data)
 	{
