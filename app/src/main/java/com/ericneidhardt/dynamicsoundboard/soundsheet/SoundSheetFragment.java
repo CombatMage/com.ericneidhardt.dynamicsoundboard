@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
+import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.OnMediaPlayersRetrievedCallback;
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 27.08.2014.
  */
-public class SoundSheetFragment extends Fragment implements OnMediaPlayersRetrievedCallback
+public class SoundSheetFragment extends Fragment implements View.OnClickListener, OnMediaPlayersRetrievedCallback
 {
 	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
@@ -53,6 +55,7 @@ public class SoundSheetFragment extends Fragment implements OnMediaPlayersRetrie
 	{
 		super.onResume();
 		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
+		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 	}
 
 	@Override
@@ -66,6 +69,18 @@ public class SoundSheetFragment extends Fragment implements OnMediaPlayersRetrie
 	public void onMediaPlayersRetrieved(List<MediaPlayer> mediaPlayers)
 	{
 		((TextView)this.getView().findViewById(R.id.tv_count)).setText(Integer.toString(mediaPlayers.size()));
+	}
+
+	@Override
+	public void onClick(View view)
+	{
+		switch (view.getId())
+		{
+			case R.id.action_add_sound:
+				AddNewSoundDialog dialog = new AddNewSoundDialog();
+				dialog.show(this.getFragmentManager(), AddNewSoundDialog.TAG);
+				break;
+		}
 	}
 
 	@Override
