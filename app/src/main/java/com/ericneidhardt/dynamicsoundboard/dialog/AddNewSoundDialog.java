@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.LoadSoundListItem;
 
 /**
  * Created by eric.neidhardt on 08.09.2014.
@@ -54,13 +55,18 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 				this.dismiss();
 				break;
 			case R.id.b_add_another_sound:
+				// TODO start activity for result
+				this.addNewSoundToLoad();
 				break;
 		}
 	}
 
 	private void addNewSoundToLoad()
 	{
-
+		LoadSoundListItem item = new LoadSoundListItem(this.getView().getContext());
+		item.setPath("file//test wie das aussieht");
+		item.setSoundName("ein neuer name.mp4");
+		this.soundsToAdd.addView(item);
 	}
 
 }

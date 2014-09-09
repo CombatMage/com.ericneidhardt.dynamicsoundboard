@@ -18,6 +18,6 @@ public class DialogEditText extends CustomEditText
 	@Override
 	protected int getLayoutId()
 	{
-		return R.layout.view_edittext;
+		return R.layout.view_dialog_edittext;
 	}
 }
