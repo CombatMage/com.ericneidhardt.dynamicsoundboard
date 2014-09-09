@@ -1,6 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.customview;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.text.method.KeyListener;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -20,7 +21,7 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	private OnTextEditedListener callback;
 	private KeyListener editTextKeyListener;
 
-	private String previousText;
+	private String initialText;
 
 	public ActionbarEditText(Context context, AttributeSet attrs)
 	{
@@ -50,8 +51,7 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	public void onClick(View v)
 	{
 		this.enableEditText();
-		this.previousText = super.input.getText().toString();
-		super.input.setText("");
+		this.initialText = super.input.getText().toString();
 	}
 
 	@Override
@@ -69,8 +69,15 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	@Override
 	public void onImeBack(EditTextBackEvent ctrl, String text)
 	{
-		super.input.setText(this.previousText);
+		super.input.setText(this.initialText);
 		this.disableEditText();
+	}
+
+	@Override
+	protected Parcelable onSaveInstanceState()
+	{
+		super.input.setText(this.initialText);
+		return super.onSaveInstanceState();
 	}
 
 	private void disableEditText()

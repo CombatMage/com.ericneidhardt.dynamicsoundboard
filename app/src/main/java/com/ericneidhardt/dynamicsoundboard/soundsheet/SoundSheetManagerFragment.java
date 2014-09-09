@@ -1,6 +1,5 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
-import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -82,11 +81,10 @@ public class SoundSheetManagerFragment
 
 		ActionbarEditText labelCurrentSoundSheet = (ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label);
 		labelCurrentSoundSheet.setOnTextEditedListener(this);
-		SoundSheet currentActiveSoundSheet = soundSheetAdapter.getSelectedItem();
+		SoundSheet currentActiveSoundSheet = this.soundSheetAdapter.getSelectedItem();
 		if (currentActiveSoundSheet != null)
 			labelCurrentSoundSheet.setText(currentActiveSoundSheet.getLabel());
 	}
-
 
 	private void buildNavigationDrawerTabLayout()
 	{
