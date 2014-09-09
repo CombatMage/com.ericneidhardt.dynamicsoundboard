@@ -12,6 +12,8 @@ import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
  */
 public class Util
 {
+	public static final String MIME_AUDIO = "audio/*|application/ogg|application/x-ogg";
+
 	public static DaoSession setupDatabase(Context context, String dbName)
 	{
 		DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, dbName, null);
