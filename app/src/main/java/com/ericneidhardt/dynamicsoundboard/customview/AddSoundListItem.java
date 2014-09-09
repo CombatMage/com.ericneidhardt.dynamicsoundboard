@@ -10,15 +10,15 @@ import com.ericneidhardt.dynamicsoundboard.R;
 /**
  * Created by Eric Neidhardt on 09.09.2014.
  */
-public class LoadSoundListItem extends LinearLayout
+public class AddSoundListItem extends LinearLayout
 {
 	private TextView soundPath;
 	private CustomEditText soundName;
 
-	public LoadSoundListItem(Context context)
+	public AddSoundListItem(Context context)
 	{
 		super(context);
-		LayoutInflater.from(context).inflate(R.layout.view_load_sound_list_item, this, true);
+		LayoutInflater.from(context).inflate(R.layout.view_add_sound_list_item, this, true);
 		this.soundPath = (TextView)this.findViewById(R.id.tv_path);
 		this.soundName = (CustomEditText)this.findViewById(R.id.et_name_file);
 	}
@@ -31,5 +31,11 @@ public class LoadSoundListItem extends LinearLayout
 	public void setSoundName(String name)
 	{
 		this.soundName.setText(name);
+	}
+
+	@Override
+	public boolean onCheckIsTextEditor()
+	{
+		return true;
 	}
 }

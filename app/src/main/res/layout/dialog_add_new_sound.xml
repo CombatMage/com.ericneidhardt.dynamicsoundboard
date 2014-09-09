@@ -1,54 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="@dimen/height_title"
-		android:gravity="center_vertical"
-		android:paddingLeft="@dimen/margin_default"
-		android:paddingRight="@dimen/margin_default"
-		android:textStyle="bold"
-		android:textColor="@color/text_content_primary"
-		android:textSize="@dimen/text_headline"
-		android:text="@string/dialog_add_new_sound_title"/>
-
-	<LinearLayout
-		android:id="@+id/layout_sounds_to_add"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:animateLayoutChanges="true"/>
-
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal">
+		android:orientation="vertical">
 
 		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_title"
+			android:gravity="center_vertical"
 			android:paddingLeft="@dimen/margin_default"
 			android:paddingRight="@dimen/margin_default"
-			android:textColor="@color/text_content_secondary"
-			android:textSize="@dimen/text_body"
-			android:text="@string/dialog_add_new_sound_message"/>
+			android:textStyle="bold"
+			android:textColor="@color/text_content_primary"
+			android:textSize="@dimen/text_headline"
+			android:text="@string/dialog_add_new_sound_title"/>
 
-		<ImageButton
-			android:id="@+id/b_add_another_sound"
-			android:layout_width="wrap_content"
+		<LinearLayout
+			android:id="@+id/layout_sounds_to_add"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical"
-			android:background="@android:color/transparent"
-			android:src="@drawable/selector_ic_add_sound"/>
+			android:orientation="vertical"
+			android:descendantFocusability="beforeDescendants"/>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:paddingLeft="@dimen/margin_default"
+				android:paddingRight="@dimen/margin_default"
+				android:textColor="@color/text_content_secondary"
+				android:textSize="@dimen/text_body"
+				android:text="@string/dialog_add_new_sound_message"/>
+
+			<ImageButton
+				android:id="@+id/b_add_another_sound"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:background="@android:color/transparent"
+				android:src="@drawable/selector_ic_add_sound"/>
+
+		</LinearLayout>
+
+		<include layout="@layout/dialog_button_bar"/>
 
 	</LinearLayout>
 
-	<include layout="@layout/dialog_button_bar"/>
-
-</LinearLayout>
+</ScrollView>

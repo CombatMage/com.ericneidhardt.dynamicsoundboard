@@ -3,12 +3,14 @@ package com.ericneidhardt.dynamicsoundboard.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.R;
-import com.ericneidhardt.dynamicsoundboard.customview.LoadSoundListItem;
+import com.ericneidhardt.dynamicsoundboard.customview.AddSoundListItem;
 
 /**
  * Created by eric.neidhardt on 08.09.2014.
@@ -17,13 +19,31 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 {
 	public static final String TAG = AddNewSoundDialog.class.getSimpleName();
 
+	private static final String KEY_CALLER_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.callingFragmentTag";
+
 	private ViewGroup soundsToAdd;
+	private String callingFragmentTag;
+
+	public DialogFragment getInstance(String callingFragmentTag)
+	{
+		AddNewSoundDialog dialog = new AddNewSoundDialog();
+
+		Bundle args = new Bundle();
+		args.putString(KEY_CALLER_FRAGMENT_TAG, callingFragmentTag);
+		dialog.setArguments(args);
+
+		return dialog;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
+
+		Bundle args = this.getArguments();
+		if (args != null)
+			this.callingFragmentTag = args.getString(KEY_CALLER_FRAGMENT_TAG);
 	}
 
 	@Override
@@ -61,9 +81,19 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		}
 	}
 
+	private void returnResultsToCallingFragment()
+	{
+		Fragment fragment = this.getFragmentManager().findFragmentByTag(this.callingFragmentTag);
+		if (fragment == null)
+			return;
+
+		// TODO deliver results
+		Toast.makeText(this.getActivity(), "returnResultsToCallingFragment", Toast.LENGTH_SHORT).show();
+	}
+
 	private void addNewSoundToLoad()
 	{
-		LoadSoundListItem item = new LoadSoundListItem(this.getView().getContext());
+		AddSoundListItem item = new AddSoundListItem(this.getActivity());
 		item.setPath("file//test wie das aussieht");
 		item.setSoundName("ein neuer name.mp4");
 		this.soundsToAdd.addView(item);

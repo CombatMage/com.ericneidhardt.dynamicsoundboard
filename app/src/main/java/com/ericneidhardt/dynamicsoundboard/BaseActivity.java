@@ -222,6 +222,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 		transaction.commit();
 		fragmentManager.executePendingTransactions();
+
+		return;
 	}
 
 }
