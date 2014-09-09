@@ -29,10 +29,13 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 	public static final String TAG = AddNewSoundDialog.class.getSimpleName();
 
 	private static final String KEY_CALLER_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.callingFragmentTag";
+	private static final String KEY_SOUNDS_URI = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.soundsToAdd";
+	private static final String KEY_SOUNDS_LABEL = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.soundsToAddLabels";
 
 	private ViewGroup soundsToAddLayout;
 	private String callingFragmentTag;
 	private List<Uri> soundsToAdd;
+	private List<String> soundsToAddLabels;
 
 	public static void showInstance(FragmentManager manager, String callingFragmentTag)
 	{
@@ -51,6 +54,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		super.onCreate(savedInstanceState);
 
 		this.soundsToAdd = new ArrayList<Uri>();
+		this.soundsToAddLabels = new ArrayList<String>();
 		Bundle args = this.getArguments();
 		if (args != null)
 			this.callingFragmentTag = args.getString(KEY_CALLER_FRAGMENT_TAG);
@@ -71,6 +75,32 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		builder.setView(view);
 
 		return builder.create();
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+
+		if (savedInstanceState != null)
+		{
+			List<String> labels = savedInstanceState.getStringArrayList(KEY_SOUNDS_LABEL);
+			List<String> uris = savedInstanceState.getStringArrayList(KEY_SOUNDS_URI);
+			if (labels != null && uris != null)
+			{
+				int count = labels.size();
+				for (int i = 0; i < count; i++)
+				{
+					this.soundsToAdd.add(i, Uri.parse(uris.get(i)));
+					this.soundsToAddLabels.add(i, labels.get(i));
+
+					AddSoundListItem item = new AddSoundListItem(this.getActivity());
+					item.setPath(this.soundsToAdd.get(i).toString());
+					item.setSoundName(this.soundsToAddLabels.get(i));
+					this.soundsToAddLayout.addView(item);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -118,6 +148,24 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		item.setPath(soundUri.toString());
 		item.setSoundName(Util.getFileNameFromUri(soundUri));
 		this.soundsToAddLayout.addView(item);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+
+		ArrayList<String> uris = new ArrayList<String>(this.soundsToAdd.size());
+		ArrayList<String> labels = new ArrayList<String>(this.soundsToAdd.size());
+		int count = this.soundsToAdd.size();
+		for (int i = 0; i < count; i++)
+		{
+			AddSoundListItem view = (AddSoundListItem)this.soundsToAddLayout.getChildAt(i);
+			labels.add(i, view.getSoundName());
+			uris.add(i, this.soundsToAdd.get(i).toString());
+		}
+		outState.putStringArrayList(KEY_SOUNDS_URI, uris);
+		outState.putStringArrayList(KEY_SOUNDS_LABEL, labels);
 	}
 
 	private void returnResultsToCallingFragment()
