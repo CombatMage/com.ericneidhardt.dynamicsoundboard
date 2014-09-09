@@ -99,6 +99,16 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		return this.soundSheets;
 	}
 
+	public SoundSheet get(String soundSheetTag)
+	{
+		for (SoundSheet soundSheet : this.soundSheets)
+		{
+			if (soundSheet.getFragmentTag().equals(soundSheetTag))
+				return soundSheet;
+		}
+		return null;
+	}
+
 	@Override
 	public int getItemCount()
 	{

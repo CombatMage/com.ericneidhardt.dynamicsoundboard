@@ -42,7 +42,8 @@ public class SoundSheetManagerFragment
 			SoundSheetAdapter.OnItemClickListener,
 			SoundSheetAdapter.OnItemDeleteListener,
 			ActionbarEditText.OnTextEditedListener,
-			AddNewSoundSheetDialog.OnAddSoundSheetListener
+			AddNewSoundSheetDialog.OnAddSoundSheetListener,
+			AddNewSoundFromIntent.OnAddSoundFromIntentListener
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
@@ -52,7 +53,6 @@ public class SoundSheetManagerFragment
 	private DaoSession daoSession;
 	private TabContentAdapter tabContentAdapter;
 
-	private Dialog pendingDialog;
 	private boolean hasPendingLoadSoundSheetsTask = false;
 
 	@Override
@@ -79,8 +79,14 @@ public class SoundSheetManagerFragment
 		this.buildNavigationDrawerTabLayout();
 
 		this.getActivity().findViewById(R.id.action_add_sound_sheet).setOnClickListener(this);
-		((ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label)).setOnTextEditedListener(this);
+
+		ActionbarEditText labelCurrentSoundSheet = (ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label);
+		labelCurrentSoundSheet.setOnTextEditedListener(this);
+		SoundSheet currentActiveSoundSheet = soundSheetAdapter.getSelectedItem();
+		if (currentActiveSoundSheet != null)
+			labelCurrentSoundSheet.setText(currentActiveSoundSheet.getLabel());
 	}
+
 
 	private void buildNavigationDrawerTabLayout()
 	{
@@ -118,8 +124,6 @@ public class SoundSheetManagerFragment
 	public void onPause()
 	{
 		super.onPause();
-		if (this.pendingDialog != null && this.pendingDialog.isShowing())
-			this.pendingDialog.dismiss();
 		StoreSoundSheetsTask task = new StoreSoundSheetsTask(this.soundSheetAdapter.getValues());
 		task.execute();
 	}
@@ -200,6 +204,30 @@ public class SoundSheetManagerFragment
 		this.soundSheetAdapter.notifyDataSetChanged();
 	}
 
+	@Override
+	public void onAddSoundFromIntent(Uri soundUri, String soundLabel, String newSoundSheetName, String existingSoundSheetTag)
+	{
+		Logger.d(TAG, "onAddSoundFromIntent: " + soundUri + " " + soundLabel + " " + newSoundSheetName + " " + existingSoundSheetTag);
+
+		// TODO init MediaPlayer just for storage is bad for performance
+		EnhancedMediaPlayer player = new EnhancedMediaPlayer(soundUri, soundLabel);
+		if (newSoundSheetName != null)
+		{
+			SoundSheet newCreatedSoundSheet = getNewSoundSheet(newSoundSheetName);
+			soundSheetAdapter.add(newCreatedSoundSheet);
+			// TODO add sound to SoundSheet
+		}
+		else if (existingSoundSheetTag != null)
+		{
+			SoundSheet existingSoundSheet = this.soundSheetAdapter.get(existingSoundSheetTag);
+			Fragment addSoundToThisFragment = getActivity().getFragmentManager().findFragmentByTag(existingSoundSheet.getFragmentTag());
+			if (addSoundToThisFragment == null)
+				DynamicSoundboardApplication.storeSoundInDatabase(existingSoundSheet.getFragmentTag(), player);
+			else
+				((SoundSheetFragment)addSoundToThisFragment).addMediaPlayer(player);
+		}
+	}
+
 	private void handleIntent(Intent intent, boolean fromLoadingTask)
 	{
 		if (intent == null)
@@ -211,45 +239,11 @@ public class SoundSheetManagerFragment
 		if (intent.getAction().equals(Intent.ACTION_VIEW)
 				&& intent.getData() != null)
 		{
-			this.openDialogAddNewSoundFromIntent(intent.getData());
-			this.getActivity().setIntent(null);
+			if (this.soundSheetAdapter.getItemCount() == 0)
+				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(), this.getSuggestedSoundSheetName(), null);
+			else
+				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(), this.getSuggestedSoundSheetName(), this.soundSheetAdapter.getValues());
 		}
-	}
-
-	private void openDialogAddNewSoundFromIntent(final Uri soundUri)
-	{
-		AddNewSoundFromIntent.OnAddSoundFromIntentListener listener = new AddNewSoundFromIntent.OnAddSoundFromIntentListener()
-		{
-			@Override
-			public void onAddSoundFromIntent(String soundLabel, String newSoundSheetName, SoundSheet existingSoundSheet)
-			{
-				// TODO init MediaPlayer just for storage is bad for performance
-				EnhancedMediaPlayer player = new EnhancedMediaPlayer(soundUri, soundLabel);
-				if (newSoundSheetName != null)
-				{
-					SoundSheet newCreatedSoundSheet = getNewSoundSheet(newSoundSheetName);
-					soundSheetAdapter.add(newCreatedSoundSheet);
-					// TODO add sound to SoundSheet
-				}
-				else if (existingSoundSheet != null)
-				{
-					Fragment addSoundToThisFragment = getActivity().getFragmentManager().findFragmentByTag(existingSoundSheet.getFragmentTag());
-					if (addSoundToThisFragment == null)
-						DynamicSoundboardApplication.storeSoundInDatabase(existingSoundSheet.getFragmentTag(), player);
-					else
-						((SoundSheetFragment)addSoundToThisFragment).addMediaPlayer(player);
-				}
-			}
-		};
-		if (this.pendingDialog != null && this.pendingDialog.isShowing())
-			this.pendingDialog.dismiss();
-
-		if (this.soundSheetAdapter.getItemCount() == 0)
-			this.pendingDialog = AddNewSoundFromIntent.create(this.getActivity(), soundUri, this.getSuggestedSoundSheetName(), listener);
-		else
-			this.pendingDialog = AddNewSoundFromIntent.create(this.getActivity(), soundUri, this.getSuggestedSoundSheetName(), this.soundSheetAdapter.getValues(), listener);
-
-		this.pendingDialog.show();
 	}
 
 	private String getSuggestedSoundSheetName()

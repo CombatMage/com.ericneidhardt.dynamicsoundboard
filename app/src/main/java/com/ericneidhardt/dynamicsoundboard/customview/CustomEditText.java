@@ -22,6 +22,8 @@ public abstract class CustomEditText extends LinearLayout
 		this.inflateLayout(context, this.getLayoutId());
 	}
 
+
+
 	protected abstract int getLayoutId();
 
 	protected void inflateLayout(Context context, int layoutToInflate)
@@ -62,11 +64,6 @@ public abstract class CustomEditText extends LinearLayout
 		if (this.input != null)
 			return this.input.getHint();
 		return null;
-	}
-
-	public EditText getEditText()
-	{
-		return this.input;
 	}
 
 }

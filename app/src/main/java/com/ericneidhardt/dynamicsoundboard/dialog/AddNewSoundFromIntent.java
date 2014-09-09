@@ -1,20 +1,21 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.net.Uri;
-import android.view.LayoutInflater;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomSpinner;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,119 +23,188 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 04.09.2014.
  */
-public class AddNewSoundFromIntent
+public class AddNewSoundFromIntent extends DialogFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
 {
-	public static Dialog create(final Activity activity, Uri uri, String suggestedName, final OnAddSoundFromIntentListener listener)
+	public static final String TAG = AddNewSoundFromIntent.class.getSimpleName();
+
+	private static final String KEY_SOUND_URI = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.uri";
+	private static final String KEY_SUGGESTED_NAME = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.suggestedName";
+	private static final String KEY_AVAILABLE_SOUND_SHEET_LABELS = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.availableSoundSheetLabels";
+	private static final String KEY_AVAILABLE_SOUND_SHEET_IDS = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.availableSoundSheetIds";
+
+	private CustomEditText soundName;
+	private CustomEditText soundSheetName;
+	private CustomSpinner soundSheetSpinner;
+	private CheckBox addNewSoundSheet;
+
+	private Uri uri;
+	private String suggestedName;
+	private List<String> availableSoundSheetLabels;
+	private List<String> availableSoundSheetIds;
+
+	private boolean soundSheetsAlreadyExists;
+
+	public static void showInstance(FragmentManager manager, Uri uri, String suggestedName, List<SoundSheet> availableSoundSheets)
 	{
-		final View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_add_new_sound_from_intent, null);
-		final CustomEditText soundName = (CustomEditText)dialogView.findViewById(R.id.et_name_file);
-		final CustomEditText soundSheetName = (CustomEditText)dialogView.findViewById(R.id.et_name_new_sound_sheet);
+		AddNewSoundFromIntent dialog = new AddNewSoundFromIntent();
 
-		soundName.setText(Util.getFileNameFromUri(uri));
-		soundSheetName.setHint(suggestedName);
-
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
-		dialogBuilder.setView(dialogView);
-		final AlertDialog dialog = dialogBuilder.create();
-
-		dialogView.findViewById(R.id.b_cancel).setOnClickListener(new View.OnClickListener()
+		Bundle args = new Bundle();
+		args.putString(KEY_SOUND_URI, uri.toString());
+		args.putString(KEY_SUGGESTED_NAME, suggestedName);
+		if (availableSoundSheets != null)
 		{
-			@Override
-			public void onClick(View v)
-			{
-				dialog.dismiss();
-			}
-		});
+			args.putStringArrayList(KEY_AVAILABLE_SOUND_SHEET_LABELS, getLabelsFromSoundSheets(availableSoundSheets));
+			args.putStringArrayList(KEY_AVAILABLE_SOUND_SHEET_IDS, getIdsFromSoundSheets(availableSoundSheets));
+		}
+		dialog.setArguments(args);
 
-		dialogView.findViewById(R.id.b_ok).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				String name = soundName.getText().toString();
-				String sheet = soundSheetName.getDisplayedText().toString();
-				listener.onAddSoundFromIntent(name, sheet, null);
-
-				dialog.dismiss();
-			}
-		});
-		return dialog;
+		dialog.show(manager, TAG);
 	}
 
-	public static Dialog create(final Activity activity, Uri uri, String suggestedName, final List<SoundSheet> availableSoundSheets, final OnAddSoundFromIntentListener listener)
+	@Override
+	public void onCreate(Bundle savedInstanceState)
 	{
-		final View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null);
-		final CustomEditText soundName = (CustomEditText)dialogView.findViewById(R.id.et_name_file);
-		final CustomEditText soundSheetName = (CustomEditText)dialogView.findViewById(R.id.et_name_new_sound_sheet);
-		final CustomSpinner soundSheetSpinner = (CustomSpinner)dialogView.findViewById(R.id.s_sound_sheets);
-		final CheckBox addNewSoundSheet = (CheckBox)dialogView.findViewById(R.id.cb_add_new_sound_sheet);
+		super.onCreate(savedInstanceState);
 
-		soundName.setText(Util.getFileNameFromUri(uri));
-		soundSheetName.setHint(suggestedName);
-		soundSheetSpinner.setItems(getKeyValueMap(availableSoundSheets));
-
-		soundSheetName.setVisibility(View.GONE);
-		addNewSoundSheet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+		Bundle args = this.getArguments();
+		if (args != null)
 		{
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-			{
-				if (isChecked)
-				{
-					soundSheetSpinner.setVisibility(View.GONE);
-					soundSheetName.setVisibility(View.VISIBLE);
-				}
-				else
-				{
-					soundSheetName.setVisibility(View.GONE);
-					soundSheetSpinner.setVisibility(View.VISIBLE);
-				}
-			}
-		});
-
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
-		dialogBuilder.setView(dialogView);
-		final AlertDialog dialog = dialogBuilder.create();
-
-		dialogView.findViewById(R.id.b_cancel).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				dialog.dismiss();
-			}
-		});
-
-		dialogView.findViewById(R.id.b_ok).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				String name = soundName.getText().toString();
-				String newSoundSheet = soundSheetName.getDisplayedText().toString();
-				SoundSheet selectedSoundSheet = availableSoundSheets.get(soundSheetSpinner.getSelectedItemPosition());
-
-				if (addNewSoundSheet.isChecked())
-					listener.onAddSoundFromIntent(name, newSoundSheet, null);
-				else
-					listener.onAddSoundFromIntent(name, null, selectedSoundSheet);
-
-				dialog.dismiss();
-			}
-		});
-		return dialog;
+			this.uri = Uri.parse(args.getString(KEY_SOUND_URI));
+			this.suggestedName = args.getString(KEY_SUGGESTED_NAME);
+			this.availableSoundSheetLabels = args.getStringArrayList(KEY_AVAILABLE_SOUND_SHEET_LABELS);
+			this.availableSoundSheetIds = args.getStringArrayList(KEY_AVAILABLE_SOUND_SHEET_IDS);
+		}
+		this.soundSheetsAlreadyExists = this.availableSoundSheetLabels != null;
 	}
 
-	private static List<String> getKeyValueMap(List<SoundSheet> soundSheets)
+	@Override
+	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
-		List<String> labels = new ArrayList<String>();
+		if (!this.soundSheetsAlreadyExists)
+			return this.createDialogIfNoSheetsExists();
+		else
+			return this.createDialogToSelectSoundSheet();
+	}
+
+	private Dialog createDialogIfNoSheetsExists()
+	{
+		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_intent, null);
+		this.soundName = (CustomEditText)view.findViewById(R.id.et_name_file);
+		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
+
+		view.findViewById(R.id.b_cancel).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+		builder.setView(view);
+
+		return builder.create();
+	}
+
+	private Dialog createDialogToSelectSoundSheet()
+	{
+		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null);
+
+		this.soundName = (CustomEditText)view.findViewById(R.id.et_name_file);
+		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
+		this.soundSheetSpinner = (CustomSpinner)view.findViewById(R.id.s_sound_sheets);
+		this.addNewSoundSheet = (CheckBox)view.findViewById(R.id.cb_add_new_sound_sheet);
+
+		this.addNewSoundSheet.setOnCheckedChangeListener(this);
+
+		view.findViewById(R.id.b_cancel).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+		builder.setView(view);
+
+		return builder.create();
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+		this.soundName.setText(Util.getFileNameFromUri(this.uri));
+		this.soundSheetName.setHint(this.suggestedName);
+		if (this.soundSheetsAlreadyExists)
+		{
+			this.soundSheetSpinner.setItems(this.availableSoundSheetLabels);
+			this.soundSheetName.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+	{
+		if (isChecked)
+		{
+			soundSheetSpinner.setVisibility(View.GONE);
+			soundSheetName.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			soundSheetName.setVisibility(View.GONE);
+			soundSheetSpinner.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case R.id.b_cancel:
+				this.dismiss();
+				break;
+			case R.id.b_ok:
+				this.deliverResult();
+				this.dismiss();
+				break;
+		}
+	}
+
+	private void deliverResult()
+	{
+		SoundSheetManagerFragment caller = (SoundSheetManagerFragment) this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
+		if (caller == null)
+			return;
+
+		String soundLabel = this.soundName.getText().toString();
+		String newSoundSheet = soundSheetName.getDisplayedText().toString();
+		if (!this.soundSheetsAlreadyExists)
+		{
+			caller.onAddSoundFromIntent(this.uri, soundLabel, newSoundSheet, null);
+		}
+		else
+		{
+			String selectedSoundSheetId = this.availableSoundSheetIds.get(this.soundSheetSpinner.getSelectedItemPosition());
+
+			if (this.addNewSoundSheet.isChecked())
+				caller.onAddSoundFromIntent(this.uri, soundLabel, newSoundSheet, null);
+			else
+				caller.onAddSoundFromIntent(this.uri, soundLabel, null, selectedSoundSheetId);
+		}
+	}
+
+	private static ArrayList<String> getLabelsFromSoundSheets(List<SoundSheet> soundSheets)
+	{
+		ArrayList<String> labels = new ArrayList<String>();
 		for (SoundSheet soundSheet : soundSheets)
 			labels.add(soundSheet.getLabel());
 		return labels;
 	}
 
+	private static ArrayList<String> getIdsFromSoundSheets(List<SoundSheet> soundSheets)
+	{
+		ArrayList<String> labels = new ArrayList<String>();
+		for (SoundSheet soundSheet : soundSheets)
+			labels.add(soundSheet.getFragmentTag());
+		return labels;
+	}
+
 	public interface OnAddSoundFromIntentListener
 	{
-		public void onAddSoundFromIntent(String soundName, String newSoundSheet, SoundSheet addToSoundSheet);
+		public void onAddSoundFromIntent(Uri soundUri, String soundName, String newSoundSheetLabel, String existingSoundSheetTag);
 	}
 }
