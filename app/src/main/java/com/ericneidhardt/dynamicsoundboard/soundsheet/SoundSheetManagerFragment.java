@@ -34,7 +34,15 @@ import java.util.List;
 /**
  * Created by Eric Neidhardt on 29.08.2014.
  */
-public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener, SoundSheetAdapter.OnItemClickListener, SoundSheetAdapter.OnItemDeleteListener, ActionbarEditText.OnTextEditedListener
+public class SoundSheetManagerFragment
+		extends
+			Fragment
+		implements
+			View.OnClickListener,
+			SoundSheetAdapter.OnItemClickListener,
+			SoundSheetAdapter.OnItemDeleteListener,
+			ActionbarEditText.OnTextEditedListener,
+			AddNewSoundSheetDialog.OnAddSoundSheetListener
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
@@ -137,7 +145,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		switch (view.getId())
 		{
 			case R.id.action_add_sound_sheet:
-				this.openDialogAddNewSoundLayout();
+				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.getSuggestedSoundSheetName());
 				break;
 			default:
 				Logger.e(TAG, "unknown item clicked " + view);
@@ -176,6 +184,12 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	}
 
 	@Override
+	public void onAddSoundSheet(String label)
+	{
+		this.soundSheetAdapter.add(this.getNewSoundSheet(label));
+	}
+
+	@Override
 	public void onTextEdited(String text)
 	{
 		SoundSheet currentActiveSoundSheet = this.soundSheetAdapter.getSelectedItem();
@@ -202,21 +216,6 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		}
 	}
 
-	private void openDialogAddNewSoundLayout()
-	{
-		if (this.pendingDialog != null && this.pendingDialog.isShowing())
-			this.pendingDialog.dismiss();
-		this.pendingDialog = AddNewSoundSheetDialog.create(this.getActivity(), this.getSuggestedSoundSheetName(), new AddNewSoundSheetDialog.OnAddSoundSheetListener()
-		{
-			@Override
-			public void onAddSoundSheet(String label)
-			{
-				soundSheetAdapter.add(getNewSoundSheet(label));
-			}
-		});
-		this.pendingDialog.show();
-	}
-
 	private void openDialogAddNewSoundFromIntent(final Uri soundUri)
 	{
 		AddNewSoundFromIntent.OnAddSoundFromIntentListener listener = new AddNewSoundFromIntent.OnAddSoundFromIntentListener()
@@ -224,7 +223,7 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			@Override
 			public void onAddSoundFromIntent(String soundLabel, String newSoundSheetName, SoundSheet existingSoundSheet)
 			{
-				// TODO init MediaPlayer jus for storage is bad for performance
+				// TODO init MediaPlayer just for storage is bad for performance
 				EnhancedMediaPlayer player = new EnhancedMediaPlayer(soundUri, soundLabel);
 				if (newSoundSheetName != null)
 				{

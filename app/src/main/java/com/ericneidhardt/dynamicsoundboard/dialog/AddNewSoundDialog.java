@@ -42,7 +42,6 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		this.setRetainInstance(true);
 
 		Bundle args = this.getArguments();
 		if (args != null)
