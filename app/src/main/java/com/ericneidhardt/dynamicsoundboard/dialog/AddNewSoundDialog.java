@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -24,7 +27,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 	private ViewGroup soundsToAdd;
 	private String callingFragmentTag;
 
-	public DialogFragment getInstance(String callingFragmentTag)
+	public static void showInstance(FragmentManager manager, String callingFragmentTag)
 	{
 		AddNewSoundDialog dialog = new AddNewSoundDialog();
 
@@ -32,7 +35,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		args.putString(KEY_CALLER_FRAGMENT_TAG, callingFragmentTag);
 		dialog.setArguments(args);
 
-		return dialog;
+		dialog.show(manager, TAG);
 	}
 
 	@Override
@@ -68,7 +71,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 	{
 		switch (v.getId()) {
 			case R.id.b_ok:
-				// TODO trigger callback
+				this.returnResultsToCallingFragment();
 				this.dismiss();
 				break;
 			case R.id.b_cancel:

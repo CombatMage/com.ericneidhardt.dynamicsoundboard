@@ -21,12 +21,17 @@
 			android:textSize="@dimen/text_headline"
 			android:text="@string/dialog_add_new_sound_title"/>
 
+		<!-- this invisible input is necessary for dynamically added input fields to get focus -->
+		<EditText
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"/>
+
 		<LinearLayout
 			android:id="@+id/layout_sounds_to_add"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:descendantFocusability="beforeDescendants"/>
+			android:orientation="vertical"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"

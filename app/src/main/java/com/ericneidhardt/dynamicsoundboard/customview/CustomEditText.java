@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -61,6 +62,11 @@ public abstract class CustomEditText extends LinearLayout
 		if (this.input != null)
 			return this.input.getHint();
 		return null;
+	}
+
+	public EditText getEditText()
+	{
+		return this.input;
 	}
 
 }

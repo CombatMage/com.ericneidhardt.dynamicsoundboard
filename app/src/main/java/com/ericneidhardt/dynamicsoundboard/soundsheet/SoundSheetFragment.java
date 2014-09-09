@@ -1,20 +1,17 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
-import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.OnMediaPlayersRetrievedCallback;
@@ -77,8 +74,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		switch (view.getId())
 		{
 			case R.id.action_add_sound:
-				AddNewSoundDialog dialog = new AddNewSoundDialog();
-				dialog.show(this.getFragmentManager(), AddNewSoundDialog.TAG);
+				AddNewSoundDialog.showInstance(this.getFragmentManager(), this.fragmentTag);
 				break;
 		}
 	}
