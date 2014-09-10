@@ -6,6 +6,7 @@
 
 	<dimen name="width_dialog_button">72dp</dimen>
 
+	<dimen name="margin_large">24dp</dimen>
 	<dimen name="margin_default">16dp</dimen>
 	<dimen name="margin_small">8dp</dimen>
 	<dimen name="margin_list_item_left">54dp</dimen>
