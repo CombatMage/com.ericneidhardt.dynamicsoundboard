@@ -4,7 +4,7 @@
 		  android:enterFadeDuration="@android:integer/config_shortAnimTime"
 		  android:exitFadeDuration="@android:integer/config_shortAnimTime">
 
-	<item android:state_pressed="true" android:state_checked="true" android:drawable="@drawable/ic_playlist_checked"/>
+	<item android:state_checked="true" android:drawable="@drawable/ic_playlist_checked"/>
 	<item android:state_pressed="true" android:drawable="@drawable/ic_playlist_checked"/>
 	<item android:drawable="@drawable/ic_playlist"/>
 

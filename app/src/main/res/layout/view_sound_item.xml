@@ -3,7 +3,8 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
 
 	<RelativeLayout
 		android:layout_width="match_parent"
@@ -62,5 +63,11 @@
 			android:layout_centerVertical="true"/>
 
 	</RelativeLayout>
+
+	<SeekBar
+		android:id="@+id/sb_time"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/margin_small"/>
 
 </LinearLayout>

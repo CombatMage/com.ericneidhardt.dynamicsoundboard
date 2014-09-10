@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
 	<style name="Theme.AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+
 		<item name="android:actionOverflowButtonStyle">@style/ActionButton.OverFlow</item>
 		<item name="android:actionBarItemBackground">@drawable/selector_background</item>
 		<item name="android:popupMenuStyle">@style/PopupMenu.Actionbar</item>
@@ -12,6 +13,8 @@
 		<item name="android:actionModeBackground">@drawable/cab_background_top_actionbar</item>
 		<item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_actionbar</item>
 		<item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Actionbar</item>
+
+		<item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
 
 		<!-- Light.DarkActionBar specific -->
 		<item name="android:actionBarWidgetTheme">@style/Theme.Actionbar.Widget</item>
