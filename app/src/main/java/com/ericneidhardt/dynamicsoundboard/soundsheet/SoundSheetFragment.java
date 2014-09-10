@@ -58,7 +58,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 	@Override
 	public void onMediaPlayersRetrieved(List<MediaPlayer> mediaPlayers)
 	{
-		((TextView)this.getView().findViewById(R.id.tv_count)).setText(Integer.toString(mediaPlayers.size()));
+		// TODO
 	}
 
 	@Override
@@ -82,8 +82,6 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		fragmentView.setLayoutParams(params);
 
-		((TextView)fragmentView.findViewById(R.id.tv_label)).setText(this.fragmentTag);
-
 		this.showMediaPlayers(fragmentView);
 
 		return fragmentView;
@@ -92,16 +90,12 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 	public void showMediaPlayers(View fragmentView)
 	{
 		// TODO load mediaplayers from pool and add to ui
-		TextView tv = (TextView)fragmentView.findViewById(R.id.tv_count);
-		List<MediaPlayer> mediaPlayers = this.mediaPlayerPool.getMediaPlayers();
-		tv.setText(Integer.toString(mediaPlayers == null ? 0 : mediaPlayers.size()));
 	}
 
 	public void addMediaPlayer(EnhancedMediaPlayer mediaPlayer)
 	{
 		this.mediaPlayerPool.add(mediaPlayer);
-		TextView tv = (TextView)this.getView().findViewById(R.id.tv_count);
-		tv.setText(Integer.toString(this.mediaPlayerPool.getMediaPlayers().size()));
+		// TODO
 	}
 
 }

@@ -61,7 +61,7 @@
 						android:layout_gravity="center_vertical"
 						android:background="@android:color/transparent"
 						android:contentDescription="@string/dialog_add_new_sound_content_description"
-						android:src="@drawable/selector_ic_add_sound"/>
+						android:src="@drawable/selector_ic_add_sound_dialog"/>
 				</LinearLayout>
 
 				<include layout="@layout/dialog_button_bar"
