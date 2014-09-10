@@ -82,6 +82,8 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		fragmentView.setLayoutParams(params);
 
+		fragmentView.findViewById(R.id.b_add_sound).setOnClickListener(this);
+
 		this.showMediaPlayers(fragmentView);
 
 		return fragmentView;

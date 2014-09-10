@@ -11,14 +11,18 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-		<com.ericneidhardt.dynamicsoundboard.customview.CircularImageView
+		<com.pkmmte.view.CircularImageView
+			android:id="@+id/b_add_sound"
 			android:layout_width="@dimen/size_floating_button"
 			android:layout_height="@dimen/size_floating_button"
 			android:layout_margin="@dimen/margin_default"
 			android:layout_gravity="end|bottom"
-			android:src="@drawable/selector_ic_add_sound_dialog"
+			android:src="@drawable/ic_add_sound"
 			app:border="true"
 			app:border_color="@color/accent_200"
+			app:selector="true"
+			app:selector_color="@color/accent_200"
+			app:selector_stroke_color="@color/primary_100"
 			app:shadow="true"/>
 
 	</FrameLayout>
