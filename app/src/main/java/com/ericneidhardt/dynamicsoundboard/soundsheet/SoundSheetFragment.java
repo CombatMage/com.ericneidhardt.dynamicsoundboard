@@ -56,13 +56,6 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 	}
 
 	@Override
-	public void onPause()
-	{
-		super.onPause();
-		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(false);
-	}
-
-	@Override
 	public void onMediaPlayersRetrieved(List<MediaPlayer> mediaPlayers)
 	{
 		((TextView)this.getView().findViewById(R.id.tv_count)).setText(Integer.toString(mediaPlayers.size()));

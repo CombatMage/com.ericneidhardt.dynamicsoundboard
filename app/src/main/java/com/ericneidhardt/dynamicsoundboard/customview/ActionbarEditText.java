@@ -69,14 +69,16 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	@Override
 	public void onImeBack(EditTextBackEvent ctrl, String text)
 	{
-		super.input.setText(this.initialText);
+		if (this.initialText != null)
+			super.input.setText(this.initialText);
 		this.disableEditText();
 	}
 
 	@Override
 	protected Parcelable onSaveInstanceState()
 	{
-		super.input.setText(this.initialText);
+		if (this.initialText != null)
+			super.input.setText(this.initialText);
 		return super.onSaveInstanceState();
 	}
 

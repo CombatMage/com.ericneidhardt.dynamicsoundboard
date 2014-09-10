@@ -51,7 +51,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	private void createActionbar()
 	{
 		ActionBar actionBar = this.getActionBar();
-
+		if (actionBar == null)
+			return;
 		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowCustomEnabled(true);
@@ -202,7 +203,11 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		FragmentManager fragmentManager = this.getFragmentManager();
 		Fragment fragment = fragmentManager.findFragmentByTag(soundSheet.getFragmentTag());
 		if (fragment != null)
+		{
 			fragmentManager.beginTransaction().remove(fragment).commit();
+			if (fragment.isVisible())
+				this.setSoundSheetActionsEnable(false);
+		}
 		fragmentManager.executePendingTransactions();
 	}
 
@@ -222,8 +227,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 		transaction.commit();
 		fragmentManager.executePendingTransactions();
-
-		return;
 	}
 
 }

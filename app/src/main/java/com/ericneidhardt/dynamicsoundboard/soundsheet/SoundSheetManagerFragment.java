@@ -31,7 +31,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import java.util.List;
 
 /**
- * Created by Eric Neidhardt on 29.08.2014.
+ * Created by eric.neidhardt on 10.09.2014.
  */
 public class SoundSheetManagerFragment
 		extends
@@ -349,7 +349,7 @@ public class SoundSheetManagerFragment
 
 	private class StoreSoundSheetsTask extends SafeAsyncTask<Void>
 	{
-		private List<SoundSheet> soundSheets;
+		private final List<SoundSheet> soundSheets;
 
 		private StoreSoundSheetsTask(List<SoundSheet> soundSheets)
 		{
