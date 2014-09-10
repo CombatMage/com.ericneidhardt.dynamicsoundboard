@@ -16,6 +16,12 @@
 	<string name="action_clear_sound_sheets">Alle Sound Gruppen löschen</string>
 	<string name="action_settings">Einstellungen</string>
 
+	<!-- sound control -->
+	<string name="sound_control_content_description_stop">Setzt den Sound zurück</string>
+	<string name="sound_control_content_description_play">Startet oder Pausiert den Sound</string>
+	<string name="sound_control_content_description_loop">Sound wird in einer Schleife abgespielt</string>
+	<string name="sound_control_content_description_playlist">Sound wird in die Playliste aufgenommen</string>
+
 	<!-- dialog -->
 	<string name="dialog_ok">Hinzufügen</string>
 	<string name="dialog_cancel">Abbrechen</string>

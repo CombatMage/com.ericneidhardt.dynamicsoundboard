@@ -18,4 +18,6 @@
 		android:layout_height="wrap_content"
 		android:text="0"/>
 
+	<include layout="@layout/view_sound_item"/>
+
 </LinearLayout>
