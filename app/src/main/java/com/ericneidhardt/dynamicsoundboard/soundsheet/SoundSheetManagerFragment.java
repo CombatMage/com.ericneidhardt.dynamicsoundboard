@@ -207,8 +207,6 @@ public class SoundSheetManagerFragment
 	{
 		Logger.d(TAG, "onAddSoundFromIntent: " + soundUri + " " + soundLabel + " " + newSoundSheetName + " " + existingSoundSheetTag);
 
-		// TODO init MediaPlayer just for storage is bad for performance
-		EnhancedMediaPlayer player = new EnhancedMediaPlayer(soundUri, soundLabel);
 		if (newSoundSheetName != null)
 		{
 			SoundSheet newCreatedSoundSheet = getNewSoundSheet(newSoundSheetName);
@@ -220,9 +218,12 @@ public class SoundSheetManagerFragment
 			SoundSheet existingSoundSheet = this.soundSheetAdapter.get(existingSoundSheetTag);
 			Fragment addSoundToThisFragment = getActivity().getFragmentManager().findFragmentByTag(existingSoundSheet.getFragmentTag());
 			if (addSoundToThisFragment == null)
-				DynamicSoundboardApplication.storeSoundInDatabase(existingSoundSheet.getFragmentTag(), player);
+				DynamicSoundboardApplication.storeSoundInDatabase(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
 			else
-				((SoundSheetFragment)addSoundToThisFragment).addMediaPlayer(player);
+			{
+				EnhancedMediaPlayer player = new EnhancedMediaPlayer(soundUri, soundLabel);
+				((SoundSheetFragment) addSoundToThisFragment).addMediaPlayer(player);
+			}
 		}
 	}
 

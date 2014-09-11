@@ -20,7 +20,7 @@ public class MediaPlayerPool
 	private static final String TAG = MediaPlayerPool.class.getSimpleName();
 
 	private String poolId;
-	private List<MediaPlayer> mediaPlayers;
+	private List<EnhancedMediaPlayer> mediaPlayers;
 
 	public MediaPlayerPool(String poolId)
 	{
@@ -34,12 +34,22 @@ public class MediaPlayerPool
 	 * Adds the media player to this pool and stores it in a database.
 	 * @param mediaPlayer
 	 */
-	public void add(MediaPlayer mediaPlayer)
+	public void add(EnhancedMediaPlayer mediaPlayer)
 	{
 		if (this.mediaPlayers == null)
-			this.mediaPlayers = new ArrayList<MediaPlayer>();
+			this.mediaPlayers = new ArrayList<EnhancedMediaPlayer>();
 		this.mediaPlayers.add(mediaPlayer);
 		SafeAsyncTask task = new StoreMediaPlayersTask(mediaPlayer);
+		task.execute();
+	}
+
+	/**
+	 * Adds the raw Media Player data to storage
+	 * @param data
+	 */
+	public void addRawData(MediaPlayerData data)
+	{
+		SafeAsyncTask task = new StoreMediaPlayersTask(data);
 		task.execute();
 	}
 
@@ -47,10 +57,10 @@ public class MediaPlayerPool
 	 * Adds all media players to this pool and stores them in a database.
 	 * @param mediaPlayers
 	 */
-	public void add(List<MediaPlayer> mediaPlayers)
+	public void add(List<EnhancedMediaPlayer> mediaPlayers)
 	{
 		if (this.mediaPlayers == null)
-			this.mediaPlayers = new ArrayList<MediaPlayer>();
+			this.mediaPlayers = new ArrayList<EnhancedMediaPlayer>();
 		this.mediaPlayers.addAll(mediaPlayers);
 		SafeAsyncTask task = new StoreMediaPlayersTask(mediaPlayers);
 		task.execute();
@@ -83,7 +93,7 @@ public class MediaPlayerPool
 		daoSession.getMediaPlayerDataDao().deleteAll();
 	}
 
-	public List<MediaPlayer> getMediaPlayers()
+	public List<EnhancedMediaPlayer> getMediaPlayers()
 	{
 		return this.mediaPlayers;
 	}
@@ -101,17 +111,25 @@ public class MediaPlayerPool
 
 	private class StoreMediaPlayersTask extends SafeAsyncTask<Void>
 	{
-		private List<MediaPlayer> mediaPlayers;
+		private List<MediaPlayerData> mediaPlayers;
 
-		private StoreMediaPlayersTask(MediaPlayer mediaPlayer)
+		private StoreMediaPlayersTask(EnhancedMediaPlayer mediaPlayer)
 		{
-			this.mediaPlayers = new ArrayList<MediaPlayer>();
-			this.mediaPlayers.add(mediaPlayer);
+			this.mediaPlayers = new ArrayList<MediaPlayerData>();
+			this.mediaPlayers.add(EnhancedMediaPlayer.getMediaPlayerData(mediaPlayer));
 		}
 
-		private StoreMediaPlayersTask(List<MediaPlayer> mediaPlayers)
+		private StoreMediaPlayersTask(MediaPlayerData mediaPlayerData)
 		{
-			this.mediaPlayers = mediaPlayers;
+			this.mediaPlayers = new ArrayList<MediaPlayerData>();
+			this.mediaPlayers.add(mediaPlayerData);
+		}
+
+		private StoreMediaPlayersTask(List<EnhancedMediaPlayer> mediaPlayers)
+		{
+			this.mediaPlayers = new ArrayList<MediaPlayerData>();
+			for (EnhancedMediaPlayer enhancedMediaPlayer : mediaPlayers)
+				this.mediaPlayers.add(EnhancedMediaPlayer.getMediaPlayerData(enhancedMediaPlayer));
 		}
 
 		@Override
@@ -122,10 +140,9 @@ public class MediaPlayerPool
 			{
 				@Override
 				public void run() {
-					for (MediaPlayer mediaPlayer : mediaPlayers)
+					for (MediaPlayerData mediaPlayer : mediaPlayers)
 					{
-						MediaPlayerData data = EnhancedMediaPlayer.getMediaPlayerData(mediaPlayer);
-						daoSession.getMediaPlayerDataDao().insert(data);
+						daoSession.getMediaPlayerDataDao().insert(mediaPlayer);
 					}
 				}
 			});
@@ -140,7 +157,7 @@ public class MediaPlayerPool
 		}
 	}
 
-	private class LoadMediaPlayersTask extends SafeAsyncTask<List<MediaPlayer>>
+	private class LoadMediaPlayersTask extends SafeAsyncTask<List<EnhancedMediaPlayer>>
 	{
 		private OnMediaPlayersRetrievedCallback callback;
 
@@ -150,23 +167,23 @@ public class MediaPlayerPool
 		}
 
 		@Override
-		public List<MediaPlayer> call() throws Exception
+		public List<EnhancedMediaPlayer> call() throws Exception
 		{
 			DaoSession daoSession = DynamicSoundboardApplication.getDatabase(poolId);
 
 			List<MediaPlayerData> storedMediaPlayers = daoSession.getMediaPlayerDataDao().queryBuilder().list();
-			List<MediaPlayer> loadedMediaPlayers = new ArrayList<MediaPlayer>(storedMediaPlayers.size());
+			List<EnhancedMediaPlayer> loadedMediaPlayers = new ArrayList<EnhancedMediaPlayer>(storedMediaPlayers.size());
 			for (MediaPlayerData storedMediaPlayer : storedMediaPlayers)
 				loadedMediaPlayers.add(new EnhancedMediaPlayer(storedMediaPlayer));
 			return loadedMediaPlayers;
 		}
 
 		@Override
-		protected void onSuccess(List<MediaPlayer> mediaPlayers) throws Exception
+		protected void onSuccess(List<EnhancedMediaPlayer> mediaPlayers) throws Exception
 		{
 			super.onSuccess(mediaPlayers);
 			if (MediaPlayerPool.this.mediaPlayers == null)
-				MediaPlayerPool.this.mediaPlayers = new ArrayList<MediaPlayer>();
+				MediaPlayerPool.this.mediaPlayers = new ArrayList<EnhancedMediaPlayer>();
 
 			MediaPlayerPool.this.mediaPlayers.addAll(mediaPlayers);
 

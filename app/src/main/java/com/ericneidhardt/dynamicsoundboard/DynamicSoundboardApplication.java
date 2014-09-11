@@ -43,10 +43,10 @@ public class DynamicSoundboardApplication extends Application
 		applicationContext = this;
 	}
 
-	public static void storeSoundInDatabase(String id, MediaPlayer player)
+	public static void storeSoundInDatabase(String id, Uri soundUri, String soundLabel)
 	{
 		MediaPlayerPool pool = new MediaPlayerPool(id);
-		pool.add(player);
+		pool.addRawData(EnhancedMediaPlayer.getMediaPlayerData(soundUri, soundLabel));
 	}
 
 	public static Context getContext()

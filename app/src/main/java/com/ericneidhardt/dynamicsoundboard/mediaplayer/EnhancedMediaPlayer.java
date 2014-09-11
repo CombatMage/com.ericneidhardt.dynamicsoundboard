@@ -44,6 +44,12 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 		return new MediaPlayerData();
 	}
 
+	public static MediaPlayerData getMediaPlayerData(Uri soundUri, String soundLabel)
+	{
+		// TODO build greendao object from player
+		return new MediaPlayerData();
+	}
+
 	public boolean playSound()
 	{
 		try

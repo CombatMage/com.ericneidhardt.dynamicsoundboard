@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface OnMediaPlayersRetrievedCallback {
 
-	public void onMediaPlayersRetrieved(List<MediaPlayer> mediaPlayers);
+	public void onMediaPlayersRetrieved(List<EnhancedMediaPlayer> mediaPlayers);
 }

@@ -1,20 +1,23 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 import android.app.Fragment;
-import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.MediaPlayerPool;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.OnMediaPlayersRetrievedCallback;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundAdapter;
 
 import java.util.List;
 
@@ -26,6 +29,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
 	private String fragmentTag;
+	private SoundAdapter soundAdapter;
 	private MediaPlayerPool mediaPlayerPool;
 
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
@@ -42,9 +46,11 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
+
 		this.fragmentTag = this.getArguments().getString(KEY_FRAGMENT_TAG);
 		this.mediaPlayerPool = new MediaPlayerPool(this.fragmentTag);
 		this.mediaPlayerPool.getMediaPlayersAsync(this);
+		this.soundAdapter = new SoundAdapter();
 	}
 
 	@Override
@@ -56,9 +62,9 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 	}
 
 	@Override
-	public void onMediaPlayersRetrieved(List<MediaPlayer> mediaPlayers)
+	public void onMediaPlayersRetrieved(List<EnhancedMediaPlayer> mediaPlayers)
 	{
-		// TODO
+		this.soundAdapter.addAll(mediaPlayers);
 	}
 
 	@Override
@@ -84,20 +90,19 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 
 		fragmentView.findViewById(R.id.b_add_sound).setOnClickListener(this);
 
-		this.showMediaPlayers(fragmentView);
+		RecyclerView listSounds = (RecyclerView)fragmentView.findViewById(R.id.rv_sounds);
+		listSounds.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
+		listSounds.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+		listSounds.setItemAnimator(new DefaultItemAnimator());
+		listSounds.setAdapter(this.soundAdapter);
 
 		return fragmentView;
-	}
-
-	public void showMediaPlayers(View fragmentView)
-	{
-		// TODO load mediaplayers from pool and add to ui
 	}
 
 	public void addMediaPlayer(EnhancedMediaPlayer mediaPlayer)
 	{
 		this.mediaPlayerPool.add(mediaPlayer);
-		// TODO
+		this.soundAdapter.add(mediaPlayer);
 	}
 
 }
