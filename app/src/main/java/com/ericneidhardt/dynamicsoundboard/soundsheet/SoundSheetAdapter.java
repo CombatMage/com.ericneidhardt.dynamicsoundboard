@@ -77,7 +77,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	{
 		for (int i = 0; i < this.soundSheets.size(); i++)
 		{
-			boolean isSelected = i == position ? true : false;
+			boolean isSelected = i == position;
 			this.soundSheets.get(i).setIsSelected(isSelected);
 		}
 		this.notifyDataSetChanged();

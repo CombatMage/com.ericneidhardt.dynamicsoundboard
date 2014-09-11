@@ -21,7 +21,7 @@
 			android:background="@android:color/transparent"/>
 
 		<CheckBox
-			android:id="@+id/b_play"
+			android:id="@+id/cb_play"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_toEndOf="@id/b_stop"
@@ -31,7 +31,7 @@
 			android:button="@drawable/selector_ic_play"/>
 
 		<CheckBox
-			android:id="@+id/b_loop"
+			android:id="@+id/cb_loop"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/margin_small"
@@ -42,11 +42,11 @@
 			android:button="@drawable/selector_ic_loop"/>
 
 		<CheckBox
-			android:id="@+id/b_add_to_playlist"
+			android:id="@+id/cb_add_to_playlist"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_toLeftOf="@id/b_loop"
-			android:layout_toStartOf="@id/b_loop"
+			android:layout_toLeftOf="@id/cb_loop"
+			android:layout_toStartOf="@id/cb_loop"
 			android:layout_centerVertical="true"
 			android:contentDescription="@string/sound_control_content_description_playlist"
 			android:button="@drawable/selector_ic_playlist"/>
@@ -56,10 +56,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/margin_small"
-			android:layout_toLeftOf="@id/b_add_to_playlist"
-			android:layout_toRightOf="@id/b_play"
-			android:layout_toStartOf="@id/b_add_to_playlist"
-			android:layout_toEndOf="@id/b_play"
+			android:layout_toLeftOf="@id/cb_add_to_playlist"
+			android:layout_toRightOf="@id/cb_play"
+			android:layout_toStartOf="@id/cb_add_to_playlist"
+			android:layout_toEndOf="@id/cb_play"
 			android:layout_centerVertical="true"/>
 
 	</RelativeLayout>

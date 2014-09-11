@@ -3,6 +3,7 @@ package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
+import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 
@@ -25,29 +26,31 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 	}
 
 	private State currentState;
-
-	public EnhancedMediaPlayer(Uri uri, String label)
-	{
-		super();
-		// TODO build player from params
-	}
+	private MediaPlayerData rawData;
 
 	public EnhancedMediaPlayer(MediaPlayerData data)
 	{
 		super();
+		this.rawData = data;
 		// TODO build player from greendao object
 	}
 
 	public MediaPlayerData getMediaPlayerData()
 	{
-		// TODO build greendao object from this player
-		return new MediaPlayerData();
+		return this.rawData;
 	}
 
 	public static MediaPlayerData getMediaPlayerData(String fragmentTag, Uri uri, String label)
 	{
-		// TODO build greendao object from this player
-		return new MediaPlayerData();
+		MediaPlayerData data = new MediaPlayerData();
+
+		String playerId = Integer.toString((uri.toString() + DynamicSoundboardApplication.getRandomNumber()).hashCode());
+		data.setPlayerId(playerId);
+		data.setFragmentTag(fragmentTag);
+		data.setLabel(label);
+		data.setUri(uri.toString());
+
+		return data;
 	}
 
 	public boolean playSound()

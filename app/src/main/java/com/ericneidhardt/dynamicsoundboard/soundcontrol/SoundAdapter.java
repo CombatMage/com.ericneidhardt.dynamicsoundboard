@@ -4,8 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.CheckBox;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 import java.util.ArrayList;
@@ -72,12 +73,26 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
 		EnhancedMediaPlayer data = this.mediaPlayers.get(position);
+
+		holder.name.setText(data.getMediaPlayerData().getLabel());
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder
 	{
+		private DialogEditText name;
+		private CheckBox play;
+		private CheckBox loop;
+		private CheckBox favorite;
+		private View stop;
+
 		public ViewHolder(View itemView) {
 			super(itemView);
+
+			this.name = (DialogEditText)itemView.findViewById(R.id.et_name_file);
+			this.play = (CheckBox) itemView.findViewById(R.id.cb_play);
+			this.loop = (CheckBox) itemView.findViewById(R.id.cb_loop);
+			this.favorite = (CheckBox)itemView.findViewById(R.id.cb_add_to_playlist);
+			this.stop = itemView.findViewById(R.id.b_stop);
 		}
 	}
 }
