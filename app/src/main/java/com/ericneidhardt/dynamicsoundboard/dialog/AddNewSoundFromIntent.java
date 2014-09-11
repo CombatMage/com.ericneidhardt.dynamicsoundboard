@@ -125,7 +125,7 @@ public class AddNewSoundFromIntent extends DialogFragment implements View.OnClic
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		this.soundName.setText(Util.getFileNameFromUri(this.uri));
+		this.soundName.setText(Util.getFileNameFromUri(this.getActivity(), this.uri));
 		this.soundSheetName.setHint(this.suggestedName);
 		if (this.soundSheetsAlreadyExists)
 		{

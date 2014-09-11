@@ -139,7 +139,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		this.soundsToAdd.add(soundUri);
 		AddSoundListItem item = new AddSoundListItem(this.getActivity());
 		item.setPath(soundUri.toString());
-		item.setSoundName(Util.getFileNameFromUri(soundUri));
+		item.setSoundName(Util.getFileNameFromUri(this.getActivity(), soundUri));
 		this.soundsToAddLayout.addView(item);
 	}
 
