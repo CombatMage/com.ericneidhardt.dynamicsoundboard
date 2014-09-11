@@ -46,7 +46,8 @@ public class SoundManagerFragment extends Fragment
 	public void onPause() {
 		super.onPause();
 
-		// TODO store data
+		SafeAsyncTask task = new UpdateMediaPlayersTask(this.sounds);
+		task.execute();
 	}
 
 	public List<EnhancedMediaPlayer> get(String fragmentTag)
@@ -56,11 +57,21 @@ public class SoundManagerFragment extends Fragment
 
 	public void add(String fragmentTag, MediaPlayerData mediaPlayerData)
 	{
-		EnhancedMediaPlayer player = new EnhancedMediaPlayer(mediaPlayerData);
+		this.add(fragmentTag, asList(mediaPlayerData));
+	}
 
-		this.storeMediaPlayerData(fragmentTag, asList(mediaPlayerData));
-		this.sounds.put(fragmentTag, asList(player));
-		this.notifyFragment(fragmentTag, asList(player));
+	public void add(String fragmentTag, List<MediaPlayerData> mediaPlayersData)
+	{
+		if (this.sounds.get(fragmentTag) == null)
+			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
+
+		List<EnhancedMediaPlayer> players = new ArrayList<EnhancedMediaPlayer>();
+		for (MediaPlayerData mediaPlayerData : mediaPlayersData)
+			players.add(new EnhancedMediaPlayer(mediaPlayerData));
+
+		this.storeMediaPlayerData(fragmentTag, mediaPlayersData);
+		this.sounds.get(fragmentTag).addAll(players);
+		this.notifyFragment(fragmentTag, players);
 	}
 
 	private void load(String fragmentTag, List<EnhancedMediaPlayer> loadedMediaPlayers)
@@ -82,6 +93,43 @@ public class SoundManagerFragment extends Fragment
 	{
 		SafeAsyncTask task = new StoreMediaPlayerTask(fragmentId, mediaPlayersData);
 		task.execute();
+	}
+
+	private class UpdateMediaPlayersTask extends SafeAsyncTask<Void>
+	{
+		private List<MediaPlayerData> mediaPlayers;
+
+		public UpdateMediaPlayersTask(Map<String, List<EnhancedMediaPlayer>> mediaPlayers)
+		{
+			this.mediaPlayers = new ArrayList<MediaPlayerData>();
+			for (String fragmentTag : mediaPlayers.keySet())
+			{
+				List<EnhancedMediaPlayer> playersOfFragment = mediaPlayers.get(fragmentTag);
+				for (EnhancedMediaPlayer player : playersOfFragment)
+					this.mediaPlayers.add(player.getMediaPlayerData());
+			}
+		}
+
+		@Override
+		public Void call() throws Exception
+		{
+			daoSession.runInTx(new Runnable() {
+				@Override
+				public void run() {
+					daoSession.getMediaPlayerDataDao().deleteAll();
+					daoSession.getMediaPlayerDataDao().insertInTx(mediaPlayers);
+				}
+			});
+			return null;
+		}
+
+		@Override
+		protected void onException(Exception e) throws RuntimeException
+		{
+			super.onException(e);
+			Logger.e(TAG, e.getMessage());
+			throw new RuntimeException(e);
+		}
 	}
 
 	private class StoreMediaPlayerTask extends SafeAsyncTask<Void>

@@ -1,22 +1,18 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.app.*;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.AddSoundListItem;
+import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +31,6 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 	private ViewGroup soundsToAddLayout;
 	private String callingFragmentTag;
 	private List<Uri> soundsToAdd;
-	private List<String> soundsToAddLabels;
 
 	public static void showInstance(FragmentManager manager, String callingFragmentTag)
 	{
@@ -54,7 +49,6 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		super.onCreate(savedInstanceState);
 
 		this.soundsToAdd = new ArrayList<Uri>();
-		this.soundsToAddLabels = new ArrayList<String>();
 		Bundle args = this.getArguments();
 		if (args != null)
 			this.callingFragmentTag = args.getString(KEY_CALLER_FRAGMENT_TAG);
@@ -92,11 +86,10 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 				for (int i = 0; i < count; i++)
 				{
 					this.soundsToAdd.add(i, Uri.parse(uris.get(i)));
-					this.soundsToAddLabels.add(i, labels.get(i));
 
 					AddSoundListItem item = new AddSoundListItem(this.getActivity());
 					item.setPath(this.soundsToAdd.get(i).toString());
-					item.setSoundName(this.soundsToAddLabels.get(i));
+					item.setSoundName(labels.get(i));
 					this.soundsToAddLayout.addView(item);
 				}
 			}
@@ -168,14 +161,24 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		outState.putStringArrayList(KEY_SOUNDS_LABEL, labels);
 	}
 
+
 	private void returnResultsToCallingFragment()
 	{
-		Fragment fragment = this.getFragmentManager().findFragmentByTag(this.callingFragmentTag);
+		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
 		if (fragment == null)
-			return;
+			throw new NullPointerException("cannot add sound, SoundManagerFragment is null");
 
-		// TODO deliver results
-		Toast.makeText(this.getActivity(), "returnResultsToCallingFragment", Toast.LENGTH_SHORT).show();
+		int count = this.soundsToAdd.size();
+		List<MediaPlayerData> playersData = new ArrayList<MediaPlayerData>(count);
+		for (int i = 0; i < count; i++)
+		{
+			Uri soundUri = this.soundsToAdd.get(i);
+			String soundLabel = ((AddSoundListItem)this.soundsToAddLayout.getChildAt(i)).getSoundName();
+			MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.callingFragmentTag, soundUri, soundLabel);
+			playersData.add(playerData);
+		}
+
+		fragment.add(this.callingFragmentTag, playersData);
 	}
 
 }

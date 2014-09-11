@@ -212,17 +212,17 @@ public class SoundSheetManagerFragment
 		if (soundManagerFragment == null)
 			throw new NullPointerException("cannot add sound, SoundManagerFragment is null");
 
-		MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(soundUri, soundLabel);
-
 		if (newSoundSheetName != null)
 		{
 			SoundSheet newCreatedSoundSheet = getNewSoundSheet(newSoundSheetName);
 			soundSheetAdapter.add(newCreatedSoundSheet);
+			MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(newCreatedSoundSheet.getFragmentTag(), soundUri, soundLabel);
 			soundManagerFragment.add(newCreatedSoundSheet.getFragmentTag(), mediaPlayerData);
 		}
 		else if (existingSoundSheetTag != null)
 		{
 			SoundSheet existingSoundSheet = this.soundSheetAdapter.get(existingSoundSheetTag);
+			MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
 			soundManagerFragment.add(existingSoundSheet.getFragmentTag(), mediaPlayerData);
 		}
 	}

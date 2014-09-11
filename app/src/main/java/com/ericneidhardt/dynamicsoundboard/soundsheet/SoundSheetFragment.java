@@ -74,8 +74,6 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 			return null;
 
 		View fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false);
-		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-		fragmentView.setLayoutParams(params);
 
 		fragmentView.findViewById(R.id.b_add_sound).setOnClickListener(this);
 

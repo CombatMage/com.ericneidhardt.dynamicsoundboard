@@ -38,15 +38,15 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 		// TODO build player from greendao object
 	}
 
-	public static MediaPlayerData getMediaPlayerData(MediaPlayer mediaPlayer)
+	public MediaPlayerData getMediaPlayerData()
 	{
-		// TODO build greendao object from player
+		// TODO build greendao object from this player
 		return new MediaPlayerData();
 	}
 
-	public static MediaPlayerData getMediaPlayerData(Uri soundUri, String soundLabel)
+	public static MediaPlayerData getMediaPlayerData(String fragmentTag, Uri uri, String label)
 	{
-		// TODO build greendao object from player
+		// TODO build greendao object from this player
 		return new MediaPlayerData();
 	}
 
