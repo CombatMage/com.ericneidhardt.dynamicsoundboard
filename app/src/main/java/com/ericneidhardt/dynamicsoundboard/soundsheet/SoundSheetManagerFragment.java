@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -20,6 +19,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
+import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
@@ -27,6 +27,7 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 import java.util.List;
 
@@ -207,23 +208,22 @@ public class SoundSheetManagerFragment
 	{
 		Logger.d(TAG, "onAddSoundFromIntent: " + soundUri + " " + soundLabel + " " + newSoundSheetName + " " + existingSoundSheetTag);
 
+		SoundManagerFragment soundManagerFragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+		if (soundManagerFragment == null)
+			throw new NullPointerException("cannot add sound, SoundManagerFragment is null");
+
+		MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(soundUri, soundLabel);
+
 		if (newSoundSheetName != null)
 		{
 			SoundSheet newCreatedSoundSheet = getNewSoundSheet(newSoundSheetName);
 			soundSheetAdapter.add(newCreatedSoundSheet);
-			// TODO add sound to SoundSheet
+			soundManagerFragment.add(newCreatedSoundSheet.getFragmentTag(), mediaPlayerData);
 		}
 		else if (existingSoundSheetTag != null)
 		{
 			SoundSheet existingSoundSheet = this.soundSheetAdapter.get(existingSoundSheetTag);
-			Fragment addSoundToThisFragment = getActivity().getFragmentManager().findFragmentByTag(existingSoundSheet.getFragmentTag());
-			if (addSoundToThisFragment == null)
-				DynamicSoundboardApplication.storeSoundInDatabase(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
-			else
-			{
-				EnhancedMediaPlayer player = new EnhancedMediaPlayer(soundUri, soundLabel);
-				((SoundSheetFragment) addSoundToThisFragment).addMediaPlayer(player);
-			}
+			soundManagerFragment.add(existingSoundSheet.getFragmentTag(), mediaPlayerData);
 		}
 	}
 

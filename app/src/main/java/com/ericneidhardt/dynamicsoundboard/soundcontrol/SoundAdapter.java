@@ -31,6 +31,8 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 
 	public void addAll(List<EnhancedMediaPlayer> mediaPlayers)
 	{
+		if (mediaPlayers == null)
+			return;
 		this.mediaPlayers.addAll(mediaPlayers);
 		this.notifyDataSetChanged();
 	}

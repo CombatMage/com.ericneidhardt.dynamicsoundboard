@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
@@ -38,6 +39,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		this.createActionbar();
 		this.createNavigationDrawer();
 
+		this.addSoundControllerFragment();
 		this.addSoundLayoutControllerFragment();
 	}
 
@@ -170,9 +172,22 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		}
 	}
 
+	private void addSoundControllerFragment()
+	{
+		FragmentManager fragmentManager = this.getFragmentManager();
+
+		Fragment fragment =  fragmentManager.findFragmentByTag(SoundManagerFragment.TAG);
+		if (fragment == null)
+		{
+			fragment = new SoundManagerFragment();
+			fragmentManager.beginTransaction().add(fragment, SoundManagerFragment.TAG).commit();
+			fragmentManager.executePendingTransactions();
+		}
+	}
+
 	private void addSoundLayoutControllerFragment()
 	{
-		FragmentManager fragmentManager = getFragmentManager();
+		FragmentManager fragmentManager = this.getFragmentManager();
 
 		Fragment fragment =  fragmentManager.findFragmentByTag(SoundSheetManagerFragment.TAG);
 		if (fragment == null)
