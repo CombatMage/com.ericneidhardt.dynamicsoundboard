@@ -1,8 +1,19 @@
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
 /build
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+
+# Intellij
 .idea/
 *.iml
+*.iws
+
+# Maven
+log/
+target/
