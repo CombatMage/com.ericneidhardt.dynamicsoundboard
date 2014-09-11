@@ -1,7 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -11,6 +10,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +24,10 @@ public class SoundManagerFragment extends Fragment
 {
 	public static final String TAG = SoundManagerFragment.class.getSimpleName();
 
-	private static final String database_prefix = "db";
+	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.SoundManagerFragment.db_sounds";
 
 	private Map<String, List<EnhancedMediaPlayer>> sounds;
-	private Map<String, DaoSession> soundDatabases;
+	private DaoSession daoSession;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -36,9 +36,10 @@ public class SoundManagerFragment extends Fragment
 		this.setRetainInstance(true);
 
 		this.sounds = new HashMap<String,  List<EnhancedMediaPlayer>>();
-		this.soundDatabases = new HashMap<String, DaoSession>();
+		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUNDS);
 
-		// TODO load data
+		SafeAsyncTask task = new LoadMediaPlayerTask();
+		task.execute();
 	}
 
 	@Override
@@ -46,22 +47,6 @@ public class SoundManagerFragment extends Fragment
 		super.onPause();
 
 		// TODO store data
-	}
-
-	public DaoSession getDatabase(String id)
-	{
-		Context context = this.getActivity();
-		if (context == null)
-			return null;
-
-		id = database_prefix + id;
-		DaoSession database = this.soundDatabases.get(id);
-		if (database == null)
-		{
-			database = Util.setupDatabase(context, id);
-			this.soundDatabases.put(id, database);
-		}
-		return database;
 	}
 
 	public List<EnhancedMediaPlayer> get(String fragmentTag)
@@ -75,10 +60,22 @@ public class SoundManagerFragment extends Fragment
 
 		this.storeMediaPlayerData(fragmentTag, asList(mediaPlayerData));
 		this.sounds.put(fragmentTag, asList(player));
+		this.notifyFragment(fragmentTag, asList(player));
+	}
 
+	private void load(String fragmentTag, List<EnhancedMediaPlayer> loadedMediaPlayers)
+	{
+		if (this.sounds.get(fragmentTag) == null)
+			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
+		this.sounds.get(fragmentTag).addAll(loadedMediaPlayers);
+		this.notifyFragment(fragmentTag, loadedMediaPlayers);
+	}
+
+	private void notifyFragment(String fragmentTag,List<EnhancedMediaPlayer> loadedMediaPlayers)
+	{
 		SoundSheetFragment fragment = (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
 		if (fragment != null)
-			fragment.notifyDataSetAdded(asList(player));
+			fragment.notifyDataSetAdded(loadedMediaPlayers);
 	}
 
 	private void storeMediaPlayerData(String fragmentId, List<MediaPlayerData> mediaPlayersData)
@@ -89,21 +86,56 @@ public class SoundManagerFragment extends Fragment
 
 	private class StoreMediaPlayerTask extends SafeAsyncTask<Void>
 	{
-		private String fragmentId;
 		private List<MediaPlayerData> mediaPlayersData;
 
 		public StoreMediaPlayerTask(String fragmentId, List<MediaPlayerData> mediaPlayersData)
 		{
-			this.fragmentId = fragmentId;
 			this.mediaPlayersData = mediaPlayersData;
+			for (MediaPlayerData mediaPlayerData : this.mediaPlayersData)
+				mediaPlayerData.setFragmentTag(fragmentId);
 		}
 
 		@Override
 		public Void call() throws Exception
 		{
-			final DaoSession daoSession = getDatabase(this.fragmentId);
 			daoSession.getMediaPlayerDataDao().insertInTx(this.mediaPlayersData);
 			return null;
+		}
+
+		@Override
+		protected void onException(Exception e) throws RuntimeException
+		{
+			super.onException(e);
+			Logger.e(TAG, e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
+	private class LoadMediaPlayerTask extends SafeAsyncTask<Map<String, List<EnhancedMediaPlayer>>>
+	{
+		@Override
+		public Map<String, List<EnhancedMediaPlayer>> call() throws Exception
+		{
+			Map<String, List<EnhancedMediaPlayer>> loadedMediaPlayers = new HashMap<String, List<EnhancedMediaPlayer>>();
+
+			List<MediaPlayerData> storedMediaPlayersData = daoSession.getMediaPlayerDataDao().queryBuilder().list();
+			for (MediaPlayerData storedMediaPlayerData : storedMediaPlayersData)
+			{
+				String fragmentTag = storedMediaPlayerData.getFragmentTag();
+				if (loadedMediaPlayers.get(fragmentTag) == null)
+					loadedMediaPlayers.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
+
+				loadedMediaPlayers.get(fragmentTag).add(new EnhancedMediaPlayer(storedMediaPlayerData));
+			}
+
+			return loadedMediaPlayers;
+		}
+
+		@Override
+		protected void onSuccess(Map<String, List<EnhancedMediaPlayer>> loadedMediaPlayers) throws Exception {
+			super.onSuccess(loadedMediaPlayers);
+			for (String fragmentTag : loadedMediaPlayers.keySet())
+				load(fragmentTag, loadedMediaPlayers.get(fragmentTag));
 		}
 
 		@Override

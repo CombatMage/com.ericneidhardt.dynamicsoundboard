@@ -47,7 +47,7 @@ public class SoundSheetManagerFragment
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
-	private static final String DB_SOUND_SHEETS = "com.ericneidhardt.dynamicsoundboard.db_sound_sheets";
+	private static final String DB_SOUND_SHEETS = "com.ericneidhardt.dynamicsoundboard.SoundSheetManagerFragment.db_sound_sheets";
 
 	private SoundSheetAdapter soundSheetAdapter;
 	private DaoSession daoSession;
