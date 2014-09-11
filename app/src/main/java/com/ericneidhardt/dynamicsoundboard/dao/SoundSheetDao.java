@@ -43,7 +43,7 @@ public class SoundSheetDao extends AbstractDao<SoundSheet, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'SOUND_SHEET' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'FRAGMENT_TAG' TEXT," + // 1: fragmentTag
+                "'FRAGMENT_TAG' TEXT UNIQUE ," + // 1: fragmentTag
                 "'LABEL' TEXT," + // 2: label
                 "'IS_SELECTED' INTEGER);"); // 3: isSelected
     }

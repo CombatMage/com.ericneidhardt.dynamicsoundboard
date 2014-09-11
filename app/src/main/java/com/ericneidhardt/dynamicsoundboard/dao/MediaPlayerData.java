@@ -8,6 +8,7 @@ public class MediaPlayerData {
 
     private Long id;
     private String playerId;
+    private String fragmentTag;
     private String label;
     private String uri;
 
@@ -18,9 +19,10 @@ public class MediaPlayerData {
         this.id = id;
     }
 
-    public MediaPlayerData(Long id, String playerId, String label, String uri) {
+    public MediaPlayerData(Long id, String playerId, String fragmentTag, String label, String uri) {
         this.id = id;
         this.playerId = playerId;
+        this.fragmentTag = fragmentTag;
         this.label = label;
         this.uri = uri;
     }
@@ -39,6 +41,14 @@ public class MediaPlayerData {
 
     public void setPlayerId(String playerId) {
         this.playerId = playerId;
+    }
+
+    public String getFragmentTag() {
+        return fragmentTag;
+    }
+
+    public void setFragmentTag(String fragmentTag) {
+        this.fragmentTag = fragmentTag;
     }
 
     public String getLabel() {

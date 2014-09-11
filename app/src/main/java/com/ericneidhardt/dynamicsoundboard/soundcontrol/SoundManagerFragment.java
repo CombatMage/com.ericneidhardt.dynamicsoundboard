@@ -37,6 +37,15 @@ public class SoundManagerFragment extends Fragment
 
 		this.sounds = new HashMap<String,  List<EnhancedMediaPlayer>>();
 		this.soundDatabases = new HashMap<String, DaoSession>();
+
+		// TODO load data
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+
+		// TODO store data
 	}
 
 	public DaoSession getDatabase(String id)
@@ -78,7 +87,7 @@ public class SoundManagerFragment extends Fragment
 		task.execute();
 	}
 
-	public class StoreMediaPlayerTask extends SafeAsyncTask<Void>
+	private class StoreMediaPlayerTask extends SafeAsyncTask<Void>
 	{
 		private String fragmentId;
 		private List<MediaPlayerData> mediaPlayersData;

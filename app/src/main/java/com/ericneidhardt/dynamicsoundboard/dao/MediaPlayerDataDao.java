@@ -25,8 +25,9 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property PlayerId = new Property(1, String.class, "playerId", false, "PLAYER_ID");
-        public final static Property Label = new Property(2, String.class, "label", false, "LABEL");
-        public final static Property Uri = new Property(3, String.class, "uri", false, "URI");
+        public final static Property FragmentTag = new Property(2, String.class, "fragmentTag", false, "FRAGMENT_TAG");
+        public final static Property Label = new Property(3, String.class, "label", false, "LABEL");
+        public final static Property Uri = new Property(4, String.class, "uri", false, "URI");
     };
 
 
@@ -44,8 +45,9 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'MEDIA_PLAYER_DATA' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
                 "'PLAYER_ID' TEXT UNIQUE ," + // 1: playerId
-                "'LABEL' TEXT UNIQUE ," + // 2: label
-                "'URI' TEXT UNIQUE );"); // 3: uri
+                "'FRAGMENT_TAG' TEXT," + // 2: fragmentTag
+                "'LABEL' TEXT," + // 3: label
+                "'URI' TEXT);"); // 4: uri
     }
 
     /** Drops the underlying database table. */
@@ -69,14 +71,19 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
             stmt.bindString(2, playerId);
         }
  
+        String fragmentTag = entity.getFragmentTag();
+        if (fragmentTag != null) {
+            stmt.bindString(3, fragmentTag);
+        }
+ 
         String label = entity.getLabel();
         if (label != null) {
-            stmt.bindString(3, label);
+            stmt.bindString(4, label);
         }
  
         String uri = entity.getUri();
         if (uri != null) {
-            stmt.bindString(4, uri);
+            stmt.bindString(5, uri);
         }
     }
 
@@ -92,8 +99,9 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
         MediaPlayerData entity = new MediaPlayerData( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // playerId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // label
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // uri
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // fragmentTag
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // label
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // uri
         );
         return entity;
     }
@@ -103,8 +111,9 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     public void readEntity(Cursor cursor, MediaPlayerData entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setPlayerId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setLabel(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setUri(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setFragmentTag(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setLabel(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setUri(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     /** @inheritdoc */
