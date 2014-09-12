@@ -91,7 +91,7 @@ public class SoundManagerFragment extends Fragment
 
 		List<EnhancedMediaPlayer> players = new ArrayList<EnhancedMediaPlayer>();
 		for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-			players.add(new EnhancedMediaPlayer(mediaPlayerData));
+			players.add(new EnhancedMediaPlayer(this.getActivity(), mediaPlayerData));
 
 		this.storeMediaPlayerData(fragmentTag, mediaPlayersData);
 		this.sounds.get(fragmentTag).addAll(players);
@@ -228,7 +228,7 @@ public class SoundManagerFragment extends Fragment
 				if (loadedMediaPlayers.get(fragmentTag) == null)
 					loadedMediaPlayers.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
 
-				loadedMediaPlayers.get(fragmentTag).add(new EnhancedMediaPlayer(storedMediaPlayerData));
+				loadedMediaPlayers.get(fragmentTag).add(new EnhancedMediaPlayer(getActivity(), storedMediaPlayerData));
 			}
 
 			return loadedMediaPlayers;

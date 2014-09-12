@@ -75,14 +75,21 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		MediaPlayerData data = this.mediaPlayers.get(position).getMediaPlayerData();
+		EnhancedMediaPlayer player = this.mediaPlayers.get(position);
+		MediaPlayerData data = player.getMediaPlayerData();
 
 		holder.name.setText(data.getLabel());
+		holder.play.setChecked(player.isPlaying());
 		holder.loop.setChecked(data.getIsLoop());
 		holder.inPlaylist.setChecked(data.getIsInPlaylist());
 	}
 
-	public class ViewHolder extends RecyclerView.ViewHolder implements CustomEditText.OnTextEditedListener, CompoundButton.OnCheckedChangeListener
+	public class ViewHolder
+			extends
+				RecyclerView.ViewHolder
+			implements
+				CustomEditText.OnTextEditedListener,
+				CompoundButton.OnCheckedChangeListener
 	{
 		private DialogEditText name;
 		private CheckBox play;
@@ -101,6 +108,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 			this.stop = itemView.findViewById(R.id.b_stop);
 
 			this.name.setOnTextEditedListener(this);
+			this.play.setOnCheckedChangeListener(this);
 			this.loop.setOnCheckedChangeListener(this);
 			this.inPlaylist.setOnCheckedChangeListener(this);
 		}
@@ -117,6 +125,12 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 			EnhancedMediaPlayer player = mediaPlayers.get(this.getPosition());
 			switch (buttonView.getId())
 			{
+				case R.id.cb_play:
+					if (isChecked)
+						player.playSound();
+					else
+						player.pauseSound();
+					break;
 				case R.id.cb_loop:
 					player.setLooping(isChecked);
 					break;

@@ -1,8 +1,9 @@
 package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
@@ -28,12 +29,16 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 	private State currentState;
 	private MediaPlayerData rawData;
 
-	public EnhancedMediaPlayer(MediaPlayerData data)
+	public EnhancedMediaPlayer(Context context, MediaPlayerData data)
 	{
 		super();
 		this.rawData = data;
 		this.setLooping(data.getIsLoop());
-		// TODO build player from greendao object
+
+		this.currentState = State.IDLE;
+		this.init(context);
+
+		// TODO set time position from green dao object
 	}
 
 	public MediaPlayerData getMediaPlayerData()
@@ -54,6 +59,26 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 		data.setIsLoop(false);
 
 		return data;
+	}
+
+	private void init(Context context)
+	{
+		if (this.rawData.getUri() == null)
+			throw new NullPointerException("cannot init media player, sound uri is null");
+
+		try
+		{
+			this.setAudioStreamType(AudioManager.STREAM_MUSIC);
+			this.setDataSource(context, Uri.parse(this.rawData.getUri()));
+			this.setLooping(this.rawData.getIsLoop());
+			this.prepare();
+			this.currentState = State.PREPARED;
+		}
+		catch (IOException e)
+		{
+			Logger.e(TAG, e.getMessage());
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void destroy()
