@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-
 import com.ericneidhardt.dynamicsoundboard.R;
 
 /**
@@ -18,7 +17,6 @@ import com.ericneidhardt.dynamicsoundboard.R;
 public class ActionbarEditText extends CustomEditText implements TextView.OnEditorActionListener, View.OnClickListener, EditTextBackEvent.EditTextImeBackListener
 {
 	private View divider;
-	private OnTextEditedListener callback;
 	private KeyListener editTextKeyListener;
 
 	private String initialText;
@@ -40,11 +38,6 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 	protected int getLayoutId()
 	{
 		return R.layout.view_actionbar_edittext;
-	}
-
-	public void setOnTextEditedListener(OnTextEditedListener listener)
-	{
-		this.callback = listener;
 	}
 
 	@Override
@@ -101,8 +94,4 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 		lManager.showSoftInput(super.input, 0);
 	}
 
-	public static interface OnTextEditedListener
-	{
-		public void onTextEdited(String text);
-	}
 }

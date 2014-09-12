@@ -17,3 +17,5 @@
 # Maven
 log/
 target/
+dao_generator/build/tmp/
+dao_generator/build/

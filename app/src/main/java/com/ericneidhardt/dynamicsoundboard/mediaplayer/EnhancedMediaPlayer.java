@@ -53,6 +53,12 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 		return data;
 	}
 
+	public void destroy()
+	{
+		this.reset();
+		this.release();
+	}
+
 	public boolean playSound()
 	{
 		try

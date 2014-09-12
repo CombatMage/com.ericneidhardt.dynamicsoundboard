@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
@@ -77,7 +78,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 		holder.name.setText(data.getMediaPlayerData().getLabel());
 	}
 
-	public class ViewHolder extends RecyclerView.ViewHolder
+	public class ViewHolder extends RecyclerView.ViewHolder implements CustomEditText.OnTextEditedListener
 	{
 		private DialogEditText name;
 		private CheckBox play;
@@ -85,7 +86,8 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 		private CheckBox favorite;
 		private View stop;
 
-		public ViewHolder(View itemView) {
+		public ViewHolder(View itemView)
+		{
 			super(itemView);
 
 			this.name = (DialogEditText)itemView.findViewById(R.id.et_name_file);
@@ -93,6 +95,14 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 			this.loop = (CheckBox) itemView.findViewById(R.id.cb_loop);
 			this.favorite = (CheckBox)itemView.findViewById(R.id.cb_add_to_playlist);
 			this.stop = itemView.findViewById(R.id.b_stop);
+
+			this.name.setOnTextEditedListener(this);
+		}
+
+		@Override
+		public void onTextEdited(String text)
+		{
+			mediaPlayers.get(getPosition()).getMediaPlayerData().setLabel(text);
 		}
 	}
 }

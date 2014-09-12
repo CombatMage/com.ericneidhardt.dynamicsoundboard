@@ -84,6 +84,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		listSounds.setAdapter(this.soundAdapter);
 
 		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+		this.soundAdapter.clear();
 		if (fragment != null)
 		{
 			List<EnhancedMediaPlayer> enhancedMediaPlayers = fragment.get(this.fragmentTag);

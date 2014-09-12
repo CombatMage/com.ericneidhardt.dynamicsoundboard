@@ -172,6 +172,7 @@ public class SoundSheetManagerFragment
 		if (this.getActivity() != null)
 		{
 			((BaseActivity)this.getActivity()).removeSoundFragment(data);
+			((SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG)).remove(data.getFragmentTag());
 
 			if (data.getIsSelected())
 			{

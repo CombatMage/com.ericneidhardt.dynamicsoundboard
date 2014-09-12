@@ -38,6 +38,7 @@ public class Util
 				filePathUri = Uri.parse(cursor.getString(column_index));
 				fileName = filePathUri.getLastPathSegment().toString();
 			}
+			cursor.close();
 		}
 		else if (uri.getScheme().equals(SCHEME_FILE_URI))
 			fileName = filePathUri.getLastPathSegment().toString();

@@ -62,6 +62,9 @@ public class SoundManagerFragment extends Fragment
 
 	public void add(String fragmentTag, List<MediaPlayerData> mediaPlayersData)
 	{
+		if (fragmentTag == null)
+			throw  new NullPointerException("add: cannot add media players to fragment, fragment tag is null");
+
 		if (this.sounds.get(fragmentTag) == null)
 			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
 
@@ -74,8 +77,21 @@ public class SoundManagerFragment extends Fragment
 		this.notifyFragment(fragmentTag, players);
 	}
 
+	public void remove(String fragmentTag)
+	{
+		if (this.sounds.get(fragmentTag) == null)
+			return;
+
+		for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
+			player.destroy();
+		this.sounds.remove(fragmentTag);
+	}
+
 	private void load(String fragmentTag, List<EnhancedMediaPlayer> loadedMediaPlayers)
 	{
+		if (fragmentTag == null)
+			throw  new NullPointerException("load: cannot add media players to fragment, fragment tag is null");
+
 		if (this.sounds.get(fragmentTag) == null)
 			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
 		this.sounds.get(fragmentTag).addAll(loadedMediaPlayers);
@@ -97,6 +113,7 @@ public class SoundManagerFragment extends Fragment
 
 	private class UpdateMediaPlayersTask extends SafeAsyncTask<Void>
 	{
+		private final String TAG = UpdateMediaPlayersTask.class.getSimpleName();
 		private List<MediaPlayerData> mediaPlayers;
 
 		public UpdateMediaPlayersTask(Map<String, List<EnhancedMediaPlayer>> mediaPlayers)
@@ -134,6 +151,7 @@ public class SoundManagerFragment extends Fragment
 
 	private class StoreMediaPlayerTask extends SafeAsyncTask<Void>
 	{
+		private final String TAG = StoreMediaPlayerTask.class.getSimpleName();
 		private List<MediaPlayerData> mediaPlayersData;
 
 		public StoreMediaPlayerTask(String fragmentId, List<MediaPlayerData> mediaPlayersData)
@@ -161,6 +179,8 @@ public class SoundManagerFragment extends Fragment
 
 	private class LoadMediaPlayerTask extends SafeAsyncTask<Map<String, List<EnhancedMediaPlayer>>>
 	{
+		private final String TAG = LoadMediaPlayerTask.class.getSimpleName();
+
 		@Override
 		public Map<String, List<EnhancedMediaPlayer>> call() throws Exception
 		{
@@ -170,6 +190,11 @@ public class SoundManagerFragment extends Fragment
 			for (MediaPlayerData storedMediaPlayerData : storedMediaPlayersData)
 			{
 				String fragmentTag = storedMediaPlayerData.getFragmentTag();
+				if (fragmentTag == null)
+				{
+					Logger.e(TAG, "cannot load media player, fragment tag is null " + storedMediaPlayerData);
+					continue;
+				}
 				if (loadedMediaPlayers.get(fragmentTag) == null)
 					loadedMediaPlayers.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
 
@@ -180,7 +205,9 @@ public class SoundManagerFragment extends Fragment
 		}
 
 		@Override
-		protected void onSuccess(Map<String, List<EnhancedMediaPlayer>> loadedMediaPlayers) throws Exception {
+		protected void onSuccess(Map<String, List<EnhancedMediaPlayer>> loadedMediaPlayers) throws Exception
+		{
+			Logger.d(TAG, "onSuccess: with " + loadedMediaPlayers.keySet().size() + " fragments");
 			super.onSuccess(loadedMediaPlayers);
 			for (String fragmentTag : loadedMediaPlayers.keySet())
 				load(fragmentTag, loadedMediaPlayers.get(fragmentTag));
