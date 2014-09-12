@@ -2,11 +2,13 @@
 <resources>
 
 	<!-- misc -->
-	<string name="app_name">DynamicSoundboard</string>
-	<string name="blank"></string>
+	<string name="app_name">Dynamic Soundboard</string>
 	<string name="suggested_sound_sheet_name">Kategorie</string>
 
 	<!-- navigation drawer -->
+	<string name="navigation_drawer_content_description_open">Navigation öffnen</string>
+	<string name="navigation_drawer_content_description_close">Navigation schließen</string>
+
 	<string name="tab_sound_sheets">Gruppen</string>
 	<string name="tab_play_list">Playliste</string>
 

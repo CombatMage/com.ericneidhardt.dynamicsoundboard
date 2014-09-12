@@ -73,7 +73,11 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	{
 		this.navigationDrawerLayout = (DrawerLayout)this.findViewById(R.id.root_layout);
 
-		DrawerLayout.DrawerListener onNavigationToggleListener = new ActionBarDrawerToggle(this, this.navigationDrawerLayout, R.color.primary_500, R.string.blank, R.string.blank)
+		DrawerLayout.DrawerListener onNavigationToggleListener = new ActionBarDrawerToggle(this,
+				this.navigationDrawerLayout,
+				R.color.primary_500,
+				R.string.navigation_drawer_content_description_open,
+				R.string.navigation_drawer_content_description_close)
 		{
 			@Override
 			public void onDrawerOpened(View drawerView)
