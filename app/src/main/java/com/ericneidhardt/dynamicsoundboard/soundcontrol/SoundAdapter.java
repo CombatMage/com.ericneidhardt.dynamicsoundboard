@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
@@ -19,13 +20,23 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 10.09.2014.
  */
-public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> implements MediaPlayer.OnCompletionListener
+public class SoundAdapter
+		extends
+			RecyclerView.Adapter<SoundAdapter.ViewHolder>
+		implements
+			MediaPlayer.OnCompletionListener,
+			Runnable
 {
+	private static final int SLEEP_TIME = 1000;
+
 	private List<EnhancedMediaPlayer> mediaPlayers;
 
 	public SoundAdapter()
 	{
 		this.mediaPlayers = new ArrayList<EnhancedMediaPlayer>();
+
+		Thread updateTimePositions = new Thread(this);
+		updateTimePositions.start();
 	}
 
 	public void add(EnhancedMediaPlayer mediaPlayer)
@@ -88,12 +99,33 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
 		holder.play.setChecked(player.isPlaying());
 		holder.loop.setChecked(data.getIsLoop());
 		holder.inPlaylist.setChecked(data.getIsInPlaylist());
+
+		holder.timePosition.setMax(player.getDuration());
+		holder.timePosition.setProgress(player.getCurrentPosition());
 	}
 
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
 		this.notifyItemChanged(this.mediaPlayers.indexOf(mp));
+	}
+
+	@Override
+	public void run()
+	{
+		while (true)
+		{
+			try
+			{
+				Thread.sleep(SLEEP_TIME);
+			}
+			catch (InterruptedException e)
+			{
+				return;
+			}
+
+			// TODO this must be called from ui thread this.notifyDataSetChanged();
+		}
 	}
 
 	public class ViewHolder
@@ -109,16 +141,18 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
 		private CheckBox loop;
 		private CheckBox inPlaylist;
 		private View stop;
+		private SeekBar timePosition;
 
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
 
 			this.name = (DialogEditText)itemView.findViewById(R.id.et_name_file);
-			this.play = (CheckBox) itemView.findViewById(R.id.cb_play);
-			this.loop = (CheckBox) itemView.findViewById(R.id.cb_loop);
+			this.play = (CheckBox)itemView.findViewById(R.id.cb_play);
+			this.loop = (CheckBox)itemView.findViewById(R.id.cb_loop);
 			this.inPlaylist = (CheckBox)itemView.findViewById(R.id.cb_add_to_playlist);
 			this.stop = itemView.findViewById(R.id.b_stop);
+			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_time);
 
 			this.name.setOnTextEditedListener(this);
 			this.play.setOnCheckedChangeListener(this);
