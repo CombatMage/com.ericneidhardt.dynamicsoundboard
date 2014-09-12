@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
+import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 import java.util.ArrayList;
@@ -73,17 +75,19 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		EnhancedMediaPlayer data = this.mediaPlayers.get(position);
+		MediaPlayerData data = this.mediaPlayers.get(position).getMediaPlayerData();
 
-		holder.name.setText(data.getMediaPlayerData().getLabel());
+		holder.name.setText(data.getLabel());
+		holder.loop.setChecked(data.getIsLoop());
+		holder.inPlaylist.setChecked(data.getIsInPlaylist());
 	}
 
-	public class ViewHolder extends RecyclerView.ViewHolder implements CustomEditText.OnTextEditedListener
+	public class ViewHolder extends RecyclerView.ViewHolder implements CustomEditText.OnTextEditedListener, CompoundButton.OnCheckedChangeListener
 	{
 		private DialogEditText name;
 		private CheckBox play;
 		private CheckBox loop;
-		private CheckBox favorite;
+		private CheckBox inPlaylist;
 		private View stop;
 
 		public ViewHolder(View itemView)
@@ -93,16 +97,33 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 			this.name = (DialogEditText)itemView.findViewById(R.id.et_name_file);
 			this.play = (CheckBox) itemView.findViewById(R.id.cb_play);
 			this.loop = (CheckBox) itemView.findViewById(R.id.cb_loop);
-			this.favorite = (CheckBox)itemView.findViewById(R.id.cb_add_to_playlist);
+			this.inPlaylist = (CheckBox)itemView.findViewById(R.id.cb_add_to_playlist);
 			this.stop = itemView.findViewById(R.id.b_stop);
 
 			this.name.setOnTextEditedListener(this);
+			this.loop.setOnCheckedChangeListener(this);
+			this.inPlaylist.setOnCheckedChangeListener(this);
 		}
 
 		@Override
 		public void onTextEdited(String text)
 		{
-			mediaPlayers.get(getPosition()).getMediaPlayerData().setLabel(text);
+			mediaPlayers.get(this.getPosition()).getMediaPlayerData().setLabel(text);
+		}
+
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		{
+			EnhancedMediaPlayer player = mediaPlayers.get(this.getPosition());
+			switch (buttonView.getId())
+			{
+				case R.id.cb_loop:
+					player.setLooping(isChecked);
+					break;
+				case R.id.cb_add_to_playlist:
+					player.setInPlaylist(isChecked);
+					break;
+			}
 		}
 	}
 }

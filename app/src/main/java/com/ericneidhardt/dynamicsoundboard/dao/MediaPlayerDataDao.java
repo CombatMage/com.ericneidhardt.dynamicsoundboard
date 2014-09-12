@@ -28,6 +28,9 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
         public final static Property FragmentTag = new Property(2, String.class, "fragmentTag", false, "FRAGMENT_TAG");
         public final static Property Label = new Property(3, String.class, "label", false, "LABEL");
         public final static Property Uri = new Property(4, String.class, "uri", false, "URI");
+        public final static Property IsLoop = new Property(5, boolean.class, "isLoop", false, "IS_LOOP");
+        public final static Property IsInPlaylist = new Property(6, boolean.class, "isInPlaylist", false, "IS_IN_PLAYLIST");
+        public final static Property TimePosition = new Property(7, Long.class, "timePosition", false, "TIME_POSITION");
     };
 
 
@@ -44,10 +47,13 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'MEDIA_PLAYER_DATA' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'PLAYER_ID' TEXT UNIQUE ," + // 1: playerId
-                "'FRAGMENT_TAG' TEXT," + // 2: fragmentTag
-                "'LABEL' TEXT," + // 3: label
-                "'URI' TEXT);"); // 4: uri
+                "'PLAYER_ID' TEXT NOT NULL UNIQUE ," + // 1: playerId
+                "'FRAGMENT_TAG' TEXT NOT NULL ," + // 2: fragmentTag
+                "'LABEL' TEXT NOT NULL ," + // 3: label
+                "'URI' TEXT NOT NULL ," + // 4: uri
+                "'IS_LOOP' INTEGER NOT NULL ," + // 5: isLoop
+                "'IS_IN_PLAYLIST' INTEGER NOT NULL ," + // 6: isInPlaylist
+                "'TIME_POSITION' INTEGER);"); // 7: timePosition
     }
 
     /** Drops the underlying database table. */
@@ -65,25 +71,16 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
+        stmt.bindString(2, entity.getPlayerId());
+        stmt.bindString(3, entity.getFragmentTag());
+        stmt.bindString(4, entity.getLabel());
+        stmt.bindString(5, entity.getUri());
+        stmt.bindLong(6, entity.getIsLoop() ? 1l: 0l);
+        stmt.bindLong(7, entity.getIsInPlaylist() ? 1l: 0l);
  
-        String playerId = entity.getPlayerId();
-        if (playerId != null) {
-            stmt.bindString(2, playerId);
-        }
- 
-        String fragmentTag = entity.getFragmentTag();
-        if (fragmentTag != null) {
-            stmt.bindString(3, fragmentTag);
-        }
- 
-        String label = entity.getLabel();
-        if (label != null) {
-            stmt.bindString(4, label);
-        }
- 
-        String uri = entity.getUri();
-        if (uri != null) {
-            stmt.bindString(5, uri);
+        Long timePosition = entity.getTimePosition();
+        if (timePosition != null) {
+            stmt.bindLong(8, timePosition);
         }
     }
 
@@ -98,10 +95,13 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     public MediaPlayerData readEntity(Cursor cursor, int offset) {
         MediaPlayerData entity = new MediaPlayerData( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // playerId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // fragmentTag
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // label
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // uri
+            cursor.getString(offset + 1), // playerId
+            cursor.getString(offset + 2), // fragmentTag
+            cursor.getString(offset + 3), // label
+            cursor.getString(offset + 4), // uri
+            cursor.getShort(offset + 5) != 0, // isLoop
+            cursor.getShort(offset + 6) != 0, // isInPlaylist
+            cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7) // timePosition
         );
         return entity;
     }
@@ -110,10 +110,13 @@ public class MediaPlayerDataDao extends AbstractDao<MediaPlayerData, Long> {
     @Override
     public void readEntity(Cursor cursor, MediaPlayerData entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setPlayerId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setFragmentTag(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setLabel(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setUri(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setPlayerId(cursor.getString(offset + 1));
+        entity.setFragmentTag(cursor.getString(offset + 2));
+        entity.setLabel(cursor.getString(offset + 3));
+        entity.setUri(cursor.getString(offset + 4));
+        entity.setIsLoop(cursor.getShort(offset + 5) != 0);
+        entity.setIsInPlaylist(cursor.getShort(offset + 6) != 0);
+        entity.setTimePosition(cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7));
      }
     
     /** @inheritdoc */

@@ -9,7 +9,7 @@ public class DynamicSoundboardDaoGenerator
 
     public static void main(String args[]) throws Exception
 	{
-		Schema schema = new Schema(6, "com.ericneidhardt.dynamicsoundboard.dao");
+		Schema schema = new Schema(8, "com.ericneidhardt.dynamicsoundboard.dao");
 
 		addMediaPlayerEntity(schema);
 		addSoundSheetEntity(schema);
@@ -21,18 +21,21 @@ public class DynamicSoundboardDaoGenerator
 	{
 		Entity sound = schema.addEntity("MediaPlayerData");
 		sound.addIdProperty();
-		sound.addStringProperty("playerId").unique();
-		sound.addStringProperty("fragmentTag");
-		sound.addStringProperty("label");
-		sound.addStringProperty("uri");
+		sound.addStringProperty("playerId").unique().notNull();
+		sound.addStringProperty("fragmentTag").notNull();
+		sound.addStringProperty("label").notNull();
+		sound.addStringProperty("uri").notNull();
+		sound.addBooleanProperty("isLoop").notNull();
+		sound.addBooleanProperty("isInPlaylist").notNull();
+		sound.addLongProperty("timePosition");
 	}
 
 	private static void addSoundSheetEntity(Schema schema)
 	{
 		Entity soundSheet = schema.addEntity("SoundSheet");
 		soundSheet.addIdProperty();
-		soundSheet.addStringProperty("fragmentTag").unique();
-		soundSheet.addStringProperty("label");
-		soundSheet.addBooleanProperty("isSelected");
+		soundSheet.addStringProperty("fragmentTag").unique().notNull();
+		soundSheet.addStringProperty("label").notNull();
+		soundSheet.addBooleanProperty("isSelected").notNull();
 	}
 }

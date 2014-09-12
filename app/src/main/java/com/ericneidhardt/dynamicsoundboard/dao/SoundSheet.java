@@ -7,9 +7,11 @@ package com.ericneidhardt.dynamicsoundboard.dao;
 public class SoundSheet {
 
     private Long id;
+    /** Not-null value. */
     private String fragmentTag;
+    /** Not-null value. */
     private String label;
-    private Boolean isSelected;
+    private boolean isSelected;
 
     public SoundSheet() {
     }
@@ -18,7 +20,7 @@ public class SoundSheet {
         this.id = id;
     }
 
-    public SoundSheet(Long id, String fragmentTag, String label, Boolean isSelected) {
+    public SoundSheet(Long id, String fragmentTag, String label, boolean isSelected) {
         this.id = id;
         this.fragmentTag = fragmentTag;
         this.label = label;
@@ -33,27 +35,31 @@ public class SoundSheet {
         this.id = id;
     }
 
+    /** Not-null value. */
     public String getFragmentTag() {
         return fragmentTag;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setFragmentTag(String fragmentTag) {
         this.fragmentTag = fragmentTag;
     }
 
+    /** Not-null value. */
     public String getLabel() {
         return label;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setLabel(String label) {
         this.label = label;
     }
 
-    public Boolean getIsSelected() {
+    public boolean getIsSelected() {
         return isSelected;
     }
 
-    public void setIsSelected(Boolean isSelected) {
+    public void setIsSelected(boolean isSelected) {
         this.isSelected = isSelected;
     }
 

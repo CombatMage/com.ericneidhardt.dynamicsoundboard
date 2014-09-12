@@ -7,10 +7,17 @@ package com.ericneidhardt.dynamicsoundboard.dao;
 public class MediaPlayerData {
 
     private Long id;
+    /** Not-null value. */
     private String playerId;
+    /** Not-null value. */
     private String fragmentTag;
+    /** Not-null value. */
     private String label;
+    /** Not-null value. */
     private String uri;
+    private boolean isLoop;
+    private boolean isInPlaylist;
+    private Long timePosition;
 
     public MediaPlayerData() {
     }
@@ -19,12 +26,15 @@ public class MediaPlayerData {
         this.id = id;
     }
 
-    public MediaPlayerData(Long id, String playerId, String fragmentTag, String label, String uri) {
+    public MediaPlayerData(Long id, String playerId, String fragmentTag, String label, String uri, boolean isLoop, boolean isInPlaylist, Long timePosition) {
         this.id = id;
         this.playerId = playerId;
         this.fragmentTag = fragmentTag;
         this.label = label;
         this.uri = uri;
+        this.isLoop = isLoop;
+        this.isInPlaylist = isInPlaylist;
+        this.timePosition = timePosition;
     }
 
     public Long getId() {
@@ -35,36 +45,68 @@ public class MediaPlayerData {
         this.id = id;
     }
 
+    /** Not-null value. */
     public String getPlayerId() {
         return playerId;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setPlayerId(String playerId) {
         this.playerId = playerId;
     }
 
+    /** Not-null value. */
     public String getFragmentTag() {
         return fragmentTag;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setFragmentTag(String fragmentTag) {
         this.fragmentTag = fragmentTag;
     }
 
+    /** Not-null value. */
     public String getLabel() {
         return label;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setLabel(String label) {
         this.label = label;
     }
 
+    /** Not-null value. */
     public String getUri() {
         return uri;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public boolean getIsLoop() {
+        return isLoop;
+    }
+
+    public void setIsLoop(boolean isLoop) {
+        this.isLoop = isLoop;
+    }
+
+    public boolean getIsInPlaylist() {
+        return isInPlaylist;
+    }
+
+    public void setIsInPlaylist(boolean isInPlaylist) {
+        this.isInPlaylist = isInPlaylist;
+    }
+
+    public Long getTimePosition() {
+        return timePosition;
+    }
+
+    public void setTimePosition(Long timePosition) {
+        this.timePosition = timePosition;
     }
 
 }

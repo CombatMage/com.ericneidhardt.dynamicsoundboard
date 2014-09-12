@@ -32,6 +32,7 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 	{
 		super();
 		this.rawData = data;
+		this.setLooping(data.getIsLoop());
 		// TODO build player from greendao object
 	}
 
@@ -49,6 +50,8 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 		data.setFragmentTag(fragmentTag);
 		data.setLabel(label);
 		data.setUri(uri.toString());
+		data.setIsInPlaylist(false);
+		data.setIsLoop(false);
 
 		return data;
 	}
@@ -57,6 +60,18 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 	{
 		this.reset();
 		this.release();
+	}
+
+	@Override
+	public void setLooping(boolean looping)
+	{
+		super.setLooping(looping);
+		this.rawData.setIsLoop(looping);
+	}
+
+	public void setInPlaylist(boolean inPlaylist)
+	{
+		this.rawData.setIsInPlaylist(inPlaylist);
 	}
 
 	public boolean playSound()
