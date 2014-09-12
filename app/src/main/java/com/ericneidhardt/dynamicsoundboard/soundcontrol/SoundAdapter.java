@@ -100,6 +100,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
 			extends
 				RecyclerView.ViewHolder
 			implements
+				View.OnClickListener,
 				CustomEditText.OnTextEditedListener,
 				CompoundButton.OnCheckedChangeListener
 	{
@@ -123,6 +124,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
 			this.play.setOnCheckedChangeListener(this);
 			this.loop.setOnCheckedChangeListener(this);
 			this.inPlaylist.setOnCheckedChangeListener(this);
+			this.stop.setOnClickListener(this);
 		}
 
 		@Override
@@ -148,6 +150,19 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
 					break;
 				case R.id.cb_add_to_playlist:
 					player.setInPlaylist(isChecked);
+					break;
+			}
+		}
+
+		@Override
+		public void onClick(View view)
+		{
+			EnhancedMediaPlayer player = mediaPlayers.get(this.getPosition());
+			switch (view.getId())
+			{
+				case R.id.b_stop:
+					player.stopSound();
+					notifyItemChanged(getPosition());
 					break;
 			}
 		}
