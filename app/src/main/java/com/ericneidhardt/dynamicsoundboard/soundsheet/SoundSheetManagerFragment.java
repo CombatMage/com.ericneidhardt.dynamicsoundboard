@@ -134,7 +134,12 @@ public class SoundSheetManagerFragment
 		switch (item.getItemId())
 		{
 			case R.id.action_clear_sound_sheets:
-				((BaseActivity)this.getActivity()).removeSoundFragment(this.soundSheetAdapter.getValues());
+				((BaseActivity) this.getActivity()).removeSoundFragment(this.soundSheetAdapter.getValues());
+
+				SoundManagerFragment soundManagerFragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+				for (SoundSheet soundSheet : this.soundSheetAdapter.getValues())
+					soundManagerFragment.remove(soundSheet.getFragmentTag());
+
 				this.soundSheetAdapter.clear();
 				return true;
 			default:

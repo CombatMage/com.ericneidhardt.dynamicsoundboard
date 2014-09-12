@@ -2,6 +2,8 @@ package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.MenuItem;
+import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -34,6 +36,7 @@ public class SoundManagerFragment extends Fragment
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
+		this.setHasOptionsMenu(true);
 
 		this.sounds = new HashMap<String,  List<EnhancedMediaPlayer>>();
 		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUNDS);
@@ -43,11 +46,29 @@ public class SoundManagerFragment extends Fragment
 	}
 
 	@Override
-	public void onPause() {
+	public void onPause()
+	{
 		super.onPause();
 
 		SafeAsyncTask task = new UpdateMediaPlayersTask(this.sounds);
 		task.execute();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId())
+		{
+			case R.id.action_clear_all_sounds:
+				for (String fragmentTag : this.sounds.keySet())
+					this.remove(fragmentTag);
+
+				return true;
+			default:
+				return false;
+		}
 	}
 
 	public List<EnhancedMediaPlayer> get(String fragmentTag)
@@ -85,6 +106,8 @@ public class SoundManagerFragment extends Fragment
 		for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
 			player.destroy();
 		this.sounds.remove(fragmentTag);
+
+		this.notifyFragment(fragmentTag);
 	}
 
 	private void load(String fragmentTag, List<EnhancedMediaPlayer> loadedMediaPlayers)
@@ -98,11 +121,18 @@ public class SoundManagerFragment extends Fragment
 		this.notifyFragment(fragmentTag, loadedMediaPlayers);
 	}
 
-	private void notifyFragment(String fragmentTag,List<EnhancedMediaPlayer> loadedMediaPlayers)
+	private void notifyFragment(String fragmentTag, List<EnhancedMediaPlayer> loadedMediaPlayers)
 	{
 		SoundSheetFragment fragment = (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
 		if (fragment != null)
 			fragment.notifyDataSetAdded(loadedMediaPlayers);
+	}
+
+	private void notifyFragment(String fragmentTag)
+	{
+		SoundSheetFragment fragment = (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
+		if (fragment != null)
+			fragment.notifyDataSetChanged(new ArrayList<EnhancedMediaPlayer>());
 	}
 
 	private void storeMediaPlayerData(String fragmentId, List<MediaPlayerData> mediaPlayersData)

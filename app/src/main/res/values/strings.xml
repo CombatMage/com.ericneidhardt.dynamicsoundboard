@@ -12,6 +12,8 @@
 
 	<!-- actionbar -->
 	<string name="action_menu">Sound Layouts öffnen</string>
+	<string name="action_clear_sounds_in_sheet">Sounds in Kategorie löschen</string>
+	<string name="action_clear_all_sounds">Alle Sounds löschen</string>
 	<string name="action_add_new_sound_sheet">Eine neue Sound Gruppe hinzufügen</string>
 	<string name="action_clear_sound_sheets">Alle Sound Gruppen löschen</string>
 	<string name="action_settings">Einstellungen</string>

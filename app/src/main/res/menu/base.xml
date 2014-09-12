@@ -2,6 +2,16 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:context=".BaseActivity" >
 
+	<item android:id="@+id/action_clear_sounds_in_sheet"
+		  android:title="@string/action_clear_sounds_in_sheet"
+		  android:orderInCategory="1"
+		  android:showAsAction="never" />
+
+	<item android:id="@+id/action_clear_all_sounds"
+		  android:title="@string/action_clear_all_sounds"
+		  android:orderInCategory="1"
+		  android:showAsAction="never" />
+
 	<item android:id="@+id/action_clear_sound_sheets"
 		  android:title="@string/action_clear_sound_sheets"
 		  android:orderInCategory="1"

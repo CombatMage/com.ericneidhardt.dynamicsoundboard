@@ -1,11 +1,15 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
@@ -14,6 +18,8 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
+import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundAdapter;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
@@ -43,6 +49,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
+		this.setHasOptionsMenu(true);
 
 		this.fragmentTag = this.getArguments().getString(KEY_FRAGMENT_TAG);
 		this.soundAdapter = new SoundAdapter();
@@ -57,12 +64,49 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId())
+		{
+			case R.id.action_clear_sounds_in_sheet:
+				SoundManagerFragment soundManagerFragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+				soundManagerFragment.remove(this.fragmentTag);
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (resultCode == Activity.RESULT_OK)
+		{
+			if (requestCode == IntentRequest.GET_AUDIO_FILE)
+			{
+				Uri soundUri = data.getData();
+				String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
+				((SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG))
+						.add(this.fragmentTag, EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
+
+				return;
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
 	public void onClick(View view)
 	{
 		switch (view.getId())
 		{
 			case R.id.action_add_sound:
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), this.fragmentTag);
+				break;
+			case R.id.b_add_sound:
+				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+				intent.setType(Util.MIME_AUDIO);
+				this.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
 				break;
 		}
 	}
@@ -96,6 +140,12 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 
 	public void notifyDataSetAdded(List<EnhancedMediaPlayer> enhancedMediaPlayers)
 	{
+		this.soundAdapter.addAll(enhancedMediaPlayers);
+	}
+
+	public void notifyDataSetChanged(List<EnhancedMediaPlayer> enhancedMediaPlayers)
+	{
+		this.soundAdapter.clear();
 		this.soundAdapter.addAll(enhancedMediaPlayers);
 	}
 
