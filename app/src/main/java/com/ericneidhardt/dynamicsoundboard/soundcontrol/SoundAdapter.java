@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
+import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 10.09.2014.
  */
-public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
+public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> implements MediaPlayer.OnCompletionListener
 {
 	private List<EnhancedMediaPlayer> mediaPlayers;
 
@@ -29,6 +30,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 
 	public void add(EnhancedMediaPlayer mediaPlayer)
 	{
+		mediaPlayer.setOnCompletionListener(this);
 		this.mediaPlayers.add(mediaPlayer);
 		this.notifyItemInserted(this.mediaPlayers.size());
 	}
@@ -37,6 +39,10 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 	{
 		if (mediaPlayers == null)
 			return;
+
+		for (EnhancedMediaPlayer player : mediaPlayers)
+			player.setOnCompletionListener(this);
+
 		this.mediaPlayers.addAll(mediaPlayers);
 		this.notifyDataSetChanged();
 	}
@@ -82,6 +88,12 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder>
 		holder.play.setChecked(player.isPlaying());
 		holder.loop.setChecked(data.getIsLoop());
 		holder.inPlaylist.setChecked(data.getIsInPlaylist());
+	}
+
+	@Override
+	public void onCompletion(MediaPlayer mp)
+	{
+		this.notifyItemChanged(this.mediaPlayers.indexOf(mp));
 	}
 
 	public class ViewHolder
