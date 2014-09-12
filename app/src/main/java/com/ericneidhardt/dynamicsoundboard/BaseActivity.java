@@ -1,10 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.*;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -13,9 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
@@ -31,6 +27,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 	private DrawerLayout navigationDrawerLayout;
 
+	private PauseSoundOnCallListener phoneStateListener;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -41,6 +39,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 		this.addSoundControllerFragment();
 		this.addSoundLayoutControllerFragment();
+
+		this.phoneStateListener = new PauseSoundOnCallListener();
 	}
 
 	@Override
@@ -96,6 +96,9 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		super.onResume();
 		this.isActivityVisible = true;
 		this.setSoundSheetActionsEnable(false);
+
+		PauseSoundOnCallListener.registerListener(this,
+				this.phoneStateListener, (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG));
 	}
 
 	@Override
@@ -103,6 +106,8 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	{
 		super.onPause();
 		this.isActivityVisible = false;
+
+		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener);
 	}
 
 	public void setSoundSheetActionsEnable(boolean enable)

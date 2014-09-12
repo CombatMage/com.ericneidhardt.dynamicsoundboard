@@ -76,6 +76,11 @@ public class SoundManagerFragment extends Fragment
 		return this.sounds.get(fragmentTag);
 	}
 
+	public Map<String, List<EnhancedMediaPlayer>> getAll()
+	{
+		return this.sounds;
+	}
+
 	public void add(String fragmentTag, MediaPlayerData mediaPlayerData)
 	{
 		this.add(fragmentTag, asList(mediaPlayerData));
