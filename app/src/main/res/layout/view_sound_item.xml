@@ -15,9 +15,9 @@
 				android:id="@+id/cb_loop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_margin="@dimen/margin_small"
-				android:layout_alignParentRight="true"
-				android:layout_alignParentEnd="true"
+				android:layout_margin="@dimen/margin_default_with_large_icon"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentStart="true"
 				android:layout_centerVertical="true"
 				android:contentDescription="@string/sound_control_content_description_loop"
 				android:button="@drawable/selector_ic_loop"/>
@@ -26,10 +26,10 @@
 				android:id="@+id/cb_add_to_playlist"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_alignParentLeft="true"
-				android:layout_alignParentStart="true"
+				android:layout_alignParentRight="true"
+				android:layout_alignParentEnd="true"
 				android:layout_centerVertical="true"
-				android:layout_margin="@dimen/margin_small"
+				android:layout_margin="@dimen/margin_default_with_large_icon"
 				android:contentDescription="@string/sound_control_content_description_playlist"
 				android:button="@drawable/selector_ic_playlist"/>
 
@@ -37,11 +37,10 @@
 				android:id="@id/et_name_file"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_margin="@dimen/margin_small"
-				android:layout_toRightOf="@id/cb_add_to_playlist"
-				android:layout_toEndOf="@id/cb_add_to_playlist"
-				android:layout_toStartOf="@id/cb_loop"
-				android:layout_toLeftOf="@id/cb_loop"
+				android:layout_toRightOf="@id/cb_loop"
+				android:layout_toEndOf="@id/cb_loop"
+				android:layout_toStartOf="@id/cb_add_to_playlist"
+				android:layout_toLeftOf="@id/cb_add_to_playlist"
 				android:layout_centerVertical="true"/>
 
 	</RelativeLayout>
@@ -54,7 +53,9 @@
 				android:id="@+id/b_stop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_margin="@dimen/margin_small"
+				android:layout_margin="@dimen/margin_default_with_large_icon"
+				android:layout_alignParentRight="true"
+				android:layout_alignParentEnd="true"
 				android:layout_centerVertical="true"
 				android:contentDescription="@string/sound_control_content_description_stop"
 				android:src="@drawable/selector_ic_stop"
@@ -64,10 +65,8 @@
 				android:id="@+id/cb_play"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_alignParentEnd="true"
 				android:layout_centerVertical="true"
-				android:layout_margin="@dimen/margin_small"
+				android:layout_margin="@dimen/margin_default_with_large_icon"
 				android:contentDescription="@string/sound_control_content_description_play"
 				android:button="@drawable/selector_ic_play"/>
 
@@ -75,9 +74,9 @@
 				android:id="@+id/sb_time"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_margin="@dimen/margin_small"
-				android:layout_toRightOf="@id/b_stop"
-				android:layout_toLeftOf="@id/cb_play"/>
+				android:layout_toLeftOf="@id/b_stop"
+				android:layout_toRightOf="@id/cb_play"
+				android:layout_centerVertical="true"/>
 
 	</RelativeLayout>
 
