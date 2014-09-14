@@ -7,9 +7,7 @@ import org.acra.annotation.ReportsCrashes;
 
 import java.util.Random;
 
-/**
- * Created by eric.neidhardt on 27.08.2014.
- */
+
 @ReportsCrashes(
 	formKey = "", // This is required for backward compatibility but not used
 	mailTo = "eric@neidhardt-erkner.de"

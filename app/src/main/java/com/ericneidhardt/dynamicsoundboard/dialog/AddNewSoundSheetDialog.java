@@ -80,7 +80,7 @@ public class AddNewSoundSheetDialog extends DialogFragment implements View.OnCli
 		if (caller == null)
 			return;
 		String label = this.soundSheetName.getDisplayedText();
-		caller.add(caller.getNewSoundSheet(label));
+		caller.addSoundSheetAndNotifyFragment(caller.getNewSoundSheet(label));
 	}
 
 

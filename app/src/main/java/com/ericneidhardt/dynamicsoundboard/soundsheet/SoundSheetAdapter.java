@@ -7,21 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by eric.neidhardt on 29.08.2014.
- */
 public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.ViewHolder>
 {
 	private List<SoundSheet> soundSheets;
 	private OnItemClickListener onItemClickListener;
-	private OnItemLongClickListener onItemLongClickListener;
 	private OnItemDeleteListener onItemDeleteListener;
 
 	public SoundSheetAdapter()
@@ -32,11 +27,6 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
 		this.onItemClickListener = onItemClickListener;
-	}
-
-	public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener)
-	{
-		this.onItemLongClickListener = onItemLongClickListener;
 	}
 
 	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener)
@@ -69,6 +59,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		this.notifyDataSetChanged();
 	}
 
+
 	/**
 	 * Set the item with this position selected and all other items deselected
 	 * @param position
@@ -81,17 +72,6 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 			this.soundSheets.get(i).setIsSelected(isSelected);
 		}
 		this.notifyDataSetChanged();
-	}
-
-	public SoundSheet getSelectedItem()
-	{
-
-		for (SoundSheet soundSheet : this.soundSheets)
-		{
-			if (soundSheet.getIsSelected())
-				return soundSheet;
-		}
-		return null;
 	}
 
 	public List<SoundSheet> getValues()
@@ -120,7 +100,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 	}
 
-	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
+	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 	{
 		private TextView textView;
 		private ImageView selectionIndicator;
@@ -131,10 +111,9 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 
 			this.textView = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
-			this.deleteItem = (ImageButton)itemView.findViewById(R.id.ib_delete_sound_sheet);
+			this.deleteItem = (ImageButton) itemView.findViewById(R.id.ib_delete_sound_sheet);
 
 			itemView.setOnClickListener(this);
-			itemView.setOnLongClickListener(this);
 			this.deleteItem.setOnClickListener(this);
 		}
 
@@ -154,24 +133,11 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 			}
 		}
 
-		@Override
-		public boolean onLongClick(View view)
-		{
-			int position = this.getPosition();
-			if (onItemLongClickListener != null)
-				return onItemLongClickListener.onItemLongClick(view, soundSheets.get(position), position);
-			return false;
-		}
 	}
 
 	public static interface OnItemClickListener
 	{
 		public void onItemClick(View view, SoundSheet data, int position);
-	}
-
-	public static interface OnItemLongClickListener
-	{
-		public boolean onItemLongClick(View view, SoundSheet data, int position);
 	}
 
 	public static interface OnItemDeleteListener

@@ -64,7 +64,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 
-		this.startTimerUpdateTask();
+		//this.startTimerUpdateTask();
 	}
 
 	private void startTimerUpdateTask()
@@ -111,7 +111,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 				Uri soundUri = data.getData();
 				String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
 				((SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG))
-						.add(this.fragmentTag, EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
+						.addMediaPlayerAndNotifyFragment(this.fragmentTag, EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
 
 				return;
 			}

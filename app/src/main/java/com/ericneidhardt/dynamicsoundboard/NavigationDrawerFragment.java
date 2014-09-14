@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.soundsheet;
+package com.ericneidhardt.dynamicsoundboard;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -9,38 +9,27 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import com.ericneidhardt.dynamicsoundboard.BaseActivity;
-import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
-import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
-import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetAdapter;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
 import java.util.List;
 
-/**
- * Created by eric.neidhardt on 10.09.2014.
- */
 public class NavigationDrawerFragment
 		extends
 			Fragment
 		implements
 			SoundSheetAdapter.OnItemClickListener,
-			SoundSheetAdapter.OnItemDeleteListener,
-			ActionbarEditText.OnTextEditedListener
+			SoundSheetAdapter.OnItemDeleteListener
 {
 	public static final String TAG = NavigationDrawerFragment.class.getSimpleName();
 
-	private static final String DB_SOUND_SHEETS = "com.ericneidhardt.dynamicsoundboard.SoundSheetManagerFragment.db_sound_sheets";
-
 	private SoundSheetAdapter soundSheetAdapter;
-	private DaoSession daoSession;
 	private TabContentAdapter tabContentAdapter;
-
-	private boolean hasPendingLoadSoundSheetsTask = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -48,7 +37,6 @@ public class NavigationDrawerFragment
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
 
-		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUND_SHEETS);
 		this.soundSheetAdapter = new SoundSheetAdapter();
 		this.soundSheetAdapter.setOnItemClickListener(this);
 		this.soundSheetAdapter.setOnItemDeleteListener(this);
@@ -59,17 +47,7 @@ public class NavigationDrawerFragment
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		this.buildNavigationDrawerTabLayout();
 
-		ActionbarEditText labelCurrentSoundSheet = (ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label);
-		labelCurrentSoundSheet.setOnTextEditedListener(this);
-		SoundSheet currentActiveSoundSheet = this.soundSheetAdapter.getSelectedItem();
-		if (currentActiveSoundSheet != null)
-			labelCurrentSoundSheet.setText(currentActiveSoundSheet.getLabel());
-	}
-
-	private void buildNavigationDrawerTabLayout()
-	{
 		ViewPager tabContent = (ViewPager) this.getActivity().findViewById(R.id.vp_tab_content);
 		tabContent.setAdapter(this.tabContentAdapter);
 
@@ -98,6 +76,29 @@ public class NavigationDrawerFragment
 		listSoundSheets.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		listSoundSheets.setItemAnimator(new DefaultItemAnimator());
 		listSoundSheets.setAdapter(this.soundSheetAdapter);
+
+		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
+				.findFragmentByTag(SoundSheetManagerFragment.TAG);
+		this.soundSheetAdapter.clear();
+		if (fragment != null)
+			this.soundSheetAdapter.addAll(fragment.getAll());
+
+	}
+
+	public void notifyDataSetAdded(List<SoundSheet> soundSheets)
+	{
+		this.soundSheetAdapter.addAll(soundSheets);
+	}
+
+	public void notifyDataSetChanged(List<SoundSheet> soundSheets)
+	{
+		this.soundSheetAdapter.clear();
+		this.soundSheetAdapter.addAll(soundSheets);
+	}
+
+	public void notifyDataSetChanged()
+	{
+		this.soundSheetAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -114,6 +115,11 @@ public class NavigationDrawerFragment
 	public void onItemDelete(View view, SoundSheet data, int position)
 	{
 		this.soundSheetAdapter.remove(data);
+		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
+				.findFragmentByTag(SoundSheetManagerFragment.TAG);
+
+		fragment.remove(data);
+
 		if (this.getActivity() != null)
 		{
 			((BaseActivity)this.getActivity()).removeSoundFragment(data);
@@ -130,17 +136,6 @@ public class NavigationDrawerFragment
 				}
 			}
 		}
-	}
-
-	@Override
-	public void onTextEdited(String text)
-	{
-		SoundSheet currentActiveSoundSheet = this.soundSheetAdapter.getSelectedItem();
-		if (currentActiveSoundSheet == null)
-			throw new NullPointerException("sound sheet label was edited, but no sound sheet is selected");
-
-		currentActiveSoundSheet.setLabel(text);
-		this.soundSheetAdapter.notifyDataSetChanged();
 	}
 
 	private void openSoundSheetFragment(SoundSheet soundSheet)

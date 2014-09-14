@@ -167,7 +167,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 	{
 		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
 		if (fragment == null)
-			throw new NullPointerException("cannot add sound, SoundManagerFragment is null");
+			throw new NullPointerException("cannot addSoundSheetAndNotifyFragment sound, SoundManagerFragment is null");
 
 		int count = this.soundsToAdd.size();
 		List<MediaPlayerData> playersData = new ArrayList<MediaPlayerData>(count);
@@ -179,7 +179,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 			playersData.add(playerData);
 		}
 
-		fragment.add(this.callingFragmentTag, playersData);
+		fragment.addMediaPlayersAndNotfiyFragment(this.callingFragmentTag, playersData);
 	}
 
 }

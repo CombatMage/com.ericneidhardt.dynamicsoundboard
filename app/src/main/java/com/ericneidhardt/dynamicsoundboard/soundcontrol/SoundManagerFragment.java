@@ -78,15 +78,15 @@ public class SoundManagerFragment extends Fragment
 		return this.sounds;
 	}
 
-	public void add(String fragmentTag, MediaPlayerData mediaPlayerData)
+	public void addMediaPlayerAndNotifyFragment(String fragmentTag, MediaPlayerData mediaPlayerData)
 	{
-		this.add(fragmentTag, asList(mediaPlayerData));
+		this.addMediaPlayersAndNotfiyFragment(fragmentTag, asList(mediaPlayerData));
 	}
 
-	public void add(String fragmentTag, List<MediaPlayerData> mediaPlayersData)
+	public void addMediaPlayersAndNotfiyFragment(String fragmentTag, List<MediaPlayerData> mediaPlayersData)
 	{
 		if (fragmentTag == null)
-			throw  new NullPointerException("add: cannot add media players to fragment, fragment tag is null");
+			throw  new NullPointerException("addSoundSheetAndNotifyFragment: cannot addSoundSheetAndNotifyFragment media players to fragment, fragment tag is null");
 
 		if (this.sounds.get(fragmentTag) == null)
 			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
@@ -107,15 +107,16 @@ public class SoundManagerFragment extends Fragment
 
 		for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
 			player.destroy();
-		this.sounds.remove(fragmentTag);
 
+		this.sounds.remove(fragmentTag);
+		// TODO remove data from dao session
 		this.notifyFragment(fragmentTag);
 	}
 
 	private void load(String fragmentTag, List<EnhancedMediaPlayer> loadedMediaPlayers)
 	{
 		if (fragmentTag == null)
-			throw  new NullPointerException("load: cannot add media players to fragment, fragment tag is null");
+			throw  new NullPointerException("load: cannot addSoundSheetAndNotifyFragment media players to fragment, fragment tag is null");
 
 		if (this.sounds.get(fragmentTag) == null)
 			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());

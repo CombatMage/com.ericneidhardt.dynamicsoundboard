@@ -9,7 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
+import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
+import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -24,7 +27,14 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundSheetManagerFragment extends Fragment implements View.OnClickListener
+import static java.util.Arrays.asList;
+
+public class SoundSheetManagerFragment
+		extends
+			Fragment
+		implements
+			View.OnClickListener,
+			CustomEditText.OnTextEditedListener
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
@@ -52,6 +62,12 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	{
 		super.onActivityCreated(savedInstanceState);
 		this.getActivity().findViewById(R.id.action_add_sound_sheet).setOnClickListener(this);
+
+		ActionbarEditText labelCurrentSoundSheet = (ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label);
+		labelCurrentSoundSheet.setOnTextEditedListener(this);
+		SoundSheet currentActiveSoundSheet = this.getSelectedItem();
+		if (currentActiveSoundSheet != null)
+			labelCurrentSoundSheet.setText(currentActiveSoundSheet.getLabel());
 	}
 
 	@Override
@@ -72,11 +88,17 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			case R.id.action_clear_sound_sheets:
 				((BaseActivity) this.getActivity()).removeSoundFragment(this.soundSheets);
 
-				SoundManagerFragment soundManagerFragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+				SoundManagerFragment soundManagerFragment = (SoundManagerFragment)this.getFragmentManager()
+						.findFragmentByTag(SoundManagerFragment.TAG);
 				for (SoundSheet soundSheet : this.soundSheets)
 					soundManagerFragment.remove(soundSheet.getFragmentTag());
 
 				this.soundSheets.clear();
+
+				NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
+						.findFragmentByTag(NavigationDrawerFragment.TAG);
+				navigationDrawerFragment.notifyDataSetChanged(new ArrayList<SoundSheet>());
+
 				return true;
 			default:
 				return false;
@@ -97,6 +119,19 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		}
 	}
 
+	@Override
+	public void onTextEdited(String text)
+	{
+		SoundSheet currentActiveSoundSheet = this.getSelectedItem();
+		if (currentActiveSoundSheet == null)
+			throw new NullPointerException("sound sheet label was edited, but no sound sheet is selected");
+
+		currentActiveSoundSheet.setLabel(text);
+		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
+				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		navigationDrawerFragment.notifyDataSetChanged();
+	}
+
 	public SoundSheet get(String soundSheetTag)
 	{
 		for (SoundSheet soundSheet : this.soundSheets)
@@ -107,10 +142,34 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 		return null;
 	}
 
+	public void remove(SoundSheet soundSheet)
+	{
+		this.soundSheets.remove(soundSheet);
+		// TODO remove data from dao session
+	}
 
-	public void add(SoundSheet soundSheet)
+	public List<SoundSheet> getAll()
+	{
+		return this.soundSheets;
+	}
+
+	public SoundSheet getSelectedItem()
+	{
+		for (SoundSheet soundSheet : this.soundSheets)
+		{
+			if (soundSheet.getIsSelected())
+				return soundSheet;
+		}
+		return null;
+	}
+
+
+	public void addSoundSheetAndNotifyFragment(SoundSheet soundSheet)
 	{
 		this.soundSheets.add(soundSheet);
+		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
+				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		navigationDrawerFragment.notifyDataSetAdded(asList(soundSheet));
 
 		SafeAsyncTask task = new StoreSoundSheetTask(soundSheet);
 		task.execute();
@@ -120,19 +179,19 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 	{
 		SoundManagerFragment soundManagerFragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
 		if (soundManagerFragment == null)
-			throw new NullPointerException("cannot add sound, SoundManagerFragment is null");
+			throw new NullPointerException("cannot addSoundSheetAndNotifyFragment sound, SoundManagerFragment is null");
 
 		if (newSoundSheetName != null)
 		{
-			SoundSheet newSoundSheet = getNewSoundSheet(newSoundSheetName);
-			this.add(newSoundSheet);
+			SoundSheet newSoundSheet = this.getNewSoundSheet(newSoundSheetName);
+			this.addSoundSheetAndNotifyFragment(newSoundSheet);
 			MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(newSoundSheet.getFragmentTag(), soundUri, soundLabel);
-			soundManagerFragment.add(newSoundSheet.getFragmentTag(), mediaPlayerData);
+			soundManagerFragment.addMediaPlayerAndNotifyFragment(newSoundSheet.getFragmentTag(), mediaPlayerData);
 		}
 		else if (existingSoundSheet != null)
 		{
 			MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
-			soundManagerFragment.add(existingSoundSheet.getFragmentTag(), mediaPlayerData);
+			soundManagerFragment.addMediaPlayerAndNotifyFragment(existingSoundSheet.getFragmentTag(), mediaPlayerData);
 		}
 	}
 
@@ -181,6 +240,9 @@ public class SoundSheetManagerFragment extends Fragment implements View.OnClickL
 			}
 
 			handleIntent(getActivity().getIntent());
+			NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager()
+					.findFragmentByTag(NavigationDrawerFragment.TAG);
+			navigationDrawerFragment.notifyDataSetAdded(soundSheets);
 		}
 
 		@Override

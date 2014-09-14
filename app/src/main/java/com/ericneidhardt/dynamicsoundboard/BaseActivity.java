@@ -13,7 +13,6 @@ import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
-import com.ericneidhardt.dynamicsoundboard.soundsheet.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
@@ -204,7 +203,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		Fragment fragment =  fragmentManager.findFragmentByTag(SoundSheetManagerFragment.TAG);
 		if (fragment == null)
 		{
-			fragment = new SoundManagerFragment();
+			fragment = new SoundSheetManagerFragment();
 			fragmentManager.beginTransaction().add(fragment, SoundSheetManagerFragment.TAG).commit();
 			fragmentManager.executePendingTransactions();
 		}
