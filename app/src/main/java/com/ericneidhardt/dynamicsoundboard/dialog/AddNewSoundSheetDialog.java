@@ -4,12 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
@@ -79,18 +75,13 @@ public class AddNewSoundSheetDialog extends DialogFragment implements View.OnCli
 
 	private void deliverResult()
 	{
-		String label = this.soundSheetName.getDisplayedText();
-
-		SoundSheetManagerFragment caller = (SoundSheetManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
+		SoundSheetManagerFragment caller = (SoundSheetManagerFragment)this.getFragmentManager()
+				.findFragmentByTag(SoundSheetManagerFragment.TAG);
 		if (caller == null)
 			return;
-
-		caller.onAddSoundSheet(label);
+		String label = this.soundSheetName.getDisplayedText();
+		caller.add(caller.getNewSoundSheet(label));
 	}
 
-	public interface OnAddSoundSheetListener
-	{
-		public void onAddSoundSheet(String label);
-	}
 
 }

@@ -19,9 +19,6 @@ import java.util.Map;
 
 import static java.util.Arrays.asList;
 
-/**
- * Created by eric.neidhardt on 11.09.2014.
- */
 public class SoundManagerFragment extends Fragment
 {
 	public static final String TAG = SoundManagerFragment.class.getSimpleName();

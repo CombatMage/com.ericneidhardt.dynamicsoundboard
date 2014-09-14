@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomSpinner;
@@ -20,9 +19,6 @@ import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by eric.neidhardt on 04.09.2014.
- */
 public class AddNewSoundFromIntent extends DialogFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
 {
 	public static final String TAG = AddNewSoundFromIntent.class.getSimpleName();
@@ -166,24 +162,26 @@ public class AddNewSoundFromIntent extends DialogFragment implements View.OnClic
 
 	private void deliverResult()
 	{
-		SoundSheetManagerFragment caller = (SoundSheetManagerFragment) this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
+		SoundSheetManagerFragment caller = (SoundSheetManagerFragment) this.getFragmentManager()
+				.findFragmentByTag(SoundSheetManagerFragment.TAG);
 		if (caller == null)
 			return;
 
 		String soundLabel = this.soundName.getText().toString();
-		String newSoundSheet = soundSheetName.getDisplayedText().toString();
+		String newSoundSheet = soundSheetName.getDisplayedText();
 		if (!this.soundSheetsAlreadyExists)
-		{
-			caller.onAddSoundFromIntent(this.uri, soundLabel, newSoundSheet, null);
-		}
+			caller.addSoundFromIntent(this.uri, soundLabel, newSoundSheet, null);
 		else
 		{
 			String selectedSoundSheetId = this.availableSoundSheetIds.get(this.soundSheetSpinner.getSelectedItemPosition());
 
 			if (this.addNewSoundSheet.isChecked())
-				caller.onAddSoundFromIntent(this.uri, soundLabel, newSoundSheet, null);
+				caller.addSoundFromIntent(this.uri, soundLabel, newSoundSheet, null);
 			else
-				caller.onAddSoundFromIntent(this.uri, soundLabel, null, selectedSoundSheetId);
+			{
+				SoundSheet existingSoundSheet = caller.get(selectedSoundSheetId);
+				caller.addSoundFromIntent(this.uri, soundLabel, null, existingSoundSheet);
+			}
 		}
 	}
 
@@ -203,8 +201,4 @@ public class AddNewSoundFromIntent extends DialogFragment implements View.OnClic
 		return labels;
 	}
 
-	public interface OnAddSoundFromIntentListener
-	{
-		public void onAddSoundFromIntent(Uri soundUri, String soundName, String newSoundSheetLabel, String existingSoundSheetTag);
-	}
 }

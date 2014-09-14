@@ -13,6 +13,7 @@ import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
@@ -37,7 +38,9 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		this.createActionbar();
 		this.createNavigationDrawer();
 
-		this.addSoundControllerFragment();
+		this.addSoundManagerFragment();
+		this.addSoundSheetManagerFragment();
+
 		this.addSoundLayoutControllerFragment();
 
 		this.phoneStateListener = new PauseSoundOnCallListener();
@@ -181,7 +184,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		}
 	}
 
-	private void addSoundControllerFragment()
+	private void addSoundManagerFragment()
 	{
 		FragmentManager fragmentManager = this.getFragmentManager();
 
@@ -194,15 +197,28 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		}
 	}
 
-	private void addSoundLayoutControllerFragment()
+	private void addSoundSheetManagerFragment()
 	{
 		FragmentManager fragmentManager = this.getFragmentManager();
 
 		Fragment fragment =  fragmentManager.findFragmentByTag(SoundSheetManagerFragment.TAG);
 		if (fragment == null)
 		{
-			fragment = new SoundSheetManagerFragment();
+			fragment = new SoundManagerFragment();
 			fragmentManager.beginTransaction().add(fragment, SoundSheetManagerFragment.TAG).commit();
+			fragmentManager.executePendingTransactions();
+		}
+	}
+
+	private void addSoundLayoutControllerFragment()
+	{
+		FragmentManager fragmentManager = this.getFragmentManager();
+
+		Fragment fragment =  fragmentManager.findFragmentByTag(NavigationDrawerFragment.TAG);
+		if (fragment == null)
+		{
+			fragment = new NavigationDrawerFragment();
+			fragmentManager.beginTransaction().add(fragment, NavigationDrawerFragment.TAG).commit();
 			fragmentManager.executePendingTransactions();
 		}
 	}
