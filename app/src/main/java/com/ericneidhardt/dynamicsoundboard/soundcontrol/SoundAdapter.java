@@ -17,26 +17,18 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by eric.neidhardt on 10.09.2014.
- */
+
 public class SoundAdapter
 		extends
 			RecyclerView.Adapter<SoundAdapter.ViewHolder>
 		implements
-			MediaPlayer.OnCompletionListener,
-			Runnable
+			MediaPlayer.OnCompletionListener
 {
-	private static final int SLEEP_TIME = 1000;
-
 	private List<EnhancedMediaPlayer> mediaPlayers;
 
 	public SoundAdapter()
 	{
 		this.mediaPlayers = new ArrayList<EnhancedMediaPlayer>();
-
-		Thread updateTimePositions = new Thread(this);
-		updateTimePositions.start();
 	}
 
 	public void add(EnhancedMediaPlayer mediaPlayer)
@@ -107,25 +99,8 @@ public class SoundAdapter
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
-		this.notifyItemChanged(this.mediaPlayers.indexOf(mp));
-	}
-
-	@Override
-	public void run()
-	{
-		while (true)
-		{
-			try
-			{
-				Thread.sleep(SLEEP_TIME);
-			}
-			catch (InterruptedException e)
-			{
-				return;
-			}
-
-			// TODO this must be called from ui thread this.notifyDataSetChanged();
-		}
+		if (mp instanceof EnhancedMediaPlayer)
+			this.notifyItemChanged(this.mediaPlayers.indexOf(mp));
 	}
 
 	public class ViewHolder
@@ -134,7 +109,8 @@ public class SoundAdapter
 			implements
 				View.OnClickListener,
 				CustomEditText.OnTextEditedListener,
-				CompoundButton.OnCheckedChangeListener
+				CompoundButton.OnCheckedChangeListener,
+				SeekBar.OnSeekBarChangeListener
 	{
 		private DialogEditText name;
 		private CheckBox play;
@@ -159,6 +135,7 @@ public class SoundAdapter
 			this.loop.setOnCheckedChangeListener(this);
 			this.inPlaylist.setOnCheckedChangeListener(this);
 			this.stop.setOnClickListener(this);
+			this.timePosition.setOnSeekBarChangeListener(this);
 		}
 
 		@Override
@@ -200,5 +177,21 @@ public class SoundAdapter
 					break;
 			}
 		}
+
+		@Override
+		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+		{
+			if (fromUser)
+			{
+				EnhancedMediaPlayer player = mediaPlayers.get(this.getPosition());
+				player.setPositionTo(progress);
+			}
+		}
+
+		@Override
+		public void onStartTrackingTouch(SeekBar seekBar) {}
+
+		@Override
+		public void onStopTrackingTouch(SeekBar seekBar) {}
 	}
 }

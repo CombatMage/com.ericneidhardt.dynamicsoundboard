@@ -24,13 +24,15 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundAdapter;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-/**
- * Created by eric.neidhardt on 27.08.2014.
- */
+
 public class SoundSheetFragment extends Fragment implements View.OnClickListener
 {
 	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
+
+	private static final int UPDATE_INTERVAL = 500;
 
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
@@ -61,10 +63,32 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		super.onResume();
 		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
+
+		this.startTimerUpdateTask();
+	}
+
+	private void startTimerUpdateTask()
+	{
+		TimerTask updateTimePositions = new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						soundAdapter.notifyDataSetChanged();
+					}
+				});
+			}
+		};
+		Timer timer = new Timer();
+		timer.schedule(updateTimePositions, 0, UPDATE_INTERVAL);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId())
 		{

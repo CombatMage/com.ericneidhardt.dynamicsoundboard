@@ -185,4 +185,45 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 		}
 	}
 
+	public boolean setPositionTo(int timePosition)
+	{
+		try
+		{
+			switch (this.currentState)
+			{
+				case INIT:
+					this.prepare();
+					this.seekTo(timePosition);
+					this.currentState = State.PREPARED;
+					return true;
+				case PREPARED:
+					this.seekTo(timePosition);
+					return true;
+				case STARTED:
+					this.seekTo(timePosition);
+					return true;
+				case PAUSED:
+					this.seekTo(timePosition);
+					return true;
+				case STOPPED:
+					this.prepare();
+					this.seekTo(timePosition);
+					this.currentState = State.PREPARED;
+					return true;
+				default:
+					return false;
+			}
+		}
+		catch (IOException e)
+		{
+			Logger.e(TAG, e.getMessage());
+			return false;
+		}
+		catch (IllegalStateException e)
+		{
+			Logger.e(TAG, e.getMessage());
+			return false;
+		}
+	}
+
 }
