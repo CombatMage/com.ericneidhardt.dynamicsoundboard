@@ -269,6 +269,9 @@ public class SoundSheetManagerFragment
 			NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager()
 					.findFragmentByTag(NavigationDrawerFragment.TAG);
 			navigationDrawerFragment.notifyDataSetChanged(true);
+
+			BaseActivity activity = (BaseActivity)getActivity();
+			activity.openSoundFragment(getSelectedItem());
 		}
 
 		@Override
