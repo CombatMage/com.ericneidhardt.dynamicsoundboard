@@ -24,19 +24,15 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundAdapter;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class SoundSheetFragment extends Fragment implements View.OnClickListener
 {
 	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
-	private static final int UPDATE_INTERVAL = 500;
-
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
-	private Timer progressBarUpdateTimer;
+
 
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
 	{
@@ -55,7 +51,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		this.setHasOptionsMenu(true);
 
 		this.fragmentTag = this.getArguments().getString(KEY_FRAGMENT_TAG);
-		this.soundAdapter = new SoundAdapter();
+		this.soundAdapter = new SoundAdapter(this);
 	}
 
 	@Override
@@ -65,35 +61,14 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 
-		this.startTimerUpdateTask();
+		this.soundAdapter.startTimerUpdateTask();
 	}
 
 	@Override
-	public void onPause() {
-		super.onPause();
-		this.progressBarUpdateTimer.cancel();
-	}
-
-	/**
-	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
-	 */
-	private void startTimerUpdateTask()
+	public void onPause()
 	{
-		TimerTask updateTimePositions = new TimerTask()
-		{
-			@Override
-			public void run()
-			{
-				getActivity().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						soundAdapter.notifyDataSetChanged();
-					}
-				});
-			}
-		};
-		this.progressBarUpdateTimer = new Timer();
-		progressBarUpdateTimer.schedule(updateTimePositions, 0, UPDATE_INTERVAL);
+		super.onPause();
+		this.soundAdapter.stopProgressUpdateTimer();
 	}
 
 	@Override
@@ -157,7 +132,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 
 		RecyclerView listSounds = (RecyclerView)fragmentView.findViewById(R.id.rv_sounds);
 		listSounds.addItemDecoration(new DividerItemDecoration(this.getActivity(),
-				DividerItemDecoration.VERTICAL_LIST, this.getResources().getDrawable(R.drawable.shape_divider)));
+				DividerItemDecoration.VERTICAL_LIST, null));
 		listSounds.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		listSounds.setItemAnimator(new DefaultItemAnimator());
 		listSounds.setAdapter(this.soundAdapter);

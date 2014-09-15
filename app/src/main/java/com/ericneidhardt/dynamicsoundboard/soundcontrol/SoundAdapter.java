@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
+import android.app.Fragment;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class SoundAdapter
@@ -24,10 +27,15 @@ public class SoundAdapter
 		implements
 			MediaPlayer.OnCompletionListener
 {
-	private List<EnhancedMediaPlayer> mediaPlayers;
+	private static final int UPDATE_INTERVAL = 500;
 
-	public SoundAdapter()
+	private Fragment parent;
+	private List<EnhancedMediaPlayer> mediaPlayers;
+	private Timer progressBarUpdateTimer;
+
+	public SoundAdapter(Fragment parent)
 	{
+		this.parent = parent;
 		this.mediaPlayers = new ArrayList<EnhancedMediaPlayer>();
 	}
 
@@ -42,12 +50,6 @@ public class SoundAdapter
 		this.mediaPlayers.addAll(mediaPlayers);
 	}
 
-	public void remove(EnhancedMediaPlayer mediaPlayer)
-	{
-		int position = this.mediaPlayers.indexOf(mediaPlayer);
-		this.mediaPlayers.remove(position);
-	}
-
 	public void clear()
 	{
 		this.mediaPlayers.clear();
@@ -57,6 +59,33 @@ public class SoundAdapter
 	public int getItemCount()
 	{
 		return this.mediaPlayers.size();
+	}
+
+	/**
+	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
+	 */
+	public void startTimerUpdateTask()
+	{
+		TimerTask updateTimePositions = new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				parent.getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						notifyDataSetChanged();
+					}
+				});
+			}
+		};
+		this.progressBarUpdateTimer = new Timer();
+		progressBarUpdateTimer.schedule(updateTimePositions, 0, UPDATE_INTERVAL);
+	}
+
+	public void stopProgressUpdateTimer()
+	{
+		this.progressBarUpdateTimer.cancel();
 	}
 
 	@Override
@@ -174,9 +203,15 @@ public class SoundAdapter
 		}
 
 		@Override
-		public void onStartTrackingTouch(SeekBar seekBar) {}
+		public void onStartTrackingTouch(SeekBar seekBar)
+		{
+			stopProgressUpdateTimer();
+		}
 
 		@Override
-		public void onStopTrackingTouch(SeekBar seekBar) {}
+		public void onStopTrackingTouch(SeekBar seekBar)
+		{
+			startTimerUpdateTask();
+		}
 	}
 }
