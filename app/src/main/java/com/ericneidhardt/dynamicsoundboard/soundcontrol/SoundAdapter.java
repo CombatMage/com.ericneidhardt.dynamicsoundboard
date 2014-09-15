@@ -11,7 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
-import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
@@ -126,7 +125,7 @@ public class SoundAdapter
 				CompoundButton.OnCheckedChangeListener,
 				SeekBar.OnSeekBarChangeListener
 	{
-		private DialogEditText name;
+		private CustomEditText name;
 		private CheckBox play;
 		private CheckBox loop;
 		private CheckBox inPlaylist;
@@ -137,7 +136,7 @@ public class SoundAdapter
 		{
 			super(itemView);
 
-			this.name = (DialogEditText)itemView.findViewById(R.id.et_name_file);
+			this.name = (CustomEditText)itemView.findViewById(R.id.et_name_file);
 			this.play = (CheckBox)itemView.findViewById(R.id.cb_play);
 			this.loop = (CheckBox)itemView.findViewById(R.id.cb_loop);
 			this.inPlaylist = (CheckBox)itemView.findViewById(R.id.cb_add_to_playlist);

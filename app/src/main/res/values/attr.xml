@@ -4,6 +4,7 @@
 	<declare-styleable name="CustomEditText">
 		<attr name="textSize" format="dimension" />
 		<attr name="textColor" format="color" />
+		<attr name="showUnderscore" format="boolean" />
 	</declare-styleable>
 
 </resources>

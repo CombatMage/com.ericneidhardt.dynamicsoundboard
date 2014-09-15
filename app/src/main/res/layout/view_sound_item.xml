@@ -1,64 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical">
+		android:layout_height="@dimen/height_list_item_large">
 
-	<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
-
-		<CheckBox
-				android:id="@+id/cb_loop"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="@dimen/margin_default_with_large_icon"
-				android:layout_marginRight="@dimen/margin_default_with_large_icon"
-				android:layout_alignParentLeft="true"
-				android:layout_alignParentStart="true"
-				android:layout_centerVertical="true"
-				android:contentDescription="@string/sound_control_content_description_loop"
-				android:button="@drawable/selector_ic_loop"/>
-
-		<CheckBox
-				android:id="@+id/cb_add_to_playlist"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_alignParentEnd="true"
-				android:layout_centerVertical="true"
-				android:layout_marginLeft="@dimen/margin_default_with_large_icon"
-				android:layout_marginRight="@dimen/margin_default_with_large_icon"
-				android:contentDescription="@string/sound_control_content_description_playlist"
-				android:button="@drawable/selector_ic_playlist"/>
-
-		<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
-				android:id="@id/et_name_file"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_toRightOf="@id/cb_loop"
-				android:layout_toEndOf="@id/cb_loop"
-				android:layout_toStartOf="@id/cb_add_to_playlist"
-				android:layout_toLeftOf="@id/cb_add_to_playlist"
-				android:layout_centerVertical="true"/>
-
-	</RelativeLayout>
-
-	<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+	<LinearLayout
+			android:id="@+id/layout_sound_controls"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/margin_default"
+			android:orientation="horizontal">
 
 		<ImageButton
 				android:id="@+id/b_stop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="@dimen/margin_default_with_large_icon"
-				android:layout_marginRight="@dimen/margin_default_with_large_icon"
-				android:layout_alignParentRight="true"
-				android:layout_alignParentEnd="true"
-				android:layout_centerVertical="true"
+				android:layout_marginRight="@dimen/margin_default"
 				android:contentDescription="@string/sound_control_content_description_stop"
 				android:src="@drawable/selector_ic_stop"
 				android:background="@android:color/transparent"/>
@@ -67,20 +26,57 @@
 				android:id="@+id/cb_play"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:layout_marginLeft="@dimen/margin_default_with_large_icon"
-				android:layout_marginRight="@dimen/margin_default_with_large_icon"
 				android:contentDescription="@string/sound_control_content_description_play"
 				android:button="@drawable/selector_ic_play"/>
 
-		<SeekBar
-				android:id="@+id/sb_time"
-				android:layout_width="match_parent"
+	</LinearLayout>
+
+	<LinearLayout
+			android:id="@+id/layout_sound_controls_secondary"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="@dimen/margin_default"
+			android:layout_marginRight="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:orientation="vertical">
+
+		<CheckBox
+				android:id="@+id/cb_loop"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_toLeftOf="@id/b_stop"
-				android:layout_toRightOf="@id/cb_play"
-				android:layout_centerVertical="true"/>
+				android:padding="@dimen/margin_tiny"
+				android:contentDescription="@string/sound_control_content_description_loop"
+				android:button="@drawable/selector_ic_loop"/>
 
-	</RelativeLayout>
+		<CheckBox
+				android:id="@+id/cb_add_to_playlist"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/margin_tiny"
+				android:contentDescription="@string/sound_control_content_description_playlist"
+				android:button="@drawable/selector_ic_playlist"/>
 
-</LinearLayout>
+
+	</LinearLayout>
+
+	<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
+			android:id="@id/et_name_file"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/layout_sound_controls"
+			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
+			android:layout_margin="@dimen/margin_default"
+			app:showUnderscore="false"
+			app:textSize="@dimen/text_subheading"
+			app:textColor="@color/text_content_primary"/>
+
+	<SeekBar
+			android:id="@+id/sb_time"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/layout_sound_controls"
+			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
+			android:layout_alignBottom="@id/layout_sound_controls"/>
+
+</RelativeLayout>

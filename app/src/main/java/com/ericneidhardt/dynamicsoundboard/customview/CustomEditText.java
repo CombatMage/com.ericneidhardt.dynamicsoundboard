@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 
 public abstract class CustomEditText extends LinearLayout implements TextView.OnEditorActionListener
 {
+	protected View divider;
 	protected EditTextBackEvent input;
 	protected OnTextEditedListener callback;
 
@@ -23,6 +25,7 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 		super(context, attrs);
 		this.inflateLayout(context, this.getLayoutId());
 		this.input.setOnEditorActionListener(this);
+		this.divider = this.findViewById(R.id.v_divider);
 
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
 		float size = array.getDimension(R.styleable.CustomEditText_textSize, 0);
@@ -32,6 +35,10 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 		int color = array.getColor(R.styleable.CustomEditText_textColor, 0);
 		if (array.hasValue(R.styleable.CustomEditText_textColor))
 			this.input.setTextColor(color);
+
+		boolean showUnderScore = array.getBoolean(R.styleable.CustomEditText_showUnderscore, true);
+		if (!showUnderScore)
+			this.divider.setVisibility(GONE);
 
 		array.recycle();
 	}
