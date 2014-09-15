@@ -11,9 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.R;
 
-/**
- * Created by eric.neidhardt on 02.09.2014.
- */
+
 public class ActionbarEditText extends CustomEditText implements TextView.OnEditorActionListener, View.OnClickListener, EditTextBackEvent.EditTextImeBackListener
 {
 	private View divider;

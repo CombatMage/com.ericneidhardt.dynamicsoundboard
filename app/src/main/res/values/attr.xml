@@ -2,7 +2,8 @@
 <resources>
 
 	<declare-styleable name="CustomEditText">
-		<attr name="layout" format="reference" />
+		<attr name="textSize" format="dimension" />
+		<attr name="textColor" format="color" />
 	</declare-styleable>
 
 </resources>

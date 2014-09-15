@@ -1,8 +1,10 @@
 package com.ericneidhardt.dynamicsoundboard.customview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.text.Editable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
@@ -10,9 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.R;
 
-/**
- * Created by eric.neidhardt on 29.08.2014.
- */
+
 public abstract class CustomEditText extends LinearLayout implements TextView.OnEditorActionListener
 {
 	protected EditTextBackEvent input;
@@ -23,6 +23,17 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 		super(context, attrs);
 		this.inflateLayout(context, this.getLayoutId());
 		this.input.setOnEditorActionListener(this);
+
+		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
+		float size = array.getDimension(R.styleable.CustomEditText_textSize, 0);
+		if (array.hasValue(R.styleable.CustomEditText_textSize))
+			this.input.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+
+		int color = array.getColor(R.styleable.CustomEditText_textColor, 0);
+		if (array.hasValue(R.styleable.CustomEditText_textColor))
+			this.input.setTextColor(color);
+
+		array.recycle();
 	}
 
 	public void setOnTextEditedListener(OnTextEditedListener listener)
