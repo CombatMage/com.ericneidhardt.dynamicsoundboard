@@ -153,12 +153,11 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		listSounds.setAdapter(this.soundAdapter);
 
 		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
-		this.soundAdapter.clear(false);
-		if (fragment != null)
-		{
-			List<EnhancedMediaPlayer> enhancedMediaPlayers = fragment.get(this.fragmentTag);
-			this.soundAdapter.addAll(enhancedMediaPlayers, true);
-		}
+		List<EnhancedMediaPlayer> enhancedMediaPlayers = fragment.get(this.fragmentTag);
+
+		this.soundAdapter.clear();
+		this.soundAdapter.addAll(enhancedMediaPlayers);
+		this.soundAdapter.notifyDataSetChanged();
 
 		return fragmentView;
 	}
@@ -170,8 +169,9 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 
 		if (newSoundsAvailable)
 		{
-			this.soundAdapter.clear(false);
-			this.soundAdapter.addAll(fragment.get(this.fragmentTag), true);
+			this.soundAdapter.clear();
+			this.soundAdapter.addAll(fragment.get(this.fragmentTag));
+			this.soundAdapter.notifyDataSetChanged();
 		}
 		else
 			this.soundAdapter.notifyDataSetChanged();

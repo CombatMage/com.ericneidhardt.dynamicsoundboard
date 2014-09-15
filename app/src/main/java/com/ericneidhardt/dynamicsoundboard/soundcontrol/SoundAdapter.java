@@ -31,7 +31,7 @@ public class SoundAdapter
 		this.mediaPlayers = new ArrayList<EnhancedMediaPlayer>();
 	}
 
-	public void addAll(List<EnhancedMediaPlayer> mediaPlayers, boolean notifyDataSetChanged)
+	public void addAll(List<EnhancedMediaPlayer> mediaPlayers)
 	{
 		if (mediaPlayers == null)
 			return;
@@ -40,23 +40,17 @@ public class SoundAdapter
 			player.setOnCompletionListener(this);
 
 		this.mediaPlayers.addAll(mediaPlayers);
-		if (notifyDataSetChanged)
-			this.notifyDataSetChanged();
 	}
 
-	public void remove(EnhancedMediaPlayer mediaPlayer, boolean notifyDataSetChanged)
+	public void remove(EnhancedMediaPlayer mediaPlayer)
 	{
 		int position = this.mediaPlayers.indexOf(mediaPlayer);
 		this.mediaPlayers.remove(position);
-		if (notifyDataSetChanged)
-			this.notifyItemRemoved(position);
 	}
 
-	public void clear(boolean notifyDataSetChanged)
+	public void clear()
 	{
 		this.mediaPlayers.clear();
-		if (notifyDataSetChanged)
-			this.notifyDataSetChanged();
 	}
 
 	@Override

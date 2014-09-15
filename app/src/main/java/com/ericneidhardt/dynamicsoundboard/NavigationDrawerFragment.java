@@ -79,10 +79,10 @@ public class NavigationDrawerFragment
 
 		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
 				.findFragmentByTag(SoundSheetManagerFragment.TAG);
-		this.soundSheetAdapter.clear(false);
+		this.soundSheetAdapter.clear();
 		if (fragment != null)
-			this.soundSheetAdapter.addAll(fragment.getAll(), true);
-
+			this.soundSheetAdapter.addAll(fragment.getAll());
+		this.soundSheetAdapter.notifyDataSetChanged();
 	}
 
 	public void notifyDataSetChanged(boolean newSoundSheetsAvailable)
@@ -92,8 +92,9 @@ public class NavigationDrawerFragment
 
 		if (newSoundSheetsAvailable)
 		{
-			this.soundSheetAdapter.clear(false);
-			this.soundSheetAdapter.addAll(fragment.getAll(), true);
+			this.soundSheetAdapter.clear();
+			this.soundSheetAdapter.addAll(fragment.getAll());
+			this.soundSheetAdapter.notifyDataSetChanged();
 		}
 		else
 			this.soundSheetAdapter.notifyDataSetChanged();
@@ -112,7 +113,8 @@ public class NavigationDrawerFragment
 	@Override
 	public void onItemDelete(View view, SoundSheet data, int position)
 	{
-		this.soundSheetAdapter.remove(data, true);
+		this.soundSheetAdapter.remove(data);
+		this.soundSheetAdapter.notifyDataSetChanged();
 		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
 				.findFragmentByTag(SoundSheetManagerFragment.TAG);
 
