@@ -156,7 +156,8 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		fragmentView.findViewById(R.id.b_add_sound).setOnClickListener(this);
 
 		RecyclerView listSounds = (RecyclerView)fragmentView.findViewById(R.id.rv_sounds);
-		listSounds.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
+		listSounds.addItemDecoration(new DividerItemDecoration(this.getActivity(),
+				DividerItemDecoration.VERTICAL_LIST, this.getResources().getDrawable(R.drawable.shape_divider)));
 		listSounds.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		listSounds.setItemAnimator(new DefaultItemAnimator());
 		listSounds.setAdapter(this.soundAdapter);

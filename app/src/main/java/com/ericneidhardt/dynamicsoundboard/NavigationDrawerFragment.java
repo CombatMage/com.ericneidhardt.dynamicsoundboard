@@ -72,7 +72,8 @@ public class NavigationDrawerFragment
 		});
 
 		RecyclerView listSoundSheets = (RecyclerView)this.getActivity().findViewById(R.id.rv_sound_sheets);
-		listSoundSheets.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
+		listSoundSheets.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST,
+				this.getResources().getDrawable(R.drawable.shape_divider)));
 		listSoundSheets.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		listSoundSheets.setItemAnimator(new DefaultItemAnimator());
 		listSoundSheets.setAdapter(this.soundSheetAdapter);

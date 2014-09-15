@@ -9,11 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
-
-/**
- * Created by eric.neidhardt on 04.09.2014.
- */
 public class DividerItemDecoration extends RecyclerView.ItemDecoration
 {
 
@@ -26,11 +21,16 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	private Drawable divider;
 	private int orientation;
 
-	public DividerItemDecoration(Context context, int orientation)
+	public DividerItemDecoration(Context context, int orientation, Drawable customDivider)
 	{
-		final TypedArray a = context.obtainStyledAttributes(ATTRS);
-		divider = a.getDrawable(0);
-		a.recycle();
+		if (customDivider == null)
+		{
+			final TypedArray a = context.obtainStyledAttributes(ATTRS);
+			this.divider = a.getDrawable(0);
+			a.recycle();
+		}
+		else
+			this.divider = customDivider;
 		setOrientation(orientation);
 	}
 
