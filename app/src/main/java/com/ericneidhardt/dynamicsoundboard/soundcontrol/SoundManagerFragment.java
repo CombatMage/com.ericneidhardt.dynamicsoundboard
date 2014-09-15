@@ -80,10 +80,10 @@ public class SoundManagerFragment extends Fragment
 
 	public void addMediaPlayerAndNotifyFragment(String fragmentTag, MediaPlayerData mediaPlayerData)
 	{
-		this.addMediaPlayersAndNotfiyFragment(fragmentTag, asList(mediaPlayerData));
+		this.addMediaPlayersAndNotifyFragment(fragmentTag, asList(mediaPlayerData));
 	}
 
-	public void addMediaPlayersAndNotfiyFragment(String fragmentTag, List<MediaPlayerData> mediaPlayersData)
+	public void addMediaPlayersAndNotifyFragment(String fragmentTag, List<MediaPlayerData> mediaPlayersData)
 	{
 		if (fragmentTag == null)
 			throw  new NullPointerException("addSoundSheetAndNotifyFragment: cannot addSoundSheetAndNotifyFragment media players to fragment, fragment tag is null");
@@ -128,14 +128,14 @@ public class SoundManagerFragment extends Fragment
 	{
 		SoundSheetFragment fragment = (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
 		if (fragment != null)
-			fragment.notifyDataSetAdded(loadedMediaPlayers);
+			fragment.notifyDataSetChanged(true);
 	}
 
 	private void notifyFragment(String fragmentTag)
 	{
 		SoundSheetFragment fragment = (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
 		if (fragment != null)
-			fragment.notifyDataSetChanged(new ArrayList<EnhancedMediaPlayer>());
+			fragment.notifyDataSetChanged(true);
 	}
 
 	private void storeMediaPlayerData(String fragmentId, List<MediaPlayerData> mediaPlayersData)

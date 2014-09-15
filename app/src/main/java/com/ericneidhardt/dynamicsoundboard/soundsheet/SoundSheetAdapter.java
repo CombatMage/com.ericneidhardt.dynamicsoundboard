@@ -34,35 +34,32 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		this.onItemDeleteListener = onItemDeleteListener;
 	}
 
-	public void add(SoundSheet soundSheet)
-	{
-		this.soundSheets.add(soundSheet);
-		this.notifyItemInserted(this.soundSheets.size());
-	}
-
-	public void addAll(List<SoundSheet> soundSheets)
+	public void addAll(List<SoundSheet> soundSheets, boolean notifyDataSetChanged)
 	{
 		this.soundSheets.addAll(soundSheets);
-		this.notifyDataSetChanged();
+		if (notifyDataSetChanged)
+			this.notifyDataSetChanged();
 	}
 
-	public void remove(SoundSheet soundSheet)
+	public void remove(SoundSheet soundSheet, boolean notifyDataSetChanged)
 	{
 		int position = this.soundSheets.indexOf(soundSheet);
 		this.soundSheets.remove(position);
-		this.notifyItemRemoved(position);
+		if (notifyDataSetChanged)
+			this.notifyItemRemoved(position);
 	}
 
-	public void clear()
+	public void clear(boolean notifyDataSetChanged)
 	{
 		this.soundSheets.clear();
-		this.notifyDataSetChanged();
+		if (notifyDataSetChanged)
+			this.notifyDataSetChanged();
 	}
 
 
 	/**
 	 * Set the item with this position selected and all other items deselected
-	 * @param position
+	 * @param position index of item to be selected
 	 */
 	public void setSelectedItem(int position)
 	{

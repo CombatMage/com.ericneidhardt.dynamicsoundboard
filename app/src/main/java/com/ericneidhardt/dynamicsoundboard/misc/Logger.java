@@ -5,7 +5,8 @@ import android.util.Log;
 /**
  * Created by eric.neidhardt on 27.08.2014.
  */
-public class Logger {
+public class Logger
+{
 
 	private static final boolean ENABLE_LOGGING = true;
 

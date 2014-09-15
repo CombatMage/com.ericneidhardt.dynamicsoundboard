@@ -79,26 +79,24 @@ public class NavigationDrawerFragment
 
 		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
 				.findFragmentByTag(SoundSheetManagerFragment.TAG);
-		this.soundSheetAdapter.clear();
+		this.soundSheetAdapter.clear(false);
 		if (fragment != null)
-			this.soundSheetAdapter.addAll(fragment.getAll());
+			this.soundSheetAdapter.addAll(fragment.getAll(), true);
 
 	}
 
-	public void notifyDataSetAdded(List<SoundSheet> soundSheets)
+	public void notifyDataSetChanged(boolean newSoundSheetsAvailable)
 	{
-		this.soundSheetAdapter.addAll(soundSheets);
-	}
+		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
+				.findFragmentByTag(SoundSheetManagerFragment.TAG);
 
-	public void notifyDataSetChanged(List<SoundSheet> soundSheets)
-	{
-		this.soundSheetAdapter.clear();
-		this.soundSheetAdapter.addAll(soundSheets);
-	}
-
-	public void notifyDataSetChanged()
-	{
-		this.soundSheetAdapter.notifyDataSetChanged();
+		if (newSoundSheetsAvailable)
+		{
+			this.soundSheetAdapter.clear(false);
+			this.soundSheetAdapter.addAll(fragment.getAll(), true);
+		}
+		else
+			this.soundSheetAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -114,7 +112,7 @@ public class NavigationDrawerFragment
 	@Override
 	public void onItemDelete(View view, SoundSheet data, int position)
 	{
-		this.soundSheetAdapter.remove(data);
+		this.soundSheetAdapter.remove(data, true);
 		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
 				.findFragmentByTag(SoundSheetManagerFragment.TAG);
 
@@ -123,7 +121,8 @@ public class NavigationDrawerFragment
 		if (this.getActivity() != null)
 		{
 			((BaseActivity)this.getActivity()).removeSoundFragment(data);
-			((SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG)).remove(data.getFragmentTag());
+			((SoundManagerFragment)this.getFragmentManager()
+					.findFragmentByTag(SoundManagerFragment.TAG)).remove(data.getFragmentTag());
 
 			if (data.getIsSelected())
 			{

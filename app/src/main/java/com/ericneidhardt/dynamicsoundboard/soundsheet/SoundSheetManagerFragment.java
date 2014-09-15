@@ -27,8 +27,6 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.asList;
-
 public class SoundSheetManagerFragment
 		extends
 			Fragment
@@ -97,7 +95,7 @@ public class SoundSheetManagerFragment
 
 				NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 						.findFragmentByTag(NavigationDrawerFragment.TAG);
-				navigationDrawerFragment.notifyDataSetChanged(new ArrayList<SoundSheet>());
+				navigationDrawerFragment.notifyDataSetChanged(true);
 
 				return true;
 			default:
@@ -129,7 +127,7 @@ public class SoundSheetManagerFragment
 		currentActiveSoundSheet.setLabel(text);
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
-		navigationDrawerFragment.notifyDataSetChanged();
+		navigationDrawerFragment.notifyDataSetChanged(false);
 	}
 
 	public SoundSheet get(String soundSheetTag)
@@ -145,6 +143,10 @@ public class SoundSheetManagerFragment
 	public void remove(SoundSheet soundSheet)
 	{
 		this.soundSheets.remove(soundSheet);
+		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
+				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		navigationDrawerFragment.notifyDataSetChanged(false);
+
 		// TODO remove data from dao session
 	}
 
@@ -169,7 +171,7 @@ public class SoundSheetManagerFragment
 		this.soundSheets.add(soundSheet);
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
-		navigationDrawerFragment.notifyDataSetAdded(asList(soundSheet));
+		navigationDrawerFragment.notifyDataSetChanged(true);
 
 		SafeAsyncTask task = new StoreSoundSheetTask(soundSheet);
 		task.execute();
@@ -230,19 +232,17 @@ public class SoundSheetManagerFragment
 		}
 
 		@Override
-		protected void onSuccess(List<SoundSheet> soundSheets) throws Exception
+		protected void onSuccess(List<SoundSheet> loadedSoundSheets) throws Exception
 		{
-			super.onSuccess(soundSheets);
+			super.onSuccess(loadedSoundSheets);
 
-			if (soundSheets.size() > 0)
-			{
-				soundSheets.addAll(soundSheets);
-			}
+			if (loadedSoundSheets.size() > 0)
+				SoundSheetManagerFragment.this.soundSheets.addAll(loadedSoundSheets);
 
 			handleIntent(getActivity().getIntent());
 			NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager()
 					.findFragmentByTag(NavigationDrawerFragment.TAG);
-			navigationDrawerFragment.notifyDataSetAdded(soundSheets);
+			navigationDrawerFragment.notifyDataSetChanged(true);
 		}
 
 		@Override

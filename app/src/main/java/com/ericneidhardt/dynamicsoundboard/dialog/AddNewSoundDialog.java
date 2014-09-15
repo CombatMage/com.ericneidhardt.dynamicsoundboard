@@ -179,7 +179,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 			playersData.add(playerData);
 		}
 
-		fragment.addMediaPlayersAndNotfiyFragment(this.callingFragmentTag, playersData);
+		fragment.addMediaPlayersAndNotifyFragment(this.callingFragmentTag, playersData);
 	}
 
 }
