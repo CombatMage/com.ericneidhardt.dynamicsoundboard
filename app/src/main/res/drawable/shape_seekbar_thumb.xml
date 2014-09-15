@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item android:drawable="@drawable/shape_seekbar_thumb_outer_circle"/>
+	<item android:drawable="@drawable/shape_seekbar_thumb_inner_circle"
+			android:left="@dimen/size_half_seekbar_thumb"
+			android:right="@dimen/size_half_seekbar_thumb"
+			android:top="@dimen/size_half_seekbar_thumb"
+			android:bottom="@dimen/size_half_seekbar_thumb"/>
+
+</layer-list>
