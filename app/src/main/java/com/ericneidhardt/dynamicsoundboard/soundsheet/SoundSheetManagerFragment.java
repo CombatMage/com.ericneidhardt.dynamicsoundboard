@@ -272,6 +272,8 @@ public class SoundSheetManagerFragment
 
 			BaseActivity activity = (BaseActivity)getActivity();
 			activity.openSoundFragment(getSelectedItem());
+			((ActionbarEditText)activity.findViewById(R.id.et_set_label)).setText(getSelectedItem().getLabel());
+
 		}
 
 		@Override

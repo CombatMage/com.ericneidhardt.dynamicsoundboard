@@ -10,6 +10,8 @@
 	<string name="navigation_drawer_content_description_close">Navigation schließen</string>
 
 	<string name="tab_sound_sheets">Gruppen</string>
+	<string name="tab_sound_sheets_content_description_selected">Aktuell geöffnete Sound Kategorie</string>
+
 	<string name="tab_play_list">Playliste</string>
 
 	<!-- actionbar -->
