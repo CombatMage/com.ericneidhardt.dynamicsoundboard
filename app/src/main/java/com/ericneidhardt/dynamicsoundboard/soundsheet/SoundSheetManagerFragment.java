@@ -147,7 +147,8 @@ public class SoundSheetManagerFragment
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
 		navigationDrawerFragment.notifyDataSetChanged(false);
 
-		// TODO remove data from dao session
+		SafeAsyncTask task = new RemoveSoundSheetTask(soundSheet);
+		task.execute();
 	}
 
 	public List<SoundSheet> getAll()
@@ -221,6 +222,31 @@ public class SoundSheetManagerFragment
 	public String getSuggestedSoundSheetName()
 	{
 		return this.getActivity().getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size();
+	}
+
+	private class RemoveSoundSheetTask extends SafeAsyncTask<Void>
+	{
+		private SoundSheet soundSheet;
+
+		public RemoveSoundSheetTask(SoundSheet soundSheet)
+		{
+			this.soundSheet = soundSheet;
+		}
+
+		@Override
+		public Void call() throws Exception
+		{
+			daoSession.getSoundSheetDao().delete(this.soundSheet);
+			return null;
+		}
+
+		@Override
+		protected void onException(Exception e) throws RuntimeException
+		{
+			super.onException(e);
+			Logger.e(TAG, e.getMessage());
+			throw new RuntimeException(e);
+		}
 	}
 
 	private class LoadSoundSheetsTask extends SafeAsyncTask<List<SoundSheet>>

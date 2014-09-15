@@ -97,7 +97,7 @@ public class SoundManagerFragment extends Fragment
 
 		this.storeMediaPlayerData(fragmentTag, mediaPlayersData);
 		this.sounds.get(fragmentTag).addAll(players);
-		this.notifyFragment(fragmentTag, players);
+		this.notifyFragment(fragmentTag);
 	}
 
 	public void remove(String fragmentTag)
@@ -105,12 +105,18 @@ public class SoundManagerFragment extends Fragment
 		if (this.sounds.get(fragmentTag) == null)
 			return;
 
+		List<MediaPlayerData> mediaPlayersToRemove = new ArrayList<MediaPlayerData>();
 		for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
+		{
 			player.destroy();
+			mediaPlayersToRemove.add(player.getMediaPlayerData());
+		}
 
 		this.sounds.remove(fragmentTag);
-		// TODO remove data from dao session
 		this.notifyFragment(fragmentTag);
+
+		SafeAsyncTask task = new RemoveMediaPlayersTask(mediaPlayersToRemove);
+		task.execute();
 	}
 
 	private void load(String fragmentTag, List<EnhancedMediaPlayer> loadedMediaPlayers)
@@ -121,14 +127,7 @@ public class SoundManagerFragment extends Fragment
 		if (this.sounds.get(fragmentTag) == null)
 			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
 		this.sounds.get(fragmentTag).addAll(loadedMediaPlayers);
-		this.notifyFragment(fragmentTag, loadedMediaPlayers);
-	}
-
-	private void notifyFragment(String fragmentTag, List<EnhancedMediaPlayer> loadedMediaPlayers)
-	{
-		SoundSheetFragment fragment = (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
-		if (fragment != null)
-			fragment.notifyDataSetChanged(true);
+		this.notifyFragment(fragmentTag);
 	}
 
 	private void notifyFragment(String fragmentTag)
@@ -198,6 +197,31 @@ public class SoundManagerFragment extends Fragment
 		public Void call() throws Exception
 		{
 			daoSession.getMediaPlayerDataDao().insertInTx(this.mediaPlayersData);
+			return null;
+		}
+
+		@Override
+		protected void onException(Exception e) throws RuntimeException
+		{
+			super.onException(e);
+			Logger.e(TAG, e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
+	private class RemoveMediaPlayersTask extends SafeAsyncTask<Void>
+	{
+		private List<MediaPlayerData> mediaPlayersData;
+
+		public RemoveMediaPlayersTask(List<MediaPlayerData> mediaPlayersData)
+		{
+			this.mediaPlayersData = mediaPlayersData;
+		}
+
+		@Override
+		public Void call() throws Exception
+		{
+			daoSession.getMediaPlayerDataDao().deleteInTx(this.mediaPlayersData);
 			return null;
 		}
 
