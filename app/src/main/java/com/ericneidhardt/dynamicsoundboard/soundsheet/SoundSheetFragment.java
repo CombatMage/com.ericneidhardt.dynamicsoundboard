@@ -36,6 +36,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
+	private Timer progressBarUpdateTimer;
 
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
 	{
@@ -64,10 +65,18 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 
-		// TODO start timer and stop timer in onPause
-		//this.startTimerUpdateTask();
+		this.startTimerUpdateTask();
 	}
 
+	@Override
+	public void onPause() {
+		super.onPause();
+		this.progressBarUpdateTimer.cancel();
+	}
+
+	/**
+	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
+	 */
 	private void startTimerUpdateTask()
 	{
 		TimerTask updateTimePositions = new TimerTask()
@@ -83,8 +92,8 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 				});
 			}
 		};
-		Timer timer = new Timer();
-		timer.schedule(updateTimePositions, 0, UPDATE_INTERVAL);
+		this.progressBarUpdateTimer = new Timer();
+		progressBarUpdateTimer.schedule(updateTimePositions, 0, UPDATE_INTERVAL);
 	}
 
 	@Override
