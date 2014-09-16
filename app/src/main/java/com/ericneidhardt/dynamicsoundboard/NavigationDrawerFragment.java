@@ -180,7 +180,7 @@ public class NavigationDrawerFragment
 					resId = R.id.rv_sound_sheets;
 					break;
 				case 1:
-					resId = R.id.lv_playlist;
+					resId = R.id.playlist;
 					break;
 			}
 			return getActivity().findViewById(resId);
