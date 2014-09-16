@@ -11,6 +11,7 @@
 
 	<string name="tab_sound_sheets">Gruppen</string>
 	<string name="tab_sound_sheets_content_description_selected">Aktuell geöffnete Sound Kategorie</string>
+	<string name="tab_sound_sheets_content_description_delete">Diese Kategorie löschen</string>
 
 	<string name="tab_play_list">Playliste</string>
 
