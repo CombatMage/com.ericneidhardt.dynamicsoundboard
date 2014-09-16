@@ -12,6 +12,8 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 
 public class Playlist extends FrameLayout
 {
+	private PlaylistAdapter adapter;
+
 	public Playlist(Context context)
 	{
 		super(context);
@@ -46,6 +48,11 @@ public class Playlist extends FrameLayout
 		playlist.setItemAnimator(new DefaultItemAnimator());
 
 		playlist.setAdapter(new PlaylistAdapter());
+	}
+
+	public void notifyDataSetChanged()
+	{
+		// TODO notify adapter
 	}
 
 }

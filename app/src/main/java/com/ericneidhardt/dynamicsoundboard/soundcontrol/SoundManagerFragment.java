@@ -3,6 +3,7 @@ package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
+import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -76,6 +77,16 @@ public class SoundManagerFragment extends Fragment
 	public Map<String, List<EnhancedMediaPlayer>> getAll()
 	{
 		return this.sounds;
+	}
+
+	/**
+	 * Notifies then sound manager, that this sound was added or removed from the playlist.
+	 * The playlist fragment is notified accordingly.
+	 */
+	public void notifyPlayListChanged(EnhancedMediaPlayer player)
+	{
+		NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
+		fragment.getPlaylist().notifyDataSetChanged();
 	}
 
 	public void addMediaPlayerAndNotifyFragment(String fragmentTag, MediaPlayerData mediaPlayerData)

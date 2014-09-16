@@ -95,7 +95,7 @@ public class SoundSheetManagerFragment
 
 				NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 						.findFragmentByTag(NavigationDrawerFragment.TAG);
-				navigationDrawerFragment.notifyDataSetChanged(true);
+				navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
 				return true;
 			default:
@@ -127,7 +127,7 @@ public class SoundSheetManagerFragment
 		currentActiveSoundSheet.setLabel(text);
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
-		navigationDrawerFragment.notifyDataSetChanged(false);
+		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false);
 	}
 
 	public SoundSheet get(String soundSheetTag)
@@ -145,7 +145,7 @@ public class SoundSheetManagerFragment
 		this.soundSheets.remove(soundSheet);
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
-		navigationDrawerFragment.notifyDataSetChanged(false);
+		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false);
 
 		SafeAsyncTask task = new RemoveSoundSheetTask(soundSheet);
 		task.execute();
@@ -172,7 +172,7 @@ public class SoundSheetManagerFragment
 		this.soundSheets.add(soundSheet);
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
-		navigationDrawerFragment.notifyDataSetChanged(true);
+		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
 		SafeAsyncTask task = new StoreSoundSheetTask(soundSheet);
 		task.execute();
@@ -268,7 +268,7 @@ public class SoundSheetManagerFragment
 			handleIntent(getActivity().getIntent());
 			NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager()
 					.findFragmentByTag(NavigationDrawerFragment.TAG);
-			navigationDrawerFragment.notifyDataSetChanged(true);
+			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
 			BaseActivity activity = (BaseActivity)getActivity();
 			activity.openSoundFragment(getSelectedItem());

@@ -25,10 +25,10 @@
 						android:layout_width="match_parent"
 						android:layout_height="match_parent">
 
-					<include android:id="@+id/rv_sound_sheets"
-							 layout="@layout/view_sound_sheets"
-							 android:layout_width="match_parent"
-							 android:layout_height="wrap_content"/>
+					<com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets
+							android:id="@+id/sound_sheets"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"/>
 					
 					<com.ericneidhardt.dynamicsoundboard.playlist.Playlist
 							android:id="@+id/playlist"

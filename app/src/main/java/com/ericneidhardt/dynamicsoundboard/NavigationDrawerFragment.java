@@ -4,32 +4,21 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
-import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
-import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
-import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetAdapter;
-import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 
-import java.util.List;
-
-public class NavigationDrawerFragment
-		extends
-			Fragment
-		implements
-			SoundSheetAdapter.OnItemClickListener,
-			SoundSheetAdapter.OnItemDeleteListener
+public class NavigationDrawerFragment extends Fragment
 {
 	public static final String TAG = NavigationDrawerFragment.class.getSimpleName();
 
-	private SoundSheetAdapter soundSheetAdapter;
 	private TabContentAdapter tabContentAdapter;
+	private Playlist playlist;
+	private SoundSheets soundSheets;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -37,9 +26,6 @@ public class NavigationDrawerFragment
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
 
-		this.soundSheetAdapter = new SoundSheetAdapter();
-		this.soundSheetAdapter.setOnItemClickListener(this);
-		this.soundSheetAdapter.setOnItemDeleteListener(this);
 		this.tabContentAdapter = new TabContentAdapter();
 	}
 
@@ -71,75 +57,22 @@ public class NavigationDrawerFragment
 			}
 		});
 
-		RecyclerView listSoundSheets = (RecyclerView)this.getActivity().findViewById(R.id.rv_sound_sheets);
-		listSoundSheets.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST, null));
-		listSoundSheets.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-		listSoundSheets.setItemAnimator(new DefaultItemAnimator());
-		listSoundSheets.setAdapter(this.soundSheetAdapter);
-
-		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
-				.findFragmentByTag(SoundSheetManagerFragment.TAG);
-		this.soundSheetAdapter.clear();
-		if (fragment != null)
-			this.soundSheetAdapter.addAll(fragment.getAll());
-		this.soundSheetAdapter.notifyDataSetChanged();
+		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
+		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
+		this.soundSheets.onActivityCreated(this);
 	}
 
-	public void notifyDataSetChanged(boolean newSoundSheetsAvailable)
+	public Playlist getPlaylist()
 	{
-		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
-				.findFragmentByTag(SoundSheetManagerFragment.TAG);
-
-		if (newSoundSheetsAvailable)
-		{
-			this.soundSheetAdapter.clear();
-			this.soundSheetAdapter.addAll(fragment.getAll());
-			this.soundSheetAdapter.notifyDataSetChanged();
-		}
-		else
-			this.soundSheetAdapter.notifyDataSetChanged();
+		return this.playlist;
 	}
 
-	@Override
-	public void onItemClick(View view, SoundSheet data, int position)
+	public SoundSheets getSoundSheets()
 	{
-		if (this.getActivity() != null)
-		{
-			this.soundSheetAdapter.setSelectedItem(position);
-			this.openSoundSheetFragment(data);
-		}
+		return this.soundSheets;
 	}
 
-	@Override
-	public void onItemDelete(View view, SoundSheet data, int position)
-	{
-		this.soundSheetAdapter.remove(data);
-		this.soundSheetAdapter.notifyDataSetChanged();
-		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
-				.findFragmentByTag(SoundSheetManagerFragment.TAG);
-
-		fragment.remove(data);
-
-		if (this.getActivity() != null)
-		{
-			((BaseActivity)this.getActivity()).removeSoundFragment(data);
-			((SoundManagerFragment)this.getFragmentManager()
-					.findFragmentByTag(SoundManagerFragment.TAG)).remove(data.getFragmentTag());
-
-			if (data.getIsSelected())
-			{
-				List<SoundSheet> soundSheets = this.soundSheetAdapter.getValues();
-				if (soundSheets.size() > 0)
-				{
-					int positionOfNewSelectedSoundSheet = (position > 0) ? position - 1 : 0;
-					this.soundSheetAdapter.setSelectedItem(positionOfNewSelectedSoundSheet);
-					this.openSoundSheetFragment(soundSheets.get(positionOfNewSelectedSoundSheet));
-				}
-			}
-		}
-	}
-
-	private void openSoundSheetFragment(SoundSheet soundSheet)
+	public void openSoundSheetFragment(SoundSheet soundSheet)
 	{
 		BaseActivity activity = (BaseActivity)this.getActivity();
 		activity.closeNavigationDrawer();
@@ -174,16 +107,15 @@ public class NavigationDrawerFragment
 		@Override
 		public Object instantiateItem(ViewGroup container, int position)
 		{
-			int resId = 0;
-			switch (position) {
+			switch (position)
+			{
 				case 0:
-					resId = R.id.rv_sound_sheets;
-					break;
+					return soundSheets;
 				case 1:
-					resId = R.id.playlist;
-					break;
+					return playlist;
+				default:
+					throw new NullPointerException("instantiateItem: no view for position " + position + " is available");
 			}
-			return getActivity().findViewById(resId);
 		}
 	}
 

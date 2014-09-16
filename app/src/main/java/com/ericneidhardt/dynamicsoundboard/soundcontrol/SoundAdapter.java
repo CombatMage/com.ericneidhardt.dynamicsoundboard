@@ -174,6 +174,8 @@ public class SoundAdapter
 					break;
 				case R.id.cb_add_to_playlist:
 					player.setInPlaylist(isChecked);
+					SoundManagerFragment fragment = (SoundManagerFragment)parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+					fragment.notifyPlayListChanged(player);
 					break;
 			}
 		}
