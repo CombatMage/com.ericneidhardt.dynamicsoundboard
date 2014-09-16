@@ -4,39 +4,48 @@
 			 android:layout_height="match_parent"
 			 android:layout_gravity="start">
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical">
-
-		<com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout
-			android:id="@+id/layout_tab"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-
-			android:background="@color/primary_100"/>
-
-		<android.support.v4.view.ViewPager
-			android:id="@+id/vp_tab_content"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:background="@color/background">
-
-			<android.support.v7.widget.RecyclerView
-				android:id="@+id/rv_sound_sheets"
+		<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"/>
+				android:layout_height="match_parent"
+				android:orientation="vertical">
 
-			<include
-				android:id="@+id/lv_playlist"
-				layout="@layout/view_playlist"/>
+			<com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout
+					android:id="@+id/layout_tab"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@color/primary_100"/>
+			
+			<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/background">
 
-		</android.support.v4.view.ViewPager>
+				<android.support.v4.view.ViewPager
+						android:id="@+id/vp_tab_content"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent">
 
-	</LinearLayout>
+					<include android:id="@+id/rv_sound_sheets"
+							 layout="@layout/view_sound_sheets"
+							 android:layout_width="match_parent"
+							 android:layout_height="wrap_content"/>
 
-	<View
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="@drawable/ic_shadow_horizontal"/>
+					<include
+							android:id="@+id/lv_playlist"
+							layout="@layout/view_playlist"/>
+
+				</android.support.v4.view.ViewPager>
+
+				<View
+						android:layout_width="match_parent"
+						android:layout_height="@dimen/height_shadow_horizontal"
+						android:background="@drawable/ic_shadow_horizontal"/>
+			</FrameLayout>
+
+		</LinearLayout>
+
+		<View
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_shadow_horizontal"
+				android:background="@drawable/ic_shadow_horizontal"/>
 </FrameLayout>

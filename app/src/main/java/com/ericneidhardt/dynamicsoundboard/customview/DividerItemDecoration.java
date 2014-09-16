@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import com.ericneidhardt.dynamicsoundboard.R;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration
 {
@@ -20,6 +21,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 
 	private Drawable divider;
 	private int orientation;
+	private int offsetFirstItem;
 
 	public DividerItemDecoration(Context context, int orientation, Drawable customDivider)
 	{
@@ -31,7 +33,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 		}
 		else
 			this.divider = customDivider;
-		setOrientation(orientation);
+
+		this.offsetFirstItem = context.getResources().getDimensionPixelSize(R.dimen.margin_small);
+		this.setOrientation(orientation);
 	}
 
 	public void setOrientation(int orientation)
@@ -88,10 +92,13 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	@Override
 	public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent)
 	{
-		if (orientation == VERTICAL_LIST)
-			outRect.set(0, 0, 0, divider.getIntrinsicHeight());
-		else
-			outRect.set(0, 0, divider.getIntrinsicWidth(), 0);
+		int bottomOffset = orientation == VERTICAL_LIST ? divider.getIntrinsicHeight() : 0;
+		int topOffset = orientation == VERTICAL_LIST && itemPosition == 0 ? this.offsetFirstItem : 0;
+
+		int rightOffset = orientation != VERTICAL_LIST ? divider.getIntrinsicHeight() : 0;
+		int leftOffset = orientation != VERTICAL_LIST && itemPosition == 0 ? this.offsetFirstItem : 0;
+
+		outRect.set(leftOffset, topOffset, rightOffset, bottomOffset);
 	}
 }
 
