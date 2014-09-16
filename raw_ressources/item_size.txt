@@ -1,0 +1,3 @@
+action: default
+Listview Groﬂ: 40dp, kein padding
+Listview kein: 24dp, 4dp padding

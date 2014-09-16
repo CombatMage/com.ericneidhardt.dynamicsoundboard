@@ -93,7 +93,6 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 	{
-		private ViewGroup container;
 		private TextView textView;
 		private ImageView selectionIndicator;
 		private ImageButton deleteItem;
@@ -101,7 +100,6 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		public ViewHolder(View itemView) {
 			super(itemView);
 
-			this.container = (ViewGroup)itemView.findViewById(R.id.layout_container);
 			this.textView = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
 			this.deleteItem = (ImageButton) itemView.findViewById(R.id.ib_delete_sound_sheet);
