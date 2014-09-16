@@ -1,30 +1,38 @@
 package com.ericneidhardt.dynamicsoundboard.playlist;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHolder>
 {
+	private List<EnhancedMediaPlayer> playlist;
+
 	public PlaylistAdapter()
 	{
-
+		this.playlist = new ArrayList<EnhancedMediaPlayer>();
 	}
 
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int position)
 	{
-		// TODO inflate real layout
-		//View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_playlist_item, parent, false);
-		//return new ViewHolder(view);
-		return new ViewHolder(new TextView(parent.getContext()));
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_playlist_item, parent, false);
+		return new ViewHolder(view);
 	}
 
 	@Override
-	public void onBindViewHolder(ViewHolder parent, int i)
+	public void onBindViewHolder(ViewHolder holder, int i)
 	{
-		// TODO bind data
+		MediaPlayerData data = this.playlist.get(i).getMediaPlayerData();
+		holder.name.setText(data.getLabel());
 	}
 
 	@Override
@@ -34,9 +42,12 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
 
 	public class ViewHolder extends RecyclerView.ViewHolder
 	{
+		private TextView name;
+
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
+			this.name = (TextView)itemView;
 		}
 	}
 }
