@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			 android:layout_width="@dimen/navigation_width"
+			 android:layout_height="match_parent"
+			 android:layout_gravity="start">
 
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="@dimen/navigation_width"
-	android:layout_height="match_parent"
-	android:layout_gravity="start"
-	android:orientation="vertical">
-
-	<com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout
-		android:id="@+id/layout_tab"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="@color/primary_100"/>
-
-	<android.support.v4.view.ViewPager
-		android:id="@+id/vp_tab_content"
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="@color/background">
+		android:orientation="vertical">
 
-		<android.support.v7.widget.RecyclerView
-			android:id="@+id/rv_sound_sheets"
+		<com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout
+			android:id="@+id/layout_tab"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"/>
+			android:layout_height="wrap_content"
 
-		<include
-			android:id="@+id/lv_playlist"
-			layout="@layout/view_playlist"/>
+			android:background="@color/primary_100"/>
 
-	</android.support.v4.view.ViewPager>
+		<android.support.v4.view.ViewPager
+			android:id="@+id/vp_tab_content"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@color/background">
 
-</LinearLayout>
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/rv_sound_sheets"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+
+			<include
+				android:id="@+id/lv_playlist"
+				layout="@layout/view_playlist"/>
+
+		</android.support.v4.view.ViewPager>
+
+	</LinearLayout>
+
+	<View
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/ic_shadow_horizontal"/>
+</FrameLayout>
