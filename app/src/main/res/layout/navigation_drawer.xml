@@ -30,9 +30,12 @@
 							 android:layout_width="match_parent"
 							 android:layout_height="wrap_content"/>
 
-					<include
-							android:id="@+id/lv_playlist"
-							layout="@layout/view_playlist"/>
+					<TextView android:id="@+id/lv_playlist"
+							  android:layout_width="match_parent"
+							  android:layout_height="match_parent"
+							  android:text="TODO Playlis Tutorial">
+
+					</TextView>
 
 				</android.support.v4.view.ViewPager>
 
