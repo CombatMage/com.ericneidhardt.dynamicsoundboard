@@ -88,10 +88,25 @@ public class SoundManagerFragment extends Fragment
 	 * Notifies then sound manager, that this sound was added or removed from the playlist.
 	 * The playlist fragment is notified accordingly.
 	 */
-	public void notifyPlayListChanged(EnhancedMediaPlayer player)
+	public void notifyPlayListChanged(MediaPlayerData playerData)
 	{
+		if (playerData.getIsInPlaylist())
+			this.addSoundToPlayList(playerData);
+		else
+			this.removeSoundFromPlayList(playerData);
+
 		NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
 		fragment.getPlaylist().notifyDataSetChanged(true);
+	}
+
+	public void addSoundToPlayList(MediaPlayerData playerData)
+	{
+		// TODO
+	}
+
+	public void removeSoundFromPlayList(MediaPlayerData playerData)
+	{
+		// TODO
 	}
 
 	public void addMediaPlayerAndNotifyFragment(String fragmentTag, MediaPlayerData mediaPlayerData)
