@@ -101,12 +101,20 @@ public class SoundManagerFragment extends Fragment
 
 	public void addSoundToPlayList(MediaPlayerData playerData)
 	{
-		// TODO
+		EnhancedMediaPlayer player = new EnhancedMediaPlayer(this.getActivity(), playerData, true);
+		this.playList.add(player);
 	}
 
 	public void removeSoundFromPlayList(MediaPlayerData playerData)
 	{
-		// TODO
+		for (int i = 0; i < this.playList.size(); i++)
+		{
+			if (this.playList.get(i).getMediaPlayerData().equals(playerData))
+			{
+				this.playList.remove(i);
+				return;
+			}
+		}
 	}
 
 	public void addMediaPlayerAndNotifyFragment(String fragmentTag, MediaPlayerData mediaPlayerData)

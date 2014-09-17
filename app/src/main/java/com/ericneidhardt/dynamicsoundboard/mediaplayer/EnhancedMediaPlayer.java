@@ -41,6 +41,21 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 		// TODO set time position from green dao object
 	}
 
+	public EnhancedMediaPlayer(Context context, MediaPlayerData data, boolean forPlayList)
+	{
+		super();
+		this.rawData = data;
+		this.currentState = State.IDLE;
+
+		if (!forPlayList)
+		{
+			this.setLooping(data.getIsLoop());
+			// TODO set time position from green dao object
+		}
+
+		this.init(context);
+	}
+
 	public MediaPlayerData getMediaPlayerData()
 	{
 		return this.rawData;
