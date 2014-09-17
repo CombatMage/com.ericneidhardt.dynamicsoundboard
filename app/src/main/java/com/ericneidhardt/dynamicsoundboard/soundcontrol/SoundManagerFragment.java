@@ -26,6 +26,7 @@ public class SoundManagerFragment extends Fragment
 
 	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.SoundManagerFragment.db_sounds";
 
+	private List<EnhancedMediaPlayer> playList;
 	private Map<String, List<EnhancedMediaPlayer>> sounds;
 	private DaoSession daoSession;
 
@@ -36,6 +37,7 @@ public class SoundManagerFragment extends Fragment
 		this.setRetainInstance(true);
 		this.setHasOptionsMenu(true);
 
+		this.playList = new ArrayList<EnhancedMediaPlayer>();
 		this.sounds = new HashMap<String,  List<EnhancedMediaPlayer>>();
 		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUNDS);
 
@@ -55,14 +57,12 @@ public class SoundManagerFragment extends Fragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId())
 		{
 			case R.id.action_clear_all_sounds:
 				for (String fragmentTag : this.sounds.keySet())
 					this.remove(fragmentTag);
-
 				return true;
 			default:
 				return false;
@@ -74,9 +74,14 @@ public class SoundManagerFragment extends Fragment
 		return this.sounds.get(fragmentTag);
 	}
 
-	public Map<String, List<EnhancedMediaPlayer>> getAll()
+	public Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return this.sounds;
+	}
+
+	public List<EnhancedMediaPlayer> getPlayList()
+	{
+		return this.playList;
 	}
 
 	/**
@@ -86,7 +91,7 @@ public class SoundManagerFragment extends Fragment
 	public void notifyPlayListChanged(EnhancedMediaPlayer player)
 	{
 		NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
-		fragment.getPlaylist().notifyDataSetChanged();
+		fragment.getPlaylist().notifyDataSetChanged(true);
 	}
 
 	public void addMediaPlayerAndNotifyFragment(String fragmentTag, MediaPlayerData mediaPlayerData)

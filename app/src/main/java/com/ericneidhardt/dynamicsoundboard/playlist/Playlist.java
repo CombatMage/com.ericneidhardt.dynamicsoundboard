@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.playlist;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +10,14 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 public class Playlist extends FrameLayout
 {
 	private PlaylistAdapter adapter;
+	private Fragment parent;
 
+	@SuppressWarnings("unused")
 	public Playlist(Context context)
 	{
 		super(context);
@@ -21,6 +25,7 @@ public class Playlist extends FrameLayout
 		this.initRecycleView(context);
 	}
 
+	@SuppressWarnings("unused")
 	public Playlist(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
@@ -28,6 +33,7 @@ public class Playlist extends FrameLayout
 		this.initRecycleView(context);
 	}
 
+	@SuppressWarnings("unused")
 	public Playlist(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
@@ -47,12 +53,26 @@ public class Playlist extends FrameLayout
 		playlist.setLayoutManager(new LinearLayoutManager(context));
 		playlist.setItemAnimator(new DefaultItemAnimator());
 
-		playlist.setAdapter(new PlaylistAdapter());
+		this.adapter = new PlaylistAdapter();
+		playlist.setAdapter(this.adapter);
 	}
 
-	public void notifyDataSetChanged()
+	public void onActivityCreated(Fragment parent)
 	{
-		// TODO notify adapter
+		this.parent = parent;
+		this.notifyDataSetChanged(true);
 	}
+
+	public void notifyDataSetChanged(boolean newSoundAvailable)
+	{
+		if (newSoundAvailable)
+		{
+			SoundManagerFragment fragment = (SoundManagerFragment)this.parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+			this.adapter.clear();
+			this.adapter.addAll(fragment.getPlayList());
+		}
+		this.adapter.notifyDataSetChanged();
+	}
+
 
 }

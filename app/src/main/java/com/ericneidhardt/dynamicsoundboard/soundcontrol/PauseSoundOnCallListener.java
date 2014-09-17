@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by eric.neidhardt on 12.09.2014.
- */
+
+
 public class PauseSoundOnCallListener extends PhoneStateListener
 {
 	private SoundManagerFragment soundManagerFragment;
@@ -29,7 +28,7 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 
 		if (state == TelephonyManager.CALL_STATE_RINGING)
 		{
-			Map<String, List<EnhancedMediaPlayer>> allPlayers = this.soundManagerFragment.getAll();
+			Map<String, List<EnhancedMediaPlayer>> allPlayers = this.soundManagerFragment.getSounds();
 			for (String fragmentTag : allPlayers.keySet())
 			{
 				for (EnhancedMediaPlayer player : allPlayers.get(fragmentTag))
@@ -41,7 +40,15 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 					}
 				}
 			}
-
+			List<EnhancedMediaPlayer> playList = this.soundManagerFragment.getPlayList();
+			for (EnhancedMediaPlayer player : playList)
+			{
+				if (player.isPlaying())
+				{
+					this.pauseSounds.add(player);
+					player.pauseSound();
+				}
+			}
 		}
 		else if (state == TelephonyManager.CALL_STATE_IDLE)
 		{

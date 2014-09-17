@@ -58,6 +58,7 @@ public class NavigationDrawerFragment extends Fragment
 		});
 
 		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
+		this.playlist.onActivityCreated(this);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
 		this.soundSheets.onActivityCreated(this);
 	}

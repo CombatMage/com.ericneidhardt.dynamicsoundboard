@@ -87,21 +87,21 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
 		SoundSheet data = this.soundSheets.get(position);
-		holder.textView.setText(data.getLabel());
+		holder.label.setText(data.getLabel());
 		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 	{
-		private TextView textView;
+		private TextView label;
 		private ImageView selectionIndicator;
 		private ImageButton deleteItem;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
-
-			this.textView = (TextView)itemView.findViewById(R.id.tv_label);
+			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
+
 			this.deleteItem = (ImageButton) itemView.findViewById(R.id.ib_delete_sound_sheet);
 
 			itemView.setOnClickListener(this);
