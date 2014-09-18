@@ -1,85 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout
+<android.support.v4.view.ViewPager
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/height_list_item_large">
 
-	<LinearLayout
-			android:id="@+id/layout_sound_controls"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginLeft="12dp"
-			android:layout_marginRight="12dp"
-			android:layout_centerVertical="true"
-			android:orientation="vertical">
-
-		<ImageButton
-				android:id="@+id/b_stop"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:contentDescription="@string/sound_control_content_description_stop"
-				android:src="@drawable/selector_ic_stop"
-				android:background="@android:color/transparent"/>
-
-		<CheckBox
-				android:id="@+id/cb_play"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:contentDescription="@string/sound_control_content_description_play"
-				android:button="@drawable/selector_ic_play"/>
-
-	</LinearLayout>
-
-	<LinearLayout
-			android:id="@+id/layout_sound_controls_secondary"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginRight="12dp"
-			android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
-			android:orientation="vertical">
-
-		<CheckBox
-				android:id="@+id/cb_loop"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:padding="@dimen/margin_tiny"
-				android:contentDescription="@string/sound_control_content_description_loop"
-				android:button="@drawable/selector_ic_loop"/>
-
-		<CheckBox
-				android:id="@+id/cb_add_to_playlist"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:padding="@dimen/margin_tiny"
-				android:contentDescription="@string/sound_control_content_description_playlist"
-				android:button="@drawable/selector_ic_playlist"/>
-
-
-	</LinearLayout>
-
-	<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
-			android:id="@id/et_name_file"
+	<RelativeLayout
+			android:id="@+id/layout_sound_item"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_toRightOf="@id/layout_sound_controls"
-			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
-			android:layout_marginTop="@dimen/margin_default"
-			android:layout_marginRight="@dimen/margin_default"
-			app:showUnderscore="false"
-			app:textSize="@dimen/text_subheading"
-			app:textColor="@color/text_content_primary"/>
+			android:layout_height="match_parent">
 
-	<SeekBar
-			android:id="@+id/sb_time"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="@dimen/margin_small"
-			android:layout_toRightOf="@id/layout_sound_controls"
-			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
-			android:layout_alignParentBottom="true"
-			android:layout_marginRight="@dimen/margin_default"/>
+		<LinearLayout
+				android:id="@+id/layout_sound_controls"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="12dp"
+				android:layout_marginRight="12dp"
+				android:layout_centerVertical="true"
+				android:orientation="vertical">
 
-</RelativeLayout>
+			<ImageButton
+					android:id="@+id/b_stop"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:contentDescription="@string/sound_control_content_description_stop"
+					android:src="@drawable/selector_ic_stop"
+					android:background="@android:color/transparent"/>
+
+			<CheckBox
+					android:id="@+id/cb_play"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:contentDescription="@string/sound_control_content_description_play"
+					android:button="@drawable/selector_ic_play"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+				android:id="@+id/layout_sound_controls_secondary"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="12dp"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:orientation="vertical">
+
+			<CheckBox
+					android:id="@+id/cb_loop"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="@dimen/margin_tiny"
+					android:contentDescription="@string/sound_control_content_description_loop"
+					android:button="@drawable/selector_ic_loop"/>
+
+			<CheckBox
+					android:id="@+id/cb_add_to_playlist"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="@dimen/margin_tiny"
+					android:contentDescription="@string/sound_control_content_description_playlist"
+					android:button="@drawable/selector_ic_playlist"/>
+
+
+		</LinearLayout>
+
+		<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
+				android:id="@id/et_name_file"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/layout_sound_controls"
+				android:layout_toLeftOf="@id/layout_sound_controls_secondary"
+				android:layout_marginTop="@dimen/margin_default"
+				android:layout_marginRight="@dimen/margin_default"
+				app:showUnderscore="false"
+				app:textSize="@dimen/text_subheading"
+				app:textColor="@color/text_content_primary"/>
+
+		<SeekBar
+				android:id="@+id/sb_time"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="@dimen/margin_small"
+				android:layout_toRightOf="@id/layout_sound_controls"
+				android:layout_toLeftOf="@id/layout_sound_controls_secondary"
+				android:layout_alignParentBottom="true"
+				android:layout_marginRight="@dimen/margin_default"/>
+
+	</RelativeLayout>
+
+	<TextView
+			android:id="@+id/layout_remove_sound_item"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:text="Löschen"
+		android:background="@android:color/holo_red_dark"/>
+
+</android.support.v4.view.ViewPager>

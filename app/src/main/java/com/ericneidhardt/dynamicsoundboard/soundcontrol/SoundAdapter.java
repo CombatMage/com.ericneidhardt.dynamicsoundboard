@@ -2,6 +2,8 @@ package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
 import android.app.Fragment;
 import android.media.MediaPlayer;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +65,7 @@ public class SoundAdapter
 	/**
 	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
 	 */
-	public void startTimerUpdateTask()
+	public void startProgressUpdateTimer()
 	{
 		TimerTask updateTimePositions = new TimerTask()
 		{
@@ -132,9 +134,32 @@ public class SoundAdapter
 		private View stop;
 		private SeekBar timePosition;
 
+		private int lastIndex = 0;
+
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
+
+			ViewPager viewPager = (ViewPager)itemView;
+			viewPager.setAdapter(new SoundItemPagerAdapter());
+			viewPager.setCurrentItem(lastIndex);
+			viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+				@Override
+				public void onPageScrolled(int i, float v, int i1) {
+					stopProgressUpdateTimer();
+				}
+
+				@Override
+				public void onPageSelected(int i) {
+					lastIndex = i;
+					startProgressUpdateTimer();
+				}
+
+				@Override
+				public void onPageScrollStateChanged(int i) {
+					stopProgressUpdateTimer();
+				}
+			});
 
 			this.name = (CustomEditText)itemView.findViewById(R.id.et_name_file);
 			this.play = (CheckBox)itemView.findViewById(R.id.cb_play);
@@ -212,7 +237,36 @@ public class SoundAdapter
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar)
 		{
-			startTimerUpdateTask();
+			startProgressUpdateTimer();
+		}
+	}
+
+	private static class SoundItemPagerAdapter extends PagerAdapter
+	{
+		@Override
+		public int getCount()
+		{
+			return 2;
+		}
+
+		@Override
+		public boolean isViewFromObject(View view, Object object)
+		{
+			return view.equals(object);
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container, int position)
+		{
+			switch (position)
+			{
+				case 0:
+					return container.findViewById(R.id.layout_sound_item);
+				case 1:
+					return container.findViewById(R.id.layout_remove_sound_item);
+				default:
+					throw new NullPointerException("instantiateItem: no view for position " + position + " is available");
+			}
 		}
 	}
 }

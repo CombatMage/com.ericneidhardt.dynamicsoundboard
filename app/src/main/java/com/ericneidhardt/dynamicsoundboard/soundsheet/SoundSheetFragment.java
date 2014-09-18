@@ -61,7 +61,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 
-		this.soundAdapter.startTimerUpdateTask();
+		this.soundAdapter.startProgressUpdateTimer();
 	}
 
 	@Override
