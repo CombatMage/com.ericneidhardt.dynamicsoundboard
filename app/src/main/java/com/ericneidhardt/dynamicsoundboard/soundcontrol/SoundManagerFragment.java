@@ -164,12 +164,13 @@ public class SoundManagerFragment extends Fragment
 		task.execute();
 	}
 
-	public void remove(String fragmentTag, EnhancedMediaPlayer player)
+	public void remove(String fragmentTag, EnhancedMediaPlayer player, boolean notifySoundFragments)
 	{
 		player.destroy();
 		this.sounds.get(fragmentTag).remove(player);
 
-		this.notifyFragment(fragmentTag);
+		if (notifySoundFragments)
+			this.notifyFragment(fragmentTag);
 
 		SafeAsyncTask task = new RemoveMediaPlayersTask(asList(player.getMediaPlayerData()));
 		task.execute();

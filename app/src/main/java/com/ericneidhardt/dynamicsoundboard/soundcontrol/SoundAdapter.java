@@ -3,7 +3,6 @@ package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
+import com.ericneidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
@@ -30,7 +30,7 @@ public class SoundAdapter
 			MediaPlayer.OnCompletionListener
 {
 	private static final int UPDATE_INTERVAL = 500;
-	private static final int VIEWPAGER_INDEX_DELETE = 1;
+	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
 	private static final Handler handler = new Handler();
 
@@ -135,13 +135,12 @@ public class SoundAdapter
 
 	public class ViewHolder
 			extends
-				RecyclerView.ViewHolder
+				DismissibleItemViewHolder
 			implements
 				View.OnClickListener,
 				CustomEditText.OnTextEditedListener,
 				CompoundButton.OnCheckedChangeListener,
-				SeekBar.OnSeekBarChangeListener,
-				ViewPager.OnPageChangeListener
+				SeekBar.OnSeekBarChangeListener
 	{
 		private CustomEditText name;
 		private CheckBox play;
@@ -153,10 +152,6 @@ public class SoundAdapter
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
-
-			ViewPager viewPager = (ViewPager)itemView;
-			viewPager.setAdapter(new SoundItemPagerAdapter());
-			viewPager.setOnPageChangeListener(this);
 
 			this.name = (CustomEditText)itemView.findViewById(R.id.et_name_file);
 			this.play = (CheckBox)itemView.findViewById(R.id.cb_play);
@@ -171,6 +166,18 @@ public class SoundAdapter
 			this.inPlaylist.setOnCheckedChangeListener(this);
 			this.stop.setOnClickListener(this);
 			this.timePosition.setOnSeekBarChangeListener(this);
+		}
+
+		@Override
+		protected PagerAdapter getPagerAdapter()
+		{
+			return new SoundItemPagerAdapter();
+		}
+
+		@Override
+		protected int getIndexOfContentPage()
+		{
+			return VIEWPAGER_INDEX_SOUND_CONTROLS;
 		}
 
 		@Override
@@ -190,14 +197,20 @@ public class SoundAdapter
 		public void onPageSelected(final int selectedPage)
 		{
 			final int position = this.getPosition();
-			handler.postDelayed(new Runnable() { // delay restart of update timer, because page is selected before scrolling has settled
+			handler.postDelayed(new Runnable() { // delay deletion, because page is selected before scrolling has settled
 				@Override
 				public void run() {
-					if (selectedPage == VIEWPAGER_INDEX_DELETE && onItemDeleteListener != null)
+					if (selectedPage != VIEWPAGER_INDEX_SOUND_CONTROLS && onItemDeleteListener != null)
 						onItemDeleteListener.onItemDelete(mediaPlayers.get(position), position);
-					startProgressUpdateTimer();
 				}
 			}, UPDATE_INTERVAL);
+
+			handler.postDelayed(new Runnable() { // delay restart of update timer, to allow deletion animation to settle
+				@Override
+				public void run() {
+					startProgressUpdateTimer();
+				}
+			}, 2 * UPDATE_INTERVAL);
 		}
 
 		@Override
@@ -270,7 +283,7 @@ public class SoundAdapter
 		@Override
 		public int getCount()
 		{
-			return 2;
+			return 3;
 		}
 
 		@Override
@@ -282,15 +295,12 @@ public class SoundAdapter
 		@Override
 		public Object instantiateItem(ViewGroup container, int position)
 		{
-			switch (position)
-			{
-				case 0:
-					return container.findViewById(R.id.layout_sound_controls);
-				case 1:
-					return container.findViewById(R.id.layout_remove_sound_item);
-				default:
-					throw new NullPointerException("instantiateItem: no view for position " + position + " is available");
-			}
+			if (position == VIEWPAGER_INDEX_SOUND_CONTROLS)
+				return container.findViewById(R.id.layout_sound_controls);
+			else if (position == VIEWPAGER_INDEX_SOUND_CONTROLS - 1)
+				return container.findViewById(R.id.layout_remove_sound_item_left);
+			else
+				return container.findViewById(R.id.layout_remove_sound_item_right);
 		}
 	}
 

@@ -156,10 +156,11 @@ public class SoundSheetFragment
 	@Override
 	public void onItemDelete(EnhancedMediaPlayer player, int position) {
 		this.soundAdapter.remove(position);
+		this.soundAdapter.notifyItemRemoved(position);
 
 		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager()
 				.findFragmentByTag(SoundManagerFragment.TAG);
-		fragment.remove(this.fragmentTag, player);
+		fragment.remove(this.fragmentTag, player, false);
 	}
 
 	public void notifyDataSetChanged(boolean newSoundsAvailable)

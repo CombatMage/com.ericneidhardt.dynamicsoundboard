@@ -4,16 +4,33 @@
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/height_list_item_large">
 
+	<TextView
+			android:id="@+id/layout_remove_sound_item_left"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:padding="@dimen/margin_default"
+			android:gravity="right|center_vertical"
+			android:text="@string/sound_control_delete"
+			android:textSize="@dimen/text_subheading"
+			android:textColor="@color/text_accent"
+			android:textStyle="bold"
+			android:background="@color/primary_100"/>
+
 	<include layout="@layout/view_sound_control"
 			 android:id="@+id/layout_sound_controls"
 			 android:layout_width="match_parent"
 			 android:layout_height="@dimen/height_list_item_large"/>
 
 	<TextView
-			android:id="@+id/layout_remove_sound_item"
+			android:id="@+id/layout_remove_sound_item_right"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:text="Löschen"
-			android:background="@android:color/holo_red_dark"/>
+			android:padding="@dimen/margin_default"
+			android:gravity="left|center_vertical"
+			android:text="@string/sound_control_delete"
+			android:textSize="@dimen/text_subheading"
+			android:textColor="@color/text_accent"
+			android:textStyle="bold"
+			android:background="@color/primary_100"/>
 
 </android.support.v4.view.ViewPager>

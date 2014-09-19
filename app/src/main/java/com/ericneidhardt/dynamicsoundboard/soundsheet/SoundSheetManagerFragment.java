@@ -140,12 +140,14 @@ public class SoundSheetManagerFragment
 		return null;
 	}
 
-	public void remove(SoundSheet soundSheet)
+	public void remove(SoundSheet soundSheet, boolean notifySoundSheets)
 	{
 		this.soundSheets.remove(soundSheet);
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
-		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
+
+		if (notifySoundSheets)
+			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
 		SafeAsyncTask task = new RemoveSoundSheetTask(soundSheet);
 		task.execute();
