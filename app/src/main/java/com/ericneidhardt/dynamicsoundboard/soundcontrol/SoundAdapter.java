@@ -1,7 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
-import android.app.Fragment;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +15,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +30,24 @@ public class SoundAdapter
 			MediaPlayer.OnCompletionListener
 {
 	private static final int UPDATE_INTERVAL = 500;
+	private static final int VIEWPAGER_INDEX_DELETE = 1;
 
-	private Fragment parent;
+	private static final Handler handler = new Handler();
+
+	private SoundSheetFragment parent;
 	private List<EnhancedMediaPlayer> mediaPlayers;
 	private Timer progressBarUpdateTimer;
 
-	public SoundAdapter(Fragment parent)
+	private OnItemDeleteListener onItemDeleteListener;
+
+	public SoundAdapter(SoundSheetFragment parent)
 	{
 		this.parent = parent;
 		this.mediaPlayers = new ArrayList<EnhancedMediaPlayer>();
+	}
+
+	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener) {
+		this.onItemDeleteListener = onItemDeleteListener;
 	}
 
 	public void addAll(List<EnhancedMediaPlayer> mediaPlayers)
@@ -56,6 +66,11 @@ public class SoundAdapter
 		this.mediaPlayers.clear();
 	}
 
+	public void remove(int index)
+	{
+		this.mediaPlayers.remove(index);
+	}
+
 	@Override
 	public int getItemCount()
 	{
@@ -72,7 +87,7 @@ public class SoundAdapter
 			@Override
 			public void run()
 			{
-				parent.getActivity().runOnUiThread(new Runnable() {
+				handler.post(new Runnable() {
 					@Override
 					public void run() {
 						notifyDataSetChanged();
@@ -172,12 +187,14 @@ public class SoundAdapter
 
 
 		@Override
-		public void onPageSelected(int i)
+		public void onPageSelected(final int selectedPage)
 		{
-			Timer delay = new Timer(); // delay restart of update timer cause page is selected before scrolling has settled
-			delay.schedule(new TimerTask() {
+			final int position = this.getPosition();
+			handler.postDelayed(new Runnable() { // delay restart of update timer, because page is selected before scrolling has settled
 				@Override
 				public void run() {
+					if (selectedPage == VIEWPAGER_INDEX_DELETE && onItemDeleteListener != null)
+						onItemDeleteListener.onItemDelete(mediaPlayers.get(position), position);
 					startProgressUpdateTimer();
 				}
 			}, UPDATE_INTERVAL);
@@ -275,5 +292,10 @@ public class SoundAdapter
 					throw new NullPointerException("instantiateItem: no view for position " + position + " is available");
 			}
 		}
+	}
+
+	public static interface OnItemDeleteListener
+	{
+		public void onItemDelete(EnhancedMediaPlayer data, int position);
 	}
 }

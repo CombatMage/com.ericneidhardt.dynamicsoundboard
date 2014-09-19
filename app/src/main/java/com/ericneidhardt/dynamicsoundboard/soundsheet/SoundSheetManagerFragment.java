@@ -145,7 +145,7 @@ public class SoundSheetManagerFragment
 		this.soundSheets.remove(soundSheet);
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
-		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false);
+		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
 		SafeAsyncTask task = new RemoveSoundSheetTask(soundSheet);
 		task.execute();

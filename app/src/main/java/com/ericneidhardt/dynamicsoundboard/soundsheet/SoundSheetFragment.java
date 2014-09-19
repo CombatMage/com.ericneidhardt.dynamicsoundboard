@@ -26,7 +26,12 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 import java.util.List;
 
 
-public class SoundSheetFragment extends Fragment implements View.OnClickListener
+public class SoundSheetFragment
+		extends
+			Fragment
+		implements
+			View.OnClickListener,
+			SoundAdapter.OnItemDeleteListener
 {
 	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
@@ -52,6 +57,7 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 
 		this.fragmentTag = this.getArguments().getString(KEY_FRAGMENT_TAG);
 		this.soundAdapter = new SoundAdapter(this);
+		this.soundAdapter.setOnItemDeleteListener(this);
 	}
 
 	@Override
@@ -145,6 +151,15 @@ public class SoundSheetFragment extends Fragment implements View.OnClickListener
 		this.soundAdapter.notifyDataSetChanged();
 
 		return fragmentView;
+	}
+
+	@Override
+	public void onItemDelete(EnhancedMediaPlayer player, int position) {
+		this.soundAdapter.remove(position);
+
+		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager()
+				.findFragmentByTag(SoundManagerFragment.TAG);
+		fragment.remove(this.fragmentTag, player);
 	}
 
 	public void notifyDataSetChanged(boolean newSoundsAvailable)

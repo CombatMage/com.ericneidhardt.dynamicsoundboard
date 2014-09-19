@@ -90,7 +90,6 @@ public class SoundSheets
 	public void onItemDelete(View view, SoundSheet data, int position)
 	{
 		this.adapter.remove(data);
-		this.adapter.notifyDataSetChanged();
 		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.parent.getFragmentManager()
 				.findFragmentByTag(SoundSheetManagerFragment.TAG);
 
