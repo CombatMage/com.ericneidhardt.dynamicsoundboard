@@ -7,17 +7,18 @@
 		android:layout_height="@dimen/height_list_item_large">
 
 	<LinearLayout
-			android:id="@+id/layout_sound_controls"
+			android:id="@+id/layout_sound_controls_primary"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/margin_default"
-			android:orientation="horizontal">
+			android:layout_marginLeft="12dp"
+			android:layout_marginRight="12dp"
+			android:layout_centerVertical="true"
+			android:orientation="vertical">
 
 		<ImageButton
 				android:id="@+id/b_stop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginRight="@dimen/margin_default"
 				android:contentDescription="@string/sound_control_content_description_stop"
 				android:src="@drawable/selector_ic_stop"
 				android:background="@android:color/transparent"/>
@@ -63,7 +64,7 @@
 			android:id="@id/et_name_file"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_toRightOf="@id/layout_sound_controls"
+			android:layout_toRightOf="@id/layout_sound_controls_primary"
 			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
 			android:layout_marginTop="@dimen/margin_default"
 			android:layout_marginRight="@dimen/margin_default"
@@ -75,10 +76,10 @@
 			android:id="@+id/sb_time"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_toRightOf="@id/layout_sound_controls"
+			android:layout_marginBottom="@dimen/margin_small"
+			android:layout_toRightOf="@id/layout_sound_controls_primary"
 			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
 			android:layout_alignParentBottom="true"
-			android:layout_marginBottom="@dimen/margin_small"
 			android:layout_marginRight="@dimen/margin_default"/>
 
 </RelativeLayout>

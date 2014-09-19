@@ -125,7 +125,8 @@ public class SoundAdapter
 				View.OnClickListener,
 				CustomEditText.OnTextEditedListener,
 				CompoundButton.OnCheckedChangeListener,
-				SeekBar.OnSeekBarChangeListener
+				SeekBar.OnSeekBarChangeListener,
+				ViewPager.OnPageChangeListener
 	{
 		private CustomEditText name;
 		private CheckBox play;
@@ -134,32 +135,13 @@ public class SoundAdapter
 		private View stop;
 		private SeekBar timePosition;
 
-		private int lastIndex = 0;
-
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
 
 			ViewPager viewPager = (ViewPager)itemView;
 			viewPager.setAdapter(new SoundItemPagerAdapter());
-			viewPager.setCurrentItem(lastIndex);
-			viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-				@Override
-				public void onPageScrolled(int i, float v, int i1) {
-					stopProgressUpdateTimer();
-				}
-
-				@Override
-				public void onPageSelected(int i) {
-					lastIndex = i;
-					startProgressUpdateTimer();
-				}
-
-				@Override
-				public void onPageScrollStateChanged(int i) {
-					stopProgressUpdateTimer();
-				}
-			});
+			viewPager.setOnPageChangeListener(this);
 
 			this.name = (CustomEditText)itemView.findViewById(R.id.et_name_file);
 			this.play = (CheckBox)itemView.findViewById(R.id.cb_play);
@@ -174,6 +156,31 @@ public class SoundAdapter
 			this.inPlaylist.setOnCheckedChangeListener(this);
 			this.stop.setOnClickListener(this);
 			this.timePosition.setOnSeekBarChangeListener(this);
+		}
+
+		@Override
+		public void onPageScrolled(int i, float v, int i1)
+		{
+			stopProgressUpdateTimer();
+		}
+
+		@Override
+		public void onPageScrollStateChanged(int i)
+		{
+			stopProgressUpdateTimer();
+		}
+
+
+		@Override
+		public void onPageSelected(int i)
+		{
+			Timer delay = new Timer(); // delay restart of update timer cause page is selected before scrolling has settled
+			delay.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					startProgressUpdateTimer();
+				}
+			}, UPDATE_INTERVAL);
 		}
 
 		@Override
@@ -241,7 +248,7 @@ public class SoundAdapter
 		}
 	}
 
-	private static class SoundItemPagerAdapter extends PagerAdapter
+	private class SoundItemPagerAdapter extends PagerAdapter
 	{
 		@Override
 		public int getCount()
@@ -261,7 +268,7 @@ public class SoundAdapter
 			switch (position)
 			{
 				case 0:
-					return container.findViewById(R.id.layout_sound_item);
+					return container.findViewById(R.id.layout_sound_controls);
 				case 1:
 					return container.findViewById(R.id.layout_remove_sound_item);
 				default:
