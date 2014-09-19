@@ -4,9 +4,9 @@
 
 	<item android:drawable="@drawable/shape_seekbar_thumb_outer_circle_pressed"/>
 	<item android:drawable="@drawable/shape_seekbar_thumb_inner_circle"
-		  android:left="@dimen/size_half_seekbar_thumb"
-		  android:right="@dimen/size_half_seekbar_thumb"
-		  android:top="@dimen/size_half_seekbar_thumb"
-		  android:bottom="@dimen/size_half_seekbar_thumb"/>
+		  android:left="@dimen/size_seekbar_padding"
+		  android:right="@dimen/size_seekbar_padding"
+		  android:top="@dimen/size_seekbar_padding"
+		  android:bottom="@dimen/size_seekbar_padding"/>
 
 </layer-list>

@@ -1,8 +1,9 @@
 <resources>
 
 	<dimen name="size_floating_button">56dp</dimen>
-	<dimen name="size_seekbar_thumb">16dp</dimen>
-	<dimen name="size_half_seekbar_thumb">8dp</dimen>
+	<dimen name="size_seekbar_thumb_pressed">16dp</dimen>
+	<dimen name="size_seekbar_thumb">12dp</dimen>
+	<dimen name="size_seekbar_padding">4dp</dimen>
 
 	<dimen name="height_title">48dp</dimen>
 	<dimen name="height_input_field">44dp</dimen>
