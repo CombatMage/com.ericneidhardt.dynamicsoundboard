@@ -3,8 +3,9 @@
 	<color name="background">#ffffff</color>
 
 	<color name="primary_500">#3f51b5</color>
-	<color name="primary_700">#303f9f</color>
 	<color name="primary_100">#c5cae9</color>
+	<color name="primary_700">#303f9f</color>
+	<color name="primary_200">#9fa8da</color>
 
 	<color name="accent_200">#ff4081</color>
 	<color name="accent_100">#ff80ab</color>

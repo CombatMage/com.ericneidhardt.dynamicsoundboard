@@ -15,15 +15,55 @@
 					android:layout_height="wrap_content"
 					android:background="@color/primary_100"/>
 			
-			<FrameLayout
+			<RelativeLayout
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:background="@color/background">
 
+				<LinearLayout
+						android:id="@+id/layout_controls"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_alignParentBottom="true"
+						android:orientation="horizontal"
+						android:background="@color/primary_100">
+
+					<TextView
+							android:id="@+id/b_delete"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:padding="@dimen/margin_default"
+							android:gravity="center"
+							android:text="@string/navigation_drawer_delete"
+							android:textSize="@dimen/text_sub_text"
+							android:textColor="@color/text_content_primary"
+							android:background="@drawable/selector_background_primary"
+							android:clickable="true"
+							style="@style/Theme.AppTheme"/>
+
+					<TextView
+							android:id="@+id/b_add"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:padding="@dimen/margin_default"
+							android:gravity="center"
+							android:text="@string/navigation_drawer_add"
+							android:textSize="@dimen/text_sub_text"
+							android:textColor="@color/text_content_primary"
+							android:background="@drawable/selector_background_primary"
+							android:clickable="true"
+							style="@style/Theme.AppTheme"/>
+
+				</LinearLayout>
+
+
 				<android.support.v4.view.ViewPager
 						android:id="@+id/vp_tab_content"
 						android:layout_width="match_parent"
-						android:layout_height="match_parent">
+						android:layout_height="match_parent"
+						android:layout_above="@id/layout_controls">
 
 					<com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets
 							android:id="@+id/sound_sheets"
@@ -45,41 +85,11 @@
 				<View
 						android:layout_width="match_parent"
 						android:layout_height="@dimen/height_shadow_horizontal"
-						android:layout_gravity="bottom"
+						android:layout_above="@id/layout_controls"
 						android:rotation="180"
 						android:background="@drawable/ic_shadow_horizontal"/>
 
-			</FrameLayout>
-
-			<LinearLayout
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:paddingLeft="@dimen/margin_default"
-					android:paddingRight="@dimen/margin_default"
-					android:paddingBottom="@dimen/margin_default"
-					android:orientation="horizontal">
-
-				<Button
-						android:id="@+id/b_delete"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:padding="@dimen/margin_small"
-						android:text="@string/navigation_drawer_delete"
-						android:textSize="@dimen/text_subheading"
-						android:textColor="@color/text_content_primary"
-						android:background="@drawable/selector_background_accent"/>
-
-				<Button
-						android:id="@+id/b_add"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:padding="@dimen/margin_small"
-						android:text="@string/navigation_drawer_add"
-						android:textSize="@dimen/text_subheading"
-						android:textColor="@color/text_accent"
-						android:background="@drawable/selector_background_accent"/>
-
-			</LinearLayout>
+			</RelativeLayout>
 
 		</LinearLayout>
 

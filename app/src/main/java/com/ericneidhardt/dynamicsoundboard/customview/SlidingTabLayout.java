@@ -1,9 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.customview;
 
 /**
- * Created by eric.neidhardt on 01.09.2014.
- */
-/*
+ *
  * Copyright (C) 2013 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.ericneidhardt.dynamicsoundboard.R;
 
 /**
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
@@ -72,7 +71,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
 	private static final int TITLE_OFFSET_DIPS = 24;
 	private static final int TAB_VIEW_PADDING_DIPS = 16;
-	private static final int TAB_VIEW_TEXT_SIZE_SP = 12;
+	private static final int TAB_VIEW_TEXT_SIZE_SP = 13;
 
 	private int mTitleOffset;
 
@@ -84,14 +83,17 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
 	private final SlidingTabStrip mTabStrip;
 
+	@SuppressWarnings("unused")
 	public SlidingTabLayout(Context context) {
 		this(context, null);
 	}
 
+	@SuppressWarnings("unused")
 	public SlidingTabLayout(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
+	@SuppressWarnings("unused")
 	public SlidingTabLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 
@@ -140,6 +142,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 	 *
 	 * @see ViewPager#setOnPageChangeListener(ViewPager.OnPageChangeListener)
 	 */
+	@SuppressWarnings("unused")
 	public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
 		mViewPagerPageChangeListener = listener;
 	}
@@ -150,6 +153,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 	 * @param layoutResId Layout id to be inflated
 	 * @param textViewId id of the {@link TextView} in the inflated view
 	 */
+	@SuppressWarnings("unused")
 	public void setCustomTabView(int layoutResId, int textViewId) {
 		mTabViewLayoutId = layoutResId;
 		mTabViewTextViewId = textViewId;
@@ -185,7 +189,9 @@ public class SlidingTabLayout extends HorizontalScrollView {
 			TypedValue outValue = new TypedValue();
 			getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground,
 					outValue, true);
-			textView.setBackgroundResource(outValue.resourceId);
+
+			textView.setBackgroundResource(R.drawable.selector_background_primary);
+			//textView.setBackgroundResource(outValue.resourceId);
 		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -222,7 +228,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
 				tabTitleView = (TextView) tabView;
 			}
 
-			tabTitleView.setText(adapter.getPageTitle(i));
+			if (tabTitleView != null)
+				tabTitleView.setText(adapter.getPageTitle(i));
 			tabView.setOnClickListener(tabClickListener);
 
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
