@@ -11,6 +11,7 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 
 import java.util.ArrayList;
@@ -95,11 +96,22 @@ public class SoundManagerFragment extends Fragment
 		else
 			this.removeSoundFromPlayList(playerData);
 
+		this.notifyPlayList();
+	}
+
+	private void notifyPlayList()
+	{
 		NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
 		fragment.getPlaylist().notifyDataSetChanged(true);
 	}
 
-	public void addSoundToPlayList(MediaPlayerData playerData)
+	private void loadSoundsToPlayList(List<EnhancedMediaPlayer> players)
+	{
+		this.playList.addAll(players);
+		this.notifyPlayList();
+	}
+
+	private void addSoundToPlayList(MediaPlayerData playerData)
 	{
 		for (EnhancedMediaPlayer player : this.playList)
 		{
@@ -111,7 +123,7 @@ public class SoundManagerFragment extends Fragment
 		this.playList.add(player);
 	}
 
-	public void removeSoundFromPlayList(MediaPlayerData playerData)
+	private void removeSoundFromPlayList(MediaPlayerData playerData)
 	{
 		for (int i = 0; i < this.playList.size(); i++)
 		{
@@ -323,8 +335,22 @@ public class SoundManagerFragment extends Fragment
 		{
 			Logger.d(TAG, "onSuccess: with " + loadedMediaPlayers.keySet().size() + " fragments");
 			super.onSuccess(loadedMediaPlayers);
+			List<EnhancedMediaPlayer> playersInPlayList = new ArrayList<EnhancedMediaPlayer>();
 			for (String fragmentTag : loadedMediaPlayers.keySet())
-				load(fragmentTag, loadedMediaPlayers.get(fragmentTag));
+			{
+				if (fragmentTag.equals(Playlist.TAG))
+					loadSoundsToPlayList(loadedMediaPlayers.get(fragmentTag));
+				else
+				{
+					for (EnhancedMediaPlayer player : loadedMediaPlayers.get(fragmentTag))
+					{
+						if (player.getMediaPlayerData().getIsInPlaylist())
+							playersInPlayList.add(player);
+					}
+					load(fragmentTag, loadedMediaPlayers.get(fragmentTag));
+				}
+			}
+			loadSoundsToPlayList(playersInPlayList);
 		}
 
 		@Override

@@ -14,6 +14,8 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 public class Playlist extends FrameLayout
 {
+	public static final String TAG = Playlist.class.getSimpleName();
+
 	private PlaylistAdapter adapter;
 	private Fragment parent;
 
