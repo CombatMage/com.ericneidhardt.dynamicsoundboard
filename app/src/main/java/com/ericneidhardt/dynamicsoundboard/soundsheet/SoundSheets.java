@@ -87,7 +87,7 @@ public class SoundSheets
 	}
 
 	@Override
-	public void onItemDelete(View view, SoundSheet data, int position)
+	public void onItemDelete(SoundSheet data, int position)
 	{
 		this.adapter.remove(data);
 		this.adapter.notifyItemRemoved(position);

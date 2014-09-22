@@ -298,9 +298,9 @@ public class SoundAdapter
 			if (position == VIEWPAGER_INDEX_SOUND_CONTROLS)
 				return container.findViewById(R.id.layout_sound_controls);
 			else if (position == VIEWPAGER_INDEX_SOUND_CONTROLS - 1)
-				return container.findViewById(R.id.layout_remove_sound_item_left);
+				return container.findViewById(R.id.layout_remove_left);
 			else
-				return container.findViewById(R.id.layout_remove_sound_item_right);
+				return container.findViewById(R.id.layout_remove_right);
 		}
 	}
 
