@@ -123,7 +123,7 @@ public class SoundManagerFragment extends Fragment
 		this.playList.add(player);
 	}
 
-	private void removeSoundFromPlayList(MediaPlayerData playerData)
+	public void removeSoundFromPlayList(MediaPlayerData playerData)
 	{
 		for (int i = 0; i < this.playList.size(); i++)
 		{

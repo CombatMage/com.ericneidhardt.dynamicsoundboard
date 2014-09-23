@@ -14,6 +14,10 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Playlist extends NavigationDrawerList implements PlaylistAdapter.OnItemClickListener
 {
@@ -80,7 +84,31 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	@Override
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
-		// TODO
+		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<EnhancedMediaPlayer>(selectedItems.size());
+		for(int i = 0; i < selectedItems.size(); i++) {
+			int index = selectedItems.keyAt(i);
+			playersToRemove.add(this.adapter.getValues().get(index));
+		}
+
+		this.adapter.removeAll(playersToRemove);
+
+		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.parent.getFragmentManager()
+				.findFragmentByTag(SoundManagerFragment.TAG);
+
+		for (EnhancedMediaPlayer player: playersToRemove)
+		{
+			player.getMediaPlayerData().setIsInPlaylist(false);
+			soundManagerFragment.removeSoundFromPlayList(player.getMediaPlayerData());
+			player.destroy();
+
+			SoundSheetFragment fragment = (SoundSheetFragment)this.parent.getFragmentManager()
+					.findFragmentByTag(player.getMediaPlayerData().getFragmentTag());
+
+			if (fragment != null)
+				fragment.notifyDataSetChanged(false);
+		}
+
+		this.adapter.notifyDataSetChanged();
 	}
 
 	@Override

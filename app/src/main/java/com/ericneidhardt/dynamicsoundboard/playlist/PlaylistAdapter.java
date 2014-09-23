@@ -38,6 +38,16 @@ public class PlaylistAdapter
 		this.playlist.clear();
 	}
 
+	public List<EnhancedMediaPlayer> getValues()
+	{
+		return playlist;
+	}
+
+	public void removeAll(List<EnhancedMediaPlayer> playerToRemove)
+	{
+		this.playlist.removeAll(playerToRemove);
+	}
+
 	public void addAll(List<EnhancedMediaPlayer> mediaPlayers)
 	{
 		if (mediaPlayers == null)
