@@ -55,6 +55,9 @@ public abstract class NavigationDrawerList extends FrameLayout implements Action
 		actionbar.setNumberOfSelectedItems(0, this.getItemCount());
 
 		mode.setCustomView(actionbar);
+
+		parent.onActionModeStart();
+
 		return true;
 	}
 
@@ -84,6 +87,7 @@ public abstract class NavigationDrawerList extends FrameLayout implements Action
 	public void onDestroyActionMode(ActionMode mode)
 	{
 		this.actionMode = null;
+		parent.onActionModeFinished();
 	}
 
 	protected abstract int getItemCount();

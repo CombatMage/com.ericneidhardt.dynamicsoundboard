@@ -25,6 +25,9 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 	private Playlist playlist;
 	private SoundSheets soundSheets;
 
+	private View controls;
+	private View deleteSelected;
+
 	public Playlist getPlaylist()
 	{
 		return this.playlist;
@@ -76,6 +79,8 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 		this.playlist.onActivityCreated(this);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
 		this.soundSheets.onActivityCreated(this);
+		this.controls = this.getActivity().findViewById(R.id.layout_controls);
+		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
 
 		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.b_add).setOnClickListener(this);
@@ -92,6 +97,19 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 		}
 		else if (v.getId() == R.id.b_add)
 			Toast.makeText(this.getActivity(), "TODO add", Toast.LENGTH_SHORT).show();
+	}
+
+	public void onActionModeStart()
+	{
+		this.deleteSelected.setVisibility(View.VISIBLE);
+		this.controls.setVisibility(View.GONE);
+
+	}
+
+	public void onActionModeFinished()
+	{
+		this.controls.setVisibility(View.VISIBLE);
+		this.deleteSelected.setVisibility(View.GONE);
 	}
 
 	public void openSoundSheetFragment(SoundSheet soundSheet)
