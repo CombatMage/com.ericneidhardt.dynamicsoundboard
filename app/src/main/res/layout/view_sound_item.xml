@@ -5,7 +5,7 @@
 		android:layout_height="@dimen/height_list_item_large">
 
 	<TextView
-			android:id="@+id/layout_remove_left"
+			android:id="@+id/layout_remove_sound_item_left"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:padding="@dimen/margin_default"
@@ -22,7 +22,7 @@
 			 android:layout_height="@dimen/height_list_item_large"/>
 
 	<TextView
-			android:id="@+id/layout_remove_right"
+			android:id="@+id/layout_remove_sound_item_right"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:padding="@dimen/margin_default"
