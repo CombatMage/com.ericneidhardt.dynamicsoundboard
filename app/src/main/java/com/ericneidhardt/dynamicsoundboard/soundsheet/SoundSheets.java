@@ -7,10 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerListL;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
@@ -20,13 +20,12 @@ import java.util.List;
 
 public class SoundSheets
 		extends
-			FrameLayout
+		NavigationDrawerListL
 		implements
 			SoundSheetAdapter.OnItemClickListener,
 			SoundSheetAdapter.OnItemDeleteListener
 {
 	private SoundSheetAdapter adapter;
-	private NavigationDrawerFragment parent;
 
 	@SuppressWarnings("unused")
 	public SoundSheets(Context context)
@@ -72,8 +71,14 @@ public class SoundSheets
 
 	public void onActivityCreated(NavigationDrawerFragment parent)
 	{
-		this.parent = parent;
+		super.parent = parent;
 		this.notifyDataSetChanged(true);
+	}
+
+	public void prepareItemDeletion()
+	{
+		super.prepareItemDeletion();
+		// TODO
 	}
 
 	@Override

@@ -1,23 +1,22 @@
 package com.ericneidhardt.dynamicsoundboard.playlist;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.FrameLayout;
+import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
+import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerListL;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
-public class Playlist extends FrameLayout
+public class Playlist extends NavigationDrawerListL
 {
 	public static final String TAG = Playlist.class.getSimpleName();
 
 	private PlaylistAdapter adapter;
-	private Fragment parent;
 
 	@SuppressWarnings("unused")
 	public Playlist(Context context)
@@ -59,10 +58,16 @@ public class Playlist extends FrameLayout
 		playlist.setAdapter(this.adapter);
 	}
 
-	public void onActivityCreated(Fragment parent)
+	public void onActivityCreated(NavigationDrawerFragment parent)
 	{
-		this.parent = parent;
+		super.parent = parent;
 		this.notifyDataSetChanged(true);
+	}
+
+	public void prepareItemDeletion()
+	{
+		super.prepareItemDeletion();
+		// TODO
 	}
 
 	public void notifyDataSetChanged(boolean newSoundAvailable)

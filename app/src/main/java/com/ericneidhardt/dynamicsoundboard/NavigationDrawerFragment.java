@@ -6,19 +6,34 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 
-public class NavigationDrawerFragment extends Fragment
+public class NavigationDrawerFragment extends Fragment implements View.OnClickListener
 {
 	public static final String TAG = NavigationDrawerFragment.class.getSimpleName();
 
+	private static final int INDEX_SOUND_SHEETS = 0;
+	private static final int INDEX_PLAYLIST = 1;
+
+	private ViewPager tabContent;
 	private TabContentAdapter tabContentAdapter;
 	private Playlist playlist;
 	private SoundSheets soundSheets;
+
+	public Playlist getPlaylist()
+	{
+		return this.playlist;
+	}
+
+	public SoundSheets getSoundSheets()
+	{
+		return this.soundSheets;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -34,7 +49,7 @@ public class NavigationDrawerFragment extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		ViewPager tabContent = (ViewPager) this.getActivity().findViewById(R.id.vp_tab_content);
+		this.tabContent = (ViewPager) this.getActivity().findViewById(R.id.vp_tab_content);
 		tabContent.setAdapter(this.tabContentAdapter);
 
 		SlidingTabLayout tabBar = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
@@ -61,16 +76,22 @@ public class NavigationDrawerFragment extends Fragment
 		this.playlist.onActivityCreated(this);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
 		this.soundSheets.onActivityCreated(this);
+
+		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
+		this.getActivity().findViewById(R.id.b_add).setOnClickListener(this);
 	}
 
-	public Playlist getPlaylist()
+	@Override
+	public void onClick(View v)
 	{
-		return this.playlist;
-	}
-
-	public SoundSheets getSoundSheets()
-	{
-		return this.soundSheets;
+		if (v.getId() == R.id.b_delete) {
+			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
+				this.playlist.prepareItemDeletion();
+			else
+				this.soundSheets.prepareItemDeletion();
+		}
+		else if (v.getId() == R.id.b_add)
+			Toast.makeText(this.getActivity(), "TODO add", Toast.LENGTH_SHORT).show();
 	}
 
 	public void openSoundSheetFragment(SoundSheet soundSheet)
@@ -110,9 +131,9 @@ public class NavigationDrawerFragment extends Fragment
 		{
 			switch (position)
 			{
-				case 0:
+				case INDEX_SOUND_SHEETS:
 					return soundSheets;
-				case 1:
+				case INDEX_PLAYLIST:
 					return playlist;
 				default:
 					throw new NullPointerException("instantiateItem: no view for position " + position + " is available");
