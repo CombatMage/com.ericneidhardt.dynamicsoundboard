@@ -5,19 +5,19 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
-import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
+import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class SoundSheets
@@ -76,11 +76,13 @@ public class SoundSheets
 	}
 
 	@Override
-	protected void onDeleteSelected(Map<Integer, View> selectedItems)
+	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
-		List<SoundSheet> soundSheetsToRemove = new ArrayList<SoundSheet>(selectedItems.keySet().size());
-		for (int index : selectedItems.keySet())
+		List<SoundSheet> soundSheetsToRemove = new ArrayList<SoundSheet>(selectedItems.size());
+		for(int i = 0; i < selectedItems.size(); i++) {
+			int index = selectedItems.keyAt(i);
 			soundSheetsToRemove.add(this.adapter.getValues().get(index));
+		}
 
 		this.adapter.removeAll(soundSheetsToRemove);
 

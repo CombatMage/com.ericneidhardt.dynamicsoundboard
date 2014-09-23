@@ -5,17 +5,17 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
-import java.util.Map;
-
-public class Playlist extends NavigationDrawerList
+public class Playlist extends NavigationDrawerList implements PlaylistAdapter.OnItemClickListener
 {
 	public static final String TAG = Playlist.class.getSimpleName();
 
@@ -58,6 +58,7 @@ public class Playlist extends NavigationDrawerList
 		playlist.setItemAnimator(new DefaultItemAnimator());
 
 		this.adapter = new PlaylistAdapter();
+		this.adapter.setOnItemClickListener(this);
 		playlist.setAdapter(this.adapter);
 	}
 
@@ -68,7 +69,16 @@ public class Playlist extends NavigationDrawerList
 	}
 
 	@Override
-	protected void onDeleteSelected(Map<Integer, View> selectedItems)
+	public void onItemClick(View view, EnhancedMediaPlayer player, int position)
+	{
+		if (super.isInSelectionMode)
+			super.onItemSelected(view, position);
+		else if (this.parent != null)
+			this.adapter.startPlayList(player, position);
+	}
+
+	@Override
+	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
 		// TODO
 	}
@@ -88,6 +98,5 @@ public class Playlist extends NavigationDrawerList
 		}
 		this.adapter.notifyDataSetChanged();
 	}
-
 
 }

@@ -21,10 +21,16 @@ public class PlaylistAdapter
 {
 	private List<EnhancedMediaPlayer> playlist;
 	private Integer currentItemIndex;
+	private OnItemClickListener onItemClickListener;
 
 	public PlaylistAdapter()
 	{
 		this.playlist = new ArrayList<EnhancedMediaPlayer>();
+	}
+
+	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
+	{
+		this.onItemClickListener = onItemClickListener;
 	}
 
 	public void clear()
@@ -43,7 +49,7 @@ public class PlaylistAdapter
 		this.playlist.addAll(mediaPlayers);
 	}
 
-	public void onItemClick(EnhancedMediaPlayer nextActivePlayer, int position)
+	public void startPlayList(EnhancedMediaPlayer nextActivePlayer, int position)
 	{
 		for (EnhancedMediaPlayer player : this.playlist)
 		{
@@ -107,7 +113,13 @@ public class PlaylistAdapter
 		public void onClick(View view)
 		{
 			int position = this.getPosition();
-			onItemClick(playlist.get(position), position);
+			if (onItemClickListener != null)
+				onItemClickListener.onItemClick(view, playlist.get(position), position);
 		}
+	}
+
+	public static interface OnItemClickListener
+	{
+		public void onItemClick(View view, EnhancedMediaPlayer player, int position);
 	}
 }

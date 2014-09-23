@@ -2,15 +2,13 @@ package com.ericneidhardt.dynamicsoundboard.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public abstract class NavigationDrawerList
@@ -24,7 +22,7 @@ public abstract class NavigationDrawerList
 	protected boolean isInSelectionMode;
 
 	private ContextualActionbar actionbar;
-	private Map<Integer, View> selectedItems;
+	private SparseArray<View> selectedItems;
 
 	public NavigationDrawerList(Context context) {
 		super(context);
@@ -64,8 +62,7 @@ public abstract class NavigationDrawerList
 		actionbar.setDeleteAction(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				actionMode.finish();
-				onDeleteSelected(selectedItems);
+				deleteSelected();
 			}
 		});
 		actionbar.setSelectAllAction(new OnClickListener() {
@@ -79,9 +76,15 @@ public abstract class NavigationDrawerList
 		mode.setCustomView(actionbar);
 		this.parent.onActionModeStart();
 		this.isInSelectionMode = true;
-		this.selectedItems = new HashMap<Integer, View>(this.getItemCount());
+		this.selectedItems = new SparseArray<View>(this.getItemCount());
 
 		return true;
+	}
+
+	public void deleteSelected()
+	{
+		actionMode.finish();
+		onDeleteSelected(selectedItems);
 	}
 
 	protected void onSelectAll()
@@ -89,7 +92,7 @@ public abstract class NavigationDrawerList
 		// TODO
 	}
 
-	protected abstract void onDeleteSelected(Map<Integer, View> selectedItems);
+	protected abstract void onDeleteSelected(SparseArray<View> selectedItems);
 
 	@Override
 	public boolean onPrepareActionMode(ActionMode mode, Menu menu)
@@ -109,8 +112,10 @@ public abstract class NavigationDrawerList
 		this.actionMode = null;
 		this.parent.onActionModeFinished();
 		this.isInSelectionMode = false;
-		for (int index : this.selectedItems.keySet())
-			this.selectedItems.get(index).setSelected(false);
+		for(int i = 0; i < this.selectedItems.size(); i++)
+		{
+			this.selectedItems.valueAt(i).setSelected(false);
+		}
 	}
 
 	protected abstract int getItemCount();

@@ -81,6 +81,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 		this.soundSheets.onActivityCreated(this);
 		this.controls = this.getActivity().findViewById(R.id.layout_controls);
 		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
+		this.deleteSelected.setOnClickListener(this);
 
 		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.b_add).setOnClickListener(this);
@@ -89,11 +90,19 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 	@Override
 	public void onClick(View v)
 	{
-		if (v.getId() == R.id.b_delete) {
+		if (v.getId() == R.id.b_delete)
+		{
 			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				this.playlist.prepareItemDeletion();
 			else
 				this.soundSheets.prepareItemDeletion();
+		}
+		else if (v.getId() == R.id.b_delete_selected)
+		{
+			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
+				this.playlist.deleteSelected();
+			else
+				this.soundSheets.deleteSelected();
 		}
 		else if (v.getId() == R.id.b_add)
 			Toast.makeText(this.getActivity(), "TODO add", Toast.LENGTH_SHORT).show();
