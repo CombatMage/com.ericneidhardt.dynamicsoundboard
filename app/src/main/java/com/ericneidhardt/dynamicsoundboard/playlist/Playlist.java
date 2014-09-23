@@ -9,10 +9,10 @@ import android.view.LayoutInflater;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
-import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerListL;
+import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
-public class Playlist extends NavigationDrawerListL
+public class Playlist extends NavigationDrawerList
 {
 	public static final String TAG = Playlist.class.getSimpleName();
 
@@ -68,6 +68,11 @@ public class Playlist extends NavigationDrawerListL
 	{
 		super.prepareItemDeletion();
 		// TODO
+	}
+
+	@Override
+	protected int getItemCount() {
+		return this.adapter.getItemCount();
 	}
 
 	public void notifyDataSetChanged(boolean newSoundAvailable)

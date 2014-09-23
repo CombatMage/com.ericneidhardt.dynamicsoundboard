@@ -10,7 +10,7 @@ import android.view.View;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
-import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerListL;
+import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class SoundSheets
 		extends
-		NavigationDrawerListL
+		NavigationDrawerList
 		implements
 			SoundSheetAdapter.OnItemClickListener,
 			SoundSheetAdapter.OnItemDeleteListener
@@ -79,6 +79,11 @@ public class SoundSheets
 	{
 		super.prepareItemDeletion();
 		// TODO
+	}
+
+	@Override
+	protected int getItemCount() {
+		return this.adapter.getItemCount();
 	}
 
 	@Override
