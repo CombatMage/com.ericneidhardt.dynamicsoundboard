@@ -6,11 +6,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
+
+import java.util.Map;
 
 public class Playlist extends NavigationDrawerList
 {
@@ -64,9 +67,9 @@ public class Playlist extends NavigationDrawerList
 		this.notifyDataSetChanged(true);
 	}
 
-	public void prepareItemDeletion()
+	@Override
+	protected void onDeleteSelected(Map<Integer, View> selectedItems)
 	{
-		super.prepareItemDeletion();
 		// TODO
 	}
 

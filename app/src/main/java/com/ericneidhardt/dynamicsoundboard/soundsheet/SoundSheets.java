@@ -15,15 +15,16 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class SoundSheets
 		extends
-		NavigationDrawerList
+			NavigationDrawerList
 		implements
-			SoundSheetAdapter.OnItemClickListener,
-			SoundSheetAdapter.OnItemDeleteListener
+			SoundSheetAdapter.OnItemClickListener
 {
 	private SoundSheetAdapter adapter;
 
@@ -65,7 +66,6 @@ public class SoundSheets
 
 		this.adapter = new SoundSheetAdapter();
 		this.adapter.setOnItemClickListener(this);
-		this.adapter.setOnItemDeleteListener(this);
 		playlist.setAdapter(this.adapter);
 	}
 
@@ -75,10 +75,40 @@ public class SoundSheets
 		this.notifyDataSetChanged(true);
 	}
 
-	public void prepareItemDeletion()
+	@Override
+	protected void onDeleteSelected(Map<Integer, View> selectedItems)
 	{
-		super.prepareItemDeletion();
-		// TODO
+		List<SoundSheet> soundSheetsToRemove = new ArrayList<SoundSheet>(selectedItems.keySet().size());
+		for (int index : selectedItems.keySet())
+			soundSheetsToRemove.add(this.adapter.getValues().get(index));
+
+		this.adapter.removeAll(soundSheetsToRemove);
+
+		SoundSheetManagerFragment soundSheetManagerfragment = (SoundSheetManagerFragment)this.parent.getFragmentManager()
+				.findFragmentByTag(SoundSheetManagerFragment.TAG);
+
+		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.parent.getFragmentManager()
+				.findFragmentByTag(SoundManagerFragment.TAG);
+
+		BaseActivity activity = (BaseActivity)this.parent.getActivity();
+
+		for (SoundSheet soundSheet: soundSheetsToRemove)
+		{
+			soundSheetManagerfragment.remove(soundSheet, false);
+			soundManagerFragment.remove(soundSheet.getFragmentTag());
+			activity.removeSoundFragment(soundSheet);
+
+			if (soundSheet.getIsSelected())
+			{
+				List<SoundSheet> remainingSoundSheets = this.adapter.getValues();
+				if (remainingSoundSheets.size() > 0)
+				{
+					this.adapter.setSelectedItem(0);
+					this.parent.openSoundSheetFragment(remainingSoundSheets.get(0));
+				}
+			}
+		}
+		this.adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -89,40 +119,12 @@ public class SoundSheets
 	@Override
 	public void onItemClick(View view, SoundSheet data, int position)
 	{
-		if (this.parent != null)
+		if (super.isInSelectionMode)
+			super.onItemSelected(view, position);
+		else if (this.parent != null)
 		{
 			this.adapter.setSelectedItem(position);
 			this.parent.openSoundSheetFragment(data);
-		}
-	}
-
-	@Override
-	public void onItemDelete(View view, SoundSheet data, int position)
-	{
-		this.adapter.remove(data);
-		this.adapter.notifyItemRemoved(position);
-
-		SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.parent.getFragmentManager()
-				.findFragmentByTag(SoundSheetManagerFragment.TAG);
-
-		fragment.remove(data, false);
-
-		if (this.parent != null)
-		{
-			((BaseActivity)this.parent.getActivity()).removeSoundFragment(data);
-			((SoundManagerFragment)this.parent.getFragmentManager()
-					.findFragmentByTag(SoundManagerFragment.TAG)).remove(data.getFragmentTag());
-
-			if (data.getIsSelected())
-			{
-				List<SoundSheet> soundSheets = this.adapter.getValues();
-				if (soundSheets.size() > 0)
-				{
-					int positionOfNewSelectedSoundSheet = (position > 0) ? position - 1 : 0;
-					this.adapter.setSelectedItem(positionOfNewSelectedSoundSheet);
-					this.parent.openSoundSheetFragment(soundSheets.get(positionOfNewSelectedSoundSheet));
-				}
-			}
 		}
 	}
 

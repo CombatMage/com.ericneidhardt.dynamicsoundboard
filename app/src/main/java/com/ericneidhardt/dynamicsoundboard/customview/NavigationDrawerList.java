@@ -9,12 +9,22 @@ import android.view.View;
 import android.widget.FrameLayout;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class NavigationDrawerList extends FrameLayout implements ActionMode.Callback
+
+public abstract class NavigationDrawerList
+		extends
+			FrameLayout
+		implements
+			ActionMode.Callback
 {
 	protected NavigationDrawerFragment parent;
-
 	protected ActionMode actionMode;
+	protected boolean isInSelectionMode;
+
+	private ContextualActionbar actionbar;
+	private Map<Integer, View> selectedItems;
 
 	public NavigationDrawerList(Context context) {
 		super(context);
@@ -28,7 +38,18 @@ public abstract class NavigationDrawerList extends FrameLayout implements Action
 		super(context, attrs, defStyle);
 	}
 
-	protected void prepareItemDeletion()
+	protected void onItemSelected(View view, int indexOfSelectedItem)
+	{
+		if (view.isSelected())
+			this.selectedItems.remove(indexOfSelectedItem);
+		else
+			this.selectedItems.put(indexOfSelectedItem, view);
+
+		this.actionbar.setNumberOfSelectedItems(this.selectedItems.size(), this.getItemCount());
+		view.setSelected(!view.isSelected());
+	}
+
+	public void prepareItemDeletion()
 	{
 		if (this.parent == null)
 			throw new NullPointerException("Cannot prepare deletion, because the containing fragment is null");
@@ -39,11 +60,12 @@ public abstract class NavigationDrawerList extends FrameLayout implements Action
 	@Override
 	public boolean onCreateActionMode(ActionMode mode, Menu menu)
 	{
-		ContextualActionbar actionbar = new ContextualActionbar(this.getContext());
+		this.actionbar = new ContextualActionbar(this.getContext());
 		actionbar.setDeleteAction(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				onDeleteSelected();
+				actionMode.finish();
+				onDeleteSelected(selectedItems);
 			}
 		});
 		actionbar.setSelectAllAction(new OnClickListener() {
@@ -55,8 +77,9 @@ public abstract class NavigationDrawerList extends FrameLayout implements Action
 		actionbar.setNumberOfSelectedItems(0, this.getItemCount());
 
 		mode.setCustomView(actionbar);
-
-		parent.onActionModeStart();
+		this.parent.onActionModeStart();
+		this.isInSelectionMode = true;
+		this.selectedItems = new HashMap<Integer, View>(this.getItemCount());
 
 		return true;
 	}
@@ -66,10 +89,7 @@ public abstract class NavigationDrawerList extends FrameLayout implements Action
 		// TODO
 	}
 
-	protected void onDeleteSelected()
-	{
-		// TODO
-	}
+	protected abstract void onDeleteSelected(Map<Integer, View> selectedItems);
 
 	@Override
 	public boolean onPrepareActionMode(ActionMode mode, Menu menu)
@@ -87,7 +107,10 @@ public abstract class NavigationDrawerList extends FrameLayout implements Action
 	public void onDestroyActionMode(ActionMode mode)
 	{
 		this.actionMode = null;
-		parent.onActionModeFinished();
+		this.parent.onActionModeFinished();
+		this.isInSelectionMode = false;
+		for (int index : this.selectedItems.keySet())
+			this.selectedItems.get(index).setSelected(false);
 	}
 
 	protected abstract int getItemCount();
