@@ -17,7 +17,6 @@ public abstract class DismissibleItemViewHolder
 		super(itemView);
 
 		ViewPager viewPager = (ViewPager)itemView;
-		//viewPager.setPageTransformer(false, new DepthPageTransformer());
 		viewPager.setOffscreenPageLimit(2);
 		viewPager.setAdapter(this.getPagerAdapter());
 		viewPager.setOnPageChangeListener(this);

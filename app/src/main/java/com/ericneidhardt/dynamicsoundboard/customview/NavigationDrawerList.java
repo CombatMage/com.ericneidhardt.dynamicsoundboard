@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 
+import java.util.List;
+
 
 public abstract class NavigationDrawerList
 		extends
@@ -89,7 +91,14 @@ public abstract class NavigationDrawerList
 
 	protected void onSelectAll()
 	{
-		// TODO
+		List<View> allViews = this.getAllItems();
+		for (int i = 0; i < allViews.size(); i++)
+		{
+			allViews.get(i).setSelected(true);
+			this.selectedItems.put(i, allViews.get(i));
+		}
+
+		this.actionbar.setNumberOfSelectedItems(this.getItemCount(), this.getItemCount());
 	}
 
 	protected abstract void onDeleteSelected(SparseArray<View> selectedItems);
@@ -113,10 +122,10 @@ public abstract class NavigationDrawerList
 		this.parent.onActionModeFinished();
 		this.isInSelectionMode = false;
 		for(int i = 0; i < this.selectedItems.size(); i++)
-		{
 			this.selectedItems.valueAt(i).setSelected(false);
-		}
 	}
+
+	protected abstract List<View> getAllItems();
 
 	protected abstract int getItemCount();
 }

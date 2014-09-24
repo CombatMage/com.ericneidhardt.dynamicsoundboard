@@ -82,6 +82,16 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	}
 
 	@Override
+	protected List<View> getAllItems()
+	{
+		List<View> viewsInPlayList = new ArrayList<View>(this.adapter.getItemCount());
+		RecyclerView playlist = (RecyclerView)this.findViewById(R.id.rv_playlist);
+		for (int i = 0; i < this.adapter.getItemCount(); i++)
+			viewsInPlayList.add(playlist.getChildAt(i));
+		return viewsInPlayList;
+	}
+
+	@Override
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
 		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<EnhancedMediaPlayer>(selectedItems.size());
