@@ -10,7 +10,10 @@ import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 
 public class NavigationDrawerFragment extends Fragment implements View.OnClickListener
@@ -105,7 +108,17 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 				this.soundSheets.deleteSelected();
 		}
 		else if (v.getId() == R.id.b_add)
-			Toast.makeText(this.getActivity(), "TODO add", Toast.LENGTH_SHORT).show();
+		{
+			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
+				Toast.makeText(this.getActivity(), "TODO add", Toast.LENGTH_SHORT).show();
+			else
+			{
+				SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
+						.findFragmentByTag(SoundManagerFragment.TAG);
+				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), fragment.getSuggestedSoundSheetName());
+			}
+		}
+
 	}
 
 	public void onActionModeStart()

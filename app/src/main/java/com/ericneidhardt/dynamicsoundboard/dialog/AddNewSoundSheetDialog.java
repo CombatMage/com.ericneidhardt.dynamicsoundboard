@@ -10,9 +10,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
-/**
- * Created by eric.neidhardt on 04.09.2014.
- */
+
 public class AddNewSoundSheetDialog extends DialogFragment implements View.OnClickListener
 {
 	public static final String TAG = AddNewSoundSheetDialog.class.getSimpleName();
