@@ -145,15 +145,23 @@ public class SoundManagerFragment extends Fragment
 		if (fragmentTag == null)
 			throw  new NullPointerException("addSoundSheetAndNotifyFragment: cannot addSoundSheetAndNotifyFragment media players to fragment, fragment tag is null");
 
-		if (this.sounds.get(fragmentTag) == null)
-			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
+		if (fragmentTag.equals(Playlist.TAG))
+		{
+			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
+				this.addSoundToPlayList(mediaPlayerData);
+		}
+		else
+		{
+			if (this.sounds.get(fragmentTag) == null)
+				this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
 
-		List<EnhancedMediaPlayer> players = new ArrayList<EnhancedMediaPlayer>();
-		for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-			players.add(new EnhancedMediaPlayer(this.getActivity(), mediaPlayerData));
+			List<EnhancedMediaPlayer> players = new ArrayList<EnhancedMediaPlayer>();
+			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
+				players.add(new EnhancedMediaPlayer(this.getActivity(), mediaPlayerData));
 
+			this.sounds.get(fragmentTag).addAll(players);
+		}
 		this.storeMediaPlayerData(fragmentTag, mediaPlayersData);
-		this.sounds.get(fragmentTag).addAll(players);
 		this.notifyFragment(fragmentTag);
 	}
 
@@ -201,9 +209,18 @@ public class SoundManagerFragment extends Fragment
 
 	private void notifyFragment(String fragmentTag)
 	{
-		SoundSheetFragment fragment = (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
-		if (fragment != null)
-			fragment.notifyDataSetChanged(true);
+		if (fragmentTag == Playlist.TAG)
+		{
+			NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager()
+					.findFragmentByTag(NavigationDrawerFragment.TAG);
+			fragment.getPlaylist().notifyDataSetChanged(true);
+		}
+		else
+		{
+			SoundSheetFragment fragment = (SoundSheetFragment) this.getFragmentManager().findFragmentByTag(fragmentTag);
+			if (fragment != null)
+				fragment.notifyDataSetChanged(true);
+		}
 	}
 
 	private void storeMediaPlayerData(String fragmentId, List<MediaPlayerData> mediaPlayersData)

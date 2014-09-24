@@ -17,9 +17,7 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by eric.neidhardt on 08.09.2014.
- */
+
 public class AddNewSoundDialog extends DialogFragment implements View.OnClickListener
 {
 	public static final String TAG = AddNewSoundDialog.class.getSimpleName();

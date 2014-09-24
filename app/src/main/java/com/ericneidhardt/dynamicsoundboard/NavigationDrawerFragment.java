@@ -6,13 +6,12 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
-import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 
@@ -110,11 +109,11 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 		else if (v.getId() == R.id.b_add)
 		{
 			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
-				Toast.makeText(this.getActivity(), "TODO add", Toast.LENGTH_SHORT).show();
+				AddNewSoundDialog.showInstance(this.getFragmentManager(), Playlist.TAG);
 			else
 			{
 				SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
-						.findFragmentByTag(SoundManagerFragment.TAG);
+						.findFragmentByTag(SoundSheetManagerFragment.TAG);
 				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), fragment.getSuggestedSoundSheetName());
 			}
 		}
