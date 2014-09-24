@@ -273,8 +273,12 @@ public class SoundSheetManagerFragment
 			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
 			BaseActivity activity = (BaseActivity)getActivity();
-			activity.openSoundFragment(getSelectedItem());
-			((ActionbarEditText)activity.findViewById(R.id.et_set_label)).setText(getSelectedItem().getLabel());
+			SoundSheet selectedSoundSheet = getSelectedItem();
+			if (selectedSoundSheet != null)
+			{
+				activity.openSoundFragment(selectedSoundSheet);
+				((ActionbarEditText) activity.findViewById(R.id.et_set_label)).setText(selectedSoundSheet.getLabel());
+			}
 
 		}
 
