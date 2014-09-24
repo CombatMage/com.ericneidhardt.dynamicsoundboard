@@ -21,7 +21,7 @@
 
 		<View
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow_horizontal"
+				android:layout_height="@dimen/height_shadow"
 				android:background="@drawable/ic_shadow_horizontal"/>
 
 	</FrameLayout>

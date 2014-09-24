@@ -4,33 +4,95 @@
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/height_list_item_large">
 
-	<TextView
+	<FrameLayout
 			android:id="@+id/layout_remove_sound_item_left"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:padding="@dimen/margin_default"
-			android:gravity="right|center_vertical"
-			android:text="@string/sound_control_delete"
-			android:textSize="@dimen/text_subheading"
-			android:textColor="@color/text_accent"
-			android:textStyle="bold"
-			android:background="@color/primary_100"/>
+			android:layout_height="@dimen/height_list_item_large"
+			android:background="@color/background_secondary">
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:padding="@dimen/margin_default"
+				android:gravity="right|center_vertical"
+				android:text="@string/sound_control_delete"
+				android:textSize="@dimen/text_subheading"
+				android:textColor="@color/text_accent"
+				android:textStyle="bold"/>
+
+		<View
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_shadow"
+				android:background="@drawable/ic_shadow_horizontal"/>
+
+		<View
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_shadow"
+				android:layout_gravity="bottom"
+				android:rotation="180"
+				android:background="@drawable/ic_shadow_horizontal"/>
+
+		<View
+				android:layout_width="@dimen/height_shadow"
+				android:layout_height="match_parent"
+				android:layout_gravity="right"
+				android:rotation="180"
+				android:background="@drawable/ic_shadow_vertical"/>
+
+		<View
+				android:layout_width="@dimen/height_shadow"
+				android:layout_height="match_parent"
+				android:layout_gravity="left"
+				android:background="@drawable/ic_shadow_vertical"/>
+
+	</FrameLayout>
 
 	<include layout="@layout/view_sound_control"
 			 android:id="@+id/layout_sound_controls"
 			 android:layout_width="match_parent"
 			 android:layout_height="@dimen/height_list_item_large"/>
 
-	<TextView
+	<FrameLayout
 			android:id="@+id/layout_remove_sound_item_right"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:padding="@dimen/margin_default"
-			android:gravity="left|center_vertical"
-			android:text="@string/sound_control_delete"
-			android:textSize="@dimen/text_subheading"
-			android:textColor="@color/text_accent"
-			android:textStyle="bold"
-			android:background="@color/primary_100"/>
+			android:layout_height="@dimen/height_list_item_large"
+			android:background="@color/background_secondary">
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:padding="@dimen/margin_default"
+				android:gravity="left|center_vertical"
+				android:text="@string/sound_control_delete"
+				android:textSize="@dimen/text_subheading"
+				android:textColor="@color/text_accent"
+				android:textStyle="bold"/>
+
+		<View
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_shadow"
+				android:background="@drawable/ic_shadow_horizontal"/>
+
+		<View
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_shadow"
+				android:layout_gravity="bottom"
+				android:rotation="180"
+				android:background="@drawable/ic_shadow_horizontal"/>
+
+		<View
+				android:layout_width="@dimen/height_shadow"
+				android:layout_height="match_parent"
+				android:layout_gravity="right"
+				android:rotation="180"
+				android:background="@drawable/ic_shadow_vertical"/>
+
+		<View
+				android:layout_width="@dimen/height_shadow"
+				android:layout_height="match_parent"
+				android:layout_gravity="left"
+				android:background="@drawable/ic_shadow_vertical"/>
+
+	</FrameLayout>
 
 </android.support.v4.view.ViewPager>
