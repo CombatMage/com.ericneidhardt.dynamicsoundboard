@@ -209,17 +209,20 @@ public class SoundManagerFragment extends Fragment
 
 	private void notifyFragment(String fragmentTag)
 	{
-		if (fragmentTag == Playlist.TAG)
+		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
+				.findFragmentByTag(NavigationDrawerFragment.TAG);
+
+		if (fragmentTag.equals(Playlist.TAG))
 		{
-			NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager()
-					.findFragmentByTag(NavigationDrawerFragment.TAG);
-			fragment.getPlaylist().notifyDataSetChanged(true);
+			navigationDrawerFragment.getPlaylist().notifyDataSetChanged(true);
 		}
 		else
 		{
 			SoundSheetFragment fragment = (SoundSheetFragment) this.getFragmentManager().findFragmentByTag(fragmentTag);
 			if (fragment != null)
 				fragment.notifyDataSetChanged(true);
+
+			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list
 		}
 	}
 

@@ -72,6 +72,7 @@ public class SoundSheets
 	public void onActivityCreated(NavigationDrawerFragment parent)
 	{
 		super.parent = parent;
+		this.adapter.setParent(parent);
 		this.notifyDataSetChanged(true);
 	}
 

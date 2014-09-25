@@ -7,26 +7,50 @@
 		android:background="@drawable/selector_background_list_item">
 
 	<ImageView
-		android:id="@+id/iv_selected"
-		android:layout_width="@dimen/height_list_item"
-		android:layout_height="@dimen/height_list_item"
-		android:layout_alignParentLeft="true"
-		android:rotation="270"
-		android:scaleType="centerCrop"
-		android:contentDescription="@string/tab_sound_sheets_content_description_selected"
-		android:src="@drawable/shape_selected_indicator"/>
+			android:id="@+id/iv_selected"
+			android:layout_width="@dimen/height_list_item"
+			android:layout_height="@dimen/height_list_item"
+			android:layout_alignParentLeft="true"
+			android:rotation="270"
+			android:scaleType="centerCrop"
+			android:contentDescription="@string/tab_sound_sheets_content_description_selected"
+			android:src="@drawable/shape_selected_indicator"/>
 
 	<TextView
-		android:id="@+id/tv_label"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="@dimen/margin_list_item_left"
-		android:layout_marginTop="@dimen/margin_default"
-		android:layout_marginBottom="@dimen/margin_default"
-		android:layout_centerVertical="true"
-		android:layout_alignParentLeft="true"
-		android:textSize="@dimen/text_subheading"
-		android:textColor="@color/text_content_primary"
-		android:text="@string/app_name"/>
+			android:id="@+id/tv_sound_count"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="@dimen/margin_default"
+			android:layout_centerVertical="true"
+			android:textSize="@dimen/text_sub_text"
+			android:textColor="@color/text_hint"
+			android:visibility="invisible"/>
+
+	<TextView
+			android:id="@+id/tv_sound_count_label"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toLeftOf="@id/tv_sound_count"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="@dimen/stroke"
+			android:textSize="@dimen/text_sub_text"
+			android:textColor="@color/text_hint"
+			android:text="@string/tab_sound_sheets_sound_count_label"
+			android:visibility="invisible"/>
+
+	<TextView
+			android:id="@+id/tv_label"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="@dimen/margin_list_item_left"
+			android:layout_marginTop="@dimen/margin_default"
+			android:layout_marginBottom="@dimen/margin_default"
+			android:layout_toLeftOf="@id/tv_sound_count_label"
+			android:layout_centerVertical="true"
+			android:layout_alignParentLeft="true"
+			android:textSize="@dimen/text_subheading"
+			android:textColor="@color/text_content_primary"
+			android:text="@string/app_name"/>
 
 </RelativeLayout>
