@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -119,14 +120,14 @@ public class PlaylistAdapter
 	{
 		private TextView label;
 		private ImageView selectionIndicator;
-		private TextView soundProgress;
+		private SeekBar progress;
 
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
 			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
-			this.soundProgress = (TextView)itemView.findViewById(R.id.tv_sound_progress);
+			this.progress = (SeekBar)itemView.findViewById(R.id.sb_progress);
 			itemView.setOnClickListener(this);
 		}
 
@@ -134,14 +135,13 @@ public class PlaylistAdapter
 		{
 			EnhancedMediaPlayer player = playlist.get(this.getPosition());
 			if (player.isPlaying())
-			{
-				int max = player.getDuration();
-				int current = player.getCurrentPosition();
-				soundProgress.setText(current + "/" + max);
-				soundProgress.setVisibility(View.VISIBLE);
+			{	
+				progress.setMax(player.getDuration());
+				progress.setProgress(player.getCurrentPosition());
+				progress.setVisibility(View.VISIBLE);
 			}
 			else
-				soundProgress.setVisibility(View.INVISIBLE);
+				progress.setVisibility(View.INVISIBLE);
 		}
 
 		@Override
