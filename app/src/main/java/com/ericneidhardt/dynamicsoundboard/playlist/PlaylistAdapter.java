@@ -1,16 +1,16 @@
 package com.ericneidhardt.dynamicsoundboard.playlist;
 
+import android.app.Fragment;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.*;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ public class PlaylistAdapter
 			MediaPlayer.OnCompletionListener
 {
 
+	private Fragment parent;
 	private List<EnhancedMediaPlayer> playlist;
 	private Integer currentItemIndex;
 	private OnItemClickListener onItemClickListener;
@@ -34,6 +35,11 @@ public class PlaylistAdapter
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
 		this.onItemClickListener = onItemClickListener;
+	}
+
+	public void setParent(Fragment parent)
+	{
+		this.parent = parent;
 	}
 
 	public void clear()
@@ -99,6 +105,10 @@ public class PlaylistAdapter
 		holder.label.setText(player.getMediaPlayerData().getLabel());
 		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
 		holder.updateProgress();
+		if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
+			holder.isInPlayList.setVisibility(View.GONE);
+		else
+			holder.isInPlayList.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -116,11 +126,17 @@ public class PlaylistAdapter
 		this.notifyDataSetChanged();
 	}
 
-	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+	public class ViewHolder
+			extends
+				RecyclerView.ViewHolder
+			implements
+				View.OnClickListener,
+				CompoundButton.OnCheckedChangeListener
 	{
 		private TextView label;
 		private ImageView selectionIndicator;
 		private SeekBar progress;
+		private CheckBox isInPlayList;
 
 		public ViewHolder(View itemView)
 		{
@@ -128,6 +144,9 @@ public class PlaylistAdapter
 			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
 			this.progress = (SeekBar)itemView.findViewById(R.id.sb_progress);
+			this.isInPlayList = (CheckBox)itemView.findViewById(R.id.cb_is_in_playlist);
+			this.isInPlayList.setChecked(true);
+			this.isInPlayList.setOnCheckedChangeListener(this);
 			itemView.setOnClickListener(this);
 		}
 
@@ -135,13 +154,34 @@ public class PlaylistAdapter
 		{
 			EnhancedMediaPlayer player = playlist.get(this.getPosition());
 			if (player.isPlaying())
-			{	
+			{
 				progress.setMax(player.getDuration());
 				progress.setProgress(player.getCurrentPosition());
 				progress.setVisibility(View.VISIBLE);
 			}
 			else
 				progress.setVisibility(View.INVISIBLE);
+		}
+
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		{
+			if (!isChecked)
+			{
+				EnhancedMediaPlayer player = playlist.get(this.getPosition());
+
+				SoundSheetFragment fragment = (SoundSheetFragment)parent.getFragmentManager()
+						.findFragmentByTag(player.getMediaPlayerData().getFragmentTag());
+
+				playlist.remove(player);
+				player.getMediaPlayerData().setIsInPlaylist(false);
+				player.destroy();
+
+				if (fragment != null)
+					fragment.notifyDataSetChanged(false);
+
+				notifyDataSetChanged();
+			}
 		}
 
 		@Override

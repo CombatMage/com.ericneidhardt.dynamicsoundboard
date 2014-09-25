@@ -18,6 +18,7 @@
 	<string name="tab_sound_sheets_sound_count_label">Sounds:</string>
 
 	<string name="tab_play_list">Playliste</string>
+	<string name="tab_play_list_content_description_playlist">Sound wird aus der Playliste entfernt</string>
 
 	<!-- actionbar -->
 	<string name="action_menu">Sound Layouts öffnen</string>

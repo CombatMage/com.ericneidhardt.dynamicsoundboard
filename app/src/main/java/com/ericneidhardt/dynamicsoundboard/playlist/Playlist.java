@@ -69,6 +69,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	public void onActivityCreated(NavigationDrawerFragment parent)
 	{
 		super.parent = parent;
+		this.adapter.setParent(parent);
 		this.notifyDataSetChanged(true);
 	}
 

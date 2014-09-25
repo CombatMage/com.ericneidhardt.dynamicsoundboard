@@ -10,9 +10,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 
 import java.io.IOException;
 
-/**
- * Created by eric.neidhardt on 27.08.2014.
- */
+
 public class EnhancedMediaPlayer extends MediaPlayer {
 
 	private static final String TAG = EnhancedMediaPlayer.class.getSimpleName();
@@ -23,7 +21,8 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 		PREPARED,
 		STARTED,
 		STOPPED,
-		PAUSED
+		PAUSED,
+		DESTROYED
 	}
 
 	private State currentState;
@@ -98,6 +97,7 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 
 	public void destroy()
 	{
+		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
 	}
