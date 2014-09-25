@@ -33,7 +33,7 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> ex
 			}
 		};
 		this.progressBarUpdateTimer = new Timer();
-		progressBarUpdateTimer.schedule(updateTimePositions, 0, UPDATE_INTERVAL);
+		this.progressBarUpdateTimer.schedule(updateTimePositions, 0, UPDATE_INTERVAL);
 	}
 
 	public void stopProgressUpdateTimer()

@@ -9,16 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistAdapter
 		extends
-			RecyclerView.Adapter<PlaylistAdapter.ViewHolder>
+			SoundProgressAdapter<PlaylistAdapter.ViewHolder>
 		implements
 			MediaPlayer.OnCompletionListener
 {
+
 	private List<EnhancedMediaPlayer> playlist;
 	private Integer currentItemIndex;
 	private OnItemClickListener onItemClickListener;
@@ -69,9 +71,15 @@ public class PlaylistAdapter
 		}
 
 		if (nextActivePlayer.isPlaying())
+		{
+			this.stopProgressUpdateTimer();
 			nextActivePlayer.pauseSound();
+		}
 		else
+		{
+			this.startProgressUpdateTimer();
 			nextActivePlayer.playSound();
+		}
 		this.currentItemIndex = position;
 		this.notifyDataSetChanged();
 	}
@@ -89,6 +97,7 @@ public class PlaylistAdapter
 		EnhancedMediaPlayer player = this.playlist.get(i);
 		holder.label.setText(player.getMediaPlayerData().getLabel());
 		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+		holder.updateProgress();
 	}
 
 	@Override
@@ -110,13 +119,29 @@ public class PlaylistAdapter
 	{
 		private TextView label;
 		private ImageView selectionIndicator;
+		private TextView soundProgress;
 
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
 			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
+			this.soundProgress = (TextView)itemView.findViewById(R.id.tv_sound_progress);
 			itemView.setOnClickListener(this);
+		}
+
+		private void updateProgress()
+		{
+			EnhancedMediaPlayer player = playlist.get(this.getPosition());
+			if (player.isPlaying())
+			{
+				int max = player.getDuration();
+				int current = player.getCurrentPosition();
+				soundProgress.setText(current + "/" + max);
+				soundProgress.setVisibility(View.VISIBLE);
+			}
+			else
+				soundProgress.setVisibility(View.INVISIBLE);
 		}
 
 		@Override
