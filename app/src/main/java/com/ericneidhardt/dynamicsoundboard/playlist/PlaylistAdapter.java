@@ -88,7 +88,7 @@ public class PlaylistAdapter
 	{
 		EnhancedMediaPlayer player = this.playlist.get(i);
 		holder.label.setText(player.getMediaPlayerData().getLabel());
-		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.GONE);
+		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	@Override
