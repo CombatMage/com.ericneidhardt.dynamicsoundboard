@@ -1,9 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
 import android.media.MediaPlayer;
-import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,28 +13,23 @@ import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class SoundAdapter
 		extends
-			RecyclerView.Adapter<SoundAdapter.ViewHolder>
+			SoundProgressAdapter<SoundAdapter.ViewHolder>
 		implements
 			MediaPlayer.OnCompletionListener
 {
-	private static final int UPDATE_INTERVAL = 500;
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
-
-	private static final Handler handler = new Handler();
 
 	private SoundSheetFragment parent;
 	private List<EnhancedMediaPlayer> mediaPlayers;
-	private Timer progressBarUpdateTimer;
 
 	private OnItemDeleteListener onItemDeleteListener;
 
@@ -75,33 +68,6 @@ public class SoundAdapter
 	public int getItemCount()
 	{
 		return this.mediaPlayers.size();
-	}
-
-	/**
-	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
-	 */
-	public void startProgressUpdateTimer()
-	{
-		TimerTask updateTimePositions = new TimerTask()
-		{
-			@Override
-			public void run()
-			{
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						notifyDataSetChanged();
-					}
-				});
-			}
-		};
-		this.progressBarUpdateTimer = new Timer();
-		progressBarUpdateTimer.schedule(updateTimePositions, 0, UPDATE_INTERVAL);
-	}
-
-	public void stopProgressUpdateTimer()
-	{
-		this.progressBarUpdateTimer.cancel();
 	}
 
 	@Override
@@ -158,7 +124,7 @@ public class SoundAdapter
 			this.loop = (CheckBox)itemView.findViewById(R.id.cb_loop);
 			this.inPlaylist = (CheckBox)itemView.findViewById(R.id.cb_add_to_playlist);
 			this.stop = itemView.findViewById(R.id.b_stop);
-			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_time);
+			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_progress);
 
 			this.name.setOnTextEditedListener(this);
 			this.play.setOnCheckedChangeListener(this);
