@@ -12,6 +12,7 @@ import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
+import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 import java.util.ArrayList;
@@ -177,7 +178,18 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 			playersData.add(playerData);
 		}
 
-		fragment.addMediaPlayersAndNotifyFragment(this.callingFragmentTag, playersData);
+		if (this.callingFragmentTag.equals(Playlist.TAG))
+		{
+			for (MediaPlayerData playerData : playersData)
+				fragment.addSoundToPlaylist(playerData);
+			fragment.notifyPlaylist();
+		}
+		else
+		{
+			for (MediaPlayerData playerData : playersData)
+				fragment.addSound(playerData);
+			fragment.notifyFragment(this.callingFragmentTag);
+		}
 	}
 
 }

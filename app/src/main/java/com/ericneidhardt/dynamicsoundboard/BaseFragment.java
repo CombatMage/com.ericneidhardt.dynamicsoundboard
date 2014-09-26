@@ -1,0 +1,24 @@
+package com.ericneidhardt.dynamicsoundboard;
+
+
+import android.app.Fragment;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+
+public abstract class BaseFragment extends Fragment
+{
+	public NavigationDrawerFragment getNavigationDrawer()
+	{
+		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
+	}
+
+	public SoundManagerFragment getSoundManagerFragment()
+	{
+		return (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+	}
+
+	public SoundSheetManagerFragment getSoundSheetManagerFragment()
+	{
+		return (SoundSheetManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
+	}
+}

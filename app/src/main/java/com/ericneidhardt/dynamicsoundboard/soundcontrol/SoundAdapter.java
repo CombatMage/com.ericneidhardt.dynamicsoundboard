@@ -203,7 +203,9 @@ public class SoundAdapter
 				case R.id.cb_add_to_playlist:
 					player.setInPlaylist(isChecked);
 					SoundManagerFragment fragment = (SoundManagerFragment)parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
-					fragment.notifyPlayListChanged(player.getMediaPlayerData());
+					fragment.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), isChecked);
+					fragment.notifyPlaylist();
+					notifyDataSetChanged();
 					break;
 			}
 		}

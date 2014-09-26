@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
+import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class SoundSheetFragment
 		extends
-			Fragment
+			BaseFragment
 		implements
 			View.OnClickListener,
 			SoundAdapter.OnItemDeleteListener
@@ -84,8 +85,9 @@ public class SoundSheetFragment
 		switch (item.getItemId())
 		{
 			case R.id.action_clear_sounds_in_sheet:
-				SoundManagerFragment soundManagerFragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
-				soundManagerFragment.remove(this.fragmentTag);
+				SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
+				soundManagerFragment.removeSounds(this.fragmentTag);
+				this.soundAdapter.notifyDataSetChanged();
 				return true;
 			default:
 				return false;
@@ -101,9 +103,8 @@ public class SoundSheetFragment
 			{
 				Uri soundUri = data.getData();
 				String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
-				((SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG))
-						.addMediaPlayerAndNotifyFragment(this.fragmentTag, EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
-
+				SoundManagerFragment fragment = this.getSoundManagerFragment();
+				fragment.addSound(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
 				return;
 			}
 		}

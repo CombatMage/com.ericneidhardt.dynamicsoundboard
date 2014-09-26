@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,7 +12,6 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
-import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 
 import java.util.ArrayList;
@@ -26,10 +26,21 @@ public class SoundManagerFragment extends Fragment
 	public static final String TAG = SoundManagerFragment.class.getSimpleName();
 
 	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.SoundManagerFragment.db_sounds";
+	private static final String DB_SOUNDS_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.SoundManagerFragment.db_sounds_playlist";
 
+	private DaoSession dbPlaylist;
 	private List<EnhancedMediaPlayer> playList;
+	public List<EnhancedMediaPlayer> getPlayList()
+	{
+		return playList;
+	}
+
+	private DaoSession dbSounds;
 	private Map<String, List<EnhancedMediaPlayer>> sounds;
-	private DaoSession daoSession;
+	public Map<String, List<EnhancedMediaPlayer>> getSounds()
+	{
+		return sounds;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -40,9 +51,14 @@ public class SoundManagerFragment extends Fragment
 
 		this.playList = new ArrayList<EnhancedMediaPlayer>();
 		this.sounds = new HashMap<String,  List<EnhancedMediaPlayer>>();
-		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUNDS);
 
-		SafeAsyncTask task = new LoadMediaPlayerTask();
+		this.dbPlaylist = Util.setupDatabase(this.getActivity(), DB_SOUNDS_PLAYLIST);
+		this.dbSounds = Util.setupDatabase(this.getActivity(), DB_SOUNDS);
+
+		SafeAsyncTask task = new LoadSoundsTask();
+		task.execute();
+
+		task = new LoadPlaylistTask();
 		task.execute();
 	}
 
@@ -51,7 +67,10 @@ public class SoundManagerFragment extends Fragment
 	{
 		super.onPause();
 
-		SafeAsyncTask task = new UpdateMediaPlayersTask(this.sounds);
+		SafeAsyncTask task = new UpdateSoundsTask(this.sounds, dbSounds);
+		task.execute();
+
+		task = new UpdateSoundsTask(this.playList, dbPlaylist);
 		task.execute();
 	}
 
@@ -63,182 +82,191 @@ public class SoundManagerFragment extends Fragment
 		{
 			case R.id.action_clear_all_sounds:
 				for (String fragmentTag : this.sounds.keySet())
-					this.remove(fragmentTag);
+					this.removeSounds(fragmentTag);
 				return true;
 			default:
 				return false;
 		}
 	}
 
-	public List<EnhancedMediaPlayer> get(String fragmentTag)
+	public void addSound(MediaPlayerData playerData)
 	{
-		return this.sounds.get(fragmentTag);
-	}
-
-	public Map<String, List<EnhancedMediaPlayer>> getSounds()
-	{
-		return this.sounds;
-	}
-
-	public List<EnhancedMediaPlayer> getPlayList()
-	{
-		return this.playList;
-	}
-
-	/**
-	 * Notifies then sound manager, that this sound was added or removed from the playlist.
-	 * The playlist fragment is notified accordingly.
-	 */
-	public void notifyPlayListChanged(MediaPlayerData playerData)
-	{
-		if (playerData.getIsInPlaylist())
-			this.addSoundToPlayList(playerData);
+		EnhancedMediaPlayer player = new EnhancedMediaPlayer(this.getActivity(), playerData);
+		if (this.sounds.get(playerData.getFragmentTag()) == null)
+			this.sounds.put(playerData.getFragmentTag(), asList(player));
 		else
-			this.removeSoundFromPlayList(playerData);
-
-		this.notifyPlayList();
+			this.sounds.get(playerData.getFragmentTag()).add(player);
 	}
 
-	private void notifyPlayList()
+	public void removeSounds(String fragmentTag)
+	{
+		this.removeSounds(this.sounds.get(fragmentTag));
+	}
+
+	public void removeSounds(List<EnhancedMediaPlayer> soundsToRemove)
+	{
+		for (EnhancedMediaPlayer playerToRemove : soundsToRemove)
+		{
+			MediaPlayerData data = playerToRemove.getMediaPlayerData();
+			this.sounds.get(data.getFragmentTag()).remove(playerToRemove);
+
+			if (data.getIsInPlaylist())
+			{
+				EnhancedMediaPlayer correspondingPlayerInPlaylist = this.findInPlaylist(data.getPlayerId());
+				this.playList.remove(correspondingPlayerInPlaylist);
+
+				correspondingPlayerInPlaylist.destroy();
+			}
+			playerToRemove.destroy();
+		}
+	}
+
+	public void addSoundToPlaylist(MediaPlayerData playerData)
+	{
+		EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(this.getActivity(), playerData);
+		this.playList.add(player);
+	}
+
+	public void toggleSoundInPlaylist(String playerId, boolean addToPlayList)
+	{
+		EnhancedMediaPlayer player = this.findInSounds(playerId);
+		EnhancedMediaPlayer playerInPlaylist = this.findInPlaylist(playerId);
+
+		if (addToPlayList)
+		{
+			if (playerInPlaylist != null)
+				return;
+
+			playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(this.getActivity(), player.getMediaPlayerData());
+			this.playList.add(playerInPlaylist);
+		}
+		else
+		{
+			if (playerInPlaylist == null)
+				return;
+
+			this.playList.remove(playerInPlaylist);
+			playerInPlaylist.destroy();
+		}
+	}
+
+	public void removeFromPlaylist(List<EnhancedMediaPlayer> playersToRemove)
+	{
+		for (EnhancedMediaPlayer player : playersToRemove)
+			this.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), false);
+	}
+
+	private EnhancedMediaPlayer findInPlaylist(String playerId)
+	{
+		for (EnhancedMediaPlayer player : this.playList)
+		{
+			if (player.getMediaPlayerData().getPlayerId().equals(playerId))
+				return player;
+		}
+		return null;
+	}
+
+	private EnhancedMediaPlayer findInSounds(String playerId)
+	{
+		for (String fragmentTag : this.sounds.keySet())
+		{
+			if (this.sounds.get(fragmentTag) == null)
+				continue;
+			for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
+			{
+				if (player.getMediaPlayerData().getPlayerId().equals(playerId))
+					return player;
+			}
+		}
+		return null;
+	}
+
+	public void notifyFragments()
+	{
+		for (String fragmentTag : this.sounds.keySet())
+			this.notifyFragment(fragmentTag);
+	}
+
+	public void notifyPlaylist()
 	{
 		NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
 		fragment.getPlaylist().notifyDataSetChanged(true);
 	}
 
-	private void loadSoundsToPlayList(List<EnhancedMediaPlayer> players)
-	{
-		this.playList.addAll(players);
-		this.notifyPlayList();
-	}
-
-	private void addSoundToPlayList(MediaPlayerData playerData)
-	{
-		for (EnhancedMediaPlayer player : this.playList)
-		{
-			if (player.getMediaPlayerData().equals(playerData))
-				return;
-		}
-
-		EnhancedMediaPlayer player = new EnhancedMediaPlayer(this.getActivity(), playerData, true);
-		this.playList.add(player);
-	}
-
-	public void removeSoundFromPlayList(MediaPlayerData playerData)
-	{
-		for (int i = 0; i < this.playList.size(); i++)
-		{
-			if (this.playList.get(i).getMediaPlayerData().equals(playerData))
-			{
-				this.playList.remove(i);
-				return;
-			}
-		}
-	}
-
-	public void addMediaPlayerAndNotifyFragment(String fragmentTag, MediaPlayerData mediaPlayerData)
-	{
-		this.addMediaPlayersAndNotifyFragment(fragmentTag, asList(mediaPlayerData));
-	}
-
-	public void addMediaPlayersAndNotifyFragment(String fragmentTag, List<MediaPlayerData> mediaPlayersData)
-	{
-		if (fragmentTag == null)
-			throw  new NullPointerException("addSoundSheetAndNotifyFragment: cannot addSoundSheetAndNotifyFragment media players to fragment, fragment tag is null");
-
-		if (fragmentTag.equals(Playlist.TAG))
-		{
-			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				this.addSoundToPlayList(mediaPlayerData);
-		}
-		else
-		{
-			if (this.sounds.get(fragmentTag) == null)
-				this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
-
-			List<EnhancedMediaPlayer> players = new ArrayList<EnhancedMediaPlayer>();
-			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				players.add(new EnhancedMediaPlayer(this.getActivity(), mediaPlayerData));
-
-			this.sounds.get(fragmentTag).addAll(players);
-		}
-		this.storeMediaPlayerData(fragmentTag, mediaPlayersData);
-		this.notifyFragment(fragmentTag);
-	}
-
-	public void remove(String fragmentTag)
-	{
-		if (this.sounds.get(fragmentTag) == null)
-			return;
-
-		List<MediaPlayerData> mediaPlayersToRemove = new ArrayList<MediaPlayerData>();
-		for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
-		{
-			player.destroy();
-			mediaPlayersToRemove.add(player.getMediaPlayerData());
-		}
-
-		this.sounds.remove(fragmentTag);
-		this.notifyFragment(fragmentTag);
-
-		SafeAsyncTask task = new RemoveMediaPlayersTask(mediaPlayersToRemove);
-		task.execute();
-	}
-
-	public void remove(String fragmentTag, EnhancedMediaPlayer player, boolean notifySoundFragments)
-	{
-		player.destroy();
-		this.sounds.get(fragmentTag).remove(player);
-
-		if (notifySoundFragments)
-			this.notifyFragment(fragmentTag);
-
-		SafeAsyncTask task = new RemoveMediaPlayersTask(asList(player.getMediaPlayerData()));
-		task.execute();
-	}
-
-	private void load(String fragmentTag, List<EnhancedMediaPlayer> loadedMediaPlayers)
-	{
-		if (fragmentTag == null)
-			throw  new NullPointerException("load: cannot addSoundSheetAndNotifyFragment media players to fragment, fragment tag is null");
-
-		if (this.sounds.get(fragmentTag) == null)
-			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
-		this.sounds.get(fragmentTag).addAll(loadedMediaPlayers);
-		this.notifyFragment(fragmentTag);
-	}
-
-	private void notifyFragment(String fragmentTag)
+	public void notifyFragment(String fragmentTag)
 	{
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
 
-		if (fragmentTag.equals(Playlist.TAG))
-		{
-			navigationDrawerFragment.getPlaylist().notifyDataSetChanged(true);
-		}
-		else
-		{
-			SoundSheetFragment fragment = (SoundSheetFragment) this.getFragmentManager().findFragmentByTag(fragmentTag);
-			if (fragment != null)
-				fragment.notifyDataSetChanged(true);
+		SoundSheetFragment fragment = (SoundSheetFragment) this.getFragmentManager().findFragmentByTag(fragmentTag);
+		if (fragment != null)
+			fragment.notifyDataSetChanged(true);
 
-			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list
+		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list
+	}
+
+	private class LoadSoundsTask extends LoadTask<MediaPlayerData>
+	{
+		@Override
+		public List<MediaPlayerData> call() throws Exception
+		{
+			return dbSounds.getMediaPlayerDataDao().queryBuilder().list();
+		}
+
+		@Override
+		protected void onSuccess(List<MediaPlayerData> mediaPlayersData) throws Exception
+		{
+			super.onSuccess(mediaPlayersData);
+			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
+				addSound(mediaPlayerData);
+			notifyFragments();
 		}
 	}
 
-	private void storeMediaPlayerData(String fragmentId, List<MediaPlayerData> mediaPlayersData)
+	private class LoadPlaylistTask extends LoadTask<MediaPlayerData>
 	{
-		SafeAsyncTask task = new StoreMediaPlayerTask(fragmentId, mediaPlayersData);
-		task.execute();
+		@Override
+		public List<MediaPlayerData> call() throws Exception
+		{
+			return dbPlaylist.getMediaPlayerDataDao().queryBuilder().list();
+		}
+
+		@Override
+		protected void onSuccess(List<MediaPlayerData> mediaPlayersData) throws Exception
+		{
+			super.onSuccess(mediaPlayersData);
+			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
+				addSoundToPlaylist(mediaPlayerData);
+			notifyPlaylist();
+		}
 	}
 
-	private class UpdateMediaPlayersTask extends SafeAsyncTask<Void>
+	private abstract class LoadTask<T> extends SafeAsyncTask<List<T>>
 	{
-		private final String TAG = UpdateMediaPlayersTask.class.getSimpleName();
+		@Override
+		protected void onSuccess(List<T> ts) throws Exception
+		{
+			super.onSuccess(ts);
+			Logger.d(TAG, "onSuccess: with " + ts.size());
+		}
+
+		@Override
+		protected void onException(Exception e) throws RuntimeException
+		{
+			super.onException(e);
+			Logger.e(TAG, e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
+	private class UpdateSoundsTask extends SafeAsyncTask<Void>
+	{
 		private List<MediaPlayerData> mediaPlayers;
+		private DaoSession database;
 
-		public UpdateMediaPlayersTask(Map<String, List<EnhancedMediaPlayer>> mediaPlayers)
+		public UpdateSoundsTask(Map<String, List<EnhancedMediaPlayer>> mediaPlayers, DaoSession database)
 		{
+			this.database = database;
 			this.mediaPlayers = new ArrayList<MediaPlayerData>();
 			for (String fragmentTag : mediaPlayers.keySet())
 			{
@@ -248,14 +276,22 @@ public class SoundManagerFragment extends Fragment
 			}
 		}
 
+		public UpdateSoundsTask(List<EnhancedMediaPlayer> mediaPlayers, DaoSession database)
+		{
+			this.database = database;
+			this.mediaPlayers = new ArrayList<MediaPlayerData>();
+			for (EnhancedMediaPlayer player : mediaPlayers)
+				this.mediaPlayers.add(player.getMediaPlayerData());
+		}
+
 		@Override
 		public Void call() throws Exception
 		{
-			daoSession.runInTx(new Runnable() {
+			this.database.runInTx(new Runnable() {
 				@Override
 				public void run() {
-					daoSession.getMediaPlayerDataDao().deleteAll();
-					daoSession.getMediaPlayerDataDao().insertInTx(mediaPlayers);
+					database.getMediaPlayerDataDao().deleteAll();
+					database.getMediaPlayerDataDao().insertInTx(mediaPlayers);
 				}
 			});
 			return null;
@@ -269,117 +305,4 @@ public class SoundManagerFragment extends Fragment
 			throw new RuntimeException(e);
 		}
 	}
-
-	private class StoreMediaPlayerTask extends SafeAsyncTask<Void>
-	{
-		private final String TAG = StoreMediaPlayerTask.class.getSimpleName();
-		private List<MediaPlayerData> mediaPlayersData;
-
-		public StoreMediaPlayerTask(String fragmentId, List<MediaPlayerData> mediaPlayersData)
-		{
-			this.mediaPlayersData = mediaPlayersData;
-			for (MediaPlayerData mediaPlayerData : this.mediaPlayersData)
-				mediaPlayerData.setFragmentTag(fragmentId);
-		}
-
-		@Override
-		public Void call() throws Exception
-		{
-			daoSession.getMediaPlayerDataDao().insertInTx(this.mediaPlayersData);
-			return null;
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
-	}
-
-	private class RemoveMediaPlayersTask extends SafeAsyncTask<Void>
-	{
-		private List<MediaPlayerData> mediaPlayersData;
-
-		public RemoveMediaPlayersTask(List<MediaPlayerData> mediaPlayersData)
-		{
-			this.mediaPlayersData = mediaPlayersData;
-		}
-
-		@Override
-		public Void call() throws Exception
-		{
-			daoSession.getMediaPlayerDataDao().deleteInTx(this.mediaPlayersData);
-			return null;
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
-	}
-
-	private class LoadMediaPlayerTask extends SafeAsyncTask<Map<String, List<EnhancedMediaPlayer>>>
-	{
-		private final String TAG = LoadMediaPlayerTask.class.getSimpleName();
-
-		@Override
-		public Map<String, List<EnhancedMediaPlayer>> call() throws Exception
-		{
-			Map<String, List<EnhancedMediaPlayer>> loadedMediaPlayers = new HashMap<String, List<EnhancedMediaPlayer>>();
-
-			List<MediaPlayerData> storedMediaPlayersData = daoSession.getMediaPlayerDataDao().queryBuilder().list();
-			for (MediaPlayerData storedMediaPlayerData : storedMediaPlayersData)
-			{
-				String fragmentTag = storedMediaPlayerData.getFragmentTag();
-				if (fragmentTag == null)
-				{
-					Logger.e(TAG, "cannot load media player, fragment tag is null " + storedMediaPlayerData);
-					continue;
-				}
-				if (loadedMediaPlayers.get(fragmentTag) == null)
-					loadedMediaPlayers.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
-
-				loadedMediaPlayers.get(fragmentTag).add(new EnhancedMediaPlayer(getActivity(), storedMediaPlayerData));
-			}
-
-			return loadedMediaPlayers;
-		}
-
-		@Override
-		protected void onSuccess(Map<String, List<EnhancedMediaPlayer>> loadedMediaPlayers) throws Exception
-		{
-			Logger.d(TAG, "onSuccess: with " + loadedMediaPlayers.keySet().size() + " fragments");
-			super.onSuccess(loadedMediaPlayers);
-			List<EnhancedMediaPlayer> playersInPlayList = new ArrayList<EnhancedMediaPlayer>();
-			for (String fragmentTag : loadedMediaPlayers.keySet())
-			{
-				if (fragmentTag.equals(Playlist.TAG))
-					loadSoundsToPlayList(loadedMediaPlayers.get(fragmentTag));
-				else
-				{
-					for (EnhancedMediaPlayer player : loadedMediaPlayers.get(fragmentTag))
-					{
-						if (player.getMediaPlayerData().getIsInPlaylist())
-							playersInPlayList.add(player);
-					}
-					load(fragmentTag, loadedMediaPlayers.get(fragmentTag));
-				}
-			}
-			loadSoundsToPlayList(playersInPlayList);
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
-	}
-
 }

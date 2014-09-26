@@ -7,6 +7,7 @@ import android.net.Uri;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 
 import java.io.IOException;
 
@@ -40,19 +41,17 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 		// TODO set time position from green dao object
 	}
 
-	public EnhancedMediaPlayer(Context context, MediaPlayerData data, boolean forPlayList)
+	public static EnhancedMediaPlayer getInstanceForPlayList(Context context, MediaPlayerData data)
 	{
-		super();
-		this.rawData = data;
-		this.currentState = State.IDLE;
+		MediaPlayerData playListData = new MediaPlayerData();
+		playListData.setIsInPlaylist(true);
+		playListData.setPlayerId(data.getPlayerId());
+		playListData.setFragmentTag(Playlist.TAG);
+		playListData.setIsLoop(false);
+		playListData.setLabel(data.getLabel());
+		playListData.setUri(data.getUri());
 
-		if (!forPlayList)
-		{
-			this.setLooping(data.getIsLoop());
-			// TODO set time position from green dao object
-		}
-
-		this.init(context);
+		return new EnhancedMediaPlayer(context, playListData);
 	}
 
 	public MediaPlayerData getMediaPlayerData()
