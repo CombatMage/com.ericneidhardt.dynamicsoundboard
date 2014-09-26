@@ -1,16 +1,12 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import com.ericneidhardt.dynamicsoundboard.BaseActivity;
-import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
-import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
-import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.*;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
@@ -29,7 +25,7 @@ import java.util.List;
 
 public class SoundSheetManagerFragment
 		extends
-			Fragment
+			BaseFragment
 		implements
 			View.OnClickListener,
 			CustomEditText.OnTextEditedListener
@@ -86,15 +82,17 @@ public class SoundSheetManagerFragment
 			case R.id.action_clear_sound_sheets:
 				((BaseActivity) this.getActivity()).removeSoundFragment(this.soundSheets);
 
-				SoundManagerFragment soundManagerFragment = (SoundManagerFragment)this.getFragmentManager()
-						.findFragmentByTag(SoundManagerFragment.TAG);
+				SoundManagerFragment fragment = this.getSoundManagerFragment();
 				for (SoundSheet soundSheet : this.soundSheets)
-					soundManagerFragment.remove(soundSheet.getFragmentTag());
-
+				{
+					List<EnhancedMediaPlayer> soundsInSoundSheet = fragment.getSounds().get(soundSheet.getFragmentTag());
+					fragment.removeSounds(soundsInSoundSheet);
+				}
 				this.soundSheets.clear();
 
-				NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
-						.findFragmentByTag(NavigationDrawerFragment.TAG);
+				fragment.notifyPlaylist();
+
+				NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawer();
 				navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
 				return true;
@@ -182,22 +180,26 @@ public class SoundSheetManagerFragment
 
 	public void addSoundFromIntent(Uri soundUri, String soundLabel, String newSoundSheetName, SoundSheet existingSoundSheet)
 	{
-		SoundManagerFragment soundManagerFragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
 		if (soundManagerFragment == null)
 			throw new NullPointerException("cannot addSoundSheetAndNotifyFragment sound, SoundManagerFragment is null");
 
+		MediaPlayerData mediaPlayerData;
 		if (newSoundSheetName != null)
 		{
 			SoundSheet newSoundSheet = this.getNewSoundSheet(newSoundSheetName);
 			this.addSoundSheetAndNotifyFragment(newSoundSheet);
-			MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(newSoundSheet.getFragmentTag(), soundUri, soundLabel);
-			soundManagerFragment.addMediaPlayerAndNotifyFragment(newSoundSheet.getFragmentTag(), mediaPlayerData);
+			mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(newSoundSheet.getFragmentTag(), soundUri, soundLabel);
+
+			soundManagerFragment.addSound(mediaPlayerData);
+			soundManagerFragment.notifyFragment(mediaPlayerData.getFragmentTag());
 		}
 		else if (existingSoundSheet != null)
-		{
-			MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
-			soundManagerFragment.addMediaPlayerAndNotifyFragment(existingSoundSheet.getFragmentTag(), mediaPlayerData);
-		}
+			mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
+		else
+			throw new NullPointerException(TAG + ".addSoundFromIntent: cannot add new sound, mediaPlayerData is null");
+		soundManagerFragment.addSound(mediaPlayerData);
+		soundManagerFragment.notifyFragment(mediaPlayerData.getFragmentTag());
 	}
 
 	public SoundSheet getNewSoundSheet(String label)

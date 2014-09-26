@@ -1,6 +1,5 @@
 package com.ericneidhardt.dynamicsoundboard;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,7 +14,7 @@ import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 
-public class NavigationDrawerFragment extends Fragment implements View.OnClickListener
+public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener
 {
 	public static final String TAG = NavigationDrawerFragment.class.getSimpleName();
 
@@ -112,8 +111,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), Playlist.TAG);
 			else
 			{
-				SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.getFragmentManager()
-						.findFragmentByTag(SoundSheetManagerFragment.TAG);
+				SoundSheetManagerFragment fragment = this.getSoundSheetManagerFragment();
 				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), fragment.getSuggestedSoundSheetName());
 			}
 		}

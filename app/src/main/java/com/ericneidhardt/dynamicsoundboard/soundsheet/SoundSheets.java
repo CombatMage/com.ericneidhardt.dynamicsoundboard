@@ -14,6 +14,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 import java.util.ArrayList;
@@ -97,18 +98,16 @@ public class SoundSheets
 
 		this.adapter.removeAll(soundSheetsToRemove);
 
-		SoundSheetManagerFragment soundSheetManagerfragment = (SoundSheetManagerFragment)this.parent.getFragmentManager()
-				.findFragmentByTag(SoundSheetManagerFragment.TAG);
-
-		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.parent.getFragmentManager()
-				.findFragmentByTag(SoundManagerFragment.TAG);
-
+		SoundSheetManagerFragment soundSheetManagerfragment = this.parent.getSoundSheetManagerFragment();
+		SoundManagerFragment soundManagerFragment = this.parent.getSoundManagerFragment();
 		BaseActivity activity = (BaseActivity)this.parent.getActivity();
 
 		for (SoundSheet soundSheet: soundSheetsToRemove)
 		{
+			List<EnhancedMediaPlayer> soundsInSoundSheet = soundManagerFragment.getSounds().get(soundSheet.getFragmentTag());
+
 			soundSheetManagerfragment.remove(soundSheet, false);
-			soundManagerFragment.remove(soundSheet.getFragmentTag());
+			soundManagerFragment.removeSounds(soundsInSoundSheet);
 			activity.removeSoundFragment(soundSheet);
 
 			if (soundSheet.getIsSelected())
@@ -121,6 +120,7 @@ public class SoundSheets
 				}
 			}
 		}
+		soundManagerFragment.notifyPlaylist();
 		this.adapter.notifyDataSetChanged();
 	}
 

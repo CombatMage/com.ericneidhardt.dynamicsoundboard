@@ -1,7 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +24,8 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundAdapter;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 
 public class SoundSheetFragment
@@ -144,8 +145,8 @@ public class SoundSheetFragment
 		listSounds.setItemAnimator(new DefaultItemAnimator());
 		listSounds.setAdapter(this.soundAdapter);
 
-		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
-		List<EnhancedMediaPlayer> enhancedMediaPlayers = fragment.get(this.fragmentTag);
+		SoundManagerFragment fragment = this.getSoundManagerFragment();
+		List<EnhancedMediaPlayer> enhancedMediaPlayers = fragment.getSounds().get(this.fragmentTag);
 
 		this.soundAdapter.clear();
 		this.soundAdapter.addAll(enhancedMediaPlayers);
@@ -160,20 +161,19 @@ public class SoundSheetFragment
 		this.soundAdapter.remove(position);
 		this.soundAdapter.notifyItemRemoved(position);
 
-		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager()
-				.findFragmentByTag(SoundManagerFragment.TAG);
-		fragment.remove(this.fragmentTag, player, false);
+		SoundManagerFragment fragment = this.getSoundManagerFragment();
+		fragment.removeSounds(asList(player));
+		fragment.notifyPlaylist();
 	}
 
 	public void notifyDataSetChanged(boolean newSoundsAvailable)
 	{
-		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager()
-				.findFragmentByTag(SoundManagerFragment.TAG);
+		SoundManagerFragment fragment = this.getSoundManagerFragment();
 
 		if (newSoundsAvailable)
 		{
 			this.soundAdapter.clear();
-			this.soundAdapter.addAll(fragment.get(this.fragmentTag));
+			this.soundAdapter.addAll(fragment.getSounds().get(this.fragmentTag));
 			this.soundAdapter.notifyDataSetChanged();
 		}
 		else
