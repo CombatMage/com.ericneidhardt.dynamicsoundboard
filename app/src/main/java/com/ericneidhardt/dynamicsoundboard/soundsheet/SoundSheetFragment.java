@@ -154,7 +154,8 @@ public class SoundSheetFragment
 	}
 
 	@Override
-	public void onItemDelete(EnhancedMediaPlayer player, int position) {
+	public void onItemDelete(EnhancedMediaPlayer player, int position)
+	{
 		this.soundAdapter.remove(position);
 		this.soundAdapter.notifyItemRemoved(position);
 

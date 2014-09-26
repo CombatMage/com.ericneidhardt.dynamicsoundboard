@@ -128,4 +128,6 @@ public abstract class NavigationDrawerList
 	protected abstract List<View> getAllItems();
 
 	protected abstract int getItemCount();
+
+
 }
