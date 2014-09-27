@@ -50,7 +50,7 @@ public class SoundManagerFragment extends Fragment
 		this.setHasOptionsMenu(true);
 
 		this.playList = new ArrayList<EnhancedMediaPlayer>();
-		this.sounds = new HashMap<String,  List<EnhancedMediaPlayer>>();
+		this.sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
 
 		this.dbPlaylist = Util.setupDatabase(this.getActivity(), DB_SOUNDS_PLAYLIST);
 		this.dbSounds = Util.setupDatabase(this.getActivity(), DB_SOUNDS);
@@ -93,7 +93,7 @@ public class SoundManagerFragment extends Fragment
 	{
 		EnhancedMediaPlayer player = new EnhancedMediaPlayer(this.getActivity(), playerData);
 		if (this.sounds.get(playerData.getFragmentTag()) == null)
-			this.sounds.put(playerData.getFragmentTag(), asList(player));
+			this.sounds.put(playerData.getFragmentTag(), new ArrayList<EnhancedMediaPlayer>(asList(player)));
 		else
 			this.sounds.get(playerData.getFragmentTag()).add(player);
 	}
