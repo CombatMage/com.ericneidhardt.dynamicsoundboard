@@ -105,8 +105,7 @@ public class SoundSheetFragment
 				String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
 				SoundManagerFragment fragment = this.getSoundManagerFragment();
 				fragment.addSound(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
-				fragment.notifySoundSheetList();
-				this.soundAdapter.notifyDataSetChanged();
+				fragment.notifyFragments();
 				return;
 			}
 		}
