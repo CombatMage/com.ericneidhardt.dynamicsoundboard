@@ -12,7 +12,6 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistAdapter
@@ -23,14 +22,8 @@ public class PlaylistAdapter
 {
 
 	private Fragment parent;
-	private List<EnhancedMediaPlayer> playlist;
 	private Integer currentItemIndex;
 	private OnItemClickListener onItemClickListener;
-
-	public PlaylistAdapter()
-	{
-		this.playlist = new ArrayList<EnhancedMediaPlayer>();
-	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
@@ -44,17 +37,17 @@ public class PlaylistAdapter
 
 	public void clear()
 	{
-		this.playlist.clear();
+		super.sounds.clear();
 	}
 
 	public List<EnhancedMediaPlayer> getValues()
 	{
-		return playlist;
+		return super.sounds;
 	}
 
 	public void removeAll(List<EnhancedMediaPlayer> playerToRemove)
 	{
-		this.playlist.removeAll(playerToRemove);
+		super.sounds.removeAll(playerToRemove);
 	}
 
 	public void addAll(List<EnhancedMediaPlayer> mediaPlayers)
@@ -65,12 +58,12 @@ public class PlaylistAdapter
 		for (EnhancedMediaPlayer player : mediaPlayers)
 			player.setOnCompletionListener(this);
 
-		this.playlist.addAll(mediaPlayers);
+		super.sounds.addAll(mediaPlayers);
 	}
 
 	public void startPlayList(EnhancedMediaPlayer nextActivePlayer, int position)
 	{
-		for (EnhancedMediaPlayer player : this.playlist)
+		for (EnhancedMediaPlayer player : super.sounds)
 		{
 			if (player.equals(nextActivePlayer))
 				continue;
@@ -101,7 +94,7 @@ public class PlaylistAdapter
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int i)
 	{
-		EnhancedMediaPlayer player = this.playlist.get(i);
+		EnhancedMediaPlayer player = super.sounds.get(i);
 		holder.label.setText(player.getMediaPlayerData().getLabel());
 		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
 		holder.updateProgress();
@@ -114,15 +107,15 @@ public class PlaylistAdapter
 	@Override
 	public int getItemCount()
 	{
-		return this.playlist.size();
+		return super.sounds.size();
 	}
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
 		this.currentItemIndex++;
-		if (this.currentItemIndex >= this.playlist.size())
+		if (this.currentItemIndex >= super.sounds.size())
 			this.currentItemIndex = 0;
-		this.playlist.get(this.currentItemIndex).playSound();
+		super.sounds.get(this.currentItemIndex).playSound();
 		this.notifyDataSetChanged();
 	}
 
@@ -152,7 +145,7 @@ public class PlaylistAdapter
 
 		private void updateProgress()
 		{
-			EnhancedMediaPlayer player = playlist.get(this.getPosition());
+			EnhancedMediaPlayer player = sounds.get(this.getPosition());
 			if (player.isPlaying())
 			{
 				progress.setMax(player.getDuration());
@@ -168,12 +161,12 @@ public class PlaylistAdapter
 		{
 			if (!isChecked)
 			{
-				EnhancedMediaPlayer player = playlist.get(this.getPosition());
+				EnhancedMediaPlayer player = sounds.get(this.getPosition());
 
 				SoundSheetFragment fragment = (SoundSheetFragment)parent.getFragmentManager()
 						.findFragmentByTag(player.getMediaPlayerData().getFragmentTag());
 
-				playlist.remove(player);
+				sounds.remove(player);
 				player.getMediaPlayerData().setIsInPlaylist(false);
 				player.destroy();
 
@@ -189,7 +182,7 @@ public class PlaylistAdapter
 		{
 			int position = this.getPosition();
 			if (onItemClickListener != null)
-				onItemClickListener.onItemClick(view, playlist.get(position), position);
+				onItemClickListener.onItemClick(view, sounds.get(position), position);
 		}
 	}
 

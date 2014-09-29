@@ -29,17 +29,16 @@ public class SoundAdapter
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
 	private SoundSheetFragment parent;
-	private List<EnhancedMediaPlayer> mediaPlayers;
 
 	private OnItemDeleteListener onItemDeleteListener;
 
 	public SoundAdapter(SoundSheetFragment parent)
 	{
 		this.parent = parent;
-		this.mediaPlayers = new ArrayList<EnhancedMediaPlayer>();
 	}
 
-	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener) {
+	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener)
+	{
 		this.onItemDeleteListener = onItemDeleteListener;
 	}
 
@@ -51,23 +50,23 @@ public class SoundAdapter
 		for (EnhancedMediaPlayer player : mediaPlayers)
 			player.setOnCompletionListener(this);
 
-		this.mediaPlayers.addAll(mediaPlayers);
+		this.sounds.addAll(mediaPlayers);
 	}
 
 	public void clear()
 	{
-		this.mediaPlayers.clear();
+		this.sounds.clear();
 	}
 
 	public void remove(int index)
 	{
-		this.mediaPlayers.remove(index);
+		this.sounds.remove(index);
 	}
 
 	@Override
 	public int getItemCount()
 	{
-		return this.mediaPlayers.size();
+		return this.sounds.size();
 	}
 
 	@Override
@@ -80,7 +79,7 @@ public class SoundAdapter
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		EnhancedMediaPlayer player = this.mediaPlayers.get(position);
+		EnhancedMediaPlayer player = this.sounds.get(position);
 		MediaPlayerData data = player.getMediaPlayerData();
 
 		holder.name.setText(data.getLabel());
@@ -96,7 +95,7 @@ public class SoundAdapter
 	public void onCompletion(MediaPlayer mp)
 	{
 		if (mp instanceof EnhancedMediaPlayer)
-			this.notifyItemChanged(this.mediaPlayers.indexOf(mp));
+			this.notifyItemChanged(this.sounds.indexOf(mp));
 	}
 
 	public class ViewHolder
@@ -167,7 +166,7 @@ public class SoundAdapter
 				@Override
 				public void run() {
 					if (selectedPage != VIEWPAGER_INDEX_SOUND_CONTROLS && onItemDeleteListener != null)
-						onItemDeleteListener.onItemDelete(mediaPlayers.get(position), position);
+						onItemDeleteListener.onItemDelete(sounds.get(position), position);
 				}
 			}, UPDATE_INTERVAL);
 
@@ -182,13 +181,13 @@ public class SoundAdapter
 		@Override
 		public void onTextEdited(String text)
 		{
-			mediaPlayers.get(this.getPosition()).getMediaPlayerData().setLabel(text);
+			sounds.get(this.getPosition()).getMediaPlayerData().setLabel(text);
 		}
 
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 		{
-			EnhancedMediaPlayer player = mediaPlayers.get(this.getPosition());
+			EnhancedMediaPlayer player = sounds.get(this.getPosition());
 			switch (buttonView.getId())
 			{
 				case R.id.cb_play:
@@ -213,7 +212,7 @@ public class SoundAdapter
 		@Override
 		public void onClick(View view)
 		{
-			EnhancedMediaPlayer player = mediaPlayers.get(this.getPosition());
+			EnhancedMediaPlayer player = sounds.get(this.getPosition());
 			switch (view.getId())
 			{
 				case R.id.b_stop:
@@ -228,7 +227,7 @@ public class SoundAdapter
 		{
 			if (fromUser)
 			{
-				EnhancedMediaPlayer player = mediaPlayers.get(this.getPosition());
+				EnhancedMediaPlayer player = sounds.get(this.getPosition());
 				player.setPositionTo(progress);
 			}
 		}
