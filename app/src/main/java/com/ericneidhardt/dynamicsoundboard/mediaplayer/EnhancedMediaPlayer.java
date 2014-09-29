@@ -12,7 +12,8 @@ import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import java.io.IOException;
 
 
-public class EnhancedMediaPlayer extends MediaPlayer {
+public class EnhancedMediaPlayer extends MediaPlayer
+{
 
 	private static final String TAG = EnhancedMediaPlayer.class.getSimpleName();
 
@@ -37,8 +38,6 @@ public class EnhancedMediaPlayer extends MediaPlayer {
 
 		this.currentState = State.IDLE;
 		this.init(context);
-
-		// TODO set time position from green dao object
 	}
 
 	public static EnhancedMediaPlayer getInstanceForPlayList(Context context, MediaPlayerData data)

@@ -166,6 +166,11 @@ public class SoundManagerFragment extends Fragment
 		return null;
 	}
 
+	public boolean isSoundInSoundSheet(EnhancedMediaPlayer player)
+	{
+		return this.findInSounds(player.getMediaPlayerData().getPlayerId()) != null;
+	}
+
 	private EnhancedMediaPlayer findInSounds(String playerId)
 	{
 		for (String fragmentTag : this.sounds.keySet())

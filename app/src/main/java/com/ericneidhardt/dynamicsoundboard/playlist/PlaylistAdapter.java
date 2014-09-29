@@ -1,12 +1,12 @@
 package com.ericneidhardt.dynamicsoundboard.playlist;
 
-import android.app.Fragment;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
@@ -21,7 +21,7 @@ public class PlaylistAdapter
 			MediaPlayer.OnCompletionListener
 {
 
-	private Fragment parent;
+	private BaseFragment parent;
 	private Integer currentItemIndex;
 	private OnItemClickListener onItemClickListener;
 
@@ -30,7 +30,7 @@ public class PlaylistAdapter
 		this.onItemClickListener = onItemClickListener;
 	}
 
-	public void setParent(Fragment parent)
+	public void setParent(BaseFragment parent)
 	{
 		this.parent = parent;
 	}
@@ -98,10 +98,11 @@ public class PlaylistAdapter
 		holder.label.setText(player.getMediaPlayerData().getLabel());
 		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
 		holder.updateProgress();
-		if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
-			holder.isInPlayList.setVisibility(View.GONE);
-		else
-			holder.isInPlayList.setVisibility(View.VISIBLE);
+		// TODO
+		//if (parent.getSoundManagerFragment().isSoundInSoundSheet(player))
+		//	holder.isInPlayList.setVisibility(View.GONE);
+		//else
+		//	holder.isInPlayList.setVisibility(View.VISIBLE);
 	}
 
 	@Override
