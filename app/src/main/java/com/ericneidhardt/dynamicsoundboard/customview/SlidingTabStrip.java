@@ -1,8 +1,5 @@
 package com.ericneidhardt.dynamicsoundboard.customview;
 
-/**
- * Created by eric.neidhardt on 01.09.2014.
- */
 /*
  * Copyright (C) 2013 The Android Open Source Project
  *

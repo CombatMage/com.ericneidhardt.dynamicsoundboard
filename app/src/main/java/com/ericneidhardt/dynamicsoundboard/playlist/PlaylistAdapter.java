@@ -10,7 +10,7 @@ import android.widget.*;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
-import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 
 import java.util.List;
 

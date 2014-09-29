@@ -1,7 +1,5 @@
 package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 
-import android.media.MediaPlayer;
-
 import java.util.List;
 
 /**

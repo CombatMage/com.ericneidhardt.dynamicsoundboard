@@ -13,7 +13,7 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
-import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +53,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 			this.callingFragmentTag = args.getString(KEY_CALLER_FRAGMENT_TAG);
 	}
 
+	@SuppressWarnings("Annotator")
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
@@ -144,7 +145,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState)
+	public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState)
 	{
 		super.onSaveInstanceState(outState);
 

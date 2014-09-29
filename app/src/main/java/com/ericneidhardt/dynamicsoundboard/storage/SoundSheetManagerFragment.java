@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.soundsheet;
+package com.ericneidhardt.dynamicsoundboard.storage;
 
 
 import android.content.Intent;
@@ -18,21 +18,20 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
-import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SoundSheetManagerFragment
 		extends
-			BaseFragment
+		BaseFragment
 		implements
 			View.OnClickListener,
 			CustomEditText.OnTextEditedListener
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
 
-	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.SoundSheetManagerFragment.db_sound_sheets";
+	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment.db_sound_sheets";
 
 	private List<SoundSheet> soundSheets;
 	private DaoSession daoSession;

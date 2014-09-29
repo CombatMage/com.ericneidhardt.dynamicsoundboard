@@ -12,9 +12,9 @@ import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
-import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
-import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
-import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 
 import java.util.List;
 

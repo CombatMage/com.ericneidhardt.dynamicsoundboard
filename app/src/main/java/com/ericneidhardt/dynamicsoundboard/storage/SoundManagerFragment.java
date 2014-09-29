@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.soundcontrol;
+package com.ericneidhardt.dynamicsoundboard.storage;
 
 
 import android.app.Fragment;
@@ -12,7 +12,7 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
-import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetFragment;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,8 +25,8 @@ public class SoundManagerFragment extends Fragment
 {
 	public static final String TAG = SoundManagerFragment.class.getSimpleName();
 
-	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.SoundManagerFragment.db_sounds";
-	private static final String DB_SOUNDS_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.SoundManagerFragment.db_sounds_playlist";
+	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
+	private static final String DB_SOUNDS_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
 
 	private DaoSession dbPlaylist;
 	private List<EnhancedMediaPlayer> playList;
@@ -191,6 +191,13 @@ public class SoundManagerFragment extends Fragment
 	{
 		NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
 		fragment.getPlaylist().notifyDataSetChanged(true);
+	}
+
+	public void notifySoundSheetList()
+	{
+		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
+				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list
 	}
 
 	public void notifyFragment(String fragmentTag)

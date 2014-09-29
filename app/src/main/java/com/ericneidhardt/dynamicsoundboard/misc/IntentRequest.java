@@ -1,7 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.misc;
 
 /**
- * Created by Eric Neidhardt on 09.09.2014.
+ * Project created by Eric Neidhardt on 09.09.2014.
  */
 public class IntentRequest
 {

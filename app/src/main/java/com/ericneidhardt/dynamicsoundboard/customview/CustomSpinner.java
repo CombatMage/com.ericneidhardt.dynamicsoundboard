@@ -12,9 +12,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 
 import java.util.List;
 
-/**
- * Created by eric.neidhardt on 05.09.2014.
- */
+
 public class CustomSpinner extends LinearLayout implements View.OnClickListener
 {
 	private Spinner spinner;

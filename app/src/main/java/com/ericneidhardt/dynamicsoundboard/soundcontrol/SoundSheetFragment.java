@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.soundsheet;
+package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,8 +20,7 @@ import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
-import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundAdapter;
-import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 
 import java.util.List;
 
@@ -106,6 +105,8 @@ public class SoundSheetFragment
 				String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
 				SoundManagerFragment fragment = this.getSoundManagerFragment();
 				fragment.addSound(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
+				fragment.notifySoundSheetList();
+				this.soundAdapter.notifyDataSetChanged();
 				return;
 			}
 		}
@@ -164,6 +165,7 @@ public class SoundSheetFragment
 		SoundManagerFragment fragment = this.getSoundManagerFragment();
 		fragment.removeSounds(asList(player));
 		fragment.notifyPlaylist();
+		fragment.notifySoundSheetList();
 	}
 
 	public void notifyDataSetChanged(boolean newSoundsAvailable)
