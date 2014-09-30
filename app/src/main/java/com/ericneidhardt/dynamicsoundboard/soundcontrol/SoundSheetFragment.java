@@ -17,6 +17,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
+import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromDirectory;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
@@ -67,6 +68,7 @@ public class SoundSheetFragment
 		super.onResume();
 		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
+		this.getActivity().findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 
 		this.soundAdapter.startProgressUpdateTimer();
 	}
@@ -119,6 +121,9 @@ public class SoundSheetFragment
 		{
 			case R.id.action_add_sound:
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), this.fragmentTag);
+				break;
+			case R.id.action_add_sound_dir:
+				AddNewSoundFromDirectory.showInstance(this.getFragmentManager(), this.fragmentTag);
 				break;
 			case R.id.b_add_sound:
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

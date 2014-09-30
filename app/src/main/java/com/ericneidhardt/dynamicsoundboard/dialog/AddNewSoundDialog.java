@@ -23,7 +23,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 {
 	public static final String TAG = AddNewSoundDialog.class.getSimpleName();
 
-	private static final String KEY_CALLER_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.callingFragmentTag";
+	private static final String KEY_CALLING_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.callingFragmentTag";
 	private static final String KEY_SOUNDS_URI = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.soundsToAdd";
 	private static final String KEY_SOUNDS_LABEL = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.soundsToAddLabels";
 
@@ -36,7 +36,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		AddNewSoundDialog dialog = new AddNewSoundDialog();
 
 		Bundle args = new Bundle();
-		args.putString(KEY_CALLER_FRAGMENT_TAG, callingFragmentTag);
+		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag);
 		dialog.setArguments(args);
 
 		dialog.show(manager, TAG);
@@ -50,7 +50,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		this.soundsToAdd = new ArrayList<Uri>();
 		Bundle args = this.getArguments();
 		if (args != null)
-			this.callingFragmentTag = args.getString(KEY_CALLER_FRAGMENT_TAG);
+			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG);
 	}
 
 	@SuppressWarnings("Annotator")
