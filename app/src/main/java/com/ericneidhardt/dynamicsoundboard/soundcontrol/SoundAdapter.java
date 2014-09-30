@@ -199,7 +199,7 @@ public class SoundAdapter
 					player.setLooping(isChecked);
 					break;
 				case R.id.cb_add_to_playlist:
-					player.setInPlaylist(isChecked);
+					player.setIsInPlaylist(isChecked);
 					SoundManagerFragment fragment = (SoundManagerFragment)parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
 					fragment.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), isChecked);
 					fragment.notifyPlaylist();

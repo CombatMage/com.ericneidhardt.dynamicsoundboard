@@ -137,6 +137,7 @@ public class SoundManagerFragment extends Fragment
 			if (playerInPlaylist != null)
 				return;
 
+			player.setIsInPlaylist(true);
 			playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(this.getActivity(), player.getMediaPlayerData());
 			this.playList.add(playerInPlaylist);
 		}
@@ -145,6 +146,7 @@ public class SoundManagerFragment extends Fragment
 			if (playerInPlaylist == null)
 				return;
 
+			player.setIsInPlaylist(false);
 			this.playList.remove(playerInPlaylist);
 			playerInPlaylist.destroy();
 		}

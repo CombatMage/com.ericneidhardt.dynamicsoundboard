@@ -107,7 +107,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		this.rawData.setIsLoop(looping);
 	}
 
-	public void setInPlaylist(boolean inPlaylist)
+	public void setIsInPlaylist(boolean inPlaylist)
 	{
 		this.rawData.setIsInPlaylist(inPlaylist);
 	}

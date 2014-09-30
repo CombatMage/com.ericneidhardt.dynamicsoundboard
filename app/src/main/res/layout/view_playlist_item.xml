@@ -6,22 +6,12 @@
 		android:layout_height="@dimen/height_list_item"
 		android:background="@drawable/selector_background_list_item">
 
-	<CheckBox
-			android:id="@+id/cb_is_in_playlist"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginLeft="12dp"
-			android:layout_centerVertical="true"
-			android:padding="@dimen/margin_tiny"
-			android:contentDescription="@string/tab_play_list_content_description_playlist"
-			android:button="@drawable/selector_ic_playlist"/>
-
 	<ImageView
 			android:id="@+id/iv_selected"
 			android:layout_width="@dimen/height_list_item"
 			android:layout_height="@dimen/height_list_item"
-			android:layout_alignParentRight="true"
-			android:rotation="90"
+			android:layout_alignParentLeft="true"
+			android:rotation="270"
 			android:scaleType="centerCrop"
 			android:contentDescription="@string/tab_sound_sheets_content_description_selected"
 			android:src="@drawable/shape_selected_indicator"/>
@@ -33,7 +23,6 @@
 			android:layout_marginTop="@dimen/margin_default"
 			android:layout_centerVertical="true"
 			android:layout_marginLeft="@dimen/margin_list_item_left"
-			android:layout_toLeftOf="@id/iv_selected"
 			android:maxLines="1"
 			android:textSize="@dimen/text_subheading"
 			android:textColor="@color/text_content_primary"
@@ -45,7 +34,6 @@
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="@dimen/margin_small"
 			android:layout_marginLeft="@dimen/margin_list_item_left"
-			android:layout_toLeftOf="@id/iv_selected"
 			android:layout_alignParentBottom="true"
 			android:layout_marginRight="@dimen/margin_default"
 			style="@style/ProgressBarAppTheme"/>

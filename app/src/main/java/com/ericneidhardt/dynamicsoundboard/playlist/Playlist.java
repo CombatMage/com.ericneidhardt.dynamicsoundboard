@@ -18,6 +18,9 @@ import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Project created by eric.neidhardt on 27.08.2014.
+ */
 public class Playlist extends NavigationDrawerList implements PlaylistAdapter.OnItemClickListener
 {
 	public static final String TAG = Playlist.class.getSimpleName();
@@ -68,7 +71,6 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	public void onActivityCreated(NavigationDrawerFragment parent)
 	{
 		super.parent = parent;
-		this.adapter.setParent(parent);
 		this.notifyDataSetChanged(true);
 	}
 
