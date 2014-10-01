@@ -8,6 +8,10 @@ import android.provider.MediaStore;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoMaster;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Project created by Eric Neidhardt on 30.08.2014.
  */
@@ -46,6 +50,28 @@ public class Util
 			fileName = "_" + filePathUri.getLastPathSegment();
 
 		return fileName;
+	}
+
+	public static List<File> getFilesInDirectory(File directory)
+	{
+		File[] content = directory.listFiles();
+		if (content == null || content.length == 0)
+			return new ArrayList<File>();
+
+		List<File> files = new ArrayList<File>(content.length);
+		for (File file : content)
+		{
+			if (file.isDirectory())
+				files.add(file);
+		}
+
+		for (File file : content)
+		{
+			if (!file.isDirectory())
+				files.add(file);
+		}
+
+		return files;
 	}
 
 }

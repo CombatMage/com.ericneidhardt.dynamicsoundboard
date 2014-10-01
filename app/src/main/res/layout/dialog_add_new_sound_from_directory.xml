@@ -25,14 +25,25 @@
 			android:textSize="@dimen/text_body"
 			android:text="@string/dialog_add_new_sound_from_directory_message"/>
 
-	<FrameLayout
+	<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="match_parent">
+
+		<LinearLayout
+				android:id="@+id/layout_dialog_controls"
+				android:layout_marginTop="@dimen/margin_default"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true"
+				android:orientation="vertical">
+			<include layout="@layout/dialog_button_bar"/>
+		</LinearLayout>
 
 		<android.support.v7.widget.RecyclerView
 				android:id="@+id/rv_directories"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:layout_above="@id/layout_dialog_controls"
 				android:overScrollMode="never"/>
 
 		<View
@@ -43,12 +54,9 @@
 		<View
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_shadow"
-				android:layout_gravity="bottom"
+				android:layout_above="@id/layout_dialog_controls"
 				android:rotation="180"
 				android:background="@drawable/ic_shadow_horizontal"/>
 
-	</FrameLayout>
-
-	<include layout="@layout/dialog_button_bar"/>
-
+	</RelativeLayout>
 </LinearLayout>
