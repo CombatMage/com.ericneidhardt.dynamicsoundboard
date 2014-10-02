@@ -19,7 +19,8 @@
 	<dimen name="margin_default">16dp</dimen>
 	<dimen name="margin_small">8dp</dimen>
 	<dimen name="margin_tiny">4dp</dimen>
-	<dimen name="margin_list_item_left">54dp</dimen>
+	<dimen name="margin_list_item_left">56dp</dimen>
+	<dimen name="margin_list_item_left_large">72dp</dimen>
 
     <dimen name="navigation_width">260dp</dimen>
 

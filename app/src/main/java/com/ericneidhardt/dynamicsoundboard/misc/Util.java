@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.webkit.MimeTypeMap;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoMaster;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 
@@ -50,6 +51,34 @@ public class Util
 			fileName = "_" + filePathUri.getLastPathSegment();
 
 		return fileName;
+	}
+
+	public static boolean isAudioFile(File file)
+	{
+		String mime = getMimeType(file.getAbsolutePath());
+
+		return false;
+		// TODO check MIME Type
+	}
+
+	public static boolean containsAudioFiles(File directory)
+	{
+		File[] filesInDirectory = directory.listFiles();
+		return false;
+		// TODO check MIME Type of children
+	}
+
+	private static String getMimeType(String url)
+	{
+		String type = null;
+		String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+
+		if (extension != null)
+		{
+			MimeTypeMap mime = MimeTypeMap.getSingleton();
+			type = mime.getMimeTypeFromExtension(extension);
+		}
+		return type;
 	}
 
 	public static List<File> getFilesInDirectory(File directory)
