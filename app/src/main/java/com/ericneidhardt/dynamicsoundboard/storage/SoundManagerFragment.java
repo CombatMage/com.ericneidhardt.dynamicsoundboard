@@ -3,9 +3,7 @@ package com.ericneidhardt.dynamicsoundboard.storage;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.view.MenuItem;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
-import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -14,6 +12,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +46,6 @@ public class SoundManagerFragment extends Fragment
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
-		this.setHasOptionsMenu(true);
 
 		this.playList = new ArrayList<EnhancedMediaPlayer>();
 		this.sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
@@ -74,28 +72,20 @@ public class SoundManagerFragment extends Fragment
 		task.execute();
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		super.onOptionsItemSelected(item);
-		switch (item.getItemId())
-		{
-			case R.id.action_clear_all_sounds:
-				for (String fragmentTag : this.sounds.keySet())
-					this.removeSounds(fragmentTag);
-				return true;
-			default:
-				return false;
-		}
-	}
-
 	public void addSound(MediaPlayerData playerData)
 	{
-		EnhancedMediaPlayer player = new EnhancedMediaPlayer(this.getActivity(), playerData);
-		if (this.sounds.get(playerData.getFragmentTag()) == null)
-			this.sounds.put(playerData.getFragmentTag(), new ArrayList<EnhancedMediaPlayer>(asList(player)));
-		else
-			this.sounds.get(playerData.getFragmentTag()).add(player);
+		try
+		{
+			EnhancedMediaPlayer player = new EnhancedMediaPlayer(this.getActivity(), playerData);
+			if (this.sounds.get(playerData.getFragmentTag()) == null)
+				this.sounds.put(playerData.getFragmentTag(), new ArrayList<EnhancedMediaPlayer>(asList(player)));
+			else
+				this.sounds.get(playerData.getFragmentTag()).add(player);
+		}
+		catch (IOException e)
+		{
+			Logger.d(TAG, e.getMessage());
+		}
 	}
 
 	public void removeSounds(String fragmentTag)
@@ -105,7 +95,10 @@ public class SoundManagerFragment extends Fragment
 
 	public void removeSounds(List<EnhancedMediaPlayer> soundsToRemove)
 	{
-		for (EnhancedMediaPlayer playerToRemove : soundsToRemove)
+		List<EnhancedMediaPlayer> copyList = new ArrayList<EnhancedMediaPlayer>(soundsToRemove.size());
+		copyList.addAll(soundsToRemove); // this is done to prevent concurrent modification exception
+
+		for (EnhancedMediaPlayer playerToRemove : copyList)
 		{
 			MediaPlayerData data = playerToRemove.getMediaPlayerData();
 			this.sounds.get(data.getFragmentTag()).remove(playerToRemove);
@@ -123,32 +116,47 @@ public class SoundManagerFragment extends Fragment
 
 	public void addSoundToPlaylist(MediaPlayerData playerData)
 	{
-		EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(this.getActivity(), playerData);
-		this.playList.add(player);
+		try
+		{
+			EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(this.getActivity(), playerData);
+			this.playList.add(player);
+		}
+		catch (IOException e)
+		{
+			Logger.d(TAG, e.getMessage());
+		}
 	}
 
 	public void toggleSoundInPlaylist(String playerId, boolean addToPlayList)
 	{
-		EnhancedMediaPlayer player = this.findInSounds(playerId);
-		EnhancedMediaPlayer playerInPlaylist = this.findInPlaylist(playerId);
-
-		if (addToPlayList)
+		try
 		{
-			if (playerInPlaylist != null)
-				return;
+			EnhancedMediaPlayer player = this.findInSounds(playerId);
+			EnhancedMediaPlayer playerInPlaylist = this.findInPlaylist(playerId);
 
-			player.setIsInPlaylist(true);
-			playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(this.getActivity(), player.getMediaPlayerData());
-			this.playList.add(playerInPlaylist);
+			if (addToPlayList)
+			{
+				if (playerInPlaylist != null)
+					return;
+
+				player.setIsInPlaylist(true);
+				playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(this.getActivity(), player.getMediaPlayerData());
+				this.playList.add(playerInPlaylist);
+			}
+			else
+			{
+				if (playerInPlaylist == null)
+					return;
+
+				player.setIsInPlaylist(false);
+				this.playList.remove(playerInPlaylist);
+				playerInPlaylist.destroy();
+			}
 		}
-		else
+		catch (IOException e)
 		{
-			if (playerInPlaylist == null)
-				return;
-
-			player.setIsInPlaylist(false);
-			this.playList.remove(playerInPlaylist);
-			playerInPlaylist.destroy();
+			Logger.e(TAG, e.getMessage());
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -166,11 +174,6 @@ public class SoundManagerFragment extends Fragment
 				return player;
 		}
 		return null;
-	}
-
-	public boolean isSoundInSoundSheet(EnhancedMediaPlayer player)
-	{
-		return this.findInSounds(player.getMediaPlayerData().getPlayerId()) != null;
 	}
 
 	private EnhancedMediaPlayer findInSounds(String playerId)

@@ -30,7 +30,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 	private State currentState;
 	private MediaPlayerData rawData;
 
-	public EnhancedMediaPlayer(Context context, MediaPlayerData data)
+	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
 	{
 		super();
 		this.rawData = data;
@@ -40,7 +40,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		this.init(context);
 	}
 
-	public static EnhancedMediaPlayer getInstanceForPlayList(Context context, MediaPlayerData data)
+	public static EnhancedMediaPlayer getInstanceForPlayList(Context context, MediaPlayerData data) throws IOException
 	{
 		MediaPlayerData playListData = new MediaPlayerData();
 		playListData.setIsInPlaylist(true);
@@ -73,24 +73,16 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		return data;
 	}
 
-	private void init(Context context)
+	private void init(Context context) throws IOException
 	{
 		if (this.rawData.getUri() == null)
 			throw new NullPointerException("cannot init media player, sound uri is null");
 
-		try
-		{
-			this.setAudioStreamType(AudioManager.STREAM_MUSIC);
-			this.setDataSource(context, Uri.parse(this.rawData.getUri()));
-			this.setLooping(this.rawData.getIsLoop());
-			this.prepare();
-			this.currentState = State.PREPARED;
-		}
-		catch (IOException e)
-		{
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
+		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		this.setDataSource(context, Uri.parse(this.rawData.getUri()));
+		this.setLooping(this.rawData.getIsLoop());
+		this.prepare();
+		this.currentState = State.PREPARED;
 	}
 
 	public void destroy()
@@ -98,6 +90,12 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
+	}
+
+	@Override
+	public boolean isPlaying()
+	{
+		return currentState != State.DESTROYED && super.isPlaying();
 	}
 
 	@Override

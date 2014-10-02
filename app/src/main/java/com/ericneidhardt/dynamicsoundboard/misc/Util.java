@@ -19,6 +19,8 @@ import java.util.List;
 public class Util
 {
 	public static final String MIME_AUDIO = "audio/*|application/ogg|application/x-ogg";
+	private static final String[] MIME_AUDIO_TYPES = {"audio/*", "application/ogg", "application/x-ogg"};
+
 	private static final String SCHEME_CONTENT_URI = "content";
 	private static final String SCHEME_FILE_URI = "file";
 
@@ -34,7 +36,7 @@ public class Util
 	{
 		String fileName = null;//default fileName
 		Uri filePathUri = uri;
-		if (uri.getScheme().equals(SCHEME_CONTENT_URI))
+		if (uri.getScheme() != null && uri.getScheme().equals(SCHEME_CONTENT_URI))
 		{
 			Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
 			if (cursor.moveToFirst())
@@ -45,7 +47,7 @@ public class Util
 			}
 			cursor.close();
 		}
-		else if (uri.getScheme().equals(SCHEME_FILE_URI))
+		else if (uri.getScheme() != null && uri.getScheme().equals(SCHEME_FILE_URI))
 			fileName = filePathUri.getLastPathSegment();
 		else
 			fileName = "_" + filePathUri.getLastPathSegment();
@@ -56,16 +58,27 @@ public class Util
 	public static boolean isAudioFile(File file)
 	{
 		String mime = getMimeType(file.getAbsolutePath());
-
+		for (String audioMime : MIME_AUDIO_TYPES)
+		{
+			if (audioMime.equals(mime))
+				return true;
+		}
 		return false;
-		// TODO check MIME Type
 	}
 
 	public static boolean containsAudioFiles(File directory)
 	{
 		File[] filesInDirectory = directory.listFiles();
+		if (filesInDirectory == null)
+			return false;
+		for (File file : filesInDirectory)
+		{
+			if (file.isDirectory())
+				continue;
+			if (isAudioFile(file))
+				return true;
+		}
 		return false;
-		// TODO check MIME Type of children
 	}
 
 	private static String getMimeType(String url)

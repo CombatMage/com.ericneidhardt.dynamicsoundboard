@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -129,6 +130,10 @@ public class SoundSheetFragment
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 				intent.setType(Util.MIME_AUDIO);
 				this.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
+				break;
+			case R.id.action_delete_sheet:
+				// TODO delete this sound sheet
+				Toast.makeText(this.getActivity(),"TODO", Toast.LENGTH_SHORT).show();
 				break;
 		}
 	}

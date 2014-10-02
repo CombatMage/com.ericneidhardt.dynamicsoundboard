@@ -48,7 +48,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		this.getMenuInflater().inflate(R.menu.base, menu);
+		this.getMenuInflater().inflate(R.menu.overflow_menu, menu);
 		return true;
 	}
 
