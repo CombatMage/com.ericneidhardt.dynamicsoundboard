@@ -88,6 +88,7 @@ public class SoundSheetFragment
 		switch (item.getItemId())
 		{
 			case R.id.action_clear_sounds_in_sheet:
+				this.soundAdapter.removeAll(this.soundAdapter.getValues());
 				SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
 				soundManagerFragment.removeSounds(this.fragmentTag);
 				this.soundAdapter.notifyDataSetChanged();

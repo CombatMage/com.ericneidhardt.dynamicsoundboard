@@ -9,12 +9,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import com.ericneidhardt.dynamicsoundboard.R;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 
 import java.util.List;
 
@@ -50,6 +50,18 @@ public class SoundAdapter
 			player.setOnCompletionListener(this);
 
 		this.sounds.addAll(mediaPlayers);
+	}
+
+	public List<EnhancedMediaPlayer> getValues()
+	{
+		return this.sounds;
+	}
+
+	public void removeAll(List<EnhancedMediaPlayer> players)
+	{
+		if (players == null)
+			return;
+		this.sounds.removeAll(players);
 	}
 
 	public void clear()
@@ -191,9 +203,14 @@ public class SoundAdapter
 			{
 				case R.id.cb_play:
 					if (isChecked)
+					{
+						startProgressUpdateTimer();
 						player.playSound();
+					}
 					else
+					{
 						player.pauseSound();
+					}
 					break;
 				case R.id.cb_loop:
 					player.setLooping(isChecked);
