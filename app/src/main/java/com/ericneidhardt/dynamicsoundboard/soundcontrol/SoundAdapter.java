@@ -2,6 +2,7 @@ package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
 import android.media.MediaPlayer;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,15 +158,16 @@ public class SoundAdapter
 		}
 
 		@Override
-		public void onPageScrolled(int i, float v, int i1)
-		{
-			stopProgressUpdateTimer();
-		}
+		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+		{}
 
 		@Override
-		public void onPageScrollStateChanged(int i)
+		public void onPageScrollStateChanged(int state)
 		{
-			stopProgressUpdateTimer();
+			if (state == ViewPager.SCROLL_STATE_IDLE)
+				startProgressUpdateTimer();
+			else
+				stopProgressUpdateTimer();
 		}
 
 

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -70,6 +69,7 @@ public class SoundSheetFragment
 		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
+		//TODO this.getActivity().findViewById(R.id.action_delete_sheet).setOnClickListener(this);
 
 		this.soundAdapter.startProgressUpdateTimer();
 	}
@@ -133,8 +133,7 @@ public class SoundSheetFragment
 				this.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
 				break;
 			case R.id.action_delete_sheet:
-				// TODO delete this sound sheet
-				Toast.makeText(this.getActivity(),"TODO", Toast.LENGTH_SHORT).show();
+				this.getSoundSheetManagerFragment().remove(this.fragmentTag, true);
 				break;
 		}
 	}

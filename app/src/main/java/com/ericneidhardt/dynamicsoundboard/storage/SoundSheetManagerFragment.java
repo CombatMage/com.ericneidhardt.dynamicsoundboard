@@ -150,6 +150,15 @@ public class SoundSheetManagerFragment
 		task.execute();
 	}
 
+	public void remove(String fragmentTag, boolean notifySoundSheets)
+	{
+		for (SoundSheet soundSheet : this.soundSheets)
+		{
+			if (soundSheet.getFragmentTag().equals(fragmentTag))
+				this.remove(soundSheet, notifySoundSheets);
+		}
+	}
+
 	public List<SoundSheet> getAll()
 	{
 		return this.soundSheets;

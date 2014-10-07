@@ -19,6 +19,7 @@ import java.util.List;
 public class Util
 {
 	public static final String MIME_AUDIO = "audio/*|application/ogg|application/x-ogg";
+	private static final String AUDIO = "audio";
 	private static final String[] MIME_AUDIO_TYPES = {"audio/*", "application/ogg", "application/x-ogg"};
 
 	private static final String SCHEME_CONTENT_URI = "content";
@@ -58,9 +59,13 @@ public class Util
 	public static boolean isAudioFile(File file)
 	{
 		String mime = getMimeType(file.getAbsolutePath());
+		if (mime == null)
+			return false;
+		if (mime.startsWith(AUDIO))
+			return true;
 		for (String audioMime : MIME_AUDIO_TYPES)
 		{
-			if (audioMime.equals(mime))
+			if (mime.equals(audioMime))
 				return true;
 		}
 		return false;
@@ -81,11 +86,23 @@ public class Util
 		return false;
 	}
 
-	private static String getMimeType(String url)
+	public static String getFileExtension(String filePath)
+	{
+		String extension = MimeTypeMap.getFileExtensionFromUrl(filePath);
+		if (extension.isEmpty())
+		{
+			Uri uri = Uri.parse(filePath);
+
+			String fileName = uri.getLastPathSegment();
+			extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+		}
+		return extension;
+	}
+
+	public static String getMimeType(String filePath)
 	{
 		String type = null;
-		String extension = MimeTypeMap.getFileExtensionFromUrl(url);
-
+		String extension = getFileExtension(filePath);
 		if (extension != null)
 		{
 			MimeTypeMap mime = MimeTypeMap.getSingleton();
