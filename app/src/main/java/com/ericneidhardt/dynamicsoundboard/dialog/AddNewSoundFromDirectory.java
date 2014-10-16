@@ -236,7 +236,7 @@ public class AddNewSoundFromDirectory
 		private void bindParentDirectory()
 		{
 			this.fileName.setText("..");
-			this.fileType.setImageResource(R.drawable.ic_parent_directory);
+			this.fileType.setImageResource(R.drawable.selector_ic_parent_directory);
 			this.selectionIndicator.setVisibility(View.GONE);
 		}
 
