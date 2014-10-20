@@ -2,7 +2,7 @@
 <resources>
 
 	<!-- misc -->
-	<string name="app_name">Dynamic Soundboard v2 (Beta)</string>
+	<string name="app_name">Dynamic Soundboard</string>
 	<string name="suggested_sound_sheet_name">Kategorie</string>
 
 	<!-- navigation drawer -->
