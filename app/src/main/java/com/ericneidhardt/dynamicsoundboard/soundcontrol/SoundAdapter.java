@@ -222,7 +222,6 @@ public class SoundAdapter
 					SoundManagerFragment fragment = (SoundManagerFragment)parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
 					fragment.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), isChecked);
 					fragment.notifyPlaylist();
-					notifyDataSetChanged();
 					break;
 			}
 		}
