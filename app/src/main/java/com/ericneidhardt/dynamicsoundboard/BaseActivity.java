@@ -1,9 +1,13 @@
 package com.ericneidhardt.dynamicsoundboard;
 
-import android.app.*;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +23,7 @@ import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 import java.util.List;
 
 
-public class BaseActivity extends Activity implements View.OnClickListener
+public class BaseActivity extends ActionBarActivity implements View.OnClickListener
 {
 	private static final String TAG = BaseActivity.class.getSimpleName();
 
@@ -55,7 +59,12 @@ public class BaseActivity extends Activity implements View.OnClickListener
 
 	private void createActionbar()
 	{
-		ActionBar actionBar = this.getActionBar();
+		Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+		this.setSupportActionBar(toolbar);
+
+		/*
+
+		ActionBar actionBar = this.getSupportActionBar();
 		if (actionBar == null)
 			return;
 		actionBar.setDisplayShowHomeEnabled(false);
@@ -69,33 +78,21 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		this.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 
 		this.findViewById(R.id.et_set_label).setVisibility(View.GONE);
-		this.findViewById(R.id.tv_app_name).setVisibility(View.VISIBLE);
+		this.findViewById(R.id.tv_app_name).setVisibility(View.VISIBLE);*/
 	}
 
 	private void createNavigationDrawer()
 	{
 		this.navigationDrawerLayout = (DrawerLayout)this.findViewById(R.id.root_layout);
+
 		this.drawerToggle = new ActionBarDrawerToggle(this,
 				this.navigationDrawerLayout,
+				(Toolbar) this.findViewById(R.id.toolbar),
 				R.string.navigation_drawer_content_description_open,
-				R.string.navigation_drawer_content_description_close)
-		{
-			@Override
-			public void onDrawerOpened(View drawerView)
-			{
-				super.onDrawerOpened(drawerView);
-				findViewById(R.id.action_open_navigation).setSelected(true);
-			}
+				R.string.navigation_drawer_content_description_close);
 
-			@Override
-			public void onDrawerClosed(View drawerView)
-			{
-				super.onDrawerClosed(drawerView);
-				findViewById(R.id.action_open_navigation).setSelected(false);
-			}
-		};
-
-		this.navigationDrawerLayout.setDrawerListener(this.drawerToggle);
+		this.drawerToggle.setDrawerIndicatorEnabled(true);
+		this.navigationDrawerLayout.setDrawerListener(drawerToggle);
 	}
 
 	@Override
@@ -141,9 +138,6 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	{
 		switch (view.getId())
 		{
-			case R.id.action_open_navigation:
-				this.toggleNavigationDrawer();
-				break;
 			case R.id.action_add_sound:
 				Toast.makeText(this, "action_add_sound", Toast.LENGTH_SHORT).show();
 				break;
@@ -159,6 +153,9 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		super.onOptionsItemSelected(item);
+		if (this.drawerToggle.onOptionsItemSelected(item))
+			return true;
+
 		switch (item.getItemId())
 		{
 			case R.id.action_settings:
@@ -169,27 +166,10 @@ public class BaseActivity extends Activity implements View.OnClickListener
 		}
 	}
 
-	public void toggleNavigationDrawer()
-	{
-		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START))
-		{
-			this.findViewById(R.id.action_open_navigation).setSelected(false);
-			this.navigationDrawerLayout.closeDrawer(Gravity.START);
-		}
-		else
-		{
-			this.findViewById(R.id.action_open_navigation).setSelected(true);
-			this.navigationDrawerLayout.openDrawer(Gravity.START);
-		}
-	}
-
 	public void closeNavigationDrawer()
 	{
 		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START))
-		{
-			this.findViewById(R.id.action_open_navigation).setSelected(false);
 			this.navigationDrawerLayout.closeDrawer(Gravity.START);
-		}
 	}
 
 	private void addSoundManagerFragment()

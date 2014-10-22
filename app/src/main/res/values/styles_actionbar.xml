@@ -61,10 +61,4 @@
 		<item name="android:src">@drawable/ic_action_overflow</item>
 	</style>
 
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Actionbar.Widget" parent="@android:style/Theme.Holo">
-        <item name="android:popupMenuStyle">@style/PopupMenu.Actionbar</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView.Actionbar</item>
-    </style>
-
 </resources>

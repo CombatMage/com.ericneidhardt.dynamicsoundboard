@@ -1,7 +1,13 @@
 <resources>
 
-    <!-- Base application theme. -->
-	<style name="Theme.AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+	<style name="Theme" parent="Theme.AppCompat.Light.NoActionBar" />
+
+
+	<style name="Theme.AppTheme" parent="Theme">
+
+		<item name="colorPrimary">@color/primary_500</item>
+		<item name="colorPrimaryDark">@color/primary_700</item>
+
 
 		<item name="android:actionOverflowButtonStyle">@style/ActionButton.OverFlow</item>
 		<item name="android:actionBarItemBackground">@drawable/selector_background</item>
@@ -16,9 +22,14 @@
 
 		<item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
 
-		<!-- Light.DarkActionBar specific -->
-		<item name="android:actionBarWidgetTheme">@style/Theme.Actionbar.Widget</item>
-
 	</style>
+
+	<style name="ActionBarThemeOverlay" parent="">
+		<item name="android:textColorPrimary">#fff</item>
+		<item name="colorControlNormal">#fff</item>
+		<item name="colorControlHighlight">#fff</item>
+	</style>
+
+	<style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
