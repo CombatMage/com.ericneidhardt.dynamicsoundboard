@@ -2,8 +2,8 @@ package com.ericneidhardt.dynamicsoundboard;
 
 import android.app.*;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +26,7 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	private boolean isActivityVisible = true;
 
 	private DrawerLayout navigationDrawerLayout;
+	private ActionBarDrawerToggle drawerToggle;
 
 	private PauseSoundOnCallListener phoneStateListener;
 
@@ -74,26 +75,34 @@ public class BaseActivity extends Activity implements View.OnClickListener
 	private void createNavigationDrawer()
 	{
 		this.navigationDrawerLayout = (DrawerLayout)this.findViewById(R.id.root_layout);
-
-		DrawerLayout.DrawerListener onNavigationToggleListener = new ActionBarDrawerToggle(this,
+		this.drawerToggle = new ActionBarDrawerToggle(this,
 				this.navigationDrawerLayout,
-				R.color.primary_500,
 				R.string.navigation_drawer_content_description_open,
 				R.string.navigation_drawer_content_description_close)
 		{
 			@Override
 			public void onDrawerOpened(View drawerView)
 			{
+				super.onDrawerOpened(drawerView);
 				findViewById(R.id.action_open_navigation).setSelected(true);
 			}
 
 			@Override
 			public void onDrawerClosed(View drawerView)
 			{
+				super.onDrawerClosed(drawerView);
 				findViewById(R.id.action_open_navigation).setSelected(false);
 			}
 		};
-		this.navigationDrawerLayout.setDrawerListener(onNavigationToggleListener);
+
+		this.navigationDrawerLayout.setDrawerListener(this.drawerToggle);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState)
+	{
+		super.onPostCreate(savedInstanceState);
+		this.drawerToggle.syncState();
 	}
 
 	@Override
