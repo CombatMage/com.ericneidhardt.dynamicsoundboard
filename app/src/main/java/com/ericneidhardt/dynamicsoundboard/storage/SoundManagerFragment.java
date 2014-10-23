@@ -95,6 +95,9 @@ public class SoundManagerFragment extends Fragment
 
 	public void removeSounds(List<EnhancedMediaPlayer> soundsToRemove)
 	{
+		if (soundsToRemove == null || soundsToRemove.size() == 0)
+			return;
+
 		List<EnhancedMediaPlayer> copyList = new ArrayList<EnhancedMediaPlayer>(soundsToRemove.size());
 		copyList.addAll(soundsToRemove); // this is done to prevent concurrent modification exception
 

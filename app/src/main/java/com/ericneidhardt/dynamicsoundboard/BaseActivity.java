@@ -62,23 +62,11 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
 		this.setSupportActionBar(toolbar);
 
-		/*
-
-		ActionBar actionBar = this.getSupportActionBar();
-		if (actionBar == null)
-			return;
-		actionBar.setDisplayShowHomeEnabled(false);
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayShowCustomEnabled(true);
-
-		actionBar.setCustomView(R.layout.actionbar);
-
-		this.findViewById(R.id.action_open_navigation).setOnClickListener(this);
 		this.findViewById(R.id.action_add_sound).setOnClickListener(this);
 		this.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 
 		this.findViewById(R.id.et_set_label).setVisibility(View.GONE);
-		this.findViewById(R.id.tv_app_name).setVisibility(View.VISIBLE);*/
+		this.findViewById(R.id.tv_app_name).setVisibility(View.VISIBLE);
 	}
 
 	private void createNavigationDrawer()

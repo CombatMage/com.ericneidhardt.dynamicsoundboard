@@ -79,7 +79,9 @@ public class SoundSheetManagerFragment
 		switch (item.getItemId())
 		{
 			case R.id.action_clear_sound_sheets:
-				((BaseActivity) this.getActivity()).removeSoundFragment(this.soundSheets);
+				BaseActivity activity = (BaseActivity) this.getActivity();
+				activity.removeSoundFragment(this.soundSheets);
+				activity.setSoundSheetActionsEnable(false);
 
 				SoundManagerFragment fragment = this.getSoundManagerFragment();
 				for (SoundSheet soundSheet : this.soundSheets)
