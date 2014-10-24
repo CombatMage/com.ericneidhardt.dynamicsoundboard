@@ -7,6 +7,7 @@
 
 	<dimen name="size_progressbar_thumb">8dp</dimen>
 
+	<dimen name="height_actionbar">44dp</dimen>
 	<dimen name="height_title">48dp</dimen>
 	<dimen name="height_input_field">44dp</dimen>
 	<dimen name="height_list_item">56dp</dimen>
@@ -17,7 +18,7 @@
 
 	<dimen name="margin_large">24dp</dimen>
 	<dimen name="margin_default">16dp</dimen>
-	<dimen name="margin_small">12dp</dimen>
+	<dimen name="margin_small">10dp</dimen>
 	<dimen name="margin_very_small">8dp</dimen>
 	<dimen name="margin_tiny">4dp</dimen>
 	<dimen name="margin_list_item_left">56dp</dimen>

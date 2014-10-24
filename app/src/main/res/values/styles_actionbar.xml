@@ -57,8 +57,4 @@
         <item name="android:background">@drawable/btn_cab_done_actionbar</item>
     </style>
 
-	<style name="ActionButton.OverFlow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
-		<item name="android:src">@drawable/ic_action_overflow</item>
-	</style>
-
 </resources>
