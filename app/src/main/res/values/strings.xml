@@ -22,6 +22,7 @@
 
 	<!-- actionbar -->
 	<string name="action_menu">Sound Layouts öffnen</string>
+	<string name="action_add_new_sound_sheet">Eine neue Sound Gruppe hinzufügen</string>
 	<string name="action_add_new_sound">Einen neuen Sound hinzufügen</string>
 	<string name="action_add_new_sound_from_dir">Alle Sounds aus einem Verzeichniss hinzufügen</string>
 	<string name="action_delete_sheet">Diese Kategorie löschen</string>

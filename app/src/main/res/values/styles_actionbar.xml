@@ -39,10 +39,6 @@
         <item name="android:listSelector">@drawable/selector_background</item>
     </style>
 
-    <style name="ActionBarTabStyle.Actionbar" parent="@android:style/Widget.Holo.ActionBar.TabView">
-        <item name="android:background">@drawable/tab_indicator_ab_actionbar</item>
-    </style>
-
     <style name="DropDownNav.Actionbar" parent="@android:style/Widget.Holo.Spinner">
         <item name="android:background">@drawable/spinner_background_ab_actionbar</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_actionbar</item>
