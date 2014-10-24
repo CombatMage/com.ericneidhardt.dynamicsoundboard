@@ -76,7 +76,7 @@
 			android:id="@+id/sb_progress"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginBottom="@dimen/margin_small"
+			android:layout_marginBottom="@dimen/margin_very_small"
 			android:layout_toRightOf="@id/layout_sound_controls_primary"
 			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
 			android:layout_alignParentBottom="true"

@@ -34,7 +34,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 		else
 			this.divider = customDivider;
 
-		this.offsetFirstItem = context.getResources().getDimensionPixelSize(R.dimen.margin_small);
+		this.offsetFirstItem = context.getResources().getDimensionPixelSize(R.dimen.margin_very_small);
 		this.setOrientation(orientation);
 	}
 

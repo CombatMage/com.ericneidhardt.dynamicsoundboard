@@ -78,7 +78,7 @@
 			android:layout_toRightOf="@id/layout_sound_controls_primary"
 			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
 			android:layout_alignParentBottom="true"
-			android:layout_marginBottom="@dimen/margin_small"
+			android:layout_marginBottom="@dimen/margin_very_small"
 			android:layout_marginRight="@dimen/margin_default"/>
 
 </RelativeLayout>
