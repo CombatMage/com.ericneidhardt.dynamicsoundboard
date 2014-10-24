@@ -3,7 +3,6 @@ package com.ericneidhardt.dynamicsoundboard.customview;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.SparseArray;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +16,10 @@ public abstract class NavigationDrawerList
 		extends
 			FrameLayout
 		implements
-			ActionMode.Callback
+			android.support.v7.view.ActionMode.Callback
 {
 	protected NavigationDrawerFragment parent;
-	protected ActionMode actionMode;
+	protected android.support.v7.view.ActionMode actionMode;
 	protected boolean isInSelectionMode;
 
 	private ContextualActionbar actionbar;
@@ -54,33 +53,7 @@ public abstract class NavigationDrawerList
 		if (this.parent == null)
 			throw new NullPointerException("Cannot prepare deletion, because the containing fragment is null");
 
-		this.actionMode = this.parent.getActivity().startActionMode(this);
-	}
-
-	@Override
-	public boolean onCreateActionMode(ActionMode mode, Menu menu)
-	{
-		this.actionbar = new ContextualActionbar(this.getContext());
-		actionbar.setDeleteAction(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				deleteSelected();
-			}
-		});
-		actionbar.setSelectAllAction(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onSelectAll();
-			}
-		});
-		actionbar.setNumberOfSelectedItems(0, this.getItemCount());
-
-		mode.setCustomView(actionbar);
-		this.parent.onActionModeStart();
-		this.isInSelectionMode = true;
-		this.selectedItems = new SparseArray<View>(this.getItemCount());
-
-		return true;
+		this.actionMode = this.parent.getBaseActivity().startSupportActionMode(this);
 	}
 
 	public void deleteSelected()
@@ -103,20 +76,50 @@ public abstract class NavigationDrawerList
 
 	protected abstract void onDeleteSelected(SparseArray<View> selectedItems);
 
+	protected abstract List<View> getAllItems();
+
+	protected abstract int getItemCount();
+
 	@Override
-	public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+	public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu)
+	{
+		this.actionbar = new ContextualActionbar(this.getContext());
+		actionbar.setDeleteAction(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				deleteSelected();
+			}
+		});
+		actionbar.setSelectAllAction(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onSelectAll();
+			}
+		});
+		actionbar.setNumberOfSelectedItems(0, this.getItemCount());
+
+		actionMode.setCustomView(actionbar);
+		this.parent.onActionModeStart();
+		this.isInSelectionMode = true;
+		this.selectedItems = new SparseArray<View>(this.getItemCount());
+
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareActionMode(android.support.v7.view.ActionMode actionMode, Menu menu)
 	{
 		return false;
 	}
 
 	@Override
-	public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+	public boolean onActionItemClicked(android.support.v7.view.ActionMode actionMode, MenuItem menuItem)
 	{
 		return false;
 	}
 
 	@Override
-	public void onDestroyActionMode(ActionMode mode)
+	public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode)
 	{
 		this.actionMode = null;
 		this.parent.onActionModeFinished();
@@ -124,10 +127,4 @@ public abstract class NavigationDrawerList
 		for(int i = 0; i < this.selectedItems.size(); i++)
 			this.selectedItems.valueAt(i).setSelected(false);
 	}
-
-	protected abstract List<View> getAllItems();
-
-	protected abstract int getItemCount();
-
-
 }

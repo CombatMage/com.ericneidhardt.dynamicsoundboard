@@ -7,6 +7,11 @@ import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 
 public abstract class BaseFragment extends Fragment
 {
+	public BaseActivity getBaseActivity()
+	{
+		return (BaseActivity)this.getActivity();
+	}
+
 	public NavigationDrawerFragment getNavigationDrawer()
 	{
 		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
