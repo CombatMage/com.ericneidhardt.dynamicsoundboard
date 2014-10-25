@@ -15,28 +15,18 @@
 			android:layout_height="match_parent">
 
 		<FrameLayout
+				android:id="@+id/main_frame"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:background="@color/background">
 
-			<FrameLayout
-					android:id="@+id/main_frame"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent">
-
-				<include
-						layout="@layout/view_introduction"/>
-
-			</FrameLayout>
-			<View
-					android:layout_width="match_parent"
-					android:layout_height="@dimen/height_shadow"
-					android:background="@drawable/ic_shadow_horizontal"/>
+			<include
+					layout="@layout/view_introduction"/>
 
 		</FrameLayout>
 
 		<include
-				layout="@layout/navigation_drawer" />
+				layout="@layout/navigation_drawer"/>
 
 	</android.support.v4.widget.DrawerLayout>
 </LinearLayout>

@@ -36,4 +36,8 @@
 		<item name="android:layout_marginRight">1dp</item>
 	</style>
 
+	<style name="ActionButton.CloseMode.Actionbar" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+		<item name="android:background">@drawable/btn_cab_done_actionbar</item>
+	</style>
+
 </resources>
