@@ -77,13 +77,9 @@ public class SoundSheets
 	}
 
 	@Override
-	protected List<View> getAllItems()
+	protected int getActionModeTitle()
 	{
-		List<View> viewsInSoundSheetList = new ArrayList<View>(this.adapter.getItemCount());
-		RecyclerView soundSheetList = (RecyclerView)this.findViewById(R.id.rv_sound_sheets);
-		for (int i = 0; i < this.adapter.getItemCount(); i++)
-			viewsInSoundSheetList.add(soundSheetList.getChildAt(i));
-		return viewsInSoundSheetList;
+		return R.string.cab_title_delete_sound_sheets;
 	}
 
 	@Override

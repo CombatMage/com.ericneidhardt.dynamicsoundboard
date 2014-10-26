@@ -84,13 +84,9 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	}
 
 	@Override
-	protected List<View> getAllItems()
+	protected int getActionModeTitle()
 	{
-		List<View> viewsInPlayList = new ArrayList<View>(this.adapter.getItemCount());
-		RecyclerView playlist = (RecyclerView)this.findViewById(R.id.rv_playlist);
-		for (int i = 0; i < this.adapter.getItemCount(); i++)
-			viewsInPlayList.add(playlist.getChildAt(i));
-		return viewsInPlayList;
+		return R.string.cab_title_delete_play_list_sounds;
 	}
 
 	@Override

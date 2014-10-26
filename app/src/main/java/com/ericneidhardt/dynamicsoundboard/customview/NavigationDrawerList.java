@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 
-import java.util.List;
-
 
 public abstract class NavigationDrawerList
 		extends
@@ -22,7 +20,6 @@ public abstract class NavigationDrawerList
 	protected android.support.v7.view.ActionMode actionMode;
 	protected boolean isInSelectionMode;
 
-	private ContextualActionbar actionbar;
 	private SparseArray<View> selectedItems;
 
 	public NavigationDrawerList(Context context) {
@@ -44,7 +41,8 @@ public abstract class NavigationDrawerList
 		else
 			this.selectedItems.put(indexOfSelectedItem, view);
 
-		this.actionbar.setNumberOfSelectedItems(this.selectedItems.size(), this.getItemCount());
+		this.actionMode.invalidate(); // update item count in cab
+
 		view.setSelected(!view.isSelected());
 	}
 
@@ -62,43 +60,15 @@ public abstract class NavigationDrawerList
 		onDeleteSelected(selectedItems);
 	}
 
-	protected void onSelectAll()
-	{
-		List<View> allViews = this.getAllItems();
-		for (int i = 0; i < allViews.size(); i++)
-		{
-			allViews.get(i).setSelected(true);
-			this.selectedItems.put(i, allViews.get(i));
-		}
-
-		this.actionbar.setNumberOfSelectedItems(this.getItemCount(), this.getItemCount());
-	}
-
 	protected abstract void onDeleteSelected(SparseArray<View> selectedItems);
 
-	protected abstract List<View> getAllItems();
-
 	protected abstract int getItemCount();
+
+	protected abstract int getActionModeTitle();
 
 	@Override
 	public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu)
 	{
-		this.actionbar = new ContextualActionbar(this.getContext());
-		actionbar.setDeleteAction(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				deleteSelected();
-			}
-		});
-		actionbar.setSelectAllAction(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onSelectAll();
-			}
-		});
-		actionbar.setNumberOfSelectedItems(0, this.getItemCount());
-
-		actionMode.setCustomView(actionbar);
 		this.parent.onActionModeStart();
 		this.isInSelectionMode = true;
 		this.selectedItems = new SparseArray<View>(this.getItemCount());
@@ -109,7 +79,16 @@ public abstract class NavigationDrawerList
 	@Override
 	public boolean onPrepareActionMode(android.support.v7.view.ActionMode actionMode, Menu menu)
 	{
-		return false;
+		actionMode.setTitle(this.getActionModeTitle());
+
+		int count = this.selectedItems.size();
+		String countString = Integer.toString(count);
+		if (countString.length() == 1)
+			countString = " " + countString;
+		countString = countString + "/" + this.getItemCount();
+
+		actionMode.setSubtitle(countString);
+		return true;
 	}
 
 	@Override
