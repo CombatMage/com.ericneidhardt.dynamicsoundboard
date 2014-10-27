@@ -14,7 +14,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:padding="@dimen/margin_default"
-				android:gravity="right|center_vertical"
+				android:gravity="end|center_vertical"
 				android:text="@string/sound_control_delete"
 				android:textSize="@dimen/text_subheading"
 				android:textColor="@color/text_accent"
@@ -35,14 +35,14 @@
 		<View
 				android:layout_width="@dimen/height_shadow"
 				android:layout_height="match_parent"
-				android:layout_gravity="right"
+				android:layout_gravity="end"
 				android:rotation="180"
 				android:background="@drawable/ic_shadow_vertical"/>
 
 		<View
 				android:layout_width="@dimen/height_shadow"
 				android:layout_height="match_parent"
-				android:layout_gravity="left"
+				android:layout_gravity="start"
 				android:background="@drawable/ic_shadow_vertical"/>
 
 	</FrameLayout>
@@ -62,7 +62,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:padding="@dimen/margin_default"
-				android:gravity="left|center_vertical"
+				android:gravity="start|center_vertical"
 				android:text="@string/sound_control_delete"
 				android:textSize="@dimen/text_subheading"
 				android:textColor="@color/text_accent"
@@ -83,14 +83,14 @@
 		<View
 				android:layout_width="@dimen/height_shadow"
 				android:layout_height="match_parent"
-				android:layout_gravity="right"
+				android:layout_gravity="end"
 				android:rotation="180"
 				android:background="@drawable/ic_shadow_vertical"/>
 
 		<View
 				android:layout_width="@dimen/height_shadow"
 				android:layout_height="match_parent"
-				android:layout_gravity="left"
+				android:layout_gravity="end"
 				android:background="@drawable/ic_shadow_vertical"/>
 
 	</FrameLayout>

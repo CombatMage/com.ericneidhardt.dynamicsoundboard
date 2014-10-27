@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:paddingTop="@dimen/margin_very_small"
-	android:background="@color/background">
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/background_secondary">
 
 	<android.support.v7.widget.RecyclerView
-		android:id="@+id/rv_sounds"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:overScrollMode="never"/>
+			android:id="@+id/rv_sounds"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:overScrollMode="never"/>
 
 	<com.pkmmte.view.CircularImageView
-		android:id="@+id/b_add_sound"
-		android:layout_width="@dimen/size_floating_button"
-		android:layout_height="@dimen/size_floating_button"
-		android:layout_margin="@dimen/margin_default"
-		android:layout_gravity="end|bottom"
-		android:src="@drawable/ic_add_sound"
-		app:border="true"
-		app:border_color="@color/accent_200"
-		app:selector="true"
-		app:selector_color="@color/accent_200"
-		app:selector_stroke_color="@color/accent_100"
-		app:shadow="true"/>
+			android:id="@+id/b_add_sound"
+			android:layout_width="@dimen/size_floating_button"
+			android:layout_height="@dimen/size_floating_button"
+			android:layout_margin="@dimen/margin_default"
+			android:layout_gravity="end|bottom"
+			android:src="@drawable/ic_add_sound"
+			app:border="true"
+			app:border_color="@color/accent_200"
+			app:selector="true"
+			app:selector_color="@color/accent_200"
+			app:selector_stroke_color="@color/accent_100"
+			app:shadow="true"/>
 
 </FrameLayout>

@@ -3,6 +3,7 @@ package com.ericneidhardt.dynamicsoundboard.customview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,17 +49,20 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	@Override
 	public void onDraw(Canvas c, RecyclerView parent) {
 		if (orientation == VERTICAL_LIST)
-			drawVertical(c, parent);
+			drawForVerticalList(c, parent);
 		else
-			drawHorizontal(c, parent);
+			drawForHorizontalList(c, parent);
 	}
 
-	public void drawVertical(Canvas c, RecyclerView parent)
+	public void drawForVerticalList(Canvas c, RecyclerView parent)
 	{
 		final int left = parent.getPaddingLeft();
 		final int right = parent.getWidth() - parent.getPaddingRight();
 
 		final int childCount = parent.getChildCount();
+		if (childCount == 0)
+			return;
+
 		for (int i = 0; i < childCount; i++)
 		{
 			final View child = parent.getChildAt(i);
@@ -68,10 +72,26 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 			final int bottom = top + divider.getIntrinsicHeight();
 			divider.setBounds(left, top, right, bottom);
 			divider.draw(c);
+
+			if (i == 0)
+				this.drawBackgroundFirstItem(c, parent);
 		}
 	}
 
-	public void drawHorizontal(Canvas c, RecyclerView parent)
+	private void drawBackgroundFirstItem(Canvas canvas, RecyclerView parent)
+	{
+		final int left = parent.getPaddingLeft();
+		final int right = parent.getWidth() - parent.getPaddingRight();
+		final int top = parent.getTop();
+		final int bottom = top + this.offsetFirstItem;
+
+		Paint paint = new Paint();
+		paint.setStyle(Paint.Style.FILL);
+		paint.setColor(parent.getContext().getResources().getColor(R.color.background));
+		canvas.drawRect(left, top, right, bottom, paint);
+	}
+
+	public void drawForHorizontalList(Canvas c, RecyclerView parent)
 	{
 		final int top = parent.getPaddingTop();
 		final int bottom = parent.getHeight() - parent.getPaddingBottom();
