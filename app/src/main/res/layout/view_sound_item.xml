@@ -90,7 +90,7 @@
 		<View
 				android:layout_width="@dimen/height_shadow"
 				android:layout_height="match_parent"
-				android:layout_gravity="end"
+				android:layout_gravity="start"
 				android:background="@drawable/ic_shadow_vertical"/>
 
 	</FrameLayout>
