@@ -20,7 +20,7 @@
 	<string name="tab_play_list">Playliste</string>
 	<string name="tab_play_list_content_description_playlist">Sound wird aus der Playliste entfernt</string>
 
-	<!-- actionbar -->
+	<!-- toolbar -->
 	<string name="action_menu">Sound Layouts öffnen</string>
 	<string name="action_add_new_sound_sheet">Eine neue Sound Gruppe hinzufügen</string>
 	<string name="action_add_new_sound">Einen neuen Sound hinzufügen</string>
