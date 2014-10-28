@@ -60,7 +60,7 @@ public class SoundSheets
 	private void initRecycleView(Context context)
 	{
 		RecyclerView playlist = (RecyclerView)this.findViewById(R.id.rv_sound_sheets);
-		playlist.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST, null));
+		playlist.addItemDecoration(new DividerItemDecoration(context, null));
 		playlist.setLayoutManager(new LinearLayoutManager(context));
 		playlist.setItemAnimator(new DefaultItemAnimator());
 

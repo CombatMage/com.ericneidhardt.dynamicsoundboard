@@ -72,7 +72,7 @@ public class AddNewSoundFromDirectory
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 
 		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
-		directories.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST, null));
+		directories.addItemDecoration(new DividerItemDecoration(this.getActivity(), null));
 		directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		directories.setItemAnimator(new DefaultItemAnimator());
 

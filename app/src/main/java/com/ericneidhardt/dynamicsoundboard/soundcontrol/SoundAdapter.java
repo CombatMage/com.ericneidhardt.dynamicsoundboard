@@ -110,6 +110,7 @@ public class SoundAdapter
 				CompoundButton.OnCheckedChangeListener,
 				SeekBar.OnSeekBarChangeListener
 	{
+		private View container;
 		private CustomEditText name;
 		private CheckBox play;
 		private CheckBox loop;
@@ -123,6 +124,8 @@ public class SoundAdapter
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
+
+			this.container = itemView;
 
 			this.name = (CustomEditText)itemView.findViewById(R.id.et_name_file);
 			this.play = (CheckBox)itemView.findViewById(R.id.cb_play);

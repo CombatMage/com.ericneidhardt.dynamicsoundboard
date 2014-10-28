@@ -48,10 +48,11 @@
 
 	</FrameLayout>
 
-	<include layout="@layout/view_sound_control"
-			 android:id="@+id/layout_sound_controls"
-			 android:layout_width="match_parent"
-			 android:layout_height="@dimen/height_list_item_large"/>
+	<include
+			layout="@layout/view_sound_control"
+			android:id="@+id/layout_sound_controls"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_list_item_large"/>
 
 	<FrameLayout
 			android:id="@+id/layout_remove_sound_item_right"
