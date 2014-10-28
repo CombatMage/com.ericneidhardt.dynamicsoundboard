@@ -26,6 +26,7 @@
 				android:background="@drawable/ic_shadow_horizontal"/>
 
 		<View
+				android:id="@+id/v_shadow_bottom_left"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_shadow"
 				android:layout_gravity="bottom"
@@ -74,6 +75,7 @@
 				android:background="@drawable/ic_shadow_horizontal"/>
 
 		<View
+				android:id="@+id/v_shadow_bottom_right"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_shadow"
 				android:layout_gravity="bottom"

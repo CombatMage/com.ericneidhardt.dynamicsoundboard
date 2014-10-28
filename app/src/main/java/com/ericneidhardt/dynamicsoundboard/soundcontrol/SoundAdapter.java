@@ -91,16 +91,7 @@ public class SoundAdapter
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		EnhancedMediaPlayer player = this.sounds.get(position);
-		MediaPlayerData data = player.getMediaPlayerData();
-
-		holder.name.setText(data.getLabel());
-		holder.play.setChecked(player.isPlaying());
-		holder.loop.setChecked(data.getIsLoop());
-		holder.inPlaylist.setChecked(data.getIsInPlaylist());
-
-		holder.timePosition.setMax(player.getDuration());
-		holder.timePosition.setProgress(player.getCurrentPosition());
+		holder.bindData(position);
 	}
 
 	@Override
@@ -126,6 +117,9 @@ public class SoundAdapter
 		private View stop;
 		private SeekBar timePosition;
 
+		private View shadowBottomDeleteViewLeft;
+		private View shadowBottomDeleteViewRight;
+
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
@@ -143,6 +137,28 @@ public class SoundAdapter
 			this.inPlaylist.setOnCheckedChangeListener(this);
 			this.stop.setOnClickListener(this);
 			this.timePosition.setOnSeekBarChangeListener(this);
+
+			this.shadowBottomDeleteViewLeft = itemView.findViewById(R.id.v_shadow_bottom_left);
+			this.shadowBottomDeleteViewRight = itemView.findViewById(R.id.v_shadow_bottom_right);
+		}
+
+		private void bindData(int positionInDataSet)
+		{
+			EnhancedMediaPlayer player = sounds.get(positionInDataSet);
+			MediaPlayerData data = player.getMediaPlayerData();
+
+			this.name.setText(data.getLabel());
+			this.play.setChecked(player.isPlaying());
+			this.loop.setChecked(data.getIsLoop());
+			this.inPlaylist.setChecked(data.getIsInPlaylist());
+
+			this.timePosition.setMax(player.getDuration());
+			this.timePosition.setProgress(player.getCurrentPosition());
+
+			boolean isLastElement = positionInDataSet == getItemCount() - 1;
+			int shadowViewState = isLastElement  ? View.GONE : View.VISIBLE;
+			this.shadowBottomDeleteViewLeft.setVisibility(shadowViewState);
+			this.shadowBottomDeleteViewRight.setVisibility(shadowViewState);
 		}
 
 		@Override
@@ -169,7 +185,6 @@ public class SoundAdapter
 			else
 				stopProgressUpdateTimer();
 		}
-
 
 		@Override
 		public void onPageSelected(final int selectedPage)
