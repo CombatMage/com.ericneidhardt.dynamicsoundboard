@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
@@ -66,12 +65,22 @@ public class SoundSheetFragment
 	public void onResume()
 	{
 		super.onResume();
-		((BaseActivity)this.getActivity()).setSoundSheetActionsEnable(true);
+		this.getBaseActivity().setSoundSheetActionsEnable(true);
+
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
-		//TODO this.getActivity().findViewById(R.id.action_delete_sheet).setOnClickListener(this);
+//TODO this.getActivity().findViewById(R.id.action_delete_sheet).setOnClickListener(this);
+
+		this.addClickListenerIfViewExists(R.id.fab_add);
 
 		this.soundAdapter.startProgressUpdateTimer();
+	}
+
+	private void addClickListenerIfViewExists(int viewId)
+	{
+		View view = this.getActivity().findViewById(viewId);
+		if (view != null)
+			view.setOnClickListener(this);
 	}
 
 	@Override
@@ -127,13 +136,13 @@ public class SoundSheetFragment
 			case R.id.action_add_sound_dir:
 				AddNewSoundFromDirectory.showInstance(this.getFragmentManager(), this.fragmentTag);
 				break;
-			case R.id.b_add_sound:
+			case R.id.action_delete_sheet:
+				this.getSoundSheetManagerFragment().remove(this.fragmentTag, true);
+				break;
+			case R.id.fab_add:
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 				intent.setType(Util.MIME_AUDIO);
 				this.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
-				break;
-			case R.id.action_delete_sheet:
-				this.getSoundSheetManagerFragment().remove(this.fragmentTag, true);
 				break;
 		}
 	}
@@ -146,10 +155,8 @@ public class SoundSheetFragment
 
 		View fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false);
 
-		fragmentView.findViewById(R.id.b_add_sound).setOnClickListener(this);
-
 		RecyclerView listSounds = (RecyclerView)fragmentView.findViewById(R.id.rv_sounds);
-		listSounds.addItemDecoration(new DividerItemDecoration(this.getActivity(), null));
+		listSounds.addItemDecoration(new DividerItemDecoration(this.getActivity()));
 		listSounds.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		listSounds.setItemAnimator(new DefaultItemAnimator());
 		listSounds.setAdapter(this.soundAdapter);

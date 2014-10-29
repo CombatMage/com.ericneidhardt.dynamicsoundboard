@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -17,22 +16,29 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	private static final int[] ATTRS = new int[]{
 			android.R.attr.listDivider
 	};
-	public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
 
 	private Drawable divider;
 	private int offsetFirstItem;
-	public DividerItemDecoration(Context context, Drawable customDivider)
+	private Integer backgroundColor;
+
+	public DividerItemDecoration(Context context)
 	{
-		if (customDivider == null)
-		{
-			final TypedArray a = context.obtainStyledAttributes(ATTRS);
-			this.divider = a.getDrawable(0);
-			a.recycle();
-		}
-		else
-			this.divider = customDivider;
+		final TypedArray a = context.obtainStyledAttributes(ATTRS);
+		this.divider = a.getDrawable(0);
+		a.recycle();
+
+		this.backgroundColor = null;
+		this.offsetFirstItem = context.getResources().getDimensionPixelSize(R.dimen.margin_very_small);
+	}
+
+	public DividerItemDecoration(Context context, int backgroundColor)
+	{
+		final TypedArray a = context.obtainStyledAttributes(ATTRS);
+		this.divider = a.getDrawable(0);
+		a.recycle();
 
 		this.offsetFirstItem = context.getResources().getDimensionPixelSize(R.dimen.margin_very_small);
+		this.backgroundColor = backgroundColor;
 	}
 
 	@Override
@@ -76,7 +82,10 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
-		paint.setColor(parent.getContext().getResources().getColor(R.color.background));
+		if (this.backgroundColor == null)
+			paint.setColor(parent.getContext().getResources().getColor(R.color.background));
+		else
+			paint.setColor(this.backgroundColor);
 		canvas.drawRect(left, top, right, bottom, paint);
 	}
 

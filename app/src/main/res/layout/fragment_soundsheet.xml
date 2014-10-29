@@ -2,7 +2,6 @@
 
 <FrameLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:background="@color/background_secondary">
@@ -12,38 +11,5 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:overScrollMode="never"/>
-
-	<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_gravity="bottom"
-			android:orientation="vertical">
-
-		<View
-				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
-				android:rotation="180"
-				android:background="@drawable/ic_shadow_horizontal"/>
-
-		<include
-				android:id="@+id/toolbar_bottom"
-				layout="@layout/toolbar_bottom"
-				android:layout_height="@dimen/abc_action_bar_default_height_material"
-				android:layout_width="match_parent"/>
-	</LinearLayout>
-
-	<com.pkmmte.view.CircularImageView
-			android:id="@+id/b_add_sound"
-			android:layout_width="@dimen/size_floating_button"
-			android:layout_height="@dimen/size_floating_button"
-			android:layout_margin="@dimen/margin_default"
-			android:layout_gravity="end|bottom"
-			android:src="@drawable/ic_add_sound"
-			app:border="true"
-			app:border_color="@color/accent_200"
-			app:selector="true"
-			app:selector_color="@color/accent_200"
-			app:selector_stroke_color="@color/accent_100"
-			app:shadow="true"/>
 
 </FrameLayout>

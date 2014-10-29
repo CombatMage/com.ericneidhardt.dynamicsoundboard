@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -72,7 +73,7 @@ public class AddNewSoundFromDirectory
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 
 		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
-		directories.addItemDecoration(new DividerItemDecoration(this.getActivity(), null));
+		directories.addItemDecoration(new DividerItemDecoration(this.getActivity(), Color.TRANSPARENT));
 		directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		directories.setItemAnimator(new DefaultItemAnimator());
 

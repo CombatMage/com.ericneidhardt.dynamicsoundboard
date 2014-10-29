@@ -119,6 +119,9 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		viewState = !enable ? View.VISIBLE : View.GONE;
 		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
+
+		if (!enable)
+			this.findViewById(R.id.fab_add).setOnClickListener(this);
 	}
 
 	@Override
@@ -126,11 +129,8 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	{
 		switch (view.getId())
 		{
-			case R.id.action_add_sound:
-				Toast.makeText(this, "action_add_sound", Toast.LENGTH_SHORT).show();
-				break;
-			case R.id.action_add_sound_dir:
-				Toast.makeText(this, "action_add_sound_dir", Toast.LENGTH_SHORT).show();
+			case R.id.fab_add:
+				((SoundSheetManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG)).openDialogAddNewSoundSheet();
 				break;
 			default:
 				Logger.e(TAG, "unknown item clicked " + view);

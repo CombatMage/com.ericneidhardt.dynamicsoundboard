@@ -109,11 +109,16 @@ public class SoundSheetManagerFragment
 		switch (view.getId())
 		{
 			case R.id.action_add_sound_sheet:
-				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.getSuggestedSoundSheetName());
+				this.openDialogAddNewSoundSheet();
 				break;
 			default:
 				Logger.e(TAG, "unknown item clicked " + view);
 		}
+	}
+
+	public void openDialogAddNewSoundSheet()
+	{
+		AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.getSuggestedSoundSheetName());
 	}
 
 	@Override
