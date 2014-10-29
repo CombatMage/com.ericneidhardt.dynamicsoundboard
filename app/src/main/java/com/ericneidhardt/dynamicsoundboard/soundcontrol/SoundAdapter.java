@@ -78,13 +78,14 @@ public class SoundAdapter
 	@Override
 	public int getItemCount()
 	{
-		return this.sounds.size() + 1;
+		return this.sounds.size();
 	}
 
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int position)
 	{
-		return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sound_item, parent, false));
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sound_item, parent, false);
+		return new ViewHolder(view);
 	}
 
 	@Override
@@ -110,7 +111,6 @@ public class SoundAdapter
 				SeekBar.OnSeekBarChangeListener
 	{
 		private View container;
-
 		private CustomEditText name;
 		private CheckBox play;
 		private CheckBox loop;
@@ -124,6 +124,7 @@ public class SoundAdapter
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
+
 			this.container = itemView;
 
 			this.name = (CustomEditText)itemView.findViewById(R.id.et_name_file);
@@ -146,14 +147,6 @@ public class SoundAdapter
 
 		private void bindData(int positionInDataSet)
 		{
-			if (positionInDataSet == getItemCount() - 1)
-			{
-				this.container.setVisibility(View.GONE);
-				return;
-			}
-			else
-				this.container.setVisibility(View.VISIBLE);
-
 			EnhancedMediaPlayer player = sounds.get(positionInDataSet);
 			MediaPlayerData data = player.getMediaPlayerData();
 

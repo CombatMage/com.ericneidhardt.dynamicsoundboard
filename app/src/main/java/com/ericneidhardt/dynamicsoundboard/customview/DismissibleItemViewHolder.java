@@ -5,7 +5,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import com.ericneidhardt.dynamicsoundboard.R;
 
 public abstract class DismissibleItemViewHolder
 		extends
@@ -17,7 +16,7 @@ public abstract class DismissibleItemViewHolder
 	{
 		super(itemView);
 
-		ViewPager viewPager = (ViewPager)itemView.findViewById(R.id.vp_sound_items);
+		ViewPager viewPager = (ViewPager)itemView;
 		viewPager.setOffscreenPageLimit(2);
 		viewPager.setAdapter(this.getPagerAdapter());
 		viewPager.setOnPageChangeListener(this);
