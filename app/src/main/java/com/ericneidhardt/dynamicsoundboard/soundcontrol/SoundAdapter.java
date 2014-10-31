@@ -120,6 +120,7 @@ public class SoundAdapter
 
 		private View shadowBottomDeleteViewLeft;
 		private View shadowBottomDeleteViewRight;
+		private View shadowBottom;
 
 		public ViewHolder(View itemView)
 		{
@@ -143,6 +144,7 @@ public class SoundAdapter
 
 			this.shadowBottomDeleteViewLeft = itemView.findViewById(R.id.v_shadow_bottom_left);
 			this.shadowBottomDeleteViewRight = itemView.findViewById(R.id.v_shadow_bottom_right);
+			this.shadowBottom = itemView.findViewById(R.id.v_shadow_bottom);
 		}
 
 		private void bindData(int positionInDataSet)
@@ -162,6 +164,34 @@ public class SoundAdapter
 			int shadowViewState = isLastElement  ? View.GONE : View.VISIBLE;
 			this.shadowBottomDeleteViewLeft.setVisibility(shadowViewState);
 			this.shadowBottomDeleteViewRight.setVisibility(shadowViewState);
+
+			boolean isLastItem = positionInDataSet == getItemCount() - 1;
+
+			if (isLastItem)
+				this.enableShadowOnLastItem();
+			else
+				this.disableShadow();
+		}
+
+		private void enableShadowOnLastItem()
+		{
+			this.shadowBottom.setVisibility(View.VISIBLE);
+			int heightWithShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_large)
+					+ parent.getResources().getDimensionPixelSize(R.dimen.height_shadow);
+
+			ViewGroup.LayoutParams params = container.getLayoutParams();
+			params.height = heightWithShadow;
+			this.container.setLayoutParams(params);
+		}
+
+		private void disableShadow()
+		{
+			this.shadowBottom.setVisibility(View.GONE);
+			int heightWithOutShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_large);
+
+			ViewGroup.LayoutParams params = container.getLayoutParams();
+			params.height = heightWithOutShadow;
+			this.container.setLayoutParams(params);
 		}
 
 		@Override

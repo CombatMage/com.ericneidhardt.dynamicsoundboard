@@ -35,24 +35,38 @@
 
 		<View
 				android:layout_width="@dimen/height_shadow"
-				android:layout_height="match_parent"
+				android:layout_height="@dimen/height_list_item_large"
 				android:layout_gravity="end"
 				android:rotation="180"
 				android:background="@drawable/ic_shadow_vertical"/>
 
 		<View
 				android:layout_width="@dimen/height_shadow"
-				android:layout_height="match_parent"
+				android:layout_height="@dimen/height_list_item_large"
 				android:layout_gravity="start"
 				android:background="@drawable/ic_shadow_vertical"/>
 
 	</FrameLayout>
 
-	<include
-			layout="@layout/view_sound_control"
+	<LinearLayout
 			android:id="@+id/layout_sound_controls"
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_list_item_large"/>
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+
+		<include
+				layout="@layout/view_sound_control"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_list_item_large"/>
+
+		<View
+				android:id="@+id/v_shadow_bottom"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_shadow"
+				android:visibility="gone"
+				android:background="@drawable/ic_shadow_horizontal"/>
+
+	</LinearLayout>
 
 	<FrameLayout
 			android:id="@+id/layout_remove_sound_item_right"
@@ -85,14 +99,14 @@
 
 		<View
 				android:layout_width="@dimen/height_shadow"
-				android:layout_height="match_parent"
+				android:layout_height="@dimen/height_list_item_large"
 				android:layout_gravity="end"
 				android:rotation="180"
 				android:background="@drawable/ic_shadow_vertical"/>
 
 		<View
 				android:layout_width="@dimen/height_shadow"
-				android:layout_height="match_parent"
+				android:layout_height="@dimen/height_list_item_large"
 				android:layout_gravity="start"
 				android:background="@drawable/ic_shadow_vertical"/>
 
