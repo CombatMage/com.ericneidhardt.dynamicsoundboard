@@ -13,7 +13,7 @@
 					android:id="@+id/layout_tab"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:background="@color/primary_100"/>
+					android:background="@color/primary_200"/>
 			
 			<RelativeLayout
 					android:layout_width="match_parent"
@@ -27,7 +27,7 @@
 						android:layout_alignParentBottom="true"
 						android:animateLayoutChanges="true"
 						android:orientation="horizontal"
-						android:background="@color/primary_100">
+						android:background="@color/primary_200">
 
 					<LinearLayout
 							android:id="@+id/layout_controls"
@@ -45,7 +45,7 @@
 								android:text="@string/navigation_drawer_delete"
 								android:textSize="@dimen/text_sub_text"
 								android:textColor="@color/text_content_primary"
-								android:background="@drawable/selector_background_primary"
+								android:background="@drawable/selector_background"
 								android:clickable="true"/>
 
 						<TextView
@@ -58,7 +58,7 @@
 								android:text="@string/navigation_drawer_add"
 								android:textSize="@dimen/text_sub_text"
 								android:textColor="@color/text_content_primary"
-								android:background="@drawable/selector_background_primary"
+								android:background="@drawable/selector_background"
 								android:clickable="true"/>
 
 					</LinearLayout>
@@ -72,7 +72,7 @@
 							android:text="@string/navigation_drawer_delete_selected"
 							android:textSize="@dimen/text_sub_text"
 							android:textColor="@color/text_content_primary"
-							android:background="@drawable/selector_background_primary"
+							android:background="@drawable/selector_background"
 							android:clickable="true"
 							android:visibility="gone"/>
 
@@ -96,11 +96,6 @@
 							android:layout_height="match_parent"/>
 
 				</android.support.v4.view.ViewPager>
-
-				<View
-						android:layout_width="match_parent"
-						android:layout_height="@dimen/height_shadow"
-						android:background="@drawable/ic_shadow_horizontal"/>
 
 				<View
 						android:layout_width="match_parent"

@@ -176,6 +176,8 @@ public class SoundSheetFragment
 	{
 		this.soundAdapter.remove(position);
 		this.soundAdapter.notifyItemRemoved(position);
+		if (position > 0)
+			this.soundAdapter.notifyItemChanged(position - 1);
 
 		SoundManagerFragment fragment = this.getSoundManagerFragment();
 		fragment.removeSounds(asList(player));

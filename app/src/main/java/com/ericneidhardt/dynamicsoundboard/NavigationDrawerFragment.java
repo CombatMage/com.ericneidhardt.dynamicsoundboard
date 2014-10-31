@@ -66,7 +66,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 				if (position == 0)
 					return getResources().getColor(R.color.accent_200);
 				else
-					return getResources().getColor(R.color.primary_500);
+					return getResources().getColor(R.color.accent_200);
 			}
 
 			@Override
