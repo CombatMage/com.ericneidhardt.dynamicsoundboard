@@ -120,7 +120,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		viewState = !enable ? View.VISIBLE : View.GONE;
 		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
 
-		if (!enable)
+		if (!enable && this.findViewById(R.id.fab_add) != null)
 			this.findViewById(R.id.fab_add).setOnClickListener(this);
 	}
 

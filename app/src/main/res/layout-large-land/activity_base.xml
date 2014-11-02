@@ -9,19 +9,27 @@
 			layout="@layout/toolbar"/>
 
 	<android.support.v4.widget.DrawerLayout
-			xmlns:android="http://schemas.android.com/apk/res/android"
+
 			android:id="@+id/root_layout"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
 		<FrameLayout
-				android:id="@+id/main_frame"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:background="@color/background">
+				android:layout_height="match_parent">
 
-			<include
-					layout="@layout/view_introduction"/>
+			<FrameLayout
+					android:id="@+id/main_frame"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/background">
+
+				<include
+						layout="@layout/view_introduction"/>
+
+			</FrameLayout>
+
+			<include layout="@layout/layout_bottom_controls"/>
 
 		</FrameLayout>
 
