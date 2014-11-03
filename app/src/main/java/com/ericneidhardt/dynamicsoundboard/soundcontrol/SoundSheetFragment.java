@@ -69,7 +69,6 @@ public class SoundSheetFragment
 
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
-//TODO this.getActivity().findViewById(R.id.action_delete_sheet).setOnClickListener(this);
 
 		this.addClickListenerIfViewExists(R.id.fab_add);
 
@@ -96,15 +95,25 @@ public class SoundSheetFragment
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId())
 		{
+			case R.id.action_delete_sheet:
+				this.removeAllSounds();
+				SoundSheet soundSheet = this.getSoundSheetManagerFragment().get(this.fragmentTag);
+				this.getSoundSheetManagerFragment().remove(this.fragmentTag, true);
+				this.getBaseActivity().removeSoundFragment(soundSheet);
+				return true;
 			case R.id.action_clear_sounds_in_sheet:
-				this.soundAdapter.removeAll(this.soundAdapter.getValues());
-				SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
-				soundManagerFragment.removeSounds(this.fragmentTag);
+				this.removeAllSounds();
 				this.soundAdapter.notifyDataSetChanged();
 				return true;
 			default:
 				return false;
 		}
+	}
+
+	private void removeAllSounds()
+	{
+		this.soundAdapter.removeAll(this.soundAdapter.getValues());
+		this.getSoundManagerFragment().removeSounds(this.fragmentTag);
 	}
 
 	@Override
@@ -135,9 +144,6 @@ public class SoundSheetFragment
 				break;
 			case R.id.action_add_sound_dir:
 				AddNewSoundFromDirectory.showInstance(this.getFragmentManager(), this.fragmentTag);
-				break;
-			case R.id.action_delete_sheet:
-				this.getSoundSheetManagerFragment().remove(this.fragmentTag, true);
 				break;
 			case R.id.fab_add:
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

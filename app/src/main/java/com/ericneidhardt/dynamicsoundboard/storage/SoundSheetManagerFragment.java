@@ -159,11 +159,14 @@ public class SoundSheetManagerFragment
 
 	public void remove(String fragmentTag, boolean notifySoundSheets)
 	{
+		SoundSheet soundSheetToRemove = null;
 		for (SoundSheet soundSheet : this.soundSheets)
 		{
 			if (soundSheet.getFragmentTag().equals(fragmentTag))
-				this.remove(soundSheet, notifySoundSheets);
+				soundSheetToRemove = soundSheet;
 		}
+		if (soundSheetToRemove != null)
+			this.remove(soundSheetToRemove, notifySoundSheets);
 	}
 
 	public List<SoundSheet> getAll()
@@ -292,10 +295,7 @@ public class SoundSheetManagerFragment
 			BaseActivity activity = (BaseActivity)getActivity();
 			SoundSheet selectedSoundSheet = getSelectedItem();
 			if (selectedSoundSheet != null)
-			{
 				activity.openSoundFragment(selectedSoundSheet);
-				((ActionbarEditText) activity.findViewById(R.id.et_set_label)).setText(selectedSoundSheet.getLabel());
-			}
 
 		}
 
