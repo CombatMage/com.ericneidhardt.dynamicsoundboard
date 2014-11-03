@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
@@ -232,6 +233,8 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		if (!this.isActivityVisible)
 			return;
 
+		this.closeNavigationDrawer();
+
 		FragmentManager fragmentManager = this.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 
@@ -243,6 +246,8 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		transaction.commit();
 		fragmentManager.executePendingTransactions();
+
+		((ActionbarEditText) this.findViewById(R.id.et_set_label)).setText(soundSheet.getLabel());
 	}
 
 }

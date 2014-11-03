@@ -5,9 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
-import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
@@ -129,15 +127,6 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 	{
 		this.controls.setVisibility(View.VISIBLE);
 		this.deleteSelected.setVisibility(View.GONE);
-	}
-
-	public void openSoundSheetFragment(SoundSheet soundSheet)
-	{
-		BaseActivity activity = (BaseActivity)this.getActivity();
-		activity.closeNavigationDrawer();
-		activity.openSoundFragment(soundSheet);
-		ActionbarEditText soundSheetLabel = (ActionbarEditText)activity.findViewById(R.id.et_set_label);
-		soundSheetLabel.setText(soundSheet.getLabel());
 	}
 
 	private class TabContentAdapter extends PagerAdapter

@@ -111,7 +111,7 @@ public class SoundSheets
 				if (remainingSoundSheets.size() > 0)
 				{
 					this.adapter.setSelectedItem(0);
-					this.parent.openSoundSheetFragment(remainingSoundSheets.get(0));
+					this.parent.getBaseActivity().openSoundFragment(remainingSoundSheets.get(0));
 				}
 			}
 		}
@@ -132,7 +132,7 @@ public class SoundSheets
 		else if (this.parent != null)
 		{
 			this.adapter.setSelectedItem(position);
-			this.parent.openSoundSheetFragment(data);
+			this.parent.getBaseActivity().openSoundFragment(data);
 		}
 	}
 
