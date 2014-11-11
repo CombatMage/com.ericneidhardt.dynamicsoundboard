@@ -1,6 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -14,8 +15,10 @@ import java.io.IOException;
 
 public class EnhancedMediaPlayer extends MediaPlayer
 {
+	private static final String TAG = EnhancedMediaPlayer.class.getName();
 
-	private static final String TAG = EnhancedMediaPlayer.class.getSimpleName();
+	public static final String KEY_EXTRA_IS_PLAYING = "com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer.KEY_EXTRA_IS_PLAYING";
+	public static final String ACTION_SOUND_STATE_CHANGED = "com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED";
 
 	private enum State {
 		IDLE,
@@ -116,6 +119,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		{
 			if (this.currentState == State.INIT || this.currentState == State.STOPPED)
 				this.prepare();
+			this.sendBroadCastSoundPlaying(true);
 			this.start();
 			this.currentState = State.STARTED;
 			return true;
@@ -138,6 +142,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		{
 			if (this.currentState == State.INIT)
 				this.prepare();
+			this.sendBroadCastSoundPlaying(false);
 			this.stop();
 			this.prepare();
 			this.seekTo(0);
@@ -182,6 +187,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 			}
 			this.pause();
 			this.currentState = State.PAUSED;
+			this.sendBroadCastSoundPlaying(false);
 			return true;
 		}
 		catch (IOException e)
@@ -235,6 +241,14 @@ public class EnhancedMediaPlayer extends MediaPlayer
 			Logger.e(TAG, e.getMessage());
 			return false;
 		}
+	}
+
+	private void sendBroadCastSoundPlaying(boolean isPlaying)
+	{
+		Intent intent = new Intent();
+		intent.setAction(ACTION_SOUND_STATE_CHANGED);
+		intent.putExtra(KEY_EXTRA_IS_PLAYING, isPlaying);
+		DynamicSoundboardApplication.getContext().sendBroadcast(intent);
 	}
 
 }

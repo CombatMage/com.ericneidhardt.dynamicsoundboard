@@ -54,10 +54,7 @@ public class SoundManagerFragment extends Fragment
 			for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
 			{
 				if (player.isPlaying())
-				{
 					currentlyPlayingSounds.add(player);
-					player.pauseSound();
-				}
 			}
 		}
 		return currentlyPlayingSounds;

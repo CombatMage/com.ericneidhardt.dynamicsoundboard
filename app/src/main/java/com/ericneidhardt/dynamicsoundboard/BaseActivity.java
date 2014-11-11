@@ -3,11 +3,14 @@ package com.ericneidhardt.dynamicsoundboard;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -24,6 +27,7 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
+import com.pkmmte.view.CircularImageView;
 
 import java.util.List;
 
@@ -38,6 +42,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	private ActionBarDrawerToggle drawerToggle;
 
 	private PauseSoundOnCallListener phoneStateListener;
+	private SoundStateChangedReceiver soundStateChangedReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -52,10 +57,26 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		this.addSoundLayoutControllerFragment();
 
-		if (this.findViewById(R.id.fab_add) != null)
-			this.findViewById(R.id.fab_add).setOnClickListener(this);
+		this.setFloatActionButton();
 
 		this.phoneStateListener = new PauseSoundOnCallListener();
+		this.soundStateChangedReceiver = new SoundStateChangedReceiver();
+	}
+
+	private void setFloatActionButton()
+	{
+		CircularImageView fab = (CircularImageView) this.findViewById(R.id.fab_add);
+		if (fab == null)
+			return;
+
+		fab.setOnClickListener(this);
+
+		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+		List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getCurrentlyPlayingSounds();
+		if (currentlyPlayingSounds.size() > 0)
+			fab.setImageResource(R.drawable.ic_pause);
+		else
+			fab.setImageResource(R.drawable.ic_add_sound);
 	}
 
 	@Override
@@ -107,6 +128,11 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		PauseSoundOnCallListener.registerListener(this,
 				this.phoneStateListener, (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG));
+
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED);
+
+		this.registerReceiver(this.soundStateChangedReceiver, filter);
 	}
 
 	@Override
@@ -116,6 +142,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		this.isActivityVisible = false;
 
 		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener);
+		this.unregisterReceiver(this.soundStateChangedReceiver);
 	}
 
 	public void setSoundSheetActionsEnable(boolean enable)
@@ -287,4 +314,12 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		return null;
 	}
 
+	private class SoundStateChangedReceiver extends BroadcastReceiver
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			setFloatActionButton();
+		}
+	}
 }
