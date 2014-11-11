@@ -14,7 +14,7 @@ import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 
 public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener
 {
-	public static final String TAG = NavigationDrawerFragment.class.getSimpleName();
+	public static final String TAG = NavigationDrawerFragment.class.getName();
 
 	private static final int INDEX_SOUND_SHEETS = 0;
 	private static final int INDEX_PLAYLIST = 1;

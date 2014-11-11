@@ -3,12 +3,11 @@ package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 import android.content.Context;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 
@@ -29,27 +28,13 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 
 		if (state == TelephonyManager.CALL_STATE_RINGING)
 		{
-			Map<String, List<EnhancedMediaPlayer>> allPlayers = this.soundManagerFragment.getSounds();
-			for (String fragmentTag : allPlayers.keySet())
+			List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getCurrentlyPlayingSounds();
+			if (currentlyPlayingSounds.size() > 0)
 			{
-				for (EnhancedMediaPlayer player : allPlayers.get(fragmentTag))
-				{
-					if (player.isPlaying())
-					{
-						this.pauseSounds.add(player);
-						player.pauseSound();
-					}
-				}
+				for (EnhancedMediaPlayer sound : currentlyPlayingSounds)
+					sound.pauseSound();
 			}
-			List<EnhancedMediaPlayer> playList = this.soundManagerFragment.getPlayList();
-			for (EnhancedMediaPlayer player : playList)
-			{
-				if (player.isPlaying())
-				{
-					this.pauseSounds.add(player);
-					player.pauseSound();
-				}
-			}
+			this.pauseSounds.addAll(currentlyPlayingSounds);
 		}
 		else if (state == TelephonyManager.CALL_STATE_IDLE)
 		{

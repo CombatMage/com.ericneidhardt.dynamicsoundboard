@@ -3,6 +3,7 @@ package com.ericneidhardt.dynamicsoundboard;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +16,10 @@ import android.view.View;
 import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
@@ -47,6 +51,9 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		this.addSoundSheetManagerFragment();
 
 		this.addSoundLayoutControllerFragment();
+
+		if (this.findViewById(R.id.fab_add) != null)
+			this.findViewById(R.id.fab_add).setOnClickListener(this);
 
 		this.phoneStateListener = new PauseSoundOnCallListener();
 	}
@@ -120,9 +127,6 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		viewState = !enable ? View.VISIBLE : View.GONE;
 		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
-
-		if (!enable && this.findViewById(R.id.fab_add) != null)
-			this.findViewById(R.id.fab_add).setOnClickListener(this);
 	}
 
 	@Override
@@ -131,10 +135,34 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		switch (view.getId())
 		{
 			case R.id.fab_add:
-				((SoundSheetManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG)).openDialogAddNewSoundSheet();
+				this.onFabClicked();
 				break;
 			default:
 				Logger.e(TAG, "unknown item clicked " + view);
+		}
+	}
+
+	private void onFabClicked()
+	{
+		SoundSheetFragment soundSheetFragment = this.getCurrentFragment();
+		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+		List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getCurrentlyPlayingSounds();
+		if (currentlyPlayingSounds.size() > 0)
+		{
+			for (EnhancedMediaPlayer sound : currentlyPlayingSounds)
+				sound.pauseSound();
+			soundManagerFragment.notifySoundSheetFragments();
+			soundManagerFragment.notifyPlaylist();
+		}
+		else if (soundSheetFragment == null)
+		{
+			((SoundSheetManagerFragment) this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG)).openDialogAddNewSoundSheet();
+		}
+		else
+		{
+			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+			intent.setType(Util.MIME_AUDIO);
+			soundSheetFragment.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
 		}
 	}
 
@@ -248,6 +276,15 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		fragmentManager.executePendingTransactions();
 
 		((ActionbarEditText) this.findViewById(R.id.et_set_label)).setText(soundSheet.getLabel());
+	}
+
+	public SoundSheetFragment getCurrentFragment()
+	{
+		FragmentManager manager = this.getFragmentManager();
+		Fragment currentFragment = manager.findFragmentById(R.id.main_frame);
+		if (currentFragment != null && currentFragment.isVisible() && currentFragment instanceof SoundSheetFragment)
+			return (SoundSheetFragment) currentFragment;
+		return null;
 	}
 
 }

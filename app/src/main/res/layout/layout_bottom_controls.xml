@@ -15,7 +15,6 @@
 			app:border="true"
 			app:border_color="@color/accent_200"
 			app:selector="true"
-			app:selector_color="@color/accent_200"
 			app:selector_stroke_color="@color/accent_100"
 			app:shadow="true"/>
 

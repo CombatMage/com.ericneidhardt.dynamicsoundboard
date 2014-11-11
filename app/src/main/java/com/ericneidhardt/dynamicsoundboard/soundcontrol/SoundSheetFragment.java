@@ -70,16 +70,7 @@ public class SoundSheetFragment
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 
-		this.addClickListenerIfViewExists(R.id.fab_add);
-
 		this.soundAdapter.startProgressUpdateTimer();
-	}
-
-	private void addClickListenerIfViewExists(int viewId)
-	{
-		View view = this.getActivity().findViewById(viewId);
-		if (view != null)
-			view.setOnClickListener(this);
 	}
 
 	@Override
@@ -127,7 +118,7 @@ public class SoundSheetFragment
 				String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
 				SoundManagerFragment fragment = this.getSoundManagerFragment();
 				fragment.addSound(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
-				fragment.notifyFragments();
+				fragment.notifySoundSheetFragments();
 				return;
 			}
 		}
@@ -144,12 +135,6 @@ public class SoundSheetFragment
 				break;
 			case R.id.action_add_sound_dir:
 				AddNewSoundFromDirectory.showInstance(this.getFragmentManager(), this.fragmentTag);
-				break;
-			case R.id.fab_add:
-				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-				intent.setType(Util.MIME_AUDIO);
-				this.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
-				break;
 		}
 	}
 

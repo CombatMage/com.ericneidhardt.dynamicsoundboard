@@ -104,7 +104,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 				.findFragmentByTag(SoundManagerFragment.TAG);
 
 		soundManagerFragment.removeFromPlaylist(playersToRemove);
-		soundManagerFragment.notifyFragments();
+		soundManagerFragment.notifySoundSheetFragments();
 
 		this.adapter.notifyDataSetChanged();
 	}

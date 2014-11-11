@@ -22,7 +22,7 @@ import static java.util.Arrays.asList;
 
 public class SoundManagerFragment extends Fragment
 {
-	public static final String TAG = SoundManagerFragment.class.getSimpleName();
+	public static final String TAG = SoundManagerFragment.class.getName();
 
 	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
 	private static final String DB_SOUNDS_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
@@ -39,6 +39,28 @@ public class SoundManagerFragment extends Fragment
 	public Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return sounds;
+	}
+
+	public List<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
+	{
+		List<EnhancedMediaPlayer> currentlyPlayingSounds = new ArrayList<EnhancedMediaPlayer>();
+		for (EnhancedMediaPlayer sound : this.playList)
+		{
+			if (sound.isPlaying())
+				currentlyPlayingSounds.add(sound);
+		}
+		for (String fragmentTag : this.sounds.keySet())
+		{
+			for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
+			{
+				if (player.isPlaying())
+				{
+					currentlyPlayingSounds.add(player);
+					player.pauseSound();
+				}
+			}
+		}
+		return currentlyPlayingSounds;
 	}
 
 	@Override
@@ -194,7 +216,7 @@ public class SoundManagerFragment extends Fragment
 		return null;
 	}
 
-	public void notifyFragments()
+	public void notifySoundSheetFragments()
 	{
 		for (String fragmentTag : this.sounds.keySet())
 			this.notifyFragment(fragmentTag);
@@ -239,7 +261,7 @@ public class SoundManagerFragment extends Fragment
 			super.onSuccess(mediaPlayersData);
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
 				addSound(mediaPlayerData);
-			notifyFragments();
+			notifySoundSheetFragments();
 		}
 	}
 
