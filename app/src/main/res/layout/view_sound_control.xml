@@ -74,9 +74,9 @@
 			android:layout_marginTop="@dimen/margin_default"
 			android:layout_marginRight="@dimen/margin_default"
 			android:layout_marginEnd="@dimen/margin_default"
-			app:showUnderscore="false"
-			app:textSize="@dimen/text_subheading"
-			app:textColor="@color/text_content_primary"/>
+			app:show_underscore="false"
+			app:text_size="@dimen/text_subheading"
+			app:text_color="@color/text_content_primary"/>
 
 	<SeekBar
 			android:id="@+id/sb_progress"
@@ -85,7 +85,10 @@
 			android:layout_marginBottom="@dimen/margin_very_small"
 			android:layout_toRightOf="@id/layout_sound_controls_primary"
 			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
+			android:layout_toEndOf="@id/layout_sound_controls_primary"
+			android:layout_toStartOf="@id/layout_sound_controls_secondary"
 			android:layout_alignParentBottom="true"
-			android:layout_marginRight="@dimen/margin_default"/>
+			android:layout_marginRight="@dimen/margin_default"
+			android:layout_marginEnd="@dimen/margin_default"/>
 
 </RelativeLayout>

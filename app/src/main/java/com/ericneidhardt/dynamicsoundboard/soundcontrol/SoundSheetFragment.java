@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
@@ -38,7 +39,7 @@ public class SoundSheetFragment
 
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
-
+	private RecyclerView soundLayout;
 
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
 	{
@@ -70,7 +71,18 @@ public class SoundSheetFragment
 		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 
+		this.attachScrollViewToFab();
+
 		this.soundAdapter.startProgressUpdateTimer();
+	}
+
+	private void attachScrollViewToFab()
+	{
+		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
+		if (fab == null || this.soundLayout == null)
+			return;
+
+		fab.attachToRecyclerView(this.soundLayout);
 	}
 
 	@Override
@@ -146,11 +158,11 @@ public class SoundSheetFragment
 
 		View fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false);
 
-		RecyclerView listSounds = (RecyclerView)fragmentView.findViewById(R.id.rv_sounds);
-		listSounds.addItemDecoration(new DividerItemDecoration(this.getActivity()));
-		listSounds.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-		listSounds.setItemAnimator(new DefaultItemAnimator());
-		listSounds.setAdapter(this.soundAdapter);
+		this.soundLayout = (RecyclerView)fragmentView.findViewById(R.id.rv_sounds);
+		this.soundLayout.addItemDecoration(new DividerItemDecoration(this.getActivity()));
+		this.soundLayout.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
+		this.soundLayout.setAdapter(this.soundAdapter);
 
 		SoundManagerFragment fragment = this.getSoundManagerFragment();
 		List<EnhancedMediaPlayer> enhancedMediaPlayers = fragment.getSounds().get(this.fragmentTag);

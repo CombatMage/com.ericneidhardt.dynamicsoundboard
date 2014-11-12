@@ -2,13 +2,13 @@
 <resources>
 
 	<declare-styleable name="CustomEditText">
-		<attr name="textSize" format="dimension" />
-		<attr name="textColor" format="color" />
-		<attr name="showUnderscore" format="boolean" />
+		<attr name="text_size" format="dimension" />
+		<attr name="text_color" format="color" />
+		<attr name="show_underscore" format="boolean" />
 	</declare-styleable>
 
 	<declare-styleable name="FabStates">
-		<attr name="statePause" format="boolean" />
+		<attr name="state_pause" format="boolean" />
 	</declare-styleable>
 
 </resources>

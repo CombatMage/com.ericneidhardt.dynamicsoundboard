@@ -5,17 +5,15 @@
 			 android:layout_width="match_parent"
 			 android:layout_height="match_parent">
 
-	<com.pkmmte.view.CircularImageView
+	<com.ericneidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton
 			android:id="@+id/fab_add"
 			android:layout_width="@dimen/size_floating_button"
 			android:layout_height="@dimen/size_floating_button"
 			android:layout_margin="@dimen/margin_default"
 			android:layout_gravity="end|bottom"
-			android:src="@drawable/ic_add_sound"
-			app:border="true"
-			app:border_color="@color/accent_200"
-			app:selector="true"
-			app:selector_stroke_color="@color/accent_100"
-			app:shadow="true"/>
+			android:src="@drawable/selector_ic_fab"
+			app:fab_colorNormal="@color/accent_200"
+			app:fab_colorPressed="@color/accent_100"
+			app:fab_colorRipple="@color/primary_500"/>
 
 </FrameLayout>

@@ -28,15 +28,15 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 		this.divider = this.findViewById(R.id.v_divider);
 
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
-		float size = array.getDimension(R.styleable.CustomEditText_textSize, 0);
-		if (array.hasValue(R.styleable.CustomEditText_textSize))
+		float size = array.getDimension(R.styleable.CustomEditText_text_size, 0);
+		if (array.hasValue(R.styleable.CustomEditText_text_size))
 			this.input.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
 
-		int color = array.getColor(R.styleable.CustomEditText_textColor, 0);
-		if (array.hasValue(R.styleable.CustomEditText_textColor))
+		int color = array.getColor(R.styleable.CustomEditText_text_color, 0);
+		if (array.hasValue(R.styleable.CustomEditText_text_color))
 			this.input.setTextColor(color);
 
-		boolean showUnderScore = array.getBoolean(R.styleable.CustomEditText_showUnderscore, true);
+		boolean showUnderScore = array.getBoolean(R.styleable.CustomEditText_show_underscore, true);
 		if (!showUnderScore)
 			this.divider.setVisibility(GONE);
 

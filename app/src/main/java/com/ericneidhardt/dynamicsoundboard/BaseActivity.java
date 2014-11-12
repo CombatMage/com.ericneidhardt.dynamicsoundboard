@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
+import com.ericneidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
@@ -27,7 +28,6 @@ import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
-import com.pkmmte.view.CircularImageView;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 	private void setFloatActionButton()
 	{
-		CircularImageView fab = (CircularImageView) this.findViewById(R.id.fab_add);
+		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.findViewById(R.id.fab_add);
 		if (fab == null)
 			return;
 
@@ -74,9 +74,9 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
 		List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
-			fab.setImageResource(R.drawable.ic_pause);
+			fab.setPauseState();
 		else
-			fab.setImageResource(R.drawable.ic_add_sound);
+			fab.setAddState();
 	}
 
 	@Override
