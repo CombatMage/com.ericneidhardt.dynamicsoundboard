@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.dialog.StoreLayoutDialog;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
@@ -202,6 +203,12 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		switch (item.getItemId())
 		{
+			case R.id.action_load_sound_sheets:
+				Toast.makeText(this, "action_load_sound_sheets", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.action_store_sound_sheets:
+				StoreLayoutDialog.showInstance(this.getFragmentManager());
+				return true;
 			case R.id.action_settings:
 				Toast.makeText(this, "action_settings", Toast.LENGTH_SHORT).show();
 				return true;

@@ -59,7 +59,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 	{
 		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound, null);
 
-		view.findViewById(R.id.b_ok).setOnClickListener(this);
+		view.findViewById(R.id.b_add).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_add_another_sound).setOnClickListener(this);
 
@@ -100,7 +100,7 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 	public void onClick(View v)
 	{
 		switch (v.getId()) {
-			case R.id.b_ok:
+			case R.id.b_add:
 				this.returnResultsToCallingFragment();
 				this.dismiss();
 				break;

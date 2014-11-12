@@ -24,12 +24,12 @@ import java.util.List;
 
 public class SoundSheetManagerFragment
 		extends
-		BaseFragment
+			BaseFragment
 		implements
 			View.OnClickListener,
 			CustomEditText.OnTextEditedListener
 {
-	public static final String TAG = SoundSheetManagerFragment.class.getSimpleName();
+	public static final String TAG = SoundSheetManagerFragment.class.getName();
 
 	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment.db_sound_sheets";
 

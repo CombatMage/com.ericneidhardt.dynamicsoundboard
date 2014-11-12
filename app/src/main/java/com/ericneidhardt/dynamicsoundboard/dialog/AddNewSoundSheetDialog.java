@@ -49,7 +49,7 @@ public class AddNewSoundSheetDialog extends DialogFragment implements View.OnCli
 		this.soundSheetName.setHint(this.suggestedName);
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		view.findViewById(R.id.b_ok).setOnClickListener(this);
+		view.findViewById(R.id.b_add).setOnClickListener(this);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
@@ -65,7 +65,7 @@ public class AddNewSoundSheetDialog extends DialogFragment implements View.OnCli
 			case R.id.b_cancel:
 				this.dismiss();
 				break;
-			case R.id.b_ok:
+			case R.id.b_add:
 				this.deliverResult();
 				this.dismiss();
 		}
