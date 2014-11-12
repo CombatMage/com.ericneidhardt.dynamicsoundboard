@@ -3,6 +3,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
 		  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<item app:state_pause="true" android:drawable="@drawable/ic_pause"/>
-	<item android:drawable="@drawable/ic_add_sound"/>
+	<item app:state_pause="true" android:drawable="@drawable/ic_fab_pause"/>
+	<item android:drawable="@drawable/ic_fab_add_sound"/>
 </selector>
