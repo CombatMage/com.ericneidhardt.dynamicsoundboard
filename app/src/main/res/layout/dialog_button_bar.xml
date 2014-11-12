@@ -25,7 +25,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:padding="@dimen/margin_very_small"
-		android:text="@string/dialog_ok"
+		android:text="@string/dialog_add"
 		android:textSize="@dimen/text_subheading"
 		android:textColor="@color/text_accent"
 		android:background="@drawable/selector_background_accent"/>

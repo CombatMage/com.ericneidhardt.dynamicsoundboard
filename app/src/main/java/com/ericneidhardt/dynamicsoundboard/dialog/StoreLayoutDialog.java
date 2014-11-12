@@ -10,7 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
+
+import java.io.File;
 
 /**
  * File created by eric.neidhardt on 12.11.2014.
@@ -18,6 +21,8 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClickListener
 {
 	private static final String TAG = AddNewSoundFromDirectory.class.getName();
+
+	private DialogEditText inputFileName;
 
 	public static void showInstance(FragmentManager manager)
 	{
@@ -30,8 +35,11 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_store_sound_sheets, null);
-		view.findViewById(R.id.b_add).setOnClickListener(this);
+		view.findViewById(R.id.b_save).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
+
+		this.inputFileName = (DialogEditText) view.findViewById(R.id.et_name_file);
+		this.inputFileName.setVisibility(View.GONE);
 
 		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
 		directories.addItemDecoration(new DividerItemDecoration(this.getActivity(), Color.TRANSPARENT));
@@ -52,10 +60,26 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	{
 		if (v.getId() == R.id.b_cancel)
 			this.dismiss();
-		else if (v.getId() == R.id.b_add)
+		else if (v.getId() == R.id.b_save)
 		{
-			// TODO
-			this.dismiss();
+			if (super.adapter.selectedFile != null)
+				this.useFile(super.adapter.selectedFile);
+			else
+				this.inputFileName();
 		}
+	}
+
+	private void inputFileName()
+	{
+		this.inputFileName.setVisibility(View.VISIBLE);
+
+		// TODO
+	}
+
+	private void useFile(File file)
+	{
+		// TODO
+
+		this.dismiss();
 	}
 }
