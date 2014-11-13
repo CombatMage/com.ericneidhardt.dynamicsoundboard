@@ -64,4 +64,9 @@
 	<string name="dialog_add_new_sound_title">Sound hinzufügen</string>
 	<string name="dialog_add_new_sound_message">Einen weiteren Sound auswählen</string>
 	<string name="dialog_add_new_sound_content_description">Öffnet den Dateibrowser um eine weitern Sound hinzuzufügen.</string>
+
+	<string name="dialog_store_layout_no_file_info">Keine Datei zum speicher ausgewählt.</string>
+	<string name="dialog_store_layout_no_file_name">Kein Name eingegeben.</string>
+	<string name="dialog_store_layout_failed_create_file">Datei konnte nicht angelegt werden. Ist der Ordner schreibgeschützt?</string>
+	<string name="dialog_store_layout_file_exists">Eine Datei mit diesem Namen existiert bereits.</string>
 </resources>

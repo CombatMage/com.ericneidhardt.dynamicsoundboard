@@ -27,7 +27,7 @@ public abstract class FileExplorerDialog extends DialogFragment
 
 	protected class DirectoryAdapter extends RecyclerView.Adapter<DirectoryEntry>
 	{
-		private File parent;
+		protected File parent;
 		protected File selectedFile;
 		private List<File> fileList;
 
@@ -40,6 +40,13 @@ public abstract class FileExplorerDialog extends DialogFragment
 		public void setParent(File parent)
 		{
 			this.parent = parent;
+			this.fileList = Util.getFilesInDirectory(this.parent);
+			if (this.parent.getParentFile() != null)
+				this.fileList.add(0, this.parent.getParentFile());
+		}
+
+		public void refreshDirectory()
+		{
 			this.fileList = Util.getFilesInDirectory(this.parent);
 			if (this.parent.getParentFile() != null)
 				this.fileList.add(0, this.parent.getParentFile());

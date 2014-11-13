@@ -15,6 +15,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * File created by eric.neidhardt on 12.11.2014.
@@ -38,6 +39,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_store_sound_sheets, null);
 		view.findViewById(R.id.b_save).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
+		view.findViewById(R.id.b_add).setOnClickListener(this);
 
 		this.inputFileName = (DialogEditText) view.findViewById(R.id.et_name_file);
 
@@ -70,22 +72,55 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	@Override
 	public void onClick(View v)
 	{
-		if (v.getId() == R.id.b_cancel)
-			this.dismiss();
-		else if (v.getId() == R.id.b_save)
+		switch (v.getId())
 		{
-			if (super.adapter.selectedFile != null)
-				this.useFile(super.adapter.selectedFile);
-			else
-				Toast.makeText(this.getActivity(), R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show();
+			case R.id.b_add:
+				this.createFileAndSelect();
+				break;
+			case R.id.b_cancel:
+				this.dismiss();
+				break;
+			case R.id.b_save:
+				if (super.adapter.selectedFile != null)
+					this.useFile(super.adapter.selectedFile);
+				else
+					Toast.makeText(this.getActivity(), R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show();
+				break;
 		}
 	}
 
-	private void inputFileName()
+	private void createFileAndSelect()
 	{
-		this.inputFileName.setVisibility(View.VISIBLE);
+		String fileName = this.inputFileName.getText().toString();
+		if (fileName.isEmpty())
+		{
+			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_no_file_name, Toast.LENGTH_SHORT).show();
+			return;
+		}
 
-		// TODO
+		File file = new File(super.adapter.parent, fileName);
+		if (file.exists())
+		{
+			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_file_exists, Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		try
+		{
+			boolean created = file.createNewFile();
+			if (!created)
+			{
+				Toast.makeText(this.getActivity(), R.string.dialog_store_layout_failed_create_file, Toast.LENGTH_SHORT).show();
+				return;
+			}
+			super.adapter.selectedFile = file;
+			super.adapter.refreshDirectory();
+			super.adapter.notifyDataSetChanged();
+		}
+		catch (IOException e)
+		{
+			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_failed_create_file, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void useFile(File file)
