@@ -21,6 +21,10 @@ public abstract class FileExplorerDialog extends DialogFragment
 {
 	protected DirectoryAdapter adapter;
 
+	protected abstract boolean canSelectDirectory();
+
+	protected abstract boolean canSelectFile();
+
 	protected class DirectoryAdapter extends RecyclerView.Adapter<DirectoryEntry>
 	{
 		private File parent;
@@ -64,10 +68,10 @@ public abstract class FileExplorerDialog extends DialogFragment
 
 	protected class DirectoryEntry
 			extends
-			RecyclerView.ViewHolder
+				RecyclerView.ViewHolder
 			implements
-			View.OnClickListener,
-			View.OnLongClickListener
+				View.OnClickListener,
+				View.OnLongClickListener
 	{
 		private ImageView fileType;
 		private ImageView selectionIndicator;
@@ -148,6 +152,13 @@ public abstract class FileExplorerDialog extends DialogFragment
 			File file = adapter.fileList.get(this.getPosition());
 			if (file.equals(adapter.parent.getParentFile()))
 				return false;
+
+			if (file.isDirectory() && !canSelectDirectory())
+				return false;
+
+			if (!file.isDirectory() && !canSelectFile())
+				return false;
+
 			adapter.selectedFile = file;
 			adapter.notifyDataSetChanged();
 			return false;

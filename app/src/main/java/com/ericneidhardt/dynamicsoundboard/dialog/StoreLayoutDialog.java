@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
@@ -20,7 +21,7 @@ import java.io.File;
  */
 public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClickListener
 {
-	private static final String TAG = AddNewSoundFromDirectory.class.getName();
+	private static final String TAG = StoreLayoutDialog.class.getName();
 
 	private DialogEditText inputFileName;
 
@@ -39,7 +40,6 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 
 		this.inputFileName = (DialogEditText) view.findViewById(R.id.et_name_file);
-		this.inputFileName.setVisibility(View.GONE);
 
 		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
 		directories.addItemDecoration(new DividerItemDecoration(this.getActivity(), Color.TRANSPARENT));
@@ -56,6 +56,18 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	}
 
 	@Override
+	protected boolean canSelectDirectory()
+	{
+		return false;
+	}
+
+	@Override
+	protected boolean canSelectFile()
+	{
+		return true;
+	}
+
+	@Override
 	public void onClick(View v)
 	{
 		if (v.getId() == R.id.b_cancel)
@@ -65,7 +77,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 			if (super.adapter.selectedFile != null)
 				this.useFile(super.adapter.selectedFile);
 			else
-				this.inputFileName();
+				Toast.makeText(this.getActivity(), R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show();
 		}
 	}
 

@@ -80,6 +80,18 @@ public class AddNewSoundFromDirectory
 	}
 
 	@Override
+	protected boolean canSelectDirectory()
+	{
+		return true;
+	}
+
+	@Override
+	protected boolean canSelectFile()
+	{
+		return true;
+	}
+
+	@Override
 	public void onClick(View v)
 	{
 		if (v.getId() == R.id.b_cancel)
