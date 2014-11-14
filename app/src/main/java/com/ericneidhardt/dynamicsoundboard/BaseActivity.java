@@ -103,22 +103,25 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	private void createNavigationDrawer()
 	{
 		this.navigationDrawerLayout = (DrawerLayout)this.findViewById(R.id.root_layout);
+		if (this.navigationDrawerLayout != null)
+		{
+			this.drawerToggle = new ActionBarDrawerToggle(this,
+					this.navigationDrawerLayout,
+					(Toolbar) this.findViewById(R.id.toolbar),
+					R.string.navigation_drawer_content_description_open,
+					R.string.navigation_drawer_content_description_close);
 
-		this.drawerToggle = new ActionBarDrawerToggle(this,
-				this.navigationDrawerLayout,
-				(Toolbar) this.findViewById(R.id.toolbar),
-				R.string.navigation_drawer_content_description_open,
-				R.string.navigation_drawer_content_description_close);
-
-		this.drawerToggle.setDrawerIndicatorEnabled(true);
-		this.navigationDrawerLayout.setDrawerListener(drawerToggle);
+			this.drawerToggle.setDrawerIndicatorEnabled(true);
+			this.navigationDrawerLayout.setDrawerListener(drawerToggle);
+		}
 	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState)
 	{
 		super.onPostCreate(savedInstanceState);
-		this.drawerToggle.syncState();
+		if (this.drawerToggle != null)
+			this.drawerToggle.syncState();
 	}
 
 	@Override
@@ -199,7 +202,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		super.onOptionsItemSelected(item);
-		if (this.drawerToggle.onOptionsItemSelected(item))
+		if (this.drawerToggle != null && this.drawerToggle.onOptionsItemSelected(item))
 			return true;
 
 		switch (item.getItemId())
@@ -220,6 +223,8 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 	public void closeNavigationDrawer()
 	{
+		if (this.navigationDrawerLayout == null)
+			return;
 		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START))
 			this.navigationDrawerLayout.closeDrawer(Gravity.START);
 	}
