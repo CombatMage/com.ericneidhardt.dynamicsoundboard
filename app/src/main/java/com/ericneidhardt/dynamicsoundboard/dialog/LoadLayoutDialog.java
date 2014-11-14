@@ -91,10 +91,8 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void useFile(File file)
 	{
-		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
 		try
 		{
-
 			JsonPojo parsedJson  = new ObjectMapper().readValues(new JsonFactory().createParser(file), JsonPojo.class).next();
 
 			List<SoundSheet> soundSheets = parsedJson.getSoundSheets();
@@ -103,7 +101,8 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 			this.addLoadedSoundSheets(soundSheets);
 
-			// TODO load parsed values
+			this.addLoadedSounds(sounds);
+			this.addLoadedPlayList(playList);
 
 			this.dismiss();
 		}
@@ -116,11 +115,34 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
 	{
-		SoundSheetManagerFragment soundSheetManagerFragment = this.getSoundSheetManagerFragment();
-		soundSheetManagerFragment.clearAllSoundSheets();
+		SoundSheetManagerFragment soundSheetManagerFragment = this.getSoundSheetManagerFragment();// clear soundsheets before adding new values
+		soundSheetManagerFragment.clearAllSoundSheets(); // this also removes all sounds
 
 		for (SoundSheet soundSheet : soundSheets)
 			soundSheetManagerFragment.addSoundSheetAndNotifyFragment(soundSheet);
+	}
+
+	private void addLoadedPlayList(List<MediaPlayerData> playList)
+	{
+		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
+		soundManagerFragment.removeFromPlaylist(soundManagerFragment.getPlayList()); // clear playlist before adding new values
+
+		for (MediaPlayerData mediaPlayerData : playList)
+			soundManagerFragment.addSoundToPlaylist(mediaPlayerData);
+		soundManagerFragment.notifyPlaylist();
+	}
+
+	private void addLoadedSounds(Map<String, List<MediaPlayerData>> sounds)
+	{
+		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
+
+		for (String key : sounds.keySet())
+		{
+			List<MediaPlayerData> soundsPerFragment = sounds.get(key);
+			for (MediaPlayerData mediaPlayerData : soundsPerFragment)
+				soundManagerFragment.addSound(mediaPlayerData);
+		}
+		soundManagerFragment.notifySoundSheetFragments();
 	}
 
 }
