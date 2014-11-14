@@ -1,6 +1,5 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
-import android.app.DialogFragment;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * File created by eric.neidhardt on 12.11.2014.
  */
-public abstract class FileExplorerDialog extends DialogFragment
+public abstract class FileExplorerDialog extends BaseDialog
 {
 	protected DirectoryAdapter adapter;
 

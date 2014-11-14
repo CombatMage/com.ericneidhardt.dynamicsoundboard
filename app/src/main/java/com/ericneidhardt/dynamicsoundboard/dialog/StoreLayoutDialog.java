@@ -132,11 +132,9 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	{
 		ObjectMapper mapper = new ObjectMapper();
 
-		SoundSheetManagerFragment soundSheetManagerFragment = (SoundSheetManagerFragment) this.getFragmentManager()
-				.findFragmentByTag(SoundSheetManagerFragment.TAG);
+		SoundSheetManagerFragment soundSheetManagerFragment = this.getSoundSheetManagerFragment();
 
-		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.getFragmentManager()
-				.findFragmentByTag(SoundManagerFragment.TAG);
+		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
 
 		JsonPojo pojo = new JsonPojo();
 		try

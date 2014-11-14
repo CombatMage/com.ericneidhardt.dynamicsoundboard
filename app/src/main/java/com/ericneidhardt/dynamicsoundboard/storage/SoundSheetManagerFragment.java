@@ -18,10 +18,7 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,29 +79,32 @@ public class SoundSheetManagerFragment
 		switch (item.getItemId())
 		{
 			case R.id.action_clear_sound_sheets:
-				BaseActivity activity = (BaseActivity) this.getActivity();
-				activity.removeSoundFragment(this.soundSheets);
-				activity.setSoundSheetActionsEnable(false);
-
-				SoundManagerFragment fragment = this.getSoundManagerFragment();
-				for (SoundSheet soundSheet : this.soundSheets)
-				{
-					List<EnhancedMediaPlayer> soundsInSoundSheet = fragment.getSounds().get(soundSheet.getFragmentTag());
-					fragment.removeSounds(soundsInSoundSheet);
-				}
-				this.soundSheets.clear();
-
-				fragment.notifyPlaylist();
-
-				NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawer();
-				navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
-
+				this.clearAllSoundSheets();
 				return true;
 			default:
 				return false;
 		}
 	}
 
+	public void clearAllSoundSheets()
+	{
+		BaseActivity activity = (BaseActivity) this.getActivity();
+		activity.removeSoundFragment(this.soundSheets);
+		activity.setSoundSheetActionsEnable(false);
+
+		SoundManagerFragment fragment = this.getSoundManagerFragment();
+		for (SoundSheet soundSheet : this.soundSheets)
+		{
+			List<EnhancedMediaPlayer> soundsInSoundSheet = fragment.getSounds().get(soundSheet.getFragmentTag());
+			fragment.removeSounds(soundsInSoundSheet);
+		}
+		this.soundSheets.clear();
+
+		fragment.notifyPlaylist();
+
+		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawer();
+		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
+	}
 
 	@Override
 	public void onClick(View view)
@@ -247,11 +247,6 @@ public class SoundSheetManagerFragment
 	public String getSuggestedSoundSheetName()
 	{
 		return this.getActivity().getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size();
-	}
-
-	public void convertStoredSoundSheetsToJson(ObjectMapper mapper, File file) throws IOException
-	{
-		mapper.writeValue(file, this.soundSheets);
 	}
 
 	private class RemoveSoundSheetTask extends SafeAsyncTask<Void>

@@ -122,7 +122,7 @@ public class AddNewSoundFromDirectory
 	private void returnResultsToCallingFragment()
 	{
 		List<File> result = this.buildResult();
-		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+		SoundManagerFragment fragment = this.getSoundManagerFragment();
 
 		for (File file : result)
 		{

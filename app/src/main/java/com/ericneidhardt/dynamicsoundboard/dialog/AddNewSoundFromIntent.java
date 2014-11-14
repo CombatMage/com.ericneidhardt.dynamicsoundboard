@@ -2,7 +2,6 @@ package com.ericneidhardt.dynamicsoundboard.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddNewSoundFromIntent extends DialogFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
+public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
 {
 	public static final String TAG = AddNewSoundFromIntent.class.getSimpleName();
 
@@ -162,8 +161,7 @@ public class AddNewSoundFromIntent extends DialogFragment implements View.OnClic
 
 	private void deliverResult()
 	{
-		SoundSheetManagerFragment caller = (SoundSheetManagerFragment) this.getFragmentManager()
-				.findFragmentByTag(SoundSheetManagerFragment.TAG);
+		SoundSheetManagerFragment caller = this.getSoundSheetManagerFragment();
 		if (caller == null)
 			return;
 

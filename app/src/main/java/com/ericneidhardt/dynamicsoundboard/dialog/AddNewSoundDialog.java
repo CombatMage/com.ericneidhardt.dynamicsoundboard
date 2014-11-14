@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AddNewSoundDialog extends DialogFragment implements View.OnClickListener
+public class AddNewSoundDialog extends BaseDialog implements View.OnClickListener
 {
 	public static final String TAG = AddNewSoundDialog.class.getSimpleName();
 
@@ -162,10 +162,9 @@ public class AddNewSoundDialog extends DialogFragment implements View.OnClickLis
 		outState.putStringArrayList(KEY_SOUNDS_LABEL, labels);
 	}
 
-
 	private void returnResultsToCallingFragment()
 	{
-		SoundManagerFragment fragment = (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+		SoundManagerFragment fragment = this.getSoundManagerFragment();
 		if (fragment == null)
 			throw new NullPointerException("cannot addSoundSheetAndNotifyFragment sound, SoundManagerFragment is null");
 

@@ -11,9 +11,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -244,16 +242,6 @@ public class SoundManagerFragment extends Fragment
 			fragment.notifyDataSetChanged(true);
 
 		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list
-	}
-
-	public void convertStoredPlayListToJson(ObjectMapper mapper, File file) throws IOException
-	{
-		mapper.writeValue(file, this.playList);
-	}
-
-	public void convertStoredSoundsToJson(ObjectMapper mapper, File file) throws IOException
-	{
-		mapper.writeValue(file, this.sounds);
 	}
 
 	private class LoadSoundsTask extends LoadTask<MediaPlayerData>

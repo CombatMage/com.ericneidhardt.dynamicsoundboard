@@ -2,7 +2,6 @@ package com.ericneidhardt.dynamicsoundboard.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 
 
-public class AddNewSoundSheetDialog extends DialogFragment implements View.OnClickListener
+public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickListener
 {
 	public static final String TAG = AddNewSoundSheetDialog.class.getSimpleName();
 
@@ -73,8 +72,7 @@ public class AddNewSoundSheetDialog extends DialogFragment implements View.OnCli
 
 	private void deliverResult()
 	{
-		SoundSheetManagerFragment caller = (SoundSheetManagerFragment)this.getFragmentManager()
-				.findFragmentByTag(SoundSheetManagerFragment.TAG);
+		SoundSheetManagerFragment caller = this.getSoundSheetManagerFragment();
 		if (caller == null)
 			return;
 		String label = this.soundSheetName.getDisplayedText();

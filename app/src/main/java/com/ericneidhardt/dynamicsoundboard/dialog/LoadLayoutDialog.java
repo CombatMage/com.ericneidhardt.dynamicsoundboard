@@ -15,6 +15,8 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.storage.JsonPojo;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -89,13 +91,17 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void useFile(File file)
 	{
+		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
 		try
 		{
+
 			JsonPojo parsedJson  = new ObjectMapper().readValues(new JsonFactory().createParser(file), JsonPojo.class).next();
 
 			List<SoundSheet> soundSheets = parsedJson.getSoundSheets();
 			List<MediaPlayerData> playList = parsedJson.getPlayList();
 			Map<String, List<MediaPlayerData>> sounds = parsedJson.getSounds();
+
+			this.addLoadedSoundSheets(soundSheets);
 
 			// TODO load parsed values
 
@@ -106,6 +112,15 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 			e.printStackTrace();
 		}
 
+	}
+
+	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
+	{
+		SoundSheetManagerFragment soundSheetManagerFragment = this.getSoundSheetManagerFragment();
+		soundSheetManagerFragment.clearAllSoundSheets();
+
+		for (SoundSheet soundSheet : soundSheets)
+			soundSheetManagerFragment.addSoundSheetAndNotifyFragment(soundSheet);
 	}
 
 }
