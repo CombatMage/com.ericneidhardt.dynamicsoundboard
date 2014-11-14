@@ -36,6 +36,11 @@
 
 			<include layout="@layout/layout_bottom_controls"/>
 
+			<View
+					android:layout_width="@dimen/height_shadow"
+					android:layout_height="match_parent"
+					android:background="@drawable/ic_shadow_vertical"/>
+
 		</FrameLayout>
 
 	</LinearLayout>
