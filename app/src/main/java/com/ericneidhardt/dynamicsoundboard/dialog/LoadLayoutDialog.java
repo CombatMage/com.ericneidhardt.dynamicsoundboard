@@ -12,8 +12,16 @@ import android.view.View;
 import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
+import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
+import com.ericneidhardt.dynamicsoundboard.storage.JsonPojo;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * File created by eric.neidhardt on 14.11.2014.
@@ -81,7 +89,23 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void useFile(File file)
 	{
-		// TODO
+		try
+		{
+			JsonPojo parsedJson  = new ObjectMapper().readValues(new JsonFactory().createParser(file), JsonPojo.class).next();
+
+			List<SoundSheet> soundSheets = parsedJson.getSoundSheets();
+			List<MediaPlayerData> playList = parsedJson.getPlayList();
+			Map<String, List<MediaPlayerData>> sounds = parsedJson.getSounds();
+
+			// TODO load parsed values
+
+			this.dismiss();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 
 	}
+
 }
