@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -125,6 +127,15 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 
 	private void useFile(File file)
 	{
+		ObjectMapper mapper = new ObjectMapper();
+
+		SoundSheetManagerFragment soundSheetManagerFragment = (SoundSheetManagerFragment) this.getFragmentManager()
+				.findFragmentByTag(SoundSheetManagerFragment.TAG);
+
+		//soundSheetManagerFragment.convertStoredSoundSheetsToJson(mapper);
+
+
+
 		// TODO
 
 		this.dismiss();
