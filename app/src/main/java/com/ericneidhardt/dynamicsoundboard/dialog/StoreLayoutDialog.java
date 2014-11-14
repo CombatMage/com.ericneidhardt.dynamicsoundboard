@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
+import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -132,12 +134,22 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		SoundSheetManagerFragment soundSheetManagerFragment = (SoundSheetManagerFragment) this.getFragmentManager()
 				.findFragmentByTag(SoundSheetManagerFragment.TAG);
 
-		//soundSheetManagerFragment.convertStoredSoundSheetsToJson(mapper);
+		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.getFragmentManager()
+				.findFragmentByTag(SoundManagerFragment.TAG);
 
+		try
+		{
+			soundSheetManagerFragment.convertStoredSoundSheetsToJson(mapper, file);
 
+			soundManagerFragment.convertStoredPlayListToJson(mapper, file);
+			soundManagerFragment.convertStoredSoundsToJson(mapper, file);
 
-		// TODO
-
-		this.dismiss();
+			this.dismiss();
+		}
+		catch (IOException e)
+		{
+			Logger.d(TAG, e.getMessage());
+			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_failed_store_layout, Toast.LENGTH_SHORT).show();
+		}
 	}
 }

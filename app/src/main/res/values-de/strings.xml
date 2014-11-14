@@ -68,5 +68,7 @@
 	<string name="dialog_store_layout_no_file_info">Keine Datei zum speicher ausgewählt.</string>
 	<string name="dialog_store_layout_no_file_name">Kein Name eingegeben.</string>
 	<string name="dialog_store_layout_failed_create_file">Datei konnte nicht angelegt werden. Ist der Ordner schreibgeschützt?</string>
+	<string name="dialog_store_layout_failed_store_layout">Das Layout konnte leider nicht gespeichert werden.</string>
 	<string name="dialog_store_layout_file_exists">Eine Datei mit diesem Namen existiert bereits.</string>
+
 </resources>

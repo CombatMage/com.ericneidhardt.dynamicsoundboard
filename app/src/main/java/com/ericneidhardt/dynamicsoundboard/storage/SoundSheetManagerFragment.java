@@ -20,8 +20,8 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -249,9 +249,9 @@ public class SoundSheetManagerFragment
 		return this.getActivity().getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size();
 	}
 
-	public void convertStoredSoundSheetsToJson(ObjectMapper mapper, Writer writer) throws IOException
+	public void convertStoredSoundSheetsToJson(ObjectMapper mapper, File file) throws IOException
 	{
-		mapper.writeValue(writer, this.soundSheets);
+		mapper.writeValue(file, this.soundSheets);
 	}
 
 	private class RemoveSoundSheetTask extends SafeAsyncTask<Void>
