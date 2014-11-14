@@ -46,6 +46,7 @@
 	<string name="dialog_add">Hinzufügen</string>
 	<string name="dialog_save">Speichern</string>
 	<string name="dialog_cancel">Abbrechen</string>
+	<string name="dialog_load">Laden</string>
 
 	<string name="dialog_add_new_sound_from_directory_title">Verzeichniss auswählen</string>
 	<string name="dialog_add_new_sound_from_directory_message">Dem Soundbord werden alle Sounds in dem ausgewählten Verzeichniss hinzugefügt</string>
@@ -65,9 +66,11 @@
 	<string name="dialog_add_new_sound_message">Einen weiteren Sound auswählen</string>
 	<string name="dialog_add_new_sound_content_description">Öffnet den Dateibrowser um eine weitern Sound hinzuzufügen.</string>
 
-	<string name="dialog_store_layout_no_file_info">Keine Datei zum speicher ausgewählt.</string>
+	<string name="dialog_store_layout_no_file_info">Keine Datei zum Speichern ausgewählt.</string>
 	<string name="dialog_store_layout_no_file_name">Kein Name eingegeben.</string>
 	<string name="dialog_store_layout_failed_create_file">Datei konnte nicht angelegt werden. Ist der Ordner schreibgeschützt?</string>
 	<string name="dialog_store_layout_failed_store_layout">Das Layout konnte leider nicht gespeichert werden.</string>
 	<string name="dialog_store_layout_file_exists">Eine Datei mit diesem Namen existiert bereits.</string>
+
+	<string name="dialog_load_layout_no_file_info">Keine Datei zum Laden ausgewählt.</string>
 </resources>
