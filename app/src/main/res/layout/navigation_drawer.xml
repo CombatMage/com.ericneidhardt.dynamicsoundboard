@@ -20,19 +20,20 @@
 					android:layout_height="match_parent"
 					android:background="@color/background">
 
-				<FrameLayout
+				<RelativeLayout
 						android:id="@+id/layout_contextual_controls"
 						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
+						android:layout_height="56dp"
 						android:layout_alignParentBottom="true"
 						android:animateLayoutChanges="true"
 						android:orientation="horizontal"
-						android:background="@color/primary_200">
+						android:background="@color/background">
 
 					<LinearLayout
 							android:id="@+id/layout_controls"
 							android:layout_width="match_parent"
-							android:layout_height="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_centerVertical="true"
 							android:orientation="horizontal">
 
 						<TextView
@@ -67,6 +68,7 @@
 							android:id="@+id/b_delete_selected"
 							android:layout_width="match_parent"
 							android:layout_height="match_parent"
+							android:layout_centerVertical="true"
 							android:padding="@dimen/margin_default"
 							android:gravity="center"
 							android:text="@string/navigation_drawer_delete_selected"
@@ -76,7 +78,7 @@
 							android:clickable="true"
 							android:visibility="gone"/>
 
-				</FrameLayout>
+				</RelativeLayout>
 
 
 				<android.support.v4.view.ViewPager
