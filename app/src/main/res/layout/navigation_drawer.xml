@@ -23,7 +23,7 @@
 				<RelativeLayout
 						android:id="@+id/layout_contextual_controls"
 						android:layout_width="match_parent"
-						android:layout_height="56dp"
+						android:layout_height="@dimen/height_list_item"
 						android:layout_alignParentBottom="true"
 						android:animateLayoutChanges="true"
 						android:orientation="horizontal"
