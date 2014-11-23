@@ -83,6 +83,7 @@ public class SoundSheetFragment
 			return;
 
 		fab.attachToRecyclerView(this.soundLayout);
+		fab.show(false);
 	}
 
 	@Override
