@@ -3,7 +3,7 @@ project(':dao_generator') {
     apply plugin: 'java'
 
     mainClassName = "com.ericneidhardt.daogenerator.DynamicSoundboardDaoGenerator"
-    outputDir = "../app/src/main/java"
+    def outputDir = "../app/src/main/java"
 
     dependencies {
         compile fileTree(dir: 'libs', include: ['*.jar'])
