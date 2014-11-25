@@ -18,27 +18,35 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	};
 
 	private Drawable divider;
+	private int heightDivider;
 	private int offsetFirstItem;
+	private int offsetLastItem;
 	private Integer backgroundColor;
 
 	public DividerItemDecoration(Context context)
 	{
-		final TypedArray a = context.obtainStyledAttributes(ATTRS);
-		this.divider = a.getDrawable(0);
-		a.recycle();
+		this.init(context);
 
 		this.backgroundColor = null;
-		this.offsetFirstItem = context.getResources().getDimensionPixelSize(R.dimen.margin_very_small);
 	}
 
 	public DividerItemDecoration(Context context, int backgroundColor)
+	{
+		this.init(context);
+
+		this.backgroundColor = backgroundColor;
+	}
+
+	private void init(Context context)
 	{
 		final TypedArray a = context.obtainStyledAttributes(ATTRS);
 		this.divider = a.getDrawable(0);
 		a.recycle();
 
+		this.heightDivider = this.divider.getIntrinsicHeight();
+
 		this.offsetFirstItem = context.getResources().getDimensionPixelSize(R.dimen.margin_very_small);
-		this.backgroundColor = backgroundColor;
+		this.offsetLastItem = context.getResources().getDimensionPixelSize(R.dimen.margin_very_small);
 	}
 
 	@Override
@@ -92,8 +100,11 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	@Override
 	public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent)
 	{
-		int bottomOffset = this.divider.getIntrinsicHeight();
-		int topOffset = itemPosition == 0 ? this.offsetFirstItem : 0;
+		boolean isFirstItem = itemPosition == 0;
+		boolean isLastItem = itemPosition == parent.getAdapter().getItemCount() - 1;
+
+		int bottomOffset = isLastItem ?  + this.heightDivider + this.offsetLastItem : this.heightDivider;
+		int topOffset = isFirstItem ? this.offsetFirstItem : 0;
 		int rightOffset =  0;
 		int leftOffset =  0;
 
