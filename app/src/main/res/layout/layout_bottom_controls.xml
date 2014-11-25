@@ -14,6 +14,6 @@
 			android:src="@drawable/selector_ic_fab"
 			app:fab_colorNormal="@color/accent_200"
 			app:fab_colorPressed="@color/accent_100"
-			app:fab_colorRipple="@color/primary_500"/>
+			app:fab_colorRipple="@color/accent_400"/>
 
 </FrameLayout>
