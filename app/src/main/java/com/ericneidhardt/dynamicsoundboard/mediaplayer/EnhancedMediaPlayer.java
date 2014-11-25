@@ -32,6 +32,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 
 	private State currentState;
 	private MediaPlayerData rawData;
+	private int duration;
 
 	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
 	{
@@ -86,6 +87,8 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		this.setLooping(this.rawData.getIsLoop());
 		this.prepare();
 		this.currentState = State.PREPARED;
+
+		this.duration = super.getDuration();
 	}
 
 	public void destroy()
@@ -93,6 +96,12 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
+	}
+
+	@Override
+	public int getDuration()
+	{
+		return this.duration;
 	}
 
 	@Override
@@ -119,6 +128,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		{
 			if (this.currentState == State.INIT || this.currentState == State.STOPPED)
 				this.prepare();
+
 			this.sendBroadCastSoundPlaying(true);
 			this.start();
 			this.currentState = State.STARTED;
