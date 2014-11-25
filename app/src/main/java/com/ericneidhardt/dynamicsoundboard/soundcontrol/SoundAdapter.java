@@ -6,8 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
@@ -107,14 +105,13 @@ public class SoundAdapter
 			implements
 				View.OnClickListener,
 				CustomEditText.OnTextEditedListener,
-				CompoundButton.OnCheckedChangeListener,
 				SeekBar.OnSeekBarChangeListener
 	{
 		private View container;
 		private CustomEditText name;
-		private CheckBox play;
-		private CheckBox loop;
-		private CheckBox inPlaylist;
+		private View play;
+		private View loop;
+		private View inPlaylist;
 		private View stop;
 		private SeekBar timePosition;
 
@@ -129,16 +126,16 @@ public class SoundAdapter
 			this.container = itemView;
 
 			this.name = (CustomEditText)itemView.findViewById(R.id.et_name_file);
-			this.play = (CheckBox)itemView.findViewById(R.id.cb_play);
-			this.loop = (CheckBox)itemView.findViewById(R.id.cb_loop);
-			this.inPlaylist = (CheckBox)itemView.findViewById(R.id.cb_add_to_playlist);
+			this.play = itemView.findViewById(R.id.b_play);
+			this.loop = itemView.findViewById(R.id.b_loop);
+			this.inPlaylist = itemView.findViewById(R.id.b_add_to_playlist);
 			this.stop = itemView.findViewById(R.id.b_stop);
 			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_progress);
 
 			this.name.setOnTextEditedListener(this);
-			this.play.setOnCheckedChangeListener(this);
-			this.loop.setOnCheckedChangeListener(this);
-			this.inPlaylist.setOnCheckedChangeListener(this);
+			this.play.setOnClickListener(this);
+			this.loop.setOnClickListener(this);
+			this.inPlaylist.setOnClickListener(this);
 			this.stop.setOnClickListener(this);
 			this.timePosition.setOnSeekBarChangeListener(this);
 
@@ -153,9 +150,9 @@ public class SoundAdapter
 			MediaPlayerData data = player.getMediaPlayerData();
 
 			this.name.setText(data.getLabel());
-			this.play.setChecked(player.isPlaying());
-			this.loop.setChecked(data.getIsLoop());
-			this.inPlaylist.setChecked(data.getIsInPlaylist());
+			this.play.setSelected(player.isPlaying());
+			this.loop.setSelected(data.getIsLoop());
+			this.inPlaylist.setSelected(data.getIsInPlaylist());
 
 			this.timePosition.setMax(player.getDuration());
 			this.timePosition.setProgress(player.getCurrentPosition());
@@ -231,9 +228,11 @@ public class SoundAdapter
 				}
 			}, UPDATE_INTERVAL);
 
-			handler.postDelayed(new Runnable() { // delay restart of update timer, to allow deletion animation to settle
+			handler.postDelayed(new Runnable()
+			{ // delay restart of update timer, to allow deletion animation to settle
 				@Override
-				public void run() {
+				public void run()
+				{
 					startProgressUpdateTimer();
 				}
 			}, 2 * UPDATE_INTERVAL);
@@ -246,13 +245,30 @@ public class SoundAdapter
 		}
 
 		@Override
-		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		public void onClick(View view)
 		{
 			EnhancedMediaPlayer player = sounds.get(this.getPosition());
-			switch (buttonView.getId())
+			int id = view.getId();
+			boolean isSelected = view.isSelected();
+			switch (id)
 			{
-				case R.id.cb_play:
-					if (isChecked)
+				case R.id.b_stop:
+					player.stopSound();
+					break;
+				case R.id.b_loop:
+					view.setSelected(!isSelected);
+					player.setLooping(!isSelected);
+					break;
+				case R.id.b_add_to_playlist:
+					view.setSelected(!isSelected);
+					player.setIsInPlaylist(!isSelected);
+					SoundManagerFragment fragment = (SoundManagerFragment)parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+					fragment.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
+					fragment.notifyPlaylist();
+					break;
+				case R.id.b_play:
+					view.setSelected(!isSelected);
+					if (!isSelected)
 					{
 						startProgressUpdateTimer();
 						player.playSound();
@@ -262,29 +278,8 @@ public class SoundAdapter
 						player.pauseSound();
 					}
 					break;
-				case R.id.cb_loop:
-					player.setLooping(isChecked);
-					break;
-				case R.id.cb_add_to_playlist:
-					player.setIsInPlaylist(isChecked);
-					SoundManagerFragment fragment = (SoundManagerFragment)parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
-					fragment.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), isChecked);
-					fragment.notifyPlaylist();
-					break;
 			}
-		}
-
-		@Override
-		public void onClick(View view)
-		{
-			EnhancedMediaPlayer player = sounds.get(this.getPosition());
-			switch (view.getId())
-			{
-				case R.id.b_stop:
-					player.stopSound();
-					notifyItemChanged(getPosition());
-					break;
-			}
+			notifyItemChanged(getPosition());
 		}
 
 		@Override

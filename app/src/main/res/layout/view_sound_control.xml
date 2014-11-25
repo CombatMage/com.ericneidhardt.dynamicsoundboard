@@ -11,19 +11,18 @@
 			android:id="@+id/layout_sound_controls_primary"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginLeft="12dp"
-			android:layout_marginRight="12dp"
+			android:layout_marginLeft="@dimen/margin_tiny"
+			android:layout_marginRight="@dimen/margin_tiny"
 			android:layout_centerVertical="true"
 			android:orientation="vertical">
 
-		<include layout="@layout/button_stop"/>
+		<include layout="@layout/button_stop"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"/>
 
-		<CheckBox
-				android:id="@+id/cb_play"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:contentDescription="@string/sound_control_content_description_play"
-				android:button="@drawable/selector_ic_play"/>
+		<include layout="@layout/button_play"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"/>
 
 	</LinearLayout>
 
@@ -31,29 +30,20 @@
 			android:id="@+id/layout_sound_controls_secondary"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginRight="12dp"
-			android:layout_marginEnd="12dp"
+			android:layout_marginRight="@dimen/margin_tiny"
+			android:layout_marginEnd="@dimen/margin_tiny"
 			android:layout_alignParentRight="true"
 			android:layout_alignParentEnd="true"
 			android:layout_centerVertical="true"
 			android:orientation="vertical">
 
-		<CheckBox
-				android:id="@+id/cb_loop"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:padding="@dimen/margin_tiny"
-				android:contentDescription="@string/sound_control_content_description_loop"
-				android:button="@drawable/selector_ic_loop"/>
+		<include layout="@layout/button_loop"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"/>
 
-		<CheckBox
-				android:id="@+id/cb_add_to_playlist"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:padding="@dimen/margin_tiny"
-				android:contentDescription="@string/sound_control_content_description_playlist"
-				android:button="@drawable/selector_ic_playlist"/>
-
+		<include layout="@layout/button_add_to_playlist"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"/>
 
 	</LinearLayout>
 
