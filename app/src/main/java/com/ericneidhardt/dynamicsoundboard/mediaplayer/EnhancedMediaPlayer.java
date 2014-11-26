@@ -148,27 +148,12 @@ public class EnhancedMediaPlayer extends MediaPlayer
 
 	public boolean stopSound()
 	{
-		try
+		if (this.pauseSound())
 		{
-			if (this.currentState == State.INIT)
-				this.prepare();
-			this.sendBroadCastSoundPlaying(false);
-			this.stop();
-			this.prepare();
 			this.seekTo(0);
-			this.currentState = State.PREPARED;
 			return true;
 		}
-		catch (IOException e)
-		{
-			Logger.e(TAG, e.toString());
-			return false;
-		}
-		catch (IllegalStateException e)
-		{
-			Logger.e(TAG, e.toString());
-			return false;
-		}
+		return false;
 	}
 
 	public boolean pauseSound()
