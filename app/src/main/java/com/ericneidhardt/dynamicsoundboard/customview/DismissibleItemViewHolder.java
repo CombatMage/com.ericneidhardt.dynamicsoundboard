@@ -12,18 +12,25 @@ public abstract class DismissibleItemViewHolder
 		implements
 			ViewPager.OnPageChangeListener
 {
+	private ViewPager viewPager;
+
 	public DismissibleItemViewHolder(View itemView)
 	{
 		super(itemView);
 
-		ViewPager viewPager = (ViewPager)itemView;
-		viewPager.setOffscreenPageLimit(2);
-		viewPager.setAdapter(this.getPagerAdapter());
-		viewPager.setOnPageChangeListener(this);
-		viewPager.setCurrentItem(this.getIndexOfContentPage());
+		this.viewPager = (ViewPager)itemView;
+		this.viewPager.setOffscreenPageLimit(2);
+		this.viewPager.setAdapter(this.getPagerAdapter());
+		this.viewPager.setOnPageChangeListener(this);
+		this.viewPager.setCurrentItem(this.getIndexOfContentPage());
 	}
 
 	protected abstract int getIndexOfContentPage();
 
 	protected abstract PagerAdapter getPagerAdapter();
+
+	protected void resetViewPager()
+	{
+		this.viewPager.setCurrentItem(this.getIndexOfContentPage());
+	}
 }

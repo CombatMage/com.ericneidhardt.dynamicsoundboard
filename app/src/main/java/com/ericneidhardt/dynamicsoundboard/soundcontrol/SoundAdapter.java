@@ -149,6 +149,8 @@ public class SoundAdapter
 			EnhancedMediaPlayer player = sounds.get(positionInDataSet);
 			MediaPlayerData data = player.getMediaPlayerData();
 
+			super.resetViewPager();
+
 			this.name.setText(data.getLabel());
 			this.play.setSelected(player.isPlaying());
 			this.loop.setSelected(data.getIsLoop());

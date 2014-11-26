@@ -93,6 +93,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 
 	public void destroy()
 	{
+		this.sendBroadCastSoundPlaying(false);
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
