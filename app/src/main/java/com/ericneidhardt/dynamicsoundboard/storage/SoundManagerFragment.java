@@ -2,7 +2,13 @@ package com.ericneidhardt.dynamicsoundboard.storage;
 
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -24,8 +30,13 @@ public class SoundManagerFragment extends Fragment
 {
 	public static final String TAG = SoundManagerFragment.class.getName();
 
+	public static final String ACTION_SOUND_CONTROL = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.ACTION_SOUND_CONTROL";
+	public static final String KEY_SOUND_ID = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.KEY_SOUND_ID";
+
 	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
 	private static final String DB_SOUNDS_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
+
+	private BroadcastReceiver receiver = new SoundControlReceiver();
 
 	private DaoSession dbPlaylist;
 	private List<EnhancedMediaPlayer> playList;
@@ -80,6 +91,13 @@ public class SoundManagerFragment extends Fragment
 	}
 
 	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+		LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.receiver, new IntentFilter(ACTION_SOUND_CONTROL));
+	}
+
+	@Override
 	public void onPause()
 	{
 		super.onPause();
@@ -89,6 +107,13 @@ public class SoundManagerFragment extends Fragment
 
 		task = new UpdateSoundsTask(this.playList, dbPlaylist);
 		task.execute();
+	}
+
+	@Override
+	public void onDestroy()
+	{
+		LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
+		super.onDestroy();
 	}
 
 	public void addSound(MediaPlayerData playerData)
@@ -342,6 +367,22 @@ public class SoundManagerFragment extends Fragment
 			super.onException(e);
 			Logger.e(TAG, e.getMessage());
 			throw new RuntimeException(e);
+		}
+	}
+
+	private class SoundControlReceiver extends BroadcastReceiver
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			String action = intent.getAction();
+			String mediaPlayerId = intent.getStringExtra(KEY_SOUND_ID);
+
+			if (action.equals(ACTION_SOUND_CONTROL))
+			{
+				Toast.makeText(context, action + " playerId " + mediaPlayerId, Toast.LENGTH_SHORT).show();
+				// TODO
+			}
 		}
 	}
 }
