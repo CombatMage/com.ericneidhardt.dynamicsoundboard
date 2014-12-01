@@ -58,6 +58,8 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		this.startSoundManagerService();
 		this.addSoundSheetManagerFragment();
 
+		this.addSoundManagerFragment(); // TODO remove this
+
 		this.addSoundLayoutControllerFragment();
 
 		this.setFloatActionButton();
@@ -233,6 +235,20 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	private void startSoundManagerService()
 	{
 		this.startService(new Intent(this, MusicService.class));
+	}
+
+	private void addSoundManagerFragment()
+	{
+		FragmentManager fragmentManager = this.getFragmentManager();
+
+		Fragment fragment =  fragmentManager.findFragmentByTag(SoundManagerFragment.TAG);
+		if (fragment == null)
+		{
+			fragment = new SoundManagerFragment();
+			fragmentManager.beginTransaction().add(fragment, SoundManagerFragment.TAG).commit();
+			fragmentManager.executePendingTransactions();
+		}
+
 	}
 
 	private void addSoundSheetManagerFragment()

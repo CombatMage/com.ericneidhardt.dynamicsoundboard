@@ -60,22 +60,28 @@ public class MusicService extends Service
 		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS);
 
 		SafeAsyncTask task = new LoadSoundsTask();
-		task.execute();
+		//task.execute();
 
 		task = new LoadPlaylistTask();
-		task.execute();
+		//task.execute();
 	}
 
 	@Override
 	public void onDestroy()
 	{
 		SafeAsyncTask task = new UpdateSoundsTask(this.sounds, dbSounds);
-		task.execute();
+		//task.execute();
 
 		task = new UpdateSoundsTask(this.playList, dbPlaylist);
-		task.execute();
+		//task.execute();
 
 		super.onDestroy();
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId)
+	{
+		return START_STICKY;
 	}
 
 	public void addSound(MediaPlayerData playerData)
