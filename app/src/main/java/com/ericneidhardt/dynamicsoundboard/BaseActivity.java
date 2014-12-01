@@ -28,6 +28,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.MusicService;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 
@@ -54,7 +55,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		this.createActionbar();
 		this.createNavigationDrawer();
 
-		this.addSoundManagerFragment();
+		this.startSoundManagerService();
 		this.addSoundSheetManagerFragment();
 
 		this.addSoundLayoutControllerFragment();
@@ -229,17 +230,9 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 			this.navigationDrawerLayout.closeDrawer(Gravity.START);
 	}
 
-	private void addSoundManagerFragment()
+	private void startSoundManagerService()
 	{
-		FragmentManager fragmentManager = this.getFragmentManager();
-
-		Fragment fragment =  fragmentManager.findFragmentByTag(SoundManagerFragment.TAG);
-		if (fragment == null)
-		{
-			fragment = new SoundManagerFragment();
-			fragmentManager.beginTransaction().add(fragment, SoundManagerFragment.TAG).commit();
-			fragmentManager.executePendingTransactions();
-		}
+		this.startService(new Intent(this, MusicService.class));
 	}
 
 	private void addSoundSheetManagerFragment()

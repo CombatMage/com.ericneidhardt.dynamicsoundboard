@@ -35,6 +35,11 @@
 
 		</activity>
 
+		<service
+				android:name=".storage.MusicService"
+				android:exported="false">
+		</service>
+
     </application>
 
 </manifest>
