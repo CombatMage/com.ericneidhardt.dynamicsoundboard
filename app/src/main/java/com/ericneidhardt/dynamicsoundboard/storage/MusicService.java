@@ -30,6 +30,7 @@ public class MusicService extends Service
 
 	private DaoSession dbPlaylist;
 	private List<EnhancedMediaPlayer> playList;
+
 	public List<EnhancedMediaPlayer> getPlayList()
 	{
 		return playList;
@@ -37,21 +38,26 @@ public class MusicService extends Service
 
 	private DaoSession dbSounds;
 	private Map<String, List<EnhancedMediaPlayer>> sounds;
+
 	public Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return sounds;
 	}
 
+	private Binder binder;
+
 	@Override
 	public IBinder onBind(Intent intent)
 	{
-		return null;
+		return this.binder;
 	}
 
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
+
+		this.binder = new Binder();
 
 		this.playList = new ArrayList<EnhancedMediaPlayer>();
 		this.sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
@@ -93,8 +99,7 @@ public class MusicService extends Service
 				this.sounds.put(playerData.getFragmentTag(), new ArrayList<EnhancedMediaPlayer>(asList(player)));
 			else
 				this.sounds.get(playerData.getFragmentTag()).add(player);
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
 		}
@@ -106,8 +111,7 @@ public class MusicService extends Service
 		{
 			EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(this.getApplicationContext(), playerData);
 			this.playList.add(player);
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
 		}
@@ -163,8 +167,7 @@ public class MusicService extends Service
 				player.setIsInPlaylist(true);
 				playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(this.getApplicationContext(), player.getMediaPlayerData());
 				this.playList.add(playerInPlaylist);
-			}
-			else
+			} else
 			{
 				if (playerInPlaylist == null)
 					return;
@@ -173,8 +176,7 @@ public class MusicService extends Service
 				this.playList.remove(playerInPlaylist);
 				playerInPlaylist.destroy();
 			}
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			Logger.e(TAG, e.getMessage());
 			throw new RuntimeException(e);
@@ -327,9 +329,11 @@ public class MusicService extends Service
 		@Override
 		public Void call() throws Exception
 		{
-			this.database.runInTx(new Runnable() {
+			this.database.runInTx(new Runnable()
+			{
 				@Override
-				public void run() {
+				public void run()
+				{
 					database.getMediaPlayerDataDao().deleteAll();
 					database.getMediaPlayerDataDao().insertInTx(mediaPlayers);
 				}
@@ -343,6 +347,14 @@ public class MusicService extends Service
 			super.onException(e);
 			Logger.e(TAG, e.getMessage());
 			throw new RuntimeException(e);
+		}
+	}
+
+	public class Binder extends android.os.Binder
+	{
+		public MusicService getService()
+		{
+			return MusicService.this;
 		}
 	}
 }
