@@ -60,8 +60,6 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		this.addSoundLayoutControllerFragment();
 
-		this.setFloatActionButton();
-
 		this.phoneStateListener = new PauseSoundOnCallListener();
 		this.soundStateChangedReceiver = new SoundStateChangedReceiver();
 	}
@@ -74,12 +72,17 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		fab.setOnClickListener(this);
 
-		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
-		List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getCurrentlyPlayingSounds();
-		if (currentlyPlayingSounds.size() > 0)
-			fab.setPauseState();
-		else
-			fab.setAddState();
+		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
+		if (serviceManagerFragment != null && serviceManagerFragment.getSoundService() != null)
+		{
+			List<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
+			if (currentlyPlayingSounds.size() > 0)
+			{
+				fab.setPauseState();
+				return;
+			}
+		}
+		fab.setAddState();
 	}
 
 	@Override
@@ -132,6 +135,8 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		this.isActivityVisible = true;
 		this.setSoundSheetActionsEnable(false);
 
+		this.setFloatActionButton();
+
 		PauseSoundOnCallListener.registerListener(this,
 				this.phoneStateListener, (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG));
 
@@ -178,14 +183,14 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	private void onFabClicked()
 	{
 		SoundSheetFragment soundSheetFragment = this.getCurrentFragment();
-		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
-		List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getCurrentlyPlayingSounds();
+		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
+		List<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
 		{
 			for (EnhancedMediaPlayer sound : currentlyPlayingSounds)
 				sound.pauseSound();
-			soundManagerFragment.notifySoundSheetFragments();
-			soundManagerFragment.notifyPlaylist();
+			serviceManagerFragment.getSoundService().notifySoundSheetFragments();
+			serviceManagerFragment.getSoundService().notifyPlaylist();
 		}
 		else if (soundSheetFragment == null)
 		{
@@ -334,6 +339,11 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		if (currentFragment != null && currentFragment.isVisible() && currentFragment instanceof SoundSheetFragment)
 			return (SoundSheetFragment) currentFragment;
 		return null;
+	}
+
+	private ServiceManagerFragment getServiceManagerFragment()
+	{
+		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
 	}
 
 	private class SoundStateChangedReceiver extends BroadcastReceiver
