@@ -2,6 +2,7 @@ package com.ericneidhardt.dynamicsoundboard;
 
 
 import android.app.Fragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 
@@ -25,5 +26,10 @@ public abstract class BaseFragment extends Fragment
 	public SoundSheetManagerFragment getSoundSheetManagerFragment()
 	{
 		return (SoundSheetManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
+	}
+
+	public ServiceManagerFragment getServiceManagerFragment()
+	{
+		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
 	}
 }

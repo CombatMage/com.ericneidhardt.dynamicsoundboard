@@ -90,6 +90,25 @@ public class MusicService extends Service
 		return START_STICKY;
 	}
 
+	public List<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
+	{
+		List<EnhancedMediaPlayer> currentlyPlayingSounds = new ArrayList<EnhancedMediaPlayer>();
+		for (EnhancedMediaPlayer sound : this.playList)
+		{
+			if (sound.isPlaying())
+				currentlyPlayingSounds.add(sound);
+		}
+		for (String fragmentTag : this.sounds.keySet())
+		{
+			for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
+			{
+				if (player.isPlaying())
+					currentlyPlayingSounds.add(player);
+			}
+		}
+		return currentlyPlayingSounds;
+	}
+
 	public void addSound(MediaPlayerData playerData)
 	{
 		try
