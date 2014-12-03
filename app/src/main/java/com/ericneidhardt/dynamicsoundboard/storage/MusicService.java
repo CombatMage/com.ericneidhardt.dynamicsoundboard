@@ -78,6 +78,12 @@ public class MusicService extends Service
 		task.execute();
 	}
 
+	public void onActivityClosed()
+	{
+		if (this.getCurrentlyPlayingSounds().size() == 0)
+			this.stopSelf();
+	}
+
 	@Override
 	public void onDestroy()
 	{

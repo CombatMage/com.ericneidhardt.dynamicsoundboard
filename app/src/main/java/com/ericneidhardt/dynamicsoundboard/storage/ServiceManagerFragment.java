@@ -66,6 +66,11 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		super.onDestroy();
 	}
 
+	public void onUserLeaveHint()
+	{
+		this.service.onActivityClosed();
+	}
+
 	private void registerReceiver()
 	{
 		IntentFilter filter = new IntentFilter();

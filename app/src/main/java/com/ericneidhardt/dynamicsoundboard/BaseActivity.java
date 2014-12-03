@@ -160,6 +160,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	protected void onUserLeaveHint()
 	{
 		super.onUserLeaveHint();
+		this.getServiceManagerFragment().onUserLeaveHint();
 	}
 
 	public void setSoundSheetActionsEnable(boolean enable)
