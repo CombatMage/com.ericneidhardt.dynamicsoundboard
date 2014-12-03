@@ -29,7 +29,6 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 
 import java.util.List;
@@ -137,8 +136,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		this.setFloatActionButton();
 
-		PauseSoundOnCallListener.registerListener(this,
-				this.phoneStateListener, (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG));
+		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener, this.getServiceManagerFragment());
 
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED);
@@ -239,15 +237,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	{
 		FragmentManager fragmentManager = this.getFragmentManager();
 
-		Fragment fragment =  fragmentManager.findFragmentByTag(SoundManagerFragment.TAG);
-		if (fragment == null)
-		{
-			fragment = new SoundManagerFragment();
-			fragmentManager.beginTransaction().add(fragment, SoundManagerFragment.TAG).commit();
-			fragmentManager.executePendingTransactions();
-		}
-
-		fragment =  fragmentManager.findFragmentByTag(ServiceManagerFragment.TAG);
+		Fragment fragment =  fragmentManager.findFragmentByTag(ServiceManagerFragment.TAG);
 		if (fragment == null)
 		{
 			fragment = new ServiceManagerFragment();

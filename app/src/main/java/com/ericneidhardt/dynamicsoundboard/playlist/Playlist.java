@@ -13,7 +13,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,10 +100,9 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 		this.adapter.removeAll(playersToRemove);
 
-		SoundManagerFragment soundManagerFragment = (SoundManagerFragment) this.parent.getFragmentManager()
-				.findFragmentByTag(SoundManagerFragment.TAG);
+		ServiceManagerFragment soundManagerFragment = this.parent.getServiceManagerFragment();
 
-		soundManagerFragment.removeFromPlaylist(playersToRemove);
+		soundManagerFragment.getSoundService().removeFromPlaylist(playersToRemove);
 		soundManagerFragment.notifySoundSheetFragments();
 
 		this.adapter.notifyDataSetChanged();
@@ -118,7 +117,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	{
 		if (newSoundAvailable)
 		{
-			SoundManagerFragment fragment = (SoundManagerFragment)this.parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+			ServiceManagerFragment fragment = this.parent.getServiceManagerFragment();
 			this.adapter.clear();
 			this.adapter.addAll(fragment.getPlayList());
 		}

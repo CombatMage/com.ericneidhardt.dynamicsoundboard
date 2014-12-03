@@ -13,7 +13,7 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,7 +164,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 
 	private void returnResultsToCallingFragment()
 	{
-		SoundManagerFragment fragment = this.getSoundManagerFragment();
+		ServiceManagerFragment fragment = this.getServiceManagerFragment();
 		if (fragment == null)
 			throw new NullPointerException("cannot addSoundSheetAndNotifyFragment sound, SoundManagerFragment is null");
 
@@ -181,13 +181,13 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		if (this.callingFragmentTag.equals(Playlist.TAG))
 		{
 			for (MediaPlayerData playerData : playersData)
-				fragment.addSoundToPlaylist(playerData);
+				fragment.getSoundService().addSoundToPlaylist(playerData);
 			fragment.notifyPlaylist();
 		}
 		else
 		{
 			for (MediaPlayerData playerData : playersData)
-				fragment.addSound(playerData);
+				fragment.getSoundService().addSound(playerData);
 			fragment.notifyFragment(this.callingFragmentTag);
 		}
 	}

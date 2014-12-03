@@ -1,16 +1,16 @@
 package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
-import android.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 {
 	private List<SoundSheet> soundSheets;
 	private OnItemClickListener onItemClickListener;
-	private Fragment parent;
+	private BaseFragment parent;
 
 	public SoundSheetAdapter()
 	{
@@ -31,7 +31,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 		this.onItemClickListener = onItemClickListener;
 	}
 
-	public void setParent(Fragment parent) {
+	public void setParent(BaseFragment parent) {
 		this.parent = parent;
 	}
 
@@ -91,7 +91,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 
 		if (this.parent != null)
 		{
-			SoundManagerFragment fragment = (SoundManagerFragment) this.parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+			ServiceManagerFragment fragment = this.parent.getServiceManagerFragment();
 			List<EnhancedMediaPlayer> sounds = fragment.getSounds().get(data.getFragmentTag());
 			holder.setSoundCount(sounds != null ? sounds.size() : 0);
 		}

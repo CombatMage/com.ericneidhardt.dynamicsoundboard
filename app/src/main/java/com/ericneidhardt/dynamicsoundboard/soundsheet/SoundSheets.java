@@ -13,7 +13,8 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.MusicService;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 
 import java.util.ArrayList;
@@ -93,16 +94,17 @@ public class SoundSheets
 
 		this.adapter.removeAll(soundSheetsToRemove);
 
-		SoundSheetManagerFragment soundSheetManagerfragment = this.parent.getSoundSheetManagerFragment();
-		SoundManagerFragment soundManagerFragment = this.parent.getSoundManagerFragment();
 		BaseActivity activity = (BaseActivity)this.parent.getActivity();
+		SoundSheetManagerFragment soundSheetManagerfragment = this.parent.getSoundSheetManagerFragment();
+		ServiceManagerFragment soundManagerFragment = this.parent.getServiceManagerFragment();
+		MusicService service = soundManagerFragment.getSoundService();
 
 		for (SoundSheet soundSheet: soundSheetsToRemove)
 		{
 			List<EnhancedMediaPlayer> soundsInSoundSheet = soundManagerFragment.getSounds().get(soundSheet.getFragmentTag());
 
 			soundSheetManagerfragment.remove(soundSheet, false);
-			soundManagerFragment.removeSounds(soundsInSoundSheet);
+			service.removeSounds(soundsInSoundSheet);
 			activity.removeSoundFragment(soundSheet);
 
 			if (soundSheet.getIsSelected())

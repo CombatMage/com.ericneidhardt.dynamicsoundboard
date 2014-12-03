@@ -13,7 +13,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 
 import java.util.List;
 
@@ -264,8 +264,8 @@ public class SoundAdapter
 				case R.id.b_add_to_playlist:
 					view.setSelected(!isSelected);
 					player.setIsInPlaylist(!isSelected);
-					SoundManagerFragment fragment = (SoundManagerFragment)parent.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
-					fragment.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
+					ServiceManagerFragment fragment = parent.getServiceManagerFragment();
+					fragment.getSoundService().toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
 					fragment.notifyPlaylist();
 					break;
 				case R.id.b_play:

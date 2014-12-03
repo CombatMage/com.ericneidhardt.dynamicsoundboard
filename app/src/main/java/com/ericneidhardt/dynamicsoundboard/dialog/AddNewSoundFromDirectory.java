@@ -15,7 +15,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -122,7 +122,7 @@ public class AddNewSoundFromDirectory
 	private void returnResultsToCallingFragment()
 	{
 		List<File> result = this.buildResult();
-		SoundManagerFragment fragment = this.getSoundManagerFragment();
+		ServiceManagerFragment fragment = this.getServiceManagerFragment();
 
 		for (File file : result)
 		{
@@ -130,7 +130,7 @@ public class AddNewSoundFromDirectory
 			String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
 			MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.callingFragmentTag, soundUri, soundLabel);
 
-			fragment.addSound(playerData);
+			fragment.getSoundService().addSound(playerData);
 		}
 		fragment.notifyFragment(this.callingFragmentTag);
 	}

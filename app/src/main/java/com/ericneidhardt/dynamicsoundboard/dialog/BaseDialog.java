@@ -1,7 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
 import android.app.DialogFragment;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 
 /**
@@ -9,9 +9,9 @@ import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
  */
 public abstract class BaseDialog extends DialogFragment
 {
-	protected SoundManagerFragment getSoundManagerFragment()
+	protected ServiceManagerFragment getServiceManagerFragment()
 	{
-		return (SoundManagerFragment)this.getFragmentManager().findFragmentByTag(SoundManagerFragment.TAG);
+		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
 	}
 
 	protected SoundSheetManagerFragment getSoundSheetManagerFragment()

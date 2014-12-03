@@ -15,7 +15,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.storage.JsonPojo;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -134,7 +134,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 
 		SoundSheetManagerFragment soundSheetManagerFragment = this.getSoundSheetManagerFragment();
 
-		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
+		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
 
 		JsonPojo pojo = new JsonPojo();
 		try

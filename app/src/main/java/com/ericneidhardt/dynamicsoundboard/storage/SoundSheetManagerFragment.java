@@ -92,11 +92,12 @@ public class SoundSheetManagerFragment
 		activity.removeSoundFragment(this.soundSheets);
 		activity.setSoundSheetActionsEnable(false);
 
-		SoundManagerFragment fragment = this.getSoundManagerFragment();
+		ServiceManagerFragment fragment = this.getServiceManagerFragment();
+		MusicService service = fragment.getSoundService();
 		for (SoundSheet soundSheet : this.soundSheets)
 		{
-			List<EnhancedMediaPlayer> soundsInSoundSheet = fragment.getSounds().get(soundSheet.getFragmentTag());
-			fragment.removeSounds(soundsInSoundSheet);
+			List<EnhancedMediaPlayer> soundsInSoundSheet = service.getSounds().get(soundSheet.getFragmentTag());
+			service.removeSounds(soundsInSoundSheet);
 		}
 		this.soundSheets.clear();
 
@@ -201,7 +202,8 @@ public class SoundSheetManagerFragment
 
 	public void addSoundFromIntent(Uri soundUri, String soundLabel, String newSoundSheetName, SoundSheet existingSoundSheet)
 	{
-		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
+		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
+		MusicService service = soundManagerFragment.getSoundService();
 		if (soundManagerFragment == null)
 			throw new NullPointerException("cannot addSoundSheetAndNotifyFragment sound, SoundManagerFragment is null");
 
@@ -212,14 +214,14 @@ public class SoundSheetManagerFragment
 			this.addSoundSheetAndNotifyFragment(newSoundSheet);
 			mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(newSoundSheet.getFragmentTag(), soundUri, soundLabel);
 
-			soundManagerFragment.addSound(mediaPlayerData);
+			service.addSound(mediaPlayerData);
 			soundManagerFragment.notifyFragment(mediaPlayerData.getFragmentTag());
 		}
 		else if (existingSoundSheet != null)
 			mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
 		else
 			throw new NullPointerException(TAG + ".addSoundFromIntent: cannot add new sound, mediaPlayerData is null");
-		soundManagerFragment.addSound(mediaPlayerData);
+		service.addSound(mediaPlayerData);
 		soundManagerFragment.notifyFragment(mediaPlayerData.getFragmentTag());
 	}
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PauseSoundOnCallListener extends PhoneStateListener
 {
-	private SoundManagerFragment soundManagerFragment;
+	private ServiceManagerFragment soundManagerFragment;
 	private List<EnhancedMediaPlayer> pauseSounds;
 
 	public PauseSoundOnCallListener()
@@ -28,7 +28,7 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 
 		if (state == TelephonyManager.CALL_STATE_RINGING)
 		{
-			List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getCurrentlyPlayingSounds();
+			List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 			if (currentlyPlayingSounds.size() > 0)
 			{
 				for (EnhancedMediaPlayer sound : currentlyPlayingSounds)
@@ -52,7 +52,7 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 		this.soundManagerFragment = null;
 	}
 
-	public static void registerListener(Context context, PauseSoundOnCallListener listener, SoundManagerFragment soundManagerFragment)
+	public static void registerListener(Context context, PauseSoundOnCallListener listener, ServiceManagerFragment soundManagerFragment)
 	{
 		listener.soundManagerFragment = soundManagerFragment;
 		TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

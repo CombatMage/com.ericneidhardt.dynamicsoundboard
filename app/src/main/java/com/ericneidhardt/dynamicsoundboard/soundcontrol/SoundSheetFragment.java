@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ericneidhardt.dynamicsoundboard.BaseFragment;
+import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
@@ -21,7 +22,7 @@ import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromDirectory;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 
 import java.util.List;
 
@@ -117,7 +118,7 @@ public class SoundSheetFragment
 	private void removeAllSounds()
 	{
 		this.soundAdapter.removeAll(this.soundAdapter.getValues());
-		this.getSoundManagerFragment().removeSounds(this.fragmentTag);
+		this.getServiceManagerFragment().getSoundService().removeSounds(this.fragmentTag);
 	}
 
 	@Override
@@ -129,8 +130,8 @@ public class SoundSheetFragment
 			{
 				Uri soundUri = data.getData();
 				String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
-				SoundManagerFragment fragment = this.getSoundManagerFragment();
-				fragment.addSound(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
+				ServiceManagerFragment fragment = this.getServiceManagerFragment();
+				fragment.getSoundService().addSound(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
 				fragment.notifySoundSheetFragments();
 				return;
 			}
@@ -165,7 +166,7 @@ public class SoundSheetFragment
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
 		this.soundLayout.setAdapter(this.soundAdapter);
 
-		SoundManagerFragment fragment = this.getSoundManagerFragment();
+		ServiceManagerFragment fragment = this.getServiceManagerFragment();
 		List<EnhancedMediaPlayer> enhancedMediaPlayers = fragment.getSounds().get(this.fragmentTag);
 
 		this.soundAdapter.clear();
@@ -183,15 +184,23 @@ public class SoundSheetFragment
 		if (position > 0)
 			this.soundAdapter.notifyItemChanged(position - 1);
 
-		SoundManagerFragment fragment = this.getSoundManagerFragment();
-		fragment.removeSounds(asList(player));
+		ServiceManagerFragment fragment = this.getServiceManagerFragment();
+		fragment.getSoundService().removeSounds(asList(player));
 		fragment.notifyPlaylist();
-		fragment.notifySoundSheetList();
+
+		this.notifySoundSheetList();
+	}
+
+	private void notifySoundSheetList()
+	{
+		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
+				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list
 	}
 
 	public void notifyDataSetChanged(boolean newSoundsAvailable)
 	{
-		SoundManagerFragment fragment = this.getSoundManagerFragment();
+		ServiceManagerFragment fragment = this.getServiceManagerFragment();
 
 		if (newSoundsAvailable)
 		{

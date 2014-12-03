@@ -6,10 +6,11 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 
-import java.util.Set;
+import java.util.*;
 
 /**
  * File created by eric.neidhardt on 02.12.2014.
@@ -57,6 +58,8 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public void onDestroy()
 	{
 		super.onDestroy();
+		this.service.storeLoadedSounds();
+
 		LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
 		this.getActivity().unbindService(this);
 	}
@@ -73,6 +76,20 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public void onServiceDisconnected(ComponentName name)
 	{
 		Logger.d(TAG, "onServiceDisconnected");
+	}
+
+	public List<EnhancedMediaPlayer> getPlayList()
+	{
+		if (this.service == null)
+			return new ArrayList<EnhancedMediaPlayer>();
+		return this.service.getPlayList();
+	}
+
+	public Map<String, List<EnhancedMediaPlayer>> getSounds()
+	{
+		if (this.service == null)
+			return new HashMap<String, List<EnhancedMediaPlayer>>();
+		return this.service.getSounds();
 	}
 
 	public void notifyPlaylist()

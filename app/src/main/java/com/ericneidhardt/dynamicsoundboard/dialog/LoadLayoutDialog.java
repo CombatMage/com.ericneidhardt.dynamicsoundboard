@@ -15,7 +15,8 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.storage.JsonPojo;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.storage.MusicService;
+import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -124,23 +125,26 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void addLoadedPlayList(List<MediaPlayerData> playList)
 	{
-		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
-		soundManagerFragment.removeFromPlaylist(soundManagerFragment.getPlayList()); // clear playlist before adding new values
+		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
+		MusicService service = soundManagerFragment.getSoundService();
+
+		service.removeFromPlaylist(soundManagerFragment.getPlayList()); // clear playlist before adding new values
 
 		for (MediaPlayerData mediaPlayerData : playList)
-			soundManagerFragment.addSoundToPlaylist(mediaPlayerData);
+			service.addSoundToPlaylist(mediaPlayerData);
 		soundManagerFragment.notifyPlaylist();
 	}
 
 	private void addLoadedSounds(Map<String, List<MediaPlayerData>> sounds)
 	{
-		SoundManagerFragment soundManagerFragment = this.getSoundManagerFragment();
+		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
+		MusicService service = soundManagerFragment.getSoundService();
 
 		for (String key : sounds.keySet())
 		{
 			List<MediaPlayerData> soundsPerFragment = sounds.get(key);
 			for (MediaPlayerData mediaPlayerData : soundsPerFragment)
-				soundManagerFragment.addSound(mediaPlayerData);
+				service.addSound(mediaPlayerData);
 		}
 		soundManagerFragment.notifySoundSheetFragments();
 	}

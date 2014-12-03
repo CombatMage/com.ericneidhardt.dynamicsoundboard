@@ -28,15 +28,13 @@ public class MusicService extends Service
 	public static final String ACTION_FINISHED_LOADING_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_PLAYLIST";
 	public static final String ACTION_FINISHED_LOADING_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_SOUNDS";
 
-	public static final String KEY_SOUNDSHEETS = "com.ericneidhardt.dynamicsoundboard.storage.KEY_SOUNDSHEETS";
-
 	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
 	private static final String DB_SOUNDS_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
 
 	private DaoSession dbPlaylist;
 	private List<EnhancedMediaPlayer> playList;
 
-	public List<EnhancedMediaPlayer> getPlayList()
+	List<EnhancedMediaPlayer> getPlayList()
 	{
 		return playList;
 	}
@@ -44,7 +42,7 @@ public class MusicService extends Service
 	private DaoSession dbSounds;
 	private Map<String, List<EnhancedMediaPlayer>> sounds;
 
-	public Map<String, List<EnhancedMediaPlayer>> getSounds()
+	Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return sounds;
 	}
@@ -71,22 +69,25 @@ public class MusicService extends Service
 		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS);
 
 		SafeAsyncTask task = new LoadSoundsTask();
-		//task.execute();
+		task.execute();
 
 		task = new LoadPlaylistTask();
-		//task.execute();
+		task.execute();
 	}
 
 	@Override
 	public void onDestroy()
 	{
+		super.onDestroy();
+	}
+
+	public void storeLoadedSounds()
+	{
 		SafeAsyncTask task = new UpdateSoundsTask(this.sounds, dbSounds);
-		//task.execute();
+		task.execute();
 
 		task = new UpdateSoundsTask(this.playList, dbPlaylist);
-		//task.execute();
-
-		super.onDestroy();
+		task.execute();
 	}
 
 	@Override
@@ -230,29 +231,6 @@ public class MusicService extends Service
 			}
 		}
 		return null;
-	}
-
-	public void notifySoundSheetList()
-	{
-		// TODO
-		/*
-		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
-				.findFragmentByTag(NavigationDrawerFragment.TAG);
-		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list*/
-	}
-
-	public void notifyFragment(String fragmentTag)
-	{
-		// TODO
-		/*
-		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
-				.findFragmentByTag(NavigationDrawerFragment.TAG);
-
-		SoundSheetFragment fragment = (SoundSheetFragment) this.getFragmentManager().findFragmentByTag(fragmentTag);
-		if (fragment != null)
-			fragment.notifyDataSetChanged(true);
-
-		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list*/
 	}
 
 	private class LoadSoundsTask extends LoadTask<MediaPlayerData>
