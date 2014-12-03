@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.storage;
+package com.ericneidhardt.dynamicsoundboard.soundsheet;
 
 
 import android.content.Intent;
@@ -18,6 +18,8 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.MusicService;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,7 @@ public class SoundSheetManagerFragment
 {
 	public static final String TAG = SoundSheetManagerFragment.class.getName();
 
-	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment.db_sound_sheets";
+	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets";
 
 	private List<SoundSheet> soundSheets;
 	private DaoSession daoSession;
@@ -96,7 +98,7 @@ public class SoundSheetManagerFragment
 		MusicService service = fragment.getSoundService();
 		for (SoundSheet soundSheet : this.soundSheets)
 		{
-			List<EnhancedMediaPlayer> soundsInSoundSheet = service.getSounds().get(soundSheet.getFragmentTag());
+			List<EnhancedMediaPlayer> soundsInSoundSheet = fragment.getSounds().get(soundSheet.getFragmentTag());
 			service.removeSounds(soundsInSoundSheet);
 		}
 		this.soundSheets.clear();
@@ -204,9 +206,6 @@ public class SoundSheetManagerFragment
 	{
 		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
 		MusicService service = soundManagerFragment.getSoundService();
-		if (soundManagerFragment == null)
-			throw new NullPointerException("cannot addSoundSheetAndNotifyFragment sound, SoundManagerFragment is null");
-
 		MediaPlayerData mediaPlayerData;
 		if (newSoundSheetName != null)
 		{

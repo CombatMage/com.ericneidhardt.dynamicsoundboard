@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.storage;
+package com.ericneidhardt.dynamicsoundboard.misc;
 
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;

@@ -14,9 +14,9 @@ import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DialogEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
-import com.ericneidhardt.dynamicsoundboard.storage.JsonPojo;
-import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.misc.JsonPojo;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;

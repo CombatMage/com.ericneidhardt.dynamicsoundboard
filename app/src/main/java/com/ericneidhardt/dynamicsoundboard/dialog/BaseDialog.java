@@ -1,8 +1,8 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
 import android.app.DialogFragment;
-import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
 /**
  * File created by eric.neidhardt on 14.11.2014.

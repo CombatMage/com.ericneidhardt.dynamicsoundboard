@@ -15,7 +15,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
-import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.io.File;
 import java.util.ArrayList;

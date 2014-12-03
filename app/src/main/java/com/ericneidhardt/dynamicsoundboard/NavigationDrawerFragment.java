@@ -10,7 +10,7 @@ import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
 public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener
 {

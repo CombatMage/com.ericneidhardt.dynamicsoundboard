@@ -10,7 +10,7 @@ import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;

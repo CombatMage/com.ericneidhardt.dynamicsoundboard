@@ -2,8 +2,8 @@ package com.ericneidhardt.dynamicsoundboard;
 
 
 import android.app.Fragment;
-import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
 public abstract class BaseFragment extends Fragment
 {

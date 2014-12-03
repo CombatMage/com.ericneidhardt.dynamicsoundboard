@@ -13,7 +13,7 @@ import com.ericneidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
-import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.List;
 

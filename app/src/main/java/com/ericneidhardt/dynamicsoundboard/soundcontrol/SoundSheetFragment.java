@@ -22,7 +22,7 @@ import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromDirectory;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
-import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.List;
 

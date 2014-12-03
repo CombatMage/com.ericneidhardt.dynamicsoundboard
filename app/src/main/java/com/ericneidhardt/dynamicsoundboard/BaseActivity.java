@@ -29,8 +29,8 @@ import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
 import java.util.List;
 

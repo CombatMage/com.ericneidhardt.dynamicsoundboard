@@ -14,10 +14,10 @@ import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
-import com.ericneidhardt.dynamicsoundboard.storage.JsonPojo;
-import com.ericneidhardt.dynamicsoundboard.storage.MusicService;
-import com.ericneidhardt.dynamicsoundboard.storage.ServiceManagerFragment;
-import com.ericneidhardt.dynamicsoundboard.storage.SoundSheetManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.misc.JsonPojo;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.MusicService;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

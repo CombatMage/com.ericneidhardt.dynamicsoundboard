@@ -36,7 +36,7 @@
 		</activity>
 
 		<service
-				android:name=".storage.MusicService"
+				android:name=".soundmanagement.MusicService"
 				android:exported="false">
 		</service>
 
