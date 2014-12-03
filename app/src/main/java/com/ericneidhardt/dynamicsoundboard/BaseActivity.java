@@ -143,10 +143,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener, this.getServiceManagerFragment());
 
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED);
-
-		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, filter);
+		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, new IntentFilter(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED));
 	}
 
 	@Override
