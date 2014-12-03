@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -43,6 +44,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	private DrawerLayout navigationDrawerLayout;
 	private ActionBarDrawerToggle drawerToggle;
 
+	private LocalBroadcastManager broadcastManager;
 	private PauseSoundOnCallListener phoneStateListener;
 	private SoundStateChangedReceiver soundStateChangedReceiver;
 
@@ -51,11 +53,14 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_base);
+
+		this.broadcastManager = LocalBroadcastManager.getInstance(this);
+
 		this.createActionbar();
 		this.createNavigationDrawer();
 
 		this.addSoundSheetManagerFragment();
-		this.addSoundManagerFragment(); // TODO remove this
+		this.addSoundManagerFragment();
 
 		this.addSoundLayoutControllerFragment();
 
@@ -141,7 +146,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED);
 
-		this.registerReceiver(this.soundStateChangedReceiver, filter);
+		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, filter);
 	}
 
 	@Override
@@ -151,7 +156,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		this.isActivityVisible = false;
 
 		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener);
-		this.unregisterReceiver(this.soundStateChangedReceiver);
+		this.broadcastManager.unregisterReceiver(this.soundStateChangedReceiver);
 	}
 
 	public void setSoundSheetActionsEnable(boolean enable)

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
@@ -34,9 +35,14 @@ public class EnhancedMediaPlayer extends MediaPlayer
 	private MediaPlayerData rawData;
 	private int duration;
 
+	private LocalBroadcastManager broadcastManager;
+
 	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
 	{
 		super();
+
+		this.broadcastManager = LocalBroadcastManager.getInstance(context);
+
 		this.rawData = data;
 		this.setLooping(data.getIsLoop());
 
@@ -244,7 +250,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		Intent intent = new Intent();
 		intent.setAction(ACTION_SOUND_STATE_CHANGED);
 		intent.putExtra(KEY_EXTRA_IS_PLAYING, isPlaying);
-		DynamicSoundboardApplication.getContext().sendBroadcast(intent);
+		this.broadcastManager.sendBroadcast(intent);
 	}
 
 }

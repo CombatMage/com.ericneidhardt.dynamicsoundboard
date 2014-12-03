@@ -3,6 +3,7 @@ package com.ericneidhardt.dynamicsoundboard.storage;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -47,6 +48,7 @@ public class MusicService extends Service
 		return sounds;
 	}
 
+	private LocalBroadcastManager broadcastManager;
 	private Binder binder;
 
 	@Override
@@ -61,6 +63,7 @@ public class MusicService extends Service
 		super.onCreate();
 
 		this.binder = new Binder();
+		this.broadcastManager = LocalBroadcastManager.getInstance(this);
 
 		this.playList = new ArrayList<EnhancedMediaPlayer>();
 		this.sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
@@ -255,7 +258,7 @@ public class MusicService extends Service
 		{
 			Intent intent = new Intent();
 			intent.setAction(ACTION_FINISHED_LOADING_SOUNDS);
-			getApplicationContext().sendBroadcast(intent);
+			broadcastManager.sendBroadcast(intent);
 		}
 	}
 
@@ -281,7 +284,7 @@ public class MusicService extends Service
 		{
 			Intent intent = new Intent();
 			intent.setAction(ACTION_FINISHED_LOADING_PLAYLIST);
-			getApplicationContext().sendBroadcast(intent);
+			broadcastManager.sendBroadcast(intent);
 		}
 	}
 
