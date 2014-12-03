@@ -21,7 +21,7 @@ import java.util.List;
 
 public class AddNewSoundDialog extends BaseDialog implements View.OnClickListener
 {
-	public static final String TAG = AddNewSoundDialog.class.getSimpleName();
+	public static final String TAG = AddNewSoundDialog.class.getName();
 
 	private static final String KEY_CALLING_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.callingFragmentTag";
 	private static final String KEY_SOUNDS_URI = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.soundsToAdd";

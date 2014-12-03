@@ -20,7 +20,7 @@ import java.util.List;
 
 public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
 {
-	public static final String TAG = AddNewSoundFromIntent.class.getSimpleName();
+	public static final String TAG = AddNewSoundFromIntent.class.getName();
 
 	private static final String KEY_SOUND_URI = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.uri";
 	private static final String KEY_SUGGESTED_NAME = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.suggestedName";

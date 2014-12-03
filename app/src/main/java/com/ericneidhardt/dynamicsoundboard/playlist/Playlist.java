@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class Playlist extends NavigationDrawerList implements PlaylistAdapter.OnItemClickListener
 {
-	public static final String TAG = Playlist.class.getSimpleName();
+	public static final String TAG = Playlist.class.getName();
 
 	private PlaylistAdapter adapter;
 

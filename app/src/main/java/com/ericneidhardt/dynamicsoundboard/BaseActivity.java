@@ -37,7 +37,7 @@ import java.util.List;
 
 public class BaseActivity extends ActionBarActivity implements View.OnClickListener
 {
-	private static final String TAG = BaseActivity.class.getSimpleName();
+	private static final String TAG = BaseActivity.class.getName();
 
 	private boolean isActivityVisible = true;
 

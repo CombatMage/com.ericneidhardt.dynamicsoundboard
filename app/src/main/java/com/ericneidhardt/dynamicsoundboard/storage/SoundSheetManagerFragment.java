@@ -315,7 +315,7 @@ public class SoundSheetManagerFragment
 
 	private class StoreSoundSheetTask extends SafeAsyncTask<Void>
 	{
-		private final String TAG = StoreSoundSheetTask.class.getSimpleName();
+		private final String TAG = StoreSoundSheetTask.class.getName();
 		private SoundSheet soundSheet;
 
 		public StoreSoundSheetTask(SoundSheet soundSheet)
