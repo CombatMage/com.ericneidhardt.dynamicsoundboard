@@ -21,6 +21,8 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 
 	private ServiceLoadingReceiver receiver;
 
+	private boolean isServiceBound = false;
+
 	private MusicService service;
 	public MusicService getSoundService()
 	{
@@ -36,34 +38,25 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		this.receiver = new ServiceLoadingReceiver();
 	}
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
-		this.startSoundManagerService();
-	}
-
 	private void startSoundManagerService()
 	{
 		this.getActivity().bindService(new Intent(this.getActivity(), MusicService.class), this, Context.BIND_AUTO_CREATE);
 	}
 
 	@Override
-	public void onResume()
+	public void onStart()
 	{
-		super.onResume();
+		super.onStart();
 		this.registerReceiver();
-		if (this.service != null)
-			this.service.onActivityResumed();
+		this.startSoundManagerService();
 	}
 
 	@Override
-	public void onPause()
+	public void onStop()
 	{
-		super.onPause();
-		if (this.service != null)
-			this.service.onActivityPaused();
-
+		super.onStop();
+		if (this.isServiceBound)
+			this.getActivity().unbindService(this);
 		LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
 	}
 
@@ -71,8 +64,6 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public void onDestroy()
 	{
 		super.onDestroy();
-		this.service.storeLoadedSounds();
-		this.getActivity().unbindService(this);
 	}
 
 	private void registerReceiver()
@@ -89,13 +80,14 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		Logger.d(TAG, "onServiceConnected");
 		MusicService.Binder binder = (MusicService.Binder) service;
 		this.service = binder.getService();
-		this.service.onActivityResumed();
+		this.isServiceBound = true;
 	}
 
 	@Override
 	public void onServiceDisconnected(ComponentName name)
 	{
 		Logger.d(TAG, "onServiceDisconnected");
+		this.isServiceBound = false;
 	}
 
 	public List<EnhancedMediaPlayer> getPlayList()

@@ -1,10 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.storage;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
@@ -53,9 +50,6 @@ public class MusicService extends Service
 
 	private LocalBroadcastManager broadcastManager;
 	private Binder binder;
-	private SoundStateChangedReceiver receiver;
-
-	private boolean isActivityResumed = false;
 
 	@Override
 	public IBinder onBind(Intent intent)
@@ -69,9 +63,7 @@ public class MusicService extends Service
 		super.onCreate();
 
 		this.binder = new Binder();
-		this.receiver = new SoundStateChangedReceiver();
 		this.broadcastManager = LocalBroadcastManager.getInstance(this);
-		this.broadcastManager.registerReceiver(this.receiver, new IntentFilter(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED));
 
 		this.playList = new ArrayList<EnhancedMediaPlayer>();
 		this.sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
@@ -86,35 +78,11 @@ public class MusicService extends Service
 		task.execute();
 	}
 
-	void onActivityResumed()
-	{
-		this.isActivityResumed = true;
-	}
-
-	void onActivityPaused()
-	{
-		this.isActivityResumed = false;
-	}
-
 	@Override
 	public void onDestroy()
 	{
 		this.storeLoadedSounds();
-		this.broadcastManager.unregisterReceiver(this.receiver);
 		super.onDestroy();
-	}
-
-	private void checkIfServiceRequired()
-	{
-		if (!this.isActivityResumed)
-		{
-			if (this.getCurrentlyPlayingSounds().size() == 0) // TODO also check if notification is pending
-			{
-				Logger.d(TAG, "stopSelf");
-				this.stopSelf();
-				// TODO shutdown
-			}
-		}
 	}
 
 	public void storeLoadedSounds()
@@ -396,12 +364,4 @@ public class MusicService extends Service
 		}
 	}
 
-	private class SoundStateChangedReceiver extends BroadcastReceiver
-	{
-		@Override
-		public void onReceive(Context context, Intent intent)
-		{
-			checkIfServiceRequired();
-		}
-	}
 }

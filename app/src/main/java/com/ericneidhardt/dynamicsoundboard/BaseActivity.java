@@ -156,6 +156,12 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		this.broadcastManager.unregisterReceiver(this.soundStateChangedReceiver);
 	}
 
+	@Override
+	protected void onUserLeaveHint()
+	{
+		super.onUserLeaveHint();
+	}
+
 	public void setSoundSheetActionsEnable(boolean enable)
 	{
 		int viewState = enable ? View.VISIBLE : View.GONE;
