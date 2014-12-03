@@ -78,9 +78,20 @@ public class MusicService extends Service
 		task.execute();
 	}
 
+	void onActivityResumed()
+	{
+// TODO
+	}
+
+	void onActivityPaused()
+	{
+// TODO
+	}
+
 	@Override
 	public void onDestroy()
 	{
+		this.storeLoadedSounds();
 		super.onDestroy();
 	}
 

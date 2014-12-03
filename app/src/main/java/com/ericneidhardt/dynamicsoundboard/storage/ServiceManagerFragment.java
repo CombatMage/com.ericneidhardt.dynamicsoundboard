@@ -40,12 +40,6 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(MusicService.ACTION_FINISHED_LOADING_PLAYLIST);
-		filter.addAction(MusicService.ACTION_FINISHED_LOADING_SOUNDS);
-		LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.receiver, filter);
-
 		this.startSoundManagerService();
 	}
 
@@ -55,13 +49,38 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	}
 
 	@Override
+	public void onResume()
+	{
+		super.onResume();
+		this.registerReceiver();
+		if (this.service != null)
+			this.service.onActivityResumed();
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if (this.service != null)
+			this.service.onActivityPaused();
+
+		LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
+	}
+
+	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
 		this.service.storeLoadedSounds();
-
-		LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
 		this.getActivity().unbindService(this);
+	}
+
+	private void registerReceiver()
+	{
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(MusicService.ACTION_FINISHED_LOADING_PLAYLIST);
+		filter.addAction(MusicService.ACTION_FINISHED_LOADING_SOUNDS);
+		LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.receiver, filter);
 	}
 
 	@Override
@@ -70,6 +89,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		Logger.d(TAG, "onServiceConnected");
 		MusicService.Binder binder = (MusicService.Binder) service;
 		this.service = binder.getService();
+		this.service.onActivityResumed();
 	}
 
 	@Override
