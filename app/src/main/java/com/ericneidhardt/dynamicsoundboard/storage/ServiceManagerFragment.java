@@ -3,6 +3,7 @@ package com.ericneidhardt.dynamicsoundboard.storage;
 import android.content.*;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
@@ -42,7 +43,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(MusicService.ACTION_FINISHED_LOADING_PLAYLIST);
 		filter.addAction(MusicService.ACTION_FINISHED_LOADING_SOUNDS);
-		this.getActivity().registerReceiver(this.receiver, filter);
+		LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.receiver, filter);
 
 		this.startSoundManagerService();
 	}
@@ -56,7 +57,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public void onDestroy()
 	{
 		super.onDestroy();
-		this.getActivity().unregisterReceiver(this.receiver);
+		LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
 		this.getActivity().unbindService(this);
 	}
 
