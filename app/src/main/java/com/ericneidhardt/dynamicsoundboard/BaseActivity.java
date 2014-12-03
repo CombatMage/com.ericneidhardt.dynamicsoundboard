@@ -189,8 +189,8 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		{
 			for (EnhancedMediaPlayer sound : currentlyPlayingSounds)
 				sound.pauseSound();
-			serviceManagerFragment.getSoundService().notifySoundSheetFragments();
-			serviceManagerFragment.getSoundService().notifyPlaylist();
+			serviceManagerFragment.notifySoundSheetFragments();
+			serviceManagerFragment.notifyPlaylist();
 		}
 		else if (soundSheetFragment == null)
 		{

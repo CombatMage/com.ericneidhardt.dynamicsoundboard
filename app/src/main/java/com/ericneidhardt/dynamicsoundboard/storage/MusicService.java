@@ -25,6 +25,11 @@ public class MusicService extends Service
 {
 	private static final String TAG = MusicService.class.getName();
 
+	public static final String ACTION_FINISHED_LOADING_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_PLAYLIST";
+	public static final String ACTION_FINISHED_LOADING_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_SOUNDS";
+
+	public static final String KEY_SOUNDSHEETS = "com.ericneidhardt.dynamicsoundboard.storage.KEY_SOUNDSHEETS";
+
 	private static final String DB_SOUNDS = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
 	private static final String DB_SOUNDS_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
 
@@ -227,22 +232,6 @@ public class MusicService extends Service
 		return null;
 	}
 
-	public void notifySoundSheetFragments()
-	{
-		// TODO
-		/*
-		for (String fragmentTag : this.sounds.keySet())
-			this.notifyFragment(fragmentTag);*/
-	}
-
-	public void notifyPlaylist()
-	{
-		// TODO
-		/*
-		NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
-		fragment.getPlaylist().notifyDataSetChanged(true);*/
-	}
-
 	public void notifySoundSheetList()
 	{
 		// TODO
@@ -280,7 +269,15 @@ public class MusicService extends Service
 			super.onSuccess(mediaPlayersData);
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
 				addSound(mediaPlayerData);
-			notifySoundSheetFragments();
+
+			this.sendBroadcastLoadingSoundsSuccessful();
+		}
+
+		private void sendBroadcastLoadingSoundsSuccessful()
+		{
+			Intent intent = new Intent();
+			intent.setAction(ACTION_FINISHED_LOADING_SOUNDS);
+			getApplicationContext().sendBroadcast(intent);
 		}
 	}
 
@@ -298,7 +295,15 @@ public class MusicService extends Service
 			super.onSuccess(mediaPlayersData);
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
 				addSoundToPlaylist(mediaPlayerData);
-			notifyPlaylist();
+
+			this.sendBroadcastLoadingPlayListSuccessful();
+		}
+
+		private void sendBroadcastLoadingPlayListSuccessful()
+		{
+			Intent intent = new Intent();
+			intent.setAction(ACTION_FINISHED_LOADING_PLAYLIST);
+			getApplicationContext().sendBroadcast(intent);
 		}
 	}
 
