@@ -1,6 +1,8 @@
 package com.ericneidhardt.dynamicsoundboard.soundmanagement;
 
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -8,6 +10,7 @@ import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.misc.SoundPlayingNotification;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 
@@ -34,7 +37,6 @@ public class MusicService extends Service
 
 	private DaoSession dbPlaylist;
 	private List<EnhancedMediaPlayer> playList;
-
 	List<EnhancedMediaPlayer> getPlayList()
 	{
 		return playList;
@@ -42,7 +44,6 @@ public class MusicService extends Service
 
 	private DaoSession dbSounds;
 	private Map<String, List<EnhancedMediaPlayer>> sounds;
-
 	Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return sounds;
@@ -50,6 +51,9 @@ public class MusicService extends Service
 
 	private LocalBroadcastManager broadcastManager;
 	private Binder binder;
+
+	private NotificationManager notificationManager;
+	private SoundPlayingNotification notification;
 
 	@Override
 	public IBinder onBind(Intent intent)
@@ -64,6 +68,7 @@ public class MusicService extends Service
 
 		this.binder = new Binder();
 		this.broadcastManager = LocalBroadcastManager.getInstance(this);
+		this.notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		this.playList = new ArrayList<EnhancedMediaPlayer>();
 		this.sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
@@ -78,17 +83,33 @@ public class MusicService extends Service
 		task.execute();
 	}
 
-	public void onActivityClosed()
-	{
-		if (this.getCurrentlyPlayingSounds().size() == 0)
-			this.stopSelf();
-	}
-
 	@Override
 	public void onDestroy()
 	{
 		this.storeLoadedSounds();
 		super.onDestroy();
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId)
+	{
+		return START_STICKY;
+	}
+
+	public void onActivityClosed()
+	{
+		if (this.getCurrentlyPlayingSounds().size() == 0)
+			this.stopSelf();
+		else
+			this.showNotification();
+	}
+
+	private void showNotification()
+	{
+		if (this.notification == null)
+			this.notification = new SoundPlayingNotification(this.getApplicationContext());
+
+		this.notificationManager.notify(this.notification.getId(), this.notification.build());
 	}
 
 	public void storeLoadedSounds()
@@ -98,12 +119,6 @@ public class MusicService extends Service
 
 		task = new UpdateSoundsTask(this.playList, dbPlaylist);
 		task.execute();
-	}
-
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId)
-	{
-		return START_STICKY;
 	}
 
 	public List<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
