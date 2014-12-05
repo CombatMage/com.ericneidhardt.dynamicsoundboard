@@ -96,6 +96,12 @@ public class MusicService extends Service
 		return START_STICKY;
 	}
 
+	public void onActivityResumed()
+	{
+		this.notificationManager.cancel(SoundPlayingNotification.NOTIFICATION_ID);
+		this.notification = null;
+	}
+
 	public void onActivityClosed()
 	{
 		int nrPlayingSounds = this.getCurrentlyPlayingSounds().size();
@@ -111,7 +117,7 @@ public class MusicService extends Service
 			this.notification = new SoundPlayingNotification(this.getApplicationContext());
 
 		this.notification.setTitle(nrPlayingSounds);
-		this.notificationManager.notify(this.notification.getId(), this.notification.build());
+		this.notificationManager.notify(SoundPlayingNotification.NOTIFICATION_ID, this.notification.build());
 	}
 
 	public void storeLoadedSounds()

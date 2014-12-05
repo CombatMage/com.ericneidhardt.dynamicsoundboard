@@ -12,7 +12,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
  */
 public class SoundPlayingNotification extends NotificationCompat.Builder
 {
-	private static final int NOTIFICATION_ID = 0;
+	public static final int NOTIFICATION_ID = 0;
 
 	public static final String ACTION_DISMISS = "com.ericneidhardt.dynamicsoundboard.misc.SoundPlayingNotification.ACTION_DISMISS";
 
@@ -36,11 +36,6 @@ public class SoundPlayingNotification extends NotificationCompat.Builder
 				? nrPlayingSounds + " " + this.context.getString(R.string.notification_n_sounds_playing)
 				: this.context.getString(R.string.notification_1_sounds_playing);
 		this.setContentTitle(title);
-	}
-
-	public int getId()
-	{
-		return NOTIFICATION_ID;
 	}
 
 	private PendingIntent getStopSoundsIntent()

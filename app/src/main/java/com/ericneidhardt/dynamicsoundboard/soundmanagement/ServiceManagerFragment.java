@@ -86,6 +86,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		MusicService.Binder binder = (MusicService.Binder) service;
 		this.service = binder.getService();
 		this.isServiceBound = true;
+		this.service.onActivityResumed();
 	}
 
 	@Override
