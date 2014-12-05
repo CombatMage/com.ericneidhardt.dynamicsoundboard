@@ -3,6 +3,8 @@ package com.ericneidhardt.dynamicsoundboard.misc;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
@@ -133,4 +135,8 @@ public class Util
 		return files;
 	}
 
+	public static Bitmap getBitmap(Context context, int drawableId)
+	{
+		return BitmapFactory.decodeResource(context.getResources(), drawableId);
+	}
 }

@@ -98,17 +98,19 @@ public class MusicService extends Service
 
 	public void onActivityClosed()
 	{
-		if (this.getCurrentlyPlayingSounds().size() == 0)
+		int nrPlayingSounds = this.getCurrentlyPlayingSounds().size();
+		if (nrPlayingSounds == 0)
 			this.stopSelf();
 		else
-			this.showNotification();
+			this.showNotification(nrPlayingSounds);
 	}
 
-	private void showNotification()
+	private void showNotification(int nrPlayingSounds)
 	{
 		if (this.notification == null)
 			this.notification = new SoundPlayingNotification(this.getApplicationContext());
 
+		this.notification.setTitle(nrPlayingSounds);
 		this.notificationManager.notify(this.notification.getId(), this.notification.build());
 	}
 

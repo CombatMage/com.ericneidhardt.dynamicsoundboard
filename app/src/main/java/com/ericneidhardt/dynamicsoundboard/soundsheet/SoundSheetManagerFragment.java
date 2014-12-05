@@ -235,6 +235,10 @@ public class SoundSheetManagerFragment
 		if (intent == null)
 			return;
 
+		String action = intent.getAction();
+		if (action == null)
+			return;
+
 		if (intent.getAction().equals(Intent.ACTION_VIEW)
 				&& intent.getData() != null)
 		{

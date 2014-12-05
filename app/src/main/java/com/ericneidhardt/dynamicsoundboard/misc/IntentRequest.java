@@ -6,4 +6,6 @@ package com.ericneidhardt.dynamicsoundboard.misc;
 public class IntentRequest
 {
 	public static final int GET_AUDIO_FILE = 0;
+	public static final int NOTIFICATION_DISMISS = 1;
+	public static final int NOTIFICATION_OPEN_ACTIVITY = 2;
 }
