@@ -3,6 +3,7 @@ package com.ericneidhardt.dynamicsoundboard.misc;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.NotificationCompat;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -27,7 +28,6 @@ public class SoundPlayingNotification extends NotificationCompat.Builder
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
 		this.setDeleteIntent(this.getStopSoundsIntent());
 		this.setContentIntent(this.getOpenActivityIntent());
-		//this.setOngoing(true); TODO enable
 	}
 
 	public void setTitle(int nrPlayingSounds)
@@ -48,5 +48,13 @@ public class SoundPlayingNotification extends NotificationCompat.Builder
 	{
 		Intent intent = new Intent(this.context, BaseActivity.class);
 		return PendingIntent.getActivity(this.context, IntentRequest.NOTIFICATION_OPEN_ACTIVITY, intent, 0);
+	}
+
+	public static IntentFilter getNotificationIntentFilter()
+	{
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ACTION_DISMISS);
+		// TODO add additional Actions
+		return filter;
 	}
 }

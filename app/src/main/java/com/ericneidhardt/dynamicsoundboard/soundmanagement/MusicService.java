@@ -2,8 +2,10 @@ package com.ericneidhardt.dynamicsoundboard.soundmanagement;
 
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
@@ -50,6 +52,8 @@ public class MusicService extends Service
 	}
 
 	private LocalBroadcastManager broadcastManager;
+	private BroadcastReceiver soundStateChangedReceiver;
+	private BroadcastReceiver notificationActionReceiver;
 	private Binder binder;
 
 	private NotificationManager notificationManager;
@@ -70,6 +74,12 @@ public class MusicService extends Service
 		this.broadcastManager = LocalBroadcastManager.getInstance(this);
 		this.notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
+		this.soundStateChangedReceiver = new SoundStateChangeReceiver();
+		this.notificationActionReceiver = new NotificationActionReceiver();
+
+		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, new IntentFilter(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED));
+		this.broadcastManager.registerReceiver(this.notificationActionReceiver, SoundPlayingNotification.getNotificationIntentFilter());
+
 		this.playList = new ArrayList<EnhancedMediaPlayer>();
 		this.sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
 
@@ -86,6 +96,8 @@ public class MusicService extends Service
 	@Override
 	public void onDestroy()
 	{
+		this.broadcastManager.unregisterReceiver(this.soundStateChangedReceiver);
+		this.broadcastManager.unregisterReceiver(this.notificationActionReceiver);
 		this.storeLoadedSounds();
 		super.onDestroy();
 	}
@@ -390,6 +402,37 @@ public class MusicService extends Service
 		public MusicService getService()
 		{
 			return MusicService.this;
+		}
+	}
+
+	private class SoundStateChangeReceiver extends BroadcastReceiver
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			Logger.d(TAG, "SoundStateChangeReceiver.onReceive" + intent);
+
+			// TODO update notification
+		}
+	}
+
+	private class NotificationActionReceiver extends BroadcastReceiver
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			Logger.d(TAG, "NotificationActionReceiver.onReceive" + intent);
+
+			String action = intent.getAction();
+			if (action == null)
+				return;
+
+			if (action.equals(SoundPlayingNotification.ACTION_DISMISS))
+			{
+				stopSelf();
+				return;
+			}
+				// TODO update notification and sounds
 		}
 	}
 

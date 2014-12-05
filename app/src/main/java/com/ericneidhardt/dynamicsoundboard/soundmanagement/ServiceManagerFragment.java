@@ -55,8 +55,8 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public void onStop()
 	{
 		super.onStop();
-		if (this.isServiceBound)
-			this.getActivity().unbindService(this);
+		//if (this.isServiceBound)
+		//	this.getActivity().unbindService(this);
 		LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
 	}
 
