@@ -29,6 +29,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
@@ -130,6 +131,13 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		super.onPostCreate(savedInstanceState);
 		if (this.drawerToggle != null)
 			this.drawerToggle.syncState();
+	}
+
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		this.startService(new Intent(this.getApplicationContext(), MusicService.class));
 	}
 
 	@Override

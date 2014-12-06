@@ -68,6 +68,8 @@ public class MusicService extends Service
 	@Override
 	public void onCreate()
 	{
+		Logger.d(TAG, "onCreate");
+
 		super.onCreate();
 
 		this.binder = new Binder();
@@ -96,6 +98,8 @@ public class MusicService extends Service
 	@Override
 	public void onDestroy()
 	{
+		Logger.d(TAG, "onDestroy");
+
 		this.broadcastManager.unregisterReceiver(this.soundStateChangedReceiver);
 		this.broadcastManager.unregisterReceiver(this.notificationActionReceiver);
 		this.storeLoadedSounds();
@@ -105,6 +109,7 @@ public class MusicService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
+		Logger.d(TAG, "onStartCommand");
 		return START_STICKY;
 	}
 
@@ -401,6 +406,7 @@ public class MusicService extends Service
 	{
 		public MusicService getService()
 		{
+			Logger.d(TAG, "getService");
 			return MusicService.this;
 		}
 	}
