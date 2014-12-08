@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundPlayingNotification;
@@ -21,8 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.util.Arrays.asList;
 
 /**
  * File created by eric.neidhardt on 01.12.2014.
@@ -38,14 +37,14 @@ public class MusicService extends Service
 	private static final String DB_SOUNDS_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
 
 	private DaoSession dbPlaylist;
-	private List<EnhancedMediaPlayer> playList;
+	private List<EnhancedMediaPlayer> playList = new ArrayList<EnhancedMediaPlayer>();
 	List<EnhancedMediaPlayer> getPlayList()
 	{
 		return playList;
 	}
 
 	private DaoSession dbSounds;
-	private Map<String, List<EnhancedMediaPlayer>> sounds;
+	private Map<String, List<EnhancedMediaPlayer>> sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
 	Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return sounds;
@@ -81,9 +80,6 @@ public class MusicService extends Service
 
 		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, new IntentFilter(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED));
 		this.broadcastManager.registerReceiver(this.notificationActionReceiver, SoundPlayingNotification.getNotificationIntentFilter());
-
-		this.playList = new ArrayList<EnhancedMediaPlayer>();
-		this.sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
 
 		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS_PLAYLIST);
 		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS);
@@ -121,6 +117,7 @@ public class MusicService extends Service
 
 	public void onActivityClosed()
 	{
+		Logger.d(TAG, "onActivityClosed");
 		int nrPlayingSounds = this.getCurrentlyPlayingSounds().size();
 		if (nrPlayingSounds == 0)
 			this.stopSelf();
@@ -167,13 +164,25 @@ public class MusicService extends Service
 
 	public void addSound(MediaPlayerData playerData)
 	{
+		this.addSoundFromDatabase(playerData);
+		this.dbSounds.getMediaPlayerDataDao().insert(playerData);
+	}
+
+	private void addSoundFromDatabase(MediaPlayerData playerData)
+	{
 		try
 		{
+			String fragmentTag = playerData.getFragmentTag();
 			EnhancedMediaPlayer player = new EnhancedMediaPlayer(this.getApplicationContext(), playerData);
-			if (this.sounds.get(playerData.getFragmentTag()) == null)
-				this.sounds.put(playerData.getFragmentTag(), new ArrayList<EnhancedMediaPlayer>(asList(player)));
+
+			if (this.sounds.get(fragmentTag) == null)
+			{
+				List<EnhancedMediaPlayer> soundListForFragment = new ArrayList<EnhancedMediaPlayer>();
+				soundListForFragment.add(player);
+				this.sounds.put(fragmentTag, soundListForFragment);
+			}
 			else
-				this.sounds.get(playerData.getFragmentTag()).add(player);
+				this.sounds.get(fragmentTag).add(player);
 		} catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
@@ -215,9 +224,9 @@ public class MusicService extends Service
 				EnhancedMediaPlayer correspondingPlayerInPlaylist = this.findInPlaylist(data.getPlayerId());
 				this.playList.remove(correspondingPlayerInPlaylist);
 
-				correspondingPlayerInPlaylist.destroy();
+				this.destroyPlayerAndUpdateDatabase(this.dbPlaylist, correspondingPlayerInPlaylist);
 			}
-			playerToRemove.destroy();
+			this.destroyPlayerAndUpdateDatabase(this.dbSounds, playerToRemove);
 		}
 	}
 
@@ -249,13 +258,19 @@ public class MusicService extends Service
 
 				player.setIsInPlaylist(false);
 				this.playList.remove(playerInPlaylist);
-				playerInPlaylist.destroy();
+				this.destroyPlayerAndUpdateDatabase(this.dbPlaylist, playerInPlaylist);
 			}
 		} catch (IOException e)
 		{
 			Logger.e(TAG, e.getMessage());
 			throw new RuntimeException(e);
 		}
+	}
+
+	private void destroyPlayerAndUpdateDatabase(DaoSession daoSession, EnhancedMediaPlayer player)
+	{
+		daoSession.getMediaPlayerDataDao().delete(player.getMediaPlayerData());
+		player.destroy();
 	}
 
 	private EnhancedMediaPlayer findInPlaylist(String playerId)
@@ -296,7 +311,7 @@ public class MusicService extends Service
 		{
 			super.onSuccess(mediaPlayersData);
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				addSound(mediaPlayerData);
+				addSoundFromDatabase(mediaPlayerData);
 
 			this.sendBroadcastLoadingSoundsSuccessful();
 		}
@@ -386,8 +401,14 @@ public class MusicService extends Service
 				@Override
 				public void run()
 				{
-					database.getMediaPlayerDataDao().deleteAll();
-					database.getMediaPlayerDataDao().insertInTx(mediaPlayers);
+					MediaPlayerDataDao dao = database.getMediaPlayerDataDao();
+					for (MediaPlayerData playerToUpdate : mediaPlayers)
+					{
+						List<MediaPlayerData> storePlayers = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerToUpdate.getPlayerId())).list();
+						if (storePlayers == null || storePlayers.size() == 0)
+							dao.insert(playerToUpdate);
+						// else we could update the existing dao, but this is currently not necessary
+					}
 				}
 			});
 			return null;

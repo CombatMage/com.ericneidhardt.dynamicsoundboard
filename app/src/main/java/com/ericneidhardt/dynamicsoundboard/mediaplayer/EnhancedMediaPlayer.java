@@ -14,7 +14,7 @@ import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import java.io.IOException;
 
 
-public class EnhancedMediaPlayer extends MediaPlayer
+public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener
 {
 	private static final String TAG = EnhancedMediaPlayer.class.getName();
 
@@ -35,6 +35,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 	private MediaPlayerData rawData;
 	private int duration;
 
+	private OnCompletionListener onCompletionListener; // listener is triggered when this.onCompletion() is called
 	private LocalBroadcastManager broadcastManager;
 
 	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
@@ -91,6 +92,7 @@ public class EnhancedMediaPlayer extends MediaPlayer
 		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		this.setDataSource(context, Uri.parse(this.rawData.getUri()));
 		this.setLooping(this.rawData.getIsLoop());
+		this.setOnCompletionListener(this);
 		this.prepare();
 		this.currentState = State.PREPARED;
 
@@ -243,6 +245,19 @@ public class EnhancedMediaPlayer extends MediaPlayer
 			Logger.e(TAG, e.getMessage());
 			return false;
 		}
+	}
+
+	@Override
+	public void setOnCompletionListener(OnCompletionListener listener)
+	{
+		this.onCompletionListener = listener;
+	}
+
+	@Override
+	public void onCompletion(MediaPlayer mp)
+	{
+		if (this.onCompletionListener != null)
+			this.onCompletionListener.onCompletion(mp);
 	}
 
 	private void sendBroadCastSoundPlaying(boolean isPlaying)
