@@ -15,6 +15,7 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
 import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,12 +28,14 @@ public class SoundAdapter
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
 	private SoundSheetFragment parent;
+	private String parentFragmentTag;
 
 	private OnItemDeleteListener onItemDeleteListener;
 
 	public SoundAdapter(SoundSheetFragment parent)
 	{
 		this.parent = parent;
+		this.parentFragmentTag = parent.getFragmentTag();
 	}
 
 	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener)
@@ -40,43 +43,28 @@ public class SoundAdapter
 		this.onItemDeleteListener = onItemDeleteListener;
 	}
 
-	public void addAll(List<EnhancedMediaPlayer> mediaPlayers)
+	private EnhancedMediaPlayer getItem(int position)
 	{
-		if (mediaPlayers == null)
-			return;
-
-		for (EnhancedMediaPlayer player : mediaPlayers)
-			player.setOnCompletionListener(this);
-
-		this.sounds.addAll(mediaPlayers);
+		return this.getValues().get(position);
 	}
 
+	@Override
 	public List<EnhancedMediaPlayer> getValues()
 	{
-		return this.sounds;
-	}
+		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getSounds().get(this.parentFragmentTag);
+		if (sounds == null)
+			return new ArrayList<EnhancedMediaPlayer>();
 
-	public void removeAll(List<EnhancedMediaPlayer> players)
-	{
-		if (players == null)
-			return;
-		this.sounds.removeAll(players);
-	}
+		for (EnhancedMediaPlayer sound : sounds)
+			sound.setOnCompletionListener(this);
 
-	public void clear()
-	{
-		this.sounds.clear();
-	}
-
-	public void remove(int index)
-	{
-		this.sounds.remove(index);
+		return sounds;
 	}
 
 	@Override
 	public int getItemCount()
 	{
-		return this.sounds.size();
+		return this.getValues().size();
 	}
 
 	@Override
@@ -96,7 +84,7 @@ public class SoundAdapter
 	public void onCompletion(MediaPlayer mp)
 	{
 		if (mp instanceof EnhancedMediaPlayer)
-			this.notifyItemChanged(this.sounds.indexOf(mp));
+			this.notifyItemChanged(this.getValues().indexOf(mp));
 	}
 
 	public class ViewHolder
@@ -146,7 +134,7 @@ public class SoundAdapter
 
 		private void bindData(int positionInDataSet)
 		{
-			EnhancedMediaPlayer player = sounds.get(positionInDataSet);
+			EnhancedMediaPlayer player = getItem(positionInDataSet);
 			MediaPlayerData data = player.getMediaPlayerData();
 
 			super.resetViewPager();
@@ -226,7 +214,7 @@ public class SoundAdapter
 				@Override
 				public void run() {
 					if (selectedPage != VIEWPAGER_INDEX_SOUND_CONTROLS && onItemDeleteListener != null)
-						onItemDeleteListener.onItemDelete(sounds.get(position), position);
+						onItemDeleteListener.onItemDelete(getItem(position), position);
 				}
 			}, UPDATE_INTERVAL);
 
@@ -243,13 +231,13 @@ public class SoundAdapter
 		@Override
 		public void onTextEdited(String text)
 		{
-			sounds.get(this.getPosition()).getMediaPlayerData().setLabel(text);
+			getItem(this.getPosition()).getMediaPlayerData().setLabel(text);
 		}
 
 		@Override
 		public void onClick(View view)
 		{
-			EnhancedMediaPlayer player = sounds.get(this.getPosition());
+			EnhancedMediaPlayer player = getItem(this.getPosition());
 			int id = view.getId();
 			boolean isSelected = view.isSelected();
 			switch (id)
@@ -289,7 +277,7 @@ public class SoundAdapter
 		{
 			if (fromUser)
 			{
-				EnhancedMediaPlayer player = sounds.get(this.getPosition());
+				EnhancedMediaPlayer player = getItem(this.getPosition());
 				player.setPositionTo(progress);
 			}
 		}

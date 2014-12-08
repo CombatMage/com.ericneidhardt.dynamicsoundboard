@@ -3,6 +3,7 @@ package com.ericneidhardt.dynamicsoundboard.misc;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +12,15 @@ import java.util.TimerTask;
 
 public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T>
 {
-
 	public static final int UPDATE_INTERVAL = 500;
 	public static final Handler handler = new Handler();
 
-	protected List<EnhancedMediaPlayer> sounds;
+	protected ServiceManagerFragment serviceManagerFragment;
 	private Timer progressBarUpdateTimer;
 
-	public SoundProgressAdapter()
+	public void setServiceManagerFragment(ServiceManagerFragment serviceManagerFragment)
 	{
-		this.sounds = new ArrayList<EnhancedMediaPlayer>();
+		this.serviceManagerFragment = serviceManagerFragment;
 	}
 
 	/**
@@ -60,11 +60,13 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> ex
 	private List<Integer> getPlayingItems()
 	{
 		List<Integer> playingSounds = new ArrayList<Integer>();
-		for (int i = 0; i < this.sounds.size(); i++)
+		for (int i = 0; i < this.getValues().size(); i++)
 		{
-			if (this.sounds.get(i).isPlaying())
+			if (this.getValues().get(i).isPlaying())
 				playingSounds.add(i);
 		}
 		return playingSounds;
 	}
+
+	protected abstract List<EnhancedMediaPlayer> getValues();
 }

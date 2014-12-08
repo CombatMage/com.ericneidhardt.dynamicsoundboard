@@ -51,6 +51,11 @@ public class SoundSheetFragment
 		return fragment;
 	}
 
+	public String getFragmentTag()
+	{
+		return fragmentTag;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -74,6 +79,7 @@ public class SoundSheetFragment
 
 		this.attachScrollViewToFab();
 
+		this.soundAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
 		this.soundAdapter.startProgressUpdateTimer();
 	}
 
@@ -117,7 +123,6 @@ public class SoundSheetFragment
 
 	private void removeAllSounds()
 	{
-		this.soundAdapter.removeAll(this.soundAdapter.getValues());
 		this.getServiceManagerFragment().getSoundService().removeSounds(this.fragmentTag);
 	}
 
@@ -169,8 +174,6 @@ public class SoundSheetFragment
 		ServiceManagerFragment fragment = this.getServiceManagerFragment();
 		List<EnhancedMediaPlayer> enhancedMediaPlayers = fragment.getSounds().get(this.fragmentTag);
 
-		this.soundAdapter.clear();
-		this.soundAdapter.addAll(enhancedMediaPlayers);
 		this.soundAdapter.notifyDataSetChanged();
 
 		return fragmentView;
@@ -179,7 +182,6 @@ public class SoundSheetFragment
 	@Override
 	public void onItemDelete(EnhancedMediaPlayer player, int position)
 	{
-		this.soundAdapter.remove(position);
 		this.soundAdapter.notifyItemRemoved(position);
 		if (position > 0)
 			this.soundAdapter.notifyItemChanged(position - 1);
@@ -201,15 +203,7 @@ public class SoundSheetFragment
 	public void notifyDataSetChanged(boolean newSoundsAvailable)
 	{
 		ServiceManagerFragment fragment = this.getServiceManagerFragment();
-
-		if (newSoundsAvailable)
-		{
-			this.soundAdapter.clear();
-			this.soundAdapter.addAll(fragment.getSounds().get(this.fragmentTag));
-			this.soundAdapter.notifyDataSetChanged();
-		}
-		else
-			this.soundAdapter.notifyDataSetChanged();
+		this.soundAdapter.notifyDataSetChanged();
 	}
 
 }

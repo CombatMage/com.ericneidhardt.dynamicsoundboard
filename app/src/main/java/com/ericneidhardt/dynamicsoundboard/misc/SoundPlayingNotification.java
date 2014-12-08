@@ -38,6 +38,11 @@ public class SoundPlayingNotification extends NotificationCompat.Builder
 		this.setContentTitle(title);
 	}
 
+	public void addPendingSoundsToNotification()
+	{
+		// TODO
+	}
+
 	private PendingIntent getStopSoundsIntent()
 	{
 		Intent intent = new Intent(ACTION_DISMISS);

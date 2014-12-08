@@ -71,6 +71,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	public void onActivityCreated(NavigationDrawerFragment parent)
 	{
 		super.parent = parent;
+		this.adapter.setServiceManagerFragment(parent.getServiceManagerFragment());
 		this.notifyDataSetChanged(true);
 	}
 
@@ -97,9 +98,6 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 			int index = selectedItems.keyAt(i);
 			playersToRemove.add(this.adapter.getValues().get(index));
 		}
-
-		this.adapter.removeAll(playersToRemove);
-
 		ServiceManagerFragment soundManagerFragment = this.parent.getServiceManagerFragment();
 
 		soundManagerFragment.getSoundService().removeFromPlaylist(playersToRemove);
@@ -115,12 +113,6 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 	public void notifyDataSetChanged(boolean newSoundAvailable)
 	{
-		if (newSoundAvailable)
-		{
-			ServiceManagerFragment fragment = this.parent.getServiceManagerFragment();
-			this.adapter.clear();
-			this.adapter.addAll(fragment.getPlayList());
-		}
 		this.adapter.notifyDataSetChanged();
 	}
 

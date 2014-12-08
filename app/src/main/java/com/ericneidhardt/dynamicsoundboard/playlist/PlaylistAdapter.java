@@ -32,35 +32,24 @@ public class PlaylistAdapter
 		this.onItemClickListener = onItemClickListener;
 	}
 
-	public void clear()
+	@Override
+	protected List<EnhancedMediaPlayer> getValues()
 	{
-		super.sounds.clear();
+		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getPlayList();
+		for (EnhancedMediaPlayer sound : sounds)
+			sound.setOnCompletionListener(this);
+		return sounds;
 	}
 
-	public List<EnhancedMediaPlayer> getValues()
+	private EnhancedMediaPlayer getItem(int position)
 	{
-		return super.sounds;
-	}
-
-	public void removeAll(List<EnhancedMediaPlayer> playerToRemove)
-	{
-		super.sounds.removeAll(playerToRemove);
-	}
-
-	public void addAll(List<EnhancedMediaPlayer> mediaPlayers)
-	{
-		if (mediaPlayers == null)
-			return;
-
-		for (EnhancedMediaPlayer player : mediaPlayers)
-			player.setOnCompletionListener(this);
-
-		super.sounds.addAll(mediaPlayers);
+		return this.getValues().get(position);
 	}
 
 	public void startPlayList(EnhancedMediaPlayer nextActivePlayer, int position)
 	{
-		for (EnhancedMediaPlayer player : super.sounds)
+		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getPlayList();
+		for (EnhancedMediaPlayer player : sounds)
 		{
 			if (player.equals(nextActivePlayer))
 				continue;
@@ -91,7 +80,7 @@ public class PlaylistAdapter
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int i)
 	{
-		EnhancedMediaPlayer player = super.sounds.get(i);
+		EnhancedMediaPlayer player = this.getItem(i);
 		holder.label.setText(player.getMediaPlayerData().getLabel());
 		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
 		holder.updateProgress();
@@ -100,15 +89,17 @@ public class PlaylistAdapter
 	@Override
 	public int getItemCount()
 	{
-		return super.sounds.size();
+		return this.getValues().size();
 	}
 
 	@Override
-	public void onCompletion(MediaPlayer mp) {
+	public void onCompletion(MediaPlayer mp)
+	{
 		this.currentItemIndex++;
-		if (this.currentItemIndex >= super.sounds.size())
+		if (this.currentItemIndex >= this.getItemCount())
 			this.currentItemIndex = 0;
-		super.sounds.get(this.currentItemIndex).playSound();
+
+		this.getItem(this.currentItemIndex).playSound();
 		this.notifyDataSetChanged();
 	}
 
@@ -133,7 +124,7 @@ public class PlaylistAdapter
 
 		private void updateProgress()
 		{
-			EnhancedMediaPlayer player = sounds.get(this.getPosition());
+			EnhancedMediaPlayer player = getItem(this.getPosition());
 			if (player.isPlaying())
 			{
 				progress.setMax(player.getDuration());
@@ -149,7 +140,7 @@ public class PlaylistAdapter
 		{
 			int position = this.getPosition();
 			if (onItemClickListener != null)
-				onItemClickListener.onItemClick(view, sounds.get(position), position);
+				onItemClickListener.onItemClick(view, getItem(position), position);
 		}
 	}
 
