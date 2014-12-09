@@ -186,6 +186,7 @@ public class MusicService extends Service
 		} catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
+			this.removeSoundFromDatabase(dbSounds, playerData);
 		}
 	}
 
@@ -197,7 +198,8 @@ public class MusicService extends Service
 			this.playList.add(player);
 		} catch (IOException e)
 		{
-			Logger.d(TAG, e.getMessage());
+			Logger.d(TAG, playerData.toString()+ " " + e.getMessage());
+			this.removeSoundFromDatabase(dbPlaylist, playerData);
 		}
 	}
 
@@ -269,8 +271,13 @@ public class MusicService extends Service
 
 	private void destroyPlayerAndUpdateDatabase(DaoSession daoSession, EnhancedMediaPlayer player)
 	{
-		daoSession.getMediaPlayerDataDao().delete(player.getMediaPlayerData());
+		this.removeSoundFromDatabase(daoSession, player.getMediaPlayerData());
 		player.destroy();
+	}
+
+	private void removeSoundFromDatabase(DaoSession daoSession, MediaPlayerData playerData)
+	{
+		daoSession.getMediaPlayerDataDao().delete(playerData);
 	}
 
 	private EnhancedMediaPlayer findInPlaylist(String playerId)
