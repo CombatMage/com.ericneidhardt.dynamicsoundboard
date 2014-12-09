@@ -37,7 +37,7 @@ public class PlaylistAdapter
 	{
 		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getPlayList();
 		for (EnhancedMediaPlayer sound : sounds)
-			sound.setOnCompletionListener(this);
+			sound.addOnCompletionListener(this);
 		return sounds;
 	}
 

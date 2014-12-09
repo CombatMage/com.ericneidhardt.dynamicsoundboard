@@ -56,7 +56,7 @@ public class SoundAdapter
 			return new ArrayList<EnhancedMediaPlayer>();
 
 		for (EnhancedMediaPlayer sound : sounds)
-			sound.setOnCompletionListener(this);
+			sound.addOnCompletionListener(this);
 
 		return sounds;
 	}

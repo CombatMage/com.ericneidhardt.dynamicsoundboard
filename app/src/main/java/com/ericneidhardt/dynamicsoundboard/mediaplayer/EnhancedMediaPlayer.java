@@ -12,6 +12,8 @@ import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener
@@ -35,7 +37,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private MediaPlayerData rawData;
 	private int duration;
 
-	private OnCompletionListener onCompletionListener; // listener is triggered when this.onCompletion() is called
+	private Set<OnCompletionListener> onCompletionListeners; // listener is triggered when this.onCompletion() is called
 	private LocalBroadcastManager broadcastManager;
 
 	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
@@ -43,7 +45,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		super();
 
 		this.broadcastManager = LocalBroadcastManager.getInstance(context);
-
+		this.onCompletionListeners = new HashSet<OnCompletionListener>();
 		this.rawData = data;
 		this.setLooping(data.getIsLoop());
 
@@ -62,11 +64,6 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		playListData.setUri(data.getUri());
 
 		return new EnhancedMediaPlayer(context, playListData);
-	}
-
-	public MediaPlayerData getMediaPlayerData()
-	{
-		return this.rawData;
 	}
 
 	public static MediaPlayerData getMediaPlayerData(String fragmentTag, Uri uri, String label)
@@ -92,11 +89,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		this.setDataSource(context, Uri.parse(this.rawData.getUri()));
 		this.setLooping(this.rawData.getIsLoop());
-		this.setOnCompletionListener(this);
 		this.prepare();
 		this.currentState = State.PREPARED;
 
 		this.duration = super.getDuration();
+		this.setOnCompletionListener(this);
 	}
 
 	public void destroy()
@@ -105,6 +102,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
+	}
+
+	public MediaPlayerData getMediaPlayerData()
+	{
+		return this.rawData;
 	}
 
 	@Override
@@ -247,17 +249,17 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		}
 	}
 
-	@Override
-	public void setOnCompletionListener(OnCompletionListener listener)
+	public void addOnCompletionListener(OnCompletionListener listener)
 	{
-		this.onCompletionListener = listener;
+		this.onCompletionListeners.add(listener);
 	}
 
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
-		if (this.onCompletionListener != null)
-			this.onCompletionListener.onCompletion(mp);
+		this.sendBroadCastSoundPlaying(false);
+		for (OnCompletionListener listener : this.onCompletionListeners)
+			listener.onCompletion(mp);
 	}
 
 	private void sendBroadCastSoundPlaying(boolean isPlaying)
