@@ -213,14 +213,14 @@ public class SoundSheetManagerFragment
 			this.addSoundSheetAndNotifyFragment(newSoundSheet);
 			mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(newSoundSheet.getFragmentTag(), soundUri, soundLabel);
 
-			service.addSound(mediaPlayerData);
+			service.addNewSoundToServiceAndDatabase(mediaPlayerData);
 			soundManagerFragment.notifyFragment(mediaPlayerData.getFragmentTag());
 		}
 		else if (existingSoundSheet != null)
 			mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
 		else
 			throw new NullPointerException(TAG + ".addSoundFromIntent: cannot add new sound, mediaPlayerData is null");
-		service.addSound(mediaPlayerData);
+		service.addNewSoundToServiceAndDatabase(mediaPlayerData);
 		soundManagerFragment.notifyFragment(mediaPlayerData.getFragmentTag());
 	}
 

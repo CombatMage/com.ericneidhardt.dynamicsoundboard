@@ -131,7 +131,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		service.removeFromPlaylist(soundManagerFragment.getPlayList()); // clear playlist before adding new values
 
 		for (MediaPlayerData mediaPlayerData : playList)
-			service.addSoundToPlaylist(mediaPlayerData);
+			service.addNewSoundToPlaylist(mediaPlayerData);
 		soundManagerFragment.notifyPlaylist();
 	}
 
@@ -144,7 +144,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		{
 			List<MediaPlayerData> soundsPerFragment = sounds.get(key);
 			for (MediaPlayerData mediaPlayerData : soundsPerFragment)
-				service.addSound(mediaPlayerData);
+				service.addNewSoundToServiceAndDatabase(mediaPlayerData);
 		}
 		soundManagerFragment.notifySoundSheetFragments();
 	}

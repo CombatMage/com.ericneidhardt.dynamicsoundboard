@@ -1,6 +1,9 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
-import android.app.*;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -181,13 +184,13 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		if (this.callingFragmentTag.equals(Playlist.TAG))
 		{
 			for (MediaPlayerData playerData : playersData)
-				fragment.getSoundService().addSoundToPlaylist(playerData);
+				fragment.getSoundService().addNewSoundToPlaylist(playerData);
 			fragment.notifyPlaylist();
 		}
 		else
 		{
 			for (MediaPlayerData playerData : playersData)
-				fragment.getSoundService().addSound(playerData);
+				fragment.getSoundService().addNewSoundToServiceAndDatabase(playerData);
 			fragment.notifyFragment(this.callingFragmentTag);
 		}
 	}

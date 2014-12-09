@@ -162,13 +162,13 @@ public class MusicService extends Service
 		return currentlyPlayingSounds;
 	}
 
-	public void addSound(MediaPlayerData playerData)
+	public void addNewSoundToServiceAndDatabase(MediaPlayerData playerData)
 	{
-		this.addSoundFromDatabase(playerData);
-		this.dbSounds.getMediaPlayerDataDao().insert(playerData);
+		if (this.addLoadedSound(playerData))
+			this.dbSounds.getMediaPlayerDataDao().insert(playerData);
 	}
 
-	private void addSoundFromDatabase(MediaPlayerData playerData)
+	private boolean addLoadedSound(MediaPlayerData playerData)
 	{
 		try
 		{
@@ -183,23 +183,34 @@ public class MusicService extends Service
 			}
 			else
 				this.sounds.get(fragmentTag).add(player);
+
+			return true;
 		} catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
 			this.removeSoundFromDatabase(dbSounds, playerData);
+			return false;
 		}
 	}
 
-	public void addSoundToPlaylist(MediaPlayerData playerData)
+	public void addNewSoundToPlaylist(MediaPlayerData playerData)
+	{
+		if (this.addLoadedSoundToPlaylist(playerData))
+			this.dbPlaylist.getMediaPlayerDataDao().insert(playerData);
+	}
+
+	private boolean addLoadedSoundToPlaylist(MediaPlayerData playerData)
 	{
 		try
 		{
 			EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(this.getApplicationContext(), playerData);
 			this.playList.add(player);
+			return true;
 		} catch (IOException e)
 		{
 			Logger.d(TAG, playerData.toString()+ " " + e.getMessage());
 			this.removeSoundFromDatabase(dbPlaylist, playerData);
+			return false;
 		}
 	}
 
@@ -318,7 +329,7 @@ public class MusicService extends Service
 		{
 			super.onSuccess(mediaPlayersData);
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				addSoundFromDatabase(mediaPlayerData);
+				addLoadedSound(mediaPlayerData);
 
 			this.sendBroadcastLoadingSoundsSuccessful();
 		}
@@ -344,7 +355,7 @@ public class MusicService extends Service
 		{
 			super.onSuccess(mediaPlayersData);
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				addSoundToPlaylist(mediaPlayerData);
+				addLoadedSoundToPlaylist(mediaPlayerData);
 
 			this.sendBroadcastLoadingPlayListSuccessful();
 		}

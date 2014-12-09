@@ -136,7 +136,7 @@ public class SoundSheetFragment
 				Uri soundUri = data.getData();
 				String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
 				ServiceManagerFragment fragment = this.getServiceManagerFragment();
-				fragment.getSoundService().addSound(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
+				fragment.getSoundService().addNewSoundToServiceAndDatabase(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
 				fragment.notifySoundSheetFragments();
 				return;
 			}
