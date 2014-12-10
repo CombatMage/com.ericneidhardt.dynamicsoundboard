@@ -423,7 +423,16 @@ public class MusicService extends Service
 						List<MediaPlayerData> storePlayers = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerToUpdate.getPlayerId())).list();
 						if (storePlayers == null || storePlayers.size() == 0)
 							dao.insert(playerToUpdate);
-						// else we could update the existing dao, but this is currently not necessary
+						else
+						{
+							MediaPlayerData storedPlayer = storePlayers.get(0); // the player id should be unique there this will never be greater than one
+							storedPlayer.setFragmentTag(playerToUpdate.getFragmentTag());
+							storedPlayer.setIsInPlaylist(playerToUpdate.getIsInPlaylist());
+							storedPlayer.setIsLoop(playerToUpdate.getIsInPlaylist());
+							storedPlayer.setLabel(playerToUpdate.getLabel());
+							storedPlayer.setTimePosition(playerToUpdate.getTimePosition());
+							dao.update(storedPlayer);
+						}
 					}
 				}
 			});
