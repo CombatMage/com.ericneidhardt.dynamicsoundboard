@@ -2,6 +2,7 @@ package com.ericneidhardt.dynamicsoundboard.mediaplayer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -268,6 +269,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		intent.setAction(ACTION_SOUND_STATE_CHANGED);
 		intent.putExtra(KEY_EXTRA_IS_PLAYING, isPlaying);
 		this.broadcastManager.sendBroadcast(intent);
+	}
+
+	public static IntentFilter getMediaPlayerIntentFilter()
+	{
+		return new IntentFilter(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED);
 	}
 
 }

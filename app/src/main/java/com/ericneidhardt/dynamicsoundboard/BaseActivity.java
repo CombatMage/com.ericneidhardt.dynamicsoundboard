@@ -6,7 +6,6 @@ import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
@@ -151,7 +150,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener, this.getServiceManagerFragment());
 
-		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, new IntentFilter(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED));
+		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, EnhancedMediaPlayer.getMediaPlayerIntentFilter());
 	}
 
 	@Override

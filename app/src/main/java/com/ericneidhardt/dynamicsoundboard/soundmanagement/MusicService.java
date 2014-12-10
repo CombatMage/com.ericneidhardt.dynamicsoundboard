@@ -5,7 +5,6 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
@@ -78,8 +77,8 @@ public class MusicService extends Service
 		this.soundStateChangedReceiver = new SoundStateChangeReceiver();
 		this.notificationActionReceiver = new NotificationActionReceiver();
 
-		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, new IntentFilter(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED));
-		this.broadcastManager.registerReceiver(this.notificationActionReceiver, SoundPlayingNotification.getNotificationIntentFilter());
+		this.registerReceiver(this.notificationActionReceiver, SoundPlayingNotification.getNotificationIntentFilter());
+		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, EnhancedMediaPlayer.getMediaPlayerIntentFilter());
 
 		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS_PLAYLIST);
 		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS);
@@ -95,9 +94,8 @@ public class MusicService extends Service
 	public void onDestroy()
 	{
 		Logger.d(TAG, "onDestroy");
-
+		this.unregisterReceiver(this.notificationActionReceiver);
 		this.broadcastManager.unregisterReceiver(this.soundStateChangedReceiver);
-		this.broadcastManager.unregisterReceiver(this.notificationActionReceiver);
 		this.storeLoadedSounds();
 		super.onDestroy();
 	}
