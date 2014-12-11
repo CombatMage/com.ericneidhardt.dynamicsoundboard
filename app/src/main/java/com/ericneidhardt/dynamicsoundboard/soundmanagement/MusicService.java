@@ -12,9 +12,10 @@ import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
-import com.ericneidhardt.dynamicsoundboard.misc.SoundPlayingNotification;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import com.ericneidhardt.dynamicsoundboard.notification.PendingSoundNotification;
+import com.ericneidhardt.dynamicsoundboard.notification.PendingSoundNotificationBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class MusicService extends Service
 	private Binder binder;
 
 	private NotificationManager notificationManager;
-	private SoundPlayingNotification notification;
+	private List<PendingSoundNotification> notifications;
 
 	@Override
 	public IBinder onBind(Intent intent)
@@ -81,11 +82,12 @@ public class MusicService extends Service
 		this.binder = new Binder();
 		this.broadcastManager = LocalBroadcastManager.getInstance(this);
 		this.notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+		this.notifications = new ArrayList<PendingSoundNotification>();
 
 		this.soundStateChangedReceiver = new SoundStateChangeReceiver();
 		this.notificationActionReceiver = new NotificationActionReceiver();
 
-		this.registerReceiver(this.notificationActionReceiver, SoundPlayingNotification.getNotificationIntentFilter());
+		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
 		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, EnhancedMediaPlayer.getMediaPlayerIntentFilter());
 
 		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS_PLAYLIST);
@@ -117,27 +119,34 @@ public class MusicService extends Service
 
 	public void onActivityResumed()
 	{
-		this.notificationManager.cancel(SoundPlayingNotification.NOTIFICATION_ID);
-		this.notification = null;
+		for (PendingSoundNotification notification : this.notifications)
+		{
+			int notificationId = notification.getNotificationId();
+			this.notificationManager.cancel(notificationId);
+		}
+		this.notifications.clear();
 	}
 
 	public void onActivityClosed()
 	{
 		Logger.d(TAG, "onActivityClosed");
-		int nrPlayingSounds = this.getCurrentlyPlayingSounds().size();
-		if (nrPlayingSounds == 0)
+		List<EnhancedMediaPlayer> pendingPlayers = this.getCurrentlyPlayingSounds();
+		if (pendingPlayers.size() == 0)
 			this.stopSelf();
 		else
-			this.showNotification(nrPlayingSounds);
+			this.showNotifications(pendingPlayers);
 	}
 
-	private void showNotification(int nrPlayingSounds)
+	private void showNotifications(List<EnhancedMediaPlayer> pendingPlayers)
 	{
-		if (this.notification == null)
-			this.notification = new SoundPlayingNotification(this.getApplicationContext());
+		for (EnhancedMediaPlayer player : pendingPlayers)
+		{
+			PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(this.getApplicationContext(), player);
+			PendingSoundNotification notification = new PendingSoundNotification(builder.getNotificationId(), builder.build());
 
-		this.notification.setTitle(nrPlayingSounds);
-		this.notificationManager.notify(SoundPlayingNotification.NOTIFICATION_ID, this.notification.build());
+			this.notifications.add(notification);
+			this.notificationManager.notify(notification.getNotificationId(), notification.getNotification());
+		}
 	}
 
 	public void storeLoadedSounds()
@@ -147,6 +156,12 @@ public class MusicService extends Service
 
 		task = new UpdateSoundsTask(this.playList, dbPlaylist);
 		task.execute();
+	}
+
+	private EnhancedMediaPlayer findPlayerWithId(String playerId)
+	{
+		// TODO
+		return null;
 	}
 
 	public List<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
@@ -506,12 +521,31 @@ public class MusicService extends Service
 			if (action == null)
 				return;
 
-			if (action.equals(SoundPlayingNotification.ACTION_DISMISS))
+			if (action.equals(PendingSoundNotificationBuilder.ACTION_DISMISS))
 			{
-				stopSelf();
+				String playerId = intent.getStringExtra(PendingSoundNotificationBuilder.KEY_PLAYER_ID);
+				int notificationId = intent.getIntExtra(PendingSoundNotificationBuilder.KEY_NOTIFICATION_ID, 0);
+				this.dismissPendingMediaPlayer(notificationId, playerId);
 				return;
 			}
 				// TODO update notification and sounds
+		}
+
+		private void dismissPendingMediaPlayer(int notificationId, String playerId)
+		{
+			PendingSoundNotification notificationToRemove = null;
+			for (PendingSoundNotification notification : notifications)
+			{
+				if (notification.getNotificationId() == notificationId)
+					notificationToRemove = notification;
+			}
+			if (notificationToRemove != null)
+				notifications.remove(notificationToRemove);
+
+			// TODO dispose player with matching i
+
+			if (notifications.size() == 0)
+				stopSelf();
 		}
 	}
 

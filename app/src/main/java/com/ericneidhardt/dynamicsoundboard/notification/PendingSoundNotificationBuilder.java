@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.misc;
+package com.ericneidhardt.dynamicsoundboard.notification;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -7,45 +7,47 @@ import android.content.IntentFilter;
 import android.support.v4.app.NotificationCompat;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
+import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
+import com.ericneidhardt.dynamicsoundboard.misc.Util;
 
 /**
  * File created by eric.neidhardt on 04.12.2014.
  */
-public class SoundPlayingNotification extends NotificationCompat.Builder
+public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 {
-	public static final int NOTIFICATION_ID = 0;
+	public static final String ACTION_DISMISS = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_DISMISS";
 
-	public static final String ACTION_DISMISS = "com.ericneidhardt.dynamicsoundboard.misc.SoundPlayingNotification.ACTION_DISMISS";
+	public static final String KEY_PLAYER_ID = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_PLAYER_ID";
+	public static final String KEY_NOTIFICATION_ID = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_NOTIFICATION_ID";
 
 	private Context context;
+	private int notificationId;
+	private String playerId;
 
-	public SoundPlayingNotification(Context context)
+	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player)
 	{
 		super(context);
 		this.context = context;
+		this.playerId = player.getMediaPlayerData().getPlayerId();
+		this.notificationId = this.playerId.hashCode();
 
 		this.setLargeIcon(Util.getBitmap(context, R.drawable.ic_launcher));
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
 		this.setDeleteIntent(this.getStopSoundsIntent());
 		this.setContentIntent(this.getOpenActivityIntent());
+		this.setContentTitle(player.getMediaPlayerData().getLabel());
 	}
 
-	public void setTitle(int nrPlayingSounds)
+	public int getNotificationId()
 	{
-		String title = nrPlayingSounds > 1
-				? nrPlayingSounds + " " + this.context.getString(R.string.notification_n_sounds_playing)
-				: this.context.getString(R.string.notification_1_sounds_playing);
-		this.setContentTitle(title);
-	}
-
-	public void addPendingSoundsToNotification()
-	{
-		// TODO
+		return this.notificationId;
 	}
 
 	private PendingIntent getStopSoundsIntent()
 	{
 		Intent intent = new Intent(ACTION_DISMISS);
+		intent.putExtra(KEY_PLAYER_ID, this.playerId);
 		return PendingIntent.getBroadcast(this.context, IntentRequest.NOTIFICATION_DISMISS, intent, 0);
 	}
 
