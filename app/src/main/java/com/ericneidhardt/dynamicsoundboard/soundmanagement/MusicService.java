@@ -426,17 +426,22 @@ public class MusicService extends Service
 						else
 						{
 							MediaPlayerData storedPlayer = storePlayers.get(0); // the player id should be unique there this will never be greater than one
-							storedPlayer.setFragmentTag(playerToUpdate.getFragmentTag());
-							storedPlayer.setIsInPlaylist(playerToUpdate.getIsInPlaylist());
-							storedPlayer.setIsLoop(playerToUpdate.getIsInPlaylist());
-							storedPlayer.setLabel(playerToUpdate.getLabel());
-							storedPlayer.setTimePosition(playerToUpdate.getTimePosition());
+							updateStorePlayerData(storedPlayer, playerToUpdate);
 							dao.update(storedPlayer);
 						}
 					}
 				}
 			});
 			return null;
+		}
+
+		private void updateStorePlayerData(MediaPlayerData storedPlayer, MediaPlayerData newPlayerData)
+		{
+			storedPlayer.setFragmentTag(newPlayerData.getFragmentTag());
+			storedPlayer.setIsInPlaylist(newPlayerData.getIsInPlaylist());
+			storedPlayer.setIsLoop(newPlayerData.getIsInPlaylist());
+			storedPlayer.setLabel(newPlayerData.getLabel());
+			storedPlayer.setTimePosition(newPlayerData.getTimePosition());
 		}
 
 		@Override
