@@ -36,6 +36,10 @@ public class MusicService extends Service
 	private static final String DB_SOUNDS_PLAYLIST = "com.ericneidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
 
 	private DaoSession dbPlaylist;
+	private synchronized MediaPlayerDataDao getPlaylistDao()
+	{
+		return this.dbPlaylist.getMediaPlayerDataDao();
+	}
 	private List<EnhancedMediaPlayer> playList = new ArrayList<EnhancedMediaPlayer>();
 	List<EnhancedMediaPlayer> getPlayList()
 	{
@@ -43,6 +47,10 @@ public class MusicService extends Service
 	}
 
 	private DaoSession dbSounds;
+	private synchronized MediaPlayerDataDao getSoundsDao()
+	{
+		return this.dbSounds.getMediaPlayerDataDao();
+	}
 	private Map<String, List<EnhancedMediaPlayer>> sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
 	Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
@@ -162,8 +170,9 @@ public class MusicService extends Service
 
 	public void addNewSoundToServiceAndDatabase(MediaPlayerData playerData)
 	{
+		MediaPlayerDataDao soundsDao = this.getSoundsDao();
 		if (this.addLoadedSound(playerData))
-			this.dbSounds.getMediaPlayerDataDao().insert(playerData);
+			soundsDao.insert(playerData);
 	}
 
 	private boolean addLoadedSound(MediaPlayerData playerData)
@@ -186,15 +195,16 @@ public class MusicService extends Service
 		} catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
-			this.removeSoundFromDatabase(dbSounds, playerData);
+			this.removeSoundFromDatabase(this.getSoundsDao(), playerData);
 			return false;
 		}
 	}
 
 	public void addNewSoundToPlaylist(MediaPlayerData playerData)
 	{
+		MediaPlayerDataDao playlistDao = this.getPlaylistDao();
 		if (this.addLoadedSoundToPlaylist(playerData))
-			this.dbPlaylist.getMediaPlayerDataDao().insert(playerData);
+			playlistDao.insert(playerData);
 	}
 
 	private boolean addLoadedSoundToPlaylist(MediaPlayerData playerData)
@@ -207,7 +217,7 @@ public class MusicService extends Service
 		} catch (IOException e)
 		{
 			Logger.d(TAG, playerData.toString()+ " " + e.getMessage());
-			this.removeSoundFromDatabase(dbPlaylist, playerData);
+			this.removeSoundFromDatabase(this.getPlaylistDao(), playerData);
 			return false;
 		}
 	}
@@ -235,9 +245,9 @@ public class MusicService extends Service
 				EnhancedMediaPlayer correspondingPlayerInPlaylist = this.findInPlaylist(data.getPlayerId());
 				this.playList.remove(correspondingPlayerInPlaylist);
 
-				this.destroyPlayerAndUpdateDatabase(this.dbPlaylist, correspondingPlayerInPlaylist);
+				this.destroyPlayerAndUpdateDatabase(this.getPlaylistDao(), correspondingPlayerInPlaylist);
 			}
-			this.destroyPlayerAndUpdateDatabase(this.dbSounds, playerToRemove);
+			this.destroyPlayerAndUpdateDatabase(this.getSoundsDao(), playerToRemove);
 		}
 	}
 
@@ -269,7 +279,7 @@ public class MusicService extends Service
 
 				player.setIsInPlaylist(false);
 				this.playList.remove(playerInPlaylist);
-				this.destroyPlayerAndUpdateDatabase(this.dbPlaylist, playerInPlaylist);
+				this.destroyPlayerAndUpdateDatabase(this.getPlaylistDao(), playerInPlaylist);
 			}
 		} catch (IOException e)
 		{
@@ -278,15 +288,15 @@ public class MusicService extends Service
 		}
 	}
 
-	private void destroyPlayerAndUpdateDatabase(DaoSession daoSession, EnhancedMediaPlayer player)
+	private void destroyPlayerAndUpdateDatabase(MediaPlayerDataDao dao, EnhancedMediaPlayer player)
 	{
-		this.removeSoundFromDatabase(daoSession, player.getMediaPlayerData());
+		this.removeSoundFromDatabase(dao, player.getMediaPlayerData());
 		player.destroy();
 	}
 
-	private void removeSoundFromDatabase(DaoSession daoSession, MediaPlayerData playerData)
+	private void removeSoundFromDatabase(MediaPlayerDataDao dao, MediaPlayerData playerData)
 	{
-		daoSession.getMediaPlayerDataDao().delete(playerData);
+		dao.delete(playerData);
 	}
 
 	private EnhancedMediaPlayer findInPlaylist(String playerId)
@@ -319,7 +329,7 @@ public class MusicService extends Service
 		@Override
 		public List<MediaPlayerData> call() throws Exception
 		{
-			return dbSounds.getMediaPlayerDataDao().queryBuilder().list();
+			return getSoundsDao().queryBuilder().list();
 		}
 
 		@Override
@@ -345,7 +355,7 @@ public class MusicService extends Service
 		@Override
 		public List<MediaPlayerData> call() throws Exception
 		{
-			return dbPlaylist.getMediaPlayerDataDao().queryBuilder().list();
+			return getPlaylistDao().queryBuilder().list();
 		}
 
 		@Override
@@ -388,10 +398,17 @@ public class MusicService extends Service
 	{
 		private List<MediaPlayerData> mediaPlayers;
 		private DaoSession database;
+		private MediaPlayerDataDao dao;
 
+		/**
+		 * Update stored sound database
+		 * @param mediaPlayers map of media players currently loaded in corresponding sound sheets
+		 * @param database daoSession to store data
+		 */
 		public UpdateSoundsTask(Map<String, List<EnhancedMediaPlayer>> mediaPlayers, DaoSession database)
 		{
 			this.database = database;
+			this.dao = getSoundsDao();
 			this.mediaPlayers = new ArrayList<MediaPlayerData>();
 			for (String fragmentTag : mediaPlayers.keySet())
 			{
@@ -401,9 +418,15 @@ public class MusicService extends Service
 			}
 		}
 
+		/**
+		 * Update stored playlist database
+		 * @param mediaPlayers list of media players currently loaded in playlist
+		 * @param database daoSession to store data
+		 */
 		public UpdateSoundsTask(List<EnhancedMediaPlayer> mediaPlayers, DaoSession database)
 		{
 			this.database = database;
+			this.dao = getPlaylistDao();
 			this.mediaPlayers = new ArrayList<MediaPlayerData>();
 			for (EnhancedMediaPlayer player : mediaPlayers)
 				this.mediaPlayers.add(player.getMediaPlayerData());
@@ -417,7 +440,6 @@ public class MusicService extends Service
 				@Override
 				public void run()
 				{
-					MediaPlayerDataDao dao = database.getMediaPlayerDataDao();
 					for (MediaPlayerData playerToUpdate : mediaPlayers)
 					{
 						List<MediaPlayerData> storePlayers = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerToUpdate.getPlayerId())).list();
