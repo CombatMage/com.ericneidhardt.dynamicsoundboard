@@ -18,10 +18,7 @@ import com.ericneidhardt.dynamicsoundboard.notification.PendingSoundNotification
 import com.ericneidhardt.dynamicsoundboard.notification.PendingSoundNotificationBuilder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * File created by eric.neidhardt on 01.12.2014.
@@ -41,10 +38,10 @@ public class MusicService extends Service
 	{
 		return this.dbPlaylist.getMediaPlayerDataDao();
 	}
-	private List<EnhancedMediaPlayer> playList = new ArrayList<EnhancedMediaPlayer>();
-	List<EnhancedMediaPlayer> getPlayList()
+	private List<EnhancedMediaPlayer> playlist = new ArrayList<EnhancedMediaPlayer>();
+	List<EnhancedMediaPlayer> getPlaylist()
 	{
-		return playList;
+		return playlist;
 	}
 
 	private DaoSession dbSounds;
@@ -154,20 +151,14 @@ public class MusicService extends Service
 		SafeAsyncTask task = new UpdateSoundsTask(this.sounds, dbSounds);
 		task.execute();
 
-		task = new UpdateSoundsTask(this.playList, dbPlaylist);
+		task = new UpdateSoundsTask(this.playlist, dbPlaylist);
 		task.execute();
-	}
-
-	private EnhancedMediaPlayer findPlayerWithId(String playerId)
-	{
-		// TODO
-		return null;
 	}
 
 	public List<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
 	{
 		List<EnhancedMediaPlayer> currentlyPlayingSounds = new ArrayList<EnhancedMediaPlayer>();
-		for (EnhancedMediaPlayer sound : this.playList)
+		for (EnhancedMediaPlayer sound : this.playlist)
 		{
 			if (sound.isPlaying())
 				currentlyPlayingSounds.add(sound);
@@ -227,7 +218,7 @@ public class MusicService extends Service
 		try
 		{
 			EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(this.getApplicationContext(), playerData);
-			this.playList.add(player);
+			this.playlist.add(player);
 			return true;
 		} catch (IOException e)
 		{
@@ -258,7 +249,7 @@ public class MusicService extends Service
 			if (data.getIsInPlaylist())
 			{
 				EnhancedMediaPlayer correspondingPlayerInPlaylist = this.findInPlaylist(data.getPlayerId());
-				this.playList.remove(correspondingPlayerInPlaylist);
+				this.playlist.remove(correspondingPlayerInPlaylist);
 
 				this.destroyPlayerAndUpdateDatabase(this.getPlaylistDao(), correspondingPlayerInPlaylist);
 			}
@@ -286,14 +277,14 @@ public class MusicService extends Service
 
 				player.setIsInPlaylist(true);
 				playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(this.getApplicationContext(), player.getMediaPlayerData());
-				this.playList.add(playerInPlaylist);
+				this.playlist.add(playerInPlaylist);
 			} else
 			{
 				if (playerInPlaylist == null)
 					return;
 
 				player.setIsInPlaylist(false);
-				this.playList.remove(playerInPlaylist);
+				this.playlist.remove(playerInPlaylist);
 				this.destroyPlayerAndUpdateDatabase(this.getPlaylistDao(), playerInPlaylist);
 			}
 		} catch (IOException e)
@@ -316,7 +307,7 @@ public class MusicService extends Service
 
 	private EnhancedMediaPlayer findInPlaylist(String playerId)
 	{
-		for (EnhancedMediaPlayer player : this.playList)
+		for (EnhancedMediaPlayer player : this.playlist)
 		{
 			if (player.getMediaPlayerData().getPlayerId().equals(playerId))
 				return player;
@@ -542,10 +533,50 @@ public class MusicService extends Service
 			if (notificationToRemove != null)
 				notifications.remove(notificationToRemove);
 
-			// TODO dispose player with matching i
+			this.pausePlayerWithId(playerId);
 
 			if (notifications.size() == 0)
 				stopSelf();
+		}
+
+		private void pausePlayerWithId(String playerId)
+		{
+			EnhancedMediaPlayer playerToRemove = null;
+
+			playerToRemove = this.searchInPlaylistForId(playerId);
+			if (playerToRemove == null)
+				playerToRemove = this.searchInSoundsForId(playerId);
+
+			if (playerToRemove != null)
+				playerToRemove.pauseSound();
+		}
+
+		private EnhancedMediaPlayer searchInPlaylistForId(String playerId)
+		{
+			return this.searchInListForId(playerId, playlist);
+		}
+
+		private EnhancedMediaPlayer searchInSoundsForId(String playerId)
+		{
+			Set<String> soundSheets = sounds.keySet();
+			for (String soundSheet : soundSheets)
+			{
+				List<EnhancedMediaPlayer> playersInSoundSheet = sounds.get(soundSheet);
+				EnhancedMediaPlayer player = this.searchInListForId(playerId, playersInSoundSheet);
+				if (player != null)
+					return player;
+			}
+			return null;
+		}
+
+		private EnhancedMediaPlayer searchInListForId(String playerId, List<EnhancedMediaPlayer> players)
+		{
+			for (EnhancedMediaPlayer player : players)
+			{
+				if (player.getMediaPlayerData().getPlayerId().equals(playerId))
+					return player;
+			}
+			return null;
 		}
 	}
 

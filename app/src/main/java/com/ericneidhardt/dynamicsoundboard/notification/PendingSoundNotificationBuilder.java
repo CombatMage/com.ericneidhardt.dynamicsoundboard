@@ -48,7 +48,8 @@ public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 	{
 		Intent intent = new Intent(ACTION_DISMISS);
 		intent.putExtra(KEY_PLAYER_ID, this.playerId);
-		return PendingIntent.getBroadcast(this.context, IntentRequest.NOTIFICATION_DISMISS, intent, 0);
+		intent.putExtra(KEY_NOTIFICATION_ID, this.notificationId);
+		return PendingIntent.getBroadcast(this.context, this.notificationId, intent, 0);
 	}
 
 	private PendingIntent getOpenActivityIntent()

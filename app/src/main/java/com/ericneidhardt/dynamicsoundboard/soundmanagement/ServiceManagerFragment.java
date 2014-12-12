@@ -95,7 +95,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	{
 		if (this.service == null)
 			return new ArrayList<EnhancedMediaPlayer>();
-		return this.service.getPlayList();
+		return this.service.getPlaylist();
 	}
 
 	public Map<String, List<EnhancedMediaPlayer>> getSounds()
