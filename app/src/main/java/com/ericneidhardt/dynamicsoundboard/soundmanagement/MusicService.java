@@ -139,7 +139,12 @@ public class MusicService extends Service
 	{
 		for (EnhancedMediaPlayer player : pendingPlayers)
 		{
-			PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(this.getApplicationContext(), player);
+			PendingSoundNotificationBuilder builder;
+			if (player.getMediaPlayerData().getIsInPlaylist()) // there is only one player in playlist active, therefore we use a const id to update this notification
+				builder = new PendingSoundNotificationBuilder(this.getApplicationContext(), player, Constants.NOTIFICATION_ID_PLAYLIST);
+			else
+				builder = new PendingSoundNotificationBuilder(this.getApplicationContext(), player);
+
 			int notificationId = builder.getNotificationId();
 			String playerId = player.getMediaPlayerData().getPlayerId();
 
@@ -532,17 +537,12 @@ public class MusicService extends Service
 
 			String action = intent.getAction();
 			String playerId = intent.getStringExtra(Constants.KEY_PLAYER_ID);
-			boolean isPlaying = intent.getBooleanExtra(Constants.KEY_IS_PLAYING, false);
 
 			if (action == null || playerId == null)
 				return;
 
 			PendingSoundNotification correspondingNotification = this.findNotificationForPendingPlayer(playerId);
-			if (correspondingNotification == null && isPlaying)
-			{
-				// TODO new player started playing, add notification
-			}
-			else if (correspondingNotification != null)
+			if (correspondingNotification != null)
 			{
 				int notificationId = correspondingNotification.getNotificationId();
 

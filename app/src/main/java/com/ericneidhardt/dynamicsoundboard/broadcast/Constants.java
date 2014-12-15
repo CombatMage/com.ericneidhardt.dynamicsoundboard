@@ -5,6 +5,8 @@ package com.ericneidhardt.dynamicsoundboard.broadcast;
  */
 public class Constants
 {
+	public static final int NOTIFICATION_ID_PLAYLIST = 0;
+
 	public static final String KEY_PLAYER_ID = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_PLAYER_ID";
 	public static final String KEY_NOTIFICATION_ID = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_NOTIFICATION_ID";
 	public static final String KEY_IS_PLAYING = "com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer.KEY_IS_PLAYING";
