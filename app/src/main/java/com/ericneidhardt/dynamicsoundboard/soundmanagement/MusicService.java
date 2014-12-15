@@ -176,12 +176,20 @@ public class MusicService extends Service
 
 	public void addNewSoundToServiceAndDatabase(MediaPlayerData playerData)
 	{
-		MediaPlayerDataDao soundsDao = this.getSoundsDao();
-		if (this.addLoadedSound(playerData))
-			soundsDao.insert(playerData);
+		MediaPlayerData dataToStore = this.createSoundFromRawData(playerData);
+		if (dataToStore != null)
+		{
+			MediaPlayerDataDao soundsDao = this.getSoundsDao();
+			soundsDao.insert(dataToStore);
+		}
 	}
 
-	private boolean addLoadedSound(MediaPlayerData playerData)
+	/**
+	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the list of loaded sounds.
+	 * @param playerData raw data to create new MediaPlayer
+	 * @return playerData to be stored in database, or null if creation failed
+	 */
+	private MediaPlayerData createSoundFromRawData(MediaPlayerData playerData)
 	{
 		try
 		{
@@ -197,34 +205,42 @@ public class MusicService extends Service
 			else
 				this.sounds.get(fragmentTag).add(player);
 
-			return true;
+			return player.getMediaPlayerData();
 		} catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
 			this.removeSoundFromDatabase(this.getSoundsDao(), playerData);
-			return false;
+			return null;
 		}
 	}
 
 	public void addNewSoundToPlaylist(MediaPlayerData playerData)
 	{
-		MediaPlayerDataDao playlistDao = this.getPlaylistDao();
-		if (this.addLoadedSoundToPlaylist(playerData))
-			playlistDao.insert(playerData);
+		MediaPlayerData dataToStore = this.createPlaylistSoundFromPlayerData(playerData);
+		if (dataToStore != null)
+		{
+			MediaPlayerDataDao playlistDao = this.getPlaylistDao();
+			playlistDao.insert(dataToStore); // it is important to use data returned from createPlaylistSoundFromPlayerData, because it is a new instance
+		}
 	}
 
-	private boolean addLoadedSoundToPlaylist(MediaPlayerData playerData)
+	/**
+	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the playlist.
+	 * @param playerData raw data to create new MediaPlayer
+	 * @return playerData to be stored in database, or null if creation failed
+	 */
+	private MediaPlayerData createPlaylistSoundFromPlayerData(MediaPlayerData playerData)
 	{
 		try
 		{
 			EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(this.getApplicationContext(), playerData);
 			this.playlist.add(player);
-			return true;
+			return player.getMediaPlayerData();
 		} catch (IOException e)
 		{
 			Logger.d(TAG, playerData.toString()+ " " + e.getMessage());
 			this.removeSoundFromDatabase(this.getPlaylistDao(), playerData);
-			return false;
+			return null;
 		}
 	}
 
@@ -283,7 +299,9 @@ public class MusicService extends Service
 				if (playerInPlaylist == null)
 					return;
 
-				player.setIsInPlaylist(false);
+				if (player != null)
+					player.setIsInPlaylist(false);
+
 				this.playlist.remove(playerInPlaylist);
 				this.destroyPlayerAndUpdateDatabase(this.getPlaylistDao(), playerInPlaylist);
 			}
@@ -343,7 +361,7 @@ public class MusicService extends Service
 		{
 			super.onSuccess(mediaPlayersData);
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				addLoadedSound(mediaPlayerData);
+				createSoundFromRawData(mediaPlayerData);
 
 			this.sendBroadcastLoadingSoundsSuccessful();
 		}
@@ -369,7 +387,7 @@ public class MusicService extends Service
 		{
 			super.onSuccess(mediaPlayersData);
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				addLoadedSoundToPlaylist(mediaPlayerData);
+				createPlaylistSoundFromPlayerData(mediaPlayerData);
 
 			this.sendBroadcastLoadingPlayListSuccessful();
 		}
@@ -495,7 +513,7 @@ public class MusicService extends Service
 		@Override
 		public void onReceive(Context context, Intent intent)
 		{
-			Logger.d(TAG, "SoundStateChangeReceiver.onReceive" + intent);
+			Logger.d(TAG, "SoundStateChangeReceiver.onReceive " + intent);
 
 			// TODO update notification
 		}
@@ -506,7 +524,7 @@ public class MusicService extends Service
 		@Override
 		public void onReceive(Context context, Intent intent)
 		{
-			Logger.d(TAG, "NotificationActionReceiver.onReceive" + intent);
+			Logger.d(TAG, "NotificationActionReceiver.onReceive " + intent);
 
 			String action = intent.getAction();
 			if (action == null)

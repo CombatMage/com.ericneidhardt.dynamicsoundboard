@@ -57,6 +57,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public static EnhancedMediaPlayer getInstanceForPlayList(Context context, MediaPlayerData data) throws IOException
 	{
 		MediaPlayerData playListData = new MediaPlayerData();
+		playListData.setId(data.getId());
 		playListData.setIsInPlaylist(true);
 		playListData.setPlayerId(data.getPlayerId());
 		playListData.setFragmentTag(Playlist.TAG);
