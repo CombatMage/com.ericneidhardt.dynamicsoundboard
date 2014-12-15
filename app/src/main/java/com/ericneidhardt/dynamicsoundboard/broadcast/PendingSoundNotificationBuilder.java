@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.notification;
+package com.ericneidhardt.dynamicsoundboard.broadcast;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,14 +16,6 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
  */
 public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 {
-	public static final String ACTION_DISMISS = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_DISMISS";
-	public static final String ACTION_PLAY = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_PLAY";
-	public static final String ACTION_PAUSE = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_PAUSE";
-	public static final String ACTION_STOP = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_STOP";
-
-	public static final String KEY_PLAYER_ID = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_PLAYER_ID";
-	public static final String KEY_NOTIFICATION_ID = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_NOTIFICATION_ID";
-
 	private Context context;
 	private String playerId;
 
@@ -31,6 +23,12 @@ public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 	public int getNotificationId()
 	{
 		return this.notificationId;
+	}
+
+	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player, int notificationId)
+	{
+		this(context, player);
+		this.notificationId = notificationId;
 	}
 
 	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player)
@@ -42,7 +40,7 @@ public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 
 		this.setLargeIcon(Util.getBitmap(context, R.drawable.ic_launcher));
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
-		this.setDeleteIntent(this.getPendingIntent(ACTION_DISMISS));
+		this.setDeleteIntent(this.getPendingIntent(Constants.ACTION_DISMISS));
 		this.setContentIntent(this.getOpenActivityIntent());
 		this.setContentTitle(player.getMediaPlayerData().getLabel());
 
@@ -55,24 +53,24 @@ public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 
 	private void setActionStop()
 	{
-		this.addAction(R.drawable.ic_stop, "", this.getPendingIntent(ACTION_STOP));
+		this.addAction(R.drawable.ic_stop, "", this.getPendingIntent(Constants.ACTION_STOP));
 	}
 
 	private void setActionPause()
 	{
-		this.addAction(R.drawable.ic_pause, "", this.getPendingIntent(ACTION_PAUSE));
+		this.addAction(R.drawable.ic_pause, "", this.getPendingIntent(Constants.ACTION_PAUSE));
 	}
 
 	private void setActionPlay()
 	{
-		this.addAction(R.drawable.ic_play, "", this.getPendingIntent(ACTION_PLAY));
+		this.addAction(R.drawable.ic_play, "", this.getPendingIntent(Constants.ACTION_PLAY));
 	}
 
 	private PendingIntent getPendingIntent(String action)
 	{
 		Intent intent = new Intent(action);
-		intent.putExtra(KEY_PLAYER_ID, this.playerId);
-		intent.putExtra(KEY_NOTIFICATION_ID, this.notificationId);
+		intent.putExtra(Constants.KEY_PLAYER_ID, this.playerId);
+		intent.putExtra(Constants.KEY_NOTIFICATION_ID, this.notificationId);
 		return PendingIntent.getBroadcast(this.context, this.notificationId, intent, 0);
 	}
 
@@ -85,10 +83,10 @@ public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 	public static IntentFilter getNotificationIntentFilter()
 	{
 		IntentFilter filter = new IntentFilter();
-		filter.addAction(ACTION_DISMISS);
-		filter.addAction(ACTION_PLAY);
-		filter.addAction(ACTION_PAUSE);
-		filter.addAction(ACTION_STOP);
+		filter.addAction(Constants.ACTION_DISMISS);
+		filter.addAction(Constants.ACTION_PLAY);
+		filter.addAction(Constants.ACTION_PAUSE);
+		filter.addAction(Constants.ACTION_STOP);
 		return filter;
 	}
 }

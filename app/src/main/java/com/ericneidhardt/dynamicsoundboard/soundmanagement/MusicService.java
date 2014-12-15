@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import com.ericneidhardt.dynamicsoundboard.broadcast.Constants;
+import com.ericneidhardt.dynamicsoundboard.broadcast.PendingSoundNotification;
+import com.ericneidhardt.dynamicsoundboard.broadcast.PendingSoundNotificationBuilder;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
@@ -14,8 +17,6 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
-import com.ericneidhardt.dynamicsoundboard.notification.PendingSoundNotification;
-import com.ericneidhardt.dynamicsoundboard.notification.PendingSoundNotificationBuilder;
 
 import java.io.IOException;
 import java.util.*;
@@ -529,7 +530,38 @@ public class MusicService extends Service
 		{
 			Logger.d(TAG, "SoundStateChangeReceiver.onReceive " + intent);
 
-			// TODO update notification
+			String action = intent.getAction();
+			String playerId = intent.getStringExtra(Constants.KEY_PLAYER_ID);
+			boolean isPlaying = intent.getBooleanExtra(Constants.KEY_IS_PLAYING, false);
+
+			if (action == null || playerId == null)
+				return;
+
+			PendingSoundNotification correspondingNotification = this.findNotificationForPendingPlayer(playerId);
+			if (correspondingNotification == null && isPlaying)
+			{
+				// TODO new player started playing, add notification
+			}
+			else if (correspondingNotification != null)
+			{
+				int notificationId = correspondingNotification.getNotificationId();
+
+				EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
+				PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(getApplicationContext(), player, notificationId);
+
+				correspondingNotification.setNotification(builder.build());
+				notificationManager.notify(notificationId, correspondingNotification.getNotification());
+			}
+		}
+
+		private PendingSoundNotification findNotificationForPendingPlayer(String playerId)
+		{
+			for (PendingSoundNotification notification : notifications)
+			{
+				if (notification.getPlayerId().equals(playerId))
+					return notification;
+			}
+			return null;
 		}
 	}
 
@@ -544,23 +576,23 @@ public class MusicService extends Service
 			if (action == null)
 				return;
 
-			String playerId = intent.getStringExtra(PendingSoundNotificationBuilder.KEY_PLAYER_ID);
+			String playerId = intent.getStringExtra(Constants.KEY_PLAYER_ID);
 			if (playerId == null)
 				return;
 
-			if (action.equals(PendingSoundNotificationBuilder.ACTION_DISMISS))
+			if (action.equals(Constants.ACTION_DISMISS))
 			{
-				int notificationId = intent.getIntExtra(PendingSoundNotificationBuilder.KEY_NOTIFICATION_ID, 0);
+				int notificationId = intent.getIntExtra(Constants.KEY_NOTIFICATION_ID, 0);
 				this.dismissPendingMediaPlayer(notificationId, playerId);
 			}
 			else
 			{
 				EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
-				if (action.equals(PendingSoundNotificationBuilder.ACTION_PAUSE))
+				if (action.equals(Constants.ACTION_PAUSE))
 					player.pauseSound();
-				else if (action.equals(PendingSoundNotificationBuilder.ACTION_STOP))
+				else if (action.equals(Constants.ACTION_STOP))
 					player.stopSound();
-				else if (action.equals(PendingSoundNotificationBuilder.ACTION_PLAY))
+				else if (action.equals(Constants.ACTION_PLAY))
 					player.playSound();
 			}
 		}

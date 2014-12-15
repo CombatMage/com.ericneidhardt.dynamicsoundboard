@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
+import com.ericneidhardt.dynamicsoundboard.broadcast.Constants;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
@@ -21,10 +22,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 {
 	private static final String TAG = EnhancedMediaPlayer.class.getName();
 
-	public static final String KEY_EXTRA_IS_PLAYING = "com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer.KEY_EXTRA_IS_PLAYING";
-	public static final String ACTION_SOUND_STATE_CHANGED = "com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED";
-
-	private enum State {
+	private enum State
+	{
 		IDLE,
 		INIT,
 		PREPARED,
@@ -267,14 +266,15 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private void sendBroadCastSoundPlaying(boolean isPlaying)
 	{
 		Intent intent = new Intent();
-		intent.setAction(ACTION_SOUND_STATE_CHANGED);
-		intent.putExtra(KEY_EXTRA_IS_PLAYING, isPlaying);
+		intent.setAction(Constants.ACTION_SOUND_STATE_CHANGED);
+		intent.putExtra(Constants.KEY_IS_PLAYING, isPlaying);
+		intent.putExtra(Constants.KEY_PLAYER_ID, this.rawData.getPlayerId());
 		this.broadcastManager.sendBroadcast(intent);
 	}
 
 	public static IntentFilter getMediaPlayerIntentFilter()
 	{
-		return new IntentFilter(EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED);
+		return new IntentFilter(Constants.ACTION_SOUND_STATE_CHANGED);
 	}
 
 }

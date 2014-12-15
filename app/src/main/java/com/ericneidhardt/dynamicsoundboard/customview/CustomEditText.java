@@ -83,7 +83,7 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 	public String getDisplayedText()
 	{
 		String userInput = this.getText().toString();
-		if (userInput != null && !userInput.isEmpty())
+		if (!userInput.isEmpty())
 			return userInput;
 		return this.getHint().toString();
 	}

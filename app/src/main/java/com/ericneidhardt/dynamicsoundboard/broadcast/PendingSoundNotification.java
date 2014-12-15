@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.notification;
+package com.ericneidhardt.dynamicsoundboard.broadcast;
 
 import android.app.Notification;
 
@@ -23,6 +23,9 @@ public class PendingSoundNotification
 	public Notification getNotification()
 	{
 		return this.notification;
+	}
+	public void setNotification(Notification notification) {
+		this.notification = notification;
 	}
 
 	public PendingSoundNotification(int notificationId, String playerId, Notification notification)
