@@ -17,13 +17,21 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
 public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 {
 	public static final String ACTION_DISMISS = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_DISMISS";
+	public static final String ACTION_PLAY = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_PLAY";
+	public static final String ACTION_PAUSE = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_PAUSE";
+	public static final String ACTION_STOP = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_STOP";
 
 	public static final String KEY_PLAYER_ID = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_PLAYER_ID";
 	public static final String KEY_NOTIFICATION_ID = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_NOTIFICATION_ID";
 
 	private Context context;
-	private int notificationId;
 	private String playerId;
+
+	private int notificationId;
+	public int getNotificationId()
+	{
+		return this.notificationId;
+	}
 
 	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player)
 	{
@@ -34,19 +42,35 @@ public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 
 		this.setLargeIcon(Util.getBitmap(context, R.drawable.ic_launcher));
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
-		this.setDeleteIntent(this.getStopSoundsIntent());
+		this.setDeleteIntent(this.getPendingIntent(ACTION_DISMISS));
 		this.setContentIntent(this.getOpenActivityIntent());
 		this.setContentTitle(player.getMediaPlayerData().getLabel());
+
+		this.setActionStop();
+		if (player.isPlaying())
+			this.setActionPause();
+		else
+			this.setActionPlay();
 	}
 
-	public int getNotificationId()
+	private void setActionStop()
 	{
-		return this.notificationId;
+		this.addAction(R.drawable.ic_stop, "", this.getPendingIntent(ACTION_STOP));
 	}
 
-	private PendingIntent getStopSoundsIntent()
+	private void setActionPause()
 	{
-		Intent intent = new Intent(ACTION_DISMISS);
+		this.addAction(R.drawable.ic_pause, "", this.getPendingIntent(ACTION_PAUSE));
+	}
+
+	private void setActionPlay()
+	{
+		this.addAction(R.drawable.ic_play, "", this.getPendingIntent(ACTION_PLAY));
+	}
+
+	private PendingIntent getPendingIntent(String action)
+	{
+		Intent intent = new Intent(action);
 		intent.putExtra(KEY_PLAYER_ID, this.playerId);
 		intent.putExtra(KEY_NOTIFICATION_ID, this.notificationId);
 		return PendingIntent.getBroadcast(this.context, this.notificationId, intent, 0);
@@ -62,7 +86,9 @@ public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 	{
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(ACTION_DISMISS);
-		// TODO add additional Actions
+		filter.addAction(ACTION_PLAY);
+		filter.addAction(ACTION_PAUSE);
+		filter.addAction(ACTION_STOP);
 		return filter;
 	}
 }

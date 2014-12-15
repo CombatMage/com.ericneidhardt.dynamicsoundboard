@@ -8,21 +8,31 @@ import android.app.Notification;
 public class PendingSoundNotification
 {
 	private int notificationId;
-	private Notification notification;
-
-	public PendingSoundNotification(int notificationId, Notification notification)
-	{
-		this.notificationId = notificationId;
-		this.notification = notification;
-	}
-
 	public int getNotificationId()
 	{
 		return notificationId;
 	}
 
+	private String playerId;
+	public String getPlayerId()
+	{
+		return playerId;
+	}
+
+	private Notification notification;
 	public Notification getNotification()
 	{
 		return this.notification;
 	}
+
+	public PendingSoundNotification(int notificationId, String playerId, Notification notification)
+	{
+		this.notificationId = notificationId;
+		this.playerId = playerId;
+		this.notification = notification;
+	}
+
+
+
+
 }

@@ -139,7 +139,10 @@ public class MusicService extends Service
 		for (EnhancedMediaPlayer player : pendingPlayers)
 		{
 			PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(this.getApplicationContext(), player);
-			PendingSoundNotification notification = new PendingSoundNotification(builder.getNotificationId(), builder.build());
+			int notificationId = builder.getNotificationId();
+			String playerId = player.getMediaPlayerData().getPlayerId();
+
+			PendingSoundNotification notification = new PendingSoundNotification(notificationId, playerId, builder.build());
 
 			this.notifications.add(notification);
 			this.notificationManager.notify(notification.getNotificationId(), notification.getNotification());
@@ -264,7 +267,7 @@ public class MusicService extends Service
 
 			if (data.getIsInPlaylist())
 			{
-				EnhancedMediaPlayer correspondingPlayerInPlaylist = this.findInPlaylist(data.getPlayerId());
+				EnhancedMediaPlayer correspondingPlayerInPlaylist = this.searchInPlaylistForId(data.getPlayerId());
 				this.playlist.remove(correspondingPlayerInPlaylist);
 
 				this.destroyPlayerAndUpdateDatabase(this.getPlaylistDao(), correspondingPlayerInPlaylist);
@@ -283,8 +286,8 @@ public class MusicService extends Service
 	{
 		try
 		{
-			EnhancedMediaPlayer player = this.findInSounds(playerId);
-			EnhancedMediaPlayer playerInPlaylist = this.findInPlaylist(playerId);
+			EnhancedMediaPlayer player = this.searchInSoundsForId(playerId);
+			EnhancedMediaPlayer playerInPlaylist = this.searchInPlaylistForId(playerId);
 
 			if (addToPlayList)
 			{
@@ -323,27 +326,30 @@ public class MusicService extends Service
 		dao.delete(playerData);
 	}
 
-	private EnhancedMediaPlayer findInPlaylist(String playerId)
+	private EnhancedMediaPlayer searchInPlaylistForId(String playerId)
 	{
-		for (EnhancedMediaPlayer player : this.playlist)
+		return this.searchInListForId(playerId, playlist);
+	}
+
+	private EnhancedMediaPlayer searchInSoundsForId(String playerId)
+	{
+		Set<String> soundSheets = sounds.keySet();
+		for (String soundSheet : soundSheets)
 		{
-			if (player.getMediaPlayerData().getPlayerId().equals(playerId))
+			List<EnhancedMediaPlayer> playersInSoundSheet = sounds.get(soundSheet);
+			EnhancedMediaPlayer player = this.searchInListForId(playerId, playersInSoundSheet);
+			if (player != null)
 				return player;
 		}
 		return null;
 	}
 
-	private EnhancedMediaPlayer findInSounds(String playerId)
+	private EnhancedMediaPlayer searchInListForId(String playerId, List<EnhancedMediaPlayer> players)
 	{
-		for (String fragmentTag : this.sounds.keySet())
+		for (EnhancedMediaPlayer player : players)
 		{
-			if (this.sounds.get(fragmentTag) == null)
-				continue;
-			for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
-			{
-				if (player.getMediaPlayerData().getPlayerId().equals(playerId))
-					return player;
-			}
+			if (player.getMediaPlayerData().getPlayerId().equals(playerId))
+				return player;
 		}
 		return null;
 	}
@@ -530,14 +536,27 @@ public class MusicService extends Service
 			if (action == null)
 				return;
 
+			String playerId = intent.getStringExtra(PendingSoundNotificationBuilder.KEY_PLAYER_ID);
+			if (playerId == null)
+				return;
+
 			if (action.equals(PendingSoundNotificationBuilder.ACTION_DISMISS))
 			{
-				String playerId = intent.getStringExtra(PendingSoundNotificationBuilder.KEY_PLAYER_ID);
 				int notificationId = intent.getIntExtra(PendingSoundNotificationBuilder.KEY_NOTIFICATION_ID, 0);
 				this.dismissPendingMediaPlayer(notificationId, playerId);
-				return;
 			}
-				// TODO update notification and sounds
+			else if (action.equals(PendingSoundNotificationBuilder.ACTION_PAUSE))
+			{
+				// TODO
+			}
+			else if (action.equals(PendingSoundNotificationBuilder.ACTION_PAUSE))
+			{
+				// TODO
+			}
+			else if (action.equals(PendingSoundNotificationBuilder.ACTION_PLAY))
+			{
+				// TODO
+			}
 		}
 
 		private void dismissPendingMediaPlayer(int notificationId, String playerId)
@@ -561,40 +580,12 @@ public class MusicService extends Service
 		{
 			EnhancedMediaPlayer playerToRemove = null;
 
-			playerToRemove = this.searchInPlaylistForId(playerId);
+			playerToRemove = searchInPlaylistForId(playerId);
 			if (playerToRemove == null)
-				playerToRemove = this.searchInSoundsForId(playerId);
+				playerToRemove = searchInSoundsForId(playerId);
 
 			if (playerToRemove != null)
 				playerToRemove.pauseSound();
-		}
-
-		private EnhancedMediaPlayer searchInPlaylistForId(String playerId)
-		{
-			return this.searchInListForId(playerId, playlist);
-		}
-
-		private EnhancedMediaPlayer searchInSoundsForId(String playerId)
-		{
-			Set<String> soundSheets = sounds.keySet();
-			for (String soundSheet : soundSheets)
-			{
-				List<EnhancedMediaPlayer> playersInSoundSheet = sounds.get(soundSheet);
-				EnhancedMediaPlayer player = this.searchInListForId(playerId, playersInSoundSheet);
-				if (player != null)
-					return player;
-			}
-			return null;
-		}
-
-		private EnhancedMediaPlayer searchInListForId(String playerId, List<EnhancedMediaPlayer> players)
-		{
-			for (EnhancedMediaPlayer player : players)
-			{
-				if (player.getMediaPlayerData().getPlayerId().equals(playerId))
-					return player;
-			}
-			return null;
 		}
 	}
 
