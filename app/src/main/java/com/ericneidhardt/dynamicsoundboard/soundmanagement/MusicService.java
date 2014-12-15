@@ -326,6 +326,14 @@ public class MusicService extends Service
 		dao.delete(playerData);
 	}
 
+	private EnhancedMediaPlayer searchInSoundsAndPlaylistForId(String playerId)
+	{
+		EnhancedMediaPlayer player = this.searchInPlaylistForId(playerId);
+		if (player == null)
+			player = this.searchInSoundsForId(playerId);
+		return player;
+	}
+
 	private EnhancedMediaPlayer searchInPlaylistForId(String playerId)
 	{
 		return this.searchInListForId(playerId, playlist);
@@ -545,17 +553,15 @@ public class MusicService extends Service
 				int notificationId = intent.getIntExtra(PendingSoundNotificationBuilder.KEY_NOTIFICATION_ID, 0);
 				this.dismissPendingMediaPlayer(notificationId, playerId);
 			}
-			else if (action.equals(PendingSoundNotificationBuilder.ACTION_PAUSE))
+			else
 			{
-				// TODO
-			}
-			else if (action.equals(PendingSoundNotificationBuilder.ACTION_PAUSE))
-			{
-				// TODO
-			}
-			else if (action.equals(PendingSoundNotificationBuilder.ACTION_PLAY))
-			{
-				// TODO
+				EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
+				if (action.equals(PendingSoundNotificationBuilder.ACTION_PAUSE))
+					player.pauseSound();
+				else if (action.equals(PendingSoundNotificationBuilder.ACTION_STOP))
+					player.stopSound();
+				else if (action.equals(PendingSoundNotificationBuilder.ACTION_PLAY))
+					player.playSound();
 			}
 		}
 
@@ -570,22 +576,12 @@ public class MusicService extends Service
 			if (notificationToRemove != null)
 				notifications.remove(notificationToRemove);
 
-			this.pausePlayerWithId(playerId);
+			EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
+			if (player != null)
+				player.pauseSound();
 
 			if (notifications.size() == 0)
 				stopSelf();
-		}
-
-		private void pausePlayerWithId(String playerId)
-		{
-			EnhancedMediaPlayer playerToRemove = null;
-
-			playerToRemove = searchInPlaylistForId(playerId);
-			if (playerToRemove == null)
-				playerToRemove = searchInSoundsForId(playerId);
-
-			if (playerToRemove != null)
-				playerToRemove.pauseSound();
 		}
 	}
 
