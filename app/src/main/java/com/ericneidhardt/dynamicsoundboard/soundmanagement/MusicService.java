@@ -132,27 +132,44 @@ public class MusicService extends Service
 		if (pendingPlayers.size() == 0)
 			this.stopSelf();
 		else
-			this.showNotifications(pendingPlayers);
+			this.showNotifications();
 	}
 
-	private void showNotifications(List<EnhancedMediaPlayer> pendingPlayers)
+	private void showNotifications()
 	{
-		for (EnhancedMediaPlayer player : pendingPlayers)
+		List<EnhancedMediaPlayer> pendingSounds = this.getPlayingSoundsFromSoundList();
+		for (EnhancedMediaPlayer player : pendingSounds)
 		{
-			PendingSoundNotificationBuilder builder;
-			if (player.getMediaPlayerData().getIsInPlaylist()) // there is only one player in playlist active, therefore we use a const id to update this notification
-				builder = new PendingSoundNotificationBuilder(this.getApplicationContext(), player, Constants.NOTIFICATION_ID_PLAYLIST);
-			else
-				builder = new PendingSoundNotificationBuilder(this.getApplicationContext(), player);
-
-			int notificationId = builder.getNotificationId();
-			String playerId = player.getMediaPlayerData().getPlayerId();
-
-			PendingSoundNotification notification = new PendingSoundNotification(notificationId, playerId, builder.build());
-
-			this.notifications.add(notification);
-			this.notificationManager.notify(notification.getNotificationId(), notification.getNotification());
+			PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(this.getApplicationContext(), player);
+			this.addNotification(builder);
 		}
+
+		EnhancedMediaPlayer player = this.getPlayingSoundFromPlaylist();
+		if (player != null)
+		{
+			PendingSoundNotificationBuilder builder = this.getNotificationForPlaylist(player);
+			this.addNotification(builder);
+		}
+	}
+
+	private PendingSoundNotificationBuilder getNotificationForPlaylist(EnhancedMediaPlayer player)
+	{
+		return new PendingSoundNotificationBuilder(
+				this.getApplicationContext(),
+				player, Constants.NOTIFICATION_ID_PLAYLIST,
+				"Playlist",
+				player.getMediaPlayerData().getLabel());
+	}
+
+	private void addNotification(PendingSoundNotificationBuilder notificationBuilder)
+	{
+		int notificationId = notificationBuilder.getNotificationId();
+		String playerId = notificationBuilder.getPlayerId();
+
+		PendingSoundNotification notification = new PendingSoundNotification(notificationId, playerId, notificationBuilder.build());
+
+		this.notifications.add(notification);
+		this.notificationManager.notify(notification.getNotificationId(), notification.getNotification());
 	}
 
 	public void storeLoadedSounds()
@@ -166,12 +183,16 @@ public class MusicService extends Service
 
 	public List<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
 	{
+		List<EnhancedMediaPlayer> currentlyPlayingSounds = this.getPlayingSoundsFromSoundList();
+		EnhancedMediaPlayer soundFromPlaylist = this.getPlayingSoundFromPlaylist();
+		if (soundFromPlaylist != null)
+			currentlyPlayingSounds.add(soundFromPlaylist);
+		return currentlyPlayingSounds;
+	}
+
+	private List<EnhancedMediaPlayer> getPlayingSoundsFromSoundList()
+	{
 		List<EnhancedMediaPlayer> currentlyPlayingSounds = new ArrayList<EnhancedMediaPlayer>();
-		for (EnhancedMediaPlayer sound : this.playlist)
-		{
-			if (sound.isPlaying())
-				currentlyPlayingSounds.add(sound);
-		}
 		for (String fragmentTag : this.sounds.keySet())
 		{
 			for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
@@ -181,6 +202,16 @@ public class MusicService extends Service
 			}
 		}
 		return currentlyPlayingSounds;
+	}
+
+	private EnhancedMediaPlayer getPlayingSoundFromPlaylist()
+	{
+		for (EnhancedMediaPlayer sound : this.playlist)
+		{
+			if (sound.isPlaying())
+				return sound;
+		}
+		return null;
 	}
 
 	public void addNewSoundToServiceAndDatabase(MediaPlayerData playerData)
@@ -541,17 +572,42 @@ public class MusicService extends Service
 			if (action == null || playerId == null)
 				return;
 
+			EnhancedMediaPlayer player = searchInPlaylistForId(playerId);
+			if (player != null)
+				this.updatePendingPlaylistNotification();
+			else
+				this.updatePendingNotification(playerId);
+		}
+
+		private void updatePendingPlaylistNotification()
+		{
+			PendingSoundNotification correspondingNotification = this.findNotificationById(Constants.NOTIFICATION_ID_PLAYLIST);
+			if (correspondingNotification == null)
+				return;
+			int notificationId = correspondingNotification.getNotificationId();
+
+			EnhancedMediaPlayer player = getPlayingSoundFromPlaylist();
+			if (player == null)
+				player = searchInPlaylistForId(correspondingNotification.getPlayerId());
+			PendingSoundNotificationBuilder builder = getNotificationForPlaylist(player);
+
+			correspondingNotification.setPlayerId(player.getMediaPlayerData().getPlayerId());
+			correspondingNotification.setNotification(builder.build());
+			notificationManager.notify(notificationId, correspondingNotification.getNotification());
+		}
+
+		private void updatePendingNotification(String playerId)
+		{
 			PendingSoundNotification correspondingNotification = this.findNotificationForPendingPlayer(playerId);
-			if (correspondingNotification != null)
-			{
-				int notificationId = correspondingNotification.getNotificationId();
+			if (correspondingNotification == null)
+				return;
 
-				EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
-				PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(getApplicationContext(), player, notificationId);
+			int notificationId = correspondingNotification.getNotificationId();
+			EnhancedMediaPlayer player = searchInSoundsForId(playerId);
+			PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(getApplicationContext(), player, notificationId);
 
-				correspondingNotification.setNotification(builder.build());
-				notificationManager.notify(notificationId, correspondingNotification.getNotification());
-			}
+			correspondingNotification.setNotification(builder.build());
+			notificationManager.notify(notificationId, correspondingNotification.getNotification());
 		}
 
 		private PendingSoundNotification findNotificationForPendingPlayer(String playerId)
@@ -559,6 +615,16 @@ public class MusicService extends Service
 			for (PendingSoundNotification notification : notifications)
 			{
 				if (notification.getPlayerId().equals(playerId))
+					return notification;
+			}
+			return null;
+		}
+
+		private PendingSoundNotification findNotificationById(int notificationId)
+		{
+			for (PendingSoundNotification notification : notifications)
+			{
+				if (notification.getNotificationId() == notificationId)
 					return notification;
 			}
 			return null;
@@ -608,12 +674,26 @@ public class MusicService extends Service
 			if (notificationToRemove != null)
 				notifications.remove(notificationToRemove);
 
-			EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
-			if (player != null)
-				player.pauseSound();
+			if (notificationId == Constants.NOTIFICATION_ID_PLAYLIST)
+				this.stopAllSoundsInPlaylist();
+			else
+				this.stopSound(playerId);
 
 			if (notifications.size() == 0)
 				stopSelf();
+		}
+
+		private void stopAllSoundsInPlaylist()
+		{
+			for (EnhancedMediaPlayer player : playlist)
+				player.stopSound();
+		}
+
+		private void stopSound(String playerId)
+		{
+			EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
+			if (player != null)
+				player.pauseSound();
 		}
 	}
 

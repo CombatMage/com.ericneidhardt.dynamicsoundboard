@@ -18,6 +18,9 @@ public class PendingSoundNotification
 	{
 		return playerId;
 	}
+	public void setPlayerId(String playerId) {
+		this.playerId = playerId;
+	}
 
 	private Notification notification;
 	public Notification getNotification()

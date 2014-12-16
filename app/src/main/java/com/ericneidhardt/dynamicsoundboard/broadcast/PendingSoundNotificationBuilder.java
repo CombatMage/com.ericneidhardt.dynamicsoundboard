@@ -21,7 +21,12 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 {
 	private Context context;
 	private Resources resources;
+
 	private String playerId;
+	public String getPlayerId()
+	{
+		return this.playerId;
+	}
 
 	private int notificationId;
 	public int getNotificationId()
@@ -29,19 +34,25 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		return this.notificationId;
 	}
 
-	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player, int notificationId)
-	{
-		this(context, player);
-		this.notificationId = notificationId;
-	}
+
 
 	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player)
+	{
+		this(context, player, player.getMediaPlayerData().getPlayerId().hashCode());
+	}
+
+	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player, int notificationId)
+	{
+		this(context, player, notificationId, player.getMediaPlayerData().getLabel(), null);
+	}
+
+	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player, int notificationId, String title, String message)
 	{
 		super(context);
 		this.context = context;
 		this.resources = this.context.getResources();
 		this.playerId = player.getMediaPlayerData().getPlayerId();
-		this.notificationId = this.playerId.hashCode();
+		this.notificationId = notificationId;
 
 		this.setActionStop();
 		if (player.isPlaying())
@@ -53,7 +64,8 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		this.setDeleteIntent(this.getPendingIntent(Constants.ACTION_DISMISS));
 		this.setContentIntent(this.getOpenActivityIntent());
 
-		this.setContentTitle(player.getMediaPlayerData().getLabel());
+		this.setContentTitle(title);
+		this.setContentText(message);
 		this.setLargeIcon(Util.getBitmap(context, R.drawable.ic_launcher));
 
 		int currentApiVersion = android.os.Build.VERSION.SDK_INT;

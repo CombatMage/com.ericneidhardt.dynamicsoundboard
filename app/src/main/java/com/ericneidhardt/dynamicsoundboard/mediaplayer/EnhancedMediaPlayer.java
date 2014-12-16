@@ -99,7 +99,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public void destroy()
 	{
-		this.sendBroadCastSoundPlaying(false);
+		this.sendBroadCastSoundPlaying(false, true);
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
@@ -141,7 +141,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			if (this.currentState == State.INIT || this.currentState == State.STOPPED)
 				this.prepare();
 
-			this.sendBroadCastSoundPlaying(true);
+			this.sendBroadCastSoundPlaying(true, false);
 			this.start();
 			this.currentState = State.STARTED;
 			return true;
@@ -194,7 +194,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			}
 			this.pause();
 			this.currentState = State.PAUSED;
-			this.sendBroadCastSoundPlaying(false);
+			this.sendBroadCastSoundPlaying(false, false);
 			return true;
 		}
 		catch (IOException e)
@@ -258,16 +258,17 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
-		this.sendBroadCastSoundPlaying(false);
+		this.sendBroadCastSoundPlaying(false, true);
 		for (OnCompletionListener listener : this.onCompletionListeners)
 			listener.onCompletion(mp);
 	}
 
-	private void sendBroadCastSoundPlaying(boolean isPlaying)
+	private void sendBroadCastSoundPlaying(boolean isPlaying, boolean isFinished)
 	{
 		Intent intent = new Intent();
 		intent.setAction(Constants.ACTION_SOUND_STATE_CHANGED);
 		intent.putExtra(Constants.KEY_IS_PLAYING, isPlaying);
+		intent.putExtra(Constants.KEY_IS_FINISHED, isFinished);
 		intent.putExtra(Constants.KEY_PLAYER_ID, this.rawData.getPlayerId());
 		this.broadcastManager.sendBroadcast(intent);
 	}
