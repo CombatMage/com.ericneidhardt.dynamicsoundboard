@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Build;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -33,8 +34,6 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 	{
 		return this.notificationId;
 	}
-
-
 
 	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player)
 	{
@@ -66,11 +65,29 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 
 		this.setContentTitle(title);
 		this.setContentText(message);
-		this.setLargeIcon(Util.getBitmap(context, R.drawable.ic_launcher));
+		this.setScaledLargeIcon(this.getLargeIcon(player.getMediaPlayerData().getUri()));
 
 		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP)
 			this.addStyleLollipop();
+	}
+
+	private Bitmap getLargeIcon(String uri)
+	{
+		//FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
+		//retriever.setDataSource(uri);
+		//byte [] data = retriever.getEmbeddedPicture();
+
+		//retriever.release();
+
+		return Util.getBitmap(context, R.drawable.ic_launcher);
+	}
+
+	private void setScaledLargeIcon(Bitmap bitmap)
+	{
+		int height = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_height);
+		int width = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_width);
+		this.setLargeIcon(Bitmap.createScaledBitmap(bitmap, width, height, false));
 	}
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
