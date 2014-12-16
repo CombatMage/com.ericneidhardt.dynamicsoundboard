@@ -43,8 +43,9 @@
 	<string name="sound_control_delete">Sound entfernen</string>
 
 	<!-- notification -->
-	<string name="notification_1_sounds_playing">Sound noch aktiv</string>
-	<string name="notification_n_sounds_playing">Sounds noch aktiv</string>
+	<string name="notification_pause_sound">Sound pausieren</string>
+	<string name="notification_stop_sound">Sound stoppen</string>
+	<string name="notification_play_sound">Sound abspielen</string>
 
 	<!-- dialog -->
 	<string name="dialog_add">Hinzufügen</string>

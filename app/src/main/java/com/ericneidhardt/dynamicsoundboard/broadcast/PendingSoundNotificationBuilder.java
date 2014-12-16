@@ -1,10 +1,12 @@
 package com.ericneidhardt.dynamicsoundboard.broadcast;
 
+import android.annotation.TargetApi;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v4.app.NotificationCompat;
+import android.os.Build;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -14,7 +16,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
 /**
  * File created by eric.neidhardt on 04.12.2014.
  */
-public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
+public class PendingSoundNotificationBuilder extends Notification.Builder
 {
 	private Context context;
 	private String playerId;
@@ -38,32 +40,44 @@ public class PendingSoundNotificationBuilder extends NotificationCompat.Builder
 		this.playerId = player.getMediaPlayerData().getPlayerId();
 		this.notificationId = this.playerId.hashCode();
 
-		this.setLargeIcon(Util.getBitmap(context, R.drawable.ic_launcher));
-		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
-		this.setDeleteIntent(this.getPendingIntent(Constants.ACTION_DISMISS));
-		this.setContentIntent(this.getOpenActivityIntent());
-		this.setContentTitle(player.getMediaPlayerData().getLabel());
-
 		this.setActionStop();
 		if (player.isPlaying())
 			this.setActionPause();
 		else
 			this.setActionPlay();
+
+		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
+		this.setDeleteIntent(this.getPendingIntent(Constants.ACTION_DISMISS));
+		this.setContentIntent(this.getOpenActivityIntent());
+
+		this.setContentTitle(player.getMediaPlayerData().getLabel());
+		this.setLargeIcon(Util.getBitmap(context, R.drawable.ic_launcher));
+
+
+		this.addStyleLollipop();
+	}
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	private void addStyleLollipop()
+	{
+		Notification.MediaStyle style = new Notification.MediaStyle();
+		style.setShowActionsInCompactView(1); // index of action play / pause
+		this.setStyle(style);
 	}
 
 	private void setActionStop()
 	{
-		this.addAction(R.drawable.ic_stop, "", this.getPendingIntent(Constants.ACTION_STOP));
+		this.addAction(R.drawable.ic_stop, this.context.getResources().getString(R.string.notification_stop_sound), this.getPendingIntent(Constants.ACTION_STOP));
 	}
 
 	private void setActionPause()
 	{
-		this.addAction(R.drawable.ic_pause, "", this.getPendingIntent(Constants.ACTION_PAUSE));
+		this.addAction(R.drawable.ic_pause, this.context.getResources().getString(R.string.notification_pause_sound), this.getPendingIntent(Constants.ACTION_PAUSE));
 	}
 
 	private void setActionPlay()
 	{
-		this.addAction(R.drawable.ic_play, "", this.getPendingIntent(Constants.ACTION_PLAY));
+		this.addAction(R.drawable.ic_play, this.context.getResources().getString(R.string.notification_play_sound), this.getPendingIntent(Constants.ACTION_PLAY));
 	}
 
 	private PendingIntent getPendingIntent(String action)
