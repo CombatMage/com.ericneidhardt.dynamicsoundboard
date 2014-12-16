@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Build;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -19,6 +20,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.Util;
 public class PendingSoundNotificationBuilder extends Notification.Builder
 {
 	private Context context;
+	private Resources resources;
 	private String playerId;
 
 	private int notificationId;
@@ -37,6 +39,7 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 	{
 		super(context);
 		this.context = context;
+		this.resources = this.context.getResources();
 		this.playerId = player.getMediaPlayerData().getPlayerId();
 		this.notificationId = this.playerId.hashCode();
 
@@ -53,8 +56,9 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		this.setContentTitle(player.getMediaPlayerData().getLabel());
 		this.setLargeIcon(Util.getBitmap(context, R.drawable.ic_launcher));
 
-
-		this.addStyleLollipop();
+		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP)
+			this.addStyleLollipop();
 	}
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -67,17 +71,17 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 
 	private void setActionStop()
 	{
-		this.addAction(R.drawable.ic_stop, this.context.getResources().getString(R.string.notification_stop_sound), this.getPendingIntent(Constants.ACTION_STOP));
+		this.addAction(R.drawable.ic_stop, this.resources.getString(R.string.notification_stop_sound), this.getPendingIntent(Constants.ACTION_STOP));
 	}
 
 	private void setActionPause()
 	{
-		this.addAction(R.drawable.ic_pause, this.context.getResources().getString(R.string.notification_pause_sound), this.getPendingIntent(Constants.ACTION_PAUSE));
+		this.addAction(R.drawable.ic_pause, this.resources.getString(R.string.notification_pause_sound), this.getPendingIntent(Constants.ACTION_PAUSE));
 	}
 
 	private void setActionPlay()
 	{
-		this.addAction(R.drawable.ic_play, this.context.getResources().getString(R.string.notification_play_sound), this.getPendingIntent(Constants.ACTION_PLAY));
+		this.addAction(R.drawable.ic_play, this.resources.getString(R.string.notification_play_sound), this.getPendingIntent(Constants.ACTION_PLAY));
 	}
 
 	private PendingIntent getPendingIntent(String action)
