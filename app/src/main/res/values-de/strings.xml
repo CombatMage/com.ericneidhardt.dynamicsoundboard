@@ -46,6 +46,7 @@
 	<string name="notification_pause_sound">Sound pausieren</string>
 	<string name="notification_stop_sound">Sound stoppen</string>
 	<string name="notification_play_sound">Sound abspielen</string>
+	<string name="notification_playlist">Playliste</string>
 
 	<!-- dialog -->
 	<string name="dialog_add">Hinzufügen</string>

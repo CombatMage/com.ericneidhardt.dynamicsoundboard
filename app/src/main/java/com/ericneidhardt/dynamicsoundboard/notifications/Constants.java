@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.broadcast;
+package com.ericneidhardt.dynamicsoundboard.notifications;
 
 /**
  * Created by eric.neidhardt on 15.12.2014.

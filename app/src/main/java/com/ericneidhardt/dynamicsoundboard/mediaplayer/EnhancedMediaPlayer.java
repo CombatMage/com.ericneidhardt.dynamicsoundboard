@@ -8,9 +8,9 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
-import com.ericneidhardt.dynamicsoundboard.broadcast.Constants;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
+import com.ericneidhardt.dynamicsoundboard.notifications.Constants;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 
 import java.io.IOException;

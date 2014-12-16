@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.broadcast;
+package com.ericneidhardt.dynamicsoundboard.notifications;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -77,23 +77,23 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 	private void addStyleLollipop()
 	{
 		Notification.MediaStyle style = new Notification.MediaStyle();
-		style.setShowActionsInCompactView(1); // index of action play / pause
+		style.setShowActionsInCompactView(1); // index of action play/pause
 		this.setStyle(style);
 	}
 
 	private void setActionStop()
 	{
-		this.addAction(R.drawable.ic_stop, this.resources.getString(R.string.notification_stop_sound), this.getPendingIntent(Constants.ACTION_STOP));
+		this.addAction(R.drawable.ic_notification_stop, this.resources.getString(R.string.notification_stop_sound), this.getPendingIntent(Constants.ACTION_STOP));
 	}
 
 	private void setActionPause()
 	{
-		this.addAction(R.drawable.ic_pause, this.resources.getString(R.string.notification_pause_sound), this.getPendingIntent(Constants.ACTION_PAUSE));
+		this.addAction(R.drawable.ic_notification_pause, this.resources.getString(R.string.notification_pause_sound), this.getPendingIntent(Constants.ACTION_PAUSE));
 	}
 
 	private void setActionPlay()
 	{
-		this.addAction(R.drawable.ic_play, this.resources.getString(R.string.notification_play_sound), this.getPendingIntent(Constants.ACTION_PLAY));
+		this.addAction(R.drawable.ic_notification_play, this.resources.getString(R.string.notification_play_sound), this.getPendingIntent(Constants.ACTION_PLAY));
 	}
 
 	private PendingIntent getPendingIntent(String action)

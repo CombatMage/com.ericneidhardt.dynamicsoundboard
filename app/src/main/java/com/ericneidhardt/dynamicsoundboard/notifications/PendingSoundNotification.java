@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.broadcast;
+package com.ericneidhardt.dynamicsoundboard.notifications;
 
 import android.app.Notification;
 

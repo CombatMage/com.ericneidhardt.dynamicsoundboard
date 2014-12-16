@@ -4,3 +4,7 @@ Listview kein: 24dp, 4dp padding
 
 color: accent
 color grey: a8000000
+
+Notification:
+32dp mit optischer größe 24dp
+color: #FFFFFF Enabled: 80% opacity

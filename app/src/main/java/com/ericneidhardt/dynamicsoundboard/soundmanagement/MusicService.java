@@ -7,9 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
-import com.ericneidhardt.dynamicsoundboard.broadcast.Constants;
-import com.ericneidhardt.dynamicsoundboard.broadcast.PendingSoundNotification;
-import com.ericneidhardt.dynamicsoundboard.broadcast.PendingSoundNotificationBuilder;
+import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.dao.DaoSession;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
@@ -17,6 +15,9 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import com.ericneidhardt.dynamicsoundboard.notifications.Constants;
+import com.ericneidhardt.dynamicsoundboard.notifications.PendingSoundNotification;
+import com.ericneidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder;
 
 import java.io.IOException;
 import java.util.*;
@@ -157,7 +158,7 @@ public class MusicService extends Service
 		return new PendingSoundNotificationBuilder(
 				this.getApplicationContext(),
 				player, Constants.NOTIFICATION_ID_PLAYLIST,
-				"Playlist",
+				this.getString(R.string.notification_playlist),
 				player.getMediaPlayerData().getLabel());
 	}
 
