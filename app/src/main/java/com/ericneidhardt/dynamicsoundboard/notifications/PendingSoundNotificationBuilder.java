@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Build;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -74,13 +77,14 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 
 	private Bitmap getLargeIcon(String uri)
 	{
-		//FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
-		//retriever.setDataSource(uri);
-		//byte [] data = retriever.getEmbeddedPicture();
+		MediaMetadataRetriever mediaDataReceiver = new MediaMetadataRetriever();
+		mediaDataReceiver.setDataSource(this.context, Uri.parse(uri));
 
-		//retriever.release();
-
-		return Util.getBitmap(context, R.drawable.ic_launcher);
+		byte [] data = mediaDataReceiver.getEmbeddedPicture();
+		if (data != null)
+			return BitmapFactory.decodeByteArray(data, 0, data.length);
+		else
+			return Util.getBitmap(context, R.drawable.ic_notification_large);
 	}
 
 	private void setScaledLargeIcon(Bitmap bitmap)
