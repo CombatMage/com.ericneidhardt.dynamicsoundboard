@@ -59,7 +59,7 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> ex
 
 	private List<Integer> getPlayingItems()
 	{
-		List<Integer> playingSounds = new ArrayList<Integer>();
+		List<Integer> playingSounds = new ArrayList<>();
 		for (int i = 0; i < this.getValues().size(); i++)
 		{
 			if (this.getValues().get(i).isPlaying())

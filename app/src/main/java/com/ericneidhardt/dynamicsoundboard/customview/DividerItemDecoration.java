@@ -18,9 +18,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	};
 
 	private Drawable divider;
-	private int heightDivider;
-	private int offsetFirstItem;
-	private int offsetLastItem;
+	private int heightDivider = 0;
+	private int offsetFirstItem = 0;
+	private int offsetLastItem = 0;
 	private Integer backgroundColor;
 
 	public DividerItemDecoration(Context context)

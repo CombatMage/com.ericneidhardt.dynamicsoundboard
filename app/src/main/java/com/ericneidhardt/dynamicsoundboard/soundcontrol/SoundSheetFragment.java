@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -23,8 +24,6 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-
-import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -72,10 +71,11 @@ public class SoundSheetFragment
 	public void onResume()
 	{
 		super.onResume();
-		this.getBaseActivity().setSoundSheetActionsEnable(true);
 
-		this.getActivity().findViewById(R.id.action_add_sound).setOnClickListener(this);
-		this.getActivity().findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
+		BaseActivity activity = this.getBaseActivity();
+		activity.setSoundSheetActionsEnable(true);
+		activity.findViewById(R.id.action_add_sound).setOnClickListener(this);
+		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 
 		this.attachScrollViewToFab();
 
@@ -171,9 +171,6 @@ public class SoundSheetFragment
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
 		this.soundLayout.setAdapter(this.soundAdapter);
 
-		ServiceManagerFragment fragment = this.getServiceManagerFragment();
-		List<EnhancedMediaPlayer> enhancedMediaPlayers = fragment.getSounds().get(this.fragmentTag);
-
 		this.soundAdapter.notifyDataSetChanged();
 
 		return fragmentView;
@@ -200,9 +197,8 @@ public class SoundSheetFragment
 		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list
 	}
 
-	public void notifyDataSetChanged(boolean newSoundsAvailable)
+	public void notifyDataSetChanged()
 	{
-		ServiceManagerFragment fragment = this.getServiceManagerFragment();
 		this.soundAdapter.notifyDataSetChanged();
 	}
 

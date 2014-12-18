@@ -53,7 +53,7 @@ public class SoundAdapter
 	{
 		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getSounds().get(this.parentFragmentTag);
 		if (sounds == null)
-			return new ArrayList<EnhancedMediaPlayer>();
+			return new ArrayList<>();
 
 		for (EnhancedMediaPlayer sound : sounds)
 			sound.addOnCompletionListener(this);

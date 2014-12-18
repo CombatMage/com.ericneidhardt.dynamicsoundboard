@@ -77,7 +77,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	@Override
 	public void onServiceConnected(ComponentName name, IBinder service)
 	{
-		Logger.d(TAG, "onServiceConnected");
+		Logger.d(TAG, "onServiceConnected: " + name);
 		MusicService.Binder binder = (MusicService.Binder) service;
 		this.service = binder.getService();
 		this.isServiceBound = true;
@@ -94,14 +94,14 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public List<EnhancedMediaPlayer> getPlayList()
 	{
 		if (this.service == null)
-			return new ArrayList<EnhancedMediaPlayer>();
+			return new ArrayList<>();
 		return this.service.getPlaylist();
 	}
 
 	public Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		if (this.service == null)
-			return new HashMap<String, List<EnhancedMediaPlayer>>();
+			return new HashMap<>();
 		return this.service.getSounds();
 	}
 
@@ -123,7 +123,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawer();
 		SoundSheetFragment fragment = (SoundSheetFragment) this.getFragmentManager().findFragmentByTag(fragmentTag);
 		if (fragment != null)
-			fragment.notifyDataSetChanged(true);
+			fragment.notifyDataSetChanged();
 
 		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list
 	}

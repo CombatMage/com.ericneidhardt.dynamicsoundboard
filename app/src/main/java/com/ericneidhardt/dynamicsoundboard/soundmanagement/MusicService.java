@@ -40,7 +40,7 @@ public class MusicService extends Service
 	{
 		return this.dbPlaylist.getMediaPlayerDataDao();
 	}
-	private List<EnhancedMediaPlayer> playlist = new ArrayList<EnhancedMediaPlayer>();
+	private List<EnhancedMediaPlayer> playlist = new ArrayList<>();
 	List<EnhancedMediaPlayer> getPlaylist()
 	{
 		return playlist;
@@ -51,7 +51,7 @@ public class MusicService extends Service
 	{
 		return this.dbSounds.getMediaPlayerDataDao();
 	}
-	private Map<String, List<EnhancedMediaPlayer>> sounds = new HashMap<String, List<EnhancedMediaPlayer>>();
+	private Map<String, List<EnhancedMediaPlayer>> sounds = new HashMap<>();
 	Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return sounds;
@@ -81,7 +81,7 @@ public class MusicService extends Service
 		this.binder = new Binder();
 		this.broadcastManager = LocalBroadcastManager.getInstance(this);
 		this.notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-		this.notifications = new ArrayList<PendingSoundNotification>();
+		this.notifications = new ArrayList<>();
 
 		this.soundStateChangedReceiver = new SoundStateChangeReceiver();
 		this.notificationActionReceiver = new NotificationActionReceiver();
@@ -193,7 +193,7 @@ public class MusicService extends Service
 
 	private List<EnhancedMediaPlayer> getPlayingSoundsFromSoundList()
 	{
-		List<EnhancedMediaPlayer> currentlyPlayingSounds = new ArrayList<EnhancedMediaPlayer>();
+		List<EnhancedMediaPlayer> currentlyPlayingSounds = new ArrayList<>();
 		for (String fragmentTag : this.sounds.keySet())
 		{
 			for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
@@ -225,6 +225,12 @@ public class MusicService extends Service
 		}
 	}
 
+	public void swapSoundsInSoundSheet(String fragmentTag, int indexSoundA, int indexSoundB)
+	{
+		List<EnhancedMediaPlayer> soundsInSoundSheet = this.sounds.get(fragmentTag);
+		Collections.swap(soundsInSoundSheet, indexSoundA, indexSoundB);
+	}
+
 	/**
 	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the list of loaded sounds.
 	 * @param playerData raw data to create new MediaPlayer
@@ -239,7 +245,7 @@ public class MusicService extends Service
 
 			if (this.sounds.get(fragmentTag) == null)
 			{
-				List<EnhancedMediaPlayer> soundListForFragment = new ArrayList<EnhancedMediaPlayer>();
+				List<EnhancedMediaPlayer> soundListForFragment = new ArrayList<>();
 				soundListForFragment.add(player);
 				this.sounds.put(fragmentTag, soundListForFragment);
 			}
@@ -295,7 +301,7 @@ public class MusicService extends Service
 		if (soundsToRemove == null || soundsToRemove.size() == 0)
 			return;
 
-		List<EnhancedMediaPlayer> copyList = new ArrayList<EnhancedMediaPlayer>(soundsToRemove.size());
+		List<EnhancedMediaPlayer> copyList = new ArrayList<>(soundsToRemove.size());
 		copyList.addAll(soundsToRemove); // this is done to prevent concurrent modification exception
 
 		for (EnhancedMediaPlayer playerToRemove : copyList)
@@ -485,7 +491,7 @@ public class MusicService extends Service
 		{
 			this.database = database;
 			this.dao = getSoundsDao();
-			this.mediaPlayers = new ArrayList<MediaPlayerData>();
+			this.mediaPlayers = new ArrayList<>();
 			for (String fragmentTag : mediaPlayers.keySet())
 			{
 				List<EnhancedMediaPlayer> playersOfFragment = mediaPlayers.get(fragmentTag);
@@ -503,7 +509,7 @@ public class MusicService extends Service
 		{
 			this.database = database;
 			this.dao = getPlaylistDao();
-			this.mediaPlayers = new ArrayList<MediaPlayerData>();
+			this.mediaPlayers = new ArrayList<>();
 			for (EnhancedMediaPlayer player : mediaPlayers)
 				this.mediaPlayers.add(player.getMediaPlayerData());
 		}
@@ -655,12 +661,18 @@ public class MusicService extends Service
 			else
 			{
 				EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
-				if (action.equals(Constants.ACTION_PAUSE))
-					player.pauseSound();
-				else if (action.equals(Constants.ACTION_STOP))
-					player.stopSound();
-				else if (action.equals(Constants.ACTION_PLAY))
-					player.playSound();
+				switch (action)
+				{
+					case Constants.ACTION_PAUSE:
+						player.pauseSound();
+						break;
+					case Constants.ACTION_STOP:
+						player.stopSound();
+						break;
+					case Constants.ACTION_PLAY:
+						player.playSound();
+						break;
+				}
 			}
 		}
 
