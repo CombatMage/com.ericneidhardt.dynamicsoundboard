@@ -45,7 +45,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		super();
 
 		this.broadcastManager = LocalBroadcastManager.getInstance(context);
-		this.onCompletionListeners = new HashSet<OnCompletionListener>();
+		this.onCompletionListeners = new HashSet<>();
 		this.rawData = data;
 		this.setLooping(data.getIsLoop());
 

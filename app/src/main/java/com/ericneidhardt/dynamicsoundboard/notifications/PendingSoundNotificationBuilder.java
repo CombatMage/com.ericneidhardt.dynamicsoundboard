@@ -89,6 +89,8 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 
 	private void setScaledLargeIcon(Bitmap bitmap)
 	{
+		if (bitmap == null)
+			return;
 		int height = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_height);
 		int width = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_width);
 		this.setLargeIcon(Bitmap.createScaledBitmap(bitmap, width, height, false));

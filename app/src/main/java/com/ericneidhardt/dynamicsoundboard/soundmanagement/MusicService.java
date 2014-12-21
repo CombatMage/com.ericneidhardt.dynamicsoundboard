@@ -225,12 +225,6 @@ public class MusicService extends Service
 		}
 	}
 
-	public void swapSoundsInSoundSheet(String fragmentTag, int indexSoundA, int indexSoundB)
-	{
-		List<EnhancedMediaPlayer> soundsInSoundSheet = this.sounds.get(fragmentTag);
-		Collections.swap(soundsInSoundSheet, indexSoundA, indexSoundB);
-	}
-
 	/**
 	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the list of loaded sounds.
 	 * @param playerData raw data to create new MediaPlayer
@@ -367,7 +361,13 @@ public class MusicService extends Service
 
 	private void removeSoundFromDatabase(MediaPlayerDataDao dao, MediaPlayerData playerData)
 	{
-		dao.delete(playerData);
+		if (playerData.getId() != null)
+			dao.delete(playerData);
+		else
+		{
+			List<MediaPlayerData> playersInDatabase = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerData.getPlayerId())).list();
+			dao.deleteInTx(playersInDatabase);
+		}
 	}
 
 	private EnhancedMediaPlayer searchInSoundsAndPlaylistForId(String playerId)
