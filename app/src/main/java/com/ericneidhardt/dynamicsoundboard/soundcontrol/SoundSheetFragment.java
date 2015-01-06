@@ -2,6 +2,9 @@ package com.ericneidhardt.dynamicsoundboard.soundcontrol;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,7 +20,6 @@ import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
-import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromDirectory;
@@ -128,6 +130,9 @@ public class SoundSheetFragment
 	private void removeAllSounds()
 	{
 		this.getServiceManagerFragment().getSoundService().removeSounds(this.fragmentTag);
+		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
+		if (fab != null)
+			fab.show();
 	}
 
 	@Override
@@ -174,7 +179,7 @@ public class SoundSheetFragment
 
 		this.soundLayout.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
-		this.soundLayout.addItemDecoration(new DividerItemDecoration(this.getActivity()));
+		this.soundLayout.addItemDecoration(new DividerItemDecoration());
 
 		DragSortRecycler dragSortRecycler = new SoundSortRecycler();
 		dragSortRecycler.setOnItemMovedListener(this);
@@ -225,6 +230,10 @@ public class SoundSheetFragment
 		fragment.notifyPlaylist();
 
 		this.notifySoundSheetList();
+
+		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
+		if (fab != null)
+			fab.show(true);
 	}
 
 	private void notifySoundSheetList()
@@ -248,6 +257,62 @@ public class SoundSheetFragment
 			this.setFloatingBgColor(0x800000FF);
 			this.setAutoScrollSpeed(0.3f);
 			this.setAutoScrollWindow(0.1f);
+		}
+	}
+
+	private class DividerItemDecoration extends RecyclerView.ItemDecoration
+	{
+		private int offsetFirstItem = getResources().getDimensionPixelSize(R.dimen.margin_very_small);
+		private int heightDivider = getResources().getDimensionPixelSize(R.dimen.stroke);
+
+		@Override
+		public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state)
+		{
+			final int childCount = parent.getChildCount();
+			if (childCount == 0)
+				return;
+
+			for (int i = 0; i < childCount; i++)
+			{
+				if (i < childCount - 1) // do not draw divider after last item
+					this.drawDivider(canvas, parent, parent.getChildAt(i));
+				if (i == 0)
+					this.drawBackgroundFirstItem(canvas, parent);
+			}
+		}
+
+		private void drawDivider(Canvas canvas, RecyclerView parent, View child)
+		{
+			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+			final int left = parent.getPaddingLeft();
+			final int right = parent.getWidth() - parent.getPaddingRight();
+			final int top = child.getBottom() + params.bottomMargin;
+			final int bottom = top + this.heightDivider;
+
+			Paint paint = new Paint();
+			paint.setStyle(Paint.Style.FILL);paint.setColor(getResources().getColor(R.color.divider));
+			canvas.drawRect(left, top, right, bottom, paint);
+		}
+
+		private void drawBackgroundFirstItem(Canvas canvas, RecyclerView parent)
+		{
+			final int left = parent.getPaddingLeft();
+			final int right = parent.getWidth() - parent.getPaddingRight();
+			final int top = parent.getTop();
+			final int bottom = top + this.offsetFirstItem;
+			Paint paint = new Paint();
+			paint.setStyle(Paint.Style.FILL);paint.setColor(getResources().getColor(R.color.background));
+			canvas.drawRect(left, top, right, bottom, paint);
+		}
+
+		@Override
+		public void getItemOffsets(Rect outRect, View childView, RecyclerView parent, RecyclerView.State state)
+		{
+			int bottomOffset = this.heightDivider;
+			int topOffset = 0;
+			int rightOffset =  0;
+			int leftOffset =  0;
+			outRect.set(leftOffset, topOffset, rightOffset, bottomOffset);
 		}
 	}
 }
