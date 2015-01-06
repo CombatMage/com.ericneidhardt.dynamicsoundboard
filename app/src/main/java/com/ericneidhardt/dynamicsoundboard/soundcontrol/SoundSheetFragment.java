@@ -4,24 +4,24 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import com.emtronics.dragsortrecycler.DragSortRecycler;
 import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
-import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromDirectory;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
+import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -166,10 +166,50 @@ public class SoundSheetFragment
 		View fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false);
 
 		this.soundLayout = (RecyclerView)fragmentView.findViewById(R.id.rv_sounds);
-		this.soundLayout.addItemDecoration(new DividerItemDecoration(this.getActivity()));
-		this.soundLayout.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
 		this.soundLayout.setAdapter(this.soundAdapter);
+
+		this.soundLayout.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+		this.soundLayout.setItemAnimator(null);
+		//this.soundLayout.addItemDecoration(new DividerItemDecoration(this.getActivity()));
+
+		DragSortRecycler dragSortRecycler = new DragSortRecycler();
+		dragSortRecycler.setViewHandleId(R.id.layout_sound_controls);
+		dragSortRecycler.setFloatingAlpha(0.4f);
+		dragSortRecycler.setFloatingBgColor(0x800000FF);
+		dragSortRecycler.setAutoScrollSpeed(0.3f);
+		dragSortRecycler.setAutoScrollWindow(0.1f);
+		dragSortRecycler.setOnItemMovedListener(new DragSortRecycler.OnItemMovedListener()
+		{
+			@Override
+			public void onItemMoved(int from, int to)
+			{
+				Logger.d(fragmentTag, "onItemMoved " + from + " to " + to);
+
+				getServiceManagerFragment().getSoundService().moveSoundInFragment(fragmentTag, from, to);
+				soundAdapter.notifyDataSetChanged();
+			}
+		});
+
+		dragSortRecycler.setOnDragStateChangedListener(new DragSortRecycler.OnDragStateChangedListener()
+		{
+			@Override
+			public void onDragStart()
+			{
+				Logger.d(fragmentTag, "onDragStart");
+				soundAdapter.stopProgressUpdateTimer();
+			}
+
+			@Override
+			public void onDragStop()
+			{
+				Logger.d(fragmentTag, "onDragStop");
+				soundAdapter.startProgressUpdateTimer();
+			}
+		});
+
+		this.soundLayout.addItemDecoration(dragSortRecycler);
+		this.soundLayout.addOnItemTouchListener(dragSortRecycler);
+		this.soundLayout.setOnScrollListener(dragSortRecycler.getScrollListener());
 
 		this.soundAdapter.notifyDataSetChanged();
 

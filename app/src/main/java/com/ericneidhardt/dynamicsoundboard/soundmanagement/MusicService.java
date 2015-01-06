@@ -406,6 +406,12 @@ public class MusicService extends Service
 		return null;
 	}
 
+	public void moveSoundInFragment(String fragmentTag, int from, int to)
+	{
+		EnhancedMediaPlayer player = this.sounds.get(fragmentTag).remove(from);
+		this.sounds.get(fragmentTag).add(to, player);
+	}
+
 	private class LoadSoundsTask extends LoadTask<MediaPlayerData>
 	{
 		@Override
