@@ -23,6 +23,8 @@
 	<dimen name="margin_list_item_left">56dp</dimen>
 	<dimen name="margin_list_item_left_large">72dp</dimen>
 
+	<dimen name="padding_button">12dp</dimen>
+
     <dimen name="navigation_width">280dp</dimen>
 
 	<dimen name="stroke">1dp</dimen>
