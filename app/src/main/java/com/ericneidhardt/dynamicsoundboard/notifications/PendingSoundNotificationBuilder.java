@@ -86,14 +86,12 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		if (data != null)
 		{
 			Point size = BitmapUtil.getBitmapSize(data);
-			int scaleFactor = BitmapUtil.getScaleFactor(size.x, size.y, requiredWidth, requiredHeight);
-			return BitmapUtil.getBitmap(data, scaleFactor);
+			int sampleSize = BitmapUtil.getSampleFactor(size.x, size.y, requiredWidth, requiredHeight);
+			return BitmapUtil.getBitmap(data, sampleSize);
 		}
 		else
 		{
-			Point size = BitmapUtil.getBitmapSize(this.context, R.raw.ic_notification_large);
-			int scaleFactor = BitmapUtil.getScaleFactor(size.x, size.y, requiredWidth, requiredHeight);
-			return BitmapUtil.getBitmap(this.context, R.raw.ic_notification_large, scaleFactor);
+			return BitmapUtil.getBitmap(this.context, R.raw.ic_notification_large, 1);
 		}
 	}
 

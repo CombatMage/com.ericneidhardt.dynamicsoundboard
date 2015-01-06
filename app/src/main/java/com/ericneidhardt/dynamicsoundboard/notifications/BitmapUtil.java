@@ -10,15 +10,6 @@ import android.graphics.Point;
  */
 class BitmapUtil
 {
-	static Point getBitmapSize(Context context, int drawableId)
-	{
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeResource(context.getResources(), drawableId, options);
-		int imageHeight = options.outHeight;
-		int imageWidth = options.outWidth;
-		return new Point(imageWidth, imageHeight);
-	}
 
 	static Point getBitmapSize(byte [] rawData)
 	{
@@ -30,7 +21,7 @@ class BitmapUtil
 		return new Point(imageWidth, imageHeight);
 	}
 
-	static int getScaleFactor(int width, int height, int requiredWidth, int requiredHeight)
+	static int getSampleFactor(int width, int height, int requiredWidth, int requiredHeight)
 	{
 		int inSampleSize = 1;
 		if (height > requiredHeight || width > requiredWidth)

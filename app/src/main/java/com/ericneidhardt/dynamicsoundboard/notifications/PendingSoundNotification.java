@@ -37,8 +37,4 @@ public class PendingSoundNotification
 		this.playerId = playerId;
 		this.notification = notification;
 	}
-
-
-
-
 }
