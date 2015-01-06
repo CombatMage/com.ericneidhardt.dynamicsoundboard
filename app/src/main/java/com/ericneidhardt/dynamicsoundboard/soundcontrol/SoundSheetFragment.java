@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.ericneidhardt.dynamicsoundboard.BaseFragment;
 import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
+import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromDirectory;
@@ -33,7 +35,9 @@ public class SoundSheetFragment
 			BaseFragment
 		implements
 			View.OnClickListener,
-			SoundAdapter.OnItemDeleteListener
+			SoundAdapter.OnItemDeleteListener,
+			DragSortRecycler.OnDragStateChangedListener,
+			DragSortRecycler.OnItemMovedListener
 {
 	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
@@ -169,43 +173,12 @@ public class SoundSheetFragment
 		this.soundLayout.setAdapter(this.soundAdapter);
 
 		this.soundLayout.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-		this.soundLayout.setItemAnimator(null);
-		//this.soundLayout.addItemDecoration(new DividerItemDecoration(this.getActivity()));
+		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
+		this.soundLayout.addItemDecoration(new DividerItemDecoration(this.getActivity()));
 
-		DragSortRecycler dragSortRecycler = new DragSortRecycler();
-		dragSortRecycler.setViewHandleId(R.id.layout_sound_controls);
-		dragSortRecycler.setFloatingAlpha(0.4f);
-		dragSortRecycler.setFloatingBgColor(0x800000FF);
-		dragSortRecycler.setAutoScrollSpeed(0.3f);
-		dragSortRecycler.setAutoScrollWindow(0.1f);
-		dragSortRecycler.setOnItemMovedListener(new DragSortRecycler.OnItemMovedListener()
-		{
-			@Override
-			public void onItemMoved(int from, int to)
-			{
-				Logger.d(fragmentTag, "onItemMoved " + from + " to " + to);
-
-				getServiceManagerFragment().getSoundService().moveSoundInFragment(fragmentTag, from, to);
-				soundAdapter.notifyDataSetChanged();
-			}
-		});
-
-		dragSortRecycler.setOnDragStateChangedListener(new DragSortRecycler.OnDragStateChangedListener()
-		{
-			@Override
-			public void onDragStart()
-			{
-				Logger.d(fragmentTag, "onDragStart");
-				soundAdapter.stopProgressUpdateTimer();
-			}
-
-			@Override
-			public void onDragStop()
-			{
-				Logger.d(fragmentTag, "onDragStop");
-				soundAdapter.startProgressUpdateTimer();
-			}
-		});
+		DragSortRecycler dragSortRecycler = new SoundSortRecycler();
+		dragSortRecycler.setOnItemMovedListener(this);
+		dragSortRecycler.setOnDragStateChangedListener(this);
 
 		this.soundLayout.addItemDecoration(dragSortRecycler);
 		this.soundLayout.addOnItemTouchListener(dragSortRecycler);
@@ -214,6 +187,30 @@ public class SoundSheetFragment
 		this.soundAdapter.notifyDataSetChanged();
 
 		return fragmentView;
+	}
+
+	@Override
+	public void onDragStart()
+	{
+		Logger.d(fragmentTag, "onDragStart");
+		this.soundLayout.setItemAnimator(null);
+		this.soundAdapter.stopProgressUpdateTimer();
+	}
+
+	@Override
+	public void onDragStop()
+	{
+		Logger.d(fragmentTag, "onDragStop");
+		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
+		this.soundAdapter.startProgressUpdateTimer();
+	}
+
+	@Override
+	public void onItemMoved(int from, int to)
+	{
+		Logger.d(fragmentTag, "onItemMoved " + from + " to " + to);
+		this.getServiceManagerFragment().getSoundService().moveSoundInFragment(fragmentTag, from, to);
+		this.soundAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -242,4 +239,15 @@ public class SoundSheetFragment
 		this.soundAdapter.notifyDataSetChanged();
 	}
 
+	private class SoundSortRecycler extends DragSortRecycler
+	{
+		public SoundSortRecycler()
+		{
+			this.setViewHandleId(R.id.b_reorder);
+			this.setFloatingAlpha(0.4f);
+			this.setFloatingBgColor(0x800000FF);
+			this.setAutoScrollSpeed(0.3f);
+			this.setAutoScrollWindow(0.1f);
+		}
+	}
 }
