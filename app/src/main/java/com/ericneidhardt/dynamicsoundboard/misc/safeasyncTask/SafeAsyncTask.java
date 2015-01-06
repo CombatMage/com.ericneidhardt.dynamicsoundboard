@@ -8,11 +8,7 @@ import android.util.Log;
 import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 /**
  * A class similar but unrelated to android's {@link android.os.AsyncTask}.
@@ -69,7 +65,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
 
 
     public FutureTask<Void> future() {
-        future = new FutureTask<Void>( newTask() );
+        future = new FutureTask<>( newTask() );
         return future;
     }
 
@@ -155,7 +151,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
 
 
     protected Task<ResultT> newTask() {
-        return new Task<ResultT>(this);
+        return new Task<>(this);
     }
 
 
@@ -219,7 +215,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
 
         protected void doException( final Exception e ) throws Exception {
             if( parent.launchLocation!=null ) {
-                final ArrayList<StackTraceElement> stack = new ArrayList<StackTraceElement>(Arrays.asList(e.getStackTrace()));
+                final ArrayList<StackTraceElement> stack = new ArrayList<>(Arrays.asList(e.getStackTrace()));
                 stack.addAll(Arrays.asList(parent.launchLocation));
                 e.setStackTrace(stack.toArray(new StackTraceElement[stack.size()]));
             }
@@ -236,7 +232,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
 
         protected void doThrowable( final Throwable e ) throws Exception {
             if( parent.launchLocation!=null ) {
-                final ArrayList<StackTraceElement> stack = new ArrayList<StackTraceElement>(Arrays.asList(e.getStackTrace()));
+                final ArrayList<StackTraceElement> stack = new ArrayList<>(Arrays.asList(e.getStackTrace()));
                 stack.addAll(Arrays.asList(parent.launchLocation));
                 e.setStackTrace(stack.toArray(new StackTraceElement[stack.size()]));
             }

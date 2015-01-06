@@ -18,7 +18,7 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 
 	public PauseSoundOnCallListener()
 	{
-		this.pauseSounds = new ArrayList<EnhancedMediaPlayer>();
+		this.pauseSounds = new ArrayList<>();
 	}
 
 	@Override

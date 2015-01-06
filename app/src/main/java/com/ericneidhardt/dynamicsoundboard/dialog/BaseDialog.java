@@ -7,14 +7,14 @@ import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 /**
  * File created by eric.neidhardt on 14.11.2014.
  */
-public abstract class BaseDialog extends DialogFragment
+abstract class BaseDialog extends DialogFragment
 {
-	protected ServiceManagerFragment getServiceManagerFragment()
+	ServiceManagerFragment getServiceManagerFragment()
 	{
 		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
 	}
 
-	protected SoundSheetManagerFragment getSoundSheetManagerFragment()
+	SoundSheetManagerFragment getSoundSheetManagerFragment()
 	{
 		return (SoundSheetManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
 	}

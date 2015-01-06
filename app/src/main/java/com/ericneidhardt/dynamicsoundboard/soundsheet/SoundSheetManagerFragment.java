@@ -45,7 +45,7 @@ public class SoundSheetManagerFragment
 		this.setRetainInstance(true);
 		this.setHasOptionsMenu(true);
 
-		this.soundSheets = new ArrayList<SoundSheet>();
+		this.soundSheets = new ArrayList<>();
 		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUNDS);
 
 		SafeAsyncTask task = new LoadSoundSheetsTask();
@@ -163,7 +163,7 @@ public class SoundSheetManagerFragment
 		task.execute();
 	}
 
-	public void remove(String fragmentTag, boolean notifySoundSheets)
+	public void remove(String fragmentTag)
 	{
 		SoundSheet soundSheetToRemove = null;
 		for (SoundSheet soundSheet : this.soundSheets)
@@ -172,7 +172,7 @@ public class SoundSheetManagerFragment
 				soundSheetToRemove = soundSheet;
 		}
 		if (soundSheetToRemove != null)
-			this.remove(soundSheetToRemove, notifySoundSheets);
+			this.remove(soundSheetToRemove, true);
 	}
 
 	public List<SoundSheet> getAll()

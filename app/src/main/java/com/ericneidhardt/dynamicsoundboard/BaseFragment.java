@@ -12,7 +12,7 @@ public abstract class BaseFragment extends Fragment
 		return (BaseActivity)this.getActivity();
 	}
 
-	public NavigationDrawerFragment getNavigationDrawer()
+	protected NavigationDrawerFragment getNavigationDrawer()
 	{
 		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
 	}

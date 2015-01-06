@@ -49,7 +49,7 @@ public class SoundAdapter
 	}
 
 	@Override
-	public List<EnhancedMediaPlayer> getValues()
+	protected List<EnhancedMediaPlayer> getValues()
 	{
 		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getSounds().get(this.parentFragmentTag);
 		if (sounds == null)

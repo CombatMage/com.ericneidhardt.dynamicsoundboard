@@ -56,18 +56,18 @@ public class JsonPojo
 
 	public void addPlayList(List<EnhancedMediaPlayer> playList)
 	{
-		this.playList = new ArrayList<MediaPlayerData>(playList.size());
+		this.playList = new ArrayList<>(playList.size());
 		for (EnhancedMediaPlayer player : playList)
 			this.playList.add(player.getMediaPlayerData());
 	}
 
 	public void addSounds(Map<String, List<EnhancedMediaPlayer>> sounds)
 	{
-		this.sounds = new HashMap<String, List<MediaPlayerData>>(sounds.size());
+		this.sounds = new HashMap<>(sounds.size());
 
 		for (String key : sounds.keySet())
 		{
-			List<MediaPlayerData> soundsPerSoundSheet = new ArrayList<MediaPlayerData>();
+			List<MediaPlayerData> soundsPerSoundSheet = new ArrayList<>();
 			for (EnhancedMediaPlayer player : sounds.get(key))
 				soundsPerSoundSheet.add(player.getMediaPlayerData());
 

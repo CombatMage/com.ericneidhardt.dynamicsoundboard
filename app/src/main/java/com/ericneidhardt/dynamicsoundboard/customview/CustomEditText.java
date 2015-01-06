@@ -16,16 +16,15 @@ import com.ericneidhardt.dynamicsoundboard.R;
 
 public abstract class CustomEditText extends LinearLayout implements TextView.OnEditorActionListener
 {
-	protected View divider;
-	protected EditTextBackEvent input;
-	protected OnTextEditedListener callback;
+	EditTextBackEvent input;
+	OnTextEditedListener callback;
 
 	public CustomEditText(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		this.inflateLayout(context, this.getLayoutId());
 		this.input.setOnEditorActionListener(this);
-		this.divider = this.findViewById(R.id.v_divider);
+		View divider = this.findViewById(R.id.v_divider);
 
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
 		float size = array.getDimension(R.styleable.CustomEditText_text_size, 0);
@@ -38,7 +37,7 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 
 		boolean showUnderScore = array.getBoolean(R.styleable.CustomEditText_show_underscore, true);
 		if (!showUnderScore)
-			this.divider.setVisibility(GONE);
+			divider.setVisibility(GONE);
 
 		array.recycle();
 	}
@@ -61,7 +60,7 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 
 	protected abstract int getLayoutId();
 
-	protected void inflateLayout(Context context, int layoutToInflate)
+	void inflateLayout(Context context, int layoutToInflate)
 	{
 		LayoutInflater.from(context).inflate(layoutToInflate, this, true);
 		this.input = (EditTextBackEvent) this.findViewById(R.id.edittext);
@@ -94,7 +93,7 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 			this.input.setHint(hint);
 	}
 
-	public CharSequence getHint()
+	CharSequence getHint()
 	{
 		if (this.input != null)
 			return this.input.getHint();

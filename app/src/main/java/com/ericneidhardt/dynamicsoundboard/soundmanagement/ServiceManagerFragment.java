@@ -108,7 +108,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public void notifyPlaylist()
 	{
 		NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
-		fragment.getPlaylist().notifyDataSetChanged(true);
+		fragment.getPlaylist().notifyDataSetChanged();
 	}
 
 	public void notifySoundSheetFragments()

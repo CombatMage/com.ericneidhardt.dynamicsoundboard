@@ -12,8 +12,8 @@ import java.util.TimerTask;
 
 public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T>
 {
-	public static final int UPDATE_INTERVAL = 500;
-	public static final Handler handler = new Handler();
+	protected static final int UPDATE_INTERVAL = 500;
+	protected static final Handler handler = new Handler();
 
 	protected ServiceManagerFragment serviceManagerFragment;
 	private Timer progressBarUpdateTimer;

@@ -8,7 +8,9 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import com.ericneidhardt.dynamicsoundboard.*;
+import com.ericneidhardt.dynamicsoundboard.BaseActivity;
+import com.ericneidhardt.dynamicsoundboard.NavigationDrawerFragment;
+import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import com.ericneidhardt.dynamicsoundboard.customview.NavigationDrawerList;
 import com.ericneidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -85,7 +87,7 @@ public class SoundSheets
 	@Override
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
-		List<SoundSheet> soundSheetsToRemove = new ArrayList<SoundSheet>(selectedItems.size());
+		List<SoundSheet> soundSheetsToRemove = new ArrayList<>(selectedItems.size());
 		for(int i = 0; i < selectedItems.size(); i++) {
 			int index = selectedItems.keyAt(i);
 			soundSheetsToRemove.add(this.adapter.getValues().get(index));

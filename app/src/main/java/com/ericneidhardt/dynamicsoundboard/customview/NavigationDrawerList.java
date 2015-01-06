@@ -17,7 +17,7 @@ public abstract class NavigationDrawerList
 			android.support.v7.view.ActionMode.Callback
 {
 	protected NavigationDrawerFragment parent;
-	protected android.support.v7.view.ActionMode actionMode;
+	private android.support.v7.view.ActionMode actionMode;
 	protected boolean isInSelectionMode;
 
 	private SparseArray<View> selectedItems;
@@ -71,7 +71,7 @@ public abstract class NavigationDrawerList
 	{
 		this.parent.onActionModeStart();
 		this.isInSelectionMode = true;
-		this.selectedItems = new SparseArray<View>(this.getItemCount());
+		this.selectedItems = new SparseArray<>(this.getItemCount());
 
 		return true;
 	}

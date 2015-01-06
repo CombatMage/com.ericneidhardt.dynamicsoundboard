@@ -2,20 +2,10 @@ package com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask;
 
 import android.annotation.SuppressLint;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.security.InvalidParameterException;
 import java.security.MessageDigest;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class Strings
 {
@@ -225,7 +215,7 @@ public class Strings
 		if (nameValuePairs.length % 2 != 0)
 			throw new InvalidParameterException("You must include one value for each parameter");
 
-		final HashMap<String, String> map = new HashMap<String, String>(nameValuePairs.length / 2);
+		final HashMap<String, String> map = new HashMap<>(nameValuePairs.length / 2);
 		for (int i = 0; i < nameValuePairs.length; i += 2)
 			map.put(Strings.toString(nameValuePairs[i]), Strings.toString(nameValuePairs[i + 1]));
 

@@ -109,7 +109,7 @@ public class SoundSheetFragment
 			case R.id.action_delete_sheet:
 				this.removeAllSounds();
 				SoundSheet soundSheet = this.getSoundSheetManagerFragment().get(this.fragmentTag);
-				this.getSoundSheetManagerFragment().remove(this.fragmentTag, true);
+				this.getSoundSheetManagerFragment().remove(this.fragmentTag);
 				this.getBaseActivity().removeSoundFragment(soundSheet);
 				return true;
 			case R.id.action_clear_sounds_in_sheet:

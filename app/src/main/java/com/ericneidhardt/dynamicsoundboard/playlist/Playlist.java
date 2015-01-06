@@ -72,7 +72,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	{
 		super.parent = parent;
 		this.adapter.setServiceManagerFragment(parent.getServiceManagerFragment());
-		this.notifyDataSetChanged(true);
+		this.notifyDataSetChanged();
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	@Override
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
-		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<EnhancedMediaPlayer>(selectedItems.size());
+		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>(selectedItems.size());
 		for(int i = 0; i < selectedItems.size(); i++) {
 			int index = selectedItems.keyAt(i);
 			playersToRemove.add(this.adapter.getValues().get(index));
@@ -111,7 +111,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 		return this.adapter.getItemCount();
 	}
 
-	public void notifyDataSetChanged(boolean newSoundAvailable)
+	public void notifyDataSetChanged()
 	{
 		this.adapter.notifyDataSetChanged();
 	}

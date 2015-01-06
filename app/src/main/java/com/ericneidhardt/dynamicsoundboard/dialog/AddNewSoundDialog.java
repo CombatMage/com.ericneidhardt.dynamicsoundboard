@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class AddNewSoundDialog extends BaseDialog implements View.OnClickListener
 {
-	public static final String TAG = AddNewSoundDialog.class.getName();
+	private static final String TAG = AddNewSoundDialog.class.getName();
 
 	private static final String KEY_CALLING_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.callingFragmentTag";
 	private static final String KEY_SOUNDS_URI = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.soundsToAdd";
@@ -50,17 +51,16 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 	{
 		super.onCreate(savedInstanceState);
 
-		this.soundsToAdd = new ArrayList<Uri>();
+		this.soundsToAdd = new ArrayList<>();
 		Bundle args = this.getArguments();
 		if (args != null)
 			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG);
 	}
 
-	@SuppressWarnings("Annotator")
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
-		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound, null);
+		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound, null);
 
 		view.findViewById(R.id.b_add).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
@@ -152,8 +152,8 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 	{
 		super.onSaveInstanceState(outState);
 
-		ArrayList<String> uris = new ArrayList<String>(this.soundsToAdd.size());
-		ArrayList<String> labels = new ArrayList<String>(this.soundsToAdd.size());
+		ArrayList<String> uris = new ArrayList<>(this.soundsToAdd.size());
+		ArrayList<String> labels = new ArrayList<>(this.soundsToAdd.size());
 		int count = this.soundsToAdd.size();
 		for (int i = 0; i < count; i++)
 		{
@@ -172,7 +172,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 			throw new NullPointerException("cannot addSoundSheetAndNotifyFragment sound, SoundManagerFragment is null");
 
 		int count = this.soundsToAdd.size();
-		List<MediaPlayerData> playersData = new ArrayList<MediaPlayerData>(count);
+		List<MediaPlayerData> playersData = new ArrayList<>(count);
 		for (int i = 0; i < count; i++)
 		{
 			Uri soundUri = this.soundsToAdd.get(i);

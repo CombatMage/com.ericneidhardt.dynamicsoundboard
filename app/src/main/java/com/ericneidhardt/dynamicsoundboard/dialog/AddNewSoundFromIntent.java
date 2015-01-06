@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
 {
-	public static final String TAG = AddNewSoundFromIntent.class.getName();
+	private static final String TAG = AddNewSoundFromIntent.class.getName();
 
 	private static final String KEY_SOUND_URI = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.uri";
 	private static final String KEY_SUGGESTED_NAME = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.suggestedName";
@@ -83,7 +84,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 
 	private Dialog createDialogIfNoSheetsExists()
 	{
-		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_intent, null);
+		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_intent, null);
 		this.soundName = (CustomEditText)view.findViewById(R.id.et_name_file);
 		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
 
@@ -98,7 +99,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 
 	private Dialog createDialogToSelectSoundSheet()
 	{
-		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null);
+		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null);
 
 		this.soundName = (CustomEditText)view.findViewById(R.id.et_name_file);
 		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
@@ -185,7 +186,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 
 	private static ArrayList<String> getLabelsFromSoundSheets(List<SoundSheet> soundSheets)
 	{
-		ArrayList<String> labels = new ArrayList<String>();
+		ArrayList<String> labels = new ArrayList<>();
 		for (SoundSheet soundSheet : soundSheets)
 			labels.add(soundSheet.getLabel());
 		return labels;
@@ -193,7 +194,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 
 	private static ArrayList<String> getIdsFromSoundSheets(List<SoundSheet> soundSheets)
 	{
-		ArrayList<String> labels = new ArrayList<String>();
+		ArrayList<String> labels = new ArrayList<>();
 		for (SoundSheet soundSheet : soundSheets)
 			labels.add(soundSheet.getFragmentTag());
 		return labels;

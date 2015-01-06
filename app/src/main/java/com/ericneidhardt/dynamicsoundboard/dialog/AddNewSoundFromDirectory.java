@@ -105,7 +105,7 @@ public class AddNewSoundFromDirectory
 
 	private List<File> buildResult()
 	{
-		List<File> files = new ArrayList<File>();
+		List<File> files = new ArrayList<>();
 		if (super.adapter.selectedFile == null)
 			return files;
 		else if (!super.adapter.selectedFile.isDirectory())

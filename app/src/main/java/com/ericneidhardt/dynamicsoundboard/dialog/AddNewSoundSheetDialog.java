@@ -1,5 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
@@ -12,7 +13,7 @@ import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
 public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickListener
 {
-	public static final String TAG = AddNewSoundSheetDialog.class.getSimpleName();
+	private static final String TAG = AddNewSoundSheetDialog.class.getSimpleName();
 
 	private static final String KEY_SUGGESTED_NAME = "com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog.suggestedName";
 
@@ -43,7 +44,7 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
-		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_layout, null);
+		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_layout, null);
 		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
 		this.soundSheetName.setHint(this.suggestedName);
 

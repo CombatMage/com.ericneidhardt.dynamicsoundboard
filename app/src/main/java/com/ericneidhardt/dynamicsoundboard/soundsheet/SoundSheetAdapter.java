@@ -23,7 +23,7 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 
 	public SoundSheetAdapter()
 	{
-		this.soundSheets = new ArrayList<SoundSheet>();
+		this.soundSheets = new ArrayList<>();
 	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)

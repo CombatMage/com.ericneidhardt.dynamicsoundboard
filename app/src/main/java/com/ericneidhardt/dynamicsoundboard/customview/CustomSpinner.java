@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-
 import com.ericneidhardt.dynamicsoundboard.R;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class CustomSpinner extends LinearLayout implements View.OnClickListener
 
 	public void setItems(List<String> items)
 	{
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, items);
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, items);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		this.spinner.setAdapter(adapter);
 	}
