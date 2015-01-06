@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
@@ -16,7 +16,6 @@ import com.ericneidhardt.dynamicsoundboard.BaseActivity;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
-import com.ericneidhardt.dynamicsoundboard.misc.Util;
 
 /**
  * File created by eric.neidhardt on 04.12.2014.
@@ -80,20 +79,29 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		MediaMetadataRetriever mediaDataReceiver = new MediaMetadataRetriever();
 		mediaDataReceiver.setDataSource(this.context, Uri.parse(uri));
 
+		int requiredHeight = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_height);
+		int requiredWidth = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_width);
+
 		byte [] data = mediaDataReceiver.getEmbeddedPicture();
 		if (data != null)
-			return BitmapFactory.decodeByteArray(data, 0, data.length);
+		{
+			Point size = BitmapUtil.getBitmapSize(data);
+			int scaleFactor = BitmapUtil.getScaleFactor(size.x, size.y, requiredWidth, requiredHeight);
+			return BitmapUtil.getBitmap(data, scaleFactor);
+		}
 		else
-			return Util.getBitmap(context, R.drawable.ic_notification_large);
+		{
+			Point size = BitmapUtil.getBitmapSize(this.context, R.raw.ic_notification_large);
+			int scaleFactor = BitmapUtil.getScaleFactor(size.x, size.y, requiredWidth, requiredHeight);
+			return BitmapUtil.getBitmap(this.context, R.raw.ic_notification_large, scaleFactor);
+		}
 	}
 
 	private void setScaledLargeIcon(Bitmap bitmap)
 	{
 		if (bitmap == null)
 			return;
-		int height = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_height);
-		int width = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_width);
-		this.setLargeIcon(Bitmap.createScaledBitmap(bitmap, width, height, false));
+		this.setLargeIcon(bitmap);
 	}
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
