@@ -1,1 +1,1 @@
-include ':app', ':dao_generator'
+include ':app', ':dao_generator', ':drag_drop_recycler_view'
