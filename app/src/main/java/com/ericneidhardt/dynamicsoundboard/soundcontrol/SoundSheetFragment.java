@@ -308,8 +308,13 @@ public class SoundSheetFragment
 		@Override
 		public void getItemOffsets(Rect outRect, View childView, RecyclerView parent, RecyclerView.State state)
 		{
+			if (parent.getAdapter().getItemCount() == 0)
+				return;
+
+			boolean isFirstItem = parent.getChildAt(0) == childView;
+			int topOffset = isFirstItem ? offsetFirstItem : 0;
+
 			int bottomOffset = this.heightDivider;
-			int topOffset = 0;
 			int rightOffset =  0;
 			int leftOffset =  0;
 			outRect.set(leftOffset, topOffset, rightOffset, bottomOffset);

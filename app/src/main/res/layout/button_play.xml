@@ -3,8 +3,8 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 
 		android:id="@+id/b_play"
-		android:layout_width="40dp"
-		android:layout_height="40dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:scaleType="centerCrop"
 		android:contentDescription="@string/sound_control_content_description_play"
 		android:src="@drawable/selector_ic_play"

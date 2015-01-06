@@ -2,7 +2,7 @@ action: default
 Listview Groﬂ: 40dp, kein padding
 Listview kein: 24dp, 4dp padding
 
-color: accent
+color: accent (ff4081)
 color grey: a8000000
 
 Notification:
