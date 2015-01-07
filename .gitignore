@@ -19,3 +19,4 @@ log/
 target/
 dao_generator/build/tmp/
 dao_generator/build/
+drag_drop_recycler_view/build/
