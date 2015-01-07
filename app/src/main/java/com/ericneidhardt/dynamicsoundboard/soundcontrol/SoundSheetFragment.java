@@ -114,6 +114,7 @@ public class SoundSheetFragment
 				return true;
 			case R.id.action_clear_sounds_in_sheet:
 				this.removeAllSounds();
+				this.notifySoundSheetList();
 				this.soundAdapter.notifyDataSetChanged();
 				return true;
 			default:
