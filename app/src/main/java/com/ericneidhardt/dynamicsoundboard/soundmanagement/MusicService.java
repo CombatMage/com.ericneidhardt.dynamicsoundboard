@@ -217,6 +217,11 @@ public class MusicService extends Service
 
 	public void addNewSoundToServiceAndDatabase(MediaPlayerData playerData)
 	{
+		String fragmentTag = playerData.getFragmentTag();
+		List<EnhancedMediaPlayer> soundInFragment = this.sounds.get(fragmentTag);
+		int sortOrder = soundInFragment == null ? 0 : soundInFragment.size();
+		playerData.setSortOrder(sortOrder);
+
 		MediaPlayerData dataToStore = this.createSoundFromRawData(playerData);
 		if (dataToStore != null)
 		{
@@ -237,14 +242,16 @@ public class MusicService extends Service
 			String fragmentTag = playerData.getFragmentTag();
 			EnhancedMediaPlayer player = new EnhancedMediaPlayer(this.getApplicationContext(), playerData);
 
+			int index = player.getMediaPlayerData().getSortOrder();
 			if (this.sounds.get(fragmentTag) == null)
-			{
-				List<EnhancedMediaPlayer> soundListForFragment = new ArrayList<>();
-				soundListForFragment.add(player);
-				this.sounds.put(fragmentTag, soundListForFragment);
-			}
+				this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
+
+			List<EnhancedMediaPlayer> soundsInFragment = this.sounds.get(fragmentTag);
+			int count = soundsInFragment.size();
+			if (index <= count) // add item according to sortorder
+				soundsInFragment.add(index, player);
 			else
-				this.sounds.get(fragmentTag).add(player);
+				soundsInFragment.add(player); // if the list is to short, just append
 
 			return player.getMediaPlayerData();
 		} catch (IOException e)
@@ -408,8 +415,15 @@ public class MusicService extends Service
 
 	public void moveSoundInFragment(String fragmentTag, int from, int to)
 	{
-		EnhancedMediaPlayer player = this.sounds.get(fragmentTag).remove(from);
-		this.sounds.get(fragmentTag).add(to, player);
+		List<EnhancedMediaPlayer> soundsInFragment = this.sounds.get(fragmentTag);
+
+		EnhancedMediaPlayer playerToMove = soundsInFragment.remove(from);
+		soundsInFragment.add(to, playerToMove);
+
+		int count = soundsInFragment.size();
+		int indexOfSoundsToUpdate = Math.min(from, to); // we need to update all sound after the moved one
+		for (int i = indexOfSoundsToUpdate; i < count; i++)
+			soundsInFragment.get(i).getMediaPlayerData().setSortOrder(i);
 	}
 
 	private class LoadSoundsTask extends LoadTask<MediaPlayerData>
