@@ -268,6 +268,7 @@ public class SoundSheetFragment
 	private class DividerItemDecoration extends RecyclerView.ItemDecoration
 	{
 		private int heightDivider = getResources().getDimensionPixelSize(R.dimen.stroke);
+
 		@Override
 		public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state)
 		{
@@ -278,18 +279,29 @@ public class SoundSheetFragment
 			for (int i = 0; i < childCount; i++)
 			{
 				if (i < childCount - 1) // do not draw divider after last item
-					this.drawDivider(canvas, parent, parent.getChildAt(i));
+				{
+					View child = parent.getChildAt(i);
+					final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+					final int left = parent.getPaddingLeft();
+					final int right = parent.getWidth() - parent.getPaddingRight();
+					final int top = child.getBottom() + params.bottomMargin;
+					final int bottom = top + this.heightDivider;
+
+					this.drawDividerBackground(canvas, left, top, right, bottom);
+					this.drawDivider(canvas, left, top, right, bottom);
+				}
 			}
 		}
 
-		private void drawDivider(Canvas canvas, RecyclerView parent, View child)
+		private void drawDividerBackground(Canvas canvas, int left, int top, int right, int bottom)
 		{
-			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-			final int left = parent.getPaddingLeft();
-			final int right = parent.getWidth() - parent.getPaddingRight();
-			final int top = child.getBottom() + params.bottomMargin;
-			final int bottom = top + this.heightDivider;
+			Paint paint = new Paint();
+			paint.setStyle(Paint.Style.FILL);paint.setColor(getResources().getColor(R.color.background));
+			canvas.drawRect(left, top, right, bottom, paint);
+		}
 
+		private void drawDivider(Canvas canvas, int left, int top, int right, int bottom)
+		{
 			Paint paint = new Paint();
 			paint.setStyle(Paint.Style.FILL);paint.setColor(getResources().getColor(R.color.divider));
 			canvas.drawRect(left, top, right, bottom, paint);
