@@ -23,7 +23,8 @@ public abstract class CustomEditText
 			LinearLayout
 		implements
 			TextView.OnEditorActionListener,
-			EditTextBackEvent.EditTextImeBackListener
+			EditTextBackEvent.EditTextImeBackListener,
+			View.OnFocusChangeListener
 {
 	EditTextBackEvent input;
 	OnTextEditedListener callback;
@@ -34,6 +35,7 @@ public abstract class CustomEditText
 		this.inflateLayout(context, this.getLayoutId());
 		this.input.setOnEditorActionListener(this);
 		this.input.setOnEditTextImeBackListener(this);
+		this.input.setOnFocusChangeListener(this);
 
 		View divider = this.findViewById(R.id.v_divider);
 
@@ -71,6 +73,13 @@ public abstract class CustomEditText
 
 	@Override
 	public void onImeBack(EditTextBackEvent ctrl, String text)
+	{
+		if (this.callback != null)
+			this.callback.onTextEdited(this.input.getText().toString());
+	}
+
+	@Override
+	public void onFocusChange(View v, boolean hasFocus)
 	{
 		if (this.callback != null)
 			this.callback.onTextEdited(this.input.getText().toString());
