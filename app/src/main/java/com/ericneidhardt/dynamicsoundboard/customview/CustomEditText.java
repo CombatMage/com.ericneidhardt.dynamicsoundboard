@@ -2,8 +2,12 @@ package com.ericneidhardt.dynamicsoundboard.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,7 +18,12 @@ import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.R;
 
 
-public abstract class CustomEditText extends LinearLayout implements TextView.OnEditorActionListener
+public abstract class CustomEditText
+		extends
+			LinearLayout
+		implements
+			TextView.OnEditorActionListener,
+			EditTextBackEvent.EditTextImeBackListener
 {
 	EditTextBackEvent input;
 	OnTextEditedListener callback;
@@ -24,6 +33,8 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 		super(context, attrs);
 		this.inflateLayout(context, this.getLayoutId());
 		this.input.setOnEditorActionListener(this);
+		this.input.setOnEditTextImeBackListener(this);
+
 		View divider = this.findViewById(R.id.v_divider);
 
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
@@ -56,6 +67,13 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 				this.callback.onTextEdited(this.input.getText().toString());
 		}
 		return false;
+	}
+
+	@Override
+	public void onImeBack(EditTextBackEvent ctrl, String text)
+	{
+		if (this.callback != null)
+			this.callback.onTextEdited(this.input.getText().toString());
 	}
 
 	protected abstract int getLayoutId();
@@ -98,6 +116,62 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 		if (this.input != null)
 			return this.input.getHint();
 		return null;
+	}
+
+	@Override
+	protected Parcelable onSaveInstanceState()
+	{
+		Parcelable superState = super.onSaveInstanceState();
+		return new SavedState(superState, this.input.getText().toString());
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Parcelable state)
+	{
+		SavedState savedState = (SavedState) state;
+		super.onRestoreInstanceState(savedState.getSuperState());
+
+		this.input.setText(savedState.getValue());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void dispatchSaveInstanceState(@NonNull SparseArray container)
+	{
+		// As we save our own instance state, ensure our children don't save
+		// and restore their state as well.
+		super.dispatchFreezeSelfOnly(container);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void dispatchRestoreInstanceState(@NonNull SparseArray container)
+	{
+		/** See comment in {@link #dispatchSaveInstanceState(android.util.SparseArray)} */
+		super.dispatchThawSelfOnly(container);
+	}
+
+	protected static class SavedState extends BaseSavedState
+	{
+		private String value;
+
+		public String getValue()
+		{
+			return this.value;
+		}
+
+		public SavedState(Parcelable superState, String value)
+		{
+			super(superState);
+			this.value = value;
+		}
+
+		@Override
+		public void writeToParcel(@NonNull Parcel destination, int flags)
+		{
+			super.writeToParcel(destination, flags);
+			destination.writeString(this.value);
+		}
 	}
 
 	public static interface OnTextEditedListener

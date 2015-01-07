@@ -1,7 +1,6 @@
 package com.ericneidhardt.dynamicsoundboard.customview;
 
 import android.content.Context;
-import android.os.Parcelable;
 import android.text.method.KeyListener;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -63,14 +62,6 @@ public class ActionbarEditText extends CustomEditText implements TextView.OnEdit
 		if (this.initialText != null)
 			super.input.setText(this.initialText);
 		this.disableEditText();
-	}
-
-	@Override
-	protected Parcelable onSaveInstanceState()
-	{
-		if (this.initialText != null)
-			super.input.setText(this.initialText);
-		return super.onSaveInstanceState();
 	}
 
 	private void disableEditText()
