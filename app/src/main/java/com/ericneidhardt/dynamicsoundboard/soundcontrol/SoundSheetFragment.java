@@ -43,6 +43,11 @@ public class SoundSheetFragment
 {
 	private static final String KEY_FRAGMENT_TAG = "com.ericneidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
+	private static final float FLOATING_ITEM_ALPHA = 0.4f;
+	private static final int FLOATING_ITEM_BG_COLOR_ID = R.color.accent_200;
+	private static final float AUTO_SCROLL_SPEED = 0.3f;
+	private static final float AUTO_SCROLL_WINDOW = 0.1f;
+
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
 	private RecyclerView soundLayout;
@@ -198,7 +203,7 @@ public class SoundSheetFragment
 	public void onDragStart()
 	{
 		Logger.d(fragmentTag, "onDragStart");
-		this.soundLayout.setItemAnimator(null);
+		this.soundLayout.setItemAnimator(null); // drag does not work with default animator
 		this.soundAdapter.stopProgressUpdateTimer();
 	}
 
@@ -206,7 +211,7 @@ public class SoundSheetFragment
 	public void onDragStop()
 	{
 		Logger.d(fragmentTag, "onDragStop");
-		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
+		this.soundLayout.setItemAnimator(new DefaultItemAnimator()); // add animator for delete animation
 		this.soundAdapter.startProgressUpdateTimer();
 	}
 
@@ -253,17 +258,16 @@ public class SoundSheetFragment
 		public SoundSortRecycler()
 		{
 			this.setViewHandleId(R.id.b_reorder);
-			this.setFloatingAlpha(0.4f);
-			this.setFloatingBgColor(0x800000FF);
-			this.setAutoScrollSpeed(0.3f);
-			this.setAutoScrollWindow(0.1f);
+			this.setFloatingAlpha(FLOATING_ITEM_ALPHA);
+			this.setFloatingBgColor(getResources().getColor(FLOATING_ITEM_BG_COLOR_ID));
+			this.setAutoScrollSpeed(AUTO_SCROLL_SPEED);
+			this.setAutoScrollWindow(AUTO_SCROLL_WINDOW);
 		}
 	}
 
 	private class DividerItemDecoration extends RecyclerView.ItemDecoration
 	{
 		private int heightDivider = getResources().getDimensionPixelSize(R.dimen.stroke);
-
 		@Override
 		public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state)
 		{
