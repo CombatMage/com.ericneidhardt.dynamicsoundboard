@@ -18,7 +18,12 @@ import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.R;
 
 
-public abstract class CustomEditText extends LinearLayout implements TextView.OnEditorActionListener
+public abstract class CustomEditText
+		extends
+			LinearLayout
+		implements
+			TextView.OnEditorActionListener,
+			EditTextBackEvent.EditTextImeBackListener
 {
 	EditTextBackEvent input;
 	OnTextEditedListener callback;
@@ -28,6 +33,8 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 		super(context, attrs);
 		this.inflateLayout(context, this.getLayoutId());
 		this.input.setOnEditorActionListener(this);
+		this.input.setOnEditTextImeBackListener(this);
+
 		View divider = this.findViewById(R.id.v_divider);
 
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
@@ -60,6 +67,13 @@ public abstract class CustomEditText extends LinearLayout implements TextView.On
 				this.callback.onTextEdited(this.input.getText().toString());
 		}
 		return false;
+	}
+
+	@Override
+	public void onImeBack(EditTextBackEvent ctrl, String text)
+	{
+		if (this.callback != null)
+			this.callback.onTextEdited(this.input.getText().toString());
 	}
 
 	protected abstract int getLayoutId();
