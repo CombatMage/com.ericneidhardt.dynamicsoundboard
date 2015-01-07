@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageButton
+		xmlns:android="http://schemas.android.com/apk/res/android"
+
+		android:id="@+id/b_reorder"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/padding_button"
+		android:contentDescription="@string/sound_control_content_description_reorder"
+		android:src="@drawable/selector_ic_reorder"
+		android:background="@drawable/selector_background_sound_control"/>

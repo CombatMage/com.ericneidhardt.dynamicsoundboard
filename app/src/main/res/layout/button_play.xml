@@ -5,7 +5,8 @@
 		android:id="@+id/b_play"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/margin_tiny"
+		android:padding="@dimen/padding_button"
+		android:scaleType="centerCrop"
 		android:contentDescription="@string/sound_control_content_description_play"
 		android:src="@drawable/selector_ic_play"
 		android:background="@drawable/selector_background_sound_control"/>

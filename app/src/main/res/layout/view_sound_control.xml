@@ -7,72 +7,84 @@
 		android:layout_height="@dimen/height_list_item_large"
 		android:background="@color/background">
 
-	<LinearLayout
-			android:id="@+id/layout_sound_controls_primary"
+	<include
+			layout="@layout/button_play"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/margin_tiny"
 			android:layout_marginLeft="@dimen/margin_tiny"
-			android:layout_marginRight="@dimen/margin_tiny"
-			android:layout_centerVertical="true"
-			android:orientation="vertical">
+			android:layout_marginTop="@dimen/margin_tiny"/>
 
-		<include layout="@layout/button_stop"
-				 android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"/>
-
-		<include layout="@layout/button_play"
-				 android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"/>
-
-	</LinearLayout>
-
-	<LinearLayout
-			android:id="@+id/layout_sound_controls_secondary"
+	<include
+			layout="@layout/button_reorder"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginRight="@dimen/margin_tiny"
-			android:layout_marginEnd="@dimen/margin_tiny"
 			android:layout_alignParentRight="true"
 			android:layout_alignParentEnd="true"
-			android:layout_centerVertical="true"
+			android:layout_marginTop="@dimen/margin_tiny"
+			android:layout_marginRight="@dimen/margin_tiny"
+			android:layout_marginEnd="@dimen/margin_tiny"/>
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_toRightOf="@id/b_play"
+			android:layout_toEndOf="@id/b_play"
+			android:layout_toLeftOf="@id/b_reorder"
+			android:layout_toStartOf="@id/b_reorder"
 			android:orientation="vertical">
 
-		<include layout="@layout/button_loop"
-				 android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"/>
+		<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
+				android:id="@id/et_name_file"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/margin_default"
+				android:layout_marginLeft="@dimen/margin_default"
+				android:layout_marginRight="@dimen/margin_default"
+				android:layout_marginEnd="@dimen/margin_default"
+				app:show_underscore="false"
+				app:text_size="@dimen/text_subheading"
+				app:text_color="@color/text_content_primary"/>
 
-		<include layout="@layout/button_add_to_playlist"
-				 android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"/>
+		<SeekBar
+				android:id="@+id/sb_progress"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="@dimen/margin_default"
+				android:layout_marginRight="@dimen/margin_default"
+				android:layout_marginEnd="@dimen/margin_default"
+				android:paddingLeft="@dimen/size_seekbar_thumb_pressed"
+				android:paddingRight="@dimen/size_seekbar_thumb_pressed"/>
 
 	</LinearLayout>
 
-	<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
-			android:id="@id/et_name_file"
+	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_toEndOf="@id/layout_sound_controls_primary"
-			android:layout_toRightOf="@id/layout_sound_controls_primary"
-			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
-			android:layout_toStartOf="@id/layout_sound_controls_secondary"
-			android:layout_marginTop="@dimen/margin_default"
-			android:layout_marginRight="@dimen/margin_default"
-			android:layout_marginEnd="@dimen/margin_default"
-			app:show_underscore="false"
-			app:text_size="@dimen/text_subheading"
-			app:text_color="@color/text_content_primary"/>
-
-	<SeekBar
-			android:id="@+id/sb_progress"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="@dimen/margin_very_small"
-			android:layout_toRightOf="@id/layout_sound_controls_primary"
-			android:layout_toLeftOf="@id/layout_sound_controls_secondary"
-			android:layout_toEndOf="@id/layout_sound_controls_primary"
-			android:layout_toStartOf="@id/layout_sound_controls_secondary"
 			android:layout_alignParentBottom="true"
-			android:layout_marginRight="@dimen/margin_default"
-			android:layout_marginEnd="@dimen/margin_default"/>
+			android:layout_marginLeft="@dimen/margin_default"
+			android:layout_marginStart="@dimen/margin_default"
+			android:layout_marginBottom="@dimen/margin_tiny"
+			android:layout_toRightOf="@id/b_play"
+			android:layout_toEndOf="@id/b_play"
+			android:orientation="horizontal">
+
+		<include
+				layout="@layout/button_stop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+		<include
+				layout="@layout/button_loop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+		<include
+				layout="@layout/button_add_to_playlist"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+	</LinearLayout>
+
 
 </RelativeLayout>

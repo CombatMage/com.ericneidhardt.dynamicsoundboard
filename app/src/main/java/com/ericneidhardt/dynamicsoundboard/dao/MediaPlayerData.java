@@ -18,6 +18,7 @@ public class MediaPlayerData {
     private boolean isLoop;
     private boolean isInPlaylist;
     private Long timePosition;
+    private Integer sortOrder;
 
     public MediaPlayerData() {
     }
@@ -26,7 +27,7 @@ public class MediaPlayerData {
         this.id = id;
     }
 
-    public MediaPlayerData(Long id, String playerId, String fragmentTag, String label, String uri, boolean isLoop, boolean isInPlaylist, Long timePosition) {
+    public MediaPlayerData(Long id, String playerId, String fragmentTag, String label, String uri, boolean isLoop, boolean isInPlaylist, Long timePosition, Integer sortOrder) {
         this.id = id;
         this.playerId = playerId;
         this.fragmentTag = fragmentTag;
@@ -35,6 +36,7 @@ public class MediaPlayerData {
         this.isLoop = isLoop;
         this.isInPlaylist = isInPlaylist;
         this.timePosition = timePosition;
+        this.sortOrder = sortOrder;
     }
 
     public Long getId() {
@@ -107,6 +109,14 @@ public class MediaPlayerData {
 
     public void setTimePosition(Long timePosition) {
         this.timePosition = timePosition;
+    }
+
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
     }
 
 }
