@@ -262,7 +262,6 @@ public class SoundSheetFragment
 
 	private class DividerItemDecoration extends RecyclerView.ItemDecoration
 	{
-		private int offsetFirstItem = getResources().getDimensionPixelSize(R.dimen.margin_very_small);
 		private int heightDivider = getResources().getDimensionPixelSize(R.dimen.stroke);
 
 		@Override
@@ -276,8 +275,6 @@ public class SoundSheetFragment
 			{
 				if (i < childCount - 1) // do not draw divider after last item
 					this.drawDivider(canvas, parent, parent.getChildAt(i));
-				if (i == 0)
-					this.drawBackgroundFirstItem(canvas, parent);
 			}
 		}
 
@@ -294,26 +291,10 @@ public class SoundSheetFragment
 			canvas.drawRect(left, top, right, bottom, paint);
 		}
 
-		private void drawBackgroundFirstItem(Canvas canvas, RecyclerView parent)
-		{
-			final int left = parent.getPaddingLeft();
-			final int right = parent.getWidth() - parent.getPaddingRight();
-			final int top = parent.getTop();
-			final int bottom = top + this.offsetFirstItem;
-			Paint paint = new Paint();
-			paint.setStyle(Paint.Style.FILL);paint.setColor(getResources().getColor(R.color.background));
-			canvas.drawRect(left, top, right, bottom, paint);
-		}
-
 		@Override
 		public void getItemOffsets(Rect outRect, View childView, RecyclerView parent, RecyclerView.State state)
 		{
-			if (parent.getAdapter().getItemCount() == 0)
-				return;
-
-			boolean isFirstItem = parent.getChildAt(0) == childView;
-			int topOffset = isFirstItem ? offsetFirstItem : 0;
-
+			int topOffset = 0;
 			int bottomOffset = this.heightDivider;
 			int rightOffset =  0;
 			int leftOffset =  0;

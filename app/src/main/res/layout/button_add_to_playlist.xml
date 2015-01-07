@@ -5,7 +5,7 @@
 		android:id="@+id/b_add_to_playlist"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/margin_tiny"
+		android:padding="@dimen/padding_button"
 		android:contentDescription="@string/sound_control_content_description_playlist"
 		android:src="@drawable/selector_ic_playlist"
 		android:background="@drawable/selector_background_sound_control"/>

@@ -7,25 +7,27 @@
 		android:layout_height="@dimen/height_list_item_large"
 		android:background="@color/background">
 
-	<include layout="@layout/button_play"
-			 android:layout_width="wrap_content"
-			 android:layout_height="wrap_content"
-			 android:layout_marginStart="@dimen/margin_tiny"
-			 android:layout_marginLeft="@dimen/margin_tiny"
-			 android:layout_marginTop="@dimen/margin_tiny"/>
+	<include
+			layout="@layout/button_play"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/margin_tiny"
+			android:layout_marginLeft="@dimen/margin_tiny"
+			android:layout_marginTop="@dimen/margin_tiny"/>
 
-	<include layout="@layout/button_reorder"
-			 android:layout_width="wrap_content"
-			 android:layout_height="wrap_content"
-			 android:layout_alignParentRight="true"
-			 android:layout_alignParentEnd="true"
-			 android:layout_marginTop="@dimen/margin_tiny"
-			 android:layout_marginRight="@dimen/margin_tiny"
-			 android:layout_marginEnd="@dimen/margin_tiny"/>
+	<include
+			layout="@layout/button_reorder"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentEnd="true"
+			android:layout_marginTop="@dimen/margin_tiny"
+			android:layout_marginRight="@dimen/margin_tiny"
+			android:layout_marginEnd="@dimen/margin_tiny"/>
 
 	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="match_parent"
 			android:layout_toRightOf="@id/b_play"
 			android:layout_toEndOf="@id/b_play"
 			android:layout_toLeftOf="@id/b_reorder"
@@ -50,30 +52,39 @@
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="@dimen/margin_default"
 				android:layout_marginRight="@dimen/margin_default"
-				android:layout_marginEnd="@dimen/margin_default"/>
-
-		<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:layout_marginLeft="@dimen/margin_default"
-				android:layout_marginStart="@dimen/margin_default"
-				android:layout_marginBottom="@dimen/margin_default">
-
-			<include layout="@layout/button_stop"
-					 android:layout_width="wrap_content"
-					 android:layout_height="wrap_content"/>
-
-			<include layout="@layout/button_loop"
-					 android:layout_width="wrap_content"
-					 android:layout_height="wrap_content"/>
-
-			<include layout="@layout/button_add_to_playlist"
-					 android:layout_width="wrap_content"
-					 android:layout_height="wrap_content"/>
-
-		</LinearLayout>
+				android:layout_marginEnd="@dimen/margin_default"
+				android:paddingLeft="@dimen/size_seekbar_thumb_pressed"
+				android:paddingRight="@dimen/size_seekbar_thumb_pressed"/>
 
 	</LinearLayout>
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_marginLeft="@dimen/margin_default"
+			android:layout_marginStart="@dimen/margin_default"
+			android:layout_marginBottom="@dimen/margin_tiny"
+			android:layout_toRightOf="@id/b_play"
+			android:layout_toEndOf="@id/b_play"
+			android:orientation="horizontal">
+
+		<include
+				layout="@layout/button_stop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+		<include
+				layout="@layout/button_loop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+		<include
+				layout="@layout/button_add_to_playlist"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+	</LinearLayout>
+
 
 </RelativeLayout>
