@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
@@ -27,8 +28,8 @@ public class SoundAdapter
 {
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
-	private SoundSheetFragment parent;
-	private String parentFragmentTag;
+	private final SoundSheetFragment parent;
+	private final String parentFragmentTag;
 
 	private OnItemDeleteListener onItemDeleteListener;
 
@@ -95,17 +96,18 @@ public class SoundAdapter
 				CustomEditText.OnTextEditedListener,
 				SeekBar.OnSeekBarChangeListener
 	{
-		private View container;
-		private CustomEditText name;
-		private View play;
-		private View loop;
-		private View inPlaylist;
-		private View stop;
-		private SeekBar timePosition;
+		private final View container;
+		private final CustomEditText name;
+		private final View play;
+		private final View loop;
+		private final View inPlaylist;
+		private final View stop;
+		private final View fadeOut;
+		private final SeekBar timePosition;
 
-		private View shadowBottomDeleteViewLeft;
-		private View shadowBottomDeleteViewRight;
-		private View shadowBottom;
+		private final View shadowBottomDeleteViewLeft;
+		private final View shadowBottomDeleteViewRight;
+		private final View shadowBottom;
 
 		public ViewHolder(View itemView)
 		{
@@ -118,6 +120,7 @@ public class SoundAdapter
 			this.loop = itemView.findViewById(R.id.b_loop);
 			this.inPlaylist = itemView.findViewById(R.id.b_add_to_playlist);
 			this.stop = itemView.findViewById(R.id.b_stop);
+			this.fadeOut = itemView.findViewById(R.id.b_fade_out);
 			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_progress);
 
 			this.name.setOnTextEditedListener(this);
@@ -125,6 +128,7 @@ public class SoundAdapter
 			this.loop.setOnClickListener(this);
 			this.inPlaylist.setOnClickListener(this);
 			this.stop.setOnClickListener(this);
+			this.fadeOut.setOnClickListener(this);
 			this.timePosition.setOnSeekBarChangeListener(this);
 
 			this.shadowBottomDeleteViewLeft = itemView.findViewById(R.id.v_shadow_bottom_left);
@@ -238,12 +242,15 @@ public class SoundAdapter
 		public void onClick(View view)
 		{
 			EnhancedMediaPlayer player = getItem(this.getPosition());
-			int id = view.getId();
 			boolean isSelected = view.isSelected();
+			int id = view.getId();
 			switch (id)
 			{
 				case R.id.b_stop:
 					player.stopSound();
+					break;
+				case R.id.b_fade_out:
+					Toast.makeText(view.getContext(), "TODO fade out", Toast.LENGTH_SHORT).show(); // TODO implement
 					break;
 				case R.id.b_loop:
 					view.setSelected(!isSelected);
@@ -300,7 +307,7 @@ public class SoundAdapter
 		@Override
 		public int getCount()
 		{
-			return 3;
+			return 3; // main sound control + delete left and right
 		}
 
 		@Override

@@ -39,6 +39,7 @@
 	<string name="sound_control_content_description_stop">Setzt den Sound zurück</string>
 	<string name="sound_control_content_description_play">Startet oder Pausiert den Sound</string>
 	<string name="sound_control_content_description_loop">Sound wird in einer Schleife abgespielt</string>
+	<string name="sound_control_content_description_fade_out">Der Sound kling langsam aus</string>
 	<string name="sound_control_content_description_playlist">Sound wird in die Playliste aufgenommen</string>
 	<string name="sound_control_content_description_reorder">Sound verschieben</string>
 	<string name="sound_control_delete">Sound entfernen</string>
