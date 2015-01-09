@@ -16,11 +16,18 @@ import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener
 {
 	private static final String TAG = EnhancedMediaPlayer.class.getName();
+
+	private final static int INT_VOLUME_MAX = 100;
+	private final static int INT_VOLUME_MIN = 0;
+	private final static float FLOAT_VOLUME_MAX = 1;
+	private final static float FLOAT_VOLUME_MIN = 0;
 
 	private enum State
 	{
@@ -36,6 +43,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private State currentState;
 	private MediaPlayerData rawData;
 	private int duration;
+	private int volume;
 
 	private Set<OnCompletionListener> onCompletionListeners; // listener is triggered when this.onCompletion() is called
 	private LocalBroadcastManager broadcastManager;
@@ -93,6 +101,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.prepare();
 		this.currentState = State.PREPARED;
 
+		this.volume = INT_VOLUME_MAX;
 		this.duration = super.getDuration();
 		this.setOnCompletionListener(this);
 	}
@@ -207,6 +216,59 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			Logger.e(TAG, e.getMessage());
 			return false;
 		}
+	}
+
+	public void fadeOutSound()
+	{
+		int fadeDuration = 100;
+
+		updateVolume(0);
+		final Timer timer = new Timer(true);
+		TimerTask timerTask = new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				updateVolume(-1);
+				if (volume == INT_VOLUME_MIN)
+				{
+					//Pause music
+					if (isPlaying())
+						pauseSound();
+					timer.cancel();
+					timer.purge();
+				}
+			}
+		};
+
+		// calculate delay, cannot be zero, set to 1 if zero
+		int delay = fadeDuration / INT_VOLUME_MAX;
+		if (delay == 0) delay = 1;
+
+		timer.schedule(timerTask, delay, delay);
+	}
+
+	private void updateVolume(int change)
+	{
+		//increment or decrement depending on type of fade
+		this.volume = this.volume + change;
+
+		//ensure iVolume within boundaries
+		if (this.volume < INT_VOLUME_MIN)
+			this.volume = INT_VOLUME_MIN;
+		else if (this.volume > INT_VOLUME_MAX)
+			this.volume = INT_VOLUME_MAX;
+
+		//convert to float value
+		float fVolume = 1 - ((float) Math.log(INT_VOLUME_MAX - this.volume) / (float) Math.log(INT_VOLUME_MAX));
+
+		//ensure fVolume within boundaries
+		if (fVolume < FLOAT_VOLUME_MIN)
+			fVolume = FLOAT_VOLUME_MIN;
+		else if (fVolume > FLOAT_VOLUME_MAX)
+			fVolume = FLOAT_VOLUME_MAX;
+
+		this.setVolume(fVolume, fVolume);
 	}
 
 	public boolean setPositionTo(int timePosition)

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
-import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.CustomEditText;
 import com.ericneidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
@@ -250,7 +249,7 @@ public class SoundAdapter
 					player.stopSound();
 					break;
 				case R.id.b_fade_out:
-					Toast.makeText(view.getContext(), "TODO fade out", Toast.LENGTH_SHORT).show(); // TODO implement
+					player.fadeOutSound();
 					break;
 				case R.id.b_loop:
 					view.setSelected(!isSelected);
