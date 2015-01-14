@@ -24,10 +24,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 {
 	private static final String TAG = EnhancedMediaPlayer.class.getName();
 
-	private final static int INT_VOLUME_MAX = 100;
-	private final static int INT_VOLUME_MIN = 0;
-	private final static float FLOAT_VOLUME_MAX = 1;
-	private final static float FLOAT_VOLUME_MIN = 0;
+	private static final int FADE_OUT_DURATION = 100;
+	private static final int INT_VOLUME_MAX = 100;
+	private static final int INT_VOLUME_MIN = 0;
+	private static final float FLOAT_VOLUME_MAX = 1;
+	private static final float FLOAT_VOLUME_MIN = 0;
 
 	private enum State
 	{
@@ -220,9 +221,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public void fadeOutSound()
 	{
-		int fadeDuration = 100;
-
-		updateVolume(0);
+		this.updateVolume(0);
 		final Timer timer = new Timer(true);
 		TimerTask timerTask = new TimerTask()
 		{
@@ -240,20 +239,15 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 				}
 			}
 		};
-
-		// calculate delay, cannot be zero, set to 1 if zero
-		int delay = fadeDuration / INT_VOLUME_MAX;
-		if (delay == 0) delay = 1;
-
+		int delay = FADE_OUT_DURATION / INT_VOLUME_MAX;
 		timer.schedule(timerTask, delay, delay);
 	}
 
 	private void updateVolume(int change)
 	{
-		//increment or decrement depending on type of fade
 		this.volume = this.volume + change;
 
-		//ensure iVolume within boundaries
+		//ensure volume within boundaries
 		if (this.volume < INT_VOLUME_MIN)
 			this.volume = INT_VOLUME_MIN;
 		else if (this.volume > INT_VOLUME_MAX)
