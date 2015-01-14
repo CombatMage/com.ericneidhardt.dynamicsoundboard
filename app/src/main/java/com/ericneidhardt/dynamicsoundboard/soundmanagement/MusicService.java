@@ -222,39 +222,47 @@ public class MusicService extends Service
 		int sortOrder = soundInFragment == null ? 0 : soundInFragment.size();
 		playerData.setSortOrder(sortOrder);
 
-		MediaPlayerData dataToStore = this.createSoundFromRawData(playerData);
-		if (dataToStore != null)
+		EnhancedMediaPlayer player = this.createSoundFromRawData(playerData);
+		this.addSoundToSounds(player);
+
+		if (player.getMediaPlayerData() != null)
 		{
 			MediaPlayerDataDao soundsDao = this.getSoundsDao();
-			soundsDao.insert(dataToStore);
+			soundsDao.insert(player.getMediaPlayerData());
 		}
 	}
 
 	/**
-	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the list of loaded sounds.
+	 * Adds sound to corresponding sound list. If the list is long enough, the players sortorder is respected, otherwise it is added to the end of the list
+	 * @param player the new player to add
+	 */
+	private void addSoundToSounds(EnhancedMediaPlayer player)
+	{
+		String fragmentTag = player.getMediaPlayerData().getFragmentTag();
+		int index = player.getMediaPlayerData().getSortOrder();
+		if (this.sounds.get(fragmentTag) == null)
+			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
+
+		List<EnhancedMediaPlayer> soundsInFragment = this.sounds.get(fragmentTag);
+		int count = soundsInFragment.size();
+		if (index <= count) // add item according to sortorder
+			soundsInFragment.add(index, player);
+		else
+			soundsInFragment.add(player); // if the list is to short, just append
+	}
+
+	/**
+	 * Creates an new EnhancedMediaPlayer instance
 	 * @param playerData raw data to create new MediaPlayer
 	 * @return playerData to be stored in database, or null if creation failed
 	 */
-	private MediaPlayerData createSoundFromRawData(MediaPlayerData playerData)
+	private EnhancedMediaPlayer createSoundFromRawData(MediaPlayerData playerData)
 	{
 		try
 		{
-			String fragmentTag = playerData.getFragmentTag();
-			EnhancedMediaPlayer player = new EnhancedMediaPlayer(this.getApplicationContext(), playerData);
-
-			int index = player.getMediaPlayerData().getSortOrder();
-			if (this.sounds.get(fragmentTag) == null)
-				this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
-
-			List<EnhancedMediaPlayer> soundsInFragment = this.sounds.get(fragmentTag);
-			int count = soundsInFragment.size();
-			if (index <= count) // add item according to sortorder
-				soundsInFragment.add(index, player);
-			else
-				soundsInFragment.add(player); // if the list is to short, just append
-
-			return player.getMediaPlayerData();
-		} catch (IOException e)
+			return new EnhancedMediaPlayer(this.getApplicationContext(), playerData);
+		}
+		catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
 			this.removeSoundFromDatabase(this.getSoundsDao(), playerData);
@@ -439,7 +447,7 @@ public class MusicService extends Service
 		{
 			super.onSuccess(mediaPlayersData);
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				createSoundFromRawData(mediaPlayerData);
+				addSoundToSounds(createSoundFromRawData(mediaPlayerData));
 
 			this.sendBroadcastLoadingSoundsSuccessful();
 		}
