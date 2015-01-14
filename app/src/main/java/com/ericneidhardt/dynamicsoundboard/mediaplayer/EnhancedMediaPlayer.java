@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -16,8 +17,6 @@ import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener
@@ -48,6 +47,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	private Set<OnCompletionListener> onCompletionListeners; // listener is triggered when this.onCompletion() is called
 	private LocalBroadcastManager broadcastManager;
+	private Handler handler = new Handler();
 
 	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
 	{
@@ -222,25 +222,25 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public void fadeOutSound()
 	{
 		this.updateVolume(0);
-		final Timer timer = new Timer(true);
-		TimerTask timerTask = new TimerTask()
+		this.scheduleNextFadeOutSound();
+	}
+
+	private void scheduleNextFadeOutSound()
+	{
+		final Runnable runnable = new Runnable()
 		{
 			@Override
 			public void run()
 			{
 				updateVolume(-1);
 				if (volume == INT_VOLUME_MIN)
-				{
-					//Pause music
-					if (isPlaying())
-						pauseSound();
-					timer.cancel();
-					timer.purge();
-				}
+					pauseSound();
+				else
+					scheduleNextFadeOutSound();
 			}
 		};
 		int delay = FADE_OUT_DURATION / INT_VOLUME_MAX;
-		timer.schedule(timerTask, delay, delay);
+		this.handler.postDelayed(runnable, delay);
 	}
 
 	private void updateVolume(int change)
