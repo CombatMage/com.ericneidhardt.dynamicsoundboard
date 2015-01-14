@@ -63,7 +63,7 @@ public class PlaylistAdapter
 		}
 		else
 		{
-			this.startProgressUpdateTimer();
+			this.scheduleProgressUpdateTimer();
 			nextActivePlayer.playSound();
 		}
 		this.currentItemIndex = position;

@@ -204,7 +204,7 @@ public class SoundAdapter
 		public void onPageScrollStateChanged(int state)
 		{
 			if (state == ViewPager.SCROLL_STATE_IDLE)
-				startProgressUpdateTimer();
+				scheduleProgressUpdateTimer();
 			else
 				stopProgressUpdateTimer();
 		}
@@ -226,7 +226,7 @@ public class SoundAdapter
 				@Override
 				public void run()
 				{
-					startProgressUpdateTimer();
+					scheduleProgressUpdateTimer();
 				}
 			}, 2 * UPDATE_INTERVAL);
 		}
@@ -266,7 +266,7 @@ public class SoundAdapter
 					view.setSelected(!isSelected);
 					if (!isSelected)
 					{
-						startProgressUpdateTimer();
+						scheduleProgressUpdateTimer();
 						player.playSound();
 					}
 					else
@@ -297,7 +297,7 @@ public class SoundAdapter
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar)
 		{
-			startProgressUpdateTimer();
+			scheduleProgressUpdateTimer();
 		}
 	}
 

@@ -91,7 +91,7 @@ public class SoundSheetFragment
 		this.attachScrollViewToFab();
 
 		this.soundAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
-		this.soundAdapter.startProgressUpdateTimer();
+		this.soundAdapter.scheduleProgressUpdateTimer();
 	}
 
 	private void attachScrollViewToFab()
@@ -213,7 +213,7 @@ public class SoundSheetFragment
 	{
 		Logger.d(fragmentTag, "onDragStop");
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator()); // add animator for delete animation
-		this.soundAdapter.startProgressUpdateTimer();
+		this.soundAdapter.scheduleProgressUpdateTimer();
 	}
 
 	@Override

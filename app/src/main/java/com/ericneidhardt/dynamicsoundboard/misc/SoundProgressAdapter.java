@@ -7,16 +7,13 @@ import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragmen
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T>
+public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> implements Runnable
 {
 	protected static final int UPDATE_INTERVAL = 500;
-	protected static final Handler handler = new Handler();
+	protected final Handler handler = new Handler();
 
 	protected ServiceManagerFragment serviceManagerFragment;
-	private Timer progressBarUpdateTimer;
 
 	public void setServiceManagerFragment(ServiceManagerFragment serviceManagerFragment)
 	{
@@ -26,35 +23,29 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> ex
 	/**
 	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
 	 */
-	public void startProgressUpdateTimer()
+	public void scheduleProgressUpdateTimer()
 	{
-		TimerTask updateTimePositions = new TimerTask()
+		this.handler.postDelayed(this, UPDATE_INTERVAL);
+	}
+
+	@Override
+	public void run()
+	{
+		List<Integer> itemsWithProgressChanged = getPlayingItems();
+		if (itemsWithProgressChanged == null || itemsWithProgressChanged.size() == 0)
 		{
-			@Override
-			public void run()
-			{
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						List<Integer> itemsWithProgressChanged = getPlayingItems();
-						if (itemsWithProgressChanged == null || itemsWithProgressChanged.size() == 0)
-						{
-							stopProgressUpdateTimer();
-							return;
-						}
-						for (Integer index : itemsWithProgressChanged)
-							notifyItemChanged(index);
-					}
-				});
-			}
-		};
-		this.progressBarUpdateTimer = new Timer();
-		this.progressBarUpdateTimer.schedule(updateTimePositions, 0, UPDATE_INTERVAL);
+			stopProgressUpdateTimer();
+			return;
+		}
+		for (Integer index : itemsWithProgressChanged)
+			notifyItemChanged(index);
+
+		this.scheduleProgressUpdateTimer();
 	}
 
 	public void stopProgressUpdateTimer()
 	{
-		this.progressBarUpdateTimer.cancel();
+		handler.removeCallbacks(this);
 	}
 
 	private List<Integer> getPlayingItems()
