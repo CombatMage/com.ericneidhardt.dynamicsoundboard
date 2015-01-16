@@ -151,6 +151,9 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			if (this.currentState == State.INIT || this.currentState == State.STOPPED)
 				this.prepare();
 
+			this.volume = INT_VOLUME_MAX;
+			this.updateVolume(this.volume);
+
 			this.sendBroadCastSoundPlaying(true, false);
 			this.start();
 			this.currentState = State.STARTED;
