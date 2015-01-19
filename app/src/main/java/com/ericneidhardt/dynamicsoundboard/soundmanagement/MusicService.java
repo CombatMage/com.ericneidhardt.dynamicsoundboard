@@ -603,7 +603,7 @@ public class MusicService extends Service
 			else
 			{
 				boolean isPendingNotification = this.updatePendingNotification(playerId);
-				if (isPendingNotification)
+				if (!isPendingNotification)
 					addNotification(getNotificationForSound(searchInSoundsForId(playerId)));
 			}
 		}
