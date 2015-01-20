@@ -207,7 +207,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			}
 			this.pause();
 			this.currentState = State.PAUSED;
-			this.sendBroadCastSoundStopped();
+			this.triggerOnMediaPlayerStateChangedListeners();
+			this.sendBroadCastSoundPaused();
 			return true;
 		}
 		catch (IOException e)
@@ -331,7 +332,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			listener.onMediaPlayerStateChanged(this);
 	}
 
-	private void sendBroadCastSoundStopped()
+	private void sendBroadCastSoundPaused()
 	{
 		this.sendBroadCastSoundState(false, false, true);
 	}
