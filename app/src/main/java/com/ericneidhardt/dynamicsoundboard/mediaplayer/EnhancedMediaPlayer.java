@@ -225,10 +225,10 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public void fadeOutSound()
 	{
 		this.updateVolume(0);
-		this.scheduleNextVolumneChange();
+		this.scheduleNextVolumeChange();
 	}
 
-	private void scheduleNextVolumneChange()
+	private void scheduleNextVolumeChange()
 	{
 		final Runnable runnable = new Runnable()
 		{
@@ -239,9 +239,10 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 				if (volume == INT_VOLUME_MIN) {
 					pauseSound();
 					updateVolume(INT_VOLUME_MAX);
+					sendBroadCastSoundPlaying(false, false);
 				}
 				else
-					scheduleNextVolumneChange();
+					scheduleNextVolumeChange();
 			}
 		};
 		int delay = FADE_OUT_DURATION / INT_VOLUME_MAX;
