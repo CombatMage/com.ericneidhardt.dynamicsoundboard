@@ -21,7 +21,7 @@ public class PlaylistAdapter
 		extends
 			SoundProgressAdapter<PlaylistAdapter.ViewHolder>
 		implements
-			MediaPlayer.OnCompletionListener
+			EnhancedMediaPlayer.OnMediaPlayerStateChangedListener
 {
 
 	private Integer currentItemIndex;
@@ -37,7 +37,7 @@ public class PlaylistAdapter
 	{
 		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getPlayList();
 		for (EnhancedMediaPlayer sound : sounds)
-			sound.addOnCompletionListener(this);
+			sound.addOnMediaPlayerStateChangedListener(this);
 		return sounds;
 	}
 
@@ -93,7 +93,7 @@ public class PlaylistAdapter
 	}
 
 	@Override
-	public void onCompletion(MediaPlayer mp)
+	public void onMediaPlayerStateChanged(MediaPlayer player)
 	{
 		this.currentItemIndex++;
 		if (this.currentItemIndex >= this.getItemCount())

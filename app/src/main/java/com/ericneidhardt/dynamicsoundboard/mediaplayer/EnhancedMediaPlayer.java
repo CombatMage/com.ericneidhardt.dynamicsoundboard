@@ -45,7 +45,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private int duration;
 	private int volume;
 
-	private Set<OnCompletionListener> onCompletionListeners; // listener is triggered when this.onCompletion() is called
+	private Set<OnMediaPlayerStateChangedListener> onMediaPlayerChangedListeners; // listener is triggered when this.onCompletion() is called
 	private LocalBroadcastManager broadcastManager;
 	private Handler handler = new Handler();
 
@@ -54,7 +54,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		super();
 
 		this.broadcastManager = LocalBroadcastManager.getInstance(context);
-		this.onCompletionListeners = new HashSet<>();
+		this.onMediaPlayerChangedListeners = new HashSet<>();
 		this.rawData = data;
 		this.setLooping(data.getIsLoop());
 
@@ -236,10 +236,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			public void run()
 			{
 				updateVolume(-1);
-				if (volume == INT_VOLUME_MIN) {
+				if (volume == INT_VOLUME_MIN)
+				{
 					pauseSound();
 					updateVolume(INT_VOLUME_MAX);
-					sendBroadCastSoundPlaying(false, false);
+					triggerOnMediaPlayerStateChangedListeners();
 				}
 				else
 					scheduleNextVolumeChange();
@@ -312,17 +313,22 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		}
 	}
 
-	public void addOnCompletionListener(OnCompletionListener listener)
+	public void addOnMediaPlayerStateChangedListener(OnMediaPlayerStateChangedListener listener)
 	{
-		this.onCompletionListeners.add(listener);
+		this.onMediaPlayerChangedListeners.add(listener);
 	}
 
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
 		this.sendBroadCastSoundPlaying(false, true);
-		for (OnCompletionListener listener : this.onCompletionListeners)
-			listener.onCompletion(mp);
+		this.triggerOnMediaPlayerStateChangedListeners();
+	}
+
+	private void triggerOnMediaPlayerStateChangedListeners()
+	{
+		for (OnMediaPlayerStateChangedListener listener : this.onMediaPlayerChangedListeners)
+			listener.onMediaPlayerStateChanged(this);
 	}
 
 	private void sendBroadCastSoundPlaying(boolean isPlaying, boolean isFinished)
@@ -338,6 +344,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public static IntentFilter getMediaPlayerIntentFilter()
 	{
 		return new IntentFilter(Constants.ACTION_SOUND_STATE_CHANGED);
+	}
+
+	public static interface OnMediaPlayerStateChangedListener
+	{
+		public void onMediaPlayerStateChanged(MediaPlayer player);
 	}
 
 }

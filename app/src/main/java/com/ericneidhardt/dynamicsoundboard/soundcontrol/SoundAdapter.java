@@ -23,7 +23,7 @@ public class SoundAdapter
 		extends
 			SoundProgressAdapter<SoundAdapter.ViewHolder>
 		implements
-			MediaPlayer.OnCompletionListener
+			EnhancedMediaPlayer.OnMediaPlayerStateChangedListener
 {
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
@@ -56,7 +56,7 @@ public class SoundAdapter
 			return new ArrayList<>();
 
 		for (EnhancedMediaPlayer sound : sounds)
-			sound.addOnCompletionListener(this);
+			sound.addOnMediaPlayerStateChangedListener(this);
 
 		return sounds;
 	}
@@ -81,10 +81,10 @@ public class SoundAdapter
 	}
 
 	@Override
-	public void onCompletion(MediaPlayer mp)
+	public void onMediaPlayerStateChanged(MediaPlayer player)
 	{
-		if (mp instanceof EnhancedMediaPlayer)
-			this.notifyItemChanged(this.getValues().indexOf(mp));
+		if (player instanceof EnhancedMediaPlayer)
+			this.notifyItemChanged(this.getValues().indexOf(player));
 	}
 
 	public class ViewHolder
