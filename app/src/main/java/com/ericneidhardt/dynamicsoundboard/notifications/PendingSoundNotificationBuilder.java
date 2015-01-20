@@ -108,6 +108,7 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		Notification.MediaStyle style = new Notification.MediaStyle();
 		style.setShowActionsInCompactView(1); // index of action play/pause
 		this.setStyle(style);
+		this.setCategory(Notification.CATEGORY_TRANSPORT);
 	}
 
 	private void setActionStop()
