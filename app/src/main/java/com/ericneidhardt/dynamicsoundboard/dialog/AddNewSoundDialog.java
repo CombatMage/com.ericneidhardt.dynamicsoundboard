@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.customview.AddSoundListItem;
 import com.ericneidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -104,8 +105,13 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 	{
 		switch (v.getId()) {
 			case R.id.b_add:
-				this.returnResultsToCallingFragment();
-				this.dismiss();
+				if (soundsToAdd.size() > 0)
+				{
+					this.returnResultsToCallingFragment();
+					this.dismiss();
+				}
+				else
+					showInfoToast();
 				break;
 			case R.id.b_cancel:
 				this.dismiss();
@@ -193,6 +199,11 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 				fragment.getSoundService().addNewSoundToServiceAndDatabase(playerData);
 			fragment.notifyFragment(this.callingFragmentTag);
 		}
+	}
+
+	private void showInfoToast()
+	{
+		Toast.makeText(this.getActivity(), R.string.dialog_add_new_sound_toast_no_sounds, Toast.LENGTH_SHORT).show();
 	}
 
 }
