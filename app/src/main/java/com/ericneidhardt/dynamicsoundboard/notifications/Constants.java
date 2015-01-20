@@ -11,6 +11,7 @@ public class Constants
 	public static final String KEY_NOTIFICATION_ID = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_NOTIFICATION_ID";
 	public static final String KEY_IS_PLAYING = "com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer.KEY_IS_PLAYING";
 	public static final String KEY_IS_FINISHED = "com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer.KEY_IS_FINISHED";
+	public static final String KEY_IS_ALIVE = "com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer.KEY_IS_ALIVE";
 
 	public static final String ACTION_SOUND_STATE_CHANGED = "com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer.ACTION_SOUND_STATE_CHANGED";
 	public static final String ACTION_DISMISS = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_DISMISS";

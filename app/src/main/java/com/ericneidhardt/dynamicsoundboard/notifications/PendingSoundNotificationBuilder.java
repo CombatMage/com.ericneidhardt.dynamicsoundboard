@@ -57,9 +57,15 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 
 		this.setActionStop();
 		if (player.isPlaying())
+		{
+			this.setOngoing(true);
 			this.setActionPause();
+		}
 		else
+		{
+			this.setOngoing(false);
 			this.setActionPlay();
+		}
 
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
 		this.setDeleteIntent(this.getPendingIntent(Constants.ACTION_DISMISS));
@@ -91,7 +97,9 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		}
 		else
 		{
-			return BitmapUtil.getBitmap(this.context, R.raw.ic_notification_large, 1);
+			Point size = BitmapUtil.getBitmapSize(this.context.getResources(), R.raw.ic_notification_large);
+			int sampleSize = BitmapUtil.getSampleFactor(size.x, size.y, requiredWidth, requiredHeight);
+			return BitmapUtil.getBitmap(this.context, R.raw.ic_notification_large, sampleSize);
 		}
 	}
 

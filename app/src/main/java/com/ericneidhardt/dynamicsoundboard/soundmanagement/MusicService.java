@@ -589,8 +589,9 @@ public class MusicService extends Service
 
 			String action = intent.getAction();
 			String playerId = intent.getStringExtra(Constants.KEY_PLAYER_ID);
+			boolean isAlive = intent.getBooleanExtra(Constants.KEY_IS_ALIVE, true);
 
-			if (action == null || playerId == null)
+			if (action == null || playerId == null || !isAlive)
 				return;
 
 			EnhancedMediaPlayer player = searchInPlaylistForId(playerId);
@@ -713,26 +714,8 @@ public class MusicService extends Service
 			if (notificationToRemove != null)
 				notifications.remove(notificationToRemove);
 
-			if (notificationId == Constants.NOTIFICATION_ID_PLAYLIST)
-				this.stopAllSoundsInPlaylist();
-			else
-				this.stopSound(playerId);
-
 			if (notifications.size() == 0)
 				stopSelf();
-		}
-
-		private void stopAllSoundsInPlaylist()
-		{
-			for (EnhancedMediaPlayer player : playlist)
-				player.stopSound();
-		}
-
-		private void stopSound(String playerId)
-		{
-			EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
-			if (player != null)
-				player.pauseSound();
 		}
 	}
 

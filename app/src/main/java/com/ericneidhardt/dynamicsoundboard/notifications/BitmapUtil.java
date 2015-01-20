@@ -1,6 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard.notifications;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -16,6 +17,16 @@ class BitmapUtil
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeByteArray(rawData, 0, rawData.length, options);
+		int imageHeight = options.outHeight;
+		int imageWidth = options.outWidth;
+		return new Point(imageWidth, imageHeight);
+	}
+
+	static Point getBitmapSize(Resources resources, int drawableId)
+	{
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeResource(resources, drawableId, options);
 		int imageHeight = options.outHeight;
 		int imageWidth = options.outWidth;
 		return new Point(imageWidth, imageHeight);

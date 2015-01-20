@@ -109,7 +109,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public void destroy()
 	{
-		this.sendBroadCastSoundPlaying(false, true);
+		this.sendBroadCastSoundDestroyed();
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
@@ -154,7 +154,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.volume = INT_VOLUME_MAX;
 			this.updateVolume(this.volume);
 
-			this.sendBroadCastSoundPlaying(true, false);
+			this.sendBroadCastSoundPlaying();
 			this.start();
 			this.currentState = State.STARTED;
 			return true;
@@ -207,7 +207,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			}
 			this.pause();
 			this.currentState = State.PAUSED;
-			this.sendBroadCastSoundPlaying(false, false);
+			this.sendBroadCastSoundStopped();
 			return true;
 		}
 		catch (IOException e)
@@ -321,7 +321,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
-		this.sendBroadCastSoundPlaying(false, true);
+		this.sendBroadCastSoundCompleted();
 		this.triggerOnMediaPlayerStateChangedListeners();
 	}
 
@@ -331,12 +331,33 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			listener.onMediaPlayerStateChanged(this);
 	}
 
-	private void sendBroadCastSoundPlaying(boolean isPlaying, boolean isFinished)
+	private void sendBroadCastSoundStopped()
+	{
+		this.sendBroadCastSoundState(false, false, true);
+	}
+
+	private void sendBroadCastSoundDestroyed()
+	{
+		this.sendBroadCastSoundState(false, false, false);
+	}
+
+	private void sendBroadCastSoundCompleted()
+	{
+		this.sendBroadCastSoundState(false, true, true);
+	}
+
+	private void sendBroadCastSoundPlaying()
+	{
+		this.sendBroadCastSoundState(true, false, true);
+	}
+
+	private void sendBroadCastSoundState(boolean isPlaying, boolean isFinished, boolean isAlive)
 	{
 		Intent intent = new Intent();
 		intent.setAction(Constants.ACTION_SOUND_STATE_CHANGED);
 		intent.putExtra(Constants.KEY_IS_PLAYING, isPlaying);
 		intent.putExtra(Constants.KEY_IS_FINISHED, isFinished);
+		intent.putExtra(Constants.KEY_IS_ALIVE, isAlive);
 		intent.putExtra(Constants.KEY_PLAYER_ID, this.rawData.getPlayerId());
 		this.broadcastManager.sendBroadcast(intent);
 	}
