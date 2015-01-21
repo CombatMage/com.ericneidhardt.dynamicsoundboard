@@ -220,6 +220,8 @@ public class MusicService extends Service
 		playerData.setSortOrder(sortOrder);
 
 		EnhancedMediaPlayer player = this.createSoundFromRawData(playerData);
+		if (player == null)
+			return;
 		this.addSoundToSounds(player);
 
 		if (player.getMediaPlayerData() != null)
@@ -235,6 +237,8 @@ public class MusicService extends Service
 	 */
 	private void addSoundToSounds(EnhancedMediaPlayer player)
 	{
+		if (player == null)
+			throw new NullPointerException("cannot add new Player, player is null");
 		String fragmentTag = player.getMediaPlayerData().getFragmentTag();
 		int index = player.getMediaPlayerData().getSortOrder();
 		if (this.sounds.get(fragmentTag) == null)
