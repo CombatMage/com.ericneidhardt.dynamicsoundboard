@@ -65,10 +65,25 @@ public class MusicService extends Service
 	private NotificationManager notificationManager;
 	private List<PendingSoundNotification> notifications;
 
+	private boolean isActivityBound = false;
+
 	@Override
 	public IBinder onBind(Intent intent)
 	{
+		this.isActivityBound = true;
 		return this.binder;
+	}
+
+	@Override
+	public boolean onUnbind(Intent intent)
+	{
+		this.isActivityBound = false;
+		return true;
+	}
+
+	@Override
+	public void onRebind(Intent intent) {
+		this.isActivityBound = true;
 	}
 
 	@Override
@@ -679,7 +694,7 @@ public class MusicService extends Service
 			if (action.equals(Constants.ACTION_DISMISS))
 			{
 				int notificationId = intent.getIntExtra(Constants.KEY_NOTIFICATION_ID, 0);
-				this.dismissPendingMediaPlayer(notificationId, playerId);
+				this.dismissPendingMediaPlayer(notificationId);
 			}
 			else
 			{
@@ -699,7 +714,7 @@ public class MusicService extends Service
 			}
 		}
 
-		private void dismissPendingMediaPlayer(int notificationId, String playerId)
+		private void dismissPendingMediaPlayer(int notificationId)
 		{
 			PendingSoundNotification notificationToRemove = null;
 			for (PendingSoundNotification notification : notifications)
@@ -710,7 +725,7 @@ public class MusicService extends Service
 			if (notificationToRemove != null)
 				notifications.remove(notificationToRemove);
 
-			if (notifications.size() == 0)
+			if (!isActivityBound && notifications.size() == 0)
 				stopSelf();
 		}
 	}
