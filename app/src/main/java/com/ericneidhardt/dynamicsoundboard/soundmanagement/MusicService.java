@@ -65,25 +65,25 @@ public class MusicService extends Service
 	private NotificationManager notificationManager;
 	private List<PendingSoundNotification> notifications;
 
-	private boolean isActivityBound = false;
+	private boolean isServiceBound = false;
 
 	@Override
 	public IBinder onBind(Intent intent)
 	{
-		this.isActivityBound = true;
+		this.isServiceBound = true;
 		return this.binder;
 	}
 
 	@Override
 	public boolean onUnbind(Intent intent)
 	{
-		this.isActivityBound = false;
-		return true;
+		this.isServiceBound = false;
+		return true; // this is necessary to ensure onRebind is called
 	}
 
 	@Override
 	public void onRebind(Intent intent) {
-		this.isActivityBound = true;
+		this.isServiceBound = true;
 	}
 
 	@Override
@@ -608,19 +608,19 @@ public class MusicService extends Service
 			EnhancedMediaPlayer player = searchInPlaylistForId(playerId);
 			if (player != null)
 			{
-				boolean isPendingNotification = this.updatePendingPlaylistNotification();
+				boolean isPendingNotification = this.updateOrRemovePendingPlaylistNotification();
 				if (!isPendingNotification)
 					addNotification(getNotificationForPlaylist(player));
 			}
 			else
 			{
-				boolean isPendingNotification = this.updatePendingNotification(playerId);
+				boolean isPendingNotification = this.updateOrRemovePendingNotification(playerId);
 				if (!isPendingNotification)
 					addNotification(getNotificationForSound(searchInSoundsForId(playerId)));
 			}
 		}
 
-		private boolean updatePendingPlaylistNotification()
+		private boolean updateOrRemovePendingPlaylistNotification()
 		{
 			PendingSoundNotification correspondingNotification = this.findNotificationById(Constants.NOTIFICATION_ID_PLAYLIST);
 			if (correspondingNotification == null)
@@ -630,6 +630,13 @@ public class MusicService extends Service
 			EnhancedMediaPlayer player = getPlayingSoundFromPlaylist();
 			if (player == null)
 				player = searchInPlaylistForId(correspondingNotification.getPlayerId());
+
+			if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
+			{
+				notificationManager.cancel(notificationId);
+				return true;
+			}
+
 			PendingSoundNotificationBuilder builder = getNotificationForPlaylist(player);
 
 			correspondingNotification.setPlayerId(player.getMediaPlayerData().getPlayerId());
@@ -639,7 +646,7 @@ public class MusicService extends Service
 			return true;
 		}
 
-		private boolean updatePendingNotification(String playerId)
+		private boolean updateOrRemovePendingNotification(String playerId)
 		{
 			PendingSoundNotification correspondingNotification = this.findNotificationForPendingPlayer(playerId);
 			if (correspondingNotification == null)
@@ -647,6 +654,13 @@ public class MusicService extends Service
 
 			int notificationId = correspondingNotification.getNotificationId();
 			EnhancedMediaPlayer player = searchInSoundsForId(playerId);
+
+			if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
+			{
+				notificationManager.cancel(notificationId);
+				return true;
+			}
+
 			PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(getApplicationContext(), player, notificationId);
 
 			correspondingNotification.setNotification(builder.build());
@@ -725,7 +739,7 @@ public class MusicService extends Service
 			if (notificationToRemove != null)
 				notifications.remove(notificationToRemove);
 
-			if (!isActivityBound && notifications.size() == 0)
+			if (!isServiceBound && notifications.size() == 0)
 				stopSelf();
 		}
 	}
