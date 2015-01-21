@@ -50,6 +50,12 @@
 	<string name="notification_play_sound">Sound abspielen</string>
 	<string name="notification_playlist">Playliste</string>
 
+	<!-- settings -->
+	<string name="settings_enable_notifications_title">Benachrichtigungen aktivieren</string>
+	<string name="settings_enable_notifications_summary">Mit aktivierten Benachrichtigungen können aktive Sounds auch nach dem
+		verlassen der App gesteuert werden. Wenn Benachrichtigungen deaktiviert sind, werden alle aktiven Sounds beim Verlassen
+		der App beendet</string>
+
 	<!-- dialog -->
 	<string name="dialog_add">Hinzufügen</string>
 	<string name="dialog_save">Speichern</string>
