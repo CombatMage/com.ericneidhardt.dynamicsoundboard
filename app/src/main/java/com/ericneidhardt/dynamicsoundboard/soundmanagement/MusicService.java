@@ -106,6 +106,12 @@ public class MusicService extends Service
 		this.unregisterReceiver(this.notificationActionReceiver);
 		this.broadcastManager.unregisterReceiver(this.soundStateChangedReceiver);
 		this.storeLoadedSounds();
+		for (PendingSoundNotification notification : this.notifications)
+		{
+			int notificationId = notification.getNotificationId();
+			this.notificationManager.cancel(notificationId);
+		}
+		this.notifications.clear();
 		super.onDestroy();
 	}
 
