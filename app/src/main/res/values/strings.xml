@@ -28,7 +28,7 @@
 	<string name="action_delete_sheet">Diese Kategorie löschen</string>
 	<string name="action_clear_sounds_in_sheet">Sounds löschen</string>
 	<string name="action_clear_sound_sheets">Alle Kategorien löschen</string>
-	<string name="action_settings">Einstellungen</string>
+	<string name="action_preferences">Einstellungen</string>
 	<string name="action_store_sound_sheets">Soundlayout speichern</string>
 	<string name="action_load_sound_sheets">Soundlayout laden</string>
 
@@ -50,9 +50,10 @@
 	<string name="notification_play_sound">Sound abspielen</string>
 	<string name="notification_playlist">Playliste</string>
 
-	<!-- settings -->
-	<string name="settings_enable_notifications_title">Benachrichtigungen aktivieren</string>
-	<string name="settings_enable_notifications_summary">Mit aktivierten Benachrichtigungen können aktive Sounds auch nach dem
+	<!-- preferences -->
+	<string name="preferences">Einstellungen</string>
+	<string name="preferences_enable_notifications_title">Benachrichtigungen aktivieren</string>
+	<string name="preferences_enable_notifications_summary">Mit aktivierten Benachrichtigungen können aktive Sounds auch nach dem
 		verlassen der App gesteuert werden. Wenn Benachrichtigungen deaktiviert sind, werden alle aktiven Sounds beim Verlassen
 		der App beendet</string>
 

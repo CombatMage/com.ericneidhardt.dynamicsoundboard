@@ -28,8 +28,8 @@
 		  android:orderInCategory="1"
 		  app:showAsAction="never" />
 
-	<item android:id="@+id/action_settings"
-		  android:title="@string/action_settings"
+	<item android:id="@+id/action_preferences"
+		  android:title="@string/action_preferences"
 		  android:orderInCategory="100"
 		  app:showAsAction="never" />
 

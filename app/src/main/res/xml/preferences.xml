@@ -2,9 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<CheckBoxPreference
-			android:key="pref_sync"
-			android:title="@string/settings_enable_notifications_title"
-			android:summary="@string/settings_enable_notifications_summary"
+			android:key="preference_notification"
+			android:title="@string/preferences_enable_notifications_title"
+			android:summary="@string/preferences_enable_notifications_summary"
 			android:defaultValue="true"/>
 
 </PreferenceScreen>

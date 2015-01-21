@@ -1,4 +1,4 @@
-package com.ericneidhardt.dynamicsoundboard.settings;
+package com.ericneidhardt.dynamicsoundboard.preferences;
 
 import android.app.Activity;
 import android.os.Bundle;
