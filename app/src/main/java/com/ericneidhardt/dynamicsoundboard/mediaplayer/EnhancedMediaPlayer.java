@@ -45,7 +45,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private int duration;
 	private int volume;
 
-	private Set<OnMediaPlayerStateChangedListener> onMediaPlayerChangedListeners; // listener is triggered when this.onCompletion() is called
+	private Set<OnMediaPlayerStateChangedListener> onMediaPlayerChangedListeners;
 	private LocalBroadcastManager broadcastManager;
 	private Handler handler = new Handler();
 
@@ -207,7 +207,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			}
 			this.pause();
 			this.currentState = State.PAUSED;
-			this.triggerOnMediaPlayerStateChangedListeners();
+			this.triggerOnMediaPlayerStateChangedListeners(false);
 			this.sendBroadCastSoundPaused();
 			return true;
 		}
@@ -241,7 +241,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 				{
 					pauseSound();
 					updateVolume(INT_VOLUME_MAX);
-					triggerOnMediaPlayerStateChangedListeners();
+					triggerOnMediaPlayerStateChangedListeners(false);
 				}
 				else
 					scheduleNextVolumeChange();
@@ -323,13 +323,13 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public void onCompletion(MediaPlayer mp)
 	{
 		this.sendBroadCastSoundCompleted();
-		this.triggerOnMediaPlayerStateChangedListeners();
+		this.triggerOnMediaPlayerStateChangedListeners(true);
 	}
 
-	private void triggerOnMediaPlayerStateChangedListeners()
+	private void triggerOnMediaPlayerStateChangedListeners(boolean hasPlayerCompleted)
 	{
 		for (OnMediaPlayerStateChangedListener listener : this.onMediaPlayerChangedListeners)
-			listener.onMediaPlayerStateChanged(this);
+			listener.onMediaPlayerStateChanged(this, hasPlayerCompleted);
 	}
 
 	private void sendBroadCastSoundPaused()
@@ -370,7 +370,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public static interface OnMediaPlayerStateChangedListener
 	{
-		public void onMediaPlayerStateChanged(MediaPlayer player);
+		public void onMediaPlayerStateChanged(MediaPlayer player, boolean hasPlayerCompleted);
 	}
 
 }

@@ -46,7 +46,7 @@ public class PlaylistAdapter
 		return this.getValues().get(position);
 	}
 
-	public void startPlayList(EnhancedMediaPlayer nextActivePlayer, int position)
+	public void startOrStopPlayList(EnhancedMediaPlayer nextActivePlayer, int position)
 	{
 		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getPlayList();
 		for (EnhancedMediaPlayer player : sounds)
@@ -93,8 +93,11 @@ public class PlaylistAdapter
 	}
 
 	@Override
-	public void onMediaPlayerStateChanged(MediaPlayer player)
+	public void onMediaPlayerStateChanged(MediaPlayer player, boolean hasPlayerCompleted)
 	{
+		if (!hasPlayerCompleted) // only schedule next playlist entry if current player has finished running, not when he was paused
+			return;
+
 		this.currentItemIndex++;
 		if (this.currentItemIndex >= this.getItemCount())
 			this.currentItemIndex = 0;

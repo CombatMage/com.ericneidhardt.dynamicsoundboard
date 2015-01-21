@@ -81,7 +81,7 @@ public class SoundAdapter
 	}
 
 	@Override
-	public void onMediaPlayerStateChanged(MediaPlayer player)
+	public void onMediaPlayerStateChanged(MediaPlayer player, boolean hasPlayerCompleted)
 	{
 		if (player instanceof EnhancedMediaPlayer)
 			this.notifyItemChanged(this.getValues().indexOf(player));
