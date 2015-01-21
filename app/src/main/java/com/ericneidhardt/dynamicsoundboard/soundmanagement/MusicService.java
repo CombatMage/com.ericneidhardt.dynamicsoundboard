@@ -717,6 +717,8 @@ public class MusicService extends Service
 			else
 			{
 				EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
+				if (player == null)
+					throw new NullPointerException(TAG + " cannot changed player status, player is null");
 				switch (action)
 				{
 					case Constants.ACTION_PAUSE:
