@@ -116,16 +116,6 @@ public class MusicService extends Service
 		return START_STICKY;
 	}
 
-	public void onActivityResumed()
-	{
-		for (PendingSoundNotification notification : this.notifications)
-		{
-			int notificationId = notification.getNotificationId();
-			this.notificationManager.cancel(notificationId);
-		}
-		this.notifications.clear();
-	}
-
 	public void onActivityClosed()
 	{
 		Logger.d(TAG, "onActivityClosed");
