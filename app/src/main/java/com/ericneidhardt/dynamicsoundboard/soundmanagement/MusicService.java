@@ -351,7 +351,8 @@ public class MusicService extends Service
 				player.setIsInPlaylist(true);
 				playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(this.getApplicationContext(), player.getMediaPlayerData());
 				this.playlist.add(playerInPlaylist);
-			} else
+			}
+			else
 			{
 				if (playerInPlaylist == null)
 					return;
@@ -362,7 +363,8 @@ public class MusicService extends Service
 				this.playlist.remove(playerInPlaylist);
 				this.destroyPlayerAndUpdateDatabase(this.getPlaylistDao(), playerInPlaylist);
 			}
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			Logger.e(TAG, e.getMessage());
 			throw new RuntimeException(e);
