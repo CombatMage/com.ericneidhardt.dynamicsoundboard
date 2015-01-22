@@ -22,8 +22,8 @@ android {
         applicationId "com.ericneidhardt.dynamicsoundboard"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 22
-        versionName "2.2"
+        versionCode 23
+        versionName "2.3"
     }
     buildTypes {
         release {
