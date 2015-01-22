@@ -96,7 +96,10 @@ public class PlaylistAdapter
 	public void onMediaPlayerStateChanged(MediaPlayer player, boolean hasPlayerCompleted)
 	{
 		if (!hasPlayerCompleted) // only schedule next playlist entry if current player has finished running, not when he was paused
+		{
+			this.notifyDataSetChanged();
 			return;
+		}
 
 		this.currentItemIndex++;
 		if (this.currentItemIndex >= this.getItemCount())
