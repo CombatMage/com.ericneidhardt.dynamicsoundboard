@@ -10,7 +10,7 @@ import com.ericneidhardt.dynamicsoundboard.R;
 /**
  * Created by eric.neidhardt on 21.01.2015.
  */
-public class SettingsActivity extends ActionBarActivity
+public class PreferenceActivity extends ActionBarActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -20,7 +20,7 @@ public class SettingsActivity extends ActionBarActivity
 
 		this.createActionbar();
 
-		this.getFragmentManager().beginTransaction().replace(R.id.main_frame, new SettingsFragment()).commit();
+		this.getFragmentManager().beginTransaction().replace(R.id.main_frame, new SoundboardPreferenceFragment()).commit();
 	}
 
 	private void createActionbar()
@@ -40,7 +40,7 @@ public class SettingsActivity extends ActionBarActivity
 		return super.onOptionsItemSelected(item);
 	}
 
-	public static class SettingsFragment extends PreferenceFragment
+	public static class SoundboardPreferenceFragment extends PreferenceFragment
 	{
 		@Override
 		public void onCreate(Bundle savedInstanceState)

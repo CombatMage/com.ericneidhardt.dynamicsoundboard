@@ -45,7 +45,7 @@
 		</activity>
 
 		<activity
-				android:name=".preferences.SettingsActivity"
+				android:name=".preferences.PreferenceActivity"
 				android:label="@string/preferences"/>
 
 		<service

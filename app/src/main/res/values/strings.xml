@@ -3,6 +3,7 @@
 
 	<!-- misc -->
 	<string name="app_name">Dynamic Soundboard</string>
+	<string name="preferences_enable_notifications_key">preferences_enable_notifications_key</string>
 	<string name="suggested_sound_sheet_name">Kategorie</string>
 
 	<!-- navigation drawer -->

@@ -1,6 +1,7 @@
 package com.ericneidhardt.dynamicsoundboard;
 
 import android.app.Application;
+import android.content.Context;
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 
@@ -14,6 +15,8 @@ import java.util.Random;
 public class DynamicSoundboardApplication extends Application
 {
 	private static Random random;
+	private static Context applicationContext;
+
 	@Override
 	public void onCreate()
 	{
@@ -21,6 +24,12 @@ public class DynamicSoundboardApplication extends Application
 		ACRA.init(this);
 
 		random = new Random();
+		applicationContext = this.getApplicationContext();
+	}
+
+	public static Context getSoundboardContext()
+	{
+		return applicationContext;
 	}
 
 	public static int getRandomNumber()
