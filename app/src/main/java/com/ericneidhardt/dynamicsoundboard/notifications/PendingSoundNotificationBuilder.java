@@ -22,9 +22,6 @@ import com.ericneidhardt.dynamicsoundboard.misc.IntentRequest;
  */
 public class PendingSoundNotificationBuilder extends Notification.Builder
 {
-	private Context context;
-	private Resources resources;
-
 	private String playerId;
 	public String getPlayerId()
 	{
@@ -50,43 +47,42 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 	public PendingSoundNotificationBuilder(Context context, EnhancedMediaPlayer player, int notificationId, String title, String message)
 	{
 		super(context);
-		this.context = context;
-		this.resources = this.context.getResources();
 		this.playerId = player.getMediaPlayerData().getPlayerId();
 		this.notificationId = notificationId;
 
-		this.setActionStop();
+		this.setActionStop(context);
 		if (player.isPlaying())
 		{
 			this.setOngoing(true);
-			this.setActionPause();
+			this.setActionPause(context);
 		}
 		else
 		{
 			this.setOngoing(false);
-			this.setActionPlay();
+			this.setActionPlay(context);
 		}
 
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
-		this.setDeleteIntent(this.getPendingIntent(Constants.ACTION_DISMISS));
-		this.setContentIntent(this.getOpenActivityIntent());
+		this.setDeleteIntent(this.getPendingIntent(context, Constants.ACTION_DISMISS));
+		this.setContentIntent(this.getOpenActivityIntent(context));
 
 		this.setContentTitle(title);
 		this.setContentText(message);
-		this.setScaledLargeIcon(this.getLargeIcon(player.getMediaPlayerData().getUri()));
+		this.setScaledLargeIcon(this.getLargeIcon(context, player.getMediaPlayerData().getUri()));
 
 		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP)
 			this.addStyleLollipop();
 	}
 
-	private Bitmap getLargeIcon(String uri)
+	private Bitmap getLargeIcon(Context context, String uri)
 	{
 		MediaMetadataRetriever mediaDataReceiver = new MediaMetadataRetriever();
-		mediaDataReceiver.setDataSource(this.context, Uri.parse(uri));
+		mediaDataReceiver.setDataSource(context, Uri.parse(uri));
 
-		int requiredHeight = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_height);
-		int requiredWidth = (int) this.resources.getDimension(android.R.dimen.notification_large_icon_width);
+		Resources resources = context.getResources();
+		int requiredHeight = (int) resources.getDimension(android.R.dimen.notification_large_icon_height);
+		int requiredWidth = (int) resources.getDimension(android.R.dimen.notification_large_icon_width);
 
 		byte [] data = mediaDataReceiver.getEmbeddedPicture();
 		if (data != null)
@@ -97,9 +93,9 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		}
 		else
 		{
-			Point size = BitmapUtil.getBitmapSize(this.context.getResources(), R.raw.ic_notification_large);
+			Point size = BitmapUtil.getBitmapSize(resources, R.raw.ic_notification_large);
 			int sampleSize = BitmapUtil.getSampleFactor(size.x, size.y, requiredWidth, requiredHeight);
-			return BitmapUtil.getBitmap(this.context, R.raw.ic_notification_large, sampleSize);
+			return BitmapUtil.getBitmap(context, R.raw.ic_notification_large, sampleSize);
 		}
 	}
 
@@ -119,33 +115,33 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		this.setCategory(Notification.CATEGORY_TRANSPORT);
 	}
 
-	private void setActionStop()
+	private void setActionStop(Context context)
 	{
-		this.addAction(R.drawable.ic_notification_stop, this.resources.getString(R.string.notification_stop_sound), this.getPendingIntent(Constants.ACTION_STOP));
+		this.addAction(R.drawable.ic_notification_stop, context.getString(R.string.notification_stop_sound), this.getPendingIntent(context, Constants.ACTION_STOP));
 	}
 
-	private void setActionPause()
+	private void setActionPause(Context context)
 	{
-		this.addAction(R.drawable.ic_notification_pause, this.resources.getString(R.string.notification_pause_sound), this.getPendingIntent(Constants.ACTION_PAUSE));
+		this.addAction(R.drawable.ic_notification_pause, context.getString(R.string.notification_pause_sound), this.getPendingIntent(context, Constants.ACTION_PAUSE));
 	}
 
-	private void setActionPlay()
+	private void setActionPlay(Context context)
 	{
-		this.addAction(R.drawable.ic_notification_play, this.resources.getString(R.string.notification_play_sound), this.getPendingIntent(Constants.ACTION_PLAY));
+		this.addAction(R.drawable.ic_notification_play, context.getString(R.string.notification_play_sound), this.getPendingIntent(context, Constants.ACTION_PLAY));
 	}
 
-	private PendingIntent getPendingIntent(String action)
+	private PendingIntent getPendingIntent(Context context, String action)
 	{
 		Intent intent = new Intent(action);
 		intent.putExtra(Constants.KEY_PLAYER_ID, this.playerId);
 		intent.putExtra(Constants.KEY_NOTIFICATION_ID, this.notificationId);
-		return PendingIntent.getBroadcast(this.context, this.notificationId, intent, 0);
+		return PendingIntent.getBroadcast(context, this.notificationId, intent, 0);
 	}
 
-	private PendingIntent getOpenActivityIntent()
+	private PendingIntent getOpenActivityIntent(Context context)
 	{
-		Intent intent = new Intent(this.context, BaseActivity.class);
-		return PendingIntent.getActivity(this.context, IntentRequest.NOTIFICATION_OPEN_ACTIVITY, intent, 0);
+		Intent intent = new Intent(context, BaseActivity.class);
+		return PendingIntent.getActivity(context, IntentRequest.NOTIFICATION_OPEN_ACTIVITY, intent, 0);
 	}
 
 	public static IntentFilter getNotificationIntentFilter()
