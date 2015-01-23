@@ -127,12 +127,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this);
 
 		this.storeLoadedSounds();
-		for (PendingSoundNotification notification : this.notifications)
-		{
-			int notificationId = notification.getNotificationId();
-			this.notificationManager.cancel(notificationId);
-		}
-		this.notifications.clear();
+		this.dismissAllNotifications();
+
 		super.onDestroy();
 	}
 
@@ -141,9 +137,39 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	{
 		if (key.equals(this.getString(R.string.preferences_enable_notifications_key)))
 		{
-			boolean areEnabled = SoundboardPreferences.areNotificationsEnabled();
-			Logger.d(TAG, "onSharedPreferenceChanged " + key + " to " + areEnabled);
+			boolean areNotificationsEnabledEnabled = SoundboardPreferences.areNotificationsEnabled();
+			Logger.d(TAG, "onSharedPreferenceChanged " + key + " to " + areNotificationsEnabledEnabled);
+			if (areNotificationsEnabledEnabled)
+				this.showAllNotifications();
+			else
+				this.dismissAllNotifications();
 		}
+	}
+
+	private void showAllNotifications()
+	{
+		List<EnhancedMediaPlayer> pendingSounds = this.getPlayingSoundsFromSoundList();
+		for (EnhancedMediaPlayer player : pendingSounds)
+		{
+			this.addNotification(this.getNotificationForSound(player));
+		}
+
+		EnhancedMediaPlayer player = this.getPlayingSoundFromPlaylist();
+		if (player != null)
+		{
+			PendingSoundNotificationBuilder builder = this.getNotificationForPlaylist(player);
+			this.addNotification(builder);
+		}
+	}
+
+	private void dismissAllNotifications()
+	{
+		for (PendingSoundNotification notification : this.notifications)
+		{
+			int notificationId = notification.getNotificationId();
+			this.notificationManager.cancel(notificationId);
+		}
+		this.notifications.clear();
 	}
 
 	@Override
