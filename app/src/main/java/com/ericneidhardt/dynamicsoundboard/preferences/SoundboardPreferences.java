@@ -9,8 +9,20 @@ import com.ericneidhardt.dynamicsoundboard.R;
 /**
  * Created by eric.neidhardt on 23.01.2015.
  */
-public class Preferences
+public class SoundboardPreferences
 {
+	public static void registerSharedPreferenceChangedListener(SharedPreferences.OnSharedPreferenceChangeListener listener)
+	{
+		Context context = DynamicSoundboardApplication.getSoundboardContext();
+		PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(listener);
+	}
+
+	public static void unregisterSharedPreferenceChangedListener(SharedPreferences.OnSharedPreferenceChangeListener listener)
+	{
+		Context context = DynamicSoundboardApplication.getSoundboardContext();
+		PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(listener);
+	}
+
 	public static boolean areNotificationsEnabled()
 	{
 		Context context = DynamicSoundboardApplication.getSoundboardContext();

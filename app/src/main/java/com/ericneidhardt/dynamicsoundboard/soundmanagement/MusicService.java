@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import com.ericneidhardt.dynamicsoundboard.R;
@@ -18,6 +19,7 @@ import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import com.ericneidhardt.dynamicsoundboard.notifications.Constants;
 import com.ericneidhardt.dynamicsoundboard.notifications.PendingSoundNotification;
 import com.ericneidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder;
+import com.ericneidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 
 import java.io.IOException;
 import java.util.*;
@@ -25,7 +27,7 @@ import java.util.*;
 /**
  * File created by eric.neidhardt on 01.12.2014.
  */
-public class MusicService extends Service
+public class MusicService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 	private static final String TAG = MusicService.class.getName();
 
@@ -104,6 +106,8 @@ public class MusicService extends Service
 		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
 		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, EnhancedMediaPlayer.getMediaPlayerIntentFilter());
 
+		SoundboardPreferences.registerSharedPreferenceChangedListener(this);
+
 		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS_PLAYLIST);
 		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS);
 
@@ -120,6 +124,8 @@ public class MusicService extends Service
 		Logger.d(TAG, "onDestroy");
 		this.unregisterReceiver(this.notificationActionReceiver);
 		this.broadcastManager.unregisterReceiver(this.soundStateChangedReceiver);
+		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this);
+
 		this.storeLoadedSounds();
 		for (PendingSoundNotification notification : this.notifications)
 		{
@@ -128,6 +134,16 @@ public class MusicService extends Service
 		}
 		this.notifications.clear();
 		super.onDestroy();
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+	{
+		if (key.equals(this.getString(R.string.preferences_enable_notifications_key)))
+		{
+			boolean areEnabled = SoundboardPreferences.areNotificationsEnabled();
+			Logger.d(TAG, "onSharedPreferenceChanged " + key + " to " + areEnabled);
+		}
 	}
 
 	@Override
