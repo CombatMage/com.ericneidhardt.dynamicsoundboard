@@ -646,6 +646,10 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		{
 			Logger.d(TAG, "SoundStateChangeReceiver.onReceive " + intent);
 
+			boolean areNotificationsEnabled = SoundboardPreferences.areNotificationsEnabled();
+			if (!areNotificationsEnabled)
+				return;
+
 			String action = intent.getAction();
 			String playerId = intent.getStringExtra(Constants.KEY_PLAYER_ID);
 			boolean isAlive = intent.getBooleanExtra(Constants.KEY_IS_ALIVE, true);
