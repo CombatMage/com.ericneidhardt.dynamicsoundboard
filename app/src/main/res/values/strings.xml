@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+	<!-- string constants used in xml, do not localize -->
+	<string name="preferences_enable_notifications_key">preferences_enable_notifications_key</string>
+
 	<!-- misc -->
 	<string name="app_name">Dynamic Soundboard</string>
-	<string name="preferences_enable_notifications_key">preferences_enable_notifications_key</string>
 	<string name="suggested_sound_sheet_name">Kategorie</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
 
