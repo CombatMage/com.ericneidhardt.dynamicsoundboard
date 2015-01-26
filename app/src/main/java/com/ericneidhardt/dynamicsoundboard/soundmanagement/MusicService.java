@@ -654,22 +654,38 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			String playerId = intent.getStringExtra(Constants.KEY_PLAYER_ID);
 			boolean isAlive = intent.getBooleanExtra(Constants.KEY_IS_ALIVE, true);
 
-			if (action == null || playerId == null || !isAlive)
+			if (action == null || playerId == null)
 				return;
 
 			EnhancedMediaPlayer player = searchInPlaylistForId(playerId);
 			if (player != null)
 			{
-				boolean isPendingNotification = this.updateOrRemovePendingPlaylistNotification();
-				if (!isPendingNotification)
-					addNotification(getNotificationForPlaylist(player));
+				if (isAlive)
+					this.handlePlaylistPlayerStateChanged(player);
+				else
+					this.removePlayListNotification();
 			}
 			else
 			{
-				boolean isPendingNotification = this.updateOrRemovePendingNotification(playerId);
-				if (!isPendingNotification)
-					addNotification(getNotificationForSound(searchInSoundsForId(playerId)));
+				if (isAlive)
+					this.handlePlayerStateChanged(playerId);
+				else
+					this.removeNotificationForPlayer(playerId);
 			}
+		}
+
+		private void handlePlaylistPlayerStateChanged(EnhancedMediaPlayer player)
+		{
+			boolean isPendingNotification = this.updateOrRemovePendingPlaylistNotification();
+			if (!isPendingNotification)
+				addNotification(getNotificationForPlaylist(player));
+		}
+
+		private void removePlayListNotification()
+		{
+			PendingSoundNotification notification = this.findNotificationById(Constants.NOTIFICATION_ID_PLAYLIST);
+			if (notification != null)
+				notificationManager.cancel(notification.getNotificationId());
 		}
 
 		private boolean updateOrRemovePendingPlaylistNotification()
@@ -685,7 +701,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 			if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
 			{
-				notificationManager.cancel(notificationId);
+				this.removePlayListNotification();
 				return true;
 			}
 
@@ -696,6 +712,13 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			notificationManager.notify(notificationId, correspondingNotification.getNotification());
 
 			return true;
+		}
+
+		private void handlePlayerStateChanged(String playerId)
+		{
+			boolean isPendingNotification = this.updateOrRemovePendingNotification(playerId);
+			if (!isPendingNotification)
+				addNotification(getNotificationForSound(searchInSoundsForId(playerId)));
 		}
 
 		private boolean updateOrRemovePendingNotification(String playerId)
@@ -709,7 +732,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 			if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
 			{
-				notificationManager.cancel(notificationId);
+				this.removeNotificationForPlayer(playerId);
 				return true;
 			}
 
@@ -719,6 +742,13 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			notificationManager.notify(notificationId, correspondingNotification.getNotification());
 
 			return true;
+		}
+
+		private void removeNotificationForPlayer(String playerId)
+		{
+			PendingSoundNotification notification = this.findNotificationForPendingPlayer(playerId);
+			if (notification != null)
+				notificationManager.cancel(notification.getNotificationId());
 		}
 
 		private PendingSoundNotification findNotificationForPendingPlayer(String playerId)
