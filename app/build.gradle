@@ -4,6 +4,14 @@ android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
+    defaultConfig {
+        applicationId "org.neidhardt.dynamicsoundboard"
+        minSdkVersion 16
+        targetSdkVersion 21
+        versionCode 223
+        versionName "2.2.3"
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
@@ -18,13 +26,10 @@ android {
         }
     }
 
-    defaultConfig {
-        applicationId "org.neidhardt.dynamicsoundboard"
-        minSdkVersion 16
-        targetSdkVersion 21
-        versionCode 223
-        versionName "2.2.3"
+    lintOptions {
+        checkReleaseBuilds false
     }
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
@@ -36,6 +41,8 @@ android {
                     output.outputFile = new File(file.parent, defaultConfig.applicationId + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk")
                 }
             }
+        }
+        debug {
         }
     }
 }
