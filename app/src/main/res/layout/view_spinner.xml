@@ -24,6 +24,7 @@
 		android:layout_alignParentRight="true"
 		android:layout_alignParentEnd="true"
 		android:layout_above="@id/v_divider"
+		android:contentDescription="@string/spinner_content_description_drop_down_arrow"
 		android:src="@drawable/ic_spinner_drop_down"/>
 
 </RelativeLayout>
