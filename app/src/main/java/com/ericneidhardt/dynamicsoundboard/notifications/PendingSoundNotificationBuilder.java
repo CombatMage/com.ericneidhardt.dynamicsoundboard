@@ -81,8 +81,8 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		mediaDataReceiver.setDataSource(context, Uri.parse(uri));
 
 		Resources resources = context.getResources();
-		int requiredHeight = (int) resources.getDimension(android.R.dimen.notification_large_icon_height);
-		int requiredWidth = (int) resources.getDimension(android.R.dimen.notification_large_icon_width);
+		int requiredHeight = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
+		int requiredWidth = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
 
 		byte [] data = mediaDataReceiver.getEmbeddedPicture();
 		if (data != null)
@@ -93,9 +93,9 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		}
 		else
 		{
-			Point size = BitmapUtil.getBitmapSize(resources, R.raw.ic_notification_large);
+			Point size = BitmapUtil.getBitmapSize(resources, R.drawable.ic_notification_large);
 			int sampleSize = BitmapUtil.getSampleFactor(size.x, size.y, requiredWidth, requiredHeight);
-			return BitmapUtil.getBitmap(context, R.raw.ic_notification_large, sampleSize);
+			return BitmapUtil.getBitmap(context, R.drawable.ic_notification_large, sampleSize);
 		}
 	}
 

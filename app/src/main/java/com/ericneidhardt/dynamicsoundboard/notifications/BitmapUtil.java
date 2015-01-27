@@ -42,8 +42,8 @@ class BitmapUtil
 
 			// Calculate the largest inSampleSize value that is a power of 2 and keeps both
 			// height and width larger than the requested height and width.
-			while ((halfHeight / inSampleSize) > requiredHeight
-					&& (halfWidth / inSampleSize) > requiredWidth)
+			while ((halfHeight / inSampleSize) >= requiredHeight
+					&& (halfWidth / inSampleSize) >= requiredWidth)
 				inSampleSize *= 2;
 		}
 		return inSampleSize;
