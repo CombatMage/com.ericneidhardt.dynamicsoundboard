@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener
+public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener, Runnable
 {
 	private static final String TAG = EnhancedMediaPlayer.class.getName();
 
@@ -109,6 +109,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public void destroy()
 	{
+		this.handler.removeCallbacks(this);
 		this.sendBroadCastSoundDestroyed();
 		this.currentState = State.DESTROYED;
 		this.reset();
@@ -231,24 +232,22 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	private void scheduleNextVolumeChange()
 	{
-		final Runnable runnable = new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				updateVolume(-1);
-				if (volume == INT_VOLUME_MIN)
-				{
-					pauseSound();
-					updateVolume(INT_VOLUME_MAX);
-					triggerOnMediaPlayerStateChangedListeners(false);
-				}
-				else
-					scheduleNextVolumeChange();
-			}
-		};
 		int delay = FADE_OUT_DURATION / INT_VOLUME_MAX;
-		this.handler.postDelayed(runnable, delay);
+		this.handler.postDelayed(this, delay);
+	}
+
+	@Override
+	public void run()
+	{
+		updateVolume(-1);
+		if (volume == INT_VOLUME_MIN)
+		{
+			pauseSound();
+			updateVolume(INT_VOLUME_MAX);
+			triggerOnMediaPlayerStateChangedListeners(false);
+		}
+		else
+			scheduleNextVolumeChange();
 	}
 
 	private void updateVolume(int change)
