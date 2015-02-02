@@ -52,6 +52,7 @@
 	<string name="notification_pause_sound">Sound pausieren</string>
 	<string name="notification_stop_sound">Sound stoppen</string>
 	<string name="notification_play_sound">Sound abspielen</string>
+	<string name="notification_fade_out_sound">Sound abklingen lassen</string>
 	<string name="notification_playlist">Playliste</string>
 
 	<!-- preferences -->

@@ -18,4 +18,6 @@ public class Constants
 	public static final String ACTION_PLAY = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_PLAY";
 	public static final String ACTION_PAUSE = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_PAUSE";
 	public static final String ACTION_STOP = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_STOP";
+	public static final String ACTION_FADE_OUT = "com.ericneidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_FADE_OUT";
+
 }

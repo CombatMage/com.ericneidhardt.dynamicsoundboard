@@ -50,17 +50,21 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		this.playerId = player.getMediaPlayerData().getPlayerId();
 		this.notificationId = notificationId;
 
-		this.setActionStop(context);
+		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+		boolean isLollipopStyleAvailable = currentApiVersion >= Build.VERSION_CODES.LOLLIPOP;
+
+		this.setActionStop(context, isLollipopStyleAvailable);
 		if (player.isPlaying())
 		{
 			this.setOngoing(true);
-			this.setActionPause(context);
+			this.setActionPause(context, isLollipopStyleAvailable);
 		}
 		else
 		{
 			this.setOngoing(false);
-			this.setActionPlay(context);
+			this.setActionPlay(context, isLollipopStyleAvailable);
 		}
+		this.setActionFadeOut(context, isLollipopStyleAvailable);
 
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
 		this.setDeleteIntent(this.getPendingIntent(context, Constants.ACTION_DISMISS));
@@ -70,8 +74,7 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		this.setContentText(message);
 		this.setScaledLargeIcon(this.getLargeIcon(context, player.getMediaPlayerData().getUri()));
 
-		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-		if (currentApiVersion >= Build.VERSION_CODES.LOLLIPOP)
+		if (isLollipopStyleAvailable)
 			this.addStyleLollipop();
 	}
 
@@ -115,19 +118,28 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		this.setCategory(Notification.CATEGORY_TRANSPORT);
 	}
 
-	private void setActionStop(Context context)
+	private void setActionStop(Context context, boolean isLollipopStyleAvailable)
 	{
-		this.addAction(R.drawable.ic_notification_stop, context.getString(R.string.notification_stop_sound), this.getPendingIntent(context, Constants.ACTION_STOP));
+		this.addAction(R.drawable.ic_notification_stop, isLollipopStyleAvailable ? context.getString(R.string.notification_stop_sound) : "",
+				this.getPendingIntent(context, Constants.ACTION_STOP));
 	}
 
-	private void setActionPause(Context context)
+	private void setActionPause(Context context, boolean isLollipopStyleAvailable)
 	{
-		this.addAction(R.drawable.ic_notification_pause, context.getString(R.string.notification_pause_sound), this.getPendingIntent(context, Constants.ACTION_PAUSE));
+		this.addAction(R.drawable.ic_notification_pause, isLollipopStyleAvailable ? context.getString(R.string.notification_pause_sound) : "",
+				this.getPendingIntent(context, Constants.ACTION_PAUSE));
 	}
 
-	private void setActionPlay(Context context)
+	private void setActionPlay(Context context, boolean isLollipopStyleAvailable)
 	{
-		this.addAction(R.drawable.ic_notification_play, context.getString(R.string.notification_play_sound), this.getPendingIntent(context, Constants.ACTION_PLAY));
+		this.addAction(R.drawable.ic_notification_play, isLollipopStyleAvailable ? context.getString(R.string.notification_play_sound) : "",
+				this.getPendingIntent(context, Constants.ACTION_PLAY));
+	}
+
+	private void setActionFadeOut(Context context, boolean isLollipopStyleAvailable)
+	{
+		this.addAction(R.drawable.ic_notification_fade_out, isLollipopStyleAvailable ? context.getString(R.string.notification_fade_out_sound) : "",
+				this.getPendingIntent(context, Constants.ACTION_FADE_OUT));
 	}
 
 	private PendingIntent getPendingIntent(Context context, String action)
