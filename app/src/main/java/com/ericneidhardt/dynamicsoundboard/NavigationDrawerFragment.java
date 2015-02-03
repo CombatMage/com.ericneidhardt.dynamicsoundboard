@@ -61,10 +61,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 			@Override
 			public int getIndicatorColor(int position)
 			{
-				if (position == 0)
-					return getResources().getColor(R.color.accent_200);
-				else
-					return getResources().getColor(R.color.accent_200);
+				return getResources().getColor(R.color.accent_200);
 			}
 
 			@Override
