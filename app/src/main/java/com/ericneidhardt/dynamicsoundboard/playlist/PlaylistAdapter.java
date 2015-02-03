@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.ericneidhardt.dynamicsoundboard.R;
 import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
+import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.List;
 
@@ -30,6 +31,12 @@ public class PlaylistAdapter
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
 		this.onItemClickListener = onItemClickListener;
+	}
+
+	public void onParentResume(ServiceManagerFragment serviceManagerFragment)
+	{
+		super.setServiceManagerFragment(serviceManagerFragment);
+		super.scheduleProgressUpdateTimer();
 	}
 
 	@Override

@@ -20,6 +20,12 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> ex
 		this.serviceManagerFragment = serviceManagerFragment;
 	}
 
+	public void onParentPause()
+	{
+		this.stopProgressUpdateTimer();
+		this.handler.removeCallbacks(null);
+	}
+
 	/**
 	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
 	 */

@@ -9,8 +9,8 @@ import com.ericneidhardt.dynamicsoundboard.customview.SlidingTabLayout;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
 import com.ericneidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import com.ericneidhardt.dynamicsoundboard.playlist.Playlist;
-import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import com.ericneidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 
 public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener
 {
@@ -75,7 +75,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 		});
 
 		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
-		this.playlist.onActivityCreated(this);
+		this.playlist.onParentActivityCreated(this);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
 		this.soundSheets.onActivityCreated(this);
 		this.controls = this.getActivity().findViewById(R.id.layout_controls);
@@ -84,6 +84,13 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 
 		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.b_add).setOnClickListener(this);
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		this.playlist.onParentActivityPaused();
 	}
 
 	@Override

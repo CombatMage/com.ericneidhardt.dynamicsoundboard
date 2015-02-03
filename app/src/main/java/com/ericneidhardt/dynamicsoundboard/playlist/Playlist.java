@@ -68,11 +68,15 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 		playlist.setAdapter(this.adapter);
 	}
 
-	public void onActivityCreated(NavigationDrawerFragment parent)
+	public void onParentActivityCreated(NavigationDrawerFragment parent)
 	{
 		super.parent = parent;
-		this.adapter.setServiceManagerFragment(parent.getServiceManagerFragment());
-		this.notifyDataSetChanged();
+		this.adapter.onParentResume(parent.getServiceManagerFragment());
+	}
+
+	public void onParentActivityPaused()
+	{
+		this.adapter.onParentPause();
 	}
 
 	@Override

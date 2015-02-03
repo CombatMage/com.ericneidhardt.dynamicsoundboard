@@ -42,14 +42,8 @@ public class SoundAdapter
 	{
 		this.parent = parent;
 
-		this.setServiceManagerFragment(this.parent.getServiceManagerFragment());
-		this.scheduleProgressUpdateTimer();
-	}
-
-	public void onParentPause()
-	{
-		this.stopProgressUpdateTimer();
-		super.handler.removeCallbacks(null);
+		super.setServiceManagerFragment(this.parent.getServiceManagerFragment());
+		super.scheduleProgressUpdateTimer();
 	}
 
 	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener)
