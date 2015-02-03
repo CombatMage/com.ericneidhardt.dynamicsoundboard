@@ -18,6 +18,7 @@ import com.ericneidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import com.ericneidhardt.dynamicsoundboard.misc.Logger;
 import com.ericneidhardt.dynamicsoundboard.misc.Util;
 import com.ericneidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import com.ericneidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import com.ericneidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import com.ericneidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -130,11 +131,13 @@ public class SoundSheetManagerFragment
 	@Override
 	public void onTextEdited(String text)
 	{
-		SoundSheet currentActiveSoundSheet = this.getSelectedItem();
-		if (currentActiveSoundSheet == null)
+		SoundSheetFragment currentSoundSheetFragment = this.getBaseActivity().getCurrentFragment();
+		SoundSheet correspondingSoundSheetData = this.get(currentSoundSheetFragment.getFragmentTag());
+
+		if (correspondingSoundSheetData == null)
 			throw new NullPointerException("sound sheet label was edited, but no sound sheet is selected");
 
-		currentActiveSoundSheet.setLabel(text);
+		correspondingSoundSheetData.setLabel(text);
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
 		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false);
@@ -182,14 +185,9 @@ public class SoundSheetManagerFragment
 
 	public SoundSheet getSelectedItem()
 	{
-		for (SoundSheet soundSheet : this.soundSheets)
-		{
-			if (soundSheet.getIsSelected())
-				return soundSheet;
-		}
-		return null;
+		SoundSheetFragment currentSoundSheetFragment = this.getBaseActivity().getCurrentFragment();
+		return currentSoundSheetFragment != null ? this.get(currentSoundSheetFragment.getFragmentTag()) : null;
 	}
-
 
 	public void addSoundSheetAndNotifyFragment(SoundSheet soundSheet)
 	{

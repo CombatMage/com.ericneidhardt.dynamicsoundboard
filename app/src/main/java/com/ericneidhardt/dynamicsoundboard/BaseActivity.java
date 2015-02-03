@@ -338,7 +338,7 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		((ActionbarEditText) this.findViewById(R.id.et_set_label)).setText(soundSheet.getLabel());
 	}
 
-	SoundSheetFragment getCurrentFragment()
+	public SoundSheetFragment getCurrentFragment()
 	{
 		FragmentManager manager = this.getFragmentManager();
 		Fragment currentFragment = manager.findFragmentById(R.id.main_frame);
