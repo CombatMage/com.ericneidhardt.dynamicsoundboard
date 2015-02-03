@@ -808,6 +808,9 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 					case Constants.ACTION_PLAY:
 						player.playSound();
 						break;
+					case Constants.ACTION_FADE_OUT:
+						player.fadeOutSound();
+						break;
 				}
 			}
 		}

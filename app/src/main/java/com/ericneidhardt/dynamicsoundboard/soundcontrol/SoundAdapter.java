@@ -27,7 +27,7 @@ public class SoundAdapter
 {
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
-	private final SoundSheetFragment parent;
+	private SoundSheetFragment parent;
 	private final String parentFragmentTag;
 
 	private OnItemDeleteListener onItemDeleteListener;
@@ -36,6 +36,20 @@ public class SoundAdapter
 	{
 		this.parent = parent;
 		this.parentFragmentTag = parent.getFragmentTag();
+	}
+
+	public void onParentResume(SoundSheetFragment parent)
+	{
+		this.parent = parent;
+
+		this.setServiceManagerFragment(this.parent.getServiceManagerFragment());
+		this.scheduleProgressUpdateTimer();
+	}
+
+	public void onParentPause()
+	{
+		this.stopProgressUpdateTimer();
+		super.handler.removeCallbacks(null);
 	}
 
 	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener)

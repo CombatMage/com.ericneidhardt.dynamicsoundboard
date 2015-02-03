@@ -90,8 +90,7 @@ public class SoundSheetFragment
 
 		this.attachScrollViewToFab();
 
-		this.soundAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
-		this.soundAdapter.scheduleProgressUpdateTimer();
+		this.soundAdapter.onParentResume(this);
 	}
 
 	private void attachScrollViewToFab()
@@ -108,7 +107,7 @@ public class SoundSheetFragment
 	public void onPause()
 	{
 		super.onPause();
-		this.soundAdapter.stopProgressUpdateTimer();
+		this.soundAdapter.onParentPause();
 	}
 
 	@Override
