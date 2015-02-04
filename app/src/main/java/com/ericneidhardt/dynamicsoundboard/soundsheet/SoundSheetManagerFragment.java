@@ -305,9 +305,25 @@ public class SoundSheetManagerFragment
 					.findFragmentByTag(NavigationDrawerFragment.TAG);
 			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
-			for (SoundSheet soundSheet : loadedSoundSheets)
-				soundSheet.setIsSelected(false);
+			SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetManagerFragment.this.soundSheets);
+			getBaseActivity().openSoundFragment(selectedSoundSheet);
 		}
+	}
+
+	private SoundSheet findSelectedAndSelectRemaining(List<SoundSheet> soundSheets)
+	{
+		SoundSheet selected = null;
+		if (soundSheets != null)
+		{
+			for (SoundSheet soundSheet : soundSheets)
+			{
+				if (soundSheet.getIsSelected() && selected == null)
+					selected = soundSheet;
+				else
+					soundSheet.setIsSelected(false);
+			}
+		}
+		return selected;
 	}
 
 	private class StoreSoundSheetTask extends SafeAsyncTask<Void>
