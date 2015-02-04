@@ -61,7 +61,7 @@ public class SoundSheetManagerFragment
 
 		ActionbarEditText labelCurrentSoundSheet = (ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label);
 		labelCurrentSoundSheet.setOnTextEditedListener(this);
-		SoundSheet currentActiveSoundSheet = this.getSelectedItem();
+		SoundSheet currentActiveSoundSheet = this.getSoundSheetForCurrentFragment();
 		if (currentActiveSoundSheet != null)
 			labelCurrentSoundSheet.setText(currentActiveSoundSheet.getLabel());
 	}
@@ -183,7 +183,7 @@ public class SoundSheetManagerFragment
 		return this.soundSheets;
 	}
 
-	public SoundSheet getSelectedItem()
+	public SoundSheet getSoundSheetForCurrentFragment()
 	{
 		SoundSheetFragment currentSoundSheetFragment = this.getBaseActivity().getCurrentFragment();
 		return currentSoundSheetFragment != null ? this.get(currentSoundSheetFragment.getFragmentTag()) : null;
@@ -286,6 +286,13 @@ public class SoundSheetManagerFragment
 		}
 
 		@Override
+		protected void onException(Exception e) throws RuntimeException
+		{
+			super.onException(e);
+			Logger.e(TAG, e.getMessage());
+			throw new RuntimeException(e);
+		}
+		@Override
 		protected void onSuccess(List<SoundSheet> loadedSoundSheets) throws Exception
 		{
 			super.onSuccess(loadedSoundSheets);
@@ -298,19 +305,8 @@ public class SoundSheetManagerFragment
 					.findFragmentByTag(NavigationDrawerFragment.TAG);
 			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
-			BaseActivity activity = (BaseActivity)getActivity();
-			SoundSheet selectedSoundSheet = getSelectedItem();
-			if (selectedSoundSheet != null)
-				activity.openSoundFragment(selectedSoundSheet);
-
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
+			for (SoundSheet soundSheet : loadedSoundSheets)
+				soundSheet.setIsSelected(false);
 		}
 	}
 
