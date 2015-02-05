@@ -7,7 +7,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-	<com.ericneidhardt.dynamicsoundboard.customview.EditTextBackEvent
+	<org.neidhardt.dynamicsoundboard.customview.EditTextBackEvent
 			android:id="@+id/edittext"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

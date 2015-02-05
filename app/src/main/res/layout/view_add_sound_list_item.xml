@@ -16,7 +16,7 @@
 		android:textSize="@dimen/text_sub_text"
 		android:textColor="@color/text_content_secondary"/>
 
-	<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
+	<org.neidhardt.dynamicsoundboard.customview.DialogEditText
 		android:id="@+id/et_name_file"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

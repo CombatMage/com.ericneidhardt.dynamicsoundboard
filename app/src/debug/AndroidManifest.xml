@@ -2,7 +2,7 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"
-		package="com.ericneidhardt.dynamicsoundboard">
+		package="org.neidhardt.dynamicsoundboard">
 
 	<application
 			android:name=".DynamicSoundboardApplication"

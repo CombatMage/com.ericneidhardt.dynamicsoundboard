@@ -9,7 +9,8 @@
 
 	<Preference android:title="@string/preferences_about_title">
 		<intent
-				android:targetClass="com.ericneidhardt.dynamicsoundboard.BaseActivity"/>
+				android:targetPackage="org.neidhardt.dynamicsoundboard"
+				android:targetClass="org.neidhardt.dynamicsoundboard.preferences.AboutActivity"/>
 	</Preference>
 
 </PreferenceScreen>

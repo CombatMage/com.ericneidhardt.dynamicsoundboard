@@ -45,7 +45,7 @@
 				android:textColor="@color/text_content_primary"
 				android:background="@drawable/selector_background_accent"/>
 
-		<com.ericneidhardt.dynamicsoundboard.customview.DialogEditText
+		<org.neidhardt.dynamicsoundboard.customview.DialogEditText
 				android:id="@+id/et_name_file"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

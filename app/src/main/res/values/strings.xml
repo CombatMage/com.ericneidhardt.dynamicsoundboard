@@ -62,7 +62,10 @@
 	<string name="preferences_enable_notifications_summary">Mit aktivierten Benachrichtigungen können aktive Sounds auch nach dem
 		verlassen der App gesteuert werden. Wenn Benachrichtigungen deaktiviert sind, werden alle aktiven Sounds beim Verlassen
 		der App beendet</string>
+
 	<string name="about">Über</string>
+	<string name="about_author_title">Autor</string>
+	<string name="about_author_summary">Eric Neidhardt</string>
 
 	<!-- dialog -->
 	<string name="dialog_add">Hinzufügen</string>

@@ -9,7 +9,7 @@ public class DynamicSoundboardDaoGenerator
 
     public static void main(String args[]) throws Exception
 	{
-		Schema schema = new Schema(9, "com.ericneidhardt.dynamicsoundboard.dao");
+		Schema schema = new Schema(9, "org.neidhardt.dynamicsoundboard.dao");
 
 		addMediaPlayerEntity(schema);
 		addSoundSheetEntity(schema);
