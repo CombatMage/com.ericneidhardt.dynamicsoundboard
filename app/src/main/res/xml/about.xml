@@ -7,9 +7,4 @@
 			android:summary="@string/preferences_enable_notifications_summary"
 			android:defaultValue="true"/>
 
-	<Preference android:title="@string/preferences_about_title">
-		<intent
-				android:targetClass="com.ericneidhardt.dynamicsoundboard.BaseActivity"/>
-	</Preference>
-
 </PreferenceScreen>

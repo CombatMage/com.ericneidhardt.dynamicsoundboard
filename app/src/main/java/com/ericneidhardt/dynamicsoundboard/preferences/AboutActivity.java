@@ -10,13 +10,14 @@ import com.ericneidhardt.dynamicsoundboard.R;
 /**
  * Created by eric.neidhardt on 21.01.2015.
  */
-public class PreferenceActivity extends ActionBarActivity
+public class AboutActivity extends ActionBarActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_preferences);
+
 		this.createActionbar();
 
 		this.getFragmentManager().beginTransaction().replace(R.id.main_frame, new SoundboardPreferenceFragment()).commit();
@@ -45,7 +46,7 @@ public class PreferenceActivity extends ActionBarActivity
 		public void onCreate(Bundle savedInstanceState)
 		{
 			super.onCreate(savedInstanceState);
-			this.addPreferencesFromResource(R.xml.preferences);
+			this.addPreferencesFromResource(R.xml.about);
 		}
 	}
 }
