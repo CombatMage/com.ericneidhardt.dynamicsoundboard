@@ -10,24 +10,28 @@ import org.neidhardt.dynamicsoundboard.misc.Util;
 /**
  * Created by eric.neidhardt on 23.01.2015.
  */
-public class SoundboardPreferences {
+public class SoundboardPreferences
+{
 	public static void registerSharedPreferenceChangedListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
 		Context context = DynamicSoundboardApplication.getSoundboardContext();
 		PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(listener);
 	}
 
-	public static void unregisterSharedPreferenceChangedListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
+	public static void unregisterSharedPreferenceChangedListener(SharedPreferences.OnSharedPreferenceChangeListener listener)
+	{
 		Context context = DynamicSoundboardApplication.getSoundboardContext();
 		PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(listener);
 	}
 
-	public static boolean areNotificationsEnabled() {
+	public static boolean areNotificationsEnabled()
+	{
 		Context context = DynamicSoundboardApplication.getSoundboardContext();
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		return preferences.getBoolean(context.getString(R.string.preferences_enable_notifications_key), true);
 	}
 
-	public static boolean isImmerseModeAvailable() {
+	public static boolean isImmerseModeAvailable()
+	{
 		if (!Util.isKitKatAvailable())
 			return false;
 

@@ -180,8 +180,7 @@ public class BaseActivity
 	}
 
 	@Override
-	protected void onPause()
-	{
+	protected void onPause() {
 		super.onPause();
 		this.isActivityVisible = false;
 
