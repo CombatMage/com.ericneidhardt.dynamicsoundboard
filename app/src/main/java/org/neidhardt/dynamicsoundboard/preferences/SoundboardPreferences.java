@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.misc.Util;
 
 /**
  * Created by eric.neidhardt on 23.01.2015.
@@ -27,8 +28,8 @@ public class SoundboardPreferences {
 	}
 
 	public static boolean isImmerseModeAvailable() {
-		//if (Util.isKitKatAvailable())
-		//	return false;
+		if (!Util.isKitKatAvailable())
+			return false;
 
 		Context context = DynamicSoundboardApplication.getSoundboardContext();
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);

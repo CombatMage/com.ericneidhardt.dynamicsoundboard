@@ -44,15 +44,6 @@ public class BaseActivity
 {
 	private static final String TAG = BaseActivity.class.getName();
 
-	private static final int SYSTEM_UI_FULL_IMMERSE = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-			| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-			| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-			| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-			| View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-			| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-
-	private static final int SYSTEM_UI_NON_IMMERSE = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-
 	private boolean isActivityVisible = true;
 
 	private DrawerLayout navigationDrawerLayout;
@@ -161,12 +152,12 @@ public class BaseActivity
 
 	private void showSystemUi()
 	{
-		this.getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_NON_IMMERSE);
+		this.getWindow().getDecorView().setSystemUiVisibility(Util.SYSTEM_UI_NON_IMMERSE);
 	}
 
 	private void hideSystemUi()
 	{
-		this.getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FULL_IMMERSE);
+		this.getWindow().getDecorView().setSystemUiVisibility(Util.SYSTEM_UI_FULL_IMMERSE);
 	}
 
 	@Override
