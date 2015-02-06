@@ -26,6 +26,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
+import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
@@ -35,9 +36,22 @@ import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 import java.util.List;
 
 
-public class BaseActivity extends ActionBarActivity implements View.OnClickListener
+public class BaseActivity
+		extends
+			ActionBarActivity
+		implements
+			View.OnClickListener
 {
 	private static final String TAG = BaseActivity.class.getName();
+
+	private static final int SYSTEM_UI_FULL_IMMERSE = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+			| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+			| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+			| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+			| View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+			| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+	private static final int SYSTEM_UI_NON_IMMERSE = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
 
 	private boolean isActivityVisible = true;
 
@@ -133,6 +147,29 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	}
 
 	@Override
+	public void onWindowFocusChanged(boolean hasFocus)
+	{
+		super.onWindowFocusChanged(hasFocus);
+		if (hasFocus)
+		{
+			if (SoundboardPreferences.isImmerseModeAvailable())
+				hideSystemUi();
+			else
+				showSystemUi();
+		}
+	}
+
+	private void showSystemUi()
+	{
+		this.getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_NON_IMMERSE);
+	}
+
+	private void hideSystemUi()
+	{
+		this.getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FULL_IMMERSE);
+	}
+
+	@Override
 	protected void onStart()
 	{
 		super.onStart();
@@ -145,11 +182,9 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		super.onResume();
 		this.isActivityVisible = true;
 		this.setSoundSheetActionsEnable(false);
-
 		this.setFloatActionButton();
 
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener, this.getServiceManagerFragment());
-
 		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, EnhancedMediaPlayer.getMediaPlayerIntentFilter());
 	}
 
@@ -320,6 +355,9 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 	{
 		if (!this.isActivityVisible)
 			return;
+
+		if (soundSheet == null)
+			throw new NullPointerException("cannot open soundSheetFragment, soundSheet is null");
 
 		this.closeNavigationDrawer();
 

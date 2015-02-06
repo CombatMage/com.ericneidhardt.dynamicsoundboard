@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<CheckBoxPreference
+			android:key="@string/preferences_enable_notifications_key"
+			android:title="@string/preferences_enable_notifications_title"
+			android:summary="@string/preferences_enable_notifications_summary"
+			android:defaultValue="true"/>
+
+	<CheckBoxPreference
+			android:key="@string/preferences_enable_immerse_mode_key"
+			android:title="@string/preferences_enable_immerse_mode_title"
+			android:summary="@string/preferences_enable_immerse_mode_summary"
+			android:defaultValue="false"/>
+
+	<Preference android:title="@string/preferences_about_title">
+		<intent
+				android:targetPackage="org.neidhardt.dynamicsoundboard"
+				android:targetClass="org.neidhardt.dynamicsoundboard.preferences.AboutActivity"/>
+	</Preference>
+
+</PreferenceScreen>

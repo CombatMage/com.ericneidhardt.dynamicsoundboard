@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
 import org.neidhardt.dynamicsoundboard.dao.DaoMaster;
@@ -131,5 +132,17 @@ public class Util
 		}
 
 		return files;
+	}
+
+	public static boolean isLollipopAvailable()
+	{
+		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+		return currentApiVersion >= Build.VERSION_CODES.LOLLIPOP;
+	}
+
+	public static boolean isKitKatAvailable()
+	{
+		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+		return currentApiVersion >= Build.VERSION_CODES.KITKAT;
 	}
 }

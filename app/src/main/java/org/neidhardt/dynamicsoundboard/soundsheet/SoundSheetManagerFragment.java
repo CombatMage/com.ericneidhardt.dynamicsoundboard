@@ -306,7 +306,8 @@ public class SoundSheetManagerFragment
 			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
 			SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetManagerFragment.this.soundSheets);
-			getBaseActivity().openSoundFragment(selectedSoundSheet);
+			if (selectedSoundSheet != null)
+				getBaseActivity().openSoundFragment(selectedSoundSheet);
 		}
 	}
 

@@ -16,6 +16,7 @@ import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
+import org.neidhardt.dynamicsoundboard.misc.Util;
 
 /**
  * File created by eric.neidhardt on 04.12.2014.
@@ -50,9 +51,7 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		this.playerId = player.getMediaPlayerData().getPlayerId();
 		this.notificationId = notificationId;
 
-		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-		boolean isLollipopStyleAvailable = currentApiVersion >= Build.VERSION_CODES.LOLLIPOP;
-
+		boolean isLollipopStyleAvailable = Util.isLollipopAvailable();
 		this.setActionStop(context, isLollipopStyleAvailable);
 		if (player.isPlaying())
 		{
