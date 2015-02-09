@@ -56,6 +56,11 @@
 	<string name="notification_fade_out_sound">Sound abklingen lassen</string>
 	<string name="notification_playlist">Playliste</string>
 
+	<!-- introduction -->
+	<string name="introduction_action_icon">Icon der beschriebenen Aktion</string>
+	<string name="introduction_action_new_sound_sheet_title">@string/action_add_new_sound_sheet</string>
+	<string name="introduction_action_new_sound_sheet_summary">TODO Ein Text mit erklärung</string>
+
 	<!-- preferences -->
 	<string name="preferences">Einstellungen</string>
 	<string name="preferences_about_title">Über</string>

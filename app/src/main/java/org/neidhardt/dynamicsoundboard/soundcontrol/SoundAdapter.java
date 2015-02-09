@@ -174,7 +174,7 @@ public class SoundAdapter
 		private void enableShadowOnLastItem()
 		{
 			this.shadowBottom.setVisibility(View.VISIBLE);
-			int heightWithShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_large)
+			int heightWithShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_xlarge)
 					+ parent.getResources().getDimensionPixelSize(R.dimen.height_shadow);
 
 			ViewGroup.LayoutParams params = container.getLayoutParams();
@@ -185,7 +185,7 @@ public class SoundAdapter
 		private void disableShadow()
 		{
 			this.shadowBottom.setVisibility(View.GONE);
-			int heightWithOutShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_large);
+			int heightWithOutShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_xlarge);
 
 			ViewGroup.LayoutParams params = container.getLayoutParams();
 			params.height = heightWithOutShadow;

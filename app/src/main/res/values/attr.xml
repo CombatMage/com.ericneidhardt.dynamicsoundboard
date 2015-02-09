@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+	<declare-styleable name="IntroductionListItem">
+		<attr name="action_title" format="string" />
+		<attr name="action_summary" format="string" />
+		<attr name="action_icon" format="reference" />
+	</declare-styleable>
+
 	<declare-styleable name="CustomEditText">
 		<attr name="text_size" format="dimension" />
 		<attr name="text_color" format="color" />

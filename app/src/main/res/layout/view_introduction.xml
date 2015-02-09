@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-		  android:orientation="vertical"
-		  android:layout_width="match_parent"
-		  android:layout_height="match_parent"
-		  android:text="TODO tutorial bauen"
-		  android:background="@color/background_secondary">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
+			  android:orientation="vertical"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:background="@color/background_secondary">
 
-</TextView>
+	<org.neidhardt.dynamicsoundboard.customview.IntroductionListItem
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:action_icon="@drawable/ic_new_sound_layout"
+			app:action_title="@string/introduction_action_new_sound_sheet_title"
+			app:action_summary="@string/introduction_action_new_sound_sheet_summary"/>
+
+	<include layout="@layout/view_introduction_divider"/>
+
+	<org.neidhardt.dynamicsoundboard.customview.IntroductionListItem
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:action_icon="@drawable/ic_new_sound_layout"
+			app:action_title="@string/introduction_action_new_sound_sheet_title"
+			app:action_summary="@string/introduction_action_new_sound_sheet_summary"/>
+
+</LinearLayout>

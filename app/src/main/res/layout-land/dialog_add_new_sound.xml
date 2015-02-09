@@ -86,7 +86,7 @@
 				android:layout_height="wrap_content"
 				android:layout_toStartOf="@id/layout_controls"
 				android:layout_toLeftOf="@id/layout_controls"
-				android:paddingBottom="@dimen/margin_large"
+				android:paddingBottom="@dimen/margin_xlarge"
 				android:orientation="vertical"/>
 
 		</RelativeLayout>
