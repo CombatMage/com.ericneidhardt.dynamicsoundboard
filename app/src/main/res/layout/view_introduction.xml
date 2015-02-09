@@ -19,8 +19,17 @@
 	<org.neidhardt.dynamicsoundboard.customview.IntroductionListItem
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			app:action_icon="@drawable/ic_new_sound_layout"
-			app:action_title="@string/introduction_action_new_sound_sheet_title"
-			app:action_summary="@string/introduction_action_new_sound_sheet_summary"/>
+			app:action_icon="@drawable/ic_add_sound_dir"
+			app:action_title="TODO"
+			app:action_summary="TODO"/>
+
+	<include layout="@layout/view_introduction_divider"/>
+
+	<org.neidhardt.dynamicsoundboard.customview.IntroductionListItem
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:action_icon="@drawable/ic_add_sound"
+			app:action_title="TODO"
+			app:action_summary="TODO"/>
 
 </LinearLayout>

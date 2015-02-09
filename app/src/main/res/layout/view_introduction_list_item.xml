@@ -33,7 +33,8 @@
 			android:layout_below="@id/tv_introduction_title"
 			android:layout_marginLeft="@dimen/height_list_item_large"
 			android:layout_marginStart="@dimen/height_list_item_large"
-			android:singleLine="true"
+			android:layout_marginRight="@dimen/margin_default"
+			android:layout_marginEnd="@dimen/margin_default"
 			android:textSize="@dimen/text_sub_text"
 			android:textColor="@color/text_content_secondary"
 			tools:text="@string/introduction_action_new_sound_sheet_summary"/>

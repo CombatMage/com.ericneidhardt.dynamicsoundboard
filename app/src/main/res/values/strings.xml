@@ -59,7 +59,13 @@
 	<!-- introduction -->
 	<string name="introduction_action_icon">Icon der beschriebenen Aktion</string>
 	<string name="introduction_action_new_sound_sheet_title">@string/action_add_new_sound_sheet</string>
-	<string name="introduction_action_new_sound_sheet_summary">TODO Ein Text mit erklärung</string>
+	<string name="introduction_action_new_sound_sheet_summary">Erstellt eine neue Kategorie für Sounds. Du kannst der
+		Kategorie einen namen geben und ihr verschiedene Sounds zuordnen. Über das Menü links kann zwischen den verschiedenen
+		Kategrien gewechselt werden.</string>
+	<string name="introduction_action_add_new_sound_from_dir_title">@string/action_add_new_sound_from_dir</string>
+	<string name="introduction_action_add_new_sound_from_dir_summary">TODO Ein Text mit erklärung</string>
+	<string name="introduction_action_add_new_sound_title">@string/action_add_new_sound</string>
+	<string name="introduction_action_add_new_sound_summary">TODO Ein Text mit erklärung</string>
 
 	<!-- preferences -->
 	<string name="preferences">Einstellungen</string>
