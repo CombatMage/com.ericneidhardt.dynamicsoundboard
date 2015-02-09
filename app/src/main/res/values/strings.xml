@@ -59,9 +59,11 @@
 		Kategorie einen namen geben und ihr verschiedene Sounds zuordnen. Über das Menü links kann zwischen den verschiedenen
 		Kategrien gewechselt werden.</string>
 	<string name="introduction_action_add_new_sound_from_dir_title">@string/action_add_new_sound_from_dir</string>
-	<string name="introduction_action_add_new_sound_from_dir_summary">TODO Ein Text mit erklärung</string>
+	<string name="introduction_action_add_new_sound_from_dir_summary">Hiermit kaönnen mehrere Sounds aus einem Verzeichniss der aktuellen
+		Kategorie hinzugefügt werden. Wähle dazu ein Verzeichniss das geladen werden soll.</string>
 	<string name="introduction_action_add_new_sound_title">@string/action_add_new_sound</string>
-	<string name="introduction_action_add_new_sound_summary">TODO Ein Text mit erklärung</string>
+	<string name="introduction_action_add_new_sound_summary">Hiermit kannst du einen oder mehrere Sounds auswählen um diese der aktuellen Kategorie
+		hinzuzufügen. Für jeden geladenen Sound kannst du einen den angezeigten Namen einstellen.</string>
 
 	<!-- preferences -->
 	<string name="preferences">Einstellungen</string>
