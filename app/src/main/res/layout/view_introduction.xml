@@ -20,8 +20,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			app:action_icon="@drawable/ic_add_sound_dir"
-			app:action_title="TODO"
-			app:action_summary="TODO"/>
+			app:action_title="@string/introduction_action_add_new_sound_from_dir_title"
+			app:action_summary="@string/introduction_action_add_new_sound_from_dir_summary"/>
 
 	<include layout="@layout/view_introduction_divider"/>
 
@@ -29,7 +29,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			app:action_icon="@drawable/ic_add_sound"
-			app:action_title="TODO"
-			app:action_summary="TODO"/>
+			app:action_title="@string/introduction_action_add_new_sound_title"
+			app:action_summary="@string/introduction_action_add_new_sound_summary"/>
 
 </LinearLayout>

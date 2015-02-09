@@ -3,7 +3,8 @@
 				xmlns:tools="http://schemas.android.com/tools"
 				android:orientation="vertical"
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_list_item_large">
+				android:layout_height="wrap_content"
+				tools:background="@color/background">
 
 	<ImageView
 			android:id="@+id/iv_introduction_icon"
@@ -21,6 +22,8 @@
 			android:layout_marginTop="@dimen/margin_large"
 			android:layout_marginLeft="@dimen/height_list_item_large"
 			android:layout_marginStart="@dimen/height_list_item_large"
+			android:layout_marginRight="@dimen/margin_default"
+			android:layout_marginEnd="@dimen/margin_default"
 			android:singleLine="true"
 			android:textSize="@dimen/text_body"
 			android:textColor="@color/text_content_primary"
@@ -35,6 +38,7 @@
 			android:layout_marginStart="@dimen/height_list_item_large"
 			android:layout_marginRight="@dimen/margin_default"
 			android:layout_marginEnd="@dimen/margin_default"
+			android:layout_marginBottom="@dimen/margin_large"
 			android:textSize="@dimen/text_sub_text"
 			android:textColor="@color/text_content_secondary"
 			tools:text="@string/introduction_action_new_sound_sheet_summary"/>
