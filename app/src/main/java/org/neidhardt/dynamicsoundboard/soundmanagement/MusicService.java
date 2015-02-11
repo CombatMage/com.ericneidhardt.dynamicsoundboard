@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
@@ -60,7 +62,6 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	}
 
 	private LocalBroadcastManager broadcastManager;
-	private BroadcastReceiver soundStateChangedReceiver;
 	private BroadcastReceiver notificationActionReceiver;
 	private Binder binder;
 
@@ -100,13 +101,11 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		this.notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 		this.notifications = new ArrayList<>();
 
-		this.soundStateChangedReceiver = new SoundStateChangeReceiver();
 		this.notificationActionReceiver = new NotificationActionReceiver();
 
-		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
-		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, EnhancedMediaPlayer.getMediaPlayerIntentFilter());
-
+		EventBus.getDefault().register(this);
 		SoundboardPreferences.registerSharedPreferenceChangedListener(this);
+		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
 
 		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS_PLAYLIST);
 		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS);
@@ -122,9 +121,10 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	public void onDestroy()
 	{
 		Logger.d(TAG, "onDestroy");
-		this.unregisterReceiver(this.notificationActionReceiver);
-		this.broadcastManager.unregisterReceiver(this.soundStateChangedReceiver);
+
+		EventBus.getDefault().unregister(this);
 		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this);
+		this.unregisterReceiver(this.notificationActionReceiver);
 
 		this.storeLoadedSounds();
 		this.dismissAllNotifications();
@@ -639,137 +639,137 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		}
 	}
 
-	private class SoundStateChangeReceiver extends BroadcastReceiver
+	/**
+	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * @param event delivered MediaPlayerStateChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(MediaPlayerStateChangedEvent event)
 	{
-		@Override
-		public void onReceive(Context context, Intent intent)
+		Logger.d(TAG, event.toString());
+
+		boolean areNotificationsEnabled = SoundboardPreferences.areNotificationsEnabled();
+		if (!areNotificationsEnabled)
+			return;
+
+		String playerId = event.getPlayerId();
+		boolean isAlive = event.isAlive();
+
+		if (playerId == null)
+			return;
+
+		EnhancedMediaPlayer player = searchInPlaylistForId(playerId);
+		if (player != null)
 		{
-			Logger.d(TAG, "SoundStateChangeReceiver.onReceive " + intent);
-
-			boolean areNotificationsEnabled = SoundboardPreferences.areNotificationsEnabled();
-			if (!areNotificationsEnabled)
-				return;
-
-			String action = intent.getAction();
-			String playerId = intent.getStringExtra(Constants.KEY_PLAYER_ID);
-			boolean isAlive = intent.getBooleanExtra(Constants.KEY_IS_ALIVE, true);
-
-			if (action == null || playerId == null)
-				return;
-
-			EnhancedMediaPlayer player = searchInPlaylistForId(playerId);
-			if (player != null)
-			{
-				if (isAlive)
-					this.handlePlaylistPlayerStateChanged(player);
-				else
-					this.removePlayListNotification();
-			}
+			if (isAlive)
+				this.handlePlaylistPlayerStateChanged(player);
 			else
-			{
-				if (isAlive)
-					this.handlePlayerStateChanged(playerId);
-				else
-					this.removeNotificationForPlayer(playerId);
-			}
-		}
-
-		private void handlePlaylistPlayerStateChanged(EnhancedMediaPlayer player)
-		{
-			boolean isPendingNotification = this.updateOrRemovePendingPlaylistNotification();
-			if (!isPendingNotification)
-				addNotification(getNotificationForPlaylist(player));
-		}
-
-		private void removePlayListNotification()
-		{
-			PendingSoundNotification notification = this.findNotificationById(Constants.NOTIFICATION_ID_PLAYLIST);
-			if (notification != null)
-				notificationManager.cancel(notification.getNotificationId());
-		}
-
-		private boolean updateOrRemovePendingPlaylistNotification()
-		{
-			PendingSoundNotification correspondingNotification = this.findNotificationById(Constants.NOTIFICATION_ID_PLAYLIST);
-			if (correspondingNotification == null)
-				return false;
-
-			int notificationId = correspondingNotification.getNotificationId();
-			EnhancedMediaPlayer player = getPlayingSoundFromPlaylist();
-			if (player == null)
-				player = searchInPlaylistForId(correspondingNotification.getPlayerId());
-
-			if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
-			{
 				this.removePlayListNotification();
-				return true;
-			}
-
-			PendingSoundNotificationBuilder builder = getNotificationForPlaylist(player);
-
-			correspondingNotification.setPlayerId(player.getMediaPlayerData().getPlayerId());
-			correspondingNotification.setNotification(builder.build());
-			notificationManager.notify(notificationId, correspondingNotification.getNotification());
-
-			return true;
 		}
-
-		private void handlePlayerStateChanged(String playerId)
+		else
 		{
-			boolean isPendingNotification = this.updateOrRemovePendingNotification(playerId);
-			if (!isPendingNotification)
-				addNotification(getNotificationForSound(searchInSoundsForId(playerId)));
-		}
-
-		private boolean updateOrRemovePendingNotification(String playerId)
-		{
-			PendingSoundNotification correspondingNotification = this.findNotificationForPendingPlayer(playerId);
-			if (correspondingNotification == null)
-				return false;
-
-			int notificationId = correspondingNotification.getNotificationId();
-			EnhancedMediaPlayer player = searchInSoundsForId(playerId);
-
-			if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
-			{
+			if (isAlive)
+				this.handlePlayerStateChanged(playerId);
+			else
 				this.removeNotificationForPlayer(playerId);
-				return true;
-			}
+		}
+	}
 
-			PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(getApplicationContext(), player, notificationId);
+	private void handlePlaylistPlayerStateChanged(EnhancedMediaPlayer player)
+	{
+		boolean isPendingNotification = this.updateOrRemovePendingPlaylistNotification();
+		if (!isPendingNotification)
+			addNotification(getNotificationForPlaylist(player));
+	}
 
-			correspondingNotification.setNotification(builder.build());
-			notificationManager.notify(notificationId, correspondingNotification.getNotification());
+	private void removePlayListNotification()
+	{
+		PendingSoundNotification notification = this.findNotificationById(Constants.NOTIFICATION_ID_PLAYLIST);
+		if (notification != null)
+			notificationManager.cancel(notification.getNotificationId());
+	}
 
+	private boolean updateOrRemovePendingPlaylistNotification()
+	{
+		PendingSoundNotification correspondingNotification = this.findNotificationById(Constants.NOTIFICATION_ID_PLAYLIST);
+		if (correspondingNotification == null)
+			return false;
+
+		int notificationId = correspondingNotification.getNotificationId();
+		EnhancedMediaPlayer player = getPlayingSoundFromPlaylist();
+		if (player == null)
+			player = searchInPlaylistForId(correspondingNotification.getPlayerId());
+
+		if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
+		{
+			this.removePlayListNotification();
 			return true;
 		}
 
-		private void removeNotificationForPlayer(String playerId)
+		PendingSoundNotificationBuilder builder = getNotificationForPlaylist(player);
+
+		correspondingNotification.setPlayerId(player.getMediaPlayerData().getPlayerId());
+		correspondingNotification.setNotification(builder.build());
+		notificationManager.notify(notificationId, correspondingNotification.getNotification());
+
+		return true;
+	}
+
+	private void handlePlayerStateChanged(String playerId)
+	{
+		boolean isPendingNotification = this.updateOrRemovePendingNotification(playerId);
+		if (!isPendingNotification)
+			addNotification(getNotificationForSound(searchInSoundsForId(playerId)));
+	}
+
+	private boolean updateOrRemovePendingNotification(String playerId)
+	{
+		PendingSoundNotification correspondingNotification = this.findNotificationForPendingPlayer(playerId);
+		if (correspondingNotification == null)
+			return false;
+
+		int notificationId = correspondingNotification.getNotificationId();
+		EnhancedMediaPlayer player = searchInSoundsForId(playerId);
+
+		if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
 		{
-			PendingSoundNotification notification = this.findNotificationForPendingPlayer(playerId);
-			if (notification != null)
-				notificationManager.cancel(notification.getNotificationId());
+			this.removeNotificationForPlayer(playerId);
+			return true;
 		}
 
-		private PendingSoundNotification findNotificationForPendingPlayer(String playerId)
-		{
-			for (PendingSoundNotification notification : notifications)
-			{
-				if (notification.getPlayerId().equals(playerId))
-					return notification;
-			}
-			return null;
-		}
+		PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(getApplicationContext(), player, notificationId);
 
-		private PendingSoundNotification findNotificationById(int notificationId)
+		correspondingNotification.setNotification(builder.build());
+		notificationManager.notify(notificationId, correspondingNotification.getNotification());
+
+		return true;
+	}
+
+	private void removeNotificationForPlayer(String playerId)
+	{
+		PendingSoundNotification notification = this.findNotificationForPendingPlayer(playerId);
+		if (notification != null)
+			notificationManager.cancel(notification.getNotificationId());
+	}
+
+	private PendingSoundNotification findNotificationForPendingPlayer(String playerId)
+	{
+		for (PendingSoundNotification notification : notifications)
 		{
-			for (PendingSoundNotification notification : notifications)
-			{
-				if (notification.getNotificationId() == notificationId)
-					return notification;
-			}
-			return null;
+			if (notification.getPlayerId().equals(playerId))
+				return notification;
 		}
+		return null;
+	}
+
+	private PendingSoundNotification findNotificationById(int notificationId)
+	{
+		for (PendingSoundNotification notification : notifications)
+		{
+			if (notification.getNotificationId() == notificationId)
+				return notification;
+		}
+		return null;
 	}
 
 	private class NotificationActionReceiver extends BroadcastReceiver

@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -353,6 +354,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	private void sendBroadCastSoundState(boolean isPlaying, boolean isFinished, boolean isAlive)
 	{
+		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(isPlaying, isFinished, isAlive, this.rawData.getPlayerId()));
+
 		Intent intent = new Intent();
 		intent.setAction(Constants.ACTION_SOUND_STATE_CHANGED);
 		intent.putExtra(Constants.KEY_IS_PLAYING, isPlaying);
