@@ -162,6 +162,7 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		filter.addAction(Constants.ACTION_PLAY);
 		filter.addAction(Constants.ACTION_PAUSE);
 		filter.addAction(Constants.ACTION_STOP);
+		filter.addAction(Constants.ACTION_FADE_OUT);
 		return filter;
 	}
 }
