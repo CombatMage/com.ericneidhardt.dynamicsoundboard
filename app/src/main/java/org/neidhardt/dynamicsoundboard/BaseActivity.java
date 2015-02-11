@@ -3,11 +3,8 @@ package org.neidhardt.dynamicsoundboard;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,12 +13,14 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.customview.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.dialog.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
@@ -49,17 +48,13 @@ public class BaseActivity
 	private DrawerLayout navigationDrawerLayout;
 	private ActionBarDrawerToggle drawerToggle;
 
-	private LocalBroadcastManager broadcastManager;
 	private PauseSoundOnCallListener phoneStateListener;
-	private SoundStateChangedReceiver soundStateChangedReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_base);
-
-		this.broadcastManager = LocalBroadcastManager.getInstance(this);
 
 		this.createActionbar();
 		this.createNavigationDrawer();
@@ -70,7 +65,16 @@ public class BaseActivity
 		this.addSoundLayoutControllerFragment();
 
 		this.phoneStateListener = new PauseSoundOnCallListener();
-		this.soundStateChangedReceiver = new SoundStateChangedReceiver();
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * @param event delivered MediaPlayerStateChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(MediaPlayerStateChangedEvent event)
+	{
+		this.setFloatActionButton();
 	}
 
 	private void setFloatActionButton()
@@ -165,6 +169,7 @@ public class BaseActivity
 	{
 		super.onStart();
 		this.startService(new Intent(this.getApplicationContext(), MusicService.class));
+		EventBus.getDefault().register(this);
 	}
 
 	@Override
@@ -176,7 +181,6 @@ public class BaseActivity
 		this.setFloatActionButton();
 
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener, this.getServiceManagerFragment());
-		this.broadcastManager.registerReceiver(this.soundStateChangedReceiver, EnhancedMediaPlayer.getMediaPlayerIntentFilter());
 	}
 
 	@Override
@@ -185,7 +189,13 @@ public class BaseActivity
 		this.isActivityVisible = false;
 
 		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener);
-		this.broadcastManager.unregisterReceiver(this.soundStateChangedReceiver);
+	}
+
+	@Override
+	protected void onStop()
+	{
+		EventBus.getDefault().unregister(this);
+		super.onStop();
 	}
 
 	@Override
@@ -378,14 +388,5 @@ public class BaseActivity
 	private ServiceManagerFragment getServiceManagerFragment()
 	{
 		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
-	}
-
-	private class SoundStateChangedReceiver extends BroadcastReceiver
-	{
-		@Override
-		public void onReceive(Context context, Intent intent)
-		{
-			setFloatActionButton();
-		}
 	}
 }

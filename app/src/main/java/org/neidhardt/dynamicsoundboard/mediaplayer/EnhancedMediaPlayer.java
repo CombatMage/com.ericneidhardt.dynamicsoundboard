@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -111,10 +110,10 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public void destroy()
 	{
 		this.handler.removeCallbacks(this);
-		this.sendBroadCastSoundDestroyed();
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
+		this.sendBroadCastSoundDestroyed();
 	}
 
 	public MediaPlayerData getMediaPlayerData()
@@ -156,9 +155,10 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.volume = INT_VOLUME_MAX;
 			this.updateVolume(this.volume);
 
-			this.sendBroadCastSoundPlaying();
 			this.start();
 			this.currentState = State.STARTED;
+
+			this.sendBroadCastSoundPlaying();
 			return true;
 		}
 		catch (IOException e)
@@ -210,6 +210,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.pause();
 			this.currentState = State.PAUSED;
 			this.triggerOnMediaPlayerStateChangedListeners(false);
+
 			this.sendBroadCastSoundPaused();
 			return true;
 		}
@@ -355,14 +356,14 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private void sendBroadCastSoundState(boolean isPlaying, boolean isFinished, boolean isAlive)
 	{
 		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(isPlaying, isFinished, isAlive, this.rawData.getPlayerId()));
-
+/*
 		Intent intent = new Intent();
 		intent.setAction(Constants.ACTION_SOUND_STATE_CHANGED);
 		intent.putExtra(Constants.KEY_IS_PLAYING, isPlaying);
 		intent.putExtra(Constants.KEY_IS_FINISHED, isFinished);
 		intent.putExtra(Constants.KEY_IS_ALIVE, isAlive);
 		intent.putExtra(Constants.KEY_PLAYER_ID, this.rawData.getPlayerId());
-		this.broadcastManager.sendBroadcast(intent);
+		this.broadcastManager.sendBroadcast(intent);*/
 	}
 
 	public static IntentFilter getMediaPlayerIntentFilter()
