@@ -108,7 +108,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
-		this.sendBroadCastSoundDestroyed();
+		this.postEvent(false);
 	}
 
 	public MediaPlayerData getMediaPlayerData()
@@ -153,7 +153,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.start();
 			this.currentState = State.STARTED;
 
-			this.sendBroadCastSoundPlaying();
+			this.postEvent(true);
 			return true;
 		}
 		catch (IOException e)
@@ -206,7 +206,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.currentState = State.PAUSED;
 			this.triggerOnMediaPlayerStateChangedListeners(false);
 
-			this.sendBroadCastSoundPaused();
+			this.postEvent(false);
 			return true;
 		}
 		catch (IOException e)
@@ -239,8 +239,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		updateVolume(-1);
 		if (volume == INT_VOLUME_MIN)
 		{
-			pauseSound();
 			updateVolume(INT_VOLUME_MAX);
+			pauseSound();
 			triggerOnMediaPlayerStateChangedListeners(false);
 		}
 		else
@@ -318,8 +318,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
-		this.sendBroadCastSoundCompleted();
 		this.triggerOnMediaPlayerStateChangedListeners(true);
+		this.postEvent(true);
 	}
 
 	private void triggerOnMediaPlayerStateChangedListeners(boolean hasPlayerCompleted)
@@ -328,29 +328,9 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			listener.onMediaPlayerStateChanged(this, hasPlayerCompleted);
 	}
 
-	private void sendBroadCastSoundPaused()
+	private void postEvent(boolean isAlive)
 	{
-		this.sendBroadCastSoundState(false, false, true);
-	}
-
-	private void sendBroadCastSoundDestroyed()
-	{
-		this.sendBroadCastSoundState(false, false, false);
-	}
-
-	private void sendBroadCastSoundCompleted()
-	{
-		this.sendBroadCastSoundState(false, true, true);
-	}
-
-	private void sendBroadCastSoundPlaying()
-	{
-		this.sendBroadCastSoundState(true, false, true);
-	}
-
-	private void sendBroadCastSoundState(boolean isPlaying, boolean isFinished, boolean isAlive)
-	{
-		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(isPlaying, isFinished, isAlive, this.rawData.getPlayerId()));
+		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(isAlive, this.rawData.getPlayerId()));
 	}
 
 	public static interface OnMediaPlayerStateChangedListener
