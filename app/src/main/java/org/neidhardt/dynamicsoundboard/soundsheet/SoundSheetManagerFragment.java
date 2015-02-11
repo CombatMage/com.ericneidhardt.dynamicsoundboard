@@ -132,8 +132,10 @@ public class SoundSheetManagerFragment
 	public void onTextEdited(String text)
 	{
 		SoundSheetFragment currentSoundSheetFragment = this.getBaseActivity().getCurrentFragment();
-		SoundSheet correspondingSoundSheetData = this.get(currentSoundSheetFragment.getFragmentTag());
+		if (currentSoundSheetFragment == null)
+			return;
 
+		SoundSheet correspondingSoundSheetData = this.get(currentSoundSheetFragment.getFragmentTag());
 		if (correspondingSoundSheetData == null)
 			throw new NullPointerException("sound sheet label was edited, but no sound sheet is selected");
 
