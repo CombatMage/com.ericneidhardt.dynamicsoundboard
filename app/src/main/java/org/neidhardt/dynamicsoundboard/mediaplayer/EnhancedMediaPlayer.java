@@ -1,17 +1,14 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer;
 
 import android.content.Context;
-import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.notifications.Constants;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 
 import java.io.IOException;
@@ -46,14 +43,12 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private int volume;
 
 	private Set<OnMediaPlayerStateChangedListener> onMediaPlayerChangedListeners;
-	private LocalBroadcastManager broadcastManager;
 	private Handler handler = new Handler();
 
 	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
 	{
 		super();
 
-		this.broadcastManager = LocalBroadcastManager.getInstance(context);
 		this.onMediaPlayerChangedListeners = new HashSet<>();
 		this.rawData = data;
 		this.setLooping(data.getIsLoop());
@@ -356,19 +351,6 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private void sendBroadCastSoundState(boolean isPlaying, boolean isFinished, boolean isAlive)
 	{
 		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(isPlaying, isFinished, isAlive, this.rawData.getPlayerId()));
-/*
-		Intent intent = new Intent();
-		intent.setAction(Constants.ACTION_SOUND_STATE_CHANGED);
-		intent.putExtra(Constants.KEY_IS_PLAYING, isPlaying);
-		intent.putExtra(Constants.KEY_IS_FINISHED, isFinished);
-		intent.putExtra(Constants.KEY_IS_ALIVE, isAlive);
-		intent.putExtra(Constants.KEY_PLAYER_ID, this.rawData.getPlayerId());
-		this.broadcastManager.sendBroadcast(intent);*/
-	}
-
-	public static IntentFilter getMediaPlayerIntentFilter()
-	{
-		return new IntentFilter(Constants.ACTION_SOUND_STATE_CHANGED);
 	}
 
 	public static interface OnMediaPlayerStateChangedListener
