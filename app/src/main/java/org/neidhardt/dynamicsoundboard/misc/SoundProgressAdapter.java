@@ -33,6 +33,20 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> ex
 		this.stopProgressUpdateTimer();
 	}
 
+	@Override
+	public void onAttachedToRecyclerView(RecyclerView recyclerView)
+	{
+		super.onAttachedToRecyclerView(recyclerView);
+		// TODO is this onResume?
+	}
+
+	@Override
+	public void onDetachedFromRecyclerView(RecyclerView recyclerView)
+	{
+		super.onDetachedFromRecyclerView(recyclerView);
+		// TODO is this onPause?
+	}
+
 	/**
 	 * This is called by greenDao EventBus in case a mediaplayer changed his state
 	 * @param event delivered MediaPlayerStateChangedEvent
