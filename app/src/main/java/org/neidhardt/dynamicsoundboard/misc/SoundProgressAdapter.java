@@ -2,9 +2,7 @@ package org.neidhardt.dynamicsoundboard.misc;
 
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
@@ -22,32 +20,9 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> ex
 		this.serviceManagerFragment = serviceManagerFragment;
 	}
 
-	public void onParentResume()
-	{
-		EventBus.getDefault().register(this);
-	}
-
 	public void onParentPause()
 	{
-		EventBus.getDefault().unregister(this);
 		this.stopProgressUpdateTimer();
-	}
-
-	/**
-	 * This is called by greenDao EventBus in case a mediaplayer changed his state
-	 * @param event delivered MediaPlayerStateChangedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEvent(MediaPlayerStateChangedEvent event)
-	{
-		String playerId = event.getPlayerId();
-		List<EnhancedMediaPlayer> players = this.getValues();
-		int count = players.size();
-		for (int i = 0; i < count; i++)
-		{
-			if (players.get(i).getMediaPlayerData().getPlayerId().equals(playerId))
-				this.notifyItemChanged(i);
-		}
 	}
 
 	/**

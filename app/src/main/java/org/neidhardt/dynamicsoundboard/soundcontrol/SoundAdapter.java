@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.CustomEditText;
 import org.neidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -37,11 +39,36 @@ public class SoundAdapter
 
 	public void onParentResume(SoundSheetFragment parent)
 	{
-		super.onParentResume();
 		this.parent = parent;
 
 		super.setServiceManagerFragment(this.parent.getServiceManagerFragment());
 		super.scheduleProgressUpdateTimer();
+
+		EventBus.getDefault().register(this);
+	}
+
+	@Override
+	public void onParentPause()
+	{
+		super.onParentPause();
+		EventBus.getDefault().unregister(this);
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * @param event delivered MediaPlayerStateChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(MediaPlayerStateChangedEvent event)
+	{
+		String playerId = event.getPlayerId();
+		List<EnhancedMediaPlayer> players = this.getValues();
+		int count = players.size();
+		for (int i = 0; i < count; i++)
+		{
+			if (players.get(i).getMediaPlayerData().getPlayerId().equals(playerId))
+				this.notifyItemChanged(i);
+		}
 	}
 
 	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener)

@@ -12,8 +12,6 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 
 public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener, Runnable
@@ -42,14 +40,12 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private int duration;
 	private int volume;
 
-	private Set<OnMediaPlayerStateChangedListener> onMediaPlayerChangedListeners;
 	private Handler handler = new Handler();
 
 	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
 	{
 		super();
 
-		this.onMediaPlayerChangedListeners = new HashSet<>();
 		this.rawData = data;
 		this.setLooping(data.getIsLoop());
 
@@ -108,7 +104,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
-		this.postEvent(false);
+		this.postStateChangedEvent(false);
 	}
 
 	public MediaPlayerData getMediaPlayerData()
@@ -153,7 +149,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.start();
 			this.currentState = State.STARTED;
 
-			this.postEvent(true);
+			this.postStateChangedEvent(true);
 			return true;
 		}
 		catch (IOException e)
@@ -204,9 +200,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			}
 			this.pause();
 			this.currentState = State.PAUSED;
-			this.triggerOnMediaPlayerStateChangedListeners(false);
 
-			this.postEvent(false);
+			this.postStateChangedEvent(false);
 			return true;
 		}
 		catch (IOException e)
@@ -241,7 +236,6 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		{
 			updateVolume(INT_VOLUME_MAX);
 			pauseSound();
-			triggerOnMediaPlayerStateChangedListeners(false);
 		}
 		else
 			scheduleNextVolumeChange();
@@ -310,32 +304,21 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		}
 	}
 
-	public void addOnMediaPlayerStateChangedListener(OnMediaPlayerStateChangedListener listener)
-	{
-		this.onMediaPlayerChangedListeners.add(listener);
-	}
-
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
-		this.triggerOnMediaPlayerStateChangedListeners(true);
-		this.postEvent(true);
+		this.postStateChangedEvent(true);
+		this.postCompletedEvent();
 	}
 
-	private void triggerOnMediaPlayerStateChangedListeners(boolean hasPlayerCompleted)
-	{
-		for (OnMediaPlayerStateChangedListener listener : this.onMediaPlayerChangedListeners)
-			listener.onMediaPlayerStateChanged(this, hasPlayerCompleted);
-	}
-
-	private void postEvent(boolean isAlive)
+	private void postStateChangedEvent(boolean isAlive)
 	{
 		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(isAlive, this.rawData.getPlayerId()));
 	}
 
-	public static interface OnMediaPlayerStateChangedListener
+	private void postCompletedEvent()
 	{
-		public void onMediaPlayerStateChanged(MediaPlayer player, boolean hasPlayerCompleted);
+		EventBus.getDefault().post(new MediaPlayerCompletedEvent());
 	}
 
 }

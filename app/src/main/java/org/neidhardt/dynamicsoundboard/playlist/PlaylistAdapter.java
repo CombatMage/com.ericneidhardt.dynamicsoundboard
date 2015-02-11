@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.playlist;
 
-import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,21 +7,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerCompletedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Project created by eric.neidhardt on 27.08.2014.
  */
-public class PlaylistAdapter
-		extends
-			SoundProgressAdapter<PlaylistAdapter.ViewHolder>
-		implements
-			EnhancedMediaPlayer.OnMediaPlayerStateChangedListener
+public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHolder>
 {
 
 	private Integer currentItemIndex;
@@ -37,14 +36,23 @@ public class PlaylistAdapter
 	{
 		super.setServiceManagerFragment(serviceManagerFragment);
 		super.scheduleProgressUpdateTimer();
+
+		EventBus.getDefault().register(this);
+	}
+
+	@Override
+	public void onParentPause()
+	{
+		super.onParentPause();
+		EventBus.getDefault().unregister(this);
 	}
 
 	@Override
 	protected List<EnhancedMediaPlayer> getValues()
 	{
 		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getPlayList();
-		for (EnhancedMediaPlayer sound : sounds)
-			sound.addOnMediaPlayerStateChangedListener(this);
+		if (sounds == null)
+			sounds = new ArrayList<>();
 		return sounds;
 	}
 
@@ -99,15 +107,23 @@ public class PlaylistAdapter
 		return this.getValues().size();
 	}
 
-	@Override
-	public void onMediaPlayerStateChanged(MediaPlayer player, boolean hasPlayerCompleted)
+	/**
+	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * @param event delivered MediaPlayerStateChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(MediaPlayerStateChangedEvent event)
 	{
-		if (!hasPlayerCompleted) // only schedule next playlist entry if current player has finished running, not when he was paused
-		{
-			this.notifyDataSetChanged();
-			return;
-		}
+		this.notifyDataSetChanged();
+	}
 
+	/**
+	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * @param event delivered MediaPlayerStateChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(MediaPlayerCompletedEvent event)
+	{
 		this.currentItemIndex++;
 		if (this.currentItemIndex >= this.getItemCount())
 			this.currentItemIndex = 0;
