@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol;
 
-import android.media.MediaPlayer;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -22,8 +21,6 @@ import java.util.List;
 public class SoundAdapter
 		extends
 			SoundProgressAdapter<SoundAdapter.ViewHolder>
-		implements
-			EnhancedMediaPlayer.OnMediaPlayerStateChangedListener
 {
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
@@ -40,6 +37,7 @@ public class SoundAdapter
 
 	public void onParentResume(SoundSheetFragment parent)
 	{
+		super.onParentResume();
 		this.parent = parent;
 
 		super.setServiceManagerFragment(this.parent.getServiceManagerFragment());
@@ -62,10 +60,6 @@ public class SoundAdapter
 		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getSounds().get(this.parentFragmentTag);
 		if (sounds == null)
 			return new ArrayList<>();
-
-		for (EnhancedMediaPlayer sound : sounds)
-			sound.addOnMediaPlayerStateChangedListener(this);
-
 		return sounds;
 	}
 
@@ -86,13 +80,6 @@ public class SoundAdapter
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
 		holder.bindData(position);
-	}
-
-	@Override
-	public void onMediaPlayerStateChanged(MediaPlayer player, boolean hasPlayerCompleted)
-	{
-		if (player instanceof EnhancedMediaPlayer)
-			this.notifyItemChanged(this.getValues().indexOf(player));
 	}
 
 	public class ViewHolder
@@ -151,7 +138,9 @@ public class SoundAdapter
 			super.resetViewPager();
 
 			this.name.setText(data.getLabel());
-			this.play.setSelected(player.isPlaying());
+
+			boolean isPlaying = player.isPlaying();
+			this.play.setSelected(isPlaying);
 			this.loop.setSelected(data.getIsLoop());
 			this.inPlaylist.setSelected(data.getIsInPlaylist());
 

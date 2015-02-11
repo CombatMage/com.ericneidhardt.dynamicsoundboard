@@ -2,7 +2,9 @@ package org.neidhardt.dynamicsoundboard.misc;
 
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
@@ -20,10 +22,32 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> ex
 		this.serviceManagerFragment = serviceManagerFragment;
 	}
 
+	public void onParentResume()
+	{
+		EventBus.getDefault().register(this);
+	}
+
 	public void onParentPause()
 	{
+		EventBus.getDefault().unregister(this);
 		this.stopProgressUpdateTimer();
-		this.handler.removeCallbacks(null);
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * @param event delivered MediaPlayerStateChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(MediaPlayerStateChangedEvent event)
+	{
+		String playerId = event.getPlayerId();
+		List<EnhancedMediaPlayer> players = this.getValues();
+		int count = players.size();
+		for (int i = 0; i < count; i++)
+		{
+			if (players.get(i).getMediaPlayerData().getPlayerId().equals(playerId))
+				this.notifyItemChanged(i);
+		}
 	}
 
 	/**
@@ -51,15 +75,17 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> ex
 
 	public void stopProgressUpdateTimer()
 	{
-		handler.removeCallbacks(this);
+		this.handler.removeMessages(0);
 	}
 
 	private List<Integer> getPlayingItems()
 	{
 		List<Integer> playingSounds = new ArrayList<>();
-		for (int i = 0; i < this.getValues().size(); i++)
+		List<EnhancedMediaPlayer> allSounds = this.getValues();
+		int count = allSounds.size();
+		for (int i = 0; i < count; i++)
 		{
-			if (this.getValues().get(i).isPlaying())
+			if (allSounds.get(i).isPlaying())
 				playingSounds.add(i);
 		}
 		return playingSounds;
