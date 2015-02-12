@@ -5,9 +5,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import org.neidhardt.dynamicsoundboard.customview.SlidingTabLayout;
-import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundDialog;
+import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
+import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets;
@@ -72,7 +72,6 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 		});
 
 		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
-		this.playlist.onParentActivityCreated(this);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
 		this.soundSheets.onActivityCreated(this);
 		this.controls = this.getActivity().findViewById(R.id.layout_controls);
@@ -81,6 +80,13 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 
 		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.b_add).setOnClickListener(this);
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		this.playlist.onParentActivityResume(this);
 	}
 
 	@Override

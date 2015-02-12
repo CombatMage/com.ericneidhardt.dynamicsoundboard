@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog;
+package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -33,7 +33,7 @@ public class AddNewSoundFromDirectory
 {
 	private static final String TAG = AddNewSoundFromDirectory.class.getName();
 
-	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundFromDirectory.callingFragmentTag";
+	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectory.callingFragmentTag";
 
 	private String callingFragmentTag;
 

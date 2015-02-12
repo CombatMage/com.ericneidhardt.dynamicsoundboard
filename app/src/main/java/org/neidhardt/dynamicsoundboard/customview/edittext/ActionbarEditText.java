@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.customview;
+package org.neidhardt.dynamicsoundboard.customview.edittext;
 
 import android.content.Context;
 import android.text.method.KeyListener;
@@ -13,11 +13,11 @@ import org.neidhardt.dynamicsoundboard.R;
 
 public class ActionbarEditText
 		extends
-			CustomEditText
+		CustomEditText
 		implements
 			TextView.OnEditorActionListener,
 			View.OnClickListener,
-			EditTextBackEvent.EditTextImeBackListener
+		EditTextBackEvent.EditTextImeBackListener
 {
 	private View divider;
 	private KeyListener editTextKeyListener;

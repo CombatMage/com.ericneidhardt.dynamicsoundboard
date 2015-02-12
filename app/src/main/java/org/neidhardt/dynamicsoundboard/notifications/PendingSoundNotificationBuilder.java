@@ -66,7 +66,7 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		this.setActionFadeOut(context, isLollipopStyleAvailable);
 
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
-		this.setDeleteIntent(this.getPendingIntent(context, Constants.ACTION_DISMISS));
+		this.setDeleteIntent(this.getPendingIntent(context, NotificationIds.ACTION_DISMISS));
 		this.setContentIntent(this.getOpenActivityIntent(context));
 
 		this.setContentTitle(title);
@@ -120,32 +120,32 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 	private void setActionStop(Context context, boolean isLollipopStyleAvailable)
 	{
 		this.addAction(R.drawable.ic_notification_stop, isLollipopStyleAvailable ? context.getString(R.string.notification_stop_sound) : "",
-				this.getPendingIntent(context, Constants.ACTION_STOP));
+				this.getPendingIntent(context, NotificationIds.ACTION_STOP));
 	}
 
 	private void setActionPause(Context context, boolean isLollipopStyleAvailable)
 	{
 		this.addAction(R.drawable.ic_notification_pause, isLollipopStyleAvailable ? context.getString(R.string.notification_pause_sound) : "",
-				this.getPendingIntent(context, Constants.ACTION_PAUSE));
+				this.getPendingIntent(context, NotificationIds.ACTION_PAUSE));
 	}
 
 	private void setActionPlay(Context context, boolean isLollipopStyleAvailable)
 	{
 		this.addAction(R.drawable.ic_notification_play, isLollipopStyleAvailable ? context.getString(R.string.notification_play_sound) : "",
-				this.getPendingIntent(context, Constants.ACTION_PLAY));
+				this.getPendingIntent(context, NotificationIds.ACTION_PLAY));
 	}
 
 	private void setActionFadeOut(Context context, boolean isLollipopStyleAvailable)
 	{
 		this.addAction(R.drawable.ic_notification_fade_out, isLollipopStyleAvailable ? context.getString(R.string.notification_fade_out_sound) : "",
-				this.getPendingIntent(context, Constants.ACTION_FADE_OUT));
+				this.getPendingIntent(context, NotificationIds.ACTION_FADE_OUT));
 	}
 
 	private PendingIntent getPendingIntent(Context context, String action)
 	{
 		Intent intent = new Intent(action);
-		intent.putExtra(Constants.KEY_PLAYER_ID, this.playerId);
-		intent.putExtra(Constants.KEY_NOTIFICATION_ID, this.notificationId);
+		intent.putExtra(NotificationIds.KEY_PLAYER_ID, this.playerId);
+		intent.putExtra(NotificationIds.KEY_NOTIFICATION_ID, this.notificationId);
 		return PendingIntent.getBroadcast(context, this.notificationId, intent, 0);
 	}
 
@@ -158,11 +158,11 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 	public static IntentFilter getNotificationIntentFilter()
 	{
 		IntentFilter filter = new IntentFilter();
-		filter.addAction(Constants.ACTION_DISMISS);
-		filter.addAction(Constants.ACTION_PLAY);
-		filter.addAction(Constants.ACTION_PAUSE);
-		filter.addAction(Constants.ACTION_STOP);
-		filter.addAction(Constants.ACTION_FADE_OUT);
+		filter.addAction(NotificationIds.ACTION_DISMISS);
+		filter.addAction(NotificationIds.ACTION_PLAY);
+		filter.addAction(NotificationIds.ACTION_PAUSE);
+		filter.addAction(NotificationIds.ACTION_STOP);
+		filter.addAction(NotificationIds.ACTION_FADE_OUT);
 		return filter;
 	}
 }

@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
-import org.neidhardt.dynamicsoundboard.customview.NavigationDrawerList;
+import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;

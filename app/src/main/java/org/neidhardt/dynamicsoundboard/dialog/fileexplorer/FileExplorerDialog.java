@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog;
+package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
 
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 
 import java.io.File;

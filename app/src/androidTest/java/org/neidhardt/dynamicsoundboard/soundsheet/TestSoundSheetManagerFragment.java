@@ -1,10 +1,11 @@
 package org.neidhardt.dynamicsoundboard.soundsheet;
 
+import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.ActionbarEditText;
+import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
 
 /**
  * Created by eric.neidhardt on 12.02.2015.
@@ -13,6 +14,7 @@ public class TestSoundSheetManagerFragment extends ActivityInstrumentationTestCa
 {
 	private static final String TAG = TestSoundSheetManagerFragment.class.getName();
 
+	private Instrumentation instrumentation;
 	private BaseActivity activity;
 	private SoundSheetManagerFragment fragment;
 
@@ -25,6 +27,7 @@ public class TestSoundSheetManagerFragment extends ActivityInstrumentationTestCa
 	protected void setUp() throws Exception
 	{
 		super.setUp();
+		this.instrumentation = this.getInstrumentation();
 		this.activity = this.getActivity();
 		this.fragment = (SoundSheetManagerFragment)this.activity.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
 	}
@@ -38,7 +41,7 @@ public class TestSoundSheetManagerFragment extends ActivityInstrumentationTestCa
 
 		// test in activity context
 		Log.d(TAG, "test in activity context");
-		ActionbarEditText labelCurrentSoundSheet = (ActionbarEditText)this.activity.findViewById(R.id.et_set_label);
+		final ActionbarEditText labelCurrentSoundSheet = (ActionbarEditText)this.activity.findViewById(R.id.et_set_label);
 		assertNotNull(labelCurrentSoundSheet);
 		labelCurrentSoundSheet.setText("test2");
 

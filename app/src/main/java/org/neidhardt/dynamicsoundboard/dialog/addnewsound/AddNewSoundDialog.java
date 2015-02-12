@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog;
+package org.neidhardt.dynamicsoundboard.dialog.addnewsound;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.AddSoundListItem;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Util;
@@ -28,9 +28,9 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 {
 	private static final String TAG = AddNewSoundDialog.class.getName();
 
-	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.callingFragmentTag";
-	private static final String KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.soundsToAdd";
-	private static final String KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundDialog.soundsToAddLabels";
+	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog.callingFragmentTag";
+	private static final String KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog.soundsToAdd";
+	private static final String KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog.soundsToAddLabels";
 
 	private ViewGroup soundsToAddLayout;
 	private String callingFragmentTag;

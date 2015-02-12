@@ -11,7 +11,7 @@ import android.view.View;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
-import org.neidhardt.dynamicsoundboard.customview.NavigationDrawerList;
+import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -68,7 +68,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 		playlist.setAdapter(this.adapter);
 	}
 
-	public void onParentActivityCreated(NavigationDrawerFragment parent)
+	public void onParentActivityResume(NavigationDrawerFragment parent)
 	{
 		super.parent = parent;
 		this.adapter.onParentResume(parent.getServiceManagerFragment());

@@ -36,7 +36,6 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	{
 		super.setServiceManagerFragment(serviceManagerFragment);
 		super.scheduleProgressUpdateTimer();
-
 		EventBus.getDefault().register(this);
 	}
 

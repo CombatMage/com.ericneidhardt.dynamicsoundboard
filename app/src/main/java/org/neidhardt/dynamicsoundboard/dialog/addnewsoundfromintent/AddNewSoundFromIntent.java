@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog;
+package org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.CustomEditText;
-import org.neidhardt.dynamicsoundboard.customview.CustomSpinner;
+import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
 
@@ -23,10 +23,10 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 {
 	private static final String TAG = AddNewSoundFromIntent.class.getName();
 
-	private static final String KEY_SOUND_URI = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.uri";
-	private static final String KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.suggestedName";
-	private static final String KEY_AVAILABLE_SOUND_SHEET_LABELS = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.availableSoundSheetLabels";
-	private static final String KEY_AVAILABLE_SOUND_SHEET_IDS = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundFromIntent.availableSoundSheetIds";
+	private static final String KEY_SOUND_URI = "org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent.uri";
+	private static final String KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent.suggestedName";
+	private static final String KEY_AVAILABLE_SOUND_SHEET_LABELS = "org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent.availableSoundSheetLabels";
+	private static final String KEY_AVAILABLE_SOUND_SHEET_IDS = "org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent.availableSoundSheetIds";
 
 	private CustomEditText soundName;
 	private CustomEditText soundSheetName;

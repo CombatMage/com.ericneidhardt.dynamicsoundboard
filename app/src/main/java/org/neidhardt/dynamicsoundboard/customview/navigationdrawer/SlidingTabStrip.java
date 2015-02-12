@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.customview;
+package org.neidhardt.dynamicsoundboard.customview.navigationdrawer;
 
 /*
  * Copyright (C) 2013 The Android Open Source Project

@@ -1,14 +1,13 @@
-package org.neidhardt.dynamicsoundboard.customview;
+package org.neidhardt.dynamicsoundboard.customview.edittext;
 
 import android.content.Context;
 import android.util.AttributeSet;
-
 import org.neidhardt.dynamicsoundboard.R;
 
 
-public class DialogEditText extends CustomEditText
+public class NoUnderscoreEditText extends CustomEditText
 {
-	public DialogEditText(Context context, AttributeSet attrs)
+	public NoUnderscoreEditText(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 	}

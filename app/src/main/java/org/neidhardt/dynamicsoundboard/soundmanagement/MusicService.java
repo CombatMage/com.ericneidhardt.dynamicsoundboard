@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
-import org.neidhardt.dynamicsoundboard.notifications.Constants;
+import org.neidhardt.dynamicsoundboard.notifications.NotificationIds;
 import org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification;
 import org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
@@ -196,7 +196,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	{
 		return new PendingSoundNotificationBuilder(
 				this.getApplicationContext(),
-				player, Constants.NOTIFICATION_ID_PLAYLIST,
+				player, NotificationIds.NOTIFICATION_ID_PLAYLIST,
 				this.getString(R.string.notification_playlist),
 				player.getMediaPlayerData().getLabel());
 	}
@@ -684,14 +684,14 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 	private void removePlayListNotification()
 	{
-		PendingSoundNotification notification = this.findNotificationById(Constants.NOTIFICATION_ID_PLAYLIST);
+		PendingSoundNotification notification = this.findNotificationById(NotificationIds.NOTIFICATION_ID_PLAYLIST);
 		if (notification != null)
 			notificationManager.cancel(notification.getNotificationId());
 	}
 
 	private boolean updateOrRemovePendingPlaylistNotification()
 	{
-		PendingSoundNotification correspondingNotification = this.findNotificationById(Constants.NOTIFICATION_ID_PLAYLIST);
+		PendingSoundNotification correspondingNotification = this.findNotificationById(NotificationIds.NOTIFICATION_ID_PLAYLIST);
 		if (correspondingNotification == null)
 			return false;
 
@@ -783,13 +783,13 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			if (action == null)
 				return;
 
-			String playerId = intent.getStringExtra(Constants.KEY_PLAYER_ID);
+			String playerId = intent.getStringExtra(NotificationIds.KEY_PLAYER_ID);
 			if (playerId == null)
 				return;
 
-			if (action.equals(Constants.ACTION_DISMISS))
+			if (action.equals(NotificationIds.ACTION_DISMISS))
 			{
-				int notificationId = intent.getIntExtra(Constants.KEY_NOTIFICATION_ID, 0);
+				int notificationId = intent.getIntExtra(NotificationIds.KEY_NOTIFICATION_ID, 0);
 				this.dismissPendingMediaPlayer(notificationId);
 			}
 			else
@@ -799,16 +799,16 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 					throw new NullPointerException(TAG + " cannot changed player status, player is null");
 				switch (action)
 				{
-					case Constants.ACTION_PAUSE:
+					case NotificationIds.ACTION_PAUSE:
 						player.pauseSound();
 						break;
-					case Constants.ACTION_STOP:
+					case NotificationIds.ACTION_STOP:
 						player.stopSound();
 						break;
-					case Constants.ACTION_PLAY:
+					case NotificationIds.ACTION_PLAY:
 						player.playSound();
 						break;
-					case Constants.ACTION_FADE_OUT:
+					case NotificationIds.ACTION_FADE_OUT:
 						player.fadeOutSound();
 						break;
 				}

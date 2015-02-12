@@ -19,7 +19,7 @@
 			android:textSize="@dimen/text_headline"
 			android:text="@string/dialog_add_new_sound_from_intent_title"/>
 
-	<org.neidhardt.dynamicsoundboard.customview.DialogEditText
+	<org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText
 			android:id="@+id/et_name_file"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
 			android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_checkbox"
 			tools:checked="true"/>
 
-	<org.neidhardt.dynamicsoundboard.customview.CustomSpinner
+	<org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.CustomSpinner
 			android:id="@+id/s_sound_sheets"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_input_field"
@@ -52,7 +52,7 @@
 			android:layout_marginRight="@dimen/margin_default"
 			android:layout_marginBottom="@dimen/margin_default"/>
 
-	<org.neidhardt.dynamicsoundboard.customview.DialogEditText
+	<org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText
 			android:id="@+id/et_name_new_sound_sheet"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_input_field"

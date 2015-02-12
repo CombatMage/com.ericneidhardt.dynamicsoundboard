@@ -34,7 +34,7 @@
 			android:layout_toStartOf="@id/b_reorder"
 			android:orientation="vertical">
 
-		<org.neidhardt.dynamicsoundboard.customview.DialogEditText
+		<org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText
 				android:id="@id/et_name_file"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

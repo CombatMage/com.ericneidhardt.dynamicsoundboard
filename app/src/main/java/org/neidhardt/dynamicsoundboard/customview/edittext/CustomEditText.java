@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.customview;
+package org.neidhardt.dynamicsoundboard.customview.edittext;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -23,7 +23,7 @@ public abstract class CustomEditText
 			LinearLayout
 		implements
 			TextView.OnEditorActionListener,
-			EditTextBackEvent.EditTextImeBackListener,
+		EditTextBackEvent.EditTextImeBackListener,
 			View.OnFocusChangeListener
 {
 	EditTextBackEvent input;

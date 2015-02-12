@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.CustomEditText;
 import org.neidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
+import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
@@ -43,7 +43,6 @@ public class SoundAdapter
 
 		super.setServiceManagerFragment(this.parent.getServiceManagerFragment());
 		super.scheduleProgressUpdateTimer();
-
 		EventBus.getDefault().register(this);
 	}
 

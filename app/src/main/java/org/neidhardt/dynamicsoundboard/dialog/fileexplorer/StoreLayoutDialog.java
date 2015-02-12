@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog;
+package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,14 +10,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.DialogEditText;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
-import org.neidhardt.dynamicsoundboard.misc.Logger;
+import org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
+import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 {
 	private static final String TAG = StoreLayoutDialog.class.getName();
 
-	private DialogEditText inputFileName;
+	private NoUnderscoreEditText inputFileName;
 
 	public static void showInstance(FragmentManager manager)
 	{
@@ -46,7 +46,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_add).setOnClickListener(this);
 
-		this.inputFileName = (DialogEditText) view.findViewById(R.id.et_name_file);
+		this.inputFileName = (NoUnderscoreEditText) view.findViewById(R.id.et_name_file);
 
 		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
 		directories.addItemDecoration(new DividerItemDecoration(this.getActivity(), Color.TRANSPARENT));
