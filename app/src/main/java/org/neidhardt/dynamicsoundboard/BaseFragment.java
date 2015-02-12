@@ -26,4 +26,5 @@ public abstract class BaseFragment extends Fragment
 	{
 		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
 	}
+
 }

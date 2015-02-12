@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundsheet;
 
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -131,7 +132,11 @@ public class SoundSheetManagerFragment
 	@Override
 	public void onTextEdited(String text)
 	{
-		SoundSheetFragment currentSoundSheetFragment = this.getBaseActivity().getCurrentFragment();
+		FragmentManager manager = this.getFragmentManager();
+		if (manager == null)
+			return;
+
+		SoundSheetFragment currentSoundSheetFragment = BaseActivity.getCurrentFragment(manager);
 		if (currentSoundSheetFragment == null)
 			return;
 
@@ -140,8 +145,7 @@ public class SoundSheetManagerFragment
 			throw new NullPointerException("sound sheet label was edited, but no sound sheet is selected");
 
 		correspondingSoundSheetData.setLabel(text);
-		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
-				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawer();
 		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false);
 	}
 
@@ -187,7 +191,7 @@ public class SoundSheetManagerFragment
 
 	public SoundSheet getSoundSheetForCurrentFragment()
 	{
-		SoundSheetFragment currentSoundSheetFragment = this.getBaseActivity().getCurrentFragment();
+		SoundSheetFragment currentSoundSheetFragment = BaseActivity.getCurrentFragment(this.getFragmentManager());
 		return currentSoundSheetFragment != null ? this.get(currentSoundSheetFragment.getFragmentTag()) : null;
 	}
 
