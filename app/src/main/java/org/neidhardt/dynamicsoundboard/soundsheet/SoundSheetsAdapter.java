@@ -15,13 +15,13 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.ViewHolder>
+public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
 {
 	private List<SoundSheet> soundSheets;
 	private OnItemClickListener onItemClickListener;
 	private BaseFragment parent;
 
-	public SoundSheetAdapter()
+	public SoundSheetsAdapter()
 	{
 		this.soundSheets = new ArrayList<>();
 	}
@@ -136,7 +136,6 @@ public class SoundSheetAdapter extends RecyclerView.Adapter<SoundSheetAdapter.Vi
 				this.soundCount.setText(Integer.toString(soundCount));
 			}
 		}
-
 	}
 
 	public static interface OnItemClickListener

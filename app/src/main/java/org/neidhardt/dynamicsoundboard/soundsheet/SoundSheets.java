@@ -9,7 +9,6 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.BaseActivity;
-import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDrawerList;
@@ -26,9 +25,10 @@ public class SoundSheets
 		extends
 			NavigationDrawerList
 		implements
-			SoundSheetAdapter.OnItemClickListener
+			SoundSheetsAdapter.OnItemClickListener
 {
-	private SoundSheetAdapter adapter;
+	private RecyclerView soundSheets;
+	private SoundSheetsAdapter adapter;
 
 	@SuppressWarnings("unused")
 	public SoundSheets(Context context)
@@ -61,21 +61,17 @@ public class SoundSheets
 
 	private void initRecycleView(Context context)
 	{
-		RecyclerView playlist = (RecyclerView)this.findViewById(R.id.rv_sound_sheets);
-		playlist.addItemDecoration(new DividerItemDecoration(context));
-		playlist.setLayoutManager(new LinearLayoutManager(context));
-		playlist.setItemAnimator(new DefaultItemAnimator());
-
-		this.adapter = new SoundSheetAdapter();
-		this.adapter.setOnItemClickListener(this);
-		playlist.setAdapter(this.adapter);
+		this.soundSheets = (RecyclerView)this.findViewById(R.id.rv_sound_sheets);
+		this.soundSheets.addItemDecoration(new DividerItemDecoration(context));
+		this.soundSheets.setLayoutManager(new LinearLayoutManager(context));
+		this.soundSheets.setItemAnimator(new DefaultItemAnimator());
 	}
 
-	public void onActivityCreated(NavigationDrawerFragment parent)
+	public void setAdapter(SoundSheetsAdapter adapter)
 	{
-		super.parent = parent;
-		this.adapter.setParent(parent);
-		this.notifyDataSetChanged(true);
+		this.adapter = adapter;
+		this.adapter.setOnItemClickListener(this);
+		this.soundSheets.setAdapter(adapter);
 	}
 
 	@Override
@@ -96,7 +92,7 @@ public class SoundSheets
 		this.adapter.removeAll(soundSheetsToRemove);
 
 		BaseActivity activity = (BaseActivity)this.parent.getActivity();
-		SoundSheetManagerFragment soundSheetManagerfragment = this.parent.getSoundSheetManagerFragment();
+		SoundSheetsManagerFragment soundSheetsManagerfragment = this.parent.getSoundSheetManagerFragment();
 		ServiceManagerFragment soundManagerFragment = this.parent.getServiceManagerFragment();
 		MusicService service = soundManagerFragment.getSoundService();
 
@@ -104,7 +100,7 @@ public class SoundSheets
 		{
 			List<EnhancedMediaPlayer> soundsInSoundSheet = soundManagerFragment.getSounds().get(soundSheet.getFragmentTag());
 
-			soundSheetManagerfragment.remove(soundSheet, false);
+			soundSheetsManagerfragment.remove(soundSheet, false);
 			service.removeSounds(soundsInSoundSheet);
 			activity.removeSoundFragment(soundSheet);
 
@@ -143,7 +139,7 @@ public class SoundSheets
 	{
 		if (newSoundAvailable)
 		{
-			SoundSheetManagerFragment fragment = (SoundSheetManagerFragment)this.parent.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
+			SoundSheetsManagerFragment fragment = (SoundSheetsManagerFragment)this.parent.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
 			this.adapter.clear();
 			this.adapter.addAll(fragment.getAll());
 		}

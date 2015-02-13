@@ -19,7 +19,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -116,11 +116,11 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
 	{
-		SoundSheetManagerFragment soundSheetManagerFragment = this.getSoundSheetManagerFragment();// clear soundsheets before adding new values
-		soundSheetManagerFragment.clearAllSoundSheets(); // this also removes all sounds
+		SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();// clear soundsheets before adding new values
+		soundSheetsManagerFragment.clearAllSoundSheets(); // this also removes all sounds
 
 		for (SoundSheet soundSheet : soundSheets)
-			soundSheetManagerFragment.addSoundSheetAndNotifyFragment(soundSheet);
+			soundSheetsManagerFragment.addSoundSheetAndNotifyFragment(soundSheet);
 	}
 
 	private void addLoadedPlayList(List<MediaPlayerData> playList)

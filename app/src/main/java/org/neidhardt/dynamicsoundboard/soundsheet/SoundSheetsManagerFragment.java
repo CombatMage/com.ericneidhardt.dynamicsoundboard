@@ -26,14 +26,14 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundSheetManagerFragment
+public class SoundSheetsManagerFragment
 		extends
 			BaseFragment
 		implements
 			View.OnClickListener,
 			CustomEditText.OnTextEditedListener
 {
-	public static final String TAG = SoundSheetManagerFragment.class.getName();
+	public static final String TAG = SoundSheetsManagerFragment.class.getName();
 
 	private static final String DB_SOUNDS = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets";
 
@@ -304,14 +304,14 @@ public class SoundSheetManagerFragment
 			super.onSuccess(loadedSoundSheets);
 
 			if (loadedSoundSheets.size() > 0)
-				SoundSheetManagerFragment.this.soundSheets.addAll(loadedSoundSheets);
+				SoundSheetsManagerFragment.this.soundSheets.addAll(loadedSoundSheets);
 
 			handleIntent(getActivity().getIntent());
 			NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager()
 					.findFragmentByTag(NavigationDrawerFragment.TAG);
 			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
 
-			SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetManagerFragment.this.soundSheets);
+			SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetsManagerFragment.this.soundSheets);
 			if (selectedSoundSheet != null)
 				getBaseActivity().openSoundFragment(selectedSoundSheet);
 		}

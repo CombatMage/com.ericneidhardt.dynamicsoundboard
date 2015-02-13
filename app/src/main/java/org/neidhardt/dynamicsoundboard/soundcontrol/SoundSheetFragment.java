@@ -212,7 +212,7 @@ public class SoundSheetFragment
 	{
 		Logger.d(fragmentTag, "onDragStop");
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator()); // add animator for delete animation
-		this.soundAdapter.scheduleProgressUpdateTimer();
+		this.soundAdapter.startProgressUpdateTimer();
 	}
 
 	@Override

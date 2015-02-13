@@ -16,7 +16,7 @@ public class TestSoundSheetManagerFragment extends ActivityInstrumentationTestCa
 
 	private Instrumentation instrumentation;
 	private BaseActivity activity;
-	private SoundSheetManagerFragment fragment;
+	private SoundSheetsManagerFragment fragment;
 
 	public TestSoundSheetManagerFragment()
 	{
@@ -29,7 +29,7 @@ public class TestSoundSheetManagerFragment extends ActivityInstrumentationTestCa
 		super.setUp();
 		this.instrumentation = this.getInstrumentation();
 		this.activity = this.getActivity();
-		this.fragment = (SoundSheetManagerFragment)this.activity.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
+		this.fragment = (SoundSheetsManagerFragment)this.activity.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
 	}
 
 	public void testOnTextEdited() throws Exception

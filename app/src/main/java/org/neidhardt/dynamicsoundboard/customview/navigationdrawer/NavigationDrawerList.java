@@ -106,4 +106,9 @@ public abstract class NavigationDrawerList
 		for(int i = 0; i < this.selectedItems.size(); i++)
 			this.selectedItems.valueAt(i).setSelected(false);
 	}
+
+	public void setParentFragment(NavigationDrawerFragment parent)
+	{
+		this.parent = parent;
+	}
 }

@@ -14,7 +14,7 @@ import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.misc.Util;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,7 +162,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 
 	private void deliverResult()
 	{
-		SoundSheetManagerFragment caller = this.getSoundSheetManagerFragment();
+		SoundSheetsManagerFragment caller = this.getSoundSheetManagerFragment();
 		if (caller == null)
 			return;
 

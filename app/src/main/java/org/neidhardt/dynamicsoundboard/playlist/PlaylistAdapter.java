@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
-import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,27 +21,12 @@ import java.util.List;
  */
 public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHolder>
 {
-
 	private Integer currentItemIndex;
 	private OnItemClickListener onItemClickListener;
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
 		this.onItemClickListener = onItemClickListener;
-	}
-
-	public void onParentResume(ServiceManagerFragment serviceManagerFragment)
-	{
-		super.setServiceManagerFragment(serviceManagerFragment);
-		super.scheduleProgressUpdateTimer();
-		EventBus.getDefault().register(this);
-	}
-
-	@Override
-	public void onParentPause()
-	{
-		super.onParentPause();
-		EventBus.getDefault().unregister(this);
 	}
 
 	@Override
@@ -77,7 +60,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 		}
 		else
 		{
-			this.scheduleProgressUpdateTimer();
+			this.startProgressUpdateTimer();
 			nextActivePlayer.playSound();
 		}
 		this.currentItemIndex = position;

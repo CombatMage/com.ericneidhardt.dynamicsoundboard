@@ -42,14 +42,13 @@ public class SoundAdapter
 		this.parent = parent;
 
 		super.setServiceManagerFragment(this.parent.getServiceManagerFragment());
-		super.scheduleProgressUpdateTimer();
+		super.startProgressUpdateTimer();
 		EventBus.getDefault().register(this);
 	}
 
-	@Override
 	public void onParentPause()
 	{
-		super.onParentPause();
+		super.stopProgressUpdateTimer();
 		EventBus.getDefault().unregister(this);
 	}
 
@@ -227,7 +226,7 @@ public class SoundAdapter
 		public void onPageScrollStateChanged(int state)
 		{
 			if (state == ViewPager.SCROLL_STATE_IDLE)
-				scheduleProgressUpdateTimer();
+				startProgressUpdateTimer();
 			else
 				stopProgressUpdateTimer();
 		}
@@ -249,7 +248,7 @@ public class SoundAdapter
 				@Override
 				public void run()
 				{
-					scheduleProgressUpdateTimer();
+					startProgressUpdateTimer();
 				}
 			}, 2 * UPDATE_INTERVAL);
 		}
@@ -289,7 +288,7 @@ public class SoundAdapter
 					view.setSelected(!isSelected);
 					if (!isSelected)
 					{
-						scheduleProgressUpdateTimer();
+						startProgressUpdateTimer();
 						player.playSound();
 					}
 					else
@@ -320,7 +319,7 @@ public class SoundAdapter
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar)
 		{
-			scheduleProgressUpdateTimer();
+			startProgressUpdateTimer();
 		}
 	}
 

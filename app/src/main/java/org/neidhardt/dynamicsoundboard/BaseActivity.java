@@ -30,7 +30,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.util.List;
 
@@ -243,7 +243,7 @@ public class BaseActivity
 		}
 		else if (soundSheetFragment == null)
 		{
-			((SoundSheetManagerFragment) this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG)).openDialogAddNewSoundSheet();
+			((SoundSheetsManagerFragment) this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG)).openDialogAddNewSoundSheet();
 		}
 		else
 		{
@@ -301,11 +301,11 @@ public class BaseActivity
 	{
 		FragmentManager fragmentManager = this.getFragmentManager();
 
-		Fragment fragment =  fragmentManager.findFragmentByTag(SoundSheetManagerFragment.TAG);
+		Fragment fragment =  fragmentManager.findFragmentByTag(SoundSheetsManagerFragment.TAG);
 		if (fragment == null)
 		{
-			fragment = new SoundSheetManagerFragment();
-			fragmentManager.beginTransaction().add(fragment, SoundSheetManagerFragment.TAG).commit();
+			fragment = new SoundSheetsManagerFragment();
+			fragmentManager.beginTransaction().add(fragment, SoundSheetsManagerFragment.TAG).commit();
 			fragmentManager.executePendingTransactions();
 		}
 	}

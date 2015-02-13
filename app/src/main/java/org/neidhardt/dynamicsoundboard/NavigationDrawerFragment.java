@@ -5,12 +5,15 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import org.neidhardt.dynamicsoundboard.playlist.PlaylistAdapter;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsAdapter;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener
 {
@@ -22,7 +25,9 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 	private ViewPager tabContent;
 	private TabContentAdapter tabContentAdapter;
 	private Playlist playlist;
+	private PlaylistAdapter playlistAdapter;
 	private SoundSheets soundSheets;
+	private SoundSheetsAdapter soundSheetsAdapter;
 
 	private View controls;
 	private View deleteSelected;
@@ -44,6 +49,8 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 		this.setRetainInstance(true);
 
 		this.tabContentAdapter = new TabContentAdapter();
+		this.playlistAdapter = new PlaylistAdapter();
+		this.soundSheetsAdapter = new SoundSheetsAdapter();
 	}
 
 	@Override
@@ -73,10 +80,12 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 
 		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
-		this.soundSheets.onActivityCreated(this);
 		this.controls = this.getActivity().findViewById(R.id.layout_controls);
 		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
 		this.deleteSelected.setOnClickListener(this);
+
+		this.playlist.setAdapter(this.playlistAdapter);
+		this.soundSheets.setAdapter(this.soundSheetsAdapter);
 
 		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.b_add).setOnClickListener(this);
@@ -86,14 +95,32 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 	public void onResume()
 	{
 		super.onResume();
-		this.playlist.onParentActivityResume(this);
+
+		this.soundSheets.setParentFragment(this); // TODO refractor this
+		this.soundSheets.notifyDataSetChanged(true); // TODO refractor this
+
+		EventBus.getDefault().register(this.playlistAdapter);
+		this.playlistAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
+		this.playlistAdapter.startProgressUpdateTimer();
+
+		if (this.playlist != null)
+			this.playlist.setParentFragment(this);
+		if (this.soundSheets != null)
+			this.soundSheets.setParentFragment(this);
 	}
 
 	@Override
 	public void onPause()
 	{
 		super.onPause();
-		this.playlist.onParentActivityPaused();
+		EventBus.getDefault().unregister(this.playlistAdapter);
+
+		this.playlistAdapter.stopProgressUpdateTimer();
+
+		if (this.playlist != null)
+			this.playlist.setParentFragment(null);
+		if (this.soundSheets != null)
+			this.soundSheets.setParentFragment(null);
 	}
 
 	@Override
@@ -119,7 +146,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), Playlist.TAG);
 			else
 			{
-				SoundSheetManagerFragment fragment = this.getSoundSheetManagerFragment();
+				SoundSheetsManagerFragment fragment = this.getSoundSheetManagerFragment();
 				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), fragment.getSuggestedSoundSheetName());
 			}
 		}

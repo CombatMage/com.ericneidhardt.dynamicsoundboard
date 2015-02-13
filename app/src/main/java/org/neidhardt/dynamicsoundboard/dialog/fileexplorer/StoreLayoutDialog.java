@@ -17,7 +17,7 @@ import org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -132,14 +132,14 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	{
 		ObjectMapper mapper = new ObjectMapper();
 
-		SoundSheetManagerFragment soundSheetManagerFragment = this.getSoundSheetManagerFragment();
+		SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();
 
 		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
 
 		JsonPojo pojo = new JsonPojo();
 		try
 		{
-			pojo.setSoundSheets(soundSheetManagerFragment.getAll());
+			pojo.setSoundSheets(soundSheetsManagerFragment.getAll());
 			pojo.addPlayList(soundManagerFragment.getPlayList());
 			pojo.addSounds(soundManagerFragment.getSounds());
 

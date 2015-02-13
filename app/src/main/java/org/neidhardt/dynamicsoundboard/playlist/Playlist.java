@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDrawerList;
@@ -25,6 +24,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 {
 	public static final String TAG = Playlist.class.getName();
 
+	private RecyclerView playlist;
 	private PlaylistAdapter adapter;
 
 	@SuppressWarnings("unused")
@@ -58,25 +58,17 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 	private void initRecycleView(Context context)
 	{
-		RecyclerView playlist = (RecyclerView)this.findViewById(R.id.rv_playlist);
-		playlist.addItemDecoration(new DividerItemDecoration(context));
-		playlist.setLayoutManager(new LinearLayoutManager(context));
-		playlist.setItemAnimator(new DefaultItemAnimator());
+		this.playlist = (RecyclerView)this.findViewById(R.id.rv_playlist);
+		this.playlist.addItemDecoration(new DividerItemDecoration(context));
+		this.playlist.setLayoutManager(new LinearLayoutManager(context));
+		this.playlist.setItemAnimator(new DefaultItemAnimator());
+	}
 
-		this.adapter = new PlaylistAdapter();
+	public void setAdapter(PlaylistAdapter adapter)
+	{
+		this.adapter = adapter;
 		this.adapter.setOnItemClickListener(this);
-		playlist.setAdapter(this.adapter);
-	}
-
-	public void onParentActivityResume(NavigationDrawerFragment parent)
-	{
-		super.parent = parent;
-		this.adapter.onParentResume(parent.getServiceManagerFragment());
-	}
-
-	public void onParentActivityPaused()
-	{
-		this.adapter.onParentPause();
+		this.playlist.setAdapter(adapter);
 	}
 
 	@Override

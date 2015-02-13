@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard;
 
 import android.app.Fragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 public abstract class BaseFragment extends Fragment
 {
@@ -17,9 +17,9 @@ public abstract class BaseFragment extends Fragment
 		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
 	}
 
-	public SoundSheetManagerFragment getSoundSheetManagerFragment()
+	public SoundSheetsManagerFragment getSoundSheetManagerFragment()
 	{
-		return (SoundSheetManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
+		return (SoundSheetsManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
 	}
 
 	public ServiceManagerFragment getServiceManagerFragment()

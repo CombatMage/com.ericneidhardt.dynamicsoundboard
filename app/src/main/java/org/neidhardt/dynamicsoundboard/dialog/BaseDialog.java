@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.dialog;
 
 import android.app.DialogFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 /**
  * File created by eric.neidhardt on 14.11.2014.
@@ -14,8 +14,8 @@ public abstract class BaseDialog extends DialogFragment
 		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
 	}
 
-	public SoundSheetManagerFragment getSoundSheetManagerFragment()
+	public SoundSheetsManagerFragment getSoundSheetManagerFragment()
 	{
-		return (SoundSheetManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetManagerFragment.TAG);
+		return (SoundSheetsManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
 	}
 }
