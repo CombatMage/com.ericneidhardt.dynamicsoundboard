@@ -32,7 +32,7 @@ public class SoundboardPreferences
 
 	public static boolean isImmerseModeAvailable()
 	{
-		if (!Util.isKitKatAvailable())
+		if (!Util.IS_KITKAT_AVAILABLE)
 			return false;
 
 		Context context = DynamicSoundboardApplication.getSoundboardContext();

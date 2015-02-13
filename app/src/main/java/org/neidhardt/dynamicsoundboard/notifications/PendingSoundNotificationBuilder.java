@@ -51,7 +51,7 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		this.playerId = player.getMediaPlayerData().getPlayerId();
 		this.notificationId = notificationId;
 
-		boolean isLollipopStyleAvailable = Util.isLollipopAvailable();
+		boolean isLollipopStyleAvailable = Util.IS_LOLLIPOP_AVAILABLE;
 		this.setActionStop(context, isLollipopStyleAvailable);
 		if (player.isPlaying())
 		{

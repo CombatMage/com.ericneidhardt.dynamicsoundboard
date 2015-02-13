@@ -209,7 +209,6 @@ public class BaseActivity
 	{
 		int viewState = enable ? View.VISIBLE : View.GONE;
 		this.findViewById(R.id.action_add_sound).setVisibility(viewState);
-		this.findViewById(R.id.action_add_sound_dir).setVisibility(viewState);
 		this.findViewById(R.id.et_set_label).setVisibility(viewState);
 
 		viewState = !enable ? View.VISIBLE : View.GONE;
