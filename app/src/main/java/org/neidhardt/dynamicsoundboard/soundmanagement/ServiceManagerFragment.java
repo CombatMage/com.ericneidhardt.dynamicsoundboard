@@ -124,7 +124,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		if (fragment != null)
 			fragment.notifyDataSetChanged();
 
-		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false); // updates sound count in sound sheet list
+		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
 	}
 
 	private class ServiceLoadingReceiver extends BroadcastReceiver

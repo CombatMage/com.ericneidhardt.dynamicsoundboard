@@ -108,7 +108,7 @@ public class SoundSheetsManagerFragment
 		fragment.notifyPlaylist();
 
 		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawer();
-		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
+		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class SoundSheetsManagerFragment
 
 		correspondingSoundSheetData.setLabel(text);
 		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawer();
-		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(false);
+		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 	}
 
 	public SoundSheet get(String soundSheetTag)
@@ -166,7 +166,7 @@ public class SoundSheetsManagerFragment
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
 
 		if (notifySoundSheets)
-			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
+			navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 
 		SafeAsyncTask task = new RemoveSoundSheetTask(soundSheet);
 		task.execute();
@@ -200,7 +200,7 @@ public class SoundSheetsManagerFragment
 		this.soundSheets.add(soundSheet);
 		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
-		navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
+		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 
 		SafeAsyncTask task = new StoreSoundSheetTask(soundSheet);
 		task.execute();
@@ -309,7 +309,7 @@ public class SoundSheetsManagerFragment
 			handleIntent(getActivity().getIntent());
 			NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager()
 					.findFragmentByTag(NavigationDrawerFragment.TAG);
-			navigationDrawerFragment.getSoundSheets().notifyDataSetChanged(true);
+			navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 
 			SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetsManagerFragment.this.soundSheets);
 			if (selectedSoundSheet != null)

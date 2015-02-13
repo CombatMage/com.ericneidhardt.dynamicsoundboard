@@ -37,9 +37,9 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 		return this.playlist;
 	}
 
-	public SoundSheets getSoundSheets()
+	public SoundSheetsAdapter getSoundSheetsAdapter()
 	{
-		return this.soundSheets;
+		return this.soundSheetsAdapter;
 	}
 
 	@Override
@@ -96,29 +96,25 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 	{
 		super.onResume();
 
-		this.soundSheets.setParentFragment(this); // TODO refractor this
-		this.soundSheets.notifyDataSetChanged(true); // TODO refractor this
+		this.soundSheets.setParentFragment(this);
+		this.soundSheetsAdapter.setParentFragment(this);
+		this.soundSheetsAdapter.notifyDataSetChanged();
 
 		EventBus.getDefault().register(this.playlistAdapter);
+		this.playlist.setParentFragment(this);
 		this.playlistAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
 		this.playlistAdapter.startProgressUpdateTimer();
-
-		if (this.playlist != null)
-			this.playlist.setParentFragment(this);
-		if (this.soundSheets != null)
-			this.soundSheets.setParentFragment(this);
 	}
 
 	@Override
 	public void onPause()
 	{
 		super.onPause();
+
 		EventBus.getDefault().unregister(this.playlistAdapter);
-
 		this.playlistAdapter.stopProgressUpdateTimer();
+		this.playlist.setParentFragment(null);
 
-		if (this.playlist != null)
-			this.playlist.setParentFragment(null);
 		if (this.soundSheets != null)
 			this.soundSheets.setParentFragment(null);
 	}

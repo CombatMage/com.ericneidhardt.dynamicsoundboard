@@ -89,8 +89,6 @@ public class SoundSheets
 			soundSheetsToRemove.add(this.adapter.getValues().get(index));
 		}
 
-		this.adapter.removeAll(soundSheetsToRemove);
-
 		BaseActivity activity = (BaseActivity)this.parent.getActivity();
 		SoundSheetsManagerFragment soundSheetsManagerfragment = this.parent.getSoundSheetManagerFragment();
 		ServiceManagerFragment soundManagerFragment = this.parent.getServiceManagerFragment();
@@ -133,17 +131,6 @@ public class SoundSheets
 			this.adapter.setSelectedItem(position);
 			this.parent.getBaseActivity().openSoundFragment(data);
 		}
-	}
-
-	public void notifyDataSetChanged(boolean newSoundAvailable)
-	{
-		if (newSoundAvailable)
-		{
-			SoundSheetsManagerFragment fragment = (SoundSheetsManagerFragment)this.parent.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
-			this.adapter.clear();
-			this.adapter.addAll(fragment.getAll());
-		}
-		this.adapter.notifyDataSetChanged();
 	}
 }
 

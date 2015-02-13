@@ -17,37 +17,17 @@ import java.util.List;
 
 public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
 {
-	private List<SoundSheet> soundSheets;
-	private OnItemClickListener onItemClickListener;
 	private BaseFragment parent;
-
-	public SoundSheetsAdapter()
-	{
-		this.soundSheets = new ArrayList<>();
-	}
+	private OnItemClickListener onItemClickListener;
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
 		this.onItemClickListener = onItemClickListener;
 	}
 
-	public void setParent(BaseFragment parent) {
+	public void setParentFragment(BaseFragment parent)
+	{
 		this.parent = parent;
-	}
-
-	public void addAll(List<SoundSheet> soundSheets)
-	{
-		this.soundSheets.addAll(soundSheets);
-	}
-
-	public void removeAll(List<SoundSheet> soundSheets)
-	{
-		this.soundSheets.removeAll(soundSheets);
-	}
-
-	public void clear()
-	{
-		this.soundSheets.clear();
 	}
 
 	/**
@@ -56,23 +36,27 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 	 */
 	public void setSelectedItem(int position)
 	{
-		for (int i = 0; i < this.soundSheets.size(); i++)
+		List<SoundSheet> soundSheets = this.getValues();
+		int size = soundSheets.size();
+		for (int i = 0; i < size; i++)
 		{
 			boolean isSelected = i == position;
-			this.soundSheets.get(i).setIsSelected(isSelected);
+			soundSheets.get(i).setIsSelected(isSelected);
 		}
 		this.notifyDataSetChanged();
 	}
 
 	public List<SoundSheet> getValues()
 	{
-		return this.soundSheets;
+		if (this.parent == null || this.parent.getSoundSheetManagerFragment() == null)
+			return new ArrayList<>();
+		return this.parent.getSoundSheetManagerFragment().getAll();
 	}
 
 	@Override
 	public int getItemCount()
 	{
-		return this.soundSheets.size();
+		return this.getValues().size();
 	}
 
 	@Override
@@ -85,7 +69,7 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		SoundSheet data = this.soundSheets.get(position);
+		SoundSheet data = this.getValues().get(position);
 		holder.label.setText(data.getLabel());
 		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 
@@ -119,7 +103,7 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 		{
 			int position = this.getPosition();
 			if (onItemClickListener != null)
-				onItemClickListener.onItemClick(view, soundSheets.get(position), position);
+				onItemClickListener.onItemClick(view, getValues().get(position), position);
 		}
 
 		private void setSoundCount(int soundCount)
