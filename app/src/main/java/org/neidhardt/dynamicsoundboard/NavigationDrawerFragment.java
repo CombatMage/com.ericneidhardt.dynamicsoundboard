@@ -100,10 +100,10 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 		this.soundSheetsAdapter.setParentFragment(this);
 		this.soundSheetsAdapter.notifyDataSetChanged();
 
-		EventBus.getDefault().register(this.playlistAdapter);
 		this.playlist.setParentFragment(this);
 		this.playlistAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
 		this.playlistAdapter.startProgressUpdateTimer();
+		EventBus.getDefault().register(this.playlistAdapter);
 	}
 
 	@Override
@@ -115,8 +115,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 		this.playlistAdapter.stopProgressUpdateTimer();
 		this.playlist.setParentFragment(null);
 
-		if (this.soundSheets != null)
-			this.soundSheets.setParentFragment(null);
+		this.soundSheets.setParentFragment(null);
 	}
 
 	@Override
