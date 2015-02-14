@@ -432,14 +432,6 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		}
 	}
 
-	private EnhancedMediaPlayer searchInSoundsAndPlaylistForId(String playerId)
-	{
-		EnhancedMediaPlayer player = this.searchInPlaylistForId(playerId);
-		if (player == null)
-			player = this.searchInSoundsForId(playerId);
-		return player;
-	}
-
 	private EnhancedMediaPlayer searchInPlaylistForId(String playerId)
 	{
 		return this.searchInListForId(playerId, playlist);
@@ -797,14 +789,17 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			if (playerId == null)
 				return;
 
+			int notificationId = intent.getIntExtra(NotificationIds.KEY_NOTIFICATION_ID, 0);
 			if (action.equals(NotificationIds.ACTION_DISMISS))
-			{
-				int notificationId = intent.getIntExtra(NotificationIds.KEY_NOTIFICATION_ID, 0);
 				this.dismissPendingMediaPlayer(notificationId);
-			}
 			else
 			{
-				EnhancedMediaPlayer player = searchInSoundsAndPlaylistForId(playerId);
+				EnhancedMediaPlayer player;
+				if (notificationId == NotificationIds.NOTIFICATION_ID_PLAYLIST)
+					player = searchInPlaylistForId(playerId);
+				else
+					player = searchInSoundsForId(playerId);
+
 				if (player == null)
 					throw new NullPointerException(TAG + " cannot changed player status, player is null");
 				switch (action)
