@@ -7,11 +7,13 @@ public class MediaPlayerStateChangedEvent
 {
 	private final boolean isAlive;
 	private final String playerId;
+	private final String fragmentTag;
 
-	public MediaPlayerStateChangedEvent(boolean isAlive, String playerId)
+	public MediaPlayerStateChangedEvent(boolean isAlive, String playerId, String fragmentTag)
 	{
 		this.isAlive = isAlive;
 		this.playerId = playerId;
+		this.fragmentTag = fragmentTag;
 	}
 
 	public boolean isAlive()
@@ -22,6 +24,11 @@ public class MediaPlayerStateChangedEvent
 	public String getPlayerId()
 	{
 		return this.playerId;
+	}
+
+	public String getFragmentTag()
+	{
+		return this.fragmentTag;
 	}
 
 	@Override

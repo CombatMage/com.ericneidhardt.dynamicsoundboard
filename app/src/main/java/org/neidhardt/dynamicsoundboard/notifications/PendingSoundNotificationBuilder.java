@@ -146,13 +146,20 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		Intent intent = new Intent(action);
 		intent.putExtra(NotificationIds.KEY_PLAYER_ID, this.playerId);
 		intent.putExtra(NotificationIds.KEY_NOTIFICATION_ID, this.notificationId);
-		return PendingIntent.getBroadcast(context, this.notificationId, intent, 0);
+		return PendingIntent.getBroadcast(context, this.getRequestCode(), intent, 0);
 	}
 
 	private PendingIntent getOpenActivityIntent(Context context)
 	{
 		Intent intent = new Intent(context, BaseActivity.class);
 		return PendingIntent.getActivity(context, IntentRequest.NOTIFICATION_OPEN_ACTIVITY, intent, 0);
+	}
+
+	private int getRequestCode()
+	{
+		if (this.notificationId != NotificationIds.NOTIFICATION_ID_PLAYLIST)
+			return this.notificationId;
+		return Integer.toString(this.notificationId + this.playerId.hashCode()).hashCode();
 	}
 
 	public static IntentFilter getNotificationIntentFilter()

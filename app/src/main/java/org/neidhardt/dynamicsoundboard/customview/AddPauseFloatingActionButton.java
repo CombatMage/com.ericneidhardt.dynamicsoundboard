@@ -47,6 +47,8 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 
 	public void setPauseState()
 	{
+		if (this.isStatePause)
+			return;
 		this.isStatePause = true;
 		refreshDrawableState();
 		if (Util.IS_LOLLIPOP_AVAILABLE) // reveal animation is only available on lollipop
@@ -55,6 +57,8 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 
 	public void setAddState()
 	{
+		if (!this.isStatePause)
+			return;
 		this.isStatePause = false;
 		refreshDrawableState();
 		if (Util.IS_LOLLIPOP_AVAILABLE) // reveal animation is only available on lollipop

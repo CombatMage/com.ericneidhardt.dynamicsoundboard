@@ -21,6 +21,7 @@ import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationIds;
 import org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification;
 import org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder;
+import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 
 import java.io.IOException;
@@ -196,7 +197,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	{
 		return new PendingSoundNotificationBuilder(
 				this.getApplicationContext(),
-				player, NotificationIds.NOTIFICATION_ID_PLAYLIST,
+				player,
+				NotificationIds.NOTIFICATION_ID_PLAYLIST,
 				this.getString(R.string.notification_playlist),
 				player.getMediaPlayerData().getLabel());
 	}
@@ -639,6 +641,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		}
 	}
 
+	// Update notifications, according to player state or notification actions
+
 	/**
 	 * This is called by greenDao EventBus in case a mediaplayer changed his state
 	 * @param event delivered MediaPlayerStateChangedEvent
@@ -653,20 +657,24 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			return;
 
 		String playerId = event.getPlayerId();
+		String fragmentTag = event.getFragmentTag();
 		boolean isAlive = event.isAlive();
 
-		if (playerId == null)
+		if (playerId == null || fragmentTag == null)
 			return;
 
-		EnhancedMediaPlayer player = searchInPlaylistForId(playerId);
-		if (player != null)
+		if (fragmentTag.equals(Playlist.TAG)) // update special playlist notification
 		{
-			if (isAlive)
-				this.handlePlaylistPlayerStateChanged(player);
-			else
-				this.removePlayListNotification();
+			EnhancedMediaPlayer player = searchInPlaylistForId(playerId);
+			if (player != null)
+			{
+				if (isAlive)
+					this.handlePlaylistPlayerStateChanged(player);
+				else
+					this.removePlayListNotification();
+			}
 		}
-		else
+		else // check if there is a generic notification to update
 		{
 			if (isAlive)
 				this.handlePlayerStateChanged(playerId);
@@ -684,14 +692,14 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 	private void removePlayListNotification()
 	{
-		PendingSoundNotification notification = this.findNotificationById(NotificationIds.NOTIFICATION_ID_PLAYLIST);
+		PendingSoundNotification notification = this.findPlaylistNotification();
 		if (notification != null)
 			notificationManager.cancel(notification.getNotificationId());
 	}
 
 	private boolean updateOrRemovePendingPlaylistNotification()
 	{
-		PendingSoundNotification correspondingNotification = this.findNotificationById(NotificationIds.NOTIFICATION_ID_PLAYLIST);
+		PendingSoundNotification correspondingNotification = this.findPlaylistNotification();
 		if (correspondingNotification == null)
 			return false;
 
@@ -756,17 +764,19 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	{
 		for (PendingSoundNotification notification : notifications)
 		{
+			if (notification.getNotificationId() == NotificationIds.NOTIFICATION_ID_PLAYLIST)
+				continue;
 			if (notification.getPlayerId().equals(playerId))
 				return notification;
 		}
 		return null;
 	}
 
-	private PendingSoundNotification findNotificationById(int notificationId)
+	private PendingSoundNotification findPlaylistNotification()
 	{
 		for (PendingSoundNotification notification : notifications)
 		{
-			if (notification.getNotificationId() == notificationId)
+			if (notification.getNotificationId() == NotificationIds.NOTIFICATION_ID_PLAYLIST)
 				return notification;
 		}
 		return null;
