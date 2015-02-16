@@ -52,9 +52,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="@dimen/margin_default"
 				android:layout_marginRight="@dimen/margin_default"
-				android:layout_marginEnd="@dimen/margin_default"
-				android:paddingLeft="@dimen/size_seekbar_thumb_pressed"
-				android:paddingRight="@dimen/size_seekbar_thumb_pressed"/>
+				android:layout_marginEnd="@dimen/margin_default"/>
 
 	</LinearLayout>
 
