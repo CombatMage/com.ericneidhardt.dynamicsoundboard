@@ -5,4 +5,8 @@
 		android:title="@string/about_author_title"
 		android:summary="@string/about_author_summary"/>
 
+	<Preference
+			android:title="@string/about_version_title"
+			android:summary="@string/about_version_summary"/>
+
 </PreferenceScreen>
