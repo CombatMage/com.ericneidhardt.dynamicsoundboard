@@ -15,6 +15,8 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent;
+import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteAllSoundSheetsDialog;
+import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
@@ -82,15 +84,27 @@ public class SoundSheetsManagerFragment
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId())
 		{
+			case R.id.action_delete_sheet:
+				ConfirmDeleteSoundSheetDialog.showInstance(this.getFragmentManager());
+				return true;
 			case R.id.action_clear_sound_sheets:
-				this.clearAllSoundSheets();
+				ConfirmDeleteAllSoundSheetsDialog.showInstance(this.getFragmentManager());
 				return true;
 			default:
 				return false;
 		}
 	}
 
-	public void clearAllSoundSheets()
+	public void deleteCurrentActiveSoundSheet()
+	{
+		SoundSheetFragment fragment = BaseActivity.getCurrentFragment(this.getFragmentManager());
+		fragment.removeAllSounds();
+		SoundSheet soundSheet = this.get(fragment.getFragmentTag());
+		this.remove(fragment.getFragmentTag());
+		this.getBaseActivity().removeSoundFragment(soundSheet);
+	}
+
+	public void deleteAllSoundSheets()
 	{
 		BaseActivity activity = (BaseActivity) this.getActivity();
 		activity.removeSoundFragment(this.soundSheets);

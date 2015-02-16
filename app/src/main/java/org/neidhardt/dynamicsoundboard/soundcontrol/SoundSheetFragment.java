@@ -22,6 +22,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
+import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundsDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectory;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
@@ -116,23 +117,22 @@ public class SoundSheetFragment
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId())
 		{
-			case R.id.action_delete_sheet:
-				this.removeAllSounds();
-				SoundSheet soundSheet = this.getSoundSheetManagerFragment().get(this.fragmentTag);
-				this.getSoundSheetManagerFragment().remove(this.fragmentTag);
-				this.getBaseActivity().removeSoundFragment(soundSheet);
-				return true;
 			case R.id.action_clear_sounds_in_sheet:
-				this.removeAllSounds();
-				this.notifySoundSheetList();
-				this.soundAdapter.notifyDataSetChanged();
+				ConfirmDeleteSoundsDialog.showInstance(this.getFragmentManager());
 				return true;
 			default:
 				return false;
 		}
 	}
 
-	private void removeAllSounds()
+	public void deleteAllSoundsInSoundSheet()
+	{
+		this.removeAllSounds();
+		this.notifySoundSheetList();
+		this.soundAdapter.notifyDataSetChanged();
+	}
+
+	public void removeAllSounds()
 	{
 		this.getServiceManagerFragment().getSoundService().removeSounds(this.fragmentTag);
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);

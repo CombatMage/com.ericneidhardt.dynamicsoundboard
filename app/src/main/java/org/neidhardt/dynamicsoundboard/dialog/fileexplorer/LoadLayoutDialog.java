@@ -117,7 +117,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
 	{
 		SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();// clear soundsheets before adding new values
-		soundSheetsManagerFragment.clearAllSoundSheets(); // this also removes all sounds
+		soundSheetsManagerFragment.deleteAllSoundSheets(); // this also removes all sounds
 
 		for (SoundSheet soundSheet : soundSheets)
 			soundSheetsManagerFragment.addSoundSheetAndNotifyFragment(soundSheet);
