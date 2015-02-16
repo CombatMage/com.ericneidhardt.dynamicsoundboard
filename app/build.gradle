@@ -8,8 +8,8 @@ android {
         applicationId "org.neidhardt.dynamicsoundboard"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 242
-        versionName "2.4.2"
+        versionCode 243
+        versionName "2.4.3"
     }
 
     packagingOptions {
@@ -37,13 +37,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
-						//def file = output.outputFile
-						//output.outputFile = new File(file.parent, defaultConfig.applicationId + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk")
+                    //def file = output.outputFile
+                    //output.outputFile = new File(file.parent, defaultConfig.applicationId + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk")
                 }
             }
         }
         debug {
-			applicationIdSuffix ".debug"
+            applicationIdSuffix ".debug"
         }
     }
 }

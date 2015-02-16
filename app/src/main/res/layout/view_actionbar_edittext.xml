@@ -12,6 +12,7 @@
 		android:gravity="center_horizontal"
 		android:inputType="textNoSuggestions"
 		android:imeOptions="actionDone"
+		android:textCursorDrawable="@drawable/shape_cursor_edittext_white"
 		android:textColor="@color/text_header"
 		android:textSize="@dimen/text_title"
 		android:background="@android:color/transparent"/>
