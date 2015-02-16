@@ -55,8 +55,8 @@ public class ActionbarEditText
 	{
 		if (actionId == EditorInfo.IME_ACTION_DONE)
 		{
-			if (this.callback != null)
-				this.callback.onTextEdited(super.input.getText().toString());
+			if (this.onTextEditedListener != null)
+				this.onTextEditedListener.onTextEdited(super.input.getText().toString());
 			this.disableEditText();
 		}
 		return false;

@@ -23,11 +23,13 @@ public abstract class CustomEditText
 			LinearLayout
 		implements
 			TextView.OnEditorActionListener,
-		EditTextBackEvent.EditTextImeBackListener,
+			EditTextBackEvent.EditTextImeBackListener,
 			View.OnFocusChangeListener
 {
 	EditTextBackEvent input;
-	OnTextEditedListener callback;
+
+	OnTextEditedListener onTextEditedListener;
+	private OnFocusChangeListener onFocusChangeListener;
 
 	public CustomEditText(Context context, AttributeSet attrs)
 	{
@@ -57,7 +59,25 @@ public abstract class CustomEditText
 
 	public void setOnTextEditedListener(OnTextEditedListener listener)
 	{
-		this.callback = listener;
+		this.onTextEditedListener = listener;
+	}
+
+	@Override
+	public boolean hasFocus()
+	{
+		return this.input.hasFocus();
+	}
+
+	@Override
+	public void clearFocus()
+	{
+		this.input.clearFocus();
+	}
+
+	@Override
+	public void setOnFocusChangeListener(OnFocusChangeListener onFocusChangeListener)
+	{
+		this.onFocusChangeListener = onFocusChangeListener;
 	}
 
 	@Override
@@ -65,8 +85,8 @@ public abstract class CustomEditText
 	{
 		if (actionId == EditorInfo.IME_ACTION_DONE)
 		{
-			if (this.callback != null)
-				this.callback.onTextEdited(this.input.getText().toString());
+			if (this.onTextEditedListener != null)
+				this.onTextEditedListener.onTextEdited(this.input.getText().toString());
 		}
 		return false;
 	}
@@ -74,15 +94,17 @@ public abstract class CustomEditText
 	@Override
 	public void onImeBack(EditTextBackEvent ctrl, String text)
 	{
-		if (this.callback != null)
-			this.callback.onTextEdited(this.input.getText().toString());
+		if (this.onTextEditedListener != null)
+			this.onTextEditedListener.onTextEdited(this.input.getText().toString());
 	}
 
 	@Override
 	public void onFocusChange(View v, boolean hasFocus)
 	{
-		if (this.callback != null)
-			this.callback.onTextEdited(this.input.getText().toString());
+		if (this.onTextEditedListener != null && !hasFocus)
+			this.onTextEditedListener.onTextEdited(this.input.getText().toString());
+		if (this.onFocusChangeListener != null)
+			this.onFocusChangeListener.onFocusChange(this, hasFocus);
 	}
 
 	protected abstract int getLayoutId();

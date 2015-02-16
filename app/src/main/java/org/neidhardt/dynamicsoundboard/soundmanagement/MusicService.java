@@ -799,9 +799,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 					player = searchInPlaylistForId(playerId);
 				else
 					player = searchInSoundsForId(playerId);
-
 				if (player == null)
-					throw new NullPointerException(TAG + " cannot changed player status, player is null");
+					return;
 				switch (action)
 				{
 					case NotificationIds.ACTION_PAUSE:

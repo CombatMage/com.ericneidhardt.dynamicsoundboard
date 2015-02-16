@@ -162,7 +162,8 @@ public class SoundAdapter
 
 			super.resetViewPager();
 
-			this.name.setText(data.getLabel());
+			if (!this.name.hasFocus())
+				this.name.setText(data.getLabel());
 
 			boolean isPlaying = player.isPlaying();
 			this.play.setSelected(isPlaying);
@@ -285,6 +286,7 @@ public class SoundAdapter
 					fragment.notifyPlaylist();
 					break;
 				case R.id.b_play:
+					name.clearFocus();
 					view.setSelected(!isSelected);
 					if (!isSelected)
 					{
