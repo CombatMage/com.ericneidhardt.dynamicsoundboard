@@ -76,7 +76,10 @@ public class SoundAdapter
 
 	private EnhancedMediaPlayer getItem(int position)
 	{
-		return this.getValues().get(position);
+		List<EnhancedMediaPlayer> players = this.getValues();
+		if (position > players.size())
+			return null;
+		return players.get(position);
 	}
 
 	@Override
@@ -158,8 +161,10 @@ public class SoundAdapter
 		private void bindData(int positionInDataSet)
 		{
 			EnhancedMediaPlayer player = getItem(positionInDataSet);
-			MediaPlayerData data = player.getMediaPlayerData();
+			if (player == null)
+				return;
 
+			MediaPlayerData data = player.getMediaPlayerData();
 			super.resetViewPager();
 
 			if (!this.name.hasFocus())
@@ -240,7 +245,11 @@ public class SoundAdapter
 				@Override
 				public void run() {
 					if (selectedPage != VIEWPAGER_INDEX_SOUND_CONTROLS && onItemDeleteListener != null)
-						onItemDeleteListener.onItemDelete(getItem(position), position);
+					{
+						EnhancedMediaPlayer player = getItem(position);
+						if (player != null)
+							onItemDeleteListener.onItemDelete(player, position);
+					}
 				}
 			}, UPDATE_INTERVAL);
 
@@ -257,13 +266,17 @@ public class SoundAdapter
 		@Override
 		public void onTextEdited(String text)
 		{
-			getItem(this.getPosition()).getMediaPlayerData().setLabel(text);
+			EnhancedMediaPlayer player = getItem(this.getPosition());
+			if (player != null)
+				player.getMediaPlayerData().setLabel(text);
 		}
 
 		@Override
 		public void onClick(View view)
 		{
 			EnhancedMediaPlayer player = getItem(this.getPosition());
+			if (player == null)
+				return;
 			boolean isSelected = view.isSelected();
 			int id = view.getId();
 			switch (id)
@@ -308,6 +321,7 @@ public class SoundAdapter
 			if (fromUser)
 			{
 				EnhancedMediaPlayer player = getItem(this.getPosition());
+				if (player != null)
 				player.setPositionTo(progress);
 			}
 		}
