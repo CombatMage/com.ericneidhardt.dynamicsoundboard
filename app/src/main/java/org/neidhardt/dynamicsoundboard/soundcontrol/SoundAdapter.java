@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
 import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
@@ -28,30 +27,17 @@ public class SoundAdapter
 	private static final String TAG = SoundAdapter.class.getName();
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
-	private SoundSheetFragment parent;
 	private final String parentFragmentTag;
+	private final int heightListItem;
+	private final int heightShadow;
 
 	private OnItemDeleteListener onItemDeleteListener;
 
 	public SoundAdapter(SoundSheetFragment parent)
 	{
-		this.parent = parent;
 		this.parentFragmentTag = parent.getFragmentTag();
-	}
-
-	public void onParentResume(SoundSheetFragment parent)
-	{
-		this.parent = parent;
-
-		super.setServiceManagerFragment(this.parent.getServiceManagerFragment());
-		super.startProgressUpdateTimer();
-		EventBus.getDefault().register(this);
-	}
-
-	public void onParentPause()
-	{
-		super.stopProgressUpdateTimer();
-		EventBus.getDefault().unregister(this);
+		this.heightListItem = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_xlarge);
+		this.heightShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_shadow);
 	}
 
 	/**
@@ -196,21 +182,16 @@ public class SoundAdapter
 		private void enableShadowOnLastItem()
 		{
 			this.shadowBottom.setVisibility(View.VISIBLE);
-			int heightWithShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_xlarge)
-					+ parent.getResources().getDimensionPixelSize(R.dimen.height_shadow);
-
 			ViewGroup.LayoutParams params = container.getLayoutParams();
-			params.height = heightWithShadow;
+			params.height = heightListItem + heightShadow;
 			this.container.setLayoutParams(params);
 		}
 
 		private void disableShadow()
 		{
 			this.shadowBottom.setVisibility(View.GONE);
-			int heightWithOutShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_xlarge);
-
 			ViewGroup.LayoutParams params = container.getLayoutParams();
-			params.height = heightWithOutShadow;
+			params.height = heightListItem;
 			this.container.setLayoutParams(params);
 		}
 
@@ -296,7 +277,7 @@ public class SoundAdapter
 				case R.id.b_add_to_playlist:
 					view.setSelected(!isSelected);
 					player.setIsInPlaylist(!isSelected);
-					ServiceManagerFragment fragment = parent.getServiceManagerFragment();
+					ServiceManagerFragment fragment = serviceManagerFragment;
 					fragment.getSoundService().toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
 					fragment.notifyPlaylist();
 					break;

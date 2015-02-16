@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.emtronics.dragsortrecycler.DragSortRecycler;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.BaseFragment;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
@@ -91,7 +92,9 @@ public class SoundSheetFragment
 
 		this.attachScrollViewToFab();
 
-		this.soundAdapter.onParentResume(this);
+		this.soundAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
+		this.soundAdapter.startProgressUpdateTimer();
+		EventBus.getDefault().register(this.soundAdapter);
 	}
 
 	private void attachScrollViewToFab()
@@ -108,7 +111,8 @@ public class SoundSheetFragment
 	public void onPause()
 	{
 		super.onPause();
-		this.soundAdapter.onParentPause();
+		this.soundAdapter.stopProgressUpdateTimer();
+		EventBus.getDefault().unregister(this.soundAdapter);
 	}
 
 	@Override

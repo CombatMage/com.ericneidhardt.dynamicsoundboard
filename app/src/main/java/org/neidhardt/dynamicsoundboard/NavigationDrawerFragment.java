@@ -86,6 +86,8 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 
 		this.playlist.setAdapter(this.playlistAdapter);
 		this.soundSheets.setAdapter(this.soundSheetsAdapter);
+		this.initSoundSheetsAndAdapter();
+		this.initPlayListAndAdapter();
 
 		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.b_add).setOnClickListener(this);
@@ -96,14 +98,24 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 	{
 		super.onResume();
 
+		this.initSoundSheetsAndAdapter();
+		this.initPlayListAndAdapter();
+	}
+
+	private void initSoundSheetsAndAdapter()
+	{
 		this.soundSheets.setParentFragment(this);
 		this.soundSheetsAdapter.setParentFragment(this);
 		this.soundSheetsAdapter.notifyDataSetChanged();
+	}
 
+	private void initPlayListAndAdapter()
+	{
 		this.playlist.setParentFragment(this);
 		this.playlistAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
 		this.playlistAdapter.startProgressUpdateTimer();
-		EventBus.getDefault().register(this.playlistAdapter);
+		if (EventBus.getDefault().isRegistered(this.playlistAdapter))
+			EventBus.getDefault().register(this.playlistAdapter);
 	}
 
 	@Override
