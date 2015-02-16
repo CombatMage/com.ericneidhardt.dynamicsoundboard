@@ -13,6 +13,7 @@ import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -24,6 +25,7 @@ public class SoundAdapter
 		extends
 			SoundProgressAdapter<SoundAdapter.ViewHolder>
 {
+	private static final String TAG = SoundAdapter.class.getName();
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
 	private SoundSheetFragment parent;
@@ -329,12 +331,14 @@ public class SoundAdapter
 		@Override
 		public void onStartTrackingTouch(SeekBar seekBar)
 		{
+			Logger.d(TAG, "onStartTrackingTouch");
 			stopProgressUpdateTimer();
 		}
 
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar)
 		{
+			Logger.d(TAG, "onStopTrackingTouch");
 			startProgressUpdateTimer();
 		}
 	}
