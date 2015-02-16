@@ -32,6 +32,6 @@
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/margin_default"/>
 
-	<include layout="@layout/dialog_button_bar"/>
+	<include layout="@layout/dialog_button_bar_add"/>
 
 </LinearLayout>

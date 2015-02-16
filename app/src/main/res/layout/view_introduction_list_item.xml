@@ -24,7 +24,6 @@
 			android:layout_marginStart="@dimen/height_list_item_large"
 			android:layout_marginRight="@dimen/margin_default"
 			android:layout_marginEnd="@dimen/margin_default"
-			android:singleLine="true"
 			android:textSize="@dimen/text_body"
 			android:textColor="@color/text_content_primary"
 			tools:text="@string/introduction_action_new_sound_sheet_title"/>
