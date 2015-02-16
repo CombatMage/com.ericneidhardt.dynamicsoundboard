@@ -50,7 +50,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	}
 
 	@Override
-	public void onDraw(Canvas c, RecyclerView parent)
+	public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state)
 	{
 		drawForVerticalList(c, parent);
 	}
