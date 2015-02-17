@@ -13,10 +13,6 @@
 			android:summary="@string/preferences_enable_immerse_mode_summary"
 			android:defaultValue="false"/>
 
-	<Preference android:title="@string/preferences_about_title">
-		<intent
-				android:targetPackage="org.neidhardt.dynamicsoundboard"
-				android:targetClass="org.neidhardt.dynamicsoundboard.preferences.AboutActivity"/>
-	</Preference>
+	<org.neidhardt.dynamicsoundboard.preferences.OpenAboutPreference android:title="@string/preferences_about_title"/>
 
 </PreferenceScreen>
