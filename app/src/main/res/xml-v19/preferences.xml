@@ -8,6 +8,12 @@
 			android:defaultValue="true"/>
 
 	<CheckBoxPreference
+			android:key="@string/preferences_enable_one_swipe_delete_key"
+			android:title="@string/preferences_enable_one_swipe_delete_title"
+			android:summary="@string/preferences_enable_one_swipe_delete_summary"
+			android:defaultValue="false"/>
+
+	<CheckBoxPreference
 			android:key="@string/preferences_enable_immerse_mode_key"
 			android:title="@string/preferences_enable_immerse_mode_title"
 			android:summary="@string/preferences_enable_immerse_mode_summary"
