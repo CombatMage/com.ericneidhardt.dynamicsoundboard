@@ -129,6 +129,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 		this.storeLoadedSounds();
 		this.dismissAllNotifications();
+		this.releaseMediaPlayers();
 
 		super.onDestroy();
 	}
@@ -171,6 +172,18 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			this.notificationManager.cancel(notificationId);
 		}
 		this.notifications.clear();
+	}
+
+	private void releaseMediaPlayers()
+	{
+		for (EnhancedMediaPlayer player : this.playlist)
+			player.destroy(false);
+		Collection<List<EnhancedMediaPlayer>> allPlayers = this.sounds.values();
+		for (List<EnhancedMediaPlayer> players : allPlayers)
+		{
+			for (EnhancedMediaPlayer player : players)
+				player.destroy(false);
+		}
 	}
 
 	@Override
@@ -418,7 +431,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	private void destroyPlayerAndUpdateDatabase(MediaPlayerDataDao dao, EnhancedMediaPlayer player)
 	{
 		this.removeSoundFromDatabase(dao, player.getMediaPlayerData());
-		player.destroy();
+		player.destroy(true);
 	}
 
 	private void removeSoundFromDatabase(MediaPlayerDataDao dao, MediaPlayerData playerData)

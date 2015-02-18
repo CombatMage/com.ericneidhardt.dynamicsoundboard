@@ -98,13 +98,14 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.setOnCompletionListener(this);
 	}
 
-	public void destroy()
+	public void destroy(boolean postStateChanged)
 	{
 		this.handler.removeCallbacks(this);
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
-		this.postStateChangedEvent(false);
+		if (postStateChanged)
+			this.postStateChangedEvent(false);
 	}
 
 	public MediaPlayerData getMediaPlayerData()
