@@ -7,6 +7,12 @@
 			android:summary="@string/preferences_enable_notifications_summary"
 			android:defaultValue="true"/>
 
+	<CheckBoxPreference
+			android:key="@string/preferences_enable_one_swipe_delete_key"
+			android:title="@string/preferences_enable_one_swipe_delete_title"
+			android:summary="@string/preferences_enable_one_swipe_delete_summary"
+			android:defaultValue="false"/>
+
 	<org.neidhardt.dynamicsoundboard.preferences.OpenAboutPreference android:title="@string/preferences_about_title"/>
 
 </PreferenceScreen>

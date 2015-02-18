@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol;
 
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -146,8 +147,11 @@ public class SoundAdapter
 			this.shadowBottom = itemView.findViewById(R.id.v_shadow_bottom);
 		}
 
-		private void bindData(int positionInDataSet)
+		@Override
+		protected void bindData(int positionInDataSet)
 		{
+			super.bindData(positionInDataSet);
+
 			EnhancedMediaPlayer player = getItem(positionInDataSet);
 			if (player == null)
 				return;
@@ -196,6 +200,12 @@ public class SoundAdapter
 		}
 
 		@Override
+		protected Handler getHandler()
+		{
+			return handler;
+		}
+
+		@Override
 		protected PagerAdapter getPagerAdapter()
 		{
 			return new SoundItemPagerAdapter();
@@ -221,20 +231,12 @@ public class SoundAdapter
 		}
 
 		@Override
-		public void onPageSelected(final int selectedPage)
+		protected void delete()
 		{
-			final int position = this.getPosition();
-			handler.postDelayed(new Runnable() { // delay deletion, because page is selected before scrolling has settled
-				@Override
-				public void run() {
-					if (selectedPage != VIEWPAGER_INDEX_SOUND_CONTROLS && onItemDeleteListener != null)
-					{
-						EnhancedMediaPlayer player = getItem(position);
-						if (player != null)
-							onItemDeleteListener.onItemDelete(player, position);
-					}
-				}
-			}, UPDATE_INTERVAL);
+			int position = this.getPosition();
+			EnhancedMediaPlayer player = getItem(position);
+			if (player != null && onItemDeleteListener != null)
+				onItemDeleteListener.onItemDelete(player, position);
 
 			handler.postDelayed(new Runnable()
 			{ // delay restart of update timer, to allow deletion animation to settle
@@ -257,6 +259,8 @@ public class SoundAdapter
 		@Override
 		public void onClick(View view)
 		{
+			super.onClick(view);
+
 			EnhancedMediaPlayer player = getItem(this.getPosition());
 			if (player == null)
 				return;

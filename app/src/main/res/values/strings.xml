@@ -44,6 +44,7 @@
 	<string name="sound_control_content_description_playlist">Sound wird in die Playliste aufgenommen</string>
 	<string name="sound_control_content_description_reorder">Sound verschieben</string>
 	<string name="sound_control_delete">Sound entfernen</string>
+	<string name="sound_control_delete_confirm">Sound entfernen bestätigen</string>
 
 	<!-- notification -->
 	<string name="notification_pause_sound">Sound pausieren</string>
@@ -72,6 +73,8 @@
 	<string name="preferences_enable_notifications_summary">Mit aktivierten Benachrichtigungen können aktive Sounds auch nach dem
 		verlassen der App gesteuert werden. Wenn Benachrichtigungen deaktiviert sind, werden alle aktiven Sounds beim Verlassen
 		der App beendet</string>
+	<string name="preferences_enable_one_swipe_delete_title">Löschen ohne Bestätigung</string>
+	<string name="preferences_enable_one_swipe_delete_summary">Mit dieser Option können Sounds ohne eine zweite Bestätigung gelöscht werden.</string>
 	<string name="preferences_enable_immerse_mode_title">Fullscreen Modus aktivieren</string>
 	<string name="preferences_enable_immerse_mode_summary">Mit aktivieren Fullscreen Modus werden die Statusleiste und die
 		Navigationsleiste ausgeblendet. Mit einem Swipe vom unteren oder oberen Bildschrimrand können sie wieder eingeblendet

@@ -180,6 +180,10 @@ public class BaseActivity
 		this.setSoundSheetActionsEnable(false);
 		this.setFloatActionButton();
 
+		SoundSheetFragment currentFragment = getCurrentFragment(this.getFragmentManager());
+		if (currentFragment != null)
+			currentFragment.notifyDataSetChanged(); // trigger update after return from settings activity
+
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener, this.getServiceManagerFragment());
 	}
 
