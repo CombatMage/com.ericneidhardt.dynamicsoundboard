@@ -40,7 +40,7 @@ public class SoundboardPreferences
 		return preferences.getBoolean(context.getString(R.string.preferences_enable_immerse_mode_key), false);
 	}
 
-	public boolean isOneSwipeToDeleteEnabled()
+	public static boolean isOneSwipeToDeleteEnabled()
 	{
 		Context context = DynamicSoundboardApplication.getSoundboardContext();
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);

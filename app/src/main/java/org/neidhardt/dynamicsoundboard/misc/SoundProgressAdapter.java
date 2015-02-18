@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> implements Runnable
 {
-	protected static final int UPDATE_INTERVAL = 500;
+	public static final int UPDATE_INTERVAL = 500;
 	protected final Handler handler = new Handler();
 
 	protected ServiceManagerFragment serviceManagerFragment;
