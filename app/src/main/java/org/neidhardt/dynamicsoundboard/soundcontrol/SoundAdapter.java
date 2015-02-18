@@ -147,8 +147,11 @@ public class SoundAdapter
 			this.shadowBottom = itemView.findViewById(R.id.v_shadow_bottom);
 		}
 
-		private void bindData(int positionInDataSet)
+		@Override
+		protected void bindData(int positionInDataSet)
 		{
+			super.bindData(positionInDataSet);
+
 			EnhancedMediaPlayer player = getItem(positionInDataSet);
 			if (player == null)
 				return;
@@ -256,6 +259,8 @@ public class SoundAdapter
 		@Override
 		public void onClick(View view)
 		{
+			super.onClick(view);
+
 			EnhancedMediaPlayer player = getItem(this.getPosition());
 			if (player == null)
 				return;

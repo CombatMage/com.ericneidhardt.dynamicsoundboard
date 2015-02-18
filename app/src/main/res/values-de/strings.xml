@@ -44,6 +44,7 @@
 	<string name="sound_control_content_description_fade_out">Der Sound kling langsam aus</string>
 	<string name="sound_control_content_description_reorder">Sound verschieben</string>
 	<string name="sound_control_delete">Sound entfernen</string>
+	<string name="sound_control_delete_confirm">Sound entfernen bestätigen</string>
 
 	<!-- notification -->
 	<string name="notification_pause_sound">Sound pausieren</string>

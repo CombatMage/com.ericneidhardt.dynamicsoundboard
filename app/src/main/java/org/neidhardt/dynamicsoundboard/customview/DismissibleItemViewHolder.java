@@ -6,6 +6,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
+import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter;
 
@@ -13,8 +15,12 @@ public abstract class DismissibleItemViewHolder
 		extends
 			RecyclerView.ViewHolder
 		implements
-			ViewPager.OnPageChangeListener
+			ViewPager.OnPageChangeListener,
+			View.OnClickListener
 {
+	private final TextView deleteSoundInfoLeft;
+	private final TextView deleteSoundInfoRight;
+
 	private ViewPager viewPager;
 
 	public DismissibleItemViewHolder(View itemView)
@@ -26,6 +32,38 @@ public abstract class DismissibleItemViewHolder
 		this.viewPager.setAdapter(this.getPagerAdapter());
 		this.viewPager.setOnPageChangeListener(this);
 		this.viewPager.setCurrentItem(this.getIndexOfContentPage());
+
+		this.deleteSoundInfoLeft = (TextView) itemView.findViewById(R.id.tv_delete_sound_left);
+		this.deleteSoundInfoLeft.setOnClickListener(this);
+		this.deleteSoundInfoRight = (TextView) itemView.findViewById(R.id.tv_delete_sound_right);
+		this.deleteSoundInfoRight.setOnClickListener(this);
+	}
+
+	protected void bindData(int positionInDataSet)
+	{
+		boolean isOneSwipeDeleteEnabled = SoundboardPreferences.isOneSwipeToDeleteEnabled();
+		if (isOneSwipeDeleteEnabled)
+		{
+			this.deleteSoundInfoLeft.setText(R.string.sound_control_delete);
+			this.deleteSoundInfoRight.setText(R.string.sound_control_delete);
+		}
+		else
+		{
+			this.deleteSoundInfoLeft.setText(R.string.sound_control_delete_confirm);
+			this.deleteSoundInfoRight.setText(R.string.sound_control_delete_confirm);
+		}
+	}
+
+	@Override
+	public void onClick(View view)
+	{
+		boolean isOneSwipeDeleteEnabled = SoundboardPreferences.isOneSwipeToDeleteEnabled();
+		if (isOneSwipeDeleteEnabled)
+			return;
+
+		int id = view.getId();
+		if (id == this.deleteSoundInfoLeft.getId() || id == this.deleteSoundInfoRight.getId())
+			this.delete();
 	}
 
 	@Override
