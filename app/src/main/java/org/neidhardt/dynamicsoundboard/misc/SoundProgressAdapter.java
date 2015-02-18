@@ -8,7 +8,11 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> implements Runnable
+public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder>
+		extends
+			RecyclerView.Adapter<T>
+		implements
+			Runnable
 {
 	public static final int UPDATE_INTERVAL = 500;
 	protected final Handler handler = new Handler();

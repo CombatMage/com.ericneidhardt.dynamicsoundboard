@@ -16,7 +16,6 @@ public abstract class DismissibleItemViewHolder
 			ViewPager.OnPageChangeListener
 {
 	private ViewPager viewPager;
-	private boolean isOneSwipeDeleteEnabled = false;
 
 	public DismissibleItemViewHolder(View itemView)
 	{
@@ -27,7 +26,6 @@ public abstract class DismissibleItemViewHolder
 		this.viewPager.setAdapter(this.getPagerAdapter());
 		this.viewPager.setOnPageChangeListener(this);
 		this.viewPager.setCurrentItem(this.getIndexOfContentPage());
-		this.isOneSwipeDeleteEnabled = SoundboardPreferences.isOneSwipeToDeleteEnabled();
 	}
 
 	@Override
@@ -37,6 +35,7 @@ public abstract class DismissibleItemViewHolder
 		{
 			@Override
 			public void run() {
+				boolean isOneSwipeDeleteEnabled = SoundboardPreferences.isOneSwipeToDeleteEnabled();
 				if (selectedPage != getIndexOfContentPage() && isOneSwipeDeleteEnabled)
 					delete();
 			}
