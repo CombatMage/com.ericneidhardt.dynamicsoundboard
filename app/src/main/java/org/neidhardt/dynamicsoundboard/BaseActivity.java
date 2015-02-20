@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -44,6 +45,7 @@ public class BaseActivity
 	private static final String TAG = BaseActivity.class.getName();
 
 	private boolean isActivityVisible = true;
+	private boolean isActionModeActive = false;
 
 	private DrawerLayout navigationDrawerLayout;
 	private ActionBarDrawerToggle drawerToggle;
@@ -280,6 +282,25 @@ public class BaseActivity
 		}
 	}
 
+	@Override
+	public void onSupportActionModeStarted(ActionMode mode)
+	{
+		super.onSupportActionModeStarted(mode);
+		this.isActionModeActive = true;
+	}
+
+	@Override
+	public void onSupportActionModeFinished(ActionMode mode)
+	{
+		super.onSupportActionModeFinished(mode);
+		this.isActionModeActive = false;
+	}
+
+	public boolean isActionModeActive()
+	{
+		return isActionModeActive;
+	}
+
 	void closeNavigationDrawer()
 	{
 		if (this.navigationDrawerLayout == null)
@@ -299,6 +320,11 @@ public class BaseActivity
 			fragmentManager.beginTransaction().add(fragment, ServiceManagerFragment.TAG).commit();
 			fragmentManager.executePendingTransactions();
 		}
+	}
+
+	private ServiceManagerFragment getServiceManagerFragment()
+	{
+		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
 	}
 
 	private void addSoundSheetManagerFragment()
@@ -388,8 +414,4 @@ public class BaseActivity
 		return null;
 	}
 
-	private ServiceManagerFragment getServiceManagerFragment()
-	{
-		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
-	}
 }

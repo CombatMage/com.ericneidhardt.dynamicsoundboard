@@ -15,7 +15,12 @@ import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
-public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener
+public class NavigationDrawerFragment
+		extends
+			BaseFragment
+		implements
+			View.OnClickListener,
+			ViewPager.OnPageChangeListener
 {
 	public static final String TAG = NavigationDrawerFragment.class.getName();
 
@@ -59,9 +64,11 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 		super.onActivityCreated(savedInstanceState);
 
 		this.tabContent = (ViewPager) this.getActivity().findViewById(R.id.vp_tab_content);
-		tabContent.setAdapter(this.tabContentAdapter);
+		this.tabContent.setAdapter(this.tabContentAdapter);
+		this.tabContent.setOnPageChangeListener(this);
 
 		SlidingTabLayout tabBar = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
+		tabBar.setOnPageChangeListener(this);
 		tabBar.setViewPager(tabContent);
 		tabBar.setCustomTabColorizer(new SlidingTabLayout.TabColorizer()
 		{
@@ -164,7 +171,6 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 	{
 		this.deleteSelected.setVisibility(View.VISIBLE);
 		this.controls.setVisibility(View.GONE);
-
 	}
 
 	public void onActionModeFinished()
@@ -173,12 +179,29 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 		this.deleteSelected.setVisibility(View.GONE);
 	}
 
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+	@Override
+	public void onPageSelected(int position)
+	{
+		if (!this.getBaseActivity().isActionModeActive())
+			return;
+		if (position == INDEX_SOUND_SHEETS)
+			this.soundSheets.prepareItemDeletion();
+		else if (position == INDEX_PLAYLIST)
+			this.playlist.prepareItemDeletion();
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {}
+
 	private class TabContentAdapter extends PagerAdapter
 	{
 		@Override
 		public CharSequence getPageTitle(int position)
 		{
-			if (position == 0)
+			if (position == INDEX_SOUND_SHEETS)
 				return getResources().getString(R.string.tab_sound_sheets);
 			else
 				return getResources().getString(R.string.tab_play_list);
