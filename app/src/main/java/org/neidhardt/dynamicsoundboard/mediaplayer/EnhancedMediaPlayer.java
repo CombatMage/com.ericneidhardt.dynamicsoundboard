@@ -122,7 +122,15 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	@Override
 	public boolean isPlaying()
 	{
-		return currentState != State.DESTROYED && super.isPlaying();
+		return this.currentState != State.DESTROYED && super.isPlaying();
+	}
+
+	@Override
+	public int getCurrentPosition()
+	{
+		if (this.currentState == State.DESTROYED)
+			return 0;
+		return super.getCurrentPosition();
 	}
 
 	@Override
