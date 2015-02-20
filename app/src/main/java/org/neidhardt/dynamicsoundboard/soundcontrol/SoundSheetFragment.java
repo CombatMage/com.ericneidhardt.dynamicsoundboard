@@ -25,7 +25,6 @@ import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteS
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectory;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
-import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -119,22 +118,9 @@ public class SoundSheetFragment
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		super.onOptionsItemSelected(item);
-		switch (item.getItemId())
-		{
-			case R.id.action_clear_sounds_in_sheet:
-				ConfirmDeleteSoundsDialog.showInstance(this.getFragmentManager());
-				return true;
-			default:
-				return false;
-		}
-	}
-
-	@Override
 	public boolean onCreateActionMode(ActionMode actionMode, Menu menu)
 	{
+		this.actionMode = actionMode;
 		// TODO prepare action mode and item selection
 		//this.isInSelectionMode = true;
 		//this.selectedItems = new SparseArray<>(this.getItemCount());
@@ -156,13 +142,6 @@ public class SoundSheetFragment
 
 		actionMode.setSubtitle(countString);*/
 		return true;
-	}
-
-	@Override
-	public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem)
-	{
-		// TODO handle options items clicked
-		return false;
 	}
 
 	@Override
@@ -223,6 +202,27 @@ public class SoundSheetFragment
 	}
 
 	@Override
+	public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem)
+	{
+		// TODO handle options items clicked
+		return false;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId())
+		{
+			case R.id.action_clear_sounds_in_sheet:
+				ConfirmDeleteSoundsDialog.showInstance(this.getFragmentManager());
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		if (container == null)
@@ -232,7 +232,6 @@ public class SoundSheetFragment
 
 		this.soundLayout = (RecyclerView)fragmentView.findViewById(R.id.rv_sounds);
 		this.soundLayout.setAdapter(this.soundAdapter);
-
 		this.soundLayout.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
 		this.soundLayout.addItemDecoration(new DividerItemDecoration());
@@ -253,7 +252,6 @@ public class SoundSheetFragment
 	@Override
 	public void onDragStart()
 	{
-		Logger.d(fragmentTag, "onDragStart");
 		this.soundLayout.setItemAnimator(null); // drag does not work with default animator
 		this.soundAdapter.stopProgressUpdateTimer();
 	}
@@ -261,7 +259,6 @@ public class SoundSheetFragment
 	@Override
 	public void onDragStop()
 	{
-		Logger.d(fragmentTag, "onDragStop");
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator()); // add animator for delete animation
 		this.soundAdapter.startProgressUpdateTimer();
 	}
@@ -269,7 +266,6 @@ public class SoundSheetFragment
 	@Override
 	public void onItemMoved(int from, int to)
 	{
-		Logger.d(fragmentTag, "onItemMoved " + from + " to " + to);
 		this.getServiceManagerFragment().getSoundService().moveSoundInFragment(fragmentTag, from, to);
 		this.soundAdapter.notifyDataSetChanged();
 	}
