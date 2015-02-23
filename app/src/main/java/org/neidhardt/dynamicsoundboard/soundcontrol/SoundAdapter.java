@@ -114,6 +114,7 @@ public class SoundAdapter
 		private final View inPlaylist;
 		private final View stop;
 		private final View fadeOut;
+		private final View settings;
 		private final SeekBar timePosition;
 
 		private final View shadowBottomDeleteViewLeft;
@@ -132,6 +133,7 @@ public class SoundAdapter
 			this.inPlaylist = itemView.findViewById(R.id.b_add_to_playlist);
 			this.stop = itemView.findViewById(R.id.b_stop);
 			this.fadeOut = itemView.findViewById(R.id.b_fade_out);
+			this.settings = itemView.findViewById(R.id.b_settings);
 			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_progress);
 
 			this.name.setOnTextEditedListener(this);
@@ -140,6 +142,7 @@ public class SoundAdapter
 			this.inPlaylist.setOnClickListener(this);
 			this.stop.setOnClickListener(this);
 			this.fadeOut.setOnClickListener(this);
+			this.settings.setOnClickListener(this);
 			this.timePosition.setOnSeekBarChangeListener(this);
 
 			this.shadowBottomDeleteViewLeft = itemView.findViewById(R.id.v_shadow_bottom_left);
@@ -297,6 +300,9 @@ public class SoundAdapter
 					{
 						player.pauseSound();
 					}
+					break;
+				case R.id.b_settings:
+				// TODO
 					break;
 			}
 			notifyItemChanged(getPosition());

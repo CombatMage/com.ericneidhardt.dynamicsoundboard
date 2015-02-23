@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:animateLayoutChanges="true">
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_title"
+			android:gravity="center_vertical"
+			android:paddingLeft="@dimen/margin_default"
+			android:paddingRight="@dimen/margin_default"
+			android:textStyle="bold"
+			android:textColor="@color/text_content_primary"
+			android:textSize="@dimen/text_headline"
+			android:text="@string/dialog_add_new_sound_from_intent_title"/>
+
+	<org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText
+			android:id="@+id/et_name_file"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/margin_default"/>
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingLeft="@dimen/margin_default"
+			android:paddingRight="@dimen/margin_default"
+			android:textColor="@color/text_content_secondary"
+			android:textSize="@dimen/text_body"
+			android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_message"/>
+
+	<CheckBox
+			android:id="@+id/cb_add_new_sound_sheet"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/margin_default"
+			android:textColor="@color/text_content_secondary"
+			android:textSize="@dimen/text_body"
+			android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_checkbox"
+			tools:checked="true"/>
+
+	<org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.CustomSpinner
+			android:id="@+id/s_sound_sheets"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_input_field"
+			android:layout_marginLeft="@dimen/margin_default"
+			android:layout_marginRight="@dimen/margin_default"
+			android:layout_marginBottom="@dimen/margin_default"/>
+
+	<org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText
+			android:id="@+id/et_name_new_sound_sheet"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_input_field"
+			android:layout_marginLeft="@dimen/margin_default"
+			android:layout_marginRight="@dimen/margin_default"
+			android:layout_marginBottom="@dimen/margin_default"
+			android:paddingTop="@dimen/margin_default"/>
+
+	<include layout="@layout/dialog_button_bar_add"/>
+
+</LinearLayout>
