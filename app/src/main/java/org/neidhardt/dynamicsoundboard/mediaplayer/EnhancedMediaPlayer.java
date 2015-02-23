@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer;
 
-import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -42,7 +41,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	private Handler handler = new Handler();
 
-	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
+	public EnhancedMediaPlayer(MediaPlayerData data) throws IOException
 	{
 		super();
 
@@ -50,10 +49,10 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.setLooping(data.getIsLoop());
 
 		this.currentState = State.IDLE;
-		this.init(context);
+		this.init();
 	}
 
-	public static EnhancedMediaPlayer getInstanceForPlayList(Context context, MediaPlayerData data) throws IOException
+	public static EnhancedMediaPlayer getInstanceForPlayList(MediaPlayerData data) throws IOException
 	{
 		MediaPlayerData playListData = new MediaPlayerData();
 		playListData.setId(data.getId());
@@ -64,7 +63,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		playListData.setLabel(data.getLabel());
 		playListData.setUri(data.getUri());
 
-		return new EnhancedMediaPlayer(context, playListData);
+		return new EnhancedMediaPlayer(playListData);
 	}
 
 	public static MediaPlayerData getMediaPlayerData(String fragmentTag, Uri uri, String label)
@@ -82,13 +81,13 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		return data;
 	}
 
-	private void init(Context context) throws IOException
+	private void init() throws IOException
 	{
 		if (this.rawData.getUri() == null)
 			throw new NullPointerException("cannot init media player, sound uri is null");
 
 		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		this.setDataSource(context, Uri.parse(this.rawData.getUri()));
+		this.setDataSource(DynamicSoundboardApplication.getSoundboardContext(), Uri.parse(this.rawData.getUri()));
 		this.setLooping(this.rawData.getIsLoop());
 		this.prepare();
 		this.currentState = State.PREPARED;
@@ -116,6 +115,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	@Override
 	public int getDuration()
 	{
+		if (this.currentState == State.DESTROYED || this.currentState == State.IDLE)
+			return 0;
 		return this.duration;
 	}
 
@@ -149,6 +150,9 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	{
 		try
 		{
+			if (this.currentState == State.IDLE || this.currentState == State.DESTROYED)
+				this.init();
+
 			if (this.currentState == State.INIT || this.currentState == State.STOPPED)
 				this.prepare();
 
@@ -189,6 +193,14 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		{
 			switch (this.currentState)
 			{
+				case IDLE:
+					this.init();
+					this.start();
+					break;
+				case DESTROYED:
+					this.init();
+					this.start();
+					break;
 				case INIT:
 					this.prepare();
 					this.start();
@@ -210,7 +222,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.pause();
 			this.currentState = State.PAUSED;
 
-			this.postStateChangedEvent(false);
+			this.postStateChangedEvent(true);
 			return true;
 		}
 		catch (IOException e)
