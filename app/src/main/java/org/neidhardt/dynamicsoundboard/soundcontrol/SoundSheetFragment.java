@@ -7,11 +7,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import com.emtronics.dragsortrecycler.DragSortRecycler;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.BaseActivity;
@@ -38,8 +40,7 @@ public class SoundSheetFragment
 			View.OnClickListener,
 			SoundAdapter.OnItemDeleteListener,
 			DragSortRecycler.OnDragStateChangedListener,
-			DragSortRecycler.OnItemMovedListener,
-			android.support.v7.view.ActionMode.Callback
+			DragSortRecycler.OnItemMovedListener
 {
 	private static final String KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
@@ -51,8 +52,6 @@ public class SoundSheetFragment
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
 	private RecyclerView soundLayout;
-
-	private ActionMode actionMode;
 
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
 	{
@@ -89,8 +88,6 @@ public class SoundSheetFragment
 		activity.setSoundSheetActionsEnable(true);
 		activity.findViewById(R.id.action_add_sound).setOnClickListener(this);
 		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
-		if (activity.isActionModeActive())
-			this.actionMode = activity.startSupportActionMode(this);
 
 		this.attachScrollViewToFab();
 
@@ -115,44 +112,6 @@ public class SoundSheetFragment
 		super.onPause();
 		this.soundAdapter.stopProgressUpdateTimer();
 		EventBus.getDefault().unregister(this.soundAdapter);
-	}
-
-	@Override
-	public boolean onCreateActionMode(ActionMode actionMode, Menu menu)
-	{
-		this.actionMode = actionMode;
-		// TODO prepare action mode and item selection
-		//this.isInSelectionMode = true;
-		//this.selectedItems = new SparseArray<>(this.getItemCount());
-
-		return true;
-	}
-
-	@Override
-	public boolean onPrepareActionMode(ActionMode actionMode, Menu menu)
-	{
-		// TODO update ActionMode after invalidate
-		/*actionMode.setTitle(this.getActionModeTitle());
-
-		int count = this.selectedItems.size();
-		String countString = Integer.toString(count);
-		if (countString.length() == 1)
-			countString = " " + countString;
-		countString = countString + "/" + this.getItemCount();
-
-		actionMode.setSubtitle(countString);*/
-		return true;
-	}
-
-	@Override
-	public void onDestroyActionMode(ActionMode actionMode)
-	{
-		this.actionMode = null;
-		// TODO cleanup after finished selection mode
-		/*this.parent.onActionModeFinished();
-		this.isInSelectionMode = false;
-		for(int i = 0; i < this.selectedItems.size(); i++)
-			this.selectedItems.valueAt(i).setSelected(false);*/
 	}
 
 	public void deleteAllSoundsInSoundSheet()
@@ -199,13 +158,6 @@ public class SoundSheetFragment
 			case R.id.action_add_sound_dir:
 				AddNewSoundFromDirectory.showInstance(this.getFragmentManager(), this.fragmentTag);
 		}
-	}
-
-	@Override
-	public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem)
-	{
-		// TODO handle options items clicked
-		return false;
 	}
 
 	@Override
