@@ -34,6 +34,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 
 	private String playerId;
 	private String fragmentTag;
+	private int indexOfCurrentFragment = -1;
 	private MediaPlayerData playerData;
 
 	public static void showInstance(FragmentManager manager, MediaPlayerData playerData)
@@ -94,18 +95,17 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 	{
 		List<SoundSheet> soundSheets = this.getSoundSheetManagerFragment().getAll();
 		ArrayList<String> labels = new ArrayList<>();
-		int indexOfCurrentFragment = -1;
 		for (int i = 0; i < soundSheets.size(); i++)
 		{
 			if (soundSheets.get(i).getFragmentTag().equals(this.fragmentTag))
-				indexOfCurrentFragment = i;
+				this.indexOfCurrentFragment = i;
 			labels.add(soundSheets.get(i).getLabel());
 		}
-		if (indexOfCurrentFragment == -1)
+		if (this.indexOfCurrentFragment == -1)
 			throw new IllegalStateException(TAG + " Current fragment of sound " + this.playerData + " is not found in list of sound sheets " + soundSheets);
 
 		this.soundSheetSpinner.setItems(labels);
-		this.soundSheetSpinner.setSelectedItem(indexOfCurrentFragment);
+		this.soundSheetSpinner.setSelectedItem(this.indexOfCurrentFragment);
 	}
 
 	@Override
@@ -140,6 +140,13 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 
 	private void deliverResult()
 	{
+		String soundLabel = this.soundName.getDisplayedText();
+		int indexOfSelectedSoundSheet = this.soundSheetSpinner.getSelectedItemPosition();
+		boolean addNewSoundSheet = this.addNewSoundSheet.isChecked();
+		boolean hasSoundSheetChanged = addNewSoundSheet || indexOfSelectedSoundSheet != this.indexOfCurrentFragment;
+
+
+
 		// TODO
 	}
 
