@@ -13,6 +13,7 @@ import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.CustomSpinner;
+import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,7 +146,15 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 		boolean addNewSoundSheet = this.addNewSoundSheet.isChecked();
 		boolean hasSoundSheetChanged = addNewSoundSheet || indexOfSelectedSoundSheet != this.indexOfCurrentFragment;
 
+		if (!hasSoundSheetChanged)
+		{
+			this.playerData.setLabel(soundLabel);
+			SoundSheetFragment soundSheetFragment = this.getSoundSheetFragment(this.fragmentTag);
+			soundSheetFragment.notifyDataSetChanged();
+		}
 
+		//SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();
+		//soundSheetsManagerFragment.addSoundToSoundSheet(this.playerData.getUri(), soundLabel, );
 
 		// TODO
 	}

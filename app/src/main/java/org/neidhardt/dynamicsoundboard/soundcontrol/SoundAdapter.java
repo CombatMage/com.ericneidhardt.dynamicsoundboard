@@ -303,6 +303,7 @@ public class SoundAdapter
 					}
 					break;
 				case R.id.b_settings:
+					player.pauseSound();
 					SoundSettingsDialog.showInstance(serviceManagerFragment.getFragmentManager(), player.getMediaPlayerData());
 					break;
 			}

@@ -220,7 +220,7 @@ public class SoundSheetsManagerFragment
 		task.execute();
 	}
 
-	public void addSoundFromIntent(Uri soundUri, String soundLabel, String newSoundSheetName, SoundSheet existingSoundSheet)
+	public void addSoundToSoundSheet(Uri soundUri, String soundLabel, String newSoundSheetName, SoundSheet existingSoundSheet)
 	{
 		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
 		MusicService service = soundManagerFragment.getSoundService();
@@ -237,7 +237,7 @@ public class SoundSheetsManagerFragment
 		else if (existingSoundSheet != null)
 			mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
 		else
-			throw new NullPointerException(TAG + ".addSoundFromIntent: cannot add new sound, mediaPlayerData is null");
+			throw new NullPointerException(TAG + ".addSoundToSoundSheet: cannot add new sound, mediaPlayerData is null");
 		service.addNewSoundToServiceAndDatabase(mediaPlayerData);
 		soundManagerFragment.notifyFragment(mediaPlayerData.getFragmentTag());
 	}
