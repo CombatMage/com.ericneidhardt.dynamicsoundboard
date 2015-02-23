@@ -318,7 +318,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	{
 		try
 		{
-			return new EnhancedMediaPlayer(this.getApplicationContext(), playerData);
+			return new EnhancedMediaPlayer(playerData);
 		}
 		catch (IOException e)
 		{
@@ -347,7 +347,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	{
 		try
 		{
-			EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(this.getApplicationContext(), playerData);
+			EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(playerData);
 			this.playlist.add(player);
 			return player.getMediaPlayerData();
 		} catch (IOException e)
@@ -406,7 +406,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 					return;
 
 				player.setIsInPlaylist(true);
-				playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(this.getApplicationContext(), player.getMediaPlayerData());
+				playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(player.getMediaPlayerData());
 				this.playlist.add(playerInPlaylist);
 			}
 			else

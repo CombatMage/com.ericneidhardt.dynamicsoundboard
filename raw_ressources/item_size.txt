@@ -1,9 +1,10 @@
 action: default
 Listview Groß: 40dp, kein padding
 Listview kein: 24dp, 4dp padding
+Soundcontrols: 24dp, kein padding
 
 color: accent (ff4081)
-color grey: a8000000
+color grey: a8000000 (54% schwarz)
 
 Notification:
 32dp mit optischer größe 24dp

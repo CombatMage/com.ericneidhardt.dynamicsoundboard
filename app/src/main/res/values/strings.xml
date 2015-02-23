@@ -40,11 +40,12 @@
 	<string name="sound_control_content_description_stop">Setzt den Sound zurück</string>
 	<string name="sound_control_content_description_play">Startet oder Pausiert den Sound</string>
 	<string name="sound_control_content_description_loop">Sound wird in einer Schleife abgespielt</string>
-	<string name="sound_control_content_description_fade_out">Der Sound kling langsam aus</string>
 	<string name="sound_control_content_description_playlist">Sound wird in die Playliste aufgenommen</string>
+	<string name="sound_control_content_description_fade_out">Der Sound kling langsam aus</string>
 	<string name="sound_control_content_description_settings">Sound editieren, verschieben, umbenennen</string>
 	<string name="sound_control_content_description_reorder">Sound neusortieren</string>
 	<string name="sound_control_delete">Sound entfernen</string>
+	<string name="sound_control_delete_confirm">Sound entfernen bestätigen</string>
 
 	<!-- notification -->
 	<string name="notification_pause_sound">Sound pausieren</string>
@@ -105,9 +106,6 @@
 
 	<string name="dialog_add_new_layout_title">Name der Sound Liste?</string>
 	<string name="dialog_add_new_layout_message">Dem SoundBoard wird ein neue Gruppe mit diesem Namen hinzugefügt. Der Name kann später noch geändert werden.</string>
-
-	<string name="dialog_sound_settings_title">Sound editieren</string>
-	<string name="dialog_sound_settings_message">Sound umbennen oder in eine andere Kategorie verschieben?</string>
 
 	<string name="dialog_add_new_sound_from_intent_title">Sound hinzufügen</string>
 	<string name="dialog_add_new_sound_from_intent_message">Es wurden noch keine Kategorien für Sounds angelegt. Soll eine neue Kategorie angelegt werden?</string>
