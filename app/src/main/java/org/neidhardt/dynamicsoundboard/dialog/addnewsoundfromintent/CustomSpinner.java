@@ -36,6 +36,11 @@ public class CustomSpinner extends LinearLayout implements View.OnClickListener
 		return this.spinner.getSelectedItemPosition();
 	}
 
+	public void setSelectedItem(int position)
+	{
+		this.spinner.setSelection(position);
+	}
+
 	@Override
 	public void onClick(View v)
 	{

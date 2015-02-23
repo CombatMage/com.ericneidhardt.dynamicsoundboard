@@ -11,7 +11,11 @@ import android.widget.CompoundButton;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.CustomSpinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by eric.neidhardt on 23.02.2015.
@@ -75,10 +79,33 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 
 		this.soundName.setText(this.playerData.getLabel());
 
+		this.setAvailableSoundSheets();
+
+		this.soundSheetName.setText(this.getSoundSheetManagerFragment().getSuggestedSoundSheetName());
+		this.soundSheetName.setVisibility(View.GONE);
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
 
 		return builder.create();
+	}
+
+	private void setAvailableSoundSheets()
+	{
+		List<SoundSheet> soundSheets = this.getSoundSheetManagerFragment().getAll();
+		ArrayList<String> labels = new ArrayList<>();
+		int indexOfCurrentFragment = -1;
+		for (int i = 0; i < soundSheets.size(); i++)
+		{
+			if (soundSheets.get(i).getFragmentTag().equals(this.fragmentTag))
+				indexOfCurrentFragment = i;
+			labels.add(soundSheets.get(i).getLabel());
+		}
+		if (indexOfCurrentFragment == -1)
+			throw new IllegalStateException(TAG + " Current fragment of sound " + this.playerData + " is not found in list of sound sheets " + soundSheets);
+
+		this.soundSheetSpinner.setItems(labels);
+		this.soundSheetSpinner.setSelectedItem(indexOfCurrentFragment);
 	}
 
 	@Override
