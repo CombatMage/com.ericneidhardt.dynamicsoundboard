@@ -42,9 +42,9 @@
 	<string name="sound_control_content_description_loop">Sound wird in einer Schleife abgespielt</string>
 	<string name="sound_control_content_description_fade_out">Der Sound kling langsam aus</string>
 	<string name="sound_control_content_description_playlist">Sound wird in die Playliste aufgenommen</string>
-	<string name="sound_control_content_description_reorder">Sound verschieben</string>
+	<string name="sound_control_content_description_settings">Sound editieren, verschieben, umbenennen</string>
+	<string name="sound_control_content_description_reorder">Sound neusortieren</string>
 	<string name="sound_control_delete">Sound entfernen</string>
-	<string name="sound_control_delete_confirm">Sound entfernen bestätigen</string>
 
 	<!-- notification -->
 	<string name="notification_pause_sound">Sound pausieren</string>
