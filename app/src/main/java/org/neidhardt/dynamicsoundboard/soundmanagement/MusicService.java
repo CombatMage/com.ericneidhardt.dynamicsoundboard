@@ -445,6 +445,14 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		}
 	}
 
+	public EnhancedMediaPlayer searchForId(String fragmentTag, String playerId)
+	{
+		if (fragmentTag.equals(Playlist.TAG))
+			return this.searchInPlaylistForId(playerId);
+		else
+			return this.searchInListForId(playerId, this.sounds.get(fragmentTag));
+	}
+
 	private EnhancedMediaPlayer searchInPlaylistForId(String playerId)
 	{
 		return this.searchInListForId(playerId, playlist);
@@ -465,6 +473,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 	private EnhancedMediaPlayer searchInListForId(String playerId, List<EnhancedMediaPlayer> players)
 	{
+		if (players == null)
+			return null;
 		for (EnhancedMediaPlayer player : players)
 		{
 			if (player.getMediaPlayerData().getPlayerId().equals(playerId))

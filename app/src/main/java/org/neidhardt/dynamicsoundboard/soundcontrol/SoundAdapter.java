@@ -11,6 +11,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
 import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import org.neidhardt.dynamicsoundboard.dialog.SoundSettingsDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -302,7 +303,7 @@ public class SoundAdapter
 					}
 					break;
 				case R.id.b_settings:
-				// TODO
+					SoundSettingsDialog.showInstance(serviceManagerFragment.getFragmentManager(), player.getMediaPlayerData());
 					break;
 			}
 			notifyItemChanged(getPosition());
