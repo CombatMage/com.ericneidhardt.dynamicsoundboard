@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,10 +14,15 @@ import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.CustomSpinner;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 /**
  * Created by eric.neidhardt on 23.02.2015.
@@ -36,7 +42,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 	private String playerId;
 	private String fragmentTag;
 	private int indexOfCurrentFragment = -1;
-	private MediaPlayerData playerData;
+	private EnhancedMediaPlayer player;
 
 	public static void showInstance(FragmentManager manager, MediaPlayerData playerData)
 	{
@@ -60,7 +66,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 		{
 			this.playerId = args.getString(KEY_PLAYER_ID);
 			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
-			this.playerData = this.getServiceManagerFragment().getSoundService().searchForId(this.fragmentTag, this.playerId).getMediaPlayerData();
+			this.player = this.getServiceManagerFragment().getSoundService().searchForId(this.fragmentTag, this.playerId);
 		}
 	}
 
@@ -79,7 +85,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_save).setOnClickListener(this);
 
-		this.soundName.setText(this.playerData.getLabel());
+		this.soundName.setText(this.player.getMediaPlayerData().getLabel());
 
 		this.setAvailableSoundSheets();
 
@@ -103,7 +109,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 			labels.add(soundSheets.get(i).getLabel());
 		}
 		if (this.indexOfCurrentFragment == -1)
-			throw new IllegalStateException(TAG + " Current fragment of sound " + this.playerData + " is not found in list of sound sheets " + soundSheets);
+			throw new IllegalStateException(TAG + " Current fragment of sound " + this.player.getMediaPlayerData() + " is not found in list of sound sheets " + soundSheets);
 
 		this.soundSheetSpinner.setItems(labels);
 		this.soundSheetSpinner.setSelectedItem(this.indexOfCurrentFragment);
@@ -146,17 +152,25 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 		boolean addNewSoundSheet = this.addNewSoundSheet.isChecked();
 		boolean hasSoundSheetChanged = addNewSoundSheet || indexOfSelectedSoundSheet != this.indexOfCurrentFragment;
 
+		SoundSheetFragment soundSheetFragment = this.getSoundSheetFragment(this.fragmentTag);
 		if (!hasSoundSheetChanged)
 		{
-			this.playerData.setLabel(soundLabel);
-			SoundSheetFragment soundSheetFragment = this.getSoundSheetFragment(this.fragmentTag);
+			this.player.getMediaPlayerData().setLabel(soundLabel);
 			soundSheetFragment.notifyDataSetChanged();
 		}
+		else
+		{
+			ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
+			serviceManagerFragment.getSoundService().removeSounds(asList(this.player));
+			soundSheetFragment.notifyDataSetChanged();
 
-		//SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();
-		//soundSheetsManagerFragment.addSoundToSoundSheet(this.playerData.getUri(), soundLabel, );
-
-		// TODO
+			SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();
+			Uri uri = Uri.parse(this.player.getMediaPlayerData().getUri());
+			if (addNewSoundSheet)
+				soundSheetsManagerFragment.addSoundToSoundSheet(uri, soundLabel, soundLabel, null);
+			else
+				soundSheetsManagerFragment.addSoundToSoundSheet(uri, soundLabel, null, soundSheetsManagerFragment.get(this.fragmentTag));
+		}
 	}
 
 }
