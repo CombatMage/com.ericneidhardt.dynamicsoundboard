@@ -149,6 +149,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 	{
 		String soundLabel = this.soundName.getDisplayedText();
 		int indexOfSelectedSoundSheet = this.soundSheetSpinner.getSelectedItemPosition();
+
 		boolean addNewSoundSheet = this.addNewSoundSheet.isChecked();
 		boolean hasSoundSheetChanged = addNewSoundSheet || indexOfSelectedSoundSheet != this.indexOfCurrentFragment;
 
@@ -166,10 +167,14 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 
 			SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();
 			Uri uri = Uri.parse(this.player.getMediaPlayerData().getUri());
+
 			if (addNewSoundSheet)
-				soundSheetsManagerFragment.addSoundToSoundSheet(uri, soundLabel, soundLabel, null);
+			{
+				String soundSheetName = this.soundSheetName.getDisplayedText();
+				soundSheetsManagerFragment.addSoundToSoundSheet(uri, soundLabel, soundSheetName);
+			}
 			else
-				soundSheetsManagerFragment.addSoundToSoundSheet(uri, soundLabel, null, soundSheetsManagerFragment.get(this.fragmentTag));
+				soundSheetsManagerFragment.addSoundToSoundSheet(uri, soundLabel, soundSheetsManagerFragment.get(this.fragmentTag));
 		}
 	}
 
