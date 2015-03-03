@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.misc.Logger;
 
 
 public abstract class CustomEditText
@@ -26,6 +27,8 @@ public abstract class CustomEditText
 			EditTextBackEvent.EditTextImeBackListener,
 			View.OnFocusChangeListener
 {
+	private static final String TAG = CustomEditText.class.getName();
+
 	EditTextBackEvent input;
 
 	OnTextEditedListener onTextEditedListener;
@@ -152,17 +155,20 @@ public abstract class CustomEditText
 	@Override
 	protected Parcelable onSaveInstanceState()
 	{
+		Logger.d(TAG, "onSaveInstanceState");
 		Parcelable superState = super.onSaveInstanceState();
-		return new SavedState(superState, this.input.getText().toString());
+		return new SavedCustomEditTextState(superState, this.input.getText().toString());
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Parcelable state)
 	{
-		SavedState savedState = (SavedState) state;
+		Logger.d(TAG, "onRestoreInstanceState " + state);
+		SavedCustomEditTextState savedState = (SavedCustomEditTextState) state;
 		super.onRestoreInstanceState(savedState.getSuperState());
 
-		this.input.setText(savedState.getValue());
+		if (savedState.getValue() != null)
+			this.input.setText(savedState.getValue());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -182,7 +188,7 @@ public abstract class CustomEditText
 		super.dispatchThawSelfOnly(container);
 	}
 
-	protected static class SavedState extends BaseSavedState
+	public static class SavedCustomEditTextState extends BaseSavedState
 	{
 		private String value;
 
@@ -191,10 +197,17 @@ public abstract class CustomEditText
 			return this.value;
 		}
 
-		public SavedState(Parcelable superState, String value)
+		public SavedCustomEditTextState(Parcelable superState, String value)
 		{
 			super(superState);
 			this.value = value;
+		}
+
+		private SavedCustomEditTextState(Parcel superState)
+		{
+			super(superState);
+			if (superState != null)
+				this.value = superState.readString();
 		}
 
 		@Override
@@ -203,6 +216,20 @@ public abstract class CustomEditText
 			super.writeToParcel(destination, flags);
 			destination.writeString(this.value);
 		}
+
+		public static final Parcelable.Creator<SavedCustomEditTextState> CREATOR = new
+				Parcelable.Creator<SavedCustomEditTextState>()
+				{
+					public SavedCustomEditTextState createFromParcel(Parcel in)
+					{
+						return new SavedCustomEditTextState(in);
+					}
+
+					public SavedCustomEditTextState[] newArray(int size)
+					{
+						return new SavedCustomEditTextState[size];
+					}
+				};
 	}
 
 	public static interface OnTextEditedListener
