@@ -14,6 +14,9 @@
 	<dimen name="height_list_item_large">72dp</dimen>
 	<dimen name="height_list_item_xlarge">122dp</dimen>
 
+	<dimen name="elevation_normal">4dp</dimen>
+	<dimen name="elevation_small">2dp</dimen>
+
 	<dimen name="margin_xlarge">24dp</dimen>
 	<dimen name="margin_large">20dp</dimen>
 	<dimen name="margin_default">16dp</dimen>

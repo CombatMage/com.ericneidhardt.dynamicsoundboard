@@ -13,7 +13,8 @@
 					android:id="@+id/layout_tab"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:background="@color/primary_200"/>
+					android:background="@color/primary_200"
+					android:elevation="@dimen/elevation_small"/>
 			
 			<RelativeLayout
 					android:layout_width="match_parent"
