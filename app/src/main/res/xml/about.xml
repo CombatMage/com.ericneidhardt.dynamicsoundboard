@@ -8,4 +8,8 @@
 	<org.neidhardt.dynamicsoundboard.preferences.VersionPreference
 			android:title="@string/about_version_title"/>
 
+	<Preference
+			android:title="@string/about_used_third_party_title"
+			android:summary="@string/about_used_third_party_summary"/>
+
 </PreferenceScreen>
