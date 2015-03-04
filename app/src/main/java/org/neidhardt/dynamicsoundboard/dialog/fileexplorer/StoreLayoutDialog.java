@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
@@ -41,7 +42,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
-		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_store_sound_sheets, null);
+		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_store_sound_sheets, null);
 		view.findViewById(R.id.b_save).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_add).setOnClickListener(this);

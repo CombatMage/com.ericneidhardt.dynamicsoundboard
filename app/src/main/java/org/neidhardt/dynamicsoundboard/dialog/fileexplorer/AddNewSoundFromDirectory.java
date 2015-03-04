@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
@@ -61,7 +62,7 @@ public class AddNewSoundFromDirectory
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
-		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_directory, null);
+		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_directory, null);
 		view.findViewById(R.id.b_add).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 
