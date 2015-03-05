@@ -36,7 +36,6 @@ public class NavigationDrawerFragment
 	private SoundSheetsAdapter soundSheetsAdapter;
 
 	private View contextualActionContainer;
-	private View controls;
 	private View deleteSelected;
 
 	public Playlist getPlaylist()
@@ -91,7 +90,6 @@ public class NavigationDrawerFragment
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
 
 		this.contextualActionContainer = this.getActivity().findViewById(R.id.layout_contextual_controls);
-		this.controls = this.getActivity().findViewById(R.id.layout_controls);
 		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
 		this.deleteSelected.setOnClickListener(this);
 
