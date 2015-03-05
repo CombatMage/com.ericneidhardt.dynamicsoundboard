@@ -4,72 +4,72 @@
 			 android:layout_height="match_parent"
 			 android:layout_gravity="start">
 
-		<LinearLayout
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+
+		<org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout
+				android:id="@+id/layout_tab"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/primary_200"
+				android:elevation="@dimen/elevation_small"/>
+
+		<RelativeLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:orientation="vertical">
+				android:background="@color/background">
 
-			<org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout
-					android:id="@+id/layout_tab"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:background="@color/primary_200"
-					android:elevation="@dimen/elevation_small"/>
-			
 			<RelativeLayout
+					android:id="@+id/layout_contextual_controls"
 					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:background="@color/background">
+					android:layout_height="@dimen/height_list_item"
+					android:layout_alignParentBottom="true"
+					android:orientation="horizontal">
 
-				<RelativeLayout
-						android:id="@+id/layout_contextual_controls"
+				<LinearLayout
+						android:id="@+id/layout_controls"
 						android:layout_width="match_parent"
-						android:layout_height="@dimen/height_list_item"
-						android:layout_alignParentBottom="true"
-						android:animateLayoutChanges="true"
-						android:orientation="horizontal"
-						android:background="@color/background">
+						android:layout_height="wrap_content"
+						android:layout_centerVertical="true"
+						android:orientation="horizontal">
 
-					<LinearLayout
-							android:id="@+id/layout_controls"
-							android:layout_width="match_parent"
+					<TextView
+							android:id="@+id/b_delete"
+							android:layout_width="0dp"
 							android:layout_height="wrap_content"
-							android:layout_centerVertical="true"
-							android:orientation="horizontal">
+							android:layout_weight="1"
+							android:padding="@dimen/margin_default"
+							android:gravity="center"
+							android:text="@string/navigation_drawer_delete"
+							android:textSize="@dimen/text_sub_text"
+							android:textColor="@color/text_content_primary"
+							android:clickable="true"
+							android:background="@drawable/selector_background_list_item"/>
 
-						<TextView
-								android:id="@+id/b_delete"
-								android:layout_width="0dp"
-								android:layout_height="wrap_content"
-								android:layout_weight="1"
-								android:padding="@dimen/margin_default"
-								android:gravity="center"
-								android:text="@string/navigation_drawer_delete"
-								android:textSize="@dimen/text_sub_text"
-								android:textColor="@color/text_content_primary"
-								android:background="@drawable/selector_background_list_item"
-								android:clickable="true"/>
+					<TextView
+							android:id="@+id/b_add"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:padding="@dimen/margin_default"
+							android:gravity="center"
+							android:text="@string/navigation_drawer_add"
+							android:textSize="@dimen/text_sub_text"
+							android:textColor="@color/text_content_primary"
+							android:clickable="true"
+							android:background="@drawable/selector_background_list_item"/>
+				</LinearLayout>
 
-						<TextView
-								android:id="@+id/b_add"
-								android:layout_width="0dp"
-								android:layout_height="wrap_content"
-								android:layout_weight="1"
-								android:padding="@dimen/margin_default"
-								android:gravity="center"
-								android:text="@string/navigation_drawer_add"
-								android:textSize="@dimen/text_sub_text"
-								android:textColor="@color/text_content_primary"
-								android:background="@drawable/selector_background_list_item"
-								android:clickable="true"/>
-
-					</LinearLayout>
-
+				<FrameLayout android:layout_width="match_parent"
+							 android:layout_height="wrap_content"
+							 android:layout_centerVertical="true"
+							 android:background="@color/background">
 					<TextView
 							android:id="@+id/b_delete_selected"
 							android:layout_width="match_parent"
 							android:layout_height="match_parent"
-							android:layout_centerVertical="true"
 							android:padding="@dimen/margin_default"
 							android:gravity="center"
 							android:text="@string/navigation_drawer_delete_selected"
@@ -78,41 +78,41 @@
 							android:background="@drawable/selector_background_list_item"
 							android:clickable="true"
 							android:visibility="gone"/>
-
-				</RelativeLayout>
-
-
-				<android.support.v4.view.ViewPager
-						android:id="@+id/vp_tab_content"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:layout_above="@id/layout_contextual_controls">
-
-					<org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets
-							android:id="@+id/sound_sheets"
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"/>
-					
-					<org.neidhardt.dynamicsoundboard.playlist.Playlist
-							android:id="@+id/playlist"
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"/>
-
-				</android.support.v4.view.ViewPager>
-
-				<View
-						android:layout_width="match_parent"
-						android:layout_height="@dimen/height_shadow"
-						android:layout_above="@id/layout_contextual_controls"
-						android:rotation="180"
-						android:background="@drawable/ic_shadow_horizontal"/>
-
+				</FrameLayout>
 			</RelativeLayout>
 
-		</LinearLayout>
 
-		<View
-				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
-				android:background="@drawable/ic_shadow_horizontal"/>
+			<android.support.v4.view.ViewPager
+					android:id="@+id/vp_tab_content"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_above="@id/layout_contextual_controls">
+
+				<org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets
+						android:id="@+id/sound_sheets"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"/>
+
+				<org.neidhardt.dynamicsoundboard.playlist.Playlist
+						android:id="@+id/playlist"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"/>
+
+			</android.support.v4.view.ViewPager>
+
+			<View
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/height_shadow"
+					android:layout_above="@id/layout_contextual_controls"
+					android:rotation="180"
+					android:background="@drawable/ic_shadow_horizontal"/>
+
+		</RelativeLayout>
+
+	</LinearLayout>
+
+	<View
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_shadow"
+			android:background="@drawable/ic_shadow_horizontal"/>
 </FrameLayout>

@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
@@ -34,6 +35,7 @@ public class NavigationDrawerFragment
 	private SoundSheets soundSheets;
 	private SoundSheetsAdapter soundSheetsAdapter;
 
+	private View contextualActionContainer;
 	private View controls;
 	private View deleteSelected;
 
@@ -87,6 +89,8 @@ public class NavigationDrawerFragment
 
 		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
+
+		this.contextualActionContainer = this.getActivity().findViewById(R.id.layout_contextual_controls);
 		this.controls = this.getActivity().findViewById(R.id.layout_controls);
 		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
 		this.deleteSelected.setOnClickListener(this);
@@ -170,12 +174,18 @@ public class NavigationDrawerFragment
 	public void onActionModeStart()
 	{
 		this.deleteSelected.setVisibility(View.VISIBLE);
-		this.controls.setVisibility(View.GONE);
+		int distance = this.contextualActionContainer.getWidth();
+
+		this.deleteSelected.setTranslationX(-distance);
+		this.deleteSelected.animate().
+				translationX(0).
+				setDuration(this.getResources().getInteger(R.integer.animation_slide_in_fast)).
+				setInterpolator(new DecelerateInterpolator()).
+				start();
 	}
 
 	public void onActionModeFinished()
 	{
-		this.controls.setVisibility(View.VISIBLE);
 		this.deleteSelected.setVisibility(View.GONE);
 	}
 
