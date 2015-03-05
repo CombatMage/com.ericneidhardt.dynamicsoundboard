@@ -393,6 +393,7 @@ public class BaseActivity
 
 		FragmentManager fragmentManager = this.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.setCustomAnimations(R.anim.anim_enter_from_left, R.anim.anim_exit_to_right);
 
 		SoundSheetFragment fragment = (SoundSheetFragment) fragmentManager.findFragmentByTag(soundSheet.getFragmentTag());
 		if (fragment != null)
@@ -401,7 +402,6 @@ public class BaseActivity
 			transaction.replace(R.id.main_frame, SoundSheetFragment.getNewInstance(soundSheet), soundSheet.getFragmentTag());
 
 		transaction.commit();
-		fragmentManager.executePendingTransactions();
 
 		((ActionbarEditText) this.findViewById(R.id.et_set_label)).setText(soundSheet.getLabel());
 	}
