@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.emtronics.dragsortrecycler.DragSortRecycler;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.BaseActivity;
@@ -88,6 +89,8 @@ public class SoundSheetFragment
 		activity.setSoundSheetActionsEnable(true);
 		activity.findViewById(R.id.action_add_sound).setOnClickListener(this);
 		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
+
+		((TextView) activity.findViewById(R.id.tv_current_sound_sheet)).setText(this.getSoundSheetManagerFragment().get(this.fragmentTag).getLabel());
 
 		this.attachScrollViewToFab();
 

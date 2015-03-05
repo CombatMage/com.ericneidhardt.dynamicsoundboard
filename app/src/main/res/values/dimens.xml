@@ -13,6 +13,7 @@
 	<dimen name="height_list_item">56dp</dimen>
 	<dimen name="height_list_item_large">72dp</dimen>
 	<dimen name="height_list_item_xlarge">122dp</dimen>
+	<dimen name="height_navigation_drawer_header">142dp</dimen>
 
 	<dimen name="elevation_normal">4dp</dimen>
 	<dimen name="elevation_small">2dp</dimen>
@@ -27,8 +28,6 @@
 	<dimen name="margin_list_item_left_large">72dp</dimen>
 
 	<dimen name="padding_button">12dp</dimen>
-
-    <dimen name="navigation_width">280dp</dimen>
 
 	<dimen name="stroke">1dp</dimen>
 

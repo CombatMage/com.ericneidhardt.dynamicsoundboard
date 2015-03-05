@@ -1,23 +1,25 @@
-<LinearLayout
+<android.support.v4.widget.DrawerLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/root_layout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical">
+		android:animateLayoutChanges="true"
+		android:fitsSystemWindows="true">
 
-	<include
-			android:id="@+id/toolbar"
-			layout="@layout/toolbar"/>
-
-	<android.support.v4.widget.DrawerLayout
-
-			android:id="@+id/root_layout"
+	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+
+		<include
+				android:id="@+id/toolbar"
+				layout="@layout/toolbar"/>
 
 		<FrameLayout
 				android:id="@+id/main_frame"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+
 				android:background="@color/background">
 
 			<include
@@ -25,8 +27,12 @@
 
 		</FrameLayout>
 
-		<include
-				layout="@layout/navigation_drawer"/>
 
-	</android.support.v4.widget.DrawerLayout>
-</LinearLayout>
+	</LinearLayout>
+
+	<include layout="@layout/navigation_drawer"
+			 android:layout_width="@dimen/navigation_width"
+			 android:layout_height="match_parent"
+			 android:layout_gravity="start"/>
+
+</android.support.v4.widget.DrawerLayout>

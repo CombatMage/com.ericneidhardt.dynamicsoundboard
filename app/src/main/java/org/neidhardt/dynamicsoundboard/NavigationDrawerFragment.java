@@ -166,7 +166,6 @@ public class NavigationDrawerFragment
 				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), fragment.getSuggestedSoundSheetName());
 			}
 		}
-
 	}
 
 	public void onActionModeStart()

@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
@@ -410,6 +411,7 @@ public class BaseActivity
 		fragmentManager.executePendingTransactions();
 
 		((ActionbarEditText) this.findViewById(R.id.et_set_label)).setText(soundSheet.getLabel());
+		((TextView) this.findViewById(R.id.tv_current_sound_sheet)).setText(soundSheet.getLabel());
 	}
 
 	public static SoundSheetFragment getCurrentFragment(FragmentManager manager)

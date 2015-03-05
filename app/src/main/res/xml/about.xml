@@ -9,7 +9,11 @@
 			android:title="@string/about_version_title"/>
 
 	<Preference
-			android:title="@string/about_used_third_party_title"
-			android:summary="@string/about_used_third_party_summary"/>
+			android:title="@string/about_used_third_party_software_title"
+			android:summary="@string/about_used_third_party_software_summary"/>
+
+	<Preference
+			android:title="@string/about_used_third_party_assets_title"
+			android:summary="@string/about_used_third_party_assets_summary"/>
 
 </PreferenceScreen>
