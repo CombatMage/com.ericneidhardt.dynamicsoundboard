@@ -393,7 +393,6 @@ public class BaseActivity
 
 		FragmentManager fragmentManager = this.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.setCustomAnimations(R.anim.anim_enter_from_left, R.anim.anim_exit_to_right);
 
 		SoundSheetFragment fragment = (SoundSheetFragment) fragmentManager.findFragmentByTag(soundSheet.getFragmentTag());
 		if (fragment != null)
