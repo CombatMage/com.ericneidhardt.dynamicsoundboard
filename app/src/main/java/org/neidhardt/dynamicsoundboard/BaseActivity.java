@@ -25,6 +25,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
+import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
@@ -276,6 +277,11 @@ public class BaseActivity
 				return true;
 			case R.id.action_preferences:
 				this.startActivity(new Intent(this, PreferenceActivity.class));
+				this.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_nothing);
+				return true;
+			case R.id.action_about:
+				this.startActivity(new Intent(this, AboutActivity.class));
+				this.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_nothing);
 				return true;
 			default:
 				return false;
@@ -401,6 +407,7 @@ public class BaseActivity
 			transaction.replace(R.id.main_frame, SoundSheetFragment.getNewInstance(soundSheet), soundSheet.getFragmentTag());
 
 		transaction.commit();
+		fragmentManager.executePendingTransactions();
 
 		((ActionbarEditText) this.findViewById(R.id.et_set_label)).setText(soundSheet.getLabel());
 	}

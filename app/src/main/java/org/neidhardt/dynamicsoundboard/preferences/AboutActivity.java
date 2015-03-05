@@ -39,4 +39,11 @@ public class AboutActivity extends PreferenceActivity
 			this.addPreferencesFromResource(R.xml.about);
 		}
 	}
+
+	@Override
+	public void finish()
+	{
+		super.finish();
+		this.overridePendingTransition(R.anim.anim_nothing, R.anim.anim_slide_out);
+	}
 }

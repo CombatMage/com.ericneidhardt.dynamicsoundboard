@@ -48,4 +48,11 @@ public class PreferenceActivity extends ActionBarActivity
 			this.addPreferencesFromResource(R.xml.preferences);
 		}
 	}
+
+	@Override
+	public void finish()
+	{
+		super.finish();
+		this.overridePendingTransition(R.anim.anim_nothing, R.anim.anim_slide_out);
+	}
 }
