@@ -91,11 +91,12 @@
 		de.greenrobot:eventbus 2.4.0,
 		de.greenrobot:greendao 1.3.7,
 		com.fasterxml.jackson.core:jackson-databind 2.5.1,
-		com.melnykov:floatingactionbutton 1.2.0
+		com.melnykov:floatingactionbutton 1.2.0,
+		com.github.johnkil.android-robototextview:robototextview 2.3.0
 	</string>
 	<string name="about_used_third_party_assets_title">Verwendete Ressourcen</string>
 	<string name="about_used_third_party_assets_summary">
-		www.dribbble.com/Lumberjacks
+		Chris Spooner: http://blog.spoongraphics.co.uk
 	</string>
 
 	<!-- dialog -->

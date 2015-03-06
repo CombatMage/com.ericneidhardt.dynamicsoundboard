@@ -5,8 +5,7 @@
 			 android:layout_marginRight="@dimen/abc_action_bar_default_height_material"
 			 android:layout_marginEnd="@dimen/abc_action_bar_default_height_material"
 			 android:layout_gravity="start"
-			 android:elevation="@dimen/elevation_normal"
-			 android:fitsSystemWindows="true">
+			 android:elevation="@dimen/elevation_normal">
 
 	<include layout="@layout/navigation_drawer_content"/>
 
