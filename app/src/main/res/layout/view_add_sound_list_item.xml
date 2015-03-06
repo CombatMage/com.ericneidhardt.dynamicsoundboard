@@ -9,10 +9,10 @@
 		android:id="@+id/tv_path"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_very_small"
+		android:layout_marginTop="@dimen/margin_small"
 		android:layout_marginLeft="@dimen/margin_default"
 		android:layout_marginRight="@dimen/margin_default"
-		android:layout_marginBottom="@dimen/margin_very_small"
+		android:layout_marginBottom="@dimen/margin_small"
 		android:textSize="@dimen/text_sub_text"
 		android:textColor="@color/text_content_secondary"/>
 
@@ -20,9 +20,9 @@
 		android:id="@+id/et_name_file"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_very_small"
+		android:layout_marginTop="@dimen/margin_small"
 		android:layout_marginLeft="@dimen/margin_default"
 		android:layout_marginRight="@dimen/margin_default"
-		android:layout_marginBottom="@dimen/margin_very_small"/>
+		android:layout_marginBottom="@dimen/margin_small"/>
 
 </LinearLayout>

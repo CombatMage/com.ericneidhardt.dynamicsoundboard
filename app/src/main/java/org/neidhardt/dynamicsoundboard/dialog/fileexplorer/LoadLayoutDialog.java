@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,7 +48,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		view.findViewById(R.id.b_load).setOnClickListener(this);
 
 		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
-		directories.addItemDecoration(new DividerItemDecoration(this.getActivity(), Color.TRANSPARENT));
+		directories.addItemDecoration(new DividerItemDecoration());
 		directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		directories.setItemAnimator(new DefaultItemAnimator());
 

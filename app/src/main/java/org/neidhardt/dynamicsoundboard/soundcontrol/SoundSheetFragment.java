@@ -2,9 +2,6 @@ package org.neidhardt.dynamicsoundboard.soundcontrol;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -22,6 +19,7 @@ import org.neidhardt.dynamicsoundboard.BaseFragment;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
+import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundsDialog;
@@ -264,59 +262,6 @@ public class SoundSheetFragment
 			this.setFloatingBgColor(getResources().getColor(FLOATING_ITEM_BG_COLOR_ID));
 			this.setAutoScrollSpeed(AUTO_SCROLL_SPEED);
 			this.setAutoScrollWindow(AUTO_SCROLL_WINDOW);
-		}
-	}
-
-	private class DividerItemDecoration extends RecyclerView.ItemDecoration
-	{
-		private int heightDivider = getResources().getDimensionPixelSize(R.dimen.stroke);
-
-		@Override
-		public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state)
-		{
-			final int childCount = parent.getChildCount();
-			if (childCount == 0)
-				return;
-
-			for (int i = 0; i < childCount; i++)
-			{
-				if (i < childCount - 1) // do not draw divider after last item
-				{
-					View child = parent.getChildAt(i);
-					final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-					final int left = parent.getPaddingLeft();
-					final int right = parent.getWidth() - parent.getPaddingRight();
-					final int top = child.getBottom() + params.bottomMargin;
-					final int bottom = top + this.heightDivider;
-
-					this.drawDividerBackground(canvas, left, top, right, bottom);
-					this.drawDivider(canvas, left, top, right, bottom);
-				}
-			}
-		}
-
-		private void drawDividerBackground(Canvas canvas, int left, int top, int right, int bottom)
-		{
-			Paint paint = new Paint();
-			paint.setStyle(Paint.Style.FILL);paint.setColor(getResources().getColor(R.color.background));
-			canvas.drawRect(left, top, right, bottom, paint);
-		}
-
-		private void drawDivider(Canvas canvas, int left, int top, int right, int bottom)
-		{
-			Paint paint = new Paint();
-			paint.setStyle(Paint.Style.FILL);paint.setColor(getResources().getColor(R.color.divider));
-			canvas.drawRect(left, top, right, bottom, paint);
-		}
-
-		@Override
-		public void getItemOffsets(Rect outRect, View childView, RecyclerView parent, RecyclerView.State state)
-		{
-			int topOffset = 0;
-			int bottomOffset = this.heightDivider;
-			int rightOffset =  0;
-			int leftOffset =  0;
-			outRect.set(leftOffset, topOffset, rightOffset, bottomOffset);
 		}
 	}
 }

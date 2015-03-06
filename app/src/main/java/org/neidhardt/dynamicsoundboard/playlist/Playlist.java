@@ -59,7 +59,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	private void initRecycleView(Context context)
 	{
 		this.playlist = (RecyclerView)this.findViewById(R.id.rv_playlist);
-		this.playlist.addItemDecoration(new DividerItemDecoration(context));
+		this.playlist.addItemDecoration(new DividerItemDecoration());
 		this.playlist.setLayoutManager(new LinearLayoutManager(context));
 		this.playlist.setItemAnimator(new DefaultItemAnimator());
 	}

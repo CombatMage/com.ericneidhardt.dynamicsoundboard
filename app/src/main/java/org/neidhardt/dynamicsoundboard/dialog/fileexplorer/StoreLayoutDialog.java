@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,7 +49,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		this.inputFileName = (NoUnderscoreEditText) view.findViewById(R.id.et_name_file);
 
 		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
-		directories.addItemDecoration(new DividerItemDecoration(this.getActivity(), Color.TRANSPARENT));
+		directories.addItemDecoration(new DividerItemDecoration());
 		directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		directories.setItemAnimator(new DefaultItemAnimator());
 

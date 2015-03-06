@@ -62,7 +62,7 @@ public class SoundSheets
 	private void initRecycleView(Context context)
 	{
 		this.soundSheets = (RecyclerView)this.findViewById(R.id.rv_sound_sheets);
-		this.soundSheets.addItemDecoration(new DividerItemDecoration(context));
+		this.soundSheets.addItemDecoration(new DividerItemDecoration());
 		this.soundSheets.setLayoutManager(new LinearLayoutManager(context));
 		this.soundSheets.setItemAnimator(new DefaultItemAnimator());
 	}
