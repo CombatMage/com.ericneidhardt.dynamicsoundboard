@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.neidhardt.dynamicsoundboard.BaseFragment;
+import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
 {
-	private BaseFragment parent;
+	private NavigationDrawerFragment parent;
 	private OnItemClickListener onItemClickListener;
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
@@ -25,7 +25,7 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 		this.onItemClickListener = onItemClickListener;
 	}
 
-	public void setParentFragment(BaseFragment parent)
+	public void setNavigationDrawerFragment(NavigationDrawerFragment parent)
 	{
 		this.parent = parent;
 	}

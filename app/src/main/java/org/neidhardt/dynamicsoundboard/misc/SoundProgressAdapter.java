@@ -2,8 +2,6 @@ package org.neidhardt.dynamicsoundboard.misc;
 
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
-import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -68,16 +66,4 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder>
 	}
 
 	protected abstract List<EnhancedMediaPlayer> getValues();
-
-	public int getHeightOfChildren()
-	{
-		int childCount = this.getItemCount();
-		int childHeight = DynamicSoundboardApplication.getSoundboardContext().getResources().getDimensionPixelSize(R.dimen.height_list_item);
-		int dividerHeight = DynamicSoundboardApplication.getSoundboardContext().getResources().getDimensionPixelSize(R.dimen.stroke);
-
-		int heightChildren = childCount * childHeight;
-		int heightDivider = childCount > 1 ? (childCount - 1) * dividerHeight : 0;
-
-		return heightChildren + heightDivider;
-	}
 }

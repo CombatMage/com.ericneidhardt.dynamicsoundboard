@@ -1,8 +1,10 @@
 package org.neidhardt.dynamicsoundboard;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -30,6 +32,8 @@ public class NavigationDrawerFragment
 
 	private ViewPager tabContent;
 	private TabContentAdapter tabContentAdapter;
+
+	private ViewPagerContentObserver listObserver;
 	private Playlist playlist;
 	private PlaylistAdapter playlistAdapter;
 	private SoundSheets soundSheets;
@@ -54,9 +58,12 @@ public class NavigationDrawerFragment
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
 
+		this.listObserver = new ViewPagerContentObserver();
 		this.tabContentAdapter = new TabContentAdapter();
 		this.playlistAdapter = new PlaylistAdapter();
+		this.playlistAdapter.registerAdapterDataObserver(this.listObserver);
 		this.soundSheetsAdapter = new SoundSheetsAdapter();
+		this.soundSheetsAdapter.registerAdapterDataObserver(this.listObserver);
 	}
 
 	@Override
@@ -109,12 +116,14 @@ public class NavigationDrawerFragment
 
 		this.initSoundSheetsAndAdapter();
 		this.initPlayListAndAdapter();
+
+		this.adjustViewPagerToContent();
 	}
 
 	private void initSoundSheetsAndAdapter()
 	{
 		this.soundSheets.setParentFragment(this);
-		this.soundSheetsAdapter.setParentFragment(this);
+		this.soundSheetsAdapter.setNavigationDrawerFragment(this);
 		this.soundSheetsAdapter.notifyDataSetChanged();
 	}
 
@@ -123,7 +132,7 @@ public class NavigationDrawerFragment
 		this.playlist.setParentFragment(this);
 		this.playlistAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
 		this.playlistAdapter.startProgressUpdateTimer();
-		if (EventBus.getDefault().isRegistered(this.playlistAdapter))
+		if (!EventBus.getDefault().isRegistered(this.playlistAdapter))
 			EventBus.getDefault().register(this.playlistAdapter);
 	}
 
@@ -241,4 +250,41 @@ public class NavigationDrawerFragment
 		}
 	}
 
+	/**
+	 * This function resize the viewpagers height to its content. It is necessary, because the viewpager can not
+	 * have layout parameter wrap_content.
+	 */
+	private void adjustViewPagerToContent()
+	{
+		Resources resources = DynamicSoundboardApplication.getSoundboardContext().getResources();
+		int childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item);
+		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
+		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);
+
+		int minHeight = this.contextualActionContainer.getTop() - this.tabContent.getTop(); // this is the minimal height required to fill the screen properly
+
+		int soundSheetCount = this.soundSheetsAdapter.getItemCount();
+		int playListCount = this.playlistAdapter.getItemCount();
+
+		int heightSoundSheetChildren = soundSheetCount * childHeight;
+		int heightDividerSoundSheet = soundSheetCount > 1 ? (soundSheetCount - 1) * dividerHeight : 0;
+		int heightSoundSheet = heightSoundSheetChildren + heightDividerSoundSheet + padding;
+
+		int heightPlayListChildren = playListCount * childHeight;
+		int heightDividerPlayList = playListCount > 1 ? (playListCount - 1) * dividerHeight : 0;
+		int heightPlayList = heightPlayListChildren + heightDividerPlayList + padding;
+
+		int largestList = Math.max(heightSoundSheet, heightPlayList);
+		this.tabContent.getLayoutParams().height = Math.max(largestList, minHeight);
+	}
+
+	private class ViewPagerContentObserver extends RecyclerView.AdapterDataObserver
+	{
+		@Override
+		public void onChanged()
+		{
+			super.onChanged();
+			adjustViewPagerToContent();
+		}
+	}
 }

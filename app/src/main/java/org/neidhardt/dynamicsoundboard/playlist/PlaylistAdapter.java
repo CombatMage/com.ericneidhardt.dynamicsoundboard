@@ -32,6 +32,8 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	@Override
 	protected List<EnhancedMediaPlayer> getValues()
 	{
+		if (super.serviceManagerFragment == null)
+			return null;
 		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getPlayList();
 		if (sounds == null)
 			sounds = new ArrayList<>();
@@ -86,7 +88,8 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	@Override
 	public int getItemCount()
 	{
-		return this.getValues().size();
+		List<EnhancedMediaPlayer> players = this.getValues();
+		return players != null ? this.getValues().size() : 0;
 	}
 
 	/**
@@ -159,4 +162,5 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	{
 		public void onItemClick(View view, EnhancedMediaPlayer player, int position);
 	}
+
 }
