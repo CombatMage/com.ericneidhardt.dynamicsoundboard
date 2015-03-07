@@ -5,7 +5,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_navigation_drawer_header"
 				android:orientation="vertical"
-				android:background="@drawable/ic_background_navigation_drawer_3">
+				android:background="@drawable/ic_background_navigation_drawer">
 
 	<LinearLayout
 			android:layout_width="match_parent"
