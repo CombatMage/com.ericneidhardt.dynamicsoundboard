@@ -13,9 +13,11 @@ import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDra
 /**
  * Created by eric.neidhardt on 08.03.2015.
  */
-public class SoundLayoutList extends NavigationDrawerList
+public class SoundLayoutList extends NavigationDrawerList implements SoundLayoutListAdapter.OnItemClickListener
 {
 	private Interpolator animationInterpolator = new AccelerateDecelerateInterpolator();
+
+	private SoundLayoutListAdapter adapter;
 
 	@SuppressWarnings("unused")
 	public SoundLayoutList(Context context)
@@ -43,6 +45,13 @@ public class SoundLayoutList extends NavigationDrawerList
 		LayoutInflater.from(context).inflate(R.layout.view_sound_layout_list, this, true); // set layout height to wrap content
 	}
 
+	public void setAdapter(SoundLayoutList SoundLayoutListAdapter)
+	{
+		this.adapter = adapter;
+		this.adapter.setOnItemClickListener(this);
+		//this.soundSheets.setAdapter(adapter);
+	}
+
 	@Override
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
@@ -60,6 +69,12 @@ public class SoundLayoutList extends NavigationDrawerList
 	protected int getActionModeTitle()
 	{
 		return R.string.cab_title_delete_sound_layouts;
+	}
+
+	@Override
+	public void onItemClick(View view, String data, int position)
+	{
+		// TODO
 	}
 
 	public void toggleVisibility()

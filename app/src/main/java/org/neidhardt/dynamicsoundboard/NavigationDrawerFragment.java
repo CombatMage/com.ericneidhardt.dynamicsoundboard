@@ -15,6 +15,7 @@ import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.playlist.PlaylistAdapter;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutList;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutListAdapter;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
@@ -36,6 +37,7 @@ public class NavigationDrawerFragment
 
 	private ViewPagerContentObserver listObserver;
 	private SoundLayoutList soundLayoutList;
+	private SoundLayoutListAdapter soundLayoutListAdapter;
 	private Playlist playlist;
 	private PlaylistAdapter playlistAdapter;
 	private SoundSheets soundSheets;
@@ -62,6 +64,7 @@ public class NavigationDrawerFragment
 
 		this.listObserver = new ViewPagerContentObserver();
 		this.tabContentAdapter = new TabContentAdapter();
+		this.soundLayoutListAdapter = new SoundLayoutListAdapter();
 		this.playlistAdapter = new PlaylistAdapter();
 		this.playlistAdapter.registerAdapterDataObserver(this.listObserver);
 		this.soundSheetsAdapter = new SoundSheetsAdapter();
@@ -103,6 +106,7 @@ public class NavigationDrawerFragment
 		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
 		this.deleteSelected.setOnClickListener(this);
 
+		this.soundLayoutList.setAdapter(this.soundLayoutList);
 		this.playlist.setAdapter(this.playlistAdapter);
 		this.soundSheets.setAdapter(this.soundSheetsAdapter);
 		this.initSoundSheetsAndAdapter();
