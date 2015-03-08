@@ -76,32 +76,21 @@
 		<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:orientation="vertical">
+				android:orientation="vertical"
+				android:animateLayoutChanges="true">
 
 			<include layout="@layout/navigation_drawer_header"/>
 
-			<org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout
-					android:id="@+id/layout_tab"
+			<FrameLayout
 					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:background="@color/primary_200"
-					android:elevation="@dimen/elevation_small"/>
+					android:layout_height="match_parent">
 
-			<android.support.v4.view.ViewPager
-					android:id="@+id/vp_tab_content"
-					android:layout_width="match_parent"
-					android:layout_height="800dp">
+				<include layout="@layout/navigation_drawer_view_pager"/>
 
-				<org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets
-						android:id="@+id/sound_sheets"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"/>
+				<include layout="@layout/navigation_drawer_select_sound_layout"
+						 android:visibility="gone"/>
 
-				<org.neidhardt.dynamicsoundboard.playlist.Playlist
-						android:id="@+id/playlist"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"/>
-			</android.support.v4.view.ViewPager>
+			</FrameLayout>
 
 		</LinearLayout>
 

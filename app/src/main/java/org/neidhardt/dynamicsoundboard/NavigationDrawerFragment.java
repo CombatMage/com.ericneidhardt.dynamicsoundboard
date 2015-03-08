@@ -34,6 +34,7 @@ public class NavigationDrawerFragment
 	private TabContentAdapter tabContentAdapter;
 
 	private ViewPagerContentObserver listObserver;
+	private View selectSoundOverlay;
 	private Playlist playlist;
 	private PlaylistAdapter playlistAdapter;
 	private SoundSheets soundSheets;
@@ -93,6 +94,7 @@ public class NavigationDrawerFragment
 			}
 		});
 
+		this.selectSoundOverlay = this.getActivity().findViewById(R.id.layout_select_sound_layout);
 		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
 
@@ -107,6 +109,7 @@ public class NavigationDrawerFragment
 
 		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.b_add).setOnClickListener(this);
+		this.getActivity().findViewById(R.id.layout_change_sound_layout).setOnClickListener(this);
 	}
 
 	@Override
@@ -151,21 +154,22 @@ public class NavigationDrawerFragment
 	@Override
 	public void onClick(View v)
 	{
-		if (v.getId() == R.id.b_delete)
+		int id = v.getId();
+		if (id == R.id.b_delete)
 		{
 			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				this.playlist.prepareItemDeletion();
 			else
 				this.soundSheets.prepareItemDeletion();
 		}
-		else if (v.getId() == R.id.b_delete_selected)
+		else if (id == R.id.b_delete_selected)
 		{
 			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				this.playlist.deleteSelected();
 			else
 				this.soundSheets.deleteSelected();
 		}
-		else if (v.getId() == R.id.b_add)
+		else if (id  == R.id.b_add)
 		{
 			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), Playlist.TAG);
@@ -175,6 +179,45 @@ public class NavigationDrawerFragment
 				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), fragment.getSuggestedSoundSheetName());
 			}
 		}
+		else if (id == R.id.layout_change_sound_layout)
+		{
+			View indicator = this.getActivity().findViewById(R.id.iv_change_sound_layout_indicator);
+			indicator.animate()
+					.rotationXBy(180)
+					.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
+					.start();
+
+			if (selectSoundOverlay.getVisibility() == View.VISIBLE)
+				this.hideSelectSoundLayout();
+			else
+				this.showSelectSoundLayoutOverlay();
+		}
+	}
+
+	private void showSelectSoundLayoutOverlay()
+	{
+		this.selectSoundOverlay.setScaleY(0);
+		this.selectSoundOverlay.setVisibility(View.VISIBLE);
+		this.selectSoundOverlay.animate()
+				.scaleY(1)
+				.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
+				.start();
+	}
+
+	private void hideSelectSoundLayout()
+	{
+		this.selectSoundOverlay.animate()
+				.scaleY(0)
+				.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
+				.withEndAction(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						selectSoundOverlay.setVisibility(View.GONE);
+					}
+				})
+				.start();
 	}
 
 	public void onActionModeStart()

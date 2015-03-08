@@ -7,6 +7,7 @@
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
 
 	<!-- navigation drawer -->
+	<string name="navigation_drawer_content_description_open_select_sound_layout">Hier klicken um zu einem anderen Sound Layout zu wechseln</string>
 	<string name="navigation_drawer_content_description_open">Navigation öffnen</string>
 	<string name="navigation_drawer_content_description_close">Navigation schließen</string>
 	<string name="navigation_drawer_content_description_avatar">App Icon</string>
@@ -22,6 +23,8 @@
 	<string name="tab_play_list">Playliste</string>
 	<string name="tab_play_list_content_description_playlist">Sound wird aus der Playliste entfernt</string>
 
+	<string name="sound_layout_default">Neue Sound Kollektion</string>
+
 	<!-- toolbar -->
 	<string name="action_menu">Sound Layouts öffnen</string>
 	<string name="action_add_new_sound_sheet">Eine neue Sound Gruppe hinzufügen</string>
@@ -30,8 +33,8 @@
 	<string name="action_delete_sheet">Diese Kategorie löschen</string>
 	<string name="action_clear_sounds_in_sheet">Sounds in dieser Kategorie löschen</string>
 	<string name="action_clear_sound_sheets">Alle Kategorien löschen</string>
-	<string name="action_store_sound_sheets">Soundlayout speichern</string>
-	<string name="action_load_sound_sheets">Soundlayout laden</string>
+	<string name="action_store_sound_sheets">Soundlayout exportieren</string>
+	<string name="action_load_sound_sheets">Soundlayout importieren</string>
 	<string name="action_preferences">Einstellungen</string>
 	<string name="action_about">Über</string>
 
