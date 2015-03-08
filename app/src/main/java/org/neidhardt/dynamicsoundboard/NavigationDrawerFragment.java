@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.playlist.PlaylistAdapter;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutList;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
@@ -34,7 +35,7 @@ public class NavigationDrawerFragment
 	private TabContentAdapter tabContentAdapter;
 
 	private ViewPagerContentObserver listObserver;
-	private View selectSoundOverlay;
+	private SoundLayoutList soundLayoutList;
 	private Playlist playlist;
 	private PlaylistAdapter playlistAdapter;
 	private SoundSheets soundSheets;
@@ -94,7 +95,7 @@ public class NavigationDrawerFragment
 			}
 		});
 
-		this.selectSoundOverlay = this.getActivity().findViewById(R.id.layout_select_sound_layout);
+		this.soundLayoutList = (SoundLayoutList) this.getActivity().findViewById(R.id.layout_select_sound_layout);
 		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
 
@@ -187,37 +188,10 @@ public class NavigationDrawerFragment
 					.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
 					.start();
 
-			if (selectSoundOverlay.getVisibility() == View.VISIBLE)
-				this.hideSelectSoundLayout();
-			else
-				this.showSelectSoundLayoutOverlay();
+			this.soundLayoutList.toggleVisibility();
+			if (!this.getBaseActivity().isActionModeActive() && this.soundLayoutList.getVisibility() == View.VISIBLE)
+				this.soundLayoutList.prepareItemDeletion();
 		}
-	}
-
-	private void showSelectSoundLayoutOverlay()
-	{
-		this.selectSoundOverlay.setScaleY(0);
-		this.selectSoundOverlay.setVisibility(View.VISIBLE);
-		this.selectSoundOverlay.animate()
-				.scaleY(1)
-				.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
-				.start();
-	}
-
-	private void hideSelectSoundLayout()
-	{
-		this.selectSoundOverlay.animate()
-				.scaleY(0)
-				.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
-				.withEndAction(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						selectSoundOverlay.setVisibility(View.GONE);
-					}
-				})
-				.start();
 	}
 
 	public void onActionModeStart()

@@ -40,6 +40,7 @@
 
 	<string name="cab_title_delete_sound_sheets">Kategorien zum löschen markieren</string>
 	<string name="cab_title_delete_play_list_sounds">Sounds zum löschen markieren</string>
+	<string name="cab_title_delete_sound_layouts">Soundlayouts zum löschen markieren</string>
 
 	<!-- sound control -->
 	<string name="sound_control_content_description_stop">Setzt den Sound zurück</string>
