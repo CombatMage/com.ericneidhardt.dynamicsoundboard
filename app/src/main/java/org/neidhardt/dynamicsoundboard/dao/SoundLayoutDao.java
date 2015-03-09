@@ -23,6 +23,7 @@ public class SoundLayoutDao extends AbstractDao<SoundLayout, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Label = new Property(1, String.class, "label", false, "LABEL");
         public final static Property DatabaseId = new Property(2, String.class, "databaseId", false, "DATABASE_ID");
+        public final static Property IsSelected = new Property(3, boolean.class, "isSelected", false, "IS_SELECTED");
     };
 
 
@@ -39,8 +40,9 @@ public class SoundLayoutDao extends AbstractDao<SoundLayout, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'SOUND_LAYOUT' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'LABEL' TEXT," + // 1: label
-                "'DATABASE_ID' TEXT);"); // 2: databaseId
+                "'LABEL' TEXT NOT NULL ," + // 1: label
+                "'DATABASE_ID' TEXT NOT NULL UNIQUE ," + // 2: databaseId
+                "'IS_SELECTED' INTEGER NOT NULL );"); // 3: isSelected
     }
 
     /** Drops the underlying database table. */
@@ -58,16 +60,9 @@ public class SoundLayoutDao extends AbstractDao<SoundLayout, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
- 
-        String label = entity.getLabel();
-        if (label != null) {
-            stmt.bindString(2, label);
-        }
- 
-        String databaseId = entity.getDatabaseId();
-        if (databaseId != null) {
-            stmt.bindString(3, databaseId);
-        }
+        stmt.bindString(2, entity.getLabel());
+        stmt.bindString(3, entity.getDatabaseId());
+        stmt.bindLong(4, entity.getIsSelected() ? 1l: 0l);
     }
 
     /** @inheritdoc */
@@ -81,8 +76,9 @@ public class SoundLayoutDao extends AbstractDao<SoundLayout, Long> {
     public SoundLayout readEntity(Cursor cursor, int offset) {
         SoundLayout entity = new SoundLayout( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // label
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // databaseId
+            cursor.getString(offset + 1), // label
+            cursor.getString(offset + 2), // databaseId
+            cursor.getShort(offset + 3) != 0 // isSelected
         );
         return entity;
     }
@@ -91,8 +87,9 @@ public class SoundLayoutDao extends AbstractDao<SoundLayout, Long> {
     @Override
     public void readEntity(Cursor cursor, SoundLayout entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setLabel(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setDatabaseId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setLabel(cursor.getString(offset + 1));
+        entity.setDatabaseId(cursor.getString(offset + 2));
+        entity.setIsSelected(cursor.getShort(offset + 3) != 0);
      }
     
     /** @inheritdoc */

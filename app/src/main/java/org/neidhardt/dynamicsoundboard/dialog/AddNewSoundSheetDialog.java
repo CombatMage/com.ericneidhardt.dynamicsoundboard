@@ -80,5 +80,4 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 		caller.addSoundSheetAndNotifyFragment(caller.getNewSoundSheet(label));
 	}
 
-
 }

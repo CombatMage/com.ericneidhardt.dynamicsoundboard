@@ -30,6 +30,7 @@ import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
@@ -62,6 +63,7 @@ public class BaseActivity
 		this.createActionbar();
 		this.createNavigationDrawer();
 
+		this.addSoundLayoutsManagerFragment();
 		this.addSoundSheetManagerFragment();
 		this.addSoundManagerFragment();
 
@@ -343,6 +345,19 @@ public class BaseActivity
 		{
 			fragment = new SoundSheetsManagerFragment();
 			fragmentManager.beginTransaction().add(fragment, SoundSheetsManagerFragment.TAG).commit();
+			fragmentManager.executePendingTransactions();
+		}
+	}
+
+	private void addSoundLayoutsManagerFragment()
+	{
+		FragmentManager fragmentManager = this.getFragmentManager();
+
+		Fragment fragment =  fragmentManager.findFragmentByTag(SoundLayoutsManagerFragment.TAG);
+		if (fragment == null)
+		{
+			fragment = new SoundLayoutsManagerFragment();
+			fragmentManager.beginTransaction().add(fragment, SoundLayoutsManagerFragment.TAG).commit();
 			fragmentManager.executePendingTransactions();
 		}
 	}
