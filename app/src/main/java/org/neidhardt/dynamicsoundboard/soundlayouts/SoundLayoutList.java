@@ -1,6 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundlayouts;
 
 import android.content.Context;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.SparseArray;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 
@@ -50,6 +53,9 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 	{
 		LayoutInflater.from(context).inflate(R.layout.view_sound_layout_list, this, true);
 		this.soundLayouts = (RecyclerView) this.findViewById(R.id.rv_sound_layouts_list);
+		this.soundLayouts.addItemDecoration(new DividerItemDecoration());
+		this.soundLayouts.setLayoutManager(new LinearLayoutManager(context));
+		this.soundLayouts.setItemAnimator(new DefaultItemAnimator());
 	}
 
 	public void setAdapter(SoundLayoutListAdapter adapter)
@@ -87,6 +93,11 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 	public void onItemClick(View view, SoundLayout data, int position)
 	{
 		// TODO
+	}
+
+	public boolean isActive()
+	{
+		return this.getVisibility() == View.VISIBLE;
 	}
 
 	public void toggleVisibility()

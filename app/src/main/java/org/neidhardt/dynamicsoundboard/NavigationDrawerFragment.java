@@ -199,7 +199,7 @@ public class NavigationDrawerFragment
 					.start();
 
 			this.soundLayoutList.toggleVisibility();
-			if (!this.getBaseActivity().isActionModeActive() && this.soundLayoutList.getVisibility() == View.VISIBLE)
+			if (this.getBaseActivity().isActionModeActive() && this.soundLayoutList.isActive())
 				this.soundLayoutList.prepareItemDeletion();
 		}
 	}
