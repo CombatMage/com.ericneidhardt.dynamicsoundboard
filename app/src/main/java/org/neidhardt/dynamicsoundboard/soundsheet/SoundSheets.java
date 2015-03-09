@@ -84,7 +84,8 @@ public class SoundSheets
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
 		List<SoundSheet> soundSheetsToRemove = new ArrayList<>(selectedItems.size());
-		for(int i = 0; i < selectedItems.size(); i++) {
+		for(int i = 0; i < selectedItems.size(); i++)
+		{
 			int index = selectedItems.keyAt(i);
 			soundSheetsToRemove.add(this.adapter.getValues().get(index));
 		}

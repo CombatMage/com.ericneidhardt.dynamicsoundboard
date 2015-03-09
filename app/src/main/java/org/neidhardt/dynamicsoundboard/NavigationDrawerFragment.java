@@ -35,7 +35,6 @@ public class NavigationDrawerFragment
 	private ViewPager tabContent;
 	private TabContentAdapter tabContentAdapter;
 
-	private ViewPagerContentObserver listObserver;
 	private SoundLayoutList soundLayoutList;
 	private SoundLayoutListAdapter soundLayoutListAdapter;
 	private Playlist playlist;
@@ -62,13 +61,13 @@ public class NavigationDrawerFragment
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
 
-		this.listObserver = new ViewPagerContentObserver();
+		ViewPagerContentObserver listObserver = new ViewPagerContentObserver();
 		this.tabContentAdapter = new TabContentAdapter();
 		this.soundLayoutListAdapter = new SoundLayoutListAdapter();
 		this.playlistAdapter = new PlaylistAdapter();
-		this.playlistAdapter.registerAdapterDataObserver(this.listObserver);
+		this.playlistAdapter.registerAdapterDataObserver(listObserver);
 		this.soundSheetsAdapter = new SoundSheetsAdapter();
-		this.soundSheetsAdapter.registerAdapterDataObserver(this.listObserver);
+		this.soundSheetsAdapter.registerAdapterDataObserver(listObserver);
 	}
 
 	@Override
@@ -106,7 +105,7 @@ public class NavigationDrawerFragment
 		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
 		this.deleteSelected.setOnClickListener(this);
 
-		this.soundLayoutList.setAdapter(this.soundLayoutList);
+		this.soundLayoutList.setAdapter(this.soundLayoutListAdapter);
 		this.playlist.setAdapter(this.playlistAdapter);
 		this.soundSheets.setAdapter(this.soundSheetsAdapter);
 		this.initSoundSheetsAndAdapter();
@@ -122,10 +121,17 @@ public class NavigationDrawerFragment
 	{
 		super.onResume();
 
+		this.initSoundLayoutsAndAdapter();
 		this.initSoundSheetsAndAdapter();
 		this.initPlayListAndAdapter();
 
 		this.adjustViewPagerToContent();
+	}
+
+	private void initSoundLayoutsAndAdapter()
+	{
+		this.soundLayoutList.setParentFragment(this);
+		this.soundLayoutListAdapter.setNavigationDrawerFragment(this);
 	}
 
 	private void initSoundSheetsAndAdapter()

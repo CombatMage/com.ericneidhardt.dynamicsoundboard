@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundlayouts;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -9,6 +10,10 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDrawerList;
+import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by eric.neidhardt on 08.03.2015.
@@ -17,6 +22,7 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 {
 	private Interpolator animationInterpolator = new AccelerateDecelerateInterpolator();
 
+	private RecyclerView soundLayouts;
 	private SoundLayoutListAdapter adapter;
 
 	@SuppressWarnings("unused")
@@ -42,27 +48,33 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 
 	private void init(Context context)
 	{
-		LayoutInflater.from(context).inflate(R.layout.view_sound_layout_list, this, true); // set layout height to wrap content
+		LayoutInflater.from(context).inflate(R.layout.view_sound_layout_list, this, true);
+		this.soundLayouts = (RecyclerView) this.findViewById(R.id.rv_sound_layouts_list);
 	}
 
-	public void setAdapter(SoundLayoutList SoundLayoutListAdapter)
+	public void setAdapter(SoundLayoutListAdapter adapter)
 	{
 		this.adapter = adapter;
 		this.adapter.setOnItemClickListener(this);
-		//this.soundSheets.setAdapter(adapter);
+		this.soundLayouts.setAdapter(adapter);
 	}
 
 	@Override
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
+		List<SoundLayout> soundLayoutsToRemove = new ArrayList<>(selectedItems.size());
+		for(int i = 0; i < selectedItems.size(); i++)
+		{
+			int index = selectedItems.keyAt(i);
+			soundLayoutsToRemove.add(this.adapter.getValues().get(index));
+		}
 		// TODO
 	}
 
 	@Override
 	protected int getItemCount()
 	{
-		// TODO
-		return 0;
+		return this.adapter.getItemCount();
 	}
 
 	@Override
@@ -72,7 +84,7 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 	}
 
 	@Override
-	public void onItemClick(View view, String data, int position)
+	public void onItemClick(View view, SoundLayout data, int position)
 	{
 		// TODO
 	}
@@ -102,9 +114,11 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 				.scaleY(0)
 				.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
 				.setInterpolator(this.animationInterpolator)
-				.withEndAction(new Runnable() {
+				.withEndAction(new Runnable()
+				{
 					@Override
-					public void run() {
+					public void run()
+					{
 						SoundLayoutList.this.setVisibility(View.GONE);
 					}
 				})

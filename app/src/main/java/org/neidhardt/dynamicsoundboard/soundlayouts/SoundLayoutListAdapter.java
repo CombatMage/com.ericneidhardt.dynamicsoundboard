@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,23 +37,21 @@ public class SoundLayoutListAdapter extends RecyclerView.Adapter<SoundLayoutList
 	 */
 	public void setSelectedItem(int position)
 	{
-		List<String> soundLayouts = this.getValues();
+		List<SoundLayout> soundLayouts = this.getValues();
 		int size = soundLayouts.size();
 		for (int i = 0; i < size; i++)
 		{
 			boolean isSelected = i == position;
-			// soundSheets.get(i).setIsSelected(isSelected); // TODO use real data object and set selection
+			soundLayouts.get(i).setIsSelected(isSelected);
 		}
 		this.notifyDataSetChanged();
 	}
 
-	public List<String> getValues()
+	public List<SoundLayout> getValues()
 	{
-		/*if (this.parent == null || this.parent.getSoundSheetManagerFragment() == null)
+		if (this.parent == null || this.parent.getSoundSheetManagerFragment() == null)
 			return new ArrayList<>();
-		return this.parent.getSoundSheetManagerFragment().getAll();*/
-
-		return new ArrayList<String>();
+		return this.parent.getSoundLayoutsManagerFragment().getSoundLayouts();
 	}
 
 	@Override
@@ -71,10 +70,9 @@ public class SoundLayoutListAdapter extends RecyclerView.Adapter<SoundLayoutList
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		// TODO use real data object
-		// SoundSheet data = this.getValues().get(position);
-		// holder.label.setText(data.getLabel());
-		// holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
+		SoundLayout data = this.getValues().get(position);
+		holder.label.setText(data.getLabel());
+		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -102,6 +100,6 @@ public class SoundLayoutListAdapter extends RecyclerView.Adapter<SoundLayoutList
 
 	public static interface OnItemClickListener
 	{
-		public void onItemClick(View view, String data, int position); // TODO wrong data
+		public void onItemClick(View view, SoundLayout data, int position);
 	}
 }
