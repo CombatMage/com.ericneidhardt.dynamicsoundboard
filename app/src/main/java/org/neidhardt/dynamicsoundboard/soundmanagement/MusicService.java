@@ -109,6 +109,11 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		SoundboardPreferences.registerSharedPreferenceChangedListener(this);
 		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
 
+		this.initSoundsAndPlayList();
+	}
+
+	public void initSoundsAndPlayList()
+	{
 		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseBaseName() + DB_SOUNDS_PLAYLIST);
 		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseBaseName() + DB_SOUNDS);
 
@@ -133,11 +138,16 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this);
 		this.unregisterReceiver(this.notificationActionReceiver);
 
+		this.clearAndStoreSoundsAndPlayList();
+
+		super.onDestroy();
+	}
+
+	public void clearAndStoreSoundsAndPlayList()
+	{
 		this.storeLoadedSounds();
 		this.dismissAllNotifications();
 		this.releaseMediaPlayers();
-
-		super.onDestroy();
 	}
 
 	@Override

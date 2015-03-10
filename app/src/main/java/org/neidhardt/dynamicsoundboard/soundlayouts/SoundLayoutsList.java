@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
+import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDrawerList;
@@ -98,7 +99,11 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 		else if (this.parent != null)
 		{
 			this.adapter.setSelectedItem(position);
-			// TODO open new sound layout
+
+			BaseActivity activity = this.parent.getBaseActivity();
+			activity.switchToActiveSoundLayout();
+
+			this.toggleVisibility();
 		}
 	}
 

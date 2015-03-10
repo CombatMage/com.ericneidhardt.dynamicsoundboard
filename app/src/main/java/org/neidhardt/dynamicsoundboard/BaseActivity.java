@@ -421,4 +421,16 @@ public class BaseActivity
 		return null;
 	}
 
+	public void switchToActiveSoundLayout()
+	{
+		SoundSheetsManagerFragment fragment = (SoundSheetsManagerFragment) this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
+		this.removeSoundFragment(fragment.getAll());
+		this.setSoundSheetActionsEnable(false);
+		fragment.storeSoundSheets();
+		fragment.initSoundSheets();
+
+		MusicService service = this.getServiceManagerFragment().getSoundService();
+		service.clearAndStoreSoundsAndPlayList();
+		service.initSoundsAndPlayList();
+	}
 }

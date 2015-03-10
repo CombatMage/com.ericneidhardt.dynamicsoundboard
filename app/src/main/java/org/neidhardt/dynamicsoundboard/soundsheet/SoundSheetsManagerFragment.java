@@ -50,10 +50,15 @@ public class SoundSheetsManagerFragment
 		this.setRetainInstance(true);
 		this.setHasOptionsMenu(true);
 
+		this.initSoundSheets();
+	}
+
+	public void initSoundSheets()
+	{
 		this.soundSheets = new ArrayList<>();
 		this.daoSession = Util.setupDatabase(this.getActivity(), this.getDatabaseName());
 
-		SafeAsyncTask task = new LoadSoundSheetsTask();
+		SafeAsyncTask task = new LoadSoundSheetsTask(this.daoSession);
 		task.execute();
 	}
 
@@ -81,7 +86,13 @@ public class SoundSheetsManagerFragment
 	{
 		super.onPause();
 
-		SafeAsyncTask task = new UpdateSoundSheetsTask(this.soundSheets);
+		SafeAsyncTask task = new UpdateSoundSheetsTask(this.daoSession, this.soundSheets);
+		task.execute();
+	}
+
+	public void storeSoundSheets()
+	{
+		SafeAsyncTask task = new UpdateSoundSheetsTask(this.daoSession, this.soundSheets);
 		task.execute();
 	}
 
@@ -223,7 +234,7 @@ public class SoundSheetsManagerFragment
 				.findFragmentByTag(NavigationDrawerFragment.TAG);
 		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 
-		SafeAsyncTask task = new StoreSoundSheetTask(soundSheet);
+		SafeAsyncTask task = new StoreSoundSheetTask(this.daoSession, soundSheet);
 		task.execute();
 	}
 
@@ -304,10 +315,17 @@ public class SoundSheetsManagerFragment
 
 	private class LoadSoundSheetsTask extends SafeAsyncTask<List<SoundSheet>>
 	{
+		private DaoSession daoSession;
+
+		public LoadSoundSheetsTask(DaoSession daoSession)
+		{
+			this.daoSession = daoSession;
+		}
+
 		@Override
 		public List<SoundSheet> call() throws Exception
 		{
-			return daoSession.getSoundSheetDao().queryBuilder().list();
+			return this.daoSession.getSoundSheetDao().queryBuilder().list();
 		}
 
 		@Override
@@ -355,17 +373,20 @@ public class SoundSheetsManagerFragment
 	private class StoreSoundSheetTask extends SafeAsyncTask<Void>
 	{
 		private final String TAG = StoreSoundSheetTask.class.getName();
+
+		private DaoSession daoSession;
 		private SoundSheet soundSheet;
 
-		public StoreSoundSheetTask(SoundSheet soundSheet)
+		public StoreSoundSheetTask(DaoSession daoSession, SoundSheet soundSheet)
 		{
+			this.daoSession = daoSession;
 			this.soundSheet = soundSheet;
 		}
 
 		@Override
 		public Void call() throws Exception
 		{
-			daoSession.getSoundSheetDao().insertInTx(this.soundSheet);
+			this.daoSession.getSoundSheetDao().insertInTx(this.soundSheet);
 			return null;
 		}
 
@@ -380,18 +401,20 @@ public class SoundSheetsManagerFragment
 
 	private class UpdateSoundSheetsTask extends SafeAsyncTask<Void>
 	{
+		private final DaoSession daoSession;
 		private final List<SoundSheet> soundSheets;
 
-		private UpdateSoundSheetsTask(List<SoundSheet> soundSheets)
+		private UpdateSoundSheetsTask(DaoSession daoSession, List<SoundSheet> soundSheets)
 		{
+			this.daoSession = daoSession;
 			this.soundSheets = soundSheets;
 		}
 
 		@Override
 		public Void call() throws Exception
 		{
-			daoSession.getSoundSheetDao().deleteAll();
-			daoSession.getSoundSheetDao().insertInTx(soundSheets);
+			this.daoSession.getSoundSheetDao().deleteAll();
+			this.daoSession.getSoundSheetDao().insertInTx(soundSheets);
 			return null;
 		}
 
