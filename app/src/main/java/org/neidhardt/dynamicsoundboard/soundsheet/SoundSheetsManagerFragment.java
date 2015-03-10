@@ -22,6 +22,7 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -37,7 +38,7 @@ public class SoundSheetsManagerFragment
 {
 	public static final String TAG = SoundSheetsManagerFragment.class.getName();
 
-	private static final String DB_SOUNDS = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets";
+	private static final String DB_SOUNDS = "db_sound_sheets";
 
 	private List<SoundSheet> soundSheets;
 	private DaoSession daoSession;
@@ -50,10 +51,17 @@ public class SoundSheetsManagerFragment
 		this.setHasOptionsMenu(true);
 
 		this.soundSheets = new ArrayList<>();
-		this.daoSession = Util.setupDatabase(this.getActivity(), DB_SOUNDS);
+		this.daoSession = Util.setupDatabase(this.getActivity(), this.getDatabaseName());
 
 		SafeAsyncTask task = new LoadSoundSheetsTask();
 		task.execute();
+	}
+
+	private String getDatabaseName()
+	{
+		SoundLayoutsManagerFragment soundLayoutsManagerFragment = this.getSoundLayoutsManagerFragment();
+		String baseName = soundLayoutsManagerFragment.getActiveSoundLayout().getDatabaseId();
+		return baseName + DB_SOUNDS;
 	}
 
 	@Override

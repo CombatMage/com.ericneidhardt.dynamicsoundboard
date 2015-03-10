@@ -40,6 +40,17 @@ public class SoundLayoutsManagerFragment extends BaseFragment
 		return storedLayouts;
 	}
 
+	public SoundLayout getActiveSoundLayout()
+	{
+		List<SoundLayout> storedLayouts = this.daoSession.getSoundLayoutDao().queryBuilder().list();
+		for (SoundLayout soundLayout : storedLayouts)
+		{
+			if (soundLayout.getIsSelected())
+				return soundLayout;
+		}
+		throw new IllegalStateException("no active sound layout was found");
+	}
+
 	private SoundLayout getDefaultSoundLayout()
 	{
 		SoundLayout layout = new SoundLayout();
