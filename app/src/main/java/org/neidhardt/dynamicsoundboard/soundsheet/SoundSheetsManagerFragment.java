@@ -38,7 +38,8 @@ public class SoundSheetsManagerFragment
 {
 	public static final String TAG = SoundSheetsManagerFragment.class.getName();
 
-	private static final String DB_SOUNDS = "db_sound_sheets";
+	private static final String DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets";
+	private static final String DB_SOUND_SHEETS = "db_sound_sheets";
 
 	private List<SoundSheet> soundSheets;
 	private DaoSession daoSession;
@@ -65,7 +66,9 @@ public class SoundSheetsManagerFragment
 	private String getDatabaseName()
 	{
 		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
-		return baseName + DB_SOUNDS;
+		if (baseName.equals(SoundLayoutsManager.DB_DEFAULT))
+			return DB_SOUND_SHEETS_DEFAULT;
+		return baseName + DB_SOUND_SHEETS;
 	}
 
 	@Override

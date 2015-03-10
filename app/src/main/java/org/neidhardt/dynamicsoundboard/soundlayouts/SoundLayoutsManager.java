@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class SoundLayoutsManager
 {
+	public static final String DB_DEFAULT = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default";
+
 	private static final String DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts";
 
 	private static SoundLayoutsManager instance;
@@ -70,7 +72,7 @@ public class SoundLayoutsManager
 	{
 		SoundLayout layout = new SoundLayout();
 		String label = DynamicSoundboardApplication.getSoundboardContext().getString(R.string.sound_layout_default);
-		layout.setDatabaseId(getNewDatabaseIdForLabel(label));
+		layout.setDatabaseId(DB_DEFAULT);
 		layout.setLabel(label);
 		layout.setIsSelected(true);
 		return layout;

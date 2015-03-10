@@ -38,6 +38,9 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	public static final String ACTION_FINISHED_LOADING_PLAYLIST = "org.neidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_PLAYLIST";
 	public static final String ACTION_FINISHED_LOADING_SOUNDS = "org.neidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_SOUNDS";
 
+	private static final String DB_SOUNDS_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
+	private static final String DB_SOUNDS_PLAYLIST_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
+
 	private static final String DB_SOUNDS = "db_sounds";
 	private static final String DB_SOUNDS_PLAYLIST = "db_sounds_playlist";
 
@@ -114,8 +117,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 	public void initSoundsAndPlayList()
 	{
-		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseBaseName() + DB_SOUNDS_PLAYLIST);
-		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseBaseName() + DB_SOUNDS);
+		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseNamePlayList());
+		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseNameSounds());
 
 		SafeAsyncTask task = new LoadSoundsTask();
 		task.execute();
@@ -124,9 +127,20 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		task.execute();
 	}
 
-	private String getDatabaseBaseName()
+	private String getDatabaseNameSounds()
 	{
-		return SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
+		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
+		if (baseName.equals(SoundLayoutsManager.DB_DEFAULT))
+			return DB_SOUNDS_DEFAULT;
+		return baseName + DB_SOUNDS;
+	}
+
+	private String getDatabaseNamePlayList()
+	{
+		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
+		if (baseName.equals(SoundLayoutsManager.DB_DEFAULT))
+			return DB_SOUNDS_PLAYLIST_DEFAULT;
+		return baseName + DB_SOUNDS_PLAYLIST;
 	}
 
 	@Override
