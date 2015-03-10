@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 08.03.2015.
  */
-public class SoundLayoutListAdapter extends RecyclerView.Adapter<SoundLayoutListAdapter.ViewHolder>
+public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsListAdapter.ViewHolder>
 {
 	private NavigationDrawerFragment parent;
 	private OnItemClickListener onItemClickListener;
@@ -37,13 +37,7 @@ public class SoundLayoutListAdapter extends RecyclerView.Adapter<SoundLayoutList
 	 */
 	public void setSelectedItem(int position)
 	{
-		List<SoundLayout> soundLayouts = this.getValues();
-		int size = soundLayouts.size();
-		for (int i = 0; i < size; i++)
-		{
-			boolean isSelected = i == position;
-			soundLayouts.get(i).setIsSelected(isSelected);
-		}
+		SoundLayoutsManager.getInstance().setSelected(position);
 		this.notifyDataSetChanged();
 	}
 
@@ -51,7 +45,7 @@ public class SoundLayoutListAdapter extends RecyclerView.Adapter<SoundLayoutList
 	{
 		if (this.parent == null || this.parent.getSoundSheetManagerFragment() == null)
 			return new ArrayList<>();
-		return this.parent.getSoundLayoutsManagerFragment().getSoundLayouts();
+		return SoundLayoutsManager.getInstance().getSoundLayouts();
 	}
 
 	@Override

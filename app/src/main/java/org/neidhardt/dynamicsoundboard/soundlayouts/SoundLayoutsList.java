@@ -21,29 +21,29 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 08.03.2015.
  */
-public class SoundLayoutList extends NavigationDrawerList implements SoundLayoutListAdapter.OnItemClickListener
+public class SoundLayoutsList extends NavigationDrawerList implements SoundLayoutsListAdapter.OnItemClickListener
 {
 	private Interpolator animationInterpolator = new AccelerateDecelerateInterpolator();
 
 	private RecyclerView soundLayouts;
-	private SoundLayoutListAdapter adapter;
+	private SoundLayoutsListAdapter adapter;
 
 	@SuppressWarnings("unused")
-	public SoundLayoutList(Context context)
+	public SoundLayoutsList(Context context)
 	{
 		super(context);
 		this.init(context);
 	}
 
 	@SuppressWarnings("unused")
-	public SoundLayoutList(Context context, AttributeSet attrs)
+	public SoundLayoutsList(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		this.init(context);
 	}
 
 	@SuppressWarnings("unused")
-	public SoundLayoutList(Context context, AttributeSet attrs, int defStyle)
+	public SoundLayoutsList(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
 		this.init(context);
@@ -58,7 +58,7 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 		this.soundLayouts.setItemAnimator(new DefaultItemAnimator());
 	}
 
-	public void setAdapter(SoundLayoutListAdapter adapter)
+	public void setAdapter(SoundLayoutsListAdapter adapter)
 	{
 		this.adapter = adapter;
 		this.adapter.setOnItemClickListener(this);
@@ -74,7 +74,8 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 			int index = selectedItems.keyAt(i);
 			soundLayoutsToRemove.add(this.adapter.getValues().get(index));
 		}
-		// TODO
+		SoundLayoutsManager.getInstance().delete(soundLayoutsToRemove);
+		this.adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -92,7 +93,13 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 	@Override
 	public void onItemClick(View view, SoundLayout data, int position)
 	{
-		// TODO
+		if (super.isInSelectionMode)
+			super.onItemSelected(view, position);
+		else if (this.parent != null)
+		{
+			this.adapter.setSelectedItem(position);
+			// TODO open new sound layout
+		}
 	}
 
 	public boolean isActive()
@@ -130,7 +137,7 @@ public class SoundLayoutList extends NavigationDrawerList implements SoundLayout
 					@Override
 					public void run()
 					{
-						SoundLayoutList.this.setVisibility(View.GONE);
+						SoundLayoutsList.this.setVisibility(View.GONE);
 					}
 				})
 				.start();

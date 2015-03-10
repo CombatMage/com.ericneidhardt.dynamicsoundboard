@@ -23,6 +23,7 @@ import org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification;
 import org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 
 import java.io.IOException;
 import java.util.*;
@@ -37,8 +38,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	public static final String ACTION_FINISHED_LOADING_PLAYLIST = "org.neidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_PLAYLIST";
 	public static final String ACTION_FINISHED_LOADING_SOUNDS = "org.neidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_SOUNDS";
 
-	private static final String DB_SOUNDS = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
-	private static final String DB_SOUNDS_PLAYLIST = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
+	private static final String DB_SOUNDS = "db_sounds";
+	private static final String DB_SOUNDS_PLAYLIST = "db_sounds_playlist";
 
 	private DaoSession dbPlaylist;
 	private synchronized MediaPlayerDataDao getPlaylistDao()
@@ -108,14 +109,19 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		SoundboardPreferences.registerSharedPreferenceChangedListener(this);
 		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
 
-		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS_PLAYLIST);
-		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), DB_SOUNDS);
+		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseBaseName() + DB_SOUNDS_PLAYLIST);
+		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseBaseName() + DB_SOUNDS);
 
 		SafeAsyncTask task = new LoadSoundsTask();
 		task.execute();
 
 		task = new LoadPlaylistTask();
 		task.execute();
+	}
+
+	private String getDatabaseBaseName()
+	{
+		return SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
 	}
 
 	@Override

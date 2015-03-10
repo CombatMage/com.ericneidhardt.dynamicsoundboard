@@ -22,7 +22,7 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -59,8 +59,7 @@ public class SoundSheetsManagerFragment
 
 	private String getDatabaseName()
 	{
-		SoundLayoutsManagerFragment soundLayoutsManagerFragment = this.getSoundLayoutsManagerFragment();
-		String baseName = soundLayoutsManagerFragment.getActiveSoundLayout().getDatabaseId();
+		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
 		return baseName + DB_SOUNDS;
 	}
 

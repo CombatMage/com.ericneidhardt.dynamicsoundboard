@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout;
+import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.playlist.PlaylistAdapter;
-import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutList;
-import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutListAdapter;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsListAdapter;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
@@ -35,8 +37,8 @@ public class NavigationDrawerFragment
 	private ViewPager tabContent;
 	private TabContentAdapter tabContentAdapter;
 
-	private SoundLayoutList soundLayoutList;
-	private SoundLayoutListAdapter soundLayoutListAdapter;
+	private SoundLayoutsList soundLayoutList;
+	private SoundLayoutsListAdapter soundLayoutListAdapter;
 	private Playlist playlist;
 	private PlaylistAdapter playlistAdapter;
 	private SoundSheets soundSheets;
@@ -63,7 +65,7 @@ public class NavigationDrawerFragment
 
 		ViewPagerContentObserver listObserver = new ViewPagerContentObserver();
 		this.tabContentAdapter = new TabContentAdapter();
-		this.soundLayoutListAdapter = new SoundLayoutListAdapter();
+		this.soundLayoutListAdapter = new SoundLayoutsListAdapter();
 		this.playlistAdapter = new PlaylistAdapter();
 		this.playlistAdapter.registerAdapterDataObserver(listObserver);
 		this.soundSheetsAdapter = new SoundSheetsAdapter();
@@ -97,7 +99,7 @@ public class NavigationDrawerFragment
 			}
 		});
 
-		this.soundLayoutList = (SoundLayoutList) this.getActivity().findViewById(R.id.layout_select_sound_layout);
+		this.soundLayoutList = (SoundLayoutsList) this.getActivity().findViewById(R.id.layout_select_sound_layout);
 		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
 		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
 
@@ -168,21 +170,36 @@ public class NavigationDrawerFragment
 		int id = v.getId();
 		if (id == R.id.b_delete)
 		{
-			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
+			if (this.soundLayoutList.isActive())
+				this.soundLayoutList.prepareItemDeletion();
+			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				this.playlist.prepareItemDeletion();
 			else
 				this.soundSheets.prepareItemDeletion();
 		}
 		else if (id == R.id.b_delete_selected)
 		{
-			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
+			if (this.soundLayoutList.isActive())
+				this.soundLayoutList.deleteSelected();
+			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				this.playlist.deleteSelected();
 			else
 				this.soundSheets.deleteSelected();
 		}
 		else if (id  == R.id.b_add)
 		{
-			if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
+			if (this.soundLayoutList.isActive())
+			{
+				// TODO start dialog to create new sound layout
+				SoundLayout layout = new SoundLayout();
+				layout.setIsSelected(false);
+				layout.setDatabaseId(SoundLayoutsManager.getNewDatabaseIdForLabel("test"));
+				layout.setLabel("test");
+
+				SoundLayoutsManager.getInstance().addSoundLayout(layout);
+				this.soundLayoutListAdapter.notifyDataSetChanged();
+			}
+			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), Playlist.TAG);
 			else
 			{
