@@ -8,7 +8,7 @@
 
 	<!-- navigation drawer -->
 	<string name="navigation_drawer_content_description_select_sound_layout">Hier klicken um zu einem anderen Sound Layout zu wechseln</string>
-	<string name="navigation_drawer_select_sound_layout">Zu einem anderen Sound layout wechseln</string>
+	<string name="navigation_drawer_select_sound_layout">Sound layout wechseln</string>
 	<string name="navigation_drawer_content_description_open">Navigation öffnen</string>
 	<string name="navigation_drawer_content_description_close">Navigation schließen</string>
 	<string name="navigation_drawer_content_description_avatar">App Icon</string>

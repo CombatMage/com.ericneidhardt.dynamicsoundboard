@@ -319,7 +319,8 @@ public class NavigationDrawerFragment
 		int heightPlayList = heightPlayListChildren + heightDividerPlayList + padding;
 
 		int largestList = Math.max(heightSoundSheet, heightPlayList);
-		this.tabContent.getLayoutParams().height = Math.max(largestList, minHeight);
+
+		this.getBaseActivity().findViewById(R.id.layout_navigation_drawer_list_content).getLayoutParams().height = Math.max(largestList, minHeight);
 	}
 
 	private class ViewPagerContentObserver extends RecyclerView.AdapterDataObserver

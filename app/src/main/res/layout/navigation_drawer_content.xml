@@ -82,6 +82,7 @@
 			<include layout="@layout/navigation_drawer_header"/>
 
 			<FrameLayout
+					android:id="@+id/layout_navigation_drawer_list_content"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content">
 
