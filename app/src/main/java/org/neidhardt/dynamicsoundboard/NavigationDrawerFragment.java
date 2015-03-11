@@ -229,7 +229,7 @@ public class NavigationDrawerFragment
 		this.deleteSelected.setTranslationX(-distance);
 		this.deleteSelected.animate().
 				translationX(0).
-				setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime)).
+				setDuration(this.getResources().getInteger(android.R.integer.config_mediumAnimTime)).
 				setInterpolator(new DecelerateInterpolator()).
 				start();
 	}
