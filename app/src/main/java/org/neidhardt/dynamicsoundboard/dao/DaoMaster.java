@@ -59,7 +59,7 @@ public class DaoMaster extends AbstractDaoMaster {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			Log.i("greenDAO", "Upgrading schema from version " + oldVersion + " to " + newVersion + " by dropping all tables");
 
-			if (oldVersion == 9) {
+			if (oldVersion <= 9) {
 				SoundLayoutDao.createTable(db, false);
 			}
 			else {

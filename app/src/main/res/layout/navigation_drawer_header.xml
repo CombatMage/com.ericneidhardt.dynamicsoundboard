@@ -23,7 +23,7 @@
 				android:layout_alignParentEnd="true"
 				android:layout_alignParentRight="true"
 				android:layout_marginRight="@dimen/margin_default"
-				android:contentDescription="@string/navigation_drawer_content_description_open_select_sound_layout"
+				android:contentDescription="@string/navigation_drawer_content_description_select_sound_layout"
 				android:scaleType="centerInside"
 				android:src="@drawable/ic_drop_down"/>
 

@@ -3,19 +3,32 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:elevation="@dimen/elevation_normal"
 		android:orientation="vertical"
 		android:background="@color/background">
 
-	<TextView
+	<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_list_item"
-			android:layout_marginBottom="@dimen/margin_small"
-			android:padding="@dimen/margin_default"
-			android:background="@color/primary_200"
-			android:textSize="@dimen/text_sub_text"
-			android:textStyle="bold"
-			android:textAllCaps="true"
-			android:text="some text"/>
+			android:layout_marginBottom="@dimen/margin_small">
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_list_item"
+				android:padding="@dimen/margin_default"
+				android:background="@color/primary_200"
+				android:textSize="@dimen/text_sub_text"
+				android:textStyle="bold"
+				android:textAllCaps="true"
+				android:text="@string/navigation_drawer_select_sound_layout"/>
+
+		<View
+				android:layout_width="match_parent"
+				android:layout_height="4dp"
+				android:layout_alignParentBottom="true"
+				android:background="@color/accent_200"/>
+
+	</RelativeLayout>
 
 	<android.support.v7.widget.RecyclerView
 			android:id="@+id/rv_sound_layouts_list"

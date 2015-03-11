@@ -45,10 +45,6 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	private static final String DB_SOUNDS_PLAYLIST = "db_sounds_playlist";
 
 	private DaoSession dbPlaylist;
-	private synchronized MediaPlayerDataDao getPlaylistDao()
-	{
-		return this.dbPlaylist.getMediaPlayerDataDao();
-	}
 	private List<EnhancedMediaPlayer> playlist = new ArrayList<>();
 	List<EnhancedMediaPlayer> getPlaylist()
 	{
@@ -56,10 +52,6 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	}
 
 	private DaoSession dbSounds;
-	private synchronized MediaPlayerDataDao getSoundsDao()
-	{
-		return this.dbSounds.getMediaPlayerDataDao();
-	}
 	private Map<String, List<EnhancedMediaPlayer>> sounds = new HashMap<>();
 	Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
@@ -120,10 +112,10 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseNamePlayList());
 		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseNameSounds());
 
-		SafeAsyncTask task = new LoadSoundsTask();
+		SafeAsyncTask task = new LoadSoundsTask(this.dbSounds);
 		task.execute();
 
-		task = new LoadPlaylistTask();
+		task = new LoadPlaylistTask(this.dbPlaylist);
 		task.execute();
 	}
 
@@ -214,6 +206,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			for (EnhancedMediaPlayer player : players)
 				player.destroy(false);
 		}
+		this.playlist.clear();
+		this.sounds.clear();
 	}
 
 	@Override
@@ -313,7 +307,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 		if (player.getMediaPlayerData() != null)
 		{
-			MediaPlayerDataDao soundsDao = this.getSoundsDao();
+			MediaPlayerDataDao soundsDao = this.dbSounds.getMediaPlayerDataDao();
 			soundsDao.insert(player.getMediaPlayerData());
 		}
 	}
@@ -353,7 +347,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
-			this.removeSoundFromDatabase(this.getSoundsDao(), playerData);
+			this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), playerData);
 			return null;
 		}
 	}
@@ -363,7 +357,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		MediaPlayerData dataToStore = this.createPlaylistSoundFromPlayerData(playerData);
 		if (dataToStore != null)
 		{
-			MediaPlayerDataDao playlistDao = this.getPlaylistDao();
+			MediaPlayerDataDao playlistDao = this.dbPlaylist.getMediaPlayerDataDao();
 			playlistDao.insert(dataToStore); // it is important to use data returned from createPlaylistSoundFromPlayerData, because it is a new instance
 		}
 	}
@@ -383,7 +377,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		} catch (IOException e)
 		{
 			Logger.d(TAG, playerData.toString()+ " " + e.getMessage());
-			this.removeSoundFromDatabase(this.getPlaylistDao(), playerData);
+			this.removeSoundFromDatabase(this.dbPlaylist.getMediaPlayerDataDao(), playerData);
 			return null;
 		}
 	}
@@ -411,9 +405,9 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 				EnhancedMediaPlayer correspondingPlayerInPlaylist = this.searchInPlaylistForId(data.getPlayerId());
 				this.playlist.remove(correspondingPlayerInPlaylist);
 
-				this.destroyPlayerAndUpdateDatabase(this.getPlaylistDao(), correspondingPlayerInPlaylist);
+				this.destroyPlayerAndUpdateDatabase(this.dbPlaylist.getMediaPlayerDataDao(), correspondingPlayerInPlaylist);
 			}
-			this.destroyPlayerAndUpdateDatabase(this.getSoundsDao(), playerToRemove);
+			this.destroyPlayerAndUpdateDatabase(this.dbSounds.getMediaPlayerDataDao(), playerToRemove);
 		}
 	}
 
@@ -448,7 +442,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 					player.setIsInPlaylist(false);
 
 				this.playlist.remove(playerInPlaylist);
-				this.destroyPlayerAndUpdateDatabase(this.getPlaylistDao(), playerInPlaylist);
+				this.destroyPlayerAndUpdateDatabase(this.dbPlaylist.getMediaPlayerDataDao(), playerInPlaylist);
 			}
 		}
 		catch (IOException e)
@@ -528,10 +522,17 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 	private class LoadSoundsTask extends LoadTask<MediaPlayerData>
 	{
+		private DaoSession daoSession;
+
+		public LoadSoundsTask(DaoSession daoSession)
+		{
+			this.daoSession = daoSession;
+		}
+
 		@Override
 		public List<MediaPlayerData> call() throws Exception
 		{
-			return getSoundsDao().queryBuilder().list();
+			return this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
 		}
 
 		@Override
@@ -554,10 +555,17 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
 	private class LoadPlaylistTask extends LoadTask<MediaPlayerData>
 	{
+		private DaoSession daoSession;
+
+		public LoadPlaylistTask(DaoSession daoSession)
+		{
+			this.daoSession = daoSession;
+		}
+
 		@Override
 		public List<MediaPlayerData> call() throws Exception
 		{
-			return getPlaylistDao().queryBuilder().list();
+			return this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
 		}
 
 		@Override
@@ -600,7 +608,6 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	{
 		private List<MediaPlayerData> mediaPlayers;
 		private DaoSession database;
-		private MediaPlayerDataDao dao;
 
 		/**
 		 * Update stored sound database
@@ -610,7 +617,6 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		public UpdateSoundsTask(Map<String, List<EnhancedMediaPlayer>> mediaPlayers, DaoSession database)
 		{
 			this.database = database;
-			this.dao = getSoundsDao();
 			this.mediaPlayers = new ArrayList<>();
 			for (String fragmentTag : mediaPlayers.keySet())
 			{
@@ -628,7 +634,6 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		public UpdateSoundsTask(List<EnhancedMediaPlayer> mediaPlayers, DaoSession database)
 		{
 			this.database = database;
-			this.dao = getPlaylistDao();
 			this.mediaPlayers = new ArrayList<>();
 			for (EnhancedMediaPlayer player : mediaPlayers)
 				this.mediaPlayers.add(player.getMediaPlayerData());
@@ -642,6 +647,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 				@Override
 				public void run()
 				{
+					MediaPlayerDataDao dao = database.getMediaPlayerDataDao();
 					for (MediaPlayerData playerToUpdate : mediaPlayers)
 					{
 						List<MediaPlayerData> storePlayers = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerToUpdate.getPlayerId())).list();
