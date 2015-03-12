@@ -9,6 +9,7 @@ import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.SoundLayoutSettingsDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,7 @@ public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsLi
 			super(itemView);
 			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
+			itemView.findViewById(R.id.b_settings).setOnClickListener(this);
 
 			itemView.setOnClickListener(this);
 		}
@@ -86,9 +88,13 @@ public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsLi
 		@Override
 		public void onClick(View view)
 		{
+			int id = view.getId();
 			int position = this.getPosition();
-			if (onItemClickListener != null)
-				onItemClickListener.onItemClick(view, getValues().get(position), position);
+			SoundLayout item = getValues().get(position);
+			if (id == R.id.b_settings)
+				SoundLayoutSettingsDialog.showInstance(parent.getFragmentManager(), item.getDatabaseId());
+			else if (onItemClickListener != null)
+				onItemClickListener.onItemClick(view, item, position);
 		}
 	}
 

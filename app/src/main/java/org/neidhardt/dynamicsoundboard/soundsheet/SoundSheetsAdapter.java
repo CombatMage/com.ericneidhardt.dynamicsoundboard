@@ -9,7 +9,6 @@ import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -104,17 +103,9 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 		@Override
 		public void onClick(View view)
 		{
-			int id = view.getId();
-			if (id == R.id.b_settings)
-			{
-				SoundLayoutSettingsDialog.showInstance(parent.getFragmentManager());
-			}
-			else
-			{
-				int position = this.getPosition();
-				if (onItemClickListener != null)
-					onItemClickListener.onItemClick(view, getValues().get(position), position);
-			}
+			int position = this.getPosition();
+			if (onItemClickListener != null)
+				onItemClickListener.onItemClick(view, getValues().get(position), position);
 		}
 
 		private void setSoundCount(int soundCount)
