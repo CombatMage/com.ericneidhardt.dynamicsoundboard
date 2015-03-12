@@ -122,18 +122,21 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 
 	private void showSelectSoundLayoutOverlay()
 	{
-		this.setVisibility(View.VISIBLE);
+		this.setVisibility(VISIBLE);
+
+		/*this.setVisibility(View.VISIBLE);
 		this.setTranslationY(-1 * this.getHeight());
 		this.animate()
 				.translationY(0)
 				.setDuration(this.getResources().getInteger(android.R.integer.config_mediumAnimTime))
 				.setInterpolator(this.animationInterpolator)
-				.start();
+				.start();*/
 	}
 
 	private void hideSelectSoundLayout()
 	{
-		this.animate()
+		this.setVisibility(INVISIBLE);
+		/*this.animate()
 				.translationY(-1 * this.getHeight())
 				.setDuration(this.getResources().getInteger(android.R.integer.config_mediumAnimTime))
 				.setInterpolator(this.animationInterpolator)
@@ -146,7 +149,7 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 						SoundLayoutsList.this.setTranslationY(0);
 					}
 				})
-				.start();
+				.start();*/
 	}
 
 }

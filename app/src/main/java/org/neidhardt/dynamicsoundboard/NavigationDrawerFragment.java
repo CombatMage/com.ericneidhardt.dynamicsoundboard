@@ -34,6 +34,7 @@ public class NavigationDrawerFragment
 	private static final int INDEX_SOUND_SHEETS = 0;
 	private static final int INDEX_PLAYLIST = 1;
 
+	private SlidingTabLayout tabBar;
 	private ViewPager tabContent;
 	private TabContentAdapter tabContentAdapter;
 
@@ -81,7 +82,7 @@ public class NavigationDrawerFragment
 		this.tabContent.setAdapter(this.tabContentAdapter);
 		this.tabContent.setOnPageChangeListener(this);
 
-		SlidingTabLayout tabBar = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
+		this.tabBar = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
 		tabBar.setOnPageChangeListener(this);
 		tabBar.setViewPager(tabContent);
 		tabBar.setCustomTabColorizer(new SlidingTabLayout.TabColorizer()
@@ -305,22 +306,24 @@ public class NavigationDrawerFragment
 		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
 		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);
 
-		int minHeight = this.contextualActionContainer.getTop() - this.tabContent.getTop(); // this is the minimal height required to fill the screen properly
+		View listContainer = this.getBaseActivity().findViewById(R.id.layout_navigation_drawer_list_content);
+
+		int minHeight = this.contextualActionContainer.getTop() - listContainer.getTop();  // this is the minimal height required to fill the screen properly
 
 		int soundSheetCount = this.soundSheetsAdapter.getItemCount();
 		int playListCount = this.playlistAdapter.getItemCount();
 
 		int heightSoundSheetChildren = soundSheetCount * childHeight;
 		int heightDividerSoundSheet = soundSheetCount > 1 ? (soundSheetCount - 1) * dividerHeight : 0;
-		int heightSoundSheet = heightSoundSheetChildren + heightDividerSoundSheet + padding;
+		int heightSoundSheet = heightSoundSheetChildren + heightDividerSoundSheet + padding + this.tabBar.getHeight();
 
 		int heightPlayListChildren = playListCount * childHeight;
 		int heightDividerPlayList = playListCount > 1 ? (playListCount - 1) * dividerHeight : 0;
-		int heightPlayList = heightPlayListChildren + heightDividerPlayList + padding;
+		int heightPlayList = heightPlayListChildren + heightDividerPlayList + padding + this.tabBar.getHeight();
 
 		int largestList = Math.max(heightSoundSheet, heightPlayList);
 
-		this.getBaseActivity().findViewById(R.id.layout_navigation_drawer_list_content).getLayoutParams().height = Math.max(largestList, minHeight);
+		listContainer.getLayoutParams().height = Math.max(largestList, minHeight);
 	}
 
 	private class ViewPagerContentObserver extends RecyclerView.AdapterDataObserver

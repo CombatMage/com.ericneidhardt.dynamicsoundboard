@@ -25,6 +25,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="4dp"
 				android:layout_alignParentBottom="true"
+				android:layout_marginBottom="@dimen/stroke"
 				android:background="@color/accent_200"/>
 
 	</RelativeLayout>
