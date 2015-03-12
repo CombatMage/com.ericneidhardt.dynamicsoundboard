@@ -3,18 +3,18 @@ package org.neidhardt.dynamicsoundboard.dialog.soundlayouts;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
+import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 
 /**
  * Created by eric.neidhardt on 12.03.2015.
  */
-public abstract class SoundLayoutDialog extends DialogFragment implements View.OnClickListener
+public abstract class SoundLayoutDialog extends BaseDialog implements View.OnClickListener
 {
-	private CustomEditText soundLayoutName;
+	protected CustomEditText soundLayoutName;
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)

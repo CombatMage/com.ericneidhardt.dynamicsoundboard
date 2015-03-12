@@ -68,6 +68,11 @@ public class SoundLayoutsManager
 		this.daoSession.getSoundLayoutDao().insert(soundLayout);
 	}
 
+	public String getSuggestedSoundLayoutName()
+	{
+		return DynamicSoundboardApplication.getSoundboardContext().getResources().getString(R.string.suggested_sound_layout_name) + this.getSoundLayouts().size();
+	}
+
 	private SoundLayout getDefaultSoundLayout()
 	{
 		SoundLayout layout = new SoundLayout();

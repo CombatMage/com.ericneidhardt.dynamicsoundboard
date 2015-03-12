@@ -13,6 +13,7 @@ import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLay
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
+import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.playlist.PlaylistAdapter;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList;
@@ -190,16 +191,7 @@ public class NavigationDrawerFragment
 		else if (id  == R.id.b_ok)
 		{
 			if (this.soundLayoutList.isActive())
-			{
-				// TODO start dialog to create new sound layout
-				SoundLayout layout = new SoundLayout();
-				layout.setIsSelected(false);
-				layout.setDatabaseId(SoundLayoutsManager.getNewDatabaseIdForLabel("test"));
-				layout.setLabel("test");
-
-				SoundLayoutsManager.getInstance().addSoundLayout(layout);
-				this.soundLayoutListAdapter.notifyDataSetChanged();
-			}
+				AddNewSoundLayoutDialog.showInstance(this.getFragmentManager(), SoundLayoutsManager.getInstance().getSuggestedSoundLayoutName());
 			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), Playlist.TAG);
 			else
@@ -220,6 +212,17 @@ public class NavigationDrawerFragment
 			if (this.getBaseActivity().isActionModeActive() && this.soundLayoutList.isActive())
 				this.soundLayoutList.prepareItemDeletion();
 		}
+	}
+
+	public void addNewSoundLayout(String name)
+	{
+		SoundLayout layout = new SoundLayout();
+		layout.setIsSelected(false);
+		layout.setDatabaseId(SoundLayoutsManager.getNewDatabaseIdForLabel(name));
+		layout.setLabel(name);
+
+		SoundLayoutsManager.getInstance().addSoundLayout(layout);
+		this.soundLayoutListAdapter.notifyDataSetChanged();
 	}
 
 	public void onActionModeStart()
