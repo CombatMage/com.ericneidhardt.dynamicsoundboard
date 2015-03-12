@@ -62,7 +62,7 @@ public class AddNewSoundFromDirectory
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_directory, null);
-		view.findViewById(R.id.b_add).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 
 		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
@@ -96,7 +96,7 @@ public class AddNewSoundFromDirectory
 	{
 		if (v.getId() == R.id.b_cancel)
 			this.dismiss();
-		else if (v.getId() == R.id.b_add)
+		else if (v.getId() == R.id.b_ok)
 		{
 			this.returnResultsToCallingFragment();
 			this.dismiss();

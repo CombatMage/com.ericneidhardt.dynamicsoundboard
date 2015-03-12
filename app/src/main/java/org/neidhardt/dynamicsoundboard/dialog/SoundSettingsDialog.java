@@ -83,7 +83,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 		this.addNewSoundSheet.setOnCheckedChangeListener(this);
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		view.findViewById(R.id.b_save).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
 		this.soundName.setText(this.player.getMediaPlayerData().getLabel());
 
@@ -138,7 +138,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 			case R.id.b_cancel:
 				this.dismiss();
 				break;
-			case R.id.b_save:
+			case R.id.b_ok:
 				this.deliverResult();
 				this.dismiss();
 				break;

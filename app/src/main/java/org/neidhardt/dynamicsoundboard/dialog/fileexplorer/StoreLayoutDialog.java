@@ -42,9 +42,9 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_store_sound_sheets, null);
-		view.findViewById(R.id.b_save).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		view.findViewById(R.id.b_add).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
 		this.inputFileName = (NoUnderscoreEditText) view.findViewById(R.id.et_name_file);
 
@@ -79,13 +79,13 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	{
 		switch (v.getId())
 		{
-			case R.id.b_add:
+			case R.id.b_ok:
 				this.createFileAndSelect();
 				break;
 			case R.id.b_cancel:
 				this.dismiss();
 				break;
-			case R.id.b_save:
+			case R.id.b_ok:
 				if (super.adapter.selectedFile != null)
 					this.useFile(super.adapter.selectedFile);
 				else

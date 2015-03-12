@@ -89,7 +89,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		view.findViewById(R.id.b_add).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
@@ -109,7 +109,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 		this.addNewSoundSheet.setOnCheckedChangeListener(this);
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		view.findViewById(R.id.b_add).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
@@ -153,7 +153,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 			case R.id.b_cancel:
 				this.dismiss();
 				break;
-			case R.id.b_add:
+			case R.id.b_ok:
 				this.deliverResult();
 				this.dismiss();
 				break;

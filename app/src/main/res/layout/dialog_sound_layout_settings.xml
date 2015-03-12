@@ -16,7 +16,7 @@
 			android:textStyle="bold"
 			android:textColor="@color/text_content_primary"
 			android:textSize="@dimen/text_headline"
-			android:text="@string/dialog_add_new_sound_layout_title"/>
+			android:text="@string/dialog_sound_layout_settings_title"/>
 
 	<org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText
 			android:id="@+id/et_name_sound_layout"
@@ -24,6 +24,6 @@
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/margin_default"/>
 
-	<include layout="@layout/dialog_button_bar_add"/>
+	<include layout="@layout/dialog_button_bar_save"/>
 
 </LinearLayout>

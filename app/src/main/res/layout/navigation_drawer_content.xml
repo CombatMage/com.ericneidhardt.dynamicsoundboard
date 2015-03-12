@@ -35,7 +35,7 @@
 					android:background="@drawable/selector_background_list_item"/>
 
 			<TextView
-					android:id="@+id/b_add"
+					android:id="@+id/b_ok"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_weight="1"

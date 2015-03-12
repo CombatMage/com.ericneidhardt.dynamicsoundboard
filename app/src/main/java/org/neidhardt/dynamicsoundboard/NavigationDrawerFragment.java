@@ -115,7 +115,7 @@ public class NavigationDrawerFragment
 		this.initPlayListAndAdapter();
 
 		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
-		this.getActivity().findViewById(R.id.b_add).setOnClickListener(this);
+		this.getActivity().findViewById(R.id.b_ok).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.layout_change_sound_layout).setOnClickListener(this);
 	}
 
@@ -187,7 +187,7 @@ public class NavigationDrawerFragment
 			else
 				this.soundSheets.deleteSelected();
 		}
-		else if (id  == R.id.b_add)
+		else if (id  == R.id.b_ok)
 		{
 			if (this.soundLayoutList.isActive())
 			{

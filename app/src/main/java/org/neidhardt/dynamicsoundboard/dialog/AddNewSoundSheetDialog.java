@@ -44,12 +44,12 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
-		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_layout, null);
+		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_sheet, null);
 		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
 		this.soundSheetName.setHint(this.suggestedName);
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		view.findViewById(R.id.b_add).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
@@ -65,7 +65,7 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 			case R.id.b_cancel:
 				this.dismiss();
 				break;
-			case R.id.b_add:
+			case R.id.b_ok:
 				this.deliverResult();
 				this.dismiss();
 		}
