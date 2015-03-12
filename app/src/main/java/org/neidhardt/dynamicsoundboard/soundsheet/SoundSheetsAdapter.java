@@ -9,6 +9,7 @@ import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -95,6 +96,7 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
 			this.soundCount = (TextView)itemView.findViewById(R.id.tv_sound_count);
 			this.soundCountLabel = itemView.findViewById(R.id.tv_sound_count_label);
+			itemView.findViewById(R.id.b_settings).setOnClickListener(this);
 
 			itemView.setOnClickListener(this);
 		}
@@ -102,9 +104,17 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 		@Override
 		public void onClick(View view)
 		{
-			int position = this.getPosition();
-			if (onItemClickListener != null)
-				onItemClickListener.onItemClick(view, getValues().get(position), position);
+			int id = view.getId();
+			if (id == R.id.b_settings)
+			{
+				SoundLayoutSettingsDialog.showInstance(parent.getFragmentManager());
+			}
+			else
+			{
+				int position = this.getPosition();
+				if (onItemClickListener != null)
+					onItemClickListener.onItemClick(view, getValues().get(position), position);
+			}
 		}
 
 		private void setSoundCount(int soundCount)

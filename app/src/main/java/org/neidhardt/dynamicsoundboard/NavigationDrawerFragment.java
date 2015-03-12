@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout;
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDialog;
@@ -214,14 +213,8 @@ public class NavigationDrawerFragment
 		}
 	}
 
-	public void addNewSoundLayout(String name)
+	public void triggerSoundLayoutUpdate()
 	{
-		SoundLayout layout = new SoundLayout();
-		layout.setIsSelected(false);
-		layout.setDatabaseId(SoundLayoutsManager.getNewDatabaseIdForLabel(name));
-		layout.setLabel(name);
-
-		SoundLayoutsManager.getInstance().addSoundLayout(layout);
 		this.soundLayoutListAdapter.notifyDataSetChanged();
 	}
 

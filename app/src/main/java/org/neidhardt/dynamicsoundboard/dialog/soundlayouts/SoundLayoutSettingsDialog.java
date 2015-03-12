@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.dialog.soundlayouts;
 
 import android.app.FragmentManager;
+import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 
 /**
@@ -10,7 +11,7 @@ public class SoundLayoutSettingsDialog extends SoundLayoutDialog
 {
 	private static final String TAG = SoundLayoutSettingsDialog.class.getName();
 
-	public static void showInstance(FragmentManager manager, String suggestedName)
+	public static void showInstance(FragmentManager manager)
 	{
 		SoundLayoutSettingsDialog dialog = new SoundLayoutSettingsDialog();
 		dialog.show(manager, TAG);
@@ -31,6 +32,12 @@ public class SoundLayoutSettingsDialog extends SoundLayoutDialog
 	@Override
 	protected void deliverResult()
 	{
-		// TODO
+		String name = super.soundLayoutName.getDisplayedText();
+		// TODO update according sound layout entry
+
+
+		NavigationDrawerFragment fragment = this.getNavigationDrawerFragment();
+		if (fragment != null)
+			fragment.triggerSoundLayoutUpdate();
 	}
 }
