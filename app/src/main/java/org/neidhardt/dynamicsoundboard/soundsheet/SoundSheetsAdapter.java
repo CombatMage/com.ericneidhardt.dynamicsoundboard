@@ -95,7 +95,6 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
 			this.soundCount = (TextView)itemView.findViewById(R.id.tv_sound_count);
 			this.soundCountLabel = itemView.findViewById(R.id.tv_sound_count_label);
-			itemView.findViewById(R.id.b_settings).setOnClickListener(this);
 
 			itemView.setOnClickListener(this);
 		}

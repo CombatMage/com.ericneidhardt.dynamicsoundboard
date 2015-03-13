@@ -79,7 +79,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	{
 		switch (v.getId())
 		{
-			case R.id.b_ok:
+			case R.id.b_add:
 				this.createFileAndSelect();
 				break;
 			case R.id.b_cancel:
