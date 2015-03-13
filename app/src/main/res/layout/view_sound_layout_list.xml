@@ -8,12 +8,13 @@
 
 	<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_list_item"
+			android:layout_height="wrap_content"
 			android:layout_marginBottom="@dimen/margin_small">
 
 		<TextView
+				android:id="@+id/tv_sound_layout_header"
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_list_item"
+				android:layout_height="wrap_content"
 				android:padding="@dimen/margin_default"
 				android:background="@color/primary_200"
 				android:textSize="@dimen/text_sub_text"
@@ -24,8 +25,7 @@
 		<View
 				android:layout_width="match_parent"
 				android:layout_height="4dp"
-				android:layout_alignParentBottom="true"
-				android:layout_marginBottom="@dimen/stroke"
+				android:layout_alignBottom="@id/tv_sound_layout_header"
 				android:background="@color/accent_200"/>
 
 	</RelativeLayout>
