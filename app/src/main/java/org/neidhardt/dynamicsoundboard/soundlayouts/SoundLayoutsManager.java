@@ -68,6 +68,24 @@ public class SoundLayoutsManager
 		this.daoSession.getSoundLayoutDao().insert(soundLayout);
 	}
 
+	public void updateSoundLayoutById(String databaseId, String newLabel)
+	{
+		SoundLayout layoutToUpdate = null;
+		for (SoundLayout layout : this.soundLayouts)
+		{
+			if (layout.getDatabaseId().equals(databaseId))
+			{
+				layoutToUpdate = layout;
+				break;
+			}
+		}
+		if (layoutToUpdate == null)
+			return;
+
+		layoutToUpdate.setLabel(newLabel);
+		this.daoSession.update(layoutToUpdate);
+	}
+
 	public String getSuggestedSoundLayoutName()
 	{
 		return DynamicSoundboardApplication.getSoundboardContext().getResources().getString(R.string.suggested_sound_layout_name) + this.getSoundLayouts().size();

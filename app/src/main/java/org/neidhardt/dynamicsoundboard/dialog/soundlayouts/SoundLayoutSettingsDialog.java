@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 
 /**
  * Created by eric.neidhardt on 12.03.2015.
@@ -53,8 +54,7 @@ public class SoundLayoutSettingsDialog extends SoundLayoutDialog
 	protected void deliverResult()
 	{
 		String name = super.soundLayoutName.getDisplayedText();
-		// TODO update according sound layout entry
-
+		SoundLayoutsManager.getInstance().updateSoundLayoutById(this.databaseId, name);
 
 		NavigationDrawerFragment fragment = this.getNavigationDrawerFragment();
 		if (fragment != null)
