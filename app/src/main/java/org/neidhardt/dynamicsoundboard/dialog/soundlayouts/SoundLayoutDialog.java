@@ -43,7 +43,10 @@ public abstract class SoundLayoutDialog extends BaseDialog implements View.OnCli
 		if (id == R.id.b_cancel)
 			this.dismiss();
 		else if (id == R.id.b_ok)
+		{
 			this.deliverResult();
+			this.dismiss();
+		}
 	}
 
 	protected abstract void deliverResult();

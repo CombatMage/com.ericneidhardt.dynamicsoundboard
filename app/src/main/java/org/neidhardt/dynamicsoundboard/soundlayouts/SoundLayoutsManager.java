@@ -70,15 +70,7 @@ public class SoundLayoutsManager
 
 	public void updateSoundLayoutById(String databaseId, String newLabel)
 	{
-		SoundLayout layoutToUpdate = null;
-		for (SoundLayout layout : this.soundLayouts)
-		{
-			if (layout.getDatabaseId().equals(databaseId))
-			{
-				layoutToUpdate = layout;
-				break;
-			}
-		}
+		SoundLayout layoutToUpdate = this.getSoundLayoutById(databaseId);
 		if (layoutToUpdate == null)
 			return;
 
@@ -136,5 +128,15 @@ public class SoundLayoutsManager
 			boolean isSelected = i == position;
 			soundLayouts.get(i).setIsSelected(isSelected);
 		}
+	}
+
+	public SoundLayout getSoundLayoutById(String databaseId)
+	{
+		for (SoundLayout layout : this.soundLayouts)
+		{
+			if (layout.getDatabaseId().equals(databaseId))
+				return layout;
+		}
+		return null;
 	}
 }

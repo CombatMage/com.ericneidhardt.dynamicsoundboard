@@ -47,7 +47,7 @@ public class SoundLayoutSettingsDialog extends SoundLayoutDialog
 	@Override
 	protected String getHintForName()
 	{
-		return null;
+		return SoundLayoutsManager.getInstance().getSoundLayoutById(this.databaseId).getLabel();
 	}
 
 	@Override
