@@ -27,7 +27,6 @@ import android.widget.LinearLayout;
 
 class SlidingTabStrip extends LinearLayout {
 
-	private static final int DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS = 0;
 	private static final byte DEFAULT_BOTTOM_BORDER_COLOR_ALPHA = 0x00;
 	private static final int SELECTED_INDICATOR_THICKNESS_DIPS = 4;
 	private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5;
@@ -35,9 +34,6 @@ class SlidingTabStrip extends LinearLayout {
 	private static final int DEFAULT_DIVIDER_THICKNESS_DIPS = 1;
 	private static final byte DEFAULT_DIVIDER_COLOR_ALPHA = 0x20;
 	private static final float DEFAULT_DIVIDER_HEIGHT = 0.5f;
-
-	private final int mBottomBorderThickness;
-	private final Paint mBottomBorderPaint;
 
 	private final int mSelectedIndicatorThickness;
 	private final Paint mSelectedIndicatorPaint;
@@ -73,8 +69,7 @@ class SlidingTabStrip extends LinearLayout {
 		mDefaultTabColorizer.setDividerColors(setColorAlpha(themeForegroundColor,
 				DEFAULT_DIVIDER_COLOR_ALPHA));
 
-		mBottomBorderThickness = (int) (DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS * density);
-		mBottomBorderPaint = new Paint();
+		Paint mBottomBorderPaint = new Paint();
 		mBottomBorderPaint.setColor(mDefaultBottomBorderColor);
 
 		mSelectedIndicatorThickness = (int) (SELECTED_INDICATOR_THICKNESS_DIPS * density);
