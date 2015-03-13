@@ -155,6 +155,7 @@ public class BaseActivity
 			else
 				showSystemUi();
 		}
+		((NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG)).adjustViewPagerToContent();
 	}
 
 	private void showSystemUi()

@@ -67,7 +67,7 @@ public class SoundAdapter
 	private EnhancedMediaPlayer getItem(int position)
 	{
 		List<EnhancedMediaPlayer> players = this.getValues();
-		if (position > players.size())
+		if (position >= players.size())
 			return null;
 		return players.get(position);
 	}

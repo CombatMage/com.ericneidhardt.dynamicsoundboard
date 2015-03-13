@@ -127,8 +127,6 @@ public class NavigationDrawerFragment
 		this.initSoundLayoutsAndAdapter();
 		this.initSoundSheetsAndAdapter();
 		this.initPlayListAndAdapter();
-
-		this.adjustViewPagerToContent();
 	}
 
 	private void initSoundLayoutsAndAdapter()
@@ -295,7 +293,7 @@ public class NavigationDrawerFragment
 	 * This function resize the viewpagers height to its content. It is necessary, because the viewpager can not
 	 * have layout parameter wrap_content.
 	 */
-	private void adjustViewPagerToContent()
+	public void adjustViewPagerToContent()
 	{
 		Resources resources = DynamicSoundboardApplication.getSoundboardContext().getResources();
 		int childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item);
