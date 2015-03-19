@@ -31,7 +31,7 @@
 			android:layout_centerVertical="true"
 			android:layout_alignParentLeft="true"
 			android:layout_alignParentStart="true"
-			android:textSize="@dimen/text_subheading"
+			android:textSize="@dimen/text_sub_text"
 			android:textColor="@color/text_content_primary"
 			android:text="@string/sound_layout_default"
 			app:typeface="roboto_medium"/>

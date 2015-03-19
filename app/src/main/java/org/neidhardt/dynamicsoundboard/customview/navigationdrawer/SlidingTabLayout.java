@@ -31,6 +31,9 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.devspark.robototextview.util.RobotoTextViewUtils;
+import com.devspark.robototextview.util.RobotoTypefaceManager;
+import com.devspark.robototextview.widget.RobotoTextView;
 import org.neidhardt.dynamicsoundboard.R;
 
 /**
@@ -177,26 +180,25 @@ public class SlidingTabLayout extends HorizontalScrollView {
 	 * Create a default view to be used for tabs. This is called if a custom tab view is not set via
 	 * {@link #setCustomTabView(int, int)}.
 	 */
-	TextView createDefaultTabView(Context context) {
-		TextView textView = new TextView(context);
+	TextView createDefaultTabView(Context context)
+	{
+		TextView textView = new RobotoTextView(context);
 		textView.setGravity(Gravity.CENTER);
 		textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP);
-		textView.setTypeface(Typeface.DEFAULT_BOLD);
+		textView.setTextColor(this.getResources().getColor(R.color.text_content_secondary));
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			// If we're running on Honeycomb or newer, then we can use the Theme's
-			// selectableItemBackground to ensure that the View has a pressed state
+		Typeface typeface = RobotoTypefaceManager.obtainTypeface(
+				context,
+				RobotoTypefaceManager.Typeface.ROBOTO_MEDIUM);
+		RobotoTextViewUtils.setTypeface(textView, typeface);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
 			TypedValue outValue = new TypedValue();
 			getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground,
 					outValue, true);
 
 			textView.setBackgroundResource(R.drawable.selector_background_actionbar);
-			//textView.setBackgroundResource(outValue.resourceId);
-		}
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			// If we're running on ICS or newer, enable all-caps to match the Action Bar tab style
-			textView.setAllCaps(true);
 		}
 
 		int padding = (int) (TAB_VIEW_PADDING_DIPS * getResources().getDisplayMetrics().density);
