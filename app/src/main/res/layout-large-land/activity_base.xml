@@ -10,38 +10,47 @@
 			android:layout_height="match_parent"
 			android:background="@color/background"/>
 
-	<LinearLayout
+	<FrameLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:orientation="horizontal">
+			android:layout_height="match_parent">
 
-		<include
-				android:id="@+id/toolbar"
-				layout="@layout/toolbar"/>
-
-		<FrameLayout
+		<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent">
+				android:layout_height="match_parent"
+				android:orientation="horizontal">
+
+			<include
+					android:id="@+id/toolbar"
+					layout="@layout/toolbar"/>
 
 			<FrameLayout
-					android:id="@+id/main_frame"
 					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:background="@color/background">
+					android:layout_height="match_parent">
 
-				<include
-						layout="@layout/view_introduction"/>
+				<FrameLayout
+						android:id="@+id/main_frame"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:background="@color/background">
+
+					<include
+							layout="@layout/view_introduction"/>
+
+				</FrameLayout>
+
+				<include layout="@layout/layout_bottom_controls"/>
+
+				<View
+						android:layout_width="@dimen/height_shadow"
+						android:layout_height="match_parent"
+						android:background="@drawable/ic_shadow_vertical"/>
 
 			</FrameLayout>
+		</LinearLayout>
 
-			<include layout="@layout/layout_bottom_controls"/>
-
-			<View
-					android:layout_width="@dimen/height_shadow"
-					android:layout_height="match_parent"
-					android:background="@drawable/ic_shadow_vertical"/>
-
-		</FrameLayout>
-
-	</LinearLayout>
+		<View
+				android:layout_width="@dimen/height_shadow"
+				android:layout_height="match_parent"
+				android:background="@drawable/ic_shadow_vertical"/>
+	</FrameLayout>
 </LinearLayout>

@@ -38,6 +38,7 @@ public class NavigationDrawerFragment
 	private ViewPager tabContent;
 	private TabContentAdapter tabContentAdapter;
 
+	private View listContainer;
 	private SoundLayoutsList soundLayoutList;
 	private SoundLayoutsListAdapter soundLayoutListAdapter;
 	private Playlist playlist;
@@ -48,15 +49,7 @@ public class NavigationDrawerFragment
 	private View contextualActionContainer;
 	private View deleteSelected;
 
-	public Playlist getPlaylist()
-	{
-		return this.playlist;
-	}
-
-	public SoundSheetsAdapter getSoundSheetsAdapter()
-	{
-		return this.soundSheetsAdapter;
-	}
+	private int minHeightOfListContent = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -74,8 +67,7 @@ public class NavigationDrawerFragment
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
+	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		this.tabContent = (ViewPager) this.getActivity().findViewById(R.id.vp_tab_content);
@@ -85,26 +77,25 @@ public class NavigationDrawerFragment
 		this.tabBar = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
 		tabBar.setOnPageChangeListener(this);
 		tabBar.setViewPager(tabContent);
-		tabBar.setCustomTabColorizer(new SlidingTabLayout.TabColorizer()
-		{
+		tabBar.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
 			@Override
-			public int getIndicatorColor(int position)
-			{
+			public int getIndicatorColor(int position) {
 				return getResources().getColor(R.color.accent_200);
 			}
 
 			@Override
-			public int getDividerColor(int position)
-			{
+			public int getDividerColor(int position) {
 				return 0;
 			}
 		});
 
 		this.soundLayoutList = (SoundLayoutsList) this.getActivity().findViewById(R.id.layout_select_sound_layout);
-		this.playlist = (Playlist)this.getActivity().findViewById(R.id.playlist);
-		this.soundSheets = (SoundSheets)this.getActivity().findViewById(R.id.sound_sheets);
+		this.playlist = (Playlist) this.getActivity().findViewById(R.id.playlist);
+		this.soundSheets = (SoundSheets) this.getActivity().findViewById(R.id.sound_sheets);
 
 		this.contextualActionContainer = this.getActivity().findViewById(R.id.layout_contextual_controls);
+		this.listContainer = this.getActivity().findViewById(R.id.layout_navigation_drawer_list_content);
+
 		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
 		this.deleteSelected.setOnClickListener(this);
 
@@ -127,6 +118,8 @@ public class NavigationDrawerFragment
 		this.initSoundLayoutsAndAdapter();
 		this.initSoundSheetsAndAdapter();
 		this.initPlayListAndAdapter();
+
+		this.minHeightOfListContent = this.contextualActionContainer.getTop() - listContainer.getTop();  // this is the minimal height required to fill the screen properly
 	}
 
 	private void initSoundLayoutsAndAdapter()
@@ -300,10 +293,6 @@ public class NavigationDrawerFragment
 		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
 		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);
 
-		View listContainer = this.getBaseActivity().findViewById(R.id.layout_navigation_drawer_list_content);
-
-		int minHeight = this.contextualActionContainer.getTop() - listContainer.getTop();  // this is the minimal height required to fill the screen properly
-
 		int soundSheetCount = this.soundSheetsAdapter.getItemCount();
 		int playListCount = this.playlistAdapter.getItemCount();
 
@@ -316,8 +305,20 @@ public class NavigationDrawerFragment
 		int heightPlayList = heightPlayListChildren + heightDividerPlayList + padding + this.tabBar.getHeight();
 
 		int largestList = Math.max(heightSoundSheet, heightPlayList);
+		if (this.minHeightOfListContent == 0) // 0 means the current height was not measured, remeasure
+			this.minHeightOfListContent = this.contextualActionContainer.getTop() - listContainer.getTop();
 
-		listContainer.getLayoutParams().height = Math.max(largestList, minHeight);
+		this.listContainer.getLayoutParams().height = Math.max(largestList, minHeightOfListContent);
+	}
+
+	public Playlist getPlaylist()
+	{
+		return this.playlist;
+	}
+
+	public SoundSheetsAdapter getSoundSheetsAdapter()
+	{
+		return this.soundSheetsAdapter;
 	}
 
 	private class ViewPagerContentObserver extends RecyclerView.AdapterDataObserver
