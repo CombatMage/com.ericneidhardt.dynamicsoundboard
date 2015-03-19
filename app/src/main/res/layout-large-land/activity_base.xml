@@ -2,23 +2,22 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical">
+		android:orientation="horizontal">
 
 	<include
-			android:id="@+id/toolbar"
-			layout="@layout/toolbar"/>
+			layout="@layout/navigation_drawer"
+			android:layout_width="@dimen/navigation_width"
+			android:layout_height="match_parent"
+			android:background="@color/background"/>
 
 	<LinearLayout
-			android:id="@+id/root_layout"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:orientation="horizontal">
 
 		<include
-				layout="@layout/navigation_drawer"
-				android:layout_width="@dimen/navigation_width"
-				android:layout_height="match_parent"
-				android:layout_gravity="start"/>
+				android:id="@+id/toolbar"
+				layout="@layout/toolbar"/>
 
 		<FrameLayout
 				android:layout_width="match_parent"

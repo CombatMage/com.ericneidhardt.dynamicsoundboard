@@ -4,6 +4,7 @@
 	<!-- misc -->
 	<string name="app_name">Dynamic Soundboard</string>
 	<string name="suggested_sound_sheet_name">Kategorie</string>
+	<string name="suggested_sound_layout_name">Zusammenstellung</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
 
 	<!-- navigation drawer -->

@@ -121,10 +121,11 @@ public class BaseActivity
 	}
 
 	private void createNavigationDrawer()
-	{
-		this.navigationDrawerLayout = (DrawerLayout)this.findViewById(R.id.root_layout);
-		if (this.navigationDrawerLayout != null)
+	{  // The navigation drawer is fixed on tablets in landscape mode, therefore we need to check the Views type
+		View navigationDrawerLayout = this.findViewById(R.id.root_layout);
+		if (navigationDrawerLayout != null && navigationDrawerLayout instanceof DrawerLayout)
 		{
+			this.navigationDrawerLayout = (DrawerLayout)navigationDrawerLayout;
 			this.drawerToggle = new ActionBarDrawerToggle(this,
 					this.navigationDrawerLayout,
 					(Toolbar) this.findViewById(R.id.toolbar),
