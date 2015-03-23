@@ -16,6 +16,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
+import org.neidhardt.dynamicsoundboard.misc.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
@@ -106,7 +107,8 @@ public class SoundAdapter
 			implements
 				View.OnClickListener,
 				CustomEditText.OnTextEditedListener,
-				SeekBar.OnSeekBarChangeListener
+				SeekBar.OnSeekBarChangeListener,
+				SoundProgressViewHolder
 	{
 		private final View container;
 		private final CustomEditText name;
@@ -149,6 +151,13 @@ public class SoundAdapter
 			this.shadowBottomDeleteViewLeft = itemView.findViewById(R.id.v_shadow_bottom_left);
 			this.shadowBottomDeleteViewRight = itemView.findViewById(R.id.v_shadow_bottom_right);
 			this.shadowBottom = itemView.findViewById(R.id.v_shadow_bottom);
+		}
+
+		@Override
+		public void onProgressUpdate()
+		{
+			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
+			this.timePosition.setProgress(player.getCurrentPosition());
 		}
 
 		@Override
@@ -317,7 +326,7 @@ public class SoundAdapter
 			{
 				EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
 				if (player != null)
-				player.setPositionTo(progress);
+					player.setPositionTo(progress);
 			}
 		}
 

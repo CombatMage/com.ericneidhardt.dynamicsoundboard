@@ -58,6 +58,7 @@ public class SoundLayoutsManager
 				return soundLayout;
 		}
 		storedLayouts.get(0).setIsSelected(true);
+		this.update(storedLayouts.get(0));
 		return storedLayouts.get(0);
 	}
 
@@ -76,6 +77,24 @@ public class SoundLayoutsManager
 
 		layoutToUpdate.setLabel(newLabel);
 		this.daoSession.update(layoutToUpdate);
+	}
+
+	public void update(SoundLayout soundLayout)
+	{
+		this.daoSession.update(soundLayout);
+	}
+
+	public void update(final List<SoundLayout> soundLayouts)
+	{
+		this.daoSession.runInTx(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				for (SoundLayout layout : soundLayouts)
+					daoSession.update(layout);
+			}
+		});
 	}
 
 	public String getSuggestedSoundLayoutName()
@@ -128,6 +147,7 @@ public class SoundLayoutsManager
 			boolean isSelected = i == position;
 			soundLayouts.get(i).setIsSelected(isSelected);
 		}
+		this.update(soundLayouts);
 	}
 
 	public SoundLayout getSoundLayoutById(String databaseId)

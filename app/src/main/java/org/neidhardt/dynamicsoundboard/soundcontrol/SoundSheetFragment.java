@@ -194,6 +194,7 @@ public class SoundSheetFragment
 		this.soundLayout.addOnItemTouchListener(dragSortRecycler);
 		this.soundLayout.setOnScrollListener(dragSortRecycler.getScrollListener());
 
+		this.soundAdapter.setRecyclerView(this.soundLayout);
 		this.soundAdapter.notifyDataSetChanged();
 
 		return fragmentView;

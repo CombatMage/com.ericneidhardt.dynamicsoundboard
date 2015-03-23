@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder>
+public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder & SoundProgressViewHolder>
 		extends
 			RecyclerView.Adapter<T>
 		implements
@@ -19,9 +19,16 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder>
 
 	protected ServiceManagerFragment serviceManagerFragment;
 
+	private RecyclerView recyclerView;
+
 	public void setServiceManagerFragment(ServiceManagerFragment serviceManagerFragment)
 	{
 		this.serviceManagerFragment = serviceManagerFragment;
+	}
+
+	public void setRecyclerView(RecyclerView recyclerView)
+	{
+		this.recyclerView = recyclerView;
 	}
 
 	/**
@@ -47,8 +54,15 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder>
 			return;
 		}
 		for (Integer index : itemsWithProgressChanged)
-			notifyItemChanged(index);
-
+		{
+			if (this.recyclerView == null)
+				this.notifyItemChanged(index);
+			else
+			{
+				SoundProgressViewHolder viewHolderToUpdate = (SoundProgressViewHolder) this.recyclerView.findViewHolderForAdapterPosition(index);
+				viewHolderToUpdate.onProgressUpdate();
+			}
+		}
 		this.startProgressUpdateTimer();
 	}
 
@@ -66,4 +80,5 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder>
 	}
 
 	protected abstract List<EnhancedMediaPlayer> getValues();
+
 }

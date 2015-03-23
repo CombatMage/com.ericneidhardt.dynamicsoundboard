@@ -69,6 +69,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 		this.adapter = adapter;
 		this.adapter.setOnItemClickListener(this);
 		this.playlist.setAdapter(adapter);
+		this.adapter.setRecyclerView(this.playlist);
 	}
 
 	@Override

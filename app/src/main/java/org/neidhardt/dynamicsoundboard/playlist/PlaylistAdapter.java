@@ -12,6 +12,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
+import org.neidhardt.dynamicsoundboard.misc.SoundProgressViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 		EnhancedMediaPlayer player = this.getItem(i);
 		holder.label.setText(player.getMediaPlayerData().getLabel());
 		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
-		holder.updateProgress();
+		holder.onProgressUpdate();
 	}
 
 	@Override
@@ -121,7 +122,8 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 			extends
 				RecyclerView.ViewHolder
 			implements
-				View.OnClickListener
+				View.OnClickListener,
+				SoundProgressViewHolder
 	{
 		private TextView label;
 		private ImageView selectionIndicator;
@@ -136,7 +138,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 			itemView.setOnClickListener(this);
 		}
 
-		private void updateProgress()
+		public void onProgressUpdate()
 		{
 			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
 			if (player.isPlaying())
