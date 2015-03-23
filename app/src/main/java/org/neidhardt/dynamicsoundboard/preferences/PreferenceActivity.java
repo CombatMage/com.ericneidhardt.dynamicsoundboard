@@ -1,7 +1,9 @@
 package org.neidhardt.dynamicsoundboard.preferences;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -34,9 +36,17 @@ public class PreferenceActivity extends ActionBarActivity
 	{
 		int id = item.getItemId();
 		if (id == android.R.id.home)
-			this.finish();
+			this.navigateBack();
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void navigateBack()
+	{
+		Intent intent = NavUtils.getParentActivityIntent(this);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		NavUtils.navigateUpTo(this, intent);
+		this.overridePendingTransition(R.anim.anim_nothing, R.anim.anim_slide_out);
 	}
 
 	public static class SoundboardPreferenceFragment extends PreferenceFragment

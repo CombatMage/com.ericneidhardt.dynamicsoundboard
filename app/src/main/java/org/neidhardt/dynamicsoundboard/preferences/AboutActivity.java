@@ -40,10 +40,4 @@ public class AboutActivity extends PreferenceActivity
 		}
 	}
 
-	@Override
-	public void finish()
-	{
-		super.finish();
-		this.overridePendingTransition(R.anim.anim_nothing, R.anim.anim_slide_out);
-	}
 }
