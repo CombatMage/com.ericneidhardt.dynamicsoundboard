@@ -89,7 +89,7 @@ public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsLi
 		public void onClick(View view)
 		{
 			int id = view.getId();
-			int position = this.getPosition();
+			int position = this.getLayoutPosition();
 			SoundLayout item = getValues().get(position);
 			if (id == R.id.b_settings)
 				SoundLayoutSettingsDialog.showInstance(parent.getFragmentManager(), item.getDatabaseId());

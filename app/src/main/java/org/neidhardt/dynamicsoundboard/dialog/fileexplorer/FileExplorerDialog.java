@@ -146,7 +146,7 @@ public abstract class FileExplorerDialog extends BaseDialog
 		@Override
 		public void onClick(View v)
 		{
-			File file = adapter.fileList.get(this.getPosition());
+			File file = adapter.fileList.get(this.getLayoutPosition());
 			if (!file.isDirectory())
 				return;
 			adapter.setParent(file);
@@ -156,7 +156,7 @@ public abstract class FileExplorerDialog extends BaseDialog
 		@Override
 		public boolean onLongClick(View v)
 		{
-			File file = adapter.fileList.get(this.getPosition());
+			File file = adapter.fileList.get(this.getLayoutPosition());
 			if (file.equals(adapter.parent.getParentFile()))
 				return false;
 

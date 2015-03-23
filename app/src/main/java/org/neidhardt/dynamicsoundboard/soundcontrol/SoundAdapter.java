@@ -237,7 +237,7 @@ public class SoundAdapter
 		@Override
 		protected void delete()
 		{
-			int position = this.getPosition();
+			int position = this.getLayoutPosition();
 			EnhancedMediaPlayer player = getItem(position);
 			if (player != null && onItemDeleteListener != null)
 				onItemDeleteListener.onItemDelete(player, position);
@@ -255,7 +255,7 @@ public class SoundAdapter
 		@Override
 		public void onTextEdited(String text)
 		{
-			EnhancedMediaPlayer player = getItem(this.getPosition());
+			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
 			if (player != null)
 				player.getMediaPlayerData().setLabel(text);
 		}
@@ -265,7 +265,7 @@ public class SoundAdapter
 		{
 			super.onClick(view);
 
-			EnhancedMediaPlayer player = getItem(this.getPosition());
+			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
 			if (player == null)
 				return;
 			boolean isSelected = view.isSelected();
@@ -307,7 +307,7 @@ public class SoundAdapter
 					SoundSettingsDialog.showInstance(serviceManagerFragment.getFragmentManager(), player.getMediaPlayerData());
 					break;
 			}
-			notifyItemChanged(getPosition());
+			notifyItemChanged(getLayoutPosition());
 		}
 
 		@Override
@@ -315,7 +315,7 @@ public class SoundAdapter
 		{
 			if (fromUser)
 			{
-				EnhancedMediaPlayer player = getItem(this.getPosition());
+				EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
 				if (player != null)
 				player.setPositionTo(progress);
 			}

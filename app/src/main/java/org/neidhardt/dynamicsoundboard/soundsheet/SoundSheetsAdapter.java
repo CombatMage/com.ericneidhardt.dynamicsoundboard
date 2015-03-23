@@ -102,7 +102,7 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 		@Override
 		public void onClick(View view)
 		{
-			int position = this.getPosition();
+			int position = this.getLayoutPosition();
 			if (onItemClickListener != null)
 				onItemClickListener.onItemClick(view, getValues().get(position), position);
 		}
