@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import de.greenrobot.event.EventBus;
+import org.acra.ACRA;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -168,11 +169,13 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		catch (IOException e)
 		{
 			Logger.e(TAG, e.toString());
+			ACRA.getErrorReporter().handleException(e);
 			return false;
 		}
 		catch (IllegalStateException e)
 		{
 			Logger.e(TAG, e.toString());
+			ACRA.getErrorReporter().handleException(e);
 			return false;
 		}
 	}
@@ -228,11 +231,13 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		catch (IOException e)
 		{
 			Logger.e(TAG, e.getMessage());
+			ACRA.getErrorReporter().handleException(e);
 			return false;
 		}
 		catch (IllegalStateException e)
 		{
 			Logger.e(TAG, e.getMessage());
+			ACRA.getErrorReporter().handleException(e);
 			return false;
 		}
 	}
@@ -316,11 +321,13 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		catch (IOException e)
 		{
 			Logger.e(TAG, e.getMessage());
+			ACRA.getErrorReporter().handleException(e);
 			return false;
 		}
 		catch (IllegalStateException e)
 		{
 			Logger.e(TAG, e.getMessage());
+			ACRA.getErrorReporter().handleException(e);
 			return false;
 		}
 	}
