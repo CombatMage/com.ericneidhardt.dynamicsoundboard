@@ -35,8 +35,9 @@ public class MediaPlayerStateChangedEvent
 	public String toString()
 	{
 		return "MediaPlayerStateChangedEvent{" +
-				", isAlive=" + isAlive +
+				"isAlive=" + isAlive +
 				", playerId='" + playerId + '\'' +
+				", fragmentTag='" + fragmentTag + '\'' +
 				'}';
 	}
 }
