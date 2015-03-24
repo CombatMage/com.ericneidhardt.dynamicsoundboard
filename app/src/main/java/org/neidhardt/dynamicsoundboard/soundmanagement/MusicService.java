@@ -1,28 +1,18 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement;
 
-import android.app.NotificationManager;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
-import de.greenrobot.event.EventBus;
-import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
-import org.neidhardt.dynamicsoundboard.notifications.NotificationIds;
-import org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification;
-import org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder;
+import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
-import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 
 import java.io.IOException;
@@ -31,7 +21,7 @@ import java.util.*;
 /**
  * File created by eric.neidhardt on 01.12.2014.
  */
-public class MusicService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
+public class MusicService extends Service
 {
 	private static final String TAG = MusicService.class.getName();
 
@@ -58,12 +48,9 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		return sounds;
 	}
 
-	private LocalBroadcastManager broadcastManager;
-	private BroadcastReceiver notificationActionReceiver;
 	private Binder binder;
-
-	private NotificationManager notificationManager;
-	private List<PendingSoundNotification> notifications;
+	private LocalBroadcastManager broadcastManager;
+	private NotificationHandler notificationHandler;
 
 	private boolean isServiceBound = false;
 
@@ -94,15 +81,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		super.onCreate();
 
 		this.binder = new Binder();
+		this.notificationHandler = new NotificationHandler(this);
 		this.broadcastManager = LocalBroadcastManager.getInstance(this);
-		this.notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-		this.notifications = new ArrayList<>();
-
-		this.notificationActionReceiver = new NotificationActionReceiver();
-
-		EventBus.getDefault().register(this);
-		SoundboardPreferences.registerSharedPreferenceChangedListener(this);
-		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
 
 		this.initSoundsAndPlayList();
 	}
@@ -140,10 +120,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	{
 		Logger.d(TAG, "onDestroy");
 
-		EventBus.getDefault().unregister(this);
-		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this);
-		this.unregisterReceiver(this.notificationActionReceiver);
-
+		this.notificationHandler.onServiceDestroyed();
 		this.clearAndStoreSoundsAndPlayList();
 
 		super.onDestroy();
@@ -152,48 +129,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 	public void clearAndStoreSoundsAndPlayList()
 	{
 		this.storeLoadedSounds();
-		this.dismissAllNotifications();
+		this.notificationHandler.dismissAllNotifications();
 		this.releaseMediaPlayers();
-	}
-
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
-	{
-		if (key.equals(this.getString(R.string.preferences_enable_notifications_key)))
-		{
-			boolean areNotificationsEnabledEnabled = SoundboardPreferences.areNotificationsEnabled();
-			Logger.d(TAG, "onSharedPreferenceChanged " + key + " to " + areNotificationsEnabledEnabled);
-			if (areNotificationsEnabledEnabled)
-				this.showAllNotifications();
-			else
-				this.dismissAllNotifications();
-		}
-	}
-
-	private void showAllNotifications()
-	{
-		List<EnhancedMediaPlayer> pendingSounds = this.getPlayingSoundsFromSoundList();
-		for (EnhancedMediaPlayer player : pendingSounds)
-		{
-			this.addNotification(this.getNotificationForSound(player));
-		}
-
-		EnhancedMediaPlayer player = this.getPlayingSoundFromPlaylist();
-		if (player != null)
-		{
-			PendingSoundNotificationBuilder builder = this.getNotificationForPlaylist(player);
-			this.addNotification(builder);
-		}
-	}
-
-	private void dismissAllNotifications()
-	{
-		for (PendingSoundNotification notification : this.notifications)
-		{
-			int notificationId = notification.getNotificationId();
-			this.notificationManager.cancel(notificationId);
-		}
-		this.notifications.clear();
 	}
 
 	private void releaseMediaPlayers()
@@ -225,32 +162,6 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			this.stopSelf();
 	}
 
-	private PendingSoundNotificationBuilder getNotificationForSound(EnhancedMediaPlayer player)
-	{
-		return new PendingSoundNotificationBuilder(this.getApplicationContext(), player);
-	}
-
-	private PendingSoundNotificationBuilder getNotificationForPlaylist(EnhancedMediaPlayer player)
-	{
-		return new PendingSoundNotificationBuilder(
-				this.getApplicationContext(),
-				player,
-				NotificationIds.NOTIFICATION_ID_PLAYLIST,
-				this.getString(R.string.notification_playlist),
-				player.getMediaPlayerData().getLabel());
-	}
-
-	private void addNotification(PendingSoundNotificationBuilder notificationBuilder)
-	{
-		int notificationId = notificationBuilder.getNotificationId();
-		String playerId = notificationBuilder.getPlayerId();
-
-		PendingSoundNotification notification = new PendingSoundNotification(notificationId, playerId, notificationBuilder.build());
-
-		this.notifications.add(notification);
-		this.notificationManager.notify(notification.getNotificationId(), notification.getNotification());
-	}
-
 	public void storeLoadedSounds()
 	{
 		SafeAsyncTask task = new UpdateSoundsTask(this.sounds, dbSounds);
@@ -269,7 +180,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		return currentlyPlayingSounds;
 	}
 
-	private List<EnhancedMediaPlayer> getPlayingSoundsFromSoundList()
+	public List<EnhancedMediaPlayer> getPlayingSoundsFromSoundList()
 	{
 		List<EnhancedMediaPlayer> currentlyPlayingSounds = new ArrayList<>();
 		for (String fragmentTag : this.sounds.keySet())
@@ -283,7 +194,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		return currentlyPlayingSounds;
 	}
 
-	private EnhancedMediaPlayer getPlayingSoundFromPlaylist()
+	public EnhancedMediaPlayer getPlayingSoundFromPlaylist()
 	{
 		for (EnhancedMediaPlayer sound : this.playlist)
 		{
@@ -477,12 +388,12 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 			return this.searchInListForId(playerId, this.sounds.get(fragmentTag));
 	}
 
-	private EnhancedMediaPlayer searchInPlaylistForId(String playerId)
+	public EnhancedMediaPlayer searchInPlaylistForId(String playerId)
 	{
 		return this.searchInListForId(playerId, playlist);
 	}
 
-	private EnhancedMediaPlayer searchInSoundsForId(String playerId)
+	public EnhancedMediaPlayer searchInSoundsForId(String playerId)
 	{
 		Set<String> soundSheets = sounds.keySet();
 		for (String soundSheet : soundSheets)
@@ -518,6 +429,11 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		int indexOfSoundsToUpdate = Math.min(from, to); // we need to update all sound after the moved one
 		for (int i = indexOfSoundsToUpdate; i < count; i++)
 			soundsInFragment.get(i).getMediaPlayerData().setSortOrder(i);
+	}
+
+	public boolean isServiceBound()
+	{
+		return this.isServiceBound;
 	}
 
 	private class LoadSoundsTask extends LoadTask<MediaPlayerData>
@@ -689,208 +605,6 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 		{
 			Logger.d(TAG, "getService");
 			return MusicService.this;
-		}
-	}
-
-	// Update notifications, according to player state or notification actions
-
-	/**
-	 * This is called by greenDao EventBus in case a mediaplayer changed his state
-	 * @param event delivered MediaPlayerStateChangedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEvent(MediaPlayerStateChangedEvent event)
-	{
-		Logger.d(TAG, event.toString());
-
-		boolean areNotificationsEnabled = SoundboardPreferences.areNotificationsEnabled();
-		if (!areNotificationsEnabled)
-			return;
-
-		String playerId = event.getPlayerId();
-		String fragmentTag = event.getFragmentTag();
-		boolean isAlive = event.isAlive();
-
-		if (playerId == null || fragmentTag == null)
-			return;
-
-		if (fragmentTag.equals(Playlist.TAG)) // update special playlist notification
-		{
-			EnhancedMediaPlayer player = searchInPlaylistForId(playerId);
-			if (player != null)
-			{
-				if (isAlive)
-					this.handlePlaylistPlayerStateChanged(player);
-				else
-					this.removePlayListNotification();
-			}
-		}
-		else // check if there is a generic notification to update
-		{
-			if (isAlive)
-				this.handlePlayerStateChanged(playerId);
-			else
-				this.removeNotificationForPlayer(playerId);
-		}
-	}
-
-	private void handlePlaylistPlayerStateChanged(EnhancedMediaPlayer player)
-	{
-		boolean isPendingNotification = this.updateOrRemovePendingPlaylistNotification();
-		if (!isPendingNotification)
-			addNotification(getNotificationForPlaylist(player));
-	}
-
-	private void removePlayListNotification()
-	{
-		PendingSoundNotification notification = this.findPlaylistNotification();
-		if (notification != null)
-			notificationManager.cancel(notification.getNotificationId());
-	}
-
-	private boolean updateOrRemovePendingPlaylistNotification()
-	{
-		PendingSoundNotification correspondingNotification = this.findPlaylistNotification();
-		if (correspondingNotification == null)
-			return false;
-
-		int notificationId = correspondingNotification.getNotificationId();
-		EnhancedMediaPlayer player = getPlayingSoundFromPlaylist();
-		if (player == null)
-			player = searchInPlaylistForId(correspondingNotification.getPlayerId());
-
-		if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
-		{
-			this.removePlayListNotification();
-			return true;
-		}
-
-		PendingSoundNotificationBuilder builder = getNotificationForPlaylist(player);
-
-		correspondingNotification.setPlayerId(player.getMediaPlayerData().getPlayerId());
-		correspondingNotification.setNotification(builder.build());
-		notificationManager.notify(notificationId, correspondingNotification.getNotification());
-
-		return true;
-	}
-
-	private void handlePlayerStateChanged(String playerId)
-	{
-		boolean isPendingNotification = this.updateOrRemovePendingNotification(playerId);
-		if (!isPendingNotification)
-			addNotification(getNotificationForSound(searchInSoundsForId(playerId)));
-	}
-
-	private boolean updateOrRemovePendingNotification(String playerId)
-	{
-		PendingSoundNotification correspondingNotification = this.findNotificationForPendingPlayer(playerId);
-		if (correspondingNotification == null)
-			return false;
-
-		int notificationId = correspondingNotification.getNotificationId();
-		EnhancedMediaPlayer player = searchInSoundsForId(playerId);
-
-		if (!player.isPlaying() && isServiceBound) // if player stops playing and the service is still bound, we remove the notification
-		{
-			this.removeNotificationForPlayer(playerId);
-			return true;
-		}
-
-		PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(getApplicationContext(), player, notificationId);
-
-		correspondingNotification.setNotification(builder.build());
-		notificationManager.notify(notificationId, correspondingNotification.getNotification());
-
-		return true;
-	}
-
-	private void removeNotificationForPlayer(String playerId)
-	{
-		PendingSoundNotification notification = this.findNotificationForPendingPlayer(playerId);
-		if (notification != null)
-			notificationManager.cancel(notification.getNotificationId());
-	}
-
-	private PendingSoundNotification findNotificationForPendingPlayer(String playerId)
-	{
-		for (PendingSoundNotification notification : notifications)
-		{
-			if (notification.getNotificationId() == NotificationIds.NOTIFICATION_ID_PLAYLIST)
-				continue;
-			if (notification.getPlayerId().equals(playerId))
-				return notification;
-		}
-		return null;
-	}
-
-	private PendingSoundNotification findPlaylistNotification()
-	{
-		for (PendingSoundNotification notification : notifications)
-		{
-			if (notification.getNotificationId() == NotificationIds.NOTIFICATION_ID_PLAYLIST)
-				return notification;
-		}
-		return null;
-	}
-
-	private class NotificationActionReceiver extends BroadcastReceiver
-	{
-		@Override
-		public void onReceive(Context context, Intent intent)
-		{
-			Logger.d(TAG, "NotificationActionReceiver.onReceive " + intent);
-
-			String action = intent.getAction();
-			if (action == null)
-				return;
-
-			String playerId = intent.getStringExtra(NotificationIds.KEY_PLAYER_ID);
-			if (playerId == null)
-				return;
-
-			int notificationId = intent.getIntExtra(NotificationIds.KEY_NOTIFICATION_ID, 0);
-			if (action.equals(NotificationIds.ACTION_DISMISS))
-				this.dismissPendingMediaPlayer(notificationId);
-			else
-			{
-				EnhancedMediaPlayer player;
-				if (notificationId == NotificationIds.NOTIFICATION_ID_PLAYLIST)
-					player = searchInPlaylistForId(playerId);
-				else
-					player = searchInSoundsForId(playerId);
-				if (player == null)
-					return;
-				switch (action)
-				{
-					case NotificationIds.ACTION_PAUSE:
-						player.pauseSound();
-						break;
-					case NotificationIds.ACTION_STOP:
-						player.stopSound();
-						break;
-					case NotificationIds.ACTION_PLAY:
-						player.playSound();
-						break;
-					case NotificationIds.ACTION_FADE_OUT:
-						player.fadeOutSound();
-						break;
-				}
-			}
-		}
-
-		private void dismissPendingMediaPlayer(int notificationId)
-		{
-			PendingSoundNotification notificationToRemove = null;
-			for (PendingSoundNotification notification : notifications)
-			{
-				if (notification.getNotificationId() == notificationId)
-					notificationToRemove = notification;
-			}
-			if (notificationToRemove != null)
-				notifications.remove(notificationToRemove);
-
-			if (!isServiceBound && notifications.size() == 0)
-				stopSelf();
 		}
 	}
 
