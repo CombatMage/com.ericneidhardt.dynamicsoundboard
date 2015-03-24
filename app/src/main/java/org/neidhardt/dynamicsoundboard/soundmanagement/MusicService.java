@@ -445,11 +445,18 @@ public class MusicService extends Service
 		public List<MediaPlayerData> call() throws Exception
 		{
 			List<MediaPlayerData> mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
-			EventBus bus = EventBus.getDefault();
-			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
+			final EventBus bus = EventBus.getDefault();
+			for (final MediaPlayerData mediaPlayerData : mediaPlayersData)
 			{
-				addSoundToSounds(createSoundFromRawData(mediaPlayerData));
-				bus.post(new SoundsLoadedEvent());
+				super.postOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						addSoundToSounds(createSoundFromRawData(mediaPlayerData));
+						bus.post(new SoundsLoadedEvent());
+					}
+				});
 			}
 
 			return mediaPlayersData;
@@ -479,15 +486,23 @@ public class MusicService extends Service
 		public List<MediaPlayerData> call() throws Exception
 		{
 			List<MediaPlayerData> mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
-			EventBus bus = EventBus.getDefault();
-			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
+			final EventBus bus = EventBus.getDefault();
+			for (final MediaPlayerData mediaPlayerData : mediaPlayersData)
 			{
-				createPlaylistSoundFromPlayerData(mediaPlayerData);
-				bus.post(new PlayListLoadedEvent());
+				super.postOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						createPlaylistSoundFromPlayerData(mediaPlayerData);
+						bus.post(new PlayListLoadedEvent());
+					}
+				});
 			}
 			return mediaPlayersData;
 		}
-/*
+
+		/*
 		@Override
 		protected void onSuccess(List<MediaPlayerData> mediaPlayersData) throws Exception
 		{

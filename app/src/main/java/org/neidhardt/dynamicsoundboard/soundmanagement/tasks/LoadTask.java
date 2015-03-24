@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.tasks;
 
+import android.os.Handler;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 
@@ -13,16 +14,25 @@ public abstract class LoadTask<T> extends SafeAsyncTask<List<T>>
 {
 	private static final String TAG = LoadTask.class.getName();
 
+	private Handler handler = new Handler();
+
 	@Override
-	protected void onSuccess(List<T> ts) throws Exception {
+	protected void onSuccess(List<T> ts) throws Exception
+	{
 		super.onSuccess(ts);
 		Logger.d(TAG, "onSuccess: with " + ts.size() + " sounds loaded");
 	}
 
 	@Override
-	protected void onException(Exception e) throws RuntimeException {
+	protected void onException(Exception e) throws RuntimeException
+	{
 		super.onException(e);
 		Logger.e(TAG, e.getMessage());
 		throw new RuntimeException(e);
+	}
+
+	protected void postOnUiThread(Runnable runnable)
+	{
+		this.handler.post(runnable);
 	}
 }
