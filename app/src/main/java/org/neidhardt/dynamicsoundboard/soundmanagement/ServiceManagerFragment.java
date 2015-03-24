@@ -1,9 +1,12 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement;
 
-import android.content.*;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.BaseFragment;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -19,8 +22,6 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 {
 	public static final String TAG = ServiceManagerFragment.class.getName();
 
-	private ServiceLoadingReceiver receiver;
-
 	private boolean isServiceBound = false;
 
 	private MusicService service;
@@ -34,8 +35,6 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
-
-		this.receiver = new ServiceLoadingReceiver();
 	}
 
 	private void startSoundManagerService()
@@ -47,7 +46,10 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public void onStart()
 	{
 		super.onStart();
-		this.registerReceiver();
+
+		EventBus.getDefault().register(this);
+
+		//this.registerReceiver();
 		this.startSoundManagerService();
 	}
 
@@ -57,21 +59,35 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		super.onStop();
 		if (this.isServiceBound)
 			this.getActivity().unbindService(this);
-		LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
+
+		EventBus.getDefault().unregister(this);
+		//LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case loading the playlist from MusicService has finished
+	 * @param event delivered PlayListLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(PlayListLoadedEvent event)
+	{
+		this.notifyPlaylist();
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
+	 * @param event delivered SoundsLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(SoundsLoadedEvent event)
+	{
+		this.notifySoundSheetFragments();
 	}
 
 	public void onUserLeaveHint()
 	{
 		if (this.service != null)
 			this.service.onActivityClosed();
-	}
-
-	private void registerReceiver()
-	{
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(MusicService.ACTION_FINISHED_LOADING_PLAYLIST);
-		filter.addAction(MusicService.ACTION_FINISHED_LOADING_SOUNDS);
-		LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.receiver, filter);
 	}
 
 	@Override
@@ -125,18 +141,5 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 			fragment.notifyDataSetChanged();
 
 		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
-	}
-
-	private class ServiceLoadingReceiver extends BroadcastReceiver
-	{
-		@Override
-		public void onReceive(Context context, Intent intent)
-		{
-			String action = intent.getAction();
-			if (action.equals(MusicService.ACTION_FINISHED_LOADING_PLAYLIST))
-				notifyPlaylist();
-			else if (action.equals(MusicService.ACTION_FINISHED_LOADING_SOUNDS))
-				notifySoundSheetFragments();
-		}
 	}
 }

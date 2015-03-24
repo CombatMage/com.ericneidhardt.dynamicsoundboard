@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundmanagement;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
@@ -24,9 +24,6 @@ import java.util.*;
 public class MusicService extends Service
 {
 	private static final String TAG = MusicService.class.getName();
-
-	public static final String ACTION_FINISHED_LOADING_PLAYLIST = "org.neidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_PLAYLIST";
-	public static final String ACTION_FINISHED_LOADING_SOUNDS = "org.neidhardt.dynamicsoundboard.storage.ACTION_FINISHED_LOADING_SOUNDS";
 
 	private static final String DB_SOUNDS_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
 	private static final String DB_SOUNDS_PLAYLIST_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
@@ -49,7 +46,6 @@ public class MusicService extends Service
 	}
 
 	private Binder binder;
-	private LocalBroadcastManager broadcastManager;
 	private NotificationHandler notificationHandler;
 
 	private boolean isServiceBound = false;
@@ -82,7 +78,6 @@ public class MusicService extends Service
 
 		this.binder = new Binder();
 		this.notificationHandler = new NotificationHandler(this);
-		this.broadcastManager = LocalBroadcastManager.getInstance(this);
 
 		this.initSoundsAndPlayList();
 	}
@@ -458,14 +453,7 @@ public class MusicService extends Service
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
 				addSoundToSounds(createSoundFromRawData(mediaPlayerData));
 
-			this.sendBroadcastLoadingSoundsSuccessful();
-		}
-
-		private void sendBroadcastLoadingSoundsSuccessful()
-		{
-			Intent intent = new Intent();
-			intent.setAction(ACTION_FINISHED_LOADING_SOUNDS);
-			broadcastManager.sendBroadcast(intent);
+			EventBus.getDefault().post(new SoundsLoadedEvent());
 		}
 	}
 
@@ -491,14 +479,7 @@ public class MusicService extends Service
 			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
 				createPlaylistSoundFromPlayerData(mediaPlayerData);
 
-			this.sendBroadcastLoadingPlayListSuccessful();
-		}
-
-		private void sendBroadcastLoadingPlayListSuccessful()
-		{
-			Intent intent = new Intent();
-			intent.setAction(ACTION_FINISHED_LOADING_PLAYLIST);
-			broadcastManager.sendBroadcast(intent);
+			EventBus.getDefault().post(new PlayListLoadedEvent());
 		}
 	}
 
