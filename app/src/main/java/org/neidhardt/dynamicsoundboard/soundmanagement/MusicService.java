@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadTask;
 
 import java.io.IOException;
 import java.util.*;
@@ -32,14 +33,14 @@ public class MusicService extends Service
 	private static final String DB_SOUNDS_PLAYLIST = "db_sounds_playlist";
 
 	private DaoSession dbPlaylist;
-	private List<EnhancedMediaPlayer> playlist = new ArrayList<>();
+	private volatile List<EnhancedMediaPlayer> playlist = new ArrayList<>();
 	List<EnhancedMediaPlayer> getPlaylist()
 	{
 		return playlist;
 	}
 
 	private DaoSession dbSounds;
-	private Map<String, List<EnhancedMediaPlayer>> sounds = new HashMap<>();
+	private volatile Map<String, List<EnhancedMediaPlayer>> sounds = new HashMap<>();
 	Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return sounds;
@@ -443,9 +444,17 @@ public class MusicService extends Service
 		@Override
 		public List<MediaPlayerData> call() throws Exception
 		{
-			return this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
-		}
+			List<MediaPlayerData> mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
+			EventBus bus = EventBus.getDefault();
+			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
+			{
+				addSoundToSounds(createSoundFromRawData(mediaPlayerData));
+				bus.post(new SoundsLoadedEvent());
+			}
 
+			return mediaPlayersData;
+		}
+/*
 		@Override
 		protected void onSuccess(List<MediaPlayerData> mediaPlayersData) throws Exception
 		{
@@ -454,7 +463,7 @@ public class MusicService extends Service
 				addSoundToSounds(createSoundFromRawData(mediaPlayerData));
 
 			EventBus.getDefault().post(new SoundsLoadedEvent());
-		}
+		}*/
 	}
 
 	private class LoadPlaylistTask extends LoadTask<MediaPlayerData>
@@ -469,9 +478,16 @@ public class MusicService extends Service
 		@Override
 		public List<MediaPlayerData> call() throws Exception
 		{
-			return this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
+			List<MediaPlayerData> mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
+			EventBus bus = EventBus.getDefault();
+			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
+			{
+				createPlaylistSoundFromPlayerData(mediaPlayerData);
+				bus.post(new PlayListLoadedEvent());
+			}
+			return mediaPlayersData;
 		}
-
+/*
 		@Override
 		protected void onSuccess(List<MediaPlayerData> mediaPlayersData) throws Exception
 		{
@@ -480,25 +496,7 @@ public class MusicService extends Service
 				createPlaylistSoundFromPlayerData(mediaPlayerData);
 
 			EventBus.getDefault().post(new PlayListLoadedEvent());
-		}
-	}
-
-	private abstract class LoadTask<T> extends SafeAsyncTask<List<T>>
-	{
-		@Override
-		protected void onSuccess(List<T> ts) throws Exception
-		{
-			super.onSuccess(ts);
-			Logger.d(TAG, "onSuccess: with " + ts.size() + " sounds loaded");
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
+		}*/
 	}
 
 	private class UpdateSoundsTask extends SafeAsyncTask<Void>
