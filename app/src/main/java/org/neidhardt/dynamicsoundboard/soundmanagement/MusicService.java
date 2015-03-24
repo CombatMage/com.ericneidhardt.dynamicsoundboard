@@ -541,7 +541,7 @@ public class MusicService extends Service
 					{
 						List<MediaPlayerData> storePlayers = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerToUpdate.getPlayerId())).list();
 						int count = storePlayers.size();
-						if (storePlayers == null || count == 0)
+						if (count == 0)
 							dao.insert(playerToUpdate);
 						else if (count == 1)
 						{
