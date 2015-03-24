@@ -5,5 +5,5 @@ package org.neidhardt.dynamicsoundboard;
  */
 public class SoundboardConfiguration
 {
-	public static final boolean ENABLE_LOGGING = true;
+	public static final boolean ENABLE_LOGGING = false;
 }
