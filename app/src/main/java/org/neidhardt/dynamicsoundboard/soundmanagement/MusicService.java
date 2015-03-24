@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import de.greenrobot.event.EventBus;
+import org.acra.ACRA;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
@@ -458,19 +459,8 @@ public class MusicService extends Service
 					}
 				});
 			}
-
 			return mediaPlayersData;
 		}
-/*
-		@Override
-		protected void onSuccess(List<MediaPlayerData> mediaPlayersData) throws Exception
-		{
-			super.onSuccess(mediaPlayersData);
-			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				addSoundToSounds(createSoundFromRawData(mediaPlayerData));
-
-			EventBus.getDefault().post(new SoundsLoadedEvent());
-		}*/
 	}
 
 	private class LoadPlaylistTask extends LoadTask<MediaPlayerData>
@@ -501,17 +491,6 @@ public class MusicService extends Service
 			}
 			return mediaPlayersData;
 		}
-
-		/*
-		@Override
-		protected void onSuccess(List<MediaPlayerData> mediaPlayersData) throws Exception
-		{
-			super.onSuccess(mediaPlayersData);
-			for (MediaPlayerData mediaPlayerData : mediaPlayersData)
-				createPlaylistSoundFromPlayerData(mediaPlayerData);
-
-			EventBus.getDefault().post(new PlayListLoadedEvent());
-		}*/
 	}
 
 	private class UpdateSoundsTask extends SafeAsyncTask<Void>
@@ -561,13 +540,20 @@ public class MusicService extends Service
 					for (MediaPlayerData playerToUpdate : mediaPlayers)
 					{
 						List<MediaPlayerData> storePlayers = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerToUpdate.getPlayerId())).list();
-						if (storePlayers == null || storePlayers.size() == 0)
+						int count = storePlayers.size();
+						if (storePlayers == null || count == 0)
 							dao.insert(playerToUpdate);
-						else
+						else if (count == 1)
 						{
-							MediaPlayerData storedPlayer = storePlayers.get(0); // the player id should be unique there this will never be greater than one
+							MediaPlayerData storedPlayer = storePlayers.get(0); // the player id should be unique so there should be no more than one entry
 							updateStorePlayerData(storedPlayer, playerToUpdate);
 							dao.update(storedPlayer);
+						}
+						else
+						{
+							String message = "More than one matching entry in dao found " + playerToUpdate;
+							Logger.e(TAG, message);
+							ACRA.getErrorReporter().handleException(new IllegalStateException(message));
 						}
 					}
 				}
