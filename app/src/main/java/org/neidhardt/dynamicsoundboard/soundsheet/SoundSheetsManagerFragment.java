@@ -119,10 +119,13 @@ public class SoundSheetsManagerFragment
 	public void deleteCurrentActiveSoundSheet()
 	{
 		SoundSheetFragment fragment = BaseActivity.getCurrentFragment(this.getFragmentManager());
-		fragment.removeAllSounds();
-		SoundSheet soundSheet = this.get(fragment.getFragmentTag());
-		this.remove(fragment.getFragmentTag());
-		this.getBaseActivity().removeSoundFragment(soundSheet);
+		if (fragment != null)
+		{
+			fragment.removeAllSounds();
+			SoundSheet soundSheet = this.get(fragment.getFragmentTag());
+			this.remove(fragment.getFragmentTag());
+			this.getBaseActivity().removeSoundFragment(soundSheet);
+		}
 	}
 
 	public void deleteAllSoundSheets()
