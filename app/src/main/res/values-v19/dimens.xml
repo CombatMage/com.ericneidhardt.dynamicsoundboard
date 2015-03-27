@@ -1,0 +1,5 @@
+<resources>
+
+	<dimen name="status_bar_padding">24dp</dimen> <!-- for material style navigation drawer, so the toolbar is still below the status bar -->
+
+</resources>
