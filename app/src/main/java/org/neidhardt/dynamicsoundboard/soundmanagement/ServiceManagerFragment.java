@@ -49,7 +49,6 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 
 		EventBus.getDefault().register(this);
 
-		//this.registerReceiver();
 		this.startSoundManagerService();
 	}
 
@@ -61,7 +60,6 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 			this.getActivity().unbindService(this);
 
 		EventBus.getDefault().unregister(this);
-		//LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.receiver);
 	}
 
 	/**
@@ -69,7 +67,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	 * @param event delivered PlayListLoadedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(PlayListLoadedEvent event)
+	public void onEventMainThread(PlayListLoadedEvent event)
 	{
 		this.notifyPlaylist();
 	}
@@ -79,7 +77,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	 * @param event delivered SoundsLoadedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(SoundsLoadedEvent event)
+	public void onEventMainThread(SoundsLoadedEvent event)
 	{
 		this.notifySoundSheetFragments();
 	}

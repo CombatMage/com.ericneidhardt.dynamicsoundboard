@@ -167,8 +167,25 @@ public abstract class FileExplorerDialog extends BaseDialog
 				return false;
 
 			adapter.selectedFile = file;
-			adapter.notifyDataSetChanged();
+			this.updateUi(file);
+
 			return false;
+		}
+
+
+		private void updateUi(File selectedFile)
+		{
+			this.bindData(selectedFile);
+
+			int position = this.getLayoutPosition();
+			int count = adapter.getItemCount();
+			for (int i = 0; i < count; i++)
+			{
+				if (i != position) // update all items except this one
+					adapter.notifyItemChanged(i);
+			}
+
+			adapter.notifyDataSetChanged();
 		}
 	}
 
