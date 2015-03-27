@@ -127,12 +127,16 @@ public class MediaPlayerData {
     }
 
     // KEEP METHODS - put your custom methods here
-    public boolean isDataAltered() {
+    public boolean wasAlteredAfterLoading() {
         return this.wasAltered;
     }
 
     public void setItemWasAltered() {
         this.wasAltered = true;
+    }
+
+    public void setItemWasUpdated() {
+        this.wasAltered = false;
     }
     // KEEP METHODS END
 

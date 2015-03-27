@@ -140,11 +140,13 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	{
 		super.setLooping(looping);
 		this.rawData.setIsLoop(looping);
+		this.rawData.setItemWasAltered();
 	}
 
 	public void setIsInPlaylist(boolean inPlaylist)
 	{
 		this.rawData.setIsInPlaylist(inPlaylist);
+		this.rawData.setItemWasAltered();
 	}
 
 	public boolean playSound()

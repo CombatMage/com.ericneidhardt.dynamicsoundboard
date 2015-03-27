@@ -266,7 +266,10 @@ public class SoundAdapter
 		{
 			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
 			if (player != null)
+			{
 				player.getMediaPlayerData().setLabel(text);
+				player.getMediaPlayerData().setItemWasAltered();
+			}
 		}
 
 		@Override

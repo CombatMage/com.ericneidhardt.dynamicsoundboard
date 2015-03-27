@@ -424,8 +424,10 @@ public class MusicService extends Service
 
 		int count = soundsInFragment.size();
 		int indexOfSoundsToUpdate = Math.min(from, to); // we need to update all sound after the moved one
-		for (int i = indexOfSoundsToUpdate; i < count; i++)
+		for (int i = indexOfSoundsToUpdate; i < count; i++) {
 			soundsInFragment.get(i).getMediaPlayerData().setSortOrder(i);
+			soundsInFragment.get(i).getMediaPlayerData().setItemWasAltered();
+		}
 	}
 
 	public boolean isServiceBound()
@@ -543,7 +545,7 @@ public class MusicService extends Service
 						int count = storePlayers.size();
 						if (count == 0)
 							dao.insert(playerToUpdate);
-						else if (count == 1)
+						else if (count == 1 && playerToUpdate.wasAlteredAfterLoading())
 						{
 							MediaPlayerData storedPlayer = storePlayers.get(0); // the player id should be unique so there should be no more than one entry
 							updateStorePlayerData(storedPlayer, playerToUpdate);
@@ -565,9 +567,11 @@ public class MusicService extends Service
 		{
 			storedPlayer.setFragmentTag(newPlayerData.getFragmentTag());
 			storedPlayer.setIsInPlaylist(newPlayerData.getIsInPlaylist());
-			storedPlayer.setIsLoop(newPlayerData.getIsInPlaylist());
+			storedPlayer.setIsLoop(newPlayerData.getIsLoop());
 			storedPlayer.setLabel(newPlayerData.getLabel());
 			storedPlayer.setTimePosition(newPlayerData.getTimePosition());
+
+			storedPlayer.setItemWasUpdated();
 		}
 
 		@Override
