@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.*;
 import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
@@ -85,12 +86,26 @@ public class SoundSheetsManagerFragment
 	}
 
 	@Override
+	public void onStart()
+	{
+		super.onStart();
+		EventBus.getDefault().registerSticky(this);
+	}
+
+	@Override
 	public void onPause()
 	{
 		super.onPause();
 
 		SafeAsyncTask task = new UpdateSoundSheetsTask(this.daoSession, this.soundSheets);
 		task.execute();
+	}
+
+	@Override
+	public void onStop()
+	{
+		EventBus.getDefault().unregister(this);
+		super.onStop();
 	}
 
 	public void storeSoundSheets()
@@ -222,7 +237,7 @@ public class SoundSheetsManagerFragment
 			this.remove(soundSheetToRemove, true);
 	}
 
-	public List<SoundSheet> getAll()
+	public List<SoundSheet> getSoundSheets()
 	{
 		return this.soundSheets;
 	}
@@ -268,25 +283,6 @@ public class SoundSheetsManagerFragment
 	{
 		String tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode());
 		return new SoundSheet(null, tag, label, false);
-	}
-
-	private void handleIntent(Intent intent)
-	{
-		if (intent == null)
-			return;
-
-		String action = intent.getAction();
-		if (action == null)
-			return;
-
-		if (intent.getAction().equals(Intent.ACTION_VIEW)
-				&& intent.getData() != null)
-		{
-			if (this.soundSheets.size() == 0)
-				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(), this.getSuggestedSoundSheetName(), null);
-			else
-				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(), this.getSuggestedSoundSheetName(), this.soundSheets);
-		}
 	}
 
 	public String getSuggestedSoundSheetName()
@@ -341,6 +337,7 @@ public class SoundSheetsManagerFragment
 			Logger.e(TAG, e.getMessage());
 			throw new RuntimeException(e);
 		}
+
 		@Override
 		protected void onSuccess(List<SoundSheet> loadedSoundSheets) throws Exception
 		{
@@ -349,15 +346,29 @@ public class SoundSheetsManagerFragment
 			if (loadedSoundSheets.size() > 0)
 				SoundSheetsManagerFragment.this.soundSheets.addAll(loadedSoundSheets);
 
-			handleIntent(getActivity().getIntent());
-			NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager()
-					.findFragmentByTag(NavigationDrawerFragment.TAG);
-			navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
-
-			SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetsManagerFragment.this.soundSheets);
-			if (selectedSoundSheet != null)
-				getBaseActivity().openSoundFragment(selectedSoundSheet);
+			EventBus.getDefault().postSticky(new SoundSheetsLoadedEvent());
 		}
+	}
+
+	/**
+	 * Called by LoadSoundSheetsTask when loading of soundsheets has been finished.
+	 * @param event delivered SoundSheetsLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(SoundSheetsLoadedEvent event)
+	{
+		EventBus.getDefault().removeStickyEvent(event);
+
+		BaseActivity activity = this.getBaseActivity();
+		activity.handleIntent(activity.getIntent());
+
+		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager()
+				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
+
+		SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetsManagerFragment.this.soundSheets);
+		if (selectedSoundSheet != null)
+			activity.openSoundFragment(selectedSoundSheet);
 	}
 
 	private SoundSheet findSelectedAndSelectRemaining(List<SoundSheet> soundSheets)

@@ -18,6 +18,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -99,6 +100,32 @@ public class BaseActivity
 			}
 		}
 		fab.setAddState();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent)
+	{
+		super.onNewIntent(intent);
+	}
+
+	public void handleIntent(Intent intent)
+	{
+		if (intent == null)
+			return;
+
+		String action = intent.getAction();
+		if (action == null)
+			return;
+
+		if (intent.getAction().equals(Intent.ACTION_VIEW)
+				&& intent.getData() != null)
+		{
+			SoundSheetsManagerFragment fragment = this.getSoundSheetsManagerFragment();
+			if (fragment.getSoundSheets().size() == 0)
+				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(), fragment.getSuggestedSoundSheetName(), null);
+			else
+				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(), fragment.getSuggestedSoundSheetName(), fragment.getSoundSheets());
+		}
 	}
 
 	@Override
@@ -336,6 +363,11 @@ public class BaseActivity
 		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
 	}
 
+	private SoundSheetsManagerFragment getSoundSheetsManagerFragment()
+	{
+		return (SoundSheetsManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
+	}
+
 	private void addSoundSheetManagerFragment()
 	{
 		FragmentManager fragmentManager = this.getFragmentManager();
@@ -426,7 +458,7 @@ public class BaseActivity
 	public void switchToActiveSoundLayout()
 	{
 		SoundSheetsManagerFragment fragment = (SoundSheetsManagerFragment) this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
-		this.removeSoundFragment(fragment.getAll());
+		this.removeSoundFragment(fragment.getSoundSheets());
 		this.setSoundSheetActionsEnable(false);
 		fragment.storeSoundSheets();
 		fragment.initSoundSheets();

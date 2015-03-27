@@ -139,7 +139,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		JsonPojo pojo = new JsonPojo();
 		try
 		{
-			pojo.setSoundSheets(soundSheetsManagerFragment.getAll());
+			pojo.setSoundSheets(soundSheetsManagerFragment.getSoundSheets());
 			pojo.addPlayList(soundManagerFragment.getPlayList());
 			pojo.addSounds(soundManagerFragment.getSounds());
 

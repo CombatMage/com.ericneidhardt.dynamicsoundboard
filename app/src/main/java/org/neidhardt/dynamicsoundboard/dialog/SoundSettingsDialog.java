@@ -100,7 +100,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 
 	private void setAvailableSoundSheets()
 	{
-		List<SoundSheet> soundSheets = this.getSoundSheetManagerFragment().getAll();
+		List<SoundSheet> soundSheets = this.getSoundSheetManagerFragment().getSoundSheets();
 		ArrayList<String> labels = new ArrayList<>();
 		for (int i = 0; i < soundSheets.size(); i++)
 		{

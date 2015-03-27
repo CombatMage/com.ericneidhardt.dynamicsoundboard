@@ -50,7 +50,7 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 	{
 		if (this.parent == null || this.parent.getSoundSheetManagerFragment() == null)
 			return new ArrayList<>();
-		return this.parent.getSoundSheetManagerFragment().getAll();
+		return this.parent.getSoundSheetManagerFragment().getSoundSheets();
 	}
 
 	@Override
