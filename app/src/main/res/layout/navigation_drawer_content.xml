@@ -109,7 +109,7 @@
 			android:layout_height="@dimen/height_shadow"
 			android:layout_above="@id/layout_contextual_controls"
 			android:rotation="180"
-			android:background="@drawable/ic_shadow_horizontal"/>
+			android:background="@drawable/shape_shadow_horizontal"/>
 
 </RelativeLayout>
 

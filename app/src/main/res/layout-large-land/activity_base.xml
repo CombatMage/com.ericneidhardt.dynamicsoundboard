@@ -43,7 +43,7 @@
 				<View
 						android:layout_width="@dimen/height_shadow"
 						android:layout_height="match_parent"
-						android:background="@drawable/ic_shadow_vertical"/>
+						android:background="@drawable/shape_shadow_vertical"/>
 
 			</FrameLayout>
 		</LinearLayout>
@@ -51,6 +51,6 @@
 		<View
 				android:layout_width="@dimen/height_shadow"
 				android:layout_height="match_parent"
-				android:background="@drawable/ic_shadow_vertical"/>
+				android:background="@drawable/shape_shadow_vertical"/>
 	</FrameLayout>
 </LinearLayout>
