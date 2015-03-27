@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
@@ -111,13 +112,37 @@ public abstract class FileExplorerDialog extends BaseDialog
 				if (file.equals(adapter.selectedFile))
 				{
 					this.selectionIndicator.setVisibility(View.VISIBLE);
+					this.animateSelectorSlideIN();
+
+					this.animateFileLogoRotate();
 					this.fileType.setSelected(true);
-				} else
+				}
+				else
 				{
 					this.selectionIndicator.setVisibility(View.INVISIBLE);
 					this.fileType.setSelected(false);
 				}
 			}
+		}
+
+		private void animateFileLogoRotate()
+		{
+			this.fileType.animate()
+					.rotationYBy(360)
+					.setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
+					.start();
+		}
+
+		private void animateSelectorSlideIN()
+		{
+			int distance = this.selectionIndicator.getWidth();
+				this.selectionIndicator.setTranslationX(distance); // move selector to the right to be out of the screen
+
+			this.selectionIndicator.animate().
+					translationX(0).
+					setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).
+					setInterpolator(new DecelerateInterpolator()).
+					start();
 		}
 
 		private void bindFile(File file)
