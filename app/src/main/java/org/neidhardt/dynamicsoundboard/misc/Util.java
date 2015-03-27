@@ -43,7 +43,7 @@ public class Util
 
 	public static DaoSession setupDatabase(Context context, String dbName)
 	{
-		DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, dbName, null);
+		DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context, dbName, null);
 		SQLiteDatabase db = helper.getWritableDatabase();
 		DaoMaster daoMaster = new DaoMaster(db);
 		return daoMaster.newSession();
