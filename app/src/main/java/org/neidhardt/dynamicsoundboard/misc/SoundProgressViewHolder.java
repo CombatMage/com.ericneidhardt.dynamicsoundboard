@@ -5,5 +5,5 @@ package org.neidhardt.dynamicsoundboard.misc;
  */
 public interface SoundProgressViewHolder
 {
-	public void onProgressUpdate();
+	void onProgressUpdate();
 }
