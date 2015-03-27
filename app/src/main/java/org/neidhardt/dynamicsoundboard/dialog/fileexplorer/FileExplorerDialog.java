@@ -129,7 +129,7 @@ public abstract class FileExplorerDialog extends BaseDialog
 		{
 			this.fileType.animate()
 					.rotationYBy(360)
-					.setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
+					.setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime))
 					.start();
 		}
 
@@ -194,7 +194,7 @@ public abstract class FileExplorerDialog extends BaseDialog
 			adapter.selectedFile = file;
 			this.updateUi(file);
 
-			return false;
+			return true;
 		}
 
 
