@@ -11,6 +11,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import org.neidhardt.dynamicsoundboard.dao.DaoMaster;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
+import org.neidhardt.dynamicsoundboard.dao.SoundboardDaoOpenHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class Util
 
 	public static DaoSession setupDatabase(Context context, String dbName)
 	{
-		DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context, dbName, null);
+		DaoMaster.OpenHelper helper = new SoundboardDaoOpenHelper(context, dbName, null);
 		SQLiteDatabase db = helper.getWritableDatabase();
 		DaoMaster daoMaster = new DaoMaster(db);
 		return daoMaster.newSession();
@@ -51,14 +52,14 @@ public class Util
 
 	public static String getFileNameFromUri(Context context, Uri uri)
 	{
-		String fileName = null;//default fileName
+		String fileName = null; // default fileName
 		Uri filePathUri = uri;
 		if (uri.getScheme() != null && uri.getScheme().equals(SCHEME_CONTENT_URI))
 		{
 			Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
 			if (cursor.moveToFirst())
 			{
-				int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);//Instead of "MediaStore.Images.Media.DATA" can be used "_data"
+				int column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
 				filePathUri = Uri.parse(cursor.getString(column_index));
 				fileName = filePathUri.getLastPathSegment();
 			}
