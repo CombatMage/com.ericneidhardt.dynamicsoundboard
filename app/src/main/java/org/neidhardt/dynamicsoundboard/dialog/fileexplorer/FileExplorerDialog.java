@@ -184,8 +184,6 @@ public abstract class FileExplorerDialog extends BaseDialog
 				if (i != position) // update all items except this one
 					adapter.notifyItemChanged(i);
 			}
-
-			adapter.notifyDataSetChanged();
 		}
 	}
 
