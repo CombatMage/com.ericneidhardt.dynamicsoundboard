@@ -1,6 +1,7 @@
 <resources>
 
 	<dimen name="status_bar_padding">0dp</dimen> <!-- for material style navigation drawer -->
+	<dimen name="height_navigation_drawer_header">142dp</dimen>
 
 	<dimen name="size_floating_button">56dp</dimen>
 	<dimen name="size_seekbar_thumb_pressed">24dp</dimen>
@@ -15,7 +16,6 @@
 	<dimen name="height_list_item">56dp</dimen>
 	<dimen name="height_list_item_large">72dp</dimen>
 	<dimen name="height_list_item_xlarge">122dp</dimen>
-	<dimen name="height_navigation_drawer_header">142dp</dimen>
 
 	<dimen name="elevation_toolbar">4dp</dimen>
 	<dimen name="elevation_normal">4dp</dimen>

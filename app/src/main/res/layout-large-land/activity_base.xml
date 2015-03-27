@@ -19,6 +19,8 @@
 				android:layout_height="match_parent"
 				android:orientation="horizontal">
 
+			<include layout="@layout/view_status_bar_padding"/>
+
 			<include
 					android:id="@+id/toolbar"
 					layout="@layout/toolbar"/>
