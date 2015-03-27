@@ -24,6 +24,7 @@ public class MediaPlayerData {
     private Integer sortOrder;
 
     // KEEP FIELDS - put your custom fields here
+    private boolean wasAltered = false;
     // KEEP FIELDS END
 
     public MediaPlayerData() {
@@ -126,6 +127,13 @@ public class MediaPlayerData {
     }
 
     // KEEP METHODS - put your custom methods here
+    public boolean isDataAltered() {
+        return this.wasAltered;
+    }
+
+    public void setItemWasAltered() {
+        this.wasAltered = true;
+    }
     // KEEP METHODS END
 
 }
