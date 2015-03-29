@@ -5,6 +5,10 @@
 			  android:layout_height="match_parent">
 
 	<include
+			android:id="@+id/v_status_bar_padding"
+			layout="@layout/view_status_bar_padding"/>
+
+	<include
 			android:id="@+id/toolbar"
 			layout="@layout/toolbar_preferences"/>
 

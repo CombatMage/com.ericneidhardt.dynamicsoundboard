@@ -66,7 +66,7 @@ public class BaseActivity
 		this.addSoundSheetManagerFragment();
 		this.addSoundManagerFragment();
 
-		this.addSoundLayoutControllerFragment();
+		this.addNavigationDrawerFragment();
 
 		this.phoneStateListener = new PauseSoundOnCallListener();
 	}
@@ -184,17 +184,21 @@ public class BaseActivity
 			else
 				showSystemUi();
 		}
-		((NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG)).adjustViewPagerToContent();
+		this.getNavigationDrawerFragment().adjustViewPagerToContent();
 	}
 
 	private void showSystemUi()
 	{
 		this.getWindow().getDecorView().setSystemUiVisibility(Util.SYSTEM_UI_NON_IMMERSE);
+		this.findViewById(R.id.v_status_bar_padding).setVisibility(View.VISIBLE);
+		this.getNavigationDrawerFragment().calculateMinHeightOfListContent();
 	}
 
 	private void hideSystemUi()
 	{
 		this.getWindow().getDecorView().setSystemUiVisibility(Util.SYSTEM_UI_FULL_IMMERSE);
+		this.findViewById(R.id.v_status_bar_padding).setVisibility(View.GONE);
+		this.getNavigationDrawerFragment().calculateMinHeightOfListContent();
 	}
 
 	@Override
@@ -369,6 +373,11 @@ public class BaseActivity
 		return (SoundSheetsManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
 	}
 
+	private NavigationDrawerFragment getNavigationDrawerFragment()
+	{
+		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
+	}
+
 	private void addSoundSheetManagerFragment()
 	{
 		FragmentManager fragmentManager = this.getFragmentManager();
@@ -382,7 +391,7 @@ public class BaseActivity
 		}
 	}
 
-	private void addSoundLayoutControllerFragment()
+	private void addNavigationDrawerFragment()
 	{
 		FragmentManager fragmentManager = this.getFragmentManager();
 

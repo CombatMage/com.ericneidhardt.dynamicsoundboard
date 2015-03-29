@@ -119,6 +119,15 @@ public class NavigationDrawerFragment
 		this.initSoundSheetsAndAdapter();
 		this.initPlayListAndAdapter();
 
+		this.calculateMinHeightOfListContent();
+	}
+
+	/**
+	 * Calculates the minimum require height of the viewpager's content (this is the height used if the content is smaller than the
+	 * screens height). Recalculation is require every time the screen's metric changes (ie. switch from/to full immersive mode).
+	 */
+	public void calculateMinHeightOfListContent()
+	{
 		this.minHeightOfListContent = this.contextualActionContainer.getTop() - listContainer.getTop();  // this is the minimal height required to fill the screen properly
 	}
 
