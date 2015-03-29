@@ -3,6 +3,7 @@
 <!-- padding for status bar, elevation must match elevation of toolbar, other  -->
 <View
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/v_status_bar_padding"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/status_bar_padding"
 		android:elevation="@dimen/elevation_toolbar"

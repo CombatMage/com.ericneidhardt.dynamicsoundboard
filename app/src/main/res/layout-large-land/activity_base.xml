@@ -21,9 +21,7 @@
 
 			<include layout="@layout/view_status_bar_padding"/>
 
-			<include
-					android:id="@+id/toolbar"
-					layout="@layout/toolbar"/>
+			<include layout="@layout/toolbar"/>
 
 			<FrameLayout
 					android:layout_width="match_parent"
