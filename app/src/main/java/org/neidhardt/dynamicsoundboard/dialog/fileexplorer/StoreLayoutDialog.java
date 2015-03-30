@@ -42,7 +42,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_store_sound_sheets, null);
-		view.findViewById(R.id.b_ok).setOnClickListener(this);
+		view.findViewById(R.id.b_add).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
