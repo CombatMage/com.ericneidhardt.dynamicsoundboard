@@ -123,9 +123,9 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 		}
 	}
 
-	public static interface OnItemClickListener
+	public interface OnItemClickListener
 	{
-		public void onItemClick(View view, SoundSheet data, int position);
+		void onItemClick(View view, SoundSheet data, int position);
 	}
 
 }
