@@ -5,7 +5,7 @@
 
 	<style name="Theme.AppTheme" parent="Theme">
 
-		<item name="android:windowTranslucentStatus">true</item>
+		<item name="android:windowTranslucentStatus">true</item> <!-- this makes the main screen to appear behind the status bar, important for material navigationdrawer style  -->
 
 		<item name="colorPrimary">@color/primary_500</item>
 		<item name="colorPrimaryDark">@color/primary_700</item>
@@ -22,24 +22,6 @@
 
 		<item name="android:actionModeCloseDrawable">@drawable/ic_action_done</item>
 		<item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Actionbar</item>
-
-	</style>
-
-	<style name="ActionBarThemeOverlay" parent="Theme.AppTheme">
-		<item name="android:textColorPrimary">@color/text_header</item>
-		<item name="colorControlNormal">@color/text_header</item>
-		<item name="colorControlHighlight">@color/text_header</item>
-	</style>
-
-	<style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-	<style name="ActionBarItemMargin">
-		<item name="android:layout_marginLeft">1dp</item>
-		<item name="android:layout_marginRight">1dp</item>
-	</style>
-
-	<style name="ActionButton.CloseMode.Actionbar" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
-		<item name="android:background">@drawable/btn_cab_done_actionbar</item>
 	</style>
 
 </resources>
