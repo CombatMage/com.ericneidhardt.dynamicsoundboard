@@ -112,9 +112,6 @@ public abstract class FileExplorerDialog extends BaseDialog
 				if (file.equals(adapter.selectedFile))
 				{
 					this.selectionIndicator.setVisibility(View.VISIBLE);
-					this.animateSelectorSlideIN();
-
-					this.animateFileLogoRotate();
 					this.fileType.setSelected(true);
 				}
 				else
@@ -123,26 +120,6 @@ public abstract class FileExplorerDialog extends BaseDialog
 					this.fileType.setSelected(false);
 				}
 			}
-		}
-
-		private void animateFileLogoRotate()
-		{
-			this.fileType.animate()
-					.rotationYBy(360)
-					.setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime))
-					.start();
-		}
-
-		private void animateSelectorSlideIN()
-		{
-			int distance = this.selectionIndicator.getWidth();
-				this.selectionIndicator.setTranslationX(distance); // move selector to the right to be out of the screen
-
-			this.selectionIndicator.animate().
-					translationX(0).
-					setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).
-					setInterpolator(new DecelerateInterpolator()).
-					start();
 		}
 
 		private void bindFile(File file)
@@ -192,11 +169,40 @@ public abstract class FileExplorerDialog extends BaseDialog
 				return false;
 
 			adapter.selectedFile = file;
+			this.selectEntry();
 			this.updateUi(file);
 
 			return true;
 		}
 
+		private void selectEntry()
+		{
+			this.selectionIndicator.setVisibility(View.VISIBLE);
+			this.animateSelectorSlideIN();
+
+			this.animateFileLogoRotate();
+			this.fileType.setSelected(true);
+		}
+
+		private void animateFileLogoRotate()
+		{
+			this.fileType.animate()
+					.rotationYBy(360)
+					.setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime))
+					.start();
+		}
+
+		private void animateSelectorSlideIN()
+		{
+			int distance = this.selectionIndicator.getWidth();
+			this.selectionIndicator.setTranslationX(distance); // move selector to the right to be out of the screen
+
+			this.selectionIndicator.animate().
+					translationX(0).
+					setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).
+					setInterpolator(new DecelerateInterpolator()).
+					start();
+		}
 
 		private void updateUi(File selectedFile)
 		{
