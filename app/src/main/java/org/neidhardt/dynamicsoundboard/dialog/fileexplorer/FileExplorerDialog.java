@@ -112,11 +112,14 @@ public abstract class FileExplorerDialog extends BaseDialog
 				else
 					this.bindFile(file);
 
-				this.setSelction(file.equals(adapter.selectedFile));
+				boolean isEntrySelected = file.equals(adapter.selectedFile);
+				this.setSelection(isEntrySelected);
+				if (isEntrySelected)
+					adapter.selectedEntry = this;
 			}
 		}
 
-		private void setSelction(boolean selected)
+		private void setSelection(boolean selected)
 		{
 			this.selectionIndicator.setVisibility(selected ? View.VISIBLE : View.INVISIBLE);
 			this.fileType.setSelected(selected);
@@ -177,11 +180,11 @@ public abstract class FileExplorerDialog extends BaseDialog
 		{
 			adapter.selectedFile = file;
 			if (adapter.selectedEntry != null)
-				adapter.selectedEntry.setSelction(false);
+				adapter.selectedEntry.setSelection(false);
 
 			adapter.selectedEntry = this;
 
-			this.setSelction(true);
+			this.setSelection(true);
 			this.animateSelectorSlideIn();
 			this.animateFileLogoRotate();
 		}

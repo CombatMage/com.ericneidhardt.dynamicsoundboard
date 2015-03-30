@@ -48,7 +48,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 
 		this.inputFileName = (NoUnderscoreEditText) view.findViewById(R.id.et_name_file);
 
-		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
+		RecyclerView directories = (RecyclerView) view.findViewById(R.id.rv_directories);
 		directories.addItemDecoration(new DividerItemDecoration());
 		directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		directories.setItemAnimator(new DefaultItemAnimator());
@@ -118,6 +118,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 				Toast.makeText(this.getActivity(), R.string.dialog_store_layout_failed_create_file, Toast.LENGTH_SHORT).show();
 				return;
 			}
+
 			super.adapter.selectedFile = file;
 			super.adapter.refreshDirectory();
 			super.adapter.notifyDataSetChanged();
