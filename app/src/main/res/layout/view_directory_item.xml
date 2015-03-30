@@ -2,6 +2,7 @@
 
 <RelativeLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/height_list_item"
 		android:background="@drawable/selector_background_list_item">
@@ -27,7 +28,7 @@
 			android:padding="@dimen/margin_small"
 			android:scaleType="centerInside"
 			android:contentDescription="@string/dialog_add_new_sound_from_directory_content_description_file_type"
-			android:src="@drawable/ic_folder"/>
+			tools:src="@drawable/ic_folder"/>
 
 	<TextView
 			android:id="@+id/tv_label"

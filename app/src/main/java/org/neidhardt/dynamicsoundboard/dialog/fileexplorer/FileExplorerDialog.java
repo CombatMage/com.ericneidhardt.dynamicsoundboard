@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
 
+import android.animation.Animator;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public abstract class FileExplorerDialog extends BaseDialog
 		protected File parent;
 		protected File selectedFile;
 		private List<File> fileList;
+		private DirectoryEntry selectedEntry = null;
 
 		public DirectoryAdapter()
 		{
@@ -79,7 +81,8 @@ public abstract class FileExplorerDialog extends BaseDialog
 				RecyclerView.ViewHolder
 			implements
 				View.OnClickListener,
-				View.OnLongClickListener
+				View.OnLongClickListener,
+				Animator.AnimatorListener
 	{
 		private ImageView fileType;
 		private ImageView selectionIndicator;
@@ -109,17 +112,14 @@ public abstract class FileExplorerDialog extends BaseDialog
 				else
 					this.bindFile(file);
 
-				if (file.equals(adapter.selectedFile))
-				{
-					this.selectionIndicator.setVisibility(View.VISIBLE);
-					this.fileType.setSelected(true);
-				}
-				else
-				{
-					this.selectionIndicator.setVisibility(View.INVISIBLE);
-					this.fileType.setSelected(false);
-				}
+				this.setSelction(file.equals(adapter.selectedFile));
 			}
+		}
+
+		private void setSelction(boolean selected)
+		{
+			this.selectionIndicator.setVisibility(selected ? View.VISIBLE : View.INVISIBLE);
+			this.fileType.setSelected(selected);
 		}
 
 		private void bindFile(File file)
@@ -168,31 +168,51 @@ public abstract class FileExplorerDialog extends BaseDialog
 			if (!file.isDirectory() && !canSelectFile())
 				return false;
 
-			adapter.selectedFile = file;
-			this.selectEntry();
-			this.updateUi(file);
+			this.selectEntry(file);
 
 			return true;
 		}
 
-		private void selectEntry()
+		private void selectEntry(File file)
 		{
-			this.selectionIndicator.setVisibility(View.VISIBLE);
-			this.animateSelectorSlideIN();
+			adapter.selectedFile = file;
+			if (adapter.selectedEntry != null)
+				adapter.selectedEntry.setSelction(false);
 
+			adapter.selectedEntry = this;
+
+			this.setSelction(true);
+			this.animateSelectorSlideIn();
 			this.animateFileLogoRotate();
-			this.fileType.setSelected(true);
 		}
 
 		private void animateFileLogoRotate()
 		{
 			this.fileType.animate()
 					.rotationYBy(360)
-					.setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime))
+					.setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(this)
 					.start();
 		}
 
-		private void animateSelectorSlideIN()
+		@Override
+		public void onAnimationStart(Animator animation) {}
+
+		@Override
+		public void onAnimationEnd(Animator animation)
+		{
+			this.fileType.setRotationY(0);
+		}
+
+		@Override
+		public void onAnimationCancel(Animator animation)
+		{
+			this.fileType.setRotationY(0);
+		}
+
+		@Override
+		public void onAnimationRepeat(Animator animation) {}
+
+		private void animateSelectorSlideIn()
 		{
 			int distance = this.selectionIndicator.getWidth();
 			this.selectionIndicator.setTranslationX(distance); // move selector to the right to be out of the screen
@@ -202,19 +222,6 @@ public abstract class FileExplorerDialog extends BaseDialog
 					setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).
 					setInterpolator(new DecelerateInterpolator()).
 					start();
-		}
-
-		private void updateUi(File selectedFile)
-		{
-			this.bindData(selectedFile);
-
-			int position = this.getLayoutPosition();
-			int count = adapter.getItemCount();
-			for (int i = 0; i < count; i++)
-			{
-				if (i != position) // update all items except this one
-					adapter.notifyItemChanged(i);
-			}
 		}
 	}
 
