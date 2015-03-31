@@ -1,11 +1,16 @@
 package org.neidhardt.dynamicsoundboard;
 
+import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import de.greenrobot.event.EventBus;
@@ -13,6 +18,8 @@ import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLay
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDialog;
+import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
+import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.playlist.PlaylistAdapter;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList;
@@ -201,15 +208,32 @@ public class NavigationDrawerFragment
 		}
 		else if (id == R.id.layout_change_sound_layout)
 		{
-			View indicator = this.getActivity().findViewById(R.id.iv_change_sound_layout_indicator);
-			indicator.animate()
-					.rotationXBy(180)
-					.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
-					.start();
-
+			this.animateSoundLayoutsListAppear();
 			this.soundLayoutList.toggleVisibility();
 			if (this.getBaseActivity().isActionModeActive() && this.soundLayoutList.isActive())
 				this.soundLayoutList.prepareItemDeletion();
+		}
+	}
+
+	private void animateSoundLayoutsListAppear()
+	{
+		View indicator = this.getActivity().findViewById(R.id.iv_change_sound_layout_indicator);
+		indicator.animate()
+				.rotationXBy(180)
+				.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
+				.start();
+
+		View viewToAppear = !this.soundLayoutList.isActive()
+				? this.soundLayoutList.findViewById(R.id.rv_sound_layouts_list) // this is the actual list
+				: this.tabContent; // animate the appearing layout
+
+		Animator animator = AnimationUtils.createSlowCircularRevealIfAvailable(viewToAppear,
+			this.listContainer.getWidth(), 0,
+			0, 2 * this.listContainer.getHeight());
+
+		if (animator != null)
+		{
+			animator.start();
 		}
 	}
 

@@ -1,12 +1,10 @@
 package org.neidhardt.dynamicsoundboard.customview;
 
-import android.annotation.TargetApi;
+import android.animation.Animator;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.view.ViewAnimationUtils;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.misc.Util;
+import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 
 /**
  * Created by Eric Neidhardt on 12.11.2014.
@@ -51,8 +49,8 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 			return;
 		this.isStatePause = true;
 		refreshDrawableState();
-		if (Util.IS_LOLLIPOP_AVAILABLE) // reveal animation is only available on lollipop
-			this.post(this);
+
+		this.post(this);
 	}
 
 	public void setAddState()
@@ -61,18 +59,20 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 			return;
 		this.isStatePause = false;
 		refreshDrawableState();
-		if (Util.IS_LOLLIPOP_AVAILABLE) // reveal animation is only available on lollipop
-			this.post(this);
+
+		this.post(this);
 	}
 
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	@Override
 	public void run()
 	{
-		ViewAnimationUtils.createCircularReveal(AddPauseFloatingActionButton.this,
+		Animator animator = AnimationUtils.createCircularRevealIfAvailable(AddPauseFloatingActionButton.this,
 				getWidth(),
 				getHeight(),
 				0,
-				getHeight() * 2).start();
+				getHeight() * 2);
+
+		if (animator != null)
+			animator.start();
 	}
 }

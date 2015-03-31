@@ -88,7 +88,8 @@
 			<FrameLayout
 					android:id="@+id/layout_navigation_drawer_list_content"
 					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+					android:layout_height="wrap_content"
+					android:background="@color/background">
 
 				<include layout="@layout/navigation_drawer_view_pager"/>
 

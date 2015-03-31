@@ -9,8 +9,7 @@
 
 	<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="@dimen/margin_small">
+			android:layout_height="wrap_content">
 
 		<com.devspark.robototextview.widget.RobotoTextView
 				android:id="@+id/tv_sound_layout_header"
@@ -35,6 +34,7 @@
 			android:id="@+id/rv_sound_layouts_list"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
+			android:paddingTop="@dimen/margin_small"
 			android:overScrollMode="never"/>
 
 	<View
