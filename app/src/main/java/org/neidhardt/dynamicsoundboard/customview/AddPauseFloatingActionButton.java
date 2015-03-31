@@ -66,7 +66,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 	@Override
 	public void run()
 	{
-		Animator animator = AnimationUtils.createCircularRevealIfAvailable(AddPauseFloatingActionButton.this,
+		Animator animator = AnimationUtils.createCircularReveal(AddPauseFloatingActionButton.this,
 				getWidth(),
 				getHeight(),
 				0,

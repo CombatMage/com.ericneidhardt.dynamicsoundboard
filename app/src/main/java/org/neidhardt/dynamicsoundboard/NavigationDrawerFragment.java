@@ -1,16 +1,13 @@
 package org.neidhardt.dynamicsoundboard;
 
 import android.animation.Animator;
-import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import de.greenrobot.event.EventBus;
@@ -19,7 +16,6 @@ import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
-import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.playlist.PlaylistAdapter;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList;
@@ -45,7 +41,7 @@ public class NavigationDrawerFragment
 	private ViewPager tabContent;
 	private TabContentAdapter tabContentAdapter;
 
-	private View listContainer;
+	private ViewGroup listContainer;
 	private SoundLayoutsList soundLayoutList;
 	private SoundLayoutsListAdapter soundLayoutListAdapter;
 	private Playlist playlist;
@@ -101,7 +97,7 @@ public class NavigationDrawerFragment
 		this.soundSheets = (SoundSheets) this.getActivity().findViewById(R.id.sound_sheets);
 
 		this.contextualActionContainer = this.getActivity().findViewById(R.id.layout_contextual_controls);
-		this.listContainer = this.getActivity().findViewById(R.id.layout_navigation_drawer_list_content);
+		this.listContainer = (ViewGroup) this.getActivity().findViewById(R.id.layout_navigation_drawer_list_content);
 
 		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
 		this.deleteSelected.setOnClickListener(this);
@@ -223,18 +219,13 @@ public class NavigationDrawerFragment
 				.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
 				.start();
 
-		View viewToAppear = !this.soundLayoutList.isActive()
-				? this.soundLayoutList.findViewById(R.id.rv_sound_layouts_list) // this is the actual list
-				: this.tabContent; // animate the appearing layout
-
-		Animator animator = AnimationUtils.createSlowCircularRevealIfAvailable(viewToAppear,
-			this.listContainer.getWidth(), 0,
-			0, 2 * this.listContainer.getHeight());
+		final View viewToAnimate = this.getActivity().findViewById(R.id.v_reveal_shadow);
+		Animator animator = AnimationUtils.createSlowCircularReveal(viewToAnimate,
+				this.listContainer.getWidth(), 0,
+				0, 2 * this.listContainer.getHeight());
 
 		if (animator != null)
-		{
 			animator.start();
-		}
 	}
 
 	public void triggerSoundLayoutUpdate()
