@@ -41,6 +41,7 @@
 				app:typeface="roboto_medium"/>
 
 		<com.devspark.robototextview.widget.RobotoTextView
+				android:id="@+id/tv_current_sound_layout_name"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="@dimen/margin_default"

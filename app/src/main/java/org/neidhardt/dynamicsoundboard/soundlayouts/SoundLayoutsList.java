@@ -103,6 +103,8 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 			BaseActivity activity = this.parent.getBaseActivity();
 			activity.switchToActiveSoundLayout();
 
+			this.parent.setLayoutName(data.getLabel());
+
 			this.toggleVisibility();
 		}
 	}

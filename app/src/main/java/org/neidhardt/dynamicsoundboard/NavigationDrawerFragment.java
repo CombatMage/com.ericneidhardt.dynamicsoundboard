@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
@@ -48,6 +49,8 @@ public class NavigationDrawerFragment
 	private PlaylistAdapter playlistAdapter;
 	private SoundSheets soundSheets;
 	private SoundSheetsAdapter soundSheetsAdapter;
+
+	private TextView currentLayoutName;
 
 	private View contextualActionContainer;
 	private View deleteSelected;
@@ -107,6 +110,9 @@ public class NavigationDrawerFragment
 		this.soundSheets.setAdapter(this.soundSheetsAdapter);
 		this.initSoundSheetsAndAdapter();
 		this.initPlayListAndAdapter();
+
+		this.currentLayoutName = (TextView) this.getActivity().findViewById(R.id.tv_current_sound_layout_name);
+		this.currentLayoutName.setText(SoundLayoutsManager.getInstance().getActiveSoundLayout().getLabel());
 
 		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
 		this.getActivity().findViewById(R.id.b_ok).setOnClickListener(this);
@@ -230,6 +236,8 @@ public class NavigationDrawerFragment
 
 	public void triggerSoundLayoutUpdate()
 	{
+		if (this.currentLayoutName != null)
+			this.currentLayoutName.setText(SoundLayoutsManager.getInstance().getActiveSoundLayout().getLabel());
 		this.soundLayoutListAdapter.notifyDataSetChanged();
 	}
 
@@ -267,6 +275,12 @@ public class NavigationDrawerFragment
 
 	@Override
 	public void onPageScrollStateChanged(int state) {}
+
+	public void setLayoutName(String layoutName)
+	{
+		if (this.currentLayoutName != null)
+			this.currentLayoutName.setText(layoutName);
+	}
 
 	private class TabContentAdapter extends PagerAdapter
 	{

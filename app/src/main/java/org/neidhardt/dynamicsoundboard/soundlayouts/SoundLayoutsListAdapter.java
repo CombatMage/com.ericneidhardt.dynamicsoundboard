@@ -98,8 +98,8 @@ public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsLi
 		}
 	}
 
-	public static interface OnItemClickListener
+	public interface OnItemClickListener
 	{
-		public void onItemClick(View view, SoundLayout data, int position);
+		void onItemClick(View view, SoundLayout data, int position);
 	}
 }
