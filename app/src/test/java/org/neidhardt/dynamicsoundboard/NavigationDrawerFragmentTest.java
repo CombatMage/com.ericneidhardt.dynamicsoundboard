@@ -15,15 +15,15 @@ import static org.junit.Assert.*;
  * Created by eric.neidhardt on 02.04.2015.
  */
 @RunWith(CustomTestRunner.class)
-public class NavigationDrawerFragmentTest
+public class NavigationDrawerFragmentTest extends ActivityTest
 {
-	BaseActivity activity;
 	NavigationDrawerFragment fragment;
 
+	@Override
 	@Before
 	public void setUp() throws Exception
 	{
-		this.activity = Robolectric.setupActivity(BaseActivity.class);
+		super.setUp();
 		this.fragment = (NavigationDrawerFragment) activity.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
 	}
 
