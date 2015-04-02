@@ -93,8 +93,13 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	{
 		Logger.d(TAG, "onServiceConnected: " + name);
 		MusicService.Binder binder = (MusicService.Binder) service;
-		this.service = binder.getService();
-		this.isServiceBound = true;
+		if (binder != null)
+		{
+			this.service = binder.getService();
+			this.isServiceBound = true;
+		}
+		else
+			this.isServiceBound = false;
 	}
 
 	@Override
