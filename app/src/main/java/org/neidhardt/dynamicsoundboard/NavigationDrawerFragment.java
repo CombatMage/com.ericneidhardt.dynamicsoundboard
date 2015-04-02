@@ -2,7 +2,6 @@ package org.neidhardt.dynamicsoundboard;
 
 import android.animation.Animator;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;

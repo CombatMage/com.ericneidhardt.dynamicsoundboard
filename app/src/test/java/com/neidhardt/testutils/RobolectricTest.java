@@ -1,12 +1,13 @@
+package com.neidhardt.testutils;
+
 import android.app.Activity;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.R;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -15,7 +16,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
  * Created by eric.neidhardt on 02.04.2015.
  */
 
-@RunWith(CustomRobolectricRunner.class)
+@RunWith(CustomTestRunner.class)
 public class RobolectricTest {
 	@Test
 	public void testIt() {

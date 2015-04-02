@@ -1,3 +1,5 @@
+package com.neidhardt.testutils;
+
 import org.junit.runners.model.InitializationError;
 import org.robolectric.AndroidManifest;
 import org.robolectric.RobolectricTestRunner;
@@ -11,9 +13,9 @@ import java.util.Properties;
 /**
  * Created by eric.neidhardt on 02.04.2015.
  */
-public class CustomRobolectricRunner extends RobolectricTestRunner {
+public class CustomTestRunner extends RobolectricTestRunner {
 
-	public CustomRobolectricRunner(Class<?> testClass) throws InitializationError
+	public CustomTestRunner(Class<?> testClass) throws InitializationError
 	{
 		super(testClass);
 	}
