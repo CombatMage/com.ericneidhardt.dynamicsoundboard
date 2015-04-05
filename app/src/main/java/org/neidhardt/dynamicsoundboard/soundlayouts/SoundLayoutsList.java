@@ -75,8 +75,11 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 			int index = selectedItems.keyAt(i);
 			soundLayoutsToRemove.add(this.adapter.getValues().get(index));
 		}
-		SoundLayoutsManager.getInstance().delete(soundLayoutsToRemove);
+		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
+		manager.delete(soundLayoutsToRemove);
 		this.adapter.notifyDataSetChanged();
+
+		this.parent.setLayoutName(manager.getActiveSoundLayout().getLabel());
 	}
 
 	@Override

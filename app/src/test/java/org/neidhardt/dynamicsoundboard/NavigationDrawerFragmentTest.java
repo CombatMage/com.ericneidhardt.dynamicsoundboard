@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 @RunWith(CustomTestRunner.class)
 public class NavigationDrawerFragmentTest extends ActivityTest
 {
-	NavigationDrawerFragment fragment;
+	protected NavigationDrawerFragment fragment;
 
 	@Override
 	@Before
@@ -25,18 +25,22 @@ public class NavigationDrawerFragmentTest extends ActivityTest
 	{
 		super.setUp();
 		this.fragment = (NavigationDrawerFragment) activity.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
+		assertNotNull(this.fragment);
 	}
 
 	@Test
 	public void testSetLayoutName() throws Exception
 	{
-		assertNotNull(this.fragment);
-
-		TextView textView = (TextView) this.activity.findViewById(R.id.tv_current_sound_layout_name);
+		TextView textView = this.getCurrentSoundLayoutName();
 		assertThat(textView.getText().toString(), equalTo(activity.getResources().getString(R.string.sound_layout_default)));
 
 		String testString = "test";
 		this.fragment.setLayoutName(testString);
 		assertThat(textView.getText().toString(), equalTo(testString));
+	}
+
+	protected TextView getCurrentSoundLayoutName()
+	{
+		return (TextView) this.activity.findViewById(R.id.tv_current_sound_layout_name);
 	}
 }

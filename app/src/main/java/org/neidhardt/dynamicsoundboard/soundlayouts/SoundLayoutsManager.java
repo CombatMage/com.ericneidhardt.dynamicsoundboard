@@ -138,6 +138,12 @@ public class SoundLayoutsManager
 		daoSession.getSoundLayoutDao().insertInTx(soundLayouts);
 	}
 
+	public void clear()
+	{
+		this.soundLayouts = null;
+		this.daoSession.getSoundLayoutDao().deleteAll();
+	}
+
 	public void setSelected(int position)
 	{
 		List<SoundLayout> soundLayouts = this.getSoundLayouts();
