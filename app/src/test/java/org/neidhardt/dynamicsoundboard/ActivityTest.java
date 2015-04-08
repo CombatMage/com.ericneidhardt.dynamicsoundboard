@@ -10,7 +10,6 @@ import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 import org.robolectric.Robolectric;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 
 /**
  * Created by eric.neidhardt on 02.04.2015.
@@ -40,8 +39,6 @@ public abstract class ActivityTest
 	{
 		SoundLayoutsManager.getInstance().clear();
 		this.soundSheetsManagerFragment.deleteAllSoundSheets();
-
-
-		// TODO clear service
+		this.service.deleteAllSounds();
 	}
 }

@@ -27,8 +27,8 @@ public class MusicService extends Service
 {
 	private static final String TAG = MusicService.class.getName();
 
-	private static final String DB_SOUNDS_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
-	private static final String DB_SOUNDS_PLAYLIST_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
+	static final String DB_SOUNDS_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
+	static final String DB_SOUNDS_PLAYLIST_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
 
 	private static final String DB_SOUNDS = "db_sounds";
 	private static final String DB_SOUNDS_PLAYLIST = "db_sounds_playlist";
@@ -96,19 +96,19 @@ public class MusicService extends Service
 		task.execute();
 	}
 
-	private String getDatabaseNameSounds()
+	static String getDatabaseNameSounds()
 	{
-		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
-		if (baseName.equals(SoundLayoutsManager.DB_DEFAULT))
+		if (SoundLayoutsManager.getInstance().getActiveSoundLayout().isDefaultLayout())
 			return DB_SOUNDS_DEFAULT;
+		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
 		return baseName + DB_SOUNDS;
 	}
 
-	private String getDatabaseNamePlayList()
+	static String getDatabaseNamePlayList()
 	{
-		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
-		if (baseName.equals(SoundLayoutsManager.DB_DEFAULT))
+		if (SoundLayoutsManager.getInstance().getActiveSoundLayout().isDefaultLayout())
 			return DB_SOUNDS_PLAYLIST_DEFAULT;
+		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
 		return baseName + DB_SOUNDS_PLAYLIST;
 	}
 
@@ -123,9 +123,23 @@ public class MusicService extends Service
 		super.onDestroy();
 	}
 
+	/**
+	 * Dismisses all pending notifications, store current sound layout and release media player resources.
+	 */
 	public void clearAndStoreSoundsAndPlayList()
 	{
 		this.storeLoadedSounds();
+		this.notificationHandler.dismissAllNotifications();
+		this.releaseMediaPlayers();
+	}
+
+	/**
+	 * Dismisses all pending notifications and clear sound layout and corresponding databases.
+	 */
+	public void deleteAllSounds()
+	{
+		this.dbPlaylist.getMediaPlayerDataDao().deleteAll();
+		this.dbSounds.getMediaPlayerDataDao().deleteAll();
 		this.notificationHandler.dismissAllNotifications();
 		this.releaseMediaPlayers();
 	}
@@ -290,8 +304,7 @@ public class MusicService extends Service
 		}
 	}
 
-	public void removeSounds(String fragmentTag)
-	{
+	public void removeSounds(String fragmentTag) {
 		this.removeSounds(this.sounds.get(fragmentTag));
 	}
 

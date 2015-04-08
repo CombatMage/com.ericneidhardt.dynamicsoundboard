@@ -4,6 +4,9 @@ package org.neidhardt.dynamicsoundboard.dao;
 
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
+
+import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
+
 /**
  * Entity mapped to table SOUND_LAYOUT.
  */
@@ -17,7 +20,6 @@ public class SoundLayout {
     private boolean isSelected;
 
     // KEEP FIELDS - put your custom fields here
-    private boolean wasAltered = false;
     // KEEP FIELDS END
 
     public SoundLayout() {
@@ -71,16 +73,9 @@ public class SoundLayout {
     }
 
     // KEEP METHODS - put your custom methods here
-    public boolean wasAlteredAfterLoading() {
-        return this.wasAltered;
-    }
-
-    public void setItemWasAltered() {
-        this.wasAltered = true;
-    }
-
-    public void setItemWasUpdated() {
-        this.wasAltered = false;
+    public boolean isDefaultLayout()
+    {
+        return this.databaseId.equals(SoundLayoutsManager.DB_DEFAULT);
     }
     // KEEP METHODS END
 
