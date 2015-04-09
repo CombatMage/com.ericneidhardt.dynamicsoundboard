@@ -7,6 +7,9 @@
 	<string name="suggested_sound_layout_name">Zusammenstellung</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
 
+	<!-- soundmanagement -->
+	<string name="music_service_loading_sound_failed">Eine Sound konnte nicht geladen werden:</string>
+
 	<!-- navigation drawer -->
 	<string name="navigation_drawer_content_description_select_sound_layout">Hier klicken um zu einem anderen Sound Layout zu wechseln</string>
 	<string name="navigation_drawer_select_sound_layout">Sound layout wechseln</string>

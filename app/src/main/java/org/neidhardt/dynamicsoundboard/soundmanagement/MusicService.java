@@ -3,12 +3,15 @@ package org.neidhardt.dynamicsoundboard.soundmanagement;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.widget.Toast;
 import de.greenrobot.event.EventBus;
 import org.acra.ACRA;
+import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
@@ -86,8 +89,8 @@ public class MusicService extends Service
 
 	public void initSoundsAndPlayList()
 	{
-		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseNamePlayList());
-		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), this.getDatabaseNameSounds());
+		this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), getDatabaseNamePlayList());
+		this.dbSounds = Util.setupDatabase(this.getApplicationContext(), getDatabaseNameSounds());
 
 		SafeAsyncTask task = new LoadSoundsTask(this.dbSounds);
 		task.execute();
@@ -249,7 +252,7 @@ public class MusicService extends Service
 
 		List<EnhancedMediaPlayer> soundsInFragment = this.sounds.get(fragmentTag);
 		int count = soundsInFragment.size();
-		if (index <= count) // add item according to sortorder
+		if (index <= count) // add item according to sort order
 			soundsInFragment.add(index, player);
 		else
 			soundsInFragment.add(player); // if the list is to short, just append
@@ -469,7 +472,11 @@ public class MusicService extends Service
 					@Override
 					public void run()
 					{
-						addSoundToSounds(createSoundFromRawData(mediaPlayerData));
+						EnhancedMediaPlayer player = createSoundFromRawData(mediaPlayerData);
+						if (player == null)
+							showLoadingMediaPlayerFailed(mediaPlayerData.getUri());
+						else
+							addSoundToSounds(player);
 						bus.post(new SoundsLoadedEvent());
 					}
 				});
@@ -499,13 +506,23 @@ public class MusicService extends Service
 					@Override
 					public void run()
 					{
-						createPlaylistSoundFromPlayerData(mediaPlayerData);
-						bus.post(new PlayListLoadedEvent());
+						MediaPlayerData playListData = createPlaylistSoundFromPlayerData(mediaPlayerData);
+						if (playListData == null)
+							showLoadingMediaPlayerFailed(mediaPlayerData.getUri());
+						else
+							bus.post(new PlayListLoadedEvent());
 					}
 				});
 			}
 			return mediaPlayersData;
 		}
+	}
+
+	private void showLoadingMediaPlayerFailed(String playerUriString)
+	{
+		String message = this.getResources().getString(R.string.music_service_loading_sound_failed) + " "
+				+ FileUtils.getFileNameFromUri(getApplicationContext(), playerUriString);
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
 
 	private class UpdateSoundsTask extends SafeAsyncTask<Void>

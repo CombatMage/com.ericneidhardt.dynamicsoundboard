@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
-import org.neidhardt.dynamicsoundboard.misc.Util;
+import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.util.ArrayList;
@@ -121,7 +121,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		this.soundName.setText(Util.getFileNameFromUri(this.getActivity(), this.uri));
+		this.soundName.setText(FileUtils.getFileNameFromUri(this.getActivity(), this.uri));
 		this.soundSheetName.setHint(this.suggestedName);
 		if (this.soundSheetsAlreadyExists)
 		{

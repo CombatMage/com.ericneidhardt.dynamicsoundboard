@@ -24,8 +24,8 @@ import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundsDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectory;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
-import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import static java.util.Arrays.asList;
@@ -135,7 +135,7 @@ public class SoundSheetFragment
 			if (requestCode == IntentRequest.GET_AUDIO_FILE)
 			{
 				Uri soundUri = data.getData();
-				String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
+				String soundLabel = FileUtils.getFileNameFromUri(this.getActivity(), soundUri);
 				ServiceManagerFragment fragment = this.getServiceManagerFragment();
 				fragment.getSoundService().addNewSoundToServiceAndDatabase(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
 				fragment.notifySoundSheetFragments();

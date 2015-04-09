@@ -15,8 +15,8 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
-import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
@@ -125,7 +125,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 	private void startIntentForNewSound()
 	{
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		intent.setType(Util.MIME_AUDIO);
+		intent.setType(FileUtils.MIME_AUDIO);
 		this.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
 	}
 
@@ -149,7 +149,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		this.soundsToAdd.add(soundUri);
 		AddSoundListItem item = new AddSoundListItem(this.getActivity());
 		item.setPath(soundUri.toString());
-		item.setSoundName(Util.getFileNameFromUri(this.getActivity(), soundUri));
+		item.setSoundName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
 		this.soundsToAddLayout.addView(item);
 	}
 

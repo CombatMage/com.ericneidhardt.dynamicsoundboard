@@ -11,8 +11,8 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
-import org.neidhardt.dynamicsoundboard.misc.SoundProgressAdapter;
-import org.neidhardt.dynamicsoundboard.misc.SoundProgressViewHolder;
+import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
+import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

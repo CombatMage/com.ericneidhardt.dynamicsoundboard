@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.misc;
+package org.neidhardt.dynamicsoundboard.soundcontrol;
 
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;

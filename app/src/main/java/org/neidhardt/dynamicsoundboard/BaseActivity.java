@@ -23,6 +23,7 @@ import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
@@ -291,7 +292,7 @@ public class BaseActivity
 		else
 		{
 			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-			intent.setType(Util.MIME_AUDIO);
+			intent.setType(FileUtils.MIME_AUDIO);
 			soundSheetFragment.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
 		}
 	}

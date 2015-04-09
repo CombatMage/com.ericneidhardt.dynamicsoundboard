@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
-import org.neidhardt.dynamicsoundboard.misc.Util;
+import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 
 import java.io.File;
 import java.util.List;
@@ -43,14 +43,14 @@ public abstract class FileExplorerDialog extends BaseDialog
 		public void setParent(File parent)
 		{
 			this.parent = parent;
-			this.fileList = Util.getFilesInDirectory(this.parent);
+			this.fileList = FileUtils.getFilesInDirectory(this.parent);
 			if (this.parent.getParentFile() != null)
 				this.fileList.add(0, this.parent.getParentFile());
 		}
 
 		public void refreshDirectory()
 		{
-			this.fileList = Util.getFilesInDirectory(this.parent);
+			this.fileList = FileUtils.getFilesInDirectory(this.parent);
 			if (this.parent.getParentFile() != null)
 				this.fileList.add(0, this.parent.getParentFile());
 		}
@@ -127,7 +127,7 @@ public abstract class FileExplorerDialog extends BaseDialog
 
 		private void bindFile(File file)
 		{
-			if (Util.isAudioFile(file))
+			if (FileUtils.isAudioFile(file))
 				this.fileType.setImageResource(R.drawable.selector_ic_file_sound);
 			else
 				this.fileType.setImageResource(R.drawable.selector_ic_file);
@@ -135,7 +135,7 @@ public abstract class FileExplorerDialog extends BaseDialog
 
 		private void bindDirectory(File file)
 		{
-			if (Util.containsAudioFiles(file))
+			if (FileUtils.containsAudioFiles(file))
 				this.fileType.setImageResource(R.drawable.selector_ic_folder_sound);
 			else
 				this.fileType.setImageResource(R.drawable.selector_ic_folder);

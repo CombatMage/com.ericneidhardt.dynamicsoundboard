@@ -14,7 +14,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.misc.Util;
+import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.io.File;
@@ -127,7 +127,7 @@ public class AddNewSoundFromDirectory
 		for (File file : result)
 		{
 			Uri soundUri = Uri.parse(file.getAbsolutePath());
-			String soundLabel = Util.getFileNameFromUri(this.getActivity(), soundUri);
+			String soundLabel = FileUtils.getFileNameFromUri(this.getActivity(), soundUri);
 			MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.callingFragmentTag, soundUri, soundLabel);
 
 			fragment.getSoundService().addNewSoundToServiceAndDatabase(playerData);

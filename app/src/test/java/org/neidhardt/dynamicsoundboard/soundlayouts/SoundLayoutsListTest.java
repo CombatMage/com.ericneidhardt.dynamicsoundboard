@@ -6,9 +6,7 @@ import android.view.View;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragmentTest;
 import org.neidhardt.dynamicsoundboard.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.robolectric.Robolectric;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
@@ -29,7 +27,7 @@ public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 		final RecyclerView listView = (RecyclerView) soundLayoutsList.findViewById(R.id.rv_sound_layouts_list);
 		assertNotNull(listView);
 
-		int childCount = listView.getChildCount();
+		int childCount = soundLayoutsList.getChildCount();
 		SparseArray<View> children = new SparseArray<>(childCount);
 		for (int i = 0; i < childCount; i++)
 			children.put(i, listView.getChildAt(i));
