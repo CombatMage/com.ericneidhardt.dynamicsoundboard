@@ -26,6 +26,8 @@ public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 
 		final RecyclerView listView = (RecyclerView) soundLayoutsList.findViewById(R.id.rv_sound_layouts_list);
 		assertNotNull(listView);
+		listView.measure(0, 0);
+		listView.layout(0, 0, 100, 10000);
 
 		int childCount = soundLayoutsList.getChildCount();
 		SparseArray<View> children = new SparseArray<>(childCount);
