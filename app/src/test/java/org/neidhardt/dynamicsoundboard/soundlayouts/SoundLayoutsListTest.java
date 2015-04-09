@@ -24,12 +24,13 @@ public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 		SoundLayoutsList soundLayoutsList = (SoundLayoutsList) this.activity.findViewById(R.id.layout_select_sound_layout);
 		assertNotNull(soundLayoutsList);
 
-		final RecyclerView listView = (RecyclerView) soundLayoutsList.findViewById(R.id.rv_sound_layouts_list);
+		RecyclerView listView = (RecyclerView) soundLayoutsList.findViewById(R.id.rv_sound_layouts_list);
 		assertNotNull(listView);
-		listView.measure(0, 0);
-		listView.layout(0, 0, 100, 10000);
+		this.triggerRecyclerViewRelayout(listView);
 
 		int childCount = soundLayoutsList.getChildCount();
+		assertThat(childCount, equalTo(1));
+
 		SparseArray<View> children = new SparseArray<>(childCount);
 		for (int i = 0; i < childCount; i++)
 			children.put(i, listView.getChildAt(i));
@@ -39,13 +40,13 @@ public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 		assertThat(SoundLayoutsManager.getInstance().getSoundLayouts().size(), equalTo(1));
 		assertTrue(SoundLayoutsManager.getInstance().getActiveSoundLayout().isDefaultLayout());
 
-		soundLayoutsList.post(new Runnable() // wait for nex rendering
-		{
-			@Override
-			public void run()
-			{
-				assertThat(listView.getChildCount(), equalTo(1)); // only the default item is left
-			}
-		});
+		triggerRecyclerViewRelayout(listView);
+		assertThat(listView.getChildCount(), equalTo(1)); // only the default item is left
+	}
+
+	private void triggerRecyclerViewRelayout(RecyclerView recyclerView)
+	{
+		recyclerView.measure(0, 0);
+		recyclerView.layout(0, 0, 100, 10000);
 	}
 }
