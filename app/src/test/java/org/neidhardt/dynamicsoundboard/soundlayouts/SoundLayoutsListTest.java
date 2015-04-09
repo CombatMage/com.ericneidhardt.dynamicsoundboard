@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 {
 
-	// TODO debug layout count is 0
 	@Test
 	public void testOnDeleteSelected() throws Exception
 	{
