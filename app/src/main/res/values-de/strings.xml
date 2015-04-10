@@ -105,7 +105,8 @@
 	</string>
 	<string name="about_used_third_party_assets_title">Verwendete Ressourcen</string>
 	<string name="about_used_third_party_assets_summary">
-		christos: http://www.oxygenna.com/author/christos
+		christos: http://www.oxygenna.com/author/christos,
+		Icons8: http://icons8.com
 	</string>
 
 	<!-- dialog -->
