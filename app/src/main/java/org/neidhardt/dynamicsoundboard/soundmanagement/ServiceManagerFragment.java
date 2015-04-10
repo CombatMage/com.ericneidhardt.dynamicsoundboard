@@ -12,6 +12,8 @@ import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsLoadedEvent;
 
 import java.util.*;
 

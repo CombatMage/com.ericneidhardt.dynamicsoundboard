@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
 import de.greenrobot.event.EventBus;
-import org.acra.ACRA;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -18,7 +17,11 @@ import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadTask;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
 
 import java.io.IOException;
 import java.util.*;
@@ -70,7 +73,8 @@ public class MusicService extends Service
 	}
 
 	@Override
-	public void onRebind(Intent intent) {
+	public void onRebind(Intent intent)
+	{
 		this.isServiceBound = true;
 	}
 
@@ -83,6 +87,7 @@ public class MusicService extends Service
 
 		this.binder = new Binder();
 		this.notificationHandler = new NotificationHandler(this);
+		EventBus.getDefault().register(this, 1);
 
 		this.initSoundsAndPlayList();
 	}
@@ -120,6 +125,7 @@ public class MusicService extends Service
 	{
 		Logger.d(TAG, "onDestroy");
 
+		EventBus.getDefault().unregister(this);
 		this.notificationHandler.onServiceDestroyed();
 		this.clearAndStoreSoundsAndPlayList();
 
@@ -451,71 +457,36 @@ public class MusicService extends Service
 		return this.isServiceBound;
 	}
 
-	private class LoadSoundsTask extends LoadTask<MediaPlayerData>
+	/**
+	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
+	 * @param event delivered SoundsLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(SoundsLoadedEvent event)
 	{
-		private DaoSession daoSession;
-
-		public LoadSoundsTask(DaoSession daoSession)
-		{
-			this.daoSession = daoSession;
-		}
-
-		@Override
-		public List<MediaPlayerData> call() throws Exception
-		{
-			List<MediaPlayerData> mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
-			final EventBus bus = EventBus.getDefault();
-			for (final MediaPlayerData mediaPlayerData : mediaPlayersData)
-			{
-				super.postOnUiThread(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						EnhancedMediaPlayer player = createSoundFromRawData(mediaPlayerData);
-						if (player == null)
-							showLoadingMediaPlayerFailed(mediaPlayerData.getUri());
-						else
-							addSoundToSounds(player);
-						bus.post(new SoundsLoadedEvent());
-					}
-				});
-			}
-			return mediaPlayersData;
-		}
+		MediaPlayerData data = event.getLoadedSoundData();
+		if (data == null)
+			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
+		EnhancedMediaPlayer player = createSoundFromRawData(data);
+		if (player == null)
+			showLoadingMediaPlayerFailed(data.getUri());
+		else
+			addSoundToSounds(player);
 	}
 
-	private class LoadPlaylistTask extends LoadTask<MediaPlayerData>
+	/**
+	 * This is called by greenDao EventBus in case loading the playlist from MusicService has finished
+	 * @param event delivered PlayListLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(PlayListLoadedEvent event)
 	{
-		private DaoSession daoSession;
-
-		public LoadPlaylistTask(DaoSession daoSession)
-		{
-			this.daoSession = daoSession;
-		}
-
-		@Override
-		public List<MediaPlayerData> call() throws Exception
-		{
-			List<MediaPlayerData> mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
-			final EventBus bus = EventBus.getDefault();
-			for (final MediaPlayerData mediaPlayerData : mediaPlayersData)
-			{
-				super.postOnUiThread(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						MediaPlayerData playListData = createPlaylistSoundFromPlayerData(mediaPlayerData);
-						if (playListData == null)
-							showLoadingMediaPlayerFailed(mediaPlayerData.getUri());
-						else
-							bus.post(new PlayListLoadedEvent());
-					}
-				});
-			}
-			return mediaPlayersData;
-		}
+		MediaPlayerData data = event.getLoadedSoundData();
+		if (data == null)
+			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
+		MediaPlayerData playListData = createPlaylistSoundFromPlayerData(data);
+		if (playListData == null)
+			showLoadingMediaPlayerFailed(data.getUri());
 	}
 
 	private void showLoadingMediaPlayerFailed(String playerUriString)
@@ -523,94 +494,6 @@ public class MusicService extends Service
 		String message = this.getResources().getString(R.string.music_service_loading_sound_failed) + " "
 				+ FileUtils.getFileNameFromUri(getApplicationContext(), playerUriString);
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-	}
-
-	private class UpdateSoundsTask extends SafeAsyncTask<Void>
-	{
-		private List<MediaPlayerData> mediaPlayers;
-		private DaoSession database;
-
-		/**
-		 * Update stored sound database
-		 * @param mediaPlayers map of media players currently loaded in corresponding sound sheets
-		 * @param database daoSession to store data
-		 */
-		public UpdateSoundsTask(Map<String, List<EnhancedMediaPlayer>> mediaPlayers, DaoSession database)
-		{
-			this.database = database;
-			this.mediaPlayers = new ArrayList<>();
-			for (String fragmentTag : mediaPlayers.keySet())
-			{
-				List<EnhancedMediaPlayer> playersOfFragment = mediaPlayers.get(fragmentTag);
-				for (EnhancedMediaPlayer player : playersOfFragment)
-					this.mediaPlayers.add(player.getMediaPlayerData());
-			}
-		}
-
-		/**
-		 * Update stored playlist database
-		 * @param mediaPlayers list of media players currently loaded in playlist
-		 * @param database daoSession to store data
-		 */
-		public UpdateSoundsTask(List<EnhancedMediaPlayer> mediaPlayers, DaoSession database)
-		{
-			this.database = database;
-			this.mediaPlayers = new ArrayList<>();
-			for (EnhancedMediaPlayer player : mediaPlayers)
-				this.mediaPlayers.add(player.getMediaPlayerData());
-		}
-
-		@Override
-		public Void call() throws Exception
-		{
-			this.database.runInTx(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					MediaPlayerDataDao dao = database.getMediaPlayerDataDao();
-					for (MediaPlayerData playerToUpdate : mediaPlayers)
-					{
-						List<MediaPlayerData> storePlayers = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerToUpdate.getPlayerId())).list();
-						int count = storePlayers.size();
-						if (count == 0)
-							dao.insert(playerToUpdate);
-						else if (count == 1 && playerToUpdate.wasAlteredAfterLoading())
-						{
-							MediaPlayerData storedPlayer = storePlayers.get(0); // the player id should be unique so there should be no more than one entry
-							updateStorePlayerData(storedPlayer, playerToUpdate);
-							dao.update(storedPlayer);
-						}
-						else
-						{
-							String message = "More than one matching entry in dao found " + playerToUpdate;
-							Logger.e(TAG, message);
-							ACRA.getErrorReporter().handleException(new IllegalStateException(message));
-						}
-					}
-				}
-			});
-			return null;
-		}
-
-		private void updateStorePlayerData(MediaPlayerData storedPlayer, MediaPlayerData newPlayerData)
-		{
-			storedPlayer.setFragmentTag(newPlayerData.getFragmentTag());
-			storedPlayer.setIsInPlaylist(newPlayerData.getIsInPlaylist());
-			storedPlayer.setIsLoop(newPlayerData.getIsLoop());
-			storedPlayer.setLabel(newPlayerData.getLabel());
-			storedPlayer.setTimePosition(newPlayerData.getTimePosition());
-
-			storedPlayer.setItemWasUpdated();
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
 	}
 
 	public class Binder extends android.os.Binder
