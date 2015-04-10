@@ -4,9 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import org.junit.Test;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragmentTest;
 import org.neidhardt.dynamicsoundboard.R;
-import org.robolectric.Robolectric;
+import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
@@ -16,6 +17,24 @@ import static org.junit.Assert.*;
  */
 public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 {
+	private static final int NR_TEST_ITEMS = 3;
+
+	@Override
+	public void setUp() throws Exception
+	{
+		super.setUp();
+		for (long i = 0; i < NR_TEST_ITEMS; i++)
+			SoundLayoutsManager.getInstance().addSoundLayout(this.getRandomSoundLayout());
+	}
+
+	private SoundLayout getRandomSoundLayout()
+	{
+		SoundLayout testLayout = new SoundLayout();
+		testLayout.setLabel("test");
+		testLayout.setDatabaseId(Integer.toString(DynamicSoundboardApplication.getRandomNumber()));
+		testLayout.setIsSelected(false);
+		return testLayout;
+	}
 
 	@Test
 	public void testOnDeleteSelected() throws Exception
@@ -27,8 +46,10 @@ public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 		assertNotNull(listView);
 		this.triggerRecyclerViewRelayout(listView);
 
-		int childCount = soundLayoutsList.getChildCount();
-		assertThat(childCount, equalTo(1));
+		assertThat(listView.getAdapter().getItemCount(), equalTo(NR_TEST_ITEMS + 1)); // test items + default item
+
+		int childCount = listView.getChildCount();
+		assertThat(childCount, equalTo(NR_TEST_ITEMS + 1));
 
 		SparseArray<View> children = new SparseArray<>(childCount);
 		for (int i = 0; i < childCount; i++)
@@ -43,8 +64,13 @@ public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 		assertThat(listView.getChildCount(), equalTo(1)); // only the default item is left
 	}
 
+	/**
+	 * Robolectric does no trigger relayout of RecyclerView. This must be done manually.
+	 * * @param recyclerView view to update
+	 */
 	private void triggerRecyclerViewRelayout(RecyclerView recyclerView)
 	{
+		recyclerView.getAdapter().notifyDataSetChanged();
 		recyclerView.measure(0, 0);
 		recyclerView.layout(0, 0, 100, 10000);
 	}

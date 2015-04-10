@@ -8,8 +8,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
 		targetSdkVersion 22
-		versionCode 279
-		versionName "2.7.9"
+		versionCode 2710
+		versionName "2.7.10"
 	}
 
 	packagingOptions {
