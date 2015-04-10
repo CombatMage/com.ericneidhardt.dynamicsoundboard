@@ -155,7 +155,8 @@ public class SoundAdapter
 		public void onProgressUpdate()
 		{
 			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
-			this.timePosition.setProgress(player.getCurrentPosition());
+			if (player != null)
+				this.timePosition.setProgress(player.getCurrentPosition());
 		}
 
 		@Override

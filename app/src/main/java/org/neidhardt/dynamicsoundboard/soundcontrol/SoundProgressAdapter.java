@@ -60,7 +60,8 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder & S
 			else
 			{
 				SoundProgressViewHolder viewHolderToUpdate = (SoundProgressViewHolder) this.recyclerView.findViewHolderForAdapterPosition(index);
-				viewHolderToUpdate.onProgressUpdate();
+				if (viewHolderToUpdate != null)
+					viewHolderToUpdate.onProgressUpdate();
 			}
 		}
 		this.startProgressUpdateTimer();

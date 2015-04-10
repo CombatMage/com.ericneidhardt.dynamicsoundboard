@@ -141,7 +141,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 		public void onProgressUpdate()
 		{
 			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
-			if (player.isPlaying())
+			if (player != null && player.isPlaying())
 			{
 				progress.setMax(player.getDuration());
 				progress.setProgress(player.getCurrentPosition());
@@ -160,9 +160,9 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 		}
 	}
 
-	public static interface OnItemClickListener
+	public interface OnItemClickListener
 	{
-		public void onItemClick(View view, EnhancedMediaPlayer player, int position);
+		void onItemClick(View view, EnhancedMediaPlayer player, int position);
 	}
 
 }
