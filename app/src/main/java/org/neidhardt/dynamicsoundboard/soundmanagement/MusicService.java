@@ -302,9 +302,12 @@ public class MusicService extends Service
 		if (player == null)
 			throw new NullPointerException("cannot add new Player, player is null");
 		String fragmentTag = player.getMediaPlayerData().getFragmentTag();
-		int index = player.getMediaPlayerData().getSortOrder();
 		if (this.sounds.get(fragmentTag) == null)
 			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
+
+		Integer index = player.getMediaPlayerData().getSortOrder();
+		if (index == null)
+			index = 0;
 
 		List<EnhancedMediaPlayer> soundsInFragment = this.sounds.get(fragmentTag);
 		int count = soundsInFragment.size();
