@@ -130,7 +130,7 @@ public class AddNewSoundFromDirectory
 			String soundLabel = FileUtils.getFileNameFromUri(this.getActivity(), soundUri);
 			MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.callingFragmentTag, soundUri, soundLabel);
 
-			fragment.getSoundService().addNewSoundToServiceAndDatabase(playerData);
+			fragment.getSoundService().addNewSoundToSoundsAndDatabase(playerData);
 		}
 		fragment.notifyFragment(this.callingFragmentTag);
 	}

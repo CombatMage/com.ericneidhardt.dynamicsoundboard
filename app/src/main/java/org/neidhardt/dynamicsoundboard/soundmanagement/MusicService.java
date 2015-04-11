@@ -224,7 +224,7 @@ public class MusicService extends Service
 		return null;
 	}
 
-	public void addNewSoundToServiceAndDatabase(MediaPlayerData playerData)
+	public void addNewSoundToSoundsAndDatabase(MediaPlayerData playerData)
 	{
 		String fragmentTag = playerData.getFragmentTag();
 		List<EnhancedMediaPlayer> soundInFragment = this.sounds.get(fragmentTag);
@@ -317,7 +317,7 @@ public class MusicService extends Service
 			soundsInFragment.add(player); // if the list is to short, just append
 	}
 
-	public void addSoundToPlaylist(EnhancedMediaPlayer player)
+	private void addSoundToPlaylist(EnhancedMediaPlayer player)
 	{
 		if (player == null)
 			throw new NullPointerException("cannot add new Player to playlist, player is null");

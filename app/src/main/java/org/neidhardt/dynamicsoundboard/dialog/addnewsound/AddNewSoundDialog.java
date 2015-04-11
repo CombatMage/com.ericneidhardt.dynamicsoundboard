@@ -196,7 +196,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		else
 		{
 			for (MediaPlayerData playerData : playersData)
-				fragment.getSoundService().addNewSoundToServiceAndDatabase(playerData);
+				fragment.getSoundService().addNewSoundToSoundsAndDatabase(playerData);
 			fragment.notifyFragment(this.callingFragmentTag);
 		}
 	}

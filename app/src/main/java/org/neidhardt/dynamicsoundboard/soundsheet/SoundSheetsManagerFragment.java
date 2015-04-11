@@ -273,7 +273,7 @@ public class SoundSheetsManagerFragment
 
 		mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
 
-		service.addNewSoundToServiceAndDatabase(mediaPlayerData);
+		service.addNewSoundToSoundsAndDatabase(mediaPlayerData);
 		soundManagerFragment.notifyFragment(mediaPlayerData.getFragmentTag());
 	}
 

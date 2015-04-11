@@ -146,7 +146,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		{
 			List<MediaPlayerData> soundsPerFragment = sounds.get(key);
 			for (MediaPlayerData mediaPlayerData : soundsPerFragment)
-				service.addNewSoundToServiceAndDatabase(mediaPlayerData);
+				service.addNewSoundToSoundsAndDatabase(mediaPlayerData);
 		}
 		soundManagerFragment.notifySoundSheetFragments();
 	}

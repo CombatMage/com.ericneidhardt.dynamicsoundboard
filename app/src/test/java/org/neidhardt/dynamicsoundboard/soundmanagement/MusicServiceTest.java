@@ -74,4 +74,16 @@ public class MusicServiceTest extends ActivityTest
 		data.setIsInPlaylist(false);
 		return data;
 	}
+
+	@Test
+	public void testAddNewSoundToServiceAndDatabase() throws Exception
+	{
+		// TODO
+	}
+
+	@Test
+	public void testAddNewSoundToPlaylistAndDatabase() throws Exception
+	{
+		// TODO
+	}
 }
