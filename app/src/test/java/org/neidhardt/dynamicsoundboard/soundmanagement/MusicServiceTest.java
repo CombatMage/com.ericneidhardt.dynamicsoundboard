@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundmanagement;
 
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.ActivityTest;
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsLoadedEvent;
 

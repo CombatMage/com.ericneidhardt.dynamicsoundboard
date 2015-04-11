@@ -231,20 +231,70 @@ public class MusicService extends Service
 		int sortOrder = soundInFragment == null ? 0 : soundInFragment.size();
 		playerData.setSortOrder(sortOrder);
 
-		EnhancedMediaPlayer player = this.createSoundFromRawData(playerData);
+		EnhancedMediaPlayer player = this.createSound(playerData);
 		if (player == null)
+		{
+			this.showLoadingMediaPlayerFailed(playerData.getUri());
 			return;
+		}
 		this.addSoundToSounds(player);
 
-		if (player.getMediaPlayerData() != null)
+		MediaPlayerDataDao soundsDao = this.dbSounds.getMediaPlayerDataDao();
+		soundsDao.insert(player.getMediaPlayerData());
+	}
+
+	public void addNewSoundToPlaylistAndDatabase(MediaPlayerData playerData)
+	{
+		EnhancedMediaPlayer player = this.createPlaylistSound(playerData);
+		if (player == null)
 		{
-			MediaPlayerDataDao soundsDao = this.dbSounds.getMediaPlayerDataDao();
-			soundsDao.insert(player.getMediaPlayerData());
+			this.showLoadingMediaPlayerFailed(playerData.getUri());
+			return;
+		}
+		this.addSoundToPlaylist(player);
+		MediaPlayerDataDao playlistDao = this.dbPlaylist.getMediaPlayerDataDao();
+		playlistDao.insert(player.getMediaPlayerData()); // it is important to use data returned from createPlaylistSound, because it is a new instance
+	}
+
+	/**
+	 * Creates an new EnhancedMediaPlayer instance
+	 * @param playerData raw data to create new MediaPlayer
+	 * @return playerData to be stored in database, or null if creation failed
+	 */
+	private EnhancedMediaPlayer createSound(MediaPlayerData playerData)
+	{
+		try
+		{
+			return new EnhancedMediaPlayer(playerData);
+		}
+		catch (IOException e)
+		{
+			Logger.d(TAG, e.getMessage());
+			this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), playerData);
+			return null;
+		}
+	}
+	/**
+	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the playlist.
+	 * @param playerData raw data to create new MediaPlayer
+	 * @return playerData to be stored in database, or null if creation failed
+	 */
+	private EnhancedMediaPlayer createPlaylistSound(MediaPlayerData playerData)
+	{
+		try
+		{
+			return EnhancedMediaPlayer.getInstanceForPlayList(playerData);
+		}
+		catch (IOException e)
+		{
+			Logger.d(TAG, playerData.toString()+ " " + e.getMessage());
+			this.removeSoundFromDatabase(this.dbPlaylist.getMediaPlayerDataDao(), playerData);
+			return null;
 		}
 	}
 
 	/**
-	 * Adds sound to corresponding sound list. If the list is long enough, the players sortorder is respected, otherwise it is added to the end of the list
+	 * Adds sound to corresponding sound list. If the list is long enough, the players sort order is respected, otherwise it is added to the end of the list
 	 * @param player the new player to add
 	 */
 	private void addSoundToSounds(EnhancedMediaPlayer player)
@@ -264,53 +314,11 @@ public class MusicService extends Service
 			soundsInFragment.add(player); // if the list is to short, just append
 	}
 
-	/**
-	 * Creates an new EnhancedMediaPlayer instance
-	 * @param playerData raw data to create new MediaPlayer
-	 * @return playerData to be stored in database, or null if creation failed
-	 */
-	private EnhancedMediaPlayer createSoundFromRawData(MediaPlayerData playerData)
+	public void addSoundToPlaylist(EnhancedMediaPlayer player)
 	{
-		try
-		{
-			return new EnhancedMediaPlayer(playerData);
-		}
-		catch (IOException e)
-		{
-			Logger.d(TAG, e.getMessage());
-			this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), playerData);
-			return null;
-		}
-	}
-
-	public void addNewSoundToPlaylist(MediaPlayerData playerData)
-	{
-		MediaPlayerData dataToStore = this.createPlaylistSoundFromPlayerData(playerData);
-		if (dataToStore != null)
-		{
-			MediaPlayerDataDao playlistDao = this.dbPlaylist.getMediaPlayerDataDao();
-			playlistDao.insert(dataToStore); // it is important to use data returned from createPlaylistSoundFromPlayerData, because it is a new instance
-		}
-	}
-
-	/**
-	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the playlist.
-	 * @param playerData raw data to create new MediaPlayer
-	 * @return playerData to be stored in database, or null if creation failed
-	 */
-	private MediaPlayerData createPlaylistSoundFromPlayerData(MediaPlayerData playerData)
-	{
-		try
-		{
-			EnhancedMediaPlayer player = EnhancedMediaPlayer.getInstanceForPlayList(playerData);
-			this.playlist.add(player);
-			return player.getMediaPlayerData();
-		} catch (IOException e)
-		{
-			Logger.d(TAG, playerData.toString()+ " " + e.getMessage());
-			this.removeSoundFromDatabase(this.dbPlaylist.getMediaPlayerDataDao(), playerData);
-			return null;
-		}
+		if (player == null)
+			throw new NullPointerException("cannot add new Player to playlist, player is null");
+		this.playlist.add(player);
 	}
 
 	public void removeSounds(String fragmentTag) {
@@ -467,7 +475,7 @@ public class MusicService extends Service
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)
 			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
-		EnhancedMediaPlayer player = createSoundFromRawData(data);
+		EnhancedMediaPlayer player = createSound(data);
 		if (player == null)
 			showLoadingMediaPlayerFailed(data.getUri());
 		else
@@ -484,9 +492,11 @@ public class MusicService extends Service
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)
 			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
-		MediaPlayerData playListData = createPlaylistSoundFromPlayerData(data);
-		if (playListData == null)
+		EnhancedMediaPlayer player = createSound(data);
+		if (player == null)
 			showLoadingMediaPlayerFailed(data.getUri());
+		else
+			addSoundToPlaylist(player);
 	}
 
 	private void showLoadingMediaPlayerFailed(String playerUriString)
