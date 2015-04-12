@@ -19,7 +19,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 
 	public static void showInstance(FragmentManager manager, MediaPlayerData playerData)
 	{
-		SoundSettingsDialog dialog = new SoundSettingsDialog();
+		RenameSoundFileDialog dialog = new RenameSoundFileDialog();
 		addArguments(dialog, playerData.getPlayerId(), playerData.getFragmentTag());
 		dialog.show(manager, TAG);
 	}
