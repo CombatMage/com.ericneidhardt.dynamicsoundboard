@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard;
 
 import android.widget.TextView;
-import com.neidhardt.testutils.CustomTestRunner;
+import org.neidhardt.testutils.CustomTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

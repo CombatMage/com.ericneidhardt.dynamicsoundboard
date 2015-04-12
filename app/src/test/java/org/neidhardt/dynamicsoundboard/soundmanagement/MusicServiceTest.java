@@ -4,12 +4,10 @@ import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.ActivityTest;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsLoadedEvent;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -42,7 +40,7 @@ public class MusicServiceTest extends ActivityTest
 			assertTrue("this should throw a NullPointerException exception and the list should remain empty", this.service.getSounds().isEmpty());
 		}
 
-		MediaPlayerData playerData = this.getRandomPlayerData();
+		MediaPlayerData playerData = getRandomPlayerData();
 		this.service.onEventMainThread(new SoundsLoadedEvent(playerData));
 		assertThat(this.service.getSounds().get(playerData.getFragmentTag()).size(), equalTo(1));
 	}
@@ -59,11 +57,11 @@ public class MusicServiceTest extends ActivityTest
 			assertTrue("this should throw a NullPointerException exception and the list should remain empty", this.service.getPlaylist().isEmpty());
 		}
 
-		this.service.onEventMainThread(new PlayListLoadedEvent(this.getRandomPlayerData()));
+		this.service.onEventMainThread(new PlayListLoadedEvent(getRandomPlayerData()));
 		assertThat(this.service.getPlaylist().size(), equalTo(1));
 	}
 
-	private MediaPlayerData getRandomPlayerData()
+	public static MediaPlayerData getRandomPlayerData()
 	{
 		MediaPlayerData data = new MediaPlayerData();
 		data.setLabel("test");

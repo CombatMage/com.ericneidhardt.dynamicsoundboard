@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard;
 
-import com.neidhardt.testutils.CustomTestRunner;
+import org.neidhardt.testutils.CustomTestRunner;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;

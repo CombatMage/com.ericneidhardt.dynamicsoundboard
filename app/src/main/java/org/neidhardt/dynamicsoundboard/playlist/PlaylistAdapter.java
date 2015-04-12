@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
@@ -110,6 +111,11 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	@SuppressWarnings("unused")
 	public void onEvent(MediaPlayerCompletedEvent event)
 	{
+		MediaPlayerData finishedPlayerData = event.getData();
+		MediaPlayerData currentPlayer = this.getItem(this.currentItemIndex).getMediaPlayerData();
+		if (currentPlayer != finishedPlayerData)
+			return;
+
 		this.currentItemIndex++;
 		if (this.currentItemIndex >= this.getItemCount())
 			this.currentItemIndex = 0;
