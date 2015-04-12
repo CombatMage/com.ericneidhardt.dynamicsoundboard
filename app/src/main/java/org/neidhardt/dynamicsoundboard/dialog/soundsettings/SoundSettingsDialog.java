@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog;
+package org.neidhardt.dynamicsoundboard.dialog.soundsettings;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -13,6 +13,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.CustomSpinner;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
@@ -27,47 +28,22 @@ import static java.util.Arrays.asList;
 /**
  * Created by eric.neidhardt on 23.02.2015.
  */
-public class SoundSettingsDialog extends BaseDialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
+public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
 {
 	private static final String TAG = SoundSettingsDialog.class.getName();
-
-	private static final String KEY_PLAYER_ID = "org.neidhardt.dynamicsoundboard.dialog.SoundSettingsDialog.playerId";
-	private static final String KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.dialog.SoundSettingsDialog.fragmentTag";
 
 	private CustomEditText soundName;
 	private CustomEditText soundSheetName;
 	private CustomSpinner soundSheetSpinner;
 	private CheckBox addNewSoundSheet;
 
-	private String playerId;
-	private String fragmentTag;
 	private int indexOfCurrentFragment = -1;
-	private EnhancedMediaPlayer player;
 
 	public static void showInstance(FragmentManager manager, MediaPlayerData playerData)
 	{
 		SoundSettingsDialog dialog = new SoundSettingsDialog();
-
-		Bundle args = new Bundle();
-		args.putString(KEY_PLAYER_ID, playerData.getPlayerId());
-		args.putString(KEY_FRAGMENT_TAG, playerData.getFragmentTag());
-
-		dialog.setArguments(args);
-
+		addArguments(dialog, playerData.getPlayerId(), playerData.getFragmentTag());
 		dialog.show(manager, TAG);
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		Bundle args = this.getArguments();
-		if (args != null)
-		{
-			this.playerId = args.getString(KEY_PLAYER_ID);
-			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
-			this.player = this.getServiceManagerFragment().getSoundService().searchForId(this.fragmentTag, this.playerId);
-		}
 	}
 
 	@Override
@@ -145,6 +121,7 @@ public class SoundSettingsDialog extends BaseDialog implements View.OnClickListe
 		}
 	}
 
+	// TODO check if label has changed and open dialog if required
 	private void deliverResult()
 	{
 		String soundLabel = this.soundName.getDisplayedText();

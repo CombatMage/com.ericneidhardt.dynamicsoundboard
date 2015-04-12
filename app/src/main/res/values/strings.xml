@@ -115,6 +115,7 @@
 	<string name="dialog_save">Speichern</string>
 	<string name="dialog_cancel">Abbrechen</string>
 	<string name="dialog_load">Laden</string>
+	<string name="dialog_rename">Umbenennen</string>
 
 	<string name="dialog_confirm_delete_title">Wirklich entfernen?</string>
 	<string name="dialog_confirm_delete_soundsheet_message">Soll diese Kategorie entfernt werden?</string>
@@ -156,4 +157,8 @@
 
 	<string name="dialog_load_layout_message">Eine gespeichtere SoundKonfiguration auswählen um diese zu laden.</string>
 	<string name="dialog_load_layout_no_file_info">Keine Datei zum Laden ausgewählt.</string>
+
+	<string name="dialog_rename_sound_file_title">Datei auch umbenennen?</string>
+	<string name="dialog_rename_sound_file_message">Soll die zugehörige Musikdatei ebenfalls umbenannt werden?</string>
+
 </resources>
