@@ -1,4 +1,4 @@
-package org.neidhardt.testutils;
+package org.neidhardt.robolectricutils;
 
 import org.junit.runners.model.InitializationError;
 import org.robolectric.AndroidManifest;

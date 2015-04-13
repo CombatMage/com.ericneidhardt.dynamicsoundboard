@@ -82,6 +82,22 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		return data;
 	}
 
+	public void setSoundUri(String uri) throws IOException
+	{
+		this.rawData.setUri(uri);
+		this.reset();
+
+		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		this.setDataSource(DynamicSoundboardApplication.getSoundboardContext(), Uri.parse(this.rawData.getUri()));
+		this.setLooping(this.rawData.getIsLoop());
+		this.prepare();
+		this.currentState = State.PREPARED;
+
+		this.volume = INT_VOLUME_MAX;
+		this.duration = super.getDuration();
+		this.setOnCompletionListener(this);
+	}
+
 	private void init() throws IOException
 	{
 		if (this.rawData.getUri() == null)

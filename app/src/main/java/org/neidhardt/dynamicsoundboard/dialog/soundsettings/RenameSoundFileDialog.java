@@ -10,6 +10,12 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.playlist.Playlist;
+import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
+
+import java.util.Collections;
+
+import static java.util.Arrays.asList;
 
 /**
  * Created by eric.neidhardt on 12.04.2015.
@@ -57,12 +63,14 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 
 	private void deliverResult()
 	{
-		this.player.destroy(false);
+		MusicService service = this.getServiceManagerFragment().getSoundService();
+		MediaPlayerData playerData = this.player.getMediaPlayerData();
 
-		EnhancedMediaPlayer playerData = this.player.getMediaPlayerData();
+		if (playerData.getFragmentTag().equals(Playlist.TAG))
+			service.removeFromPlaylist(Collections.singletonList(this.player));
+		else
+			service.removeSounds(Collections.singletonList(this.player));
 
-		// TODO rename file
-
-		this.getServiceManagerFragment().getSoundService().recreateMediaPlayer(this.player);
+		// TODO rename File and update playerData
 	}
 }

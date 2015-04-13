@@ -365,36 +365,27 @@ public class MusicService extends Service
 
 	public void toggleSoundInPlaylist(String playerId, boolean addToPlayList)
 	{
-		try
+		EnhancedMediaPlayer player = this.searchInSoundsForId(playerId);
+		EnhancedMediaPlayer playerInPlaylist = this.searchInPlaylistForId(playerId);
+
+		if (addToPlayList)
 		{
-			EnhancedMediaPlayer player = this.searchInSoundsForId(playerId);
-			EnhancedMediaPlayer playerInPlaylist = this.searchInPlaylistForId(playerId);
+			if (playerInPlaylist != null)
+				return;
 
-			if (addToPlayList)
-			{
-				if (playerInPlaylist != null)
-					return;
-
-				player.setIsInPlaylist(true);
-				playerInPlaylist = EnhancedMediaPlayer.getInstanceForPlayList(player.getMediaPlayerData());
-				this.playlist.add(playerInPlaylist);
-			}
-			else
-			{
-				if (playerInPlaylist == null)
-					return;
-
-				if (player != null)
-					player.setIsInPlaylist(false);
-
-				this.playlist.remove(playerInPlaylist);
-				this.destroyPlayerAndUpdateDatabase(this.dbPlaylist.getMediaPlayerDataDao(), playerInPlaylist);
-			}
+			player.setIsInPlaylist(true);
+			addNewSoundToPlaylistAndDatabase(player.getMediaPlayerData());
 		}
-		catch (IOException e)
+		else
 		{
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
+			if (playerInPlaylist == null)
+				return;
+
+			if (player != null)
+				player.setIsInPlaylist(false);
+
+			this.playlist.remove(playerInPlaylist);
+			this.destroyPlayerAndUpdateDatabase(this.dbPlaylist.getMediaPlayerDataDao(), playerInPlaylist);
 		}
 	}
 
@@ -466,11 +457,6 @@ public class MusicService extends Service
 			soundsInFragment.get(i).getMediaPlayerData().setSortOrder(i);
 			soundsInFragment.get(i).getMediaPlayerData().setItemWasAltered();
 		}
-	}
-
-	public void recreateMediaPlayer(EnhancedMediaPlayer player)
-	{
-		// TODO
 	}
 
 	/**

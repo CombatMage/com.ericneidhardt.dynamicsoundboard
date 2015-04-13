@@ -2,10 +2,10 @@ package org.neidhardt.dynamicsoundboard.soundmanagement;
 
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.ActivityTest;
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsLoadedEvent;
+import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
@@ -40,7 +40,7 @@ public class MusicServiceTest extends ActivityTest
 			assertTrue("this should throw a NullPointerException exception and the list should remain empty", this.service.getSounds().isEmpty());
 		}
 
-		MediaPlayerData playerData = getRandomPlayerData();
+		MediaPlayerData playerData = TestDataGenerator.getRandomPlayerData();
 		this.service.onEventMainThread(new SoundsLoadedEvent(playerData));
 		assertThat(this.service.getSounds().get(playerData.getFragmentTag()).size(), equalTo(1));
 	}
@@ -57,20 +57,8 @@ public class MusicServiceTest extends ActivityTest
 			assertTrue("this should throw a NullPointerException exception and the list should remain empty", this.service.getPlaylist().isEmpty());
 		}
 
-		this.service.onEventMainThread(new PlayListLoadedEvent(getRandomPlayerData()));
+		this.service.onEventMainThread(new PlayListLoadedEvent(TestDataGenerator.getRandomPlayerData()));
 		assertThat(this.service.getPlaylist().size(), equalTo(1));
-	}
-
-	public static MediaPlayerData getRandomPlayerData()
-	{
-		MediaPlayerData data = new MediaPlayerData();
-		data.setLabel("test");
-		data.setUri(Integer.toString(DynamicSoundboardApplication.getRandomNumber()));
-		data.setPlayerId(Integer.toString(DynamicSoundboardApplication.getRandomNumber()));
-		data.setFragmentTag(Integer.toString(DynamicSoundboardApplication.getRandomNumber()));
-		data.setIsLoop(false);
-		data.setIsInPlaylist(false);
-		return data;
 	}
 
 	@Test

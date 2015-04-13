@@ -1,12 +1,10 @@
 package org.neidhardt.dynamicsoundboard;
 
 import android.widget.TextView;
-import org.neidhardt.testutils.CustomTestRunner;
+import org.neidhardt.robolectricutils.CustomTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
-import org.robolectric.Robolectric;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;

@@ -1,4 +1,4 @@
-package org.neidhardt.testutils;
+package org.neidhardt.robolectricutils;
 
 import android.support.v7.internal.view.SupportMenuInflater;
 import android.view.Menu;

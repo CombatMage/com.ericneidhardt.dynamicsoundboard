@@ -4,10 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import org.junit.Test;
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragmentTest;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
@@ -24,16 +23,7 @@ public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 	{
 		super.setUp();
 		for (long i = 0; i < NR_TEST_ITEMS; i++)
-			SoundLayoutsManager.getInstance().addSoundLayout(this.getRandomSoundLayout());
-	}
-
-	private SoundLayout getRandomSoundLayout()
-	{
-		SoundLayout testLayout = new SoundLayout();
-		testLayout.setLabel("test");
-		testLayout.setDatabaseId(Integer.toString(DynamicSoundboardApplication.getRandomNumber()));
-		testLayout.setIsSelected(false);
-		return testLayout;
+			SoundLayoutsManager.getInstance().addSoundLayout(TestDataGenerator.getRandomSoundLayout());
 	}
 
 	@Test
