@@ -64,6 +64,11 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		EventBus.getDefault().unregister(this);
 	}
 
+	public boolean isServiceBound()
+	{
+		return this.isServiceBound;
+	}
+
 	/**
 	 * This is called by greenDao EventBus in case loading the playlist from MusicService has finished
 	 * @param event delivered PlayListLoadedEvent
@@ -93,7 +98,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	@Override
 	public void onServiceConnected(ComponentName name, IBinder service)
 	{
-		Logger.d(TAG, "onServiceConnected: " + name);
+		Logger.d(TAG, "onServiceConnected: " + (name != null ? name : "null"));
 		MusicService.Binder binder = (MusicService.Binder) service;
 		if (binder != null)
 		{

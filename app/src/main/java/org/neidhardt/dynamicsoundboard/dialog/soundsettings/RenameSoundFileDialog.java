@@ -13,7 +13,10 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 
@@ -22,7 +25,7 @@ import static java.util.Arrays.asList;
  */
 public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements View.OnClickListener
 {
-	private static final String TAG = RenameSoundFileDialog.class.getName();
+	public static final String TAG = RenameSoundFileDialog.class.getName();
 
 	public static void showInstance(FragmentManager manager, MediaPlayerData playerData)
 	{
@@ -66,11 +69,33 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		MusicService service = this.getServiceManagerFragment().getSoundService();
 		MediaPlayerData playerData = this.player.getMediaPlayerData();
 
-		if (playerData.getFragmentTag().equals(Playlist.TAG))
-			service.removeFromPlaylist(Collections.singletonList(this.player));
-		else
-			service.removeSounds(Collections.singletonList(this.player));
+
 
 		// TODO rename File and update playerData
+	}
+
+	List<EnhancedMediaPlayer> getPlayersWithMatchingUri(String uri)
+	{
+		MusicService service = this.getServiceManagerFragment().getSoundService();
+		List<EnhancedMediaPlayer> players = new ArrayList<>();
+
+		for (EnhancedMediaPlayer player : service.getPlaylist())
+		{
+			if (player.getMediaPlayerData().getUri().equals(uri))
+				players.add(player);
+		}
+
+		Set<String> fragments = service.getSounds().keySet();
+		for (String fragment : fragments)
+		{
+			List<EnhancedMediaPlayer> soundsInFragment = service.getSounds().get(fragment);
+			for (EnhancedMediaPlayer player : soundsInFragment)
+			{
+				if (player.getMediaPlayerData().getUri().equals(uri))
+					players.add(player);
+			}
+		}
+
+		return players;
 	}
 }

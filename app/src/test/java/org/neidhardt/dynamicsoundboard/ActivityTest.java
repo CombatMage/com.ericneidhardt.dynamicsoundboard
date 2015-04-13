@@ -1,5 +1,7 @@
 package org.neidhardt.dynamicsoundboard;
 
+import android.os.IBinder;
+import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.robolectricutils.CustomTestRunner;
 import org.junit.After;
 import org.junit.Before;
@@ -10,6 +12,7 @@ import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 import org.robolectric.Robolectric;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by eric.neidhardt on 02.04.2015.
@@ -32,6 +35,11 @@ public abstract class ActivityTest
 		assertNotNull(this.activity);
 		assertNotNull(this.soundSheetsManagerFragment);
 		assertNotNull(this.service);
+
+		ServiceManagerFragment fragment = (ServiceManagerFragment) this.activity.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
+		fragment.onServiceConnected(null, new MusicService.Binder(this.service));
+
+		assertTrue(fragment.isServiceBound());
 	}
 
 	@After

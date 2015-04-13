@@ -21,6 +21,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -139,7 +140,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		else
 		{
 			ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
-			serviceManagerFragment.getSoundService().removeSounds(asList(this.player));
+			serviceManagerFragment.getSoundService().removeSounds(Collections.singletonList(this.player));
 			soundSheetFragment.notifyDataSetChanged();
 
 			SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();

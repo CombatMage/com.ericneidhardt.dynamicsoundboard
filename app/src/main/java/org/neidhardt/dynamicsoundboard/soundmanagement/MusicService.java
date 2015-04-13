@@ -31,7 +31,7 @@ import java.util.*;
  */
 public class MusicService extends Service
 {
-	private static final String TAG = MusicService.class.getName();
+	public static final String TAG = MusicService.class.getName();
 
 	static final String DB_SOUNDS_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds";
 	static final String DB_SOUNDS_PLAYLIST_DEFAULT = "org.neidhardt.dynamicsoundboard.storage.SoundManagerFragment.db_sounds_playlist";
@@ -41,14 +41,14 @@ public class MusicService extends Service
 
 	private DaoSession dbPlaylist;
 	private volatile List<EnhancedMediaPlayer> playlist = new ArrayList<>();
-	List<EnhancedMediaPlayer> getPlaylist()
+	public List<EnhancedMediaPlayer> getPlaylist()
 	{
 		return playlist;
 	}
 
 	private DaoSession dbSounds;
 	private volatile Map<String, List<EnhancedMediaPlayer>> sounds = new HashMap<>();
-	Map<String, List<EnhancedMediaPlayer>> getSounds()
+	public Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return sounds;
 	}
@@ -90,7 +90,7 @@ public class MusicService extends Service
 
 		super.onCreate();
 
-		this.binder = new Binder();
+		this.binder = new Binder(this);
 		this.notificationHandler = new NotificationHandler(this);
 		EventBus.getDefault().register(this, 1);
 
@@ -453,7 +453,8 @@ public class MusicService extends Service
 
 		int count = soundsInFragment.size();
 		int indexOfSoundsToUpdate = Math.min(from, to); // we need to update all sound after the moved one
-		for (int i = indexOfSoundsToUpdate; i < count; i++) {
+		for (int i = indexOfSoundsToUpdate; i < count; i++)
+		{
 			soundsInFragment.get(i).getMediaPlayerData().setSortOrder(i);
 			soundsInFragment.get(i).getMediaPlayerData().setItemWasAltered();
 		}
@@ -500,12 +501,19 @@ public class MusicService extends Service
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
 
-	public class Binder extends android.os.Binder
+	public static class Binder extends android.os.Binder
 	{
+		private MusicService service;
+
+		public Binder(MusicService service)
+		{
+			this.service = service;
+		}
+
 		public MusicService getService()
 		{
 			Logger.d(TAG, "getService");
-			return MusicService.this;
+			return this.service;
 		}
 	}
 
