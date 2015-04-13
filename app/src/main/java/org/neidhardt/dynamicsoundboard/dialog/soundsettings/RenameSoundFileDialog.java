@@ -9,6 +9,7 @@ import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 /**
  * Created by eric.neidhardt on 12.04.2015.
@@ -56,6 +57,12 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 
 	private void deliverResult()
 	{
+		this.player.destroy(false);
+
+		EnhancedMediaPlayer playerData = this.player.getMediaPlayerData();
+
 		// TODO rename file
+
+		this.getServiceManagerFragment().getSoundService().recreateMediaPlayer(this.player);
 	}
 }

@@ -72,6 +72,11 @@ public class MusicService extends Service
 		return true; // this is necessary to ensure onRebind is called
 	}
 
+	public boolean isServiceBound()
+	{
+		return this.isServiceBound;
+	}
+
 	@Override
 	public void onRebind(Intent intent)
 	{
@@ -463,9 +468,9 @@ public class MusicService extends Service
 		}
 	}
 
-	public boolean isServiceBound()
+	public void recreateMediaPlayer(EnhancedMediaPlayer player)
 	{
-		return this.isServiceBound;
+		// TODO
 	}
 
 	/**
