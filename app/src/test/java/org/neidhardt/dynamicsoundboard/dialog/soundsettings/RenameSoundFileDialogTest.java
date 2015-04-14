@@ -4,11 +4,15 @@ import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.ActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
@@ -17,31 +21,71 @@ import static org.junit.Assert.*;
  */
 public class RenameSoundFileDialogTest extends ActivityTest
 {
+	private RenameSoundFileDialog dialog;
+	private MediaPlayerData testData;
+
+	@Override
+	public void setUp() throws Exception
+	{
+		super.setUp();
+		this.testData = TestDataGenerator.getRandomPlayerData();
+		RenameSoundFileDialog.showInstance(this.activity.getFragmentManager(), this.testData);
+
+		this.dialog = (RenameSoundFileDialog) this.activity.getFragmentManager().findFragmentByTag(RenameSoundFileDialog.TAG);
+		assertNotNull(this.dialog);
+	}
 
 	@Test
 	public void testGetPlayersWithMatchingUri() throws Exception
 	{
-		MediaPlayerData data = TestDataGenerator.getRandomPlayerData();
-		RenameSoundFileDialog.showInstance(this.activity.getFragmentManager(), data);
-
-		RenameSoundFileDialog dialog = (RenameSoundFileDialog) this.activity.getFragmentManager().findFragmentByTag(RenameSoundFileDialog.TAG);
-		assertNotNull(dialog);
-
 		this.service.addNewSoundToSoundsAndDatabase(TestDataGenerator.getRandomPlayerData());
 		this.service.addNewSoundToSoundsAndDatabase(TestDataGenerator.getRandomPlayerData());
 
 		MediaPlayerData data2 = TestDataGenerator.getRandomPlayerData();
-		data2.setUri(data.getUri());
+		data2.setUri(this.testData.getUri());
 		this.service.addNewSoundToPlaylistAndDatabase(data2);
 
 		MediaPlayerData data3 = TestDataGenerator.getRandomPlayerData();
-		data3.setUri(data.getUri());
+		data3.setUri(this.testData.getUri());
 		this.service.addNewSoundToSoundsAndDatabase(data3);
 
-		List<EnhancedMediaPlayer> players = dialog.getPlayersWithMatchingUri(data.getUri());
+		List<EnhancedMediaPlayer> players = this.dialog.getPlayersWithMatchingUri(this.testData.getUri());
 		assertThat(players.size(), equalTo(2));
 
 		assertTrue(players.get(0).getMediaPlayerData().getUri().equals(data2.getUri()) || players.get(1).getMediaPlayerData().getUri().equals(data2.getUri()));
 		assertTrue(players.get(0).getMediaPlayerData().getUri().equals(data3.getUri()) || players.get(1).getMediaPlayerData().getUri().equals(data3.getUri()));
 	}
+
+	@Test
+	public void testSetUriForPlayer() throws Exception
+	{
+		MediaPlayerData data = TestDataGenerator.getRandomPlayerData();
+		EnhancedMediaPlayer testPlayer = new EnhancedMediaPlayer(data);
+
+		this.dialog.setUriForPlayer(testPlayer, this.testData.getUri());
+		assertThat(testPlayer.getMediaPlayerData().getUri(), equalTo(this.testData.getUri()));
+
+		testPlayer = new EnhancedMediaPlayer(data)
+		{
+			@Override
+			public void setSoundUri(String uri) throws IOException
+			{
+				throw new IOException();
+			}
+		};
+
+		List<EnhancedMediaPlayer> testSounds = new ArrayList<>();
+		testSounds.add(testPlayer);
+		this.service.getSounds().put(testPlayer.getMediaPlayerData().getFragmentTag(), testSounds);
+		this.dialog.setUriForPlayer(testPlayer, this.testData.getUri()); // this should remove player from service
+
+		assertThat(this.service.getSounds().get(testPlayer.getMediaPlayerData().getFragmentTag()).size(), equalTo(0));
+
+		testPlayer.getMediaPlayerData().setFragmentTag(Playlist.TAG);
+		this.service.getPlaylist().add(testPlayer);
+		this.dialog.setUriForPlayer(testPlayer, this.testData.getUri()); // this should remove player from playlist
+
+		assertTrue(this.service.getPlaylist().isEmpty());
+	}
+
 }

@@ -160,5 +160,6 @@
 
 	<string name="dialog_rename_sound_file_title">Datei auch umbenennen?</string>
 	<string name="dialog_rename_sound_file_message">Soll die zugehörige Musikdatei ebenfalls umbenannt werden?</string>
+	<string name="dialog_rename_sound_toast_file_not_found">Die Sounddatei konnte leider nicht umbenannt werden</string>
 
 </resources>

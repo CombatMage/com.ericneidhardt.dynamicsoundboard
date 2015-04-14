@@ -7,15 +7,18 @@ import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
+import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -69,13 +72,39 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 
 	private void deliverResult()
 	{
-		MusicService service = this.getServiceManagerFragment().getSoundService();
 		MediaPlayerData playerData = this.player.getMediaPlayerData();
 
 		File correspondingSoundFile = FileUtils.getFileForUri(this.getActivity(), Uri.parse(playerData.getUri()));
-
+		if (correspondingSoundFile == null)
+		{
+			Toast.makeText(this.getActivity(), R.string.dialog_rename_sound_toast_file_not_found, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		List<EnhancedMediaPlayer> playersWithMatchingUri = this.getPlayersWithMatchingUri(playerData.getUri());
 
 		// TODO rename File and update playerData
+
+		Uri uri = Uri.fromFile(correspondingSoundFile);
+		String newUri = uri.toString();
+		for (EnhancedMediaPlayer player : playersWithMatchingUri)
+			this.setUriForPlayer(player, newUri);
+	}
+
+	void setUriForPlayer(EnhancedMediaPlayer player, String uri)
+	{
+		MusicService service = this.getServiceManagerFragment().getSoundService();
+		try
+		{
+			player.setSoundUri(uri);
+		}
+		catch (IOException e)
+		{
+			Logger.e(TAG, e.getMessage());
+			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
+				service.removeFromPlaylist(Collections.singletonList(player));
+			else
+				service.removeSounds(Collections.singletonList(player));
+		}
 	}
 
 	List<EnhancedMediaPlayer> getPlayersWithMatchingUri(String uri)
