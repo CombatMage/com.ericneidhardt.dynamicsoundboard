@@ -4,15 +4,18 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -69,6 +72,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		MusicService service = this.getServiceManagerFragment().getSoundService();
 		MediaPlayerData playerData = this.player.getMediaPlayerData();
 
+		File correspondingSoundFile = FileUtils.getFileForUri(this.getActivity(), Uri.parse(playerData.getUri()));
 
 
 		// TODO rename File and update playerData

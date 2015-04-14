@@ -43,6 +43,19 @@ public class FileUtils
 		return files;
 	}
 
+	public static File getFileForUri(Context context, Uri uri)
+	{
+		Uri pathUri = getPathUriFromGenericUri(context.getApplicationContext(), uri);
+		if (pathUri == null)
+			return null;
+
+		File file = new File(pathUri.getPath());
+		if (!file.exists())
+			return null;
+
+		return file;
+	}
+
 	public static String getFileNameFromUri(Context context, String uriString)
 	{
 		return getFileNameFromUri(context, Uri.parse(uriString));
@@ -69,6 +82,22 @@ public class FileUtils
 			fileName = "_" + filePathUri.getLastPathSegment();
 
 		return fileName;
+	}
+
+	private static Uri getPathUriFromGenericUri(Context context, Uri uri)
+	{
+		Uri filePathUri = uri;
+		if (uri.getScheme() != null && uri.getScheme().equals(SCHEME_CONTENT_URI))
+		{
+			Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+			if (cursor.moveToFirst())
+			{
+				int column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
+				filePathUri = Uri.parse(cursor.getString(column_index));
+			}
+			cursor.close();
+		}
+		return filePathUri;
 	}
 
 	public static boolean isAudioFile(File file)
