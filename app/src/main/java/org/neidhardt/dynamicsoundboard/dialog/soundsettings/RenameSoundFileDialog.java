@@ -74,16 +74,22 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		File fileToRename = FileUtils.getFileForUri(this.getActivity(), Uri.parse(playerData.getUri()));
 		if (fileToRename == null)
 		{
-			Toast.makeText(this.getActivity(), R.string.dialog_rename_sound_toast_file_not_found, Toast.LENGTH_SHORT).show();
+			this.showErrorRenameFile();
 			return;
 		}
 
 		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.appendFileTypeToNewPath(playerData.getLabel(), fileToRename.getName());
+		if (newFilePath.equals(fileToRename.getAbsolutePath()))
+		{
+			Logger.d(TAG, "old name and new name are equal, nothing to be done");
+			return;
+		}
+
 		File newFile = new File(newFilePath);
 		boolean success = fileToRename.renameTo(newFile);
 		if (!success)
 		{
-			Toast.makeText(this.getActivity(), R.string.dialog_rename_sound_toast_file_not_found, Toast.LENGTH_SHORT).show();
+			this.showErrorRenameFile();
 			return;
 		}
 
@@ -91,7 +97,16 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		Uri uri = Uri.fromFile(fileToRename);
 		String newUri = uri.toString();
 		for (EnhancedMediaPlayer player : playersWithMatchingUri)
-			this.setUriForPlayer(player, newUri);
+		{
+			if (!this.setUriForPlayer(player, newUri))
+				this.showErrorRenameFile();
+		}
+	}
+
+	private void showErrorRenameFile()
+	{
+		if (this.getActivity() != null)
+			Toast.makeText(this.getActivity(), R.string.dialog_rename_sound_toast_player_not_updated, Toast.LENGTH_SHORT).show();
 	}
 
 	String appendFileTypeToNewPath(String newNameFilePath, String oldFilePath)
@@ -108,12 +123,13 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		return newNameFilePath;
 	}
 
-	void setUriForPlayer(EnhancedMediaPlayer player, String uri)
+	boolean setUriForPlayer(EnhancedMediaPlayer player, String uri)
 	{
 		MusicService service = this.getServiceManagerFragment().getSoundService();
 		try
 		{
 			player.setSoundUri(uri);
+			return true;
 		}
 		catch (IOException e)
 		{
@@ -128,6 +144,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 				service.removeSounds(Collections.singletonList(player));
 				this.getServiceManagerFragment().notifyFragment(player.getMediaPlayerData().getFragmentTag());
 			}
+			return false;
 		}
 	}
 

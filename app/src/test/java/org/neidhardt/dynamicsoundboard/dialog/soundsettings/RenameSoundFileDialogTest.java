@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
 /**
  * Created by eric.neidhardt on 13.04.2015.
@@ -64,7 +65,7 @@ public class RenameSoundFileDialogTest extends ActivityTest
 		MediaPlayerData data = TestDataGenerator.getRandomPlayerData();
 		EnhancedMediaPlayer testPlayer = new EnhancedMediaPlayer(data);
 
-		this.dialog.setUriForPlayer(testPlayer, this.testData.getUri());
+		assertTrue(this.dialog.setUriForPlayer(testPlayer, this.testData.getUri()));
 		assertThat(testPlayer.getMediaPlayerData().getUri(), equalTo(this.testData.getUri()));
 
 		MediaPlayerData testPlayerData = TestDataGenerator.getRandomPlayerData();
@@ -75,13 +76,13 @@ public class RenameSoundFileDialogTest extends ActivityTest
 		List<EnhancedMediaPlayer> testSounds = new ArrayList<>();
 		testSounds.add(testPlayer);
 		this.service.getSounds().put(testPlayer.getMediaPlayerData().getFragmentTag(), testSounds);
-		this.dialog.setUriForPlayer(testPlayer, this.testData.getUri()); // this should remove player from service
+		assertFalse(this.dialog.setUriForPlayer(testPlayer, this.testData.getUri())); // this should remove player from service
 
 		assertThat(this.service.getSounds().get(testPlayer.getMediaPlayerData().getFragmentTag()).size(), equalTo(0));
 
 		testPlayer.getMediaPlayerData().setFragmentTag(Playlist.TAG);
 		this.service.getPlaylist().add(testPlayer);
-		this.dialog.setUriForPlayer(testPlayer, this.testData.getUri()); // this should remove player from playlist
+		assertFalse(this.dialog.setUriForPlayer(testPlayer, this.testData.getUri())); // this should remove player from playlist
 
 		assertTrue(this.service.getPlaylist().isEmpty());
 	}
@@ -89,7 +90,8 @@ public class RenameSoundFileDialogTest extends ActivityTest
 	@Test
 	public void testGetFileName() throws Exception
 	{
-		RenameSoundFileDialog dialog = new RenameSoundFileDialog();
+		final RenameSoundFileDialog dialog = spy(new RenameSoundFileDialog());
+
 
 		boolean wasExceptionThrown = false;
 		try {
