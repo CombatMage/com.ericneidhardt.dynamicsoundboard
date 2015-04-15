@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.dialog.soundsettings;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.neidhardt.dynamicsoundboard.ActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -15,6 +16,10 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by eric.neidhardt on 13.04.2015.
@@ -65,14 +70,10 @@ public class RenameSoundFileDialogTest extends ActivityTest
 		this.dialog.setUriForPlayer(testPlayer, this.testData.getUri());
 		assertThat(testPlayer.getMediaPlayerData().getUri(), equalTo(this.testData.getUri()));
 
-		testPlayer = new EnhancedMediaPlayer(data)
-		{
-			@Override
-			public void setSoundUri(String uri) throws IOException
-			{
-				throw new IOException();
-			}
-		};
+		MediaPlayerData testPlayerData = TestDataGenerator.getRandomPlayerData();
+		testPlayer = mock(EnhancedMediaPlayer.class);
+		Mockito.doThrow(new IOException()).when(testPlayer).setSoundUri(any(String.class));
+		Mockito.when(testPlayer.getMediaPlayerData()).thenReturn(testPlayerData);
 
 		List<EnhancedMediaPlayer> testSounds = new ArrayList<>();
 		testSounds.add(testPlayer);
@@ -91,6 +92,8 @@ public class RenameSoundFileDialogTest extends ActivityTest
 	@Test
 	public void testGetFileName() throws Exception
 	{
+		RenameSoundFileDialog dialog = mock(RenameSoundFileDialog.class);
+
 		// TODO mock dialog
 		// TODO write tests
 	}
