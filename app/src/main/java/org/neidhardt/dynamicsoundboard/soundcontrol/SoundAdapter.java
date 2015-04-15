@@ -265,7 +265,7 @@ public class SoundAdapter
 		public void onTextEdited(String text)
 		{
 			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
-			if (player != null)
+			if (player != null && !text.equals(player.getMediaPlayerData().getLabel()))
 			{
 				player.getMediaPlayerData().setLabel(text);
 				player.getMediaPlayerData().setItemWasAltered();
@@ -376,8 +376,8 @@ public class SoundAdapter
 		}
 	}
 
-	public static interface OnItemDeleteListener
+	public interface OnItemDeleteListener
 	{
-		public void onItemDelete(EnhancedMediaPlayer data, int position);
+		void onItemDelete(EnhancedMediaPlayer data, int position);
 	}
 }

@@ -88,4 +88,10 @@ public class RenameSoundFileDialogTest extends ActivityTest
 		assertTrue(this.service.getPlaylist().isEmpty());
 	}
 
+	@Test
+	public void testGetFileName() throws Exception
+	{
+		// TODO mock dialog
+		// TODO write tests
+	}
 }

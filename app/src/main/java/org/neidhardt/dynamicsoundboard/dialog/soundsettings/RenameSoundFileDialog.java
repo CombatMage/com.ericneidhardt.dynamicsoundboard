@@ -74,20 +74,40 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 	{
 		MediaPlayerData playerData = this.player.getMediaPlayerData();
 
-		File correspondingSoundFile = FileUtils.getFileForUri(this.getActivity(), Uri.parse(playerData.getUri()));
-		if (correspondingSoundFile == null)
+		File fileToRename = FileUtils.getFileForUri(this.getActivity(), Uri.parse(playerData.getUri()));
+		if (fileToRename == null)
 		{
 			Toast.makeText(this.getActivity(), R.string.dialog_rename_sound_toast_file_not_found, Toast.LENGTH_SHORT).show();
 			return;
 		}
+
+		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.getFileName(playerData.getLabel(), fileToRename.getName());
+		File newFile = new File(newFilePath);
+		boolean success = fileToRename.renameTo(newFile);
+		if (!success)
+		{
+			Toast.makeText(this.getActivity(), R.string.dialog_rename_sound_toast_file_not_found, Toast.LENGTH_SHORT).show();
+			return;
+		}
+
 		List<EnhancedMediaPlayer> playersWithMatchingUri = this.getPlayersWithMatchingUri(playerData.getUri());
-
-		// TODO rename File and update playerData
-
-		Uri uri = Uri.fromFile(correspondingSoundFile);
+		Uri uri = Uri.fromFile(fileToRename);
 		String newUri = uri.toString();
 		for (EnhancedMediaPlayer player : playersWithMatchingUri)
 			this.setUriForPlayer(player, newUri);
+	}
+
+	String getFileName(String newName, String oldName)
+	{
+		if (newName == null || oldName == null)
+			throw new NullPointerException(TAG + ": cannot create new file name, either old or new name is null");
+
+		String[] segments = oldName.split(".");
+		String fileType = "";
+		if (segments.length > 1)
+			fileType = segments[segments.length - 1];
+
+		return newName + fileType;
 	}
 
 	void setUriForPlayer(EnhancedMediaPlayer player, String uri)
@@ -101,9 +121,15 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		{
 			Logger.e(TAG, e.getMessage());
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
+			{
 				service.removeFromPlaylist(Collections.singletonList(player));
+				this.getServiceManagerFragment().notifyPlaylist();
+			}
 			else
+			{
 				service.removeSounds(Collections.singletonList(player));
+				this.getServiceManagerFragment().notifyFragment(player.getMediaPlayerData().getFragmentTag());
+			}
 		}
 	}
 

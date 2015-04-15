@@ -28,6 +28,8 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
+import java.util.Collections;
+
 import static java.util.Arrays.asList;
 
 
@@ -229,7 +231,7 @@ public class SoundSheetFragment
 			this.soundAdapter.notifyItemChanged(position - 1);
 
 		ServiceManagerFragment fragment = this.getServiceManagerFragment();
-		fragment.getSoundService().removeSounds(asList(player));
+		fragment.getSoundService().removeSounds(Collections.singletonList(player));
 		fragment.notifyPlaylist();
 
 		this.notifySoundSheetList();

@@ -85,10 +85,12 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public void setSoundUri(String uri) throws IOException
 	{
 		this.rawData.setUri(uri);
+		this.rawData.setItemWasUpdated();
 		this.reset();
 
 		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		this.setDataSource(DynamicSoundboardApplication.getSoundboardContext(), Uri.parse(this.rawData.getUri()));
+		Uri soundUri = Uri.parse(this.rawData.getUri());
+		this.setDataSource(DynamicSoundboardApplication.getSoundboardContext(), soundUri);
 		this.setLooping(this.rawData.getIsLoop());
 		this.prepare();
 		this.currentState = State.PREPARED;
@@ -104,7 +106,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			throw new NullPointerException("cannot init media player, sound uri is null");
 
 		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		this.setDataSource(DynamicSoundboardApplication.getSoundboardContext(), Uri.parse(this.rawData.getUri()));
+		Uri soundUri = Uri.parse(this.rawData.getUri());
+		this.setDataSource(DynamicSoundboardApplication.getSoundboardContext(), soundUri);
 		this.setLooping(this.rawData.getIsLoop());
 		this.prepare();
 		this.currentState = State.PREPARED;
