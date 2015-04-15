@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Toast;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -23,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-
-import static java.util.Arrays.asList;
 
 /**
  * Created by eric.neidhardt on 12.04.2015.
@@ -81,7 +78,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 			return;
 		}
 
-		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.getFileName(playerData.getLabel(), fileToRename.getName());
+		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.appendFileTypeToNewPath(playerData.getLabel(), fileToRename.getName());
 		File newFile = new File(newFilePath);
 		boolean success = fileToRename.renameTo(newFile);
 		if (!success)
@@ -97,17 +94,18 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 			this.setUriForPlayer(player, newUri);
 	}
 
-	String getFileName(String newName, String oldName)
+	String appendFileTypeToNewPath(String newNameFilePath, String oldFilePath)
 	{
-		if (newName == null || oldName == null)
-			throw new NullPointerException(TAG + ": cannot create new file name, either old or new name is null");
+		if (newNameFilePath == null || oldFilePath == null)
+			throw new NullPointerException(TAG + ": cannot create new file name, either old name or new name is null");
 
-		String[] segments = oldName.split(".");
-		String fileType = "";
-		if (segments.length > 1)
-			fileType = segments[segments.length - 1];
+		String[] segments = oldFilePath.split("\\.");
+		if (segments.length > 1) {
+			String fileType = segments[segments.length - 1];
+			return newNameFilePath + "." + fileType;
+		}
 
-		return newName + fileType;
+		return newNameFilePath;
 	}
 
 	void setUriForPlayer(EnhancedMediaPlayer player, String uri)

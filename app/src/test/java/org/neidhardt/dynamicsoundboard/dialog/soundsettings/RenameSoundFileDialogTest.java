@@ -10,16 +10,13 @@ import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by eric.neidhardt on 13.04.2015.
@@ -92,9 +89,26 @@ public class RenameSoundFileDialogTest extends ActivityTest
 	@Test
 	public void testGetFileName() throws Exception
 	{
-		RenameSoundFileDialog dialog = mock(RenameSoundFileDialog.class);
+		RenameSoundFileDialog dialog = new RenameSoundFileDialog();
 
-		// TODO mock dialog
-		// TODO write tests
+		boolean wasExceptionThrown = false;
+		try {
+			dialog.appendFileTypeToNewPath(null, null);
+		}
+		catch (NullPointerException e) {
+			wasExceptionThrown = true;
+		}
+		assertTrue(wasExceptionThrown);
+
+		String newFilePath = "/dir/new";
+		String oldFilePath = "/dir/old.mp3";
+
+		assertThat(dialog.appendFileTypeToNewPath(newFilePath, oldFilePath), equalTo("/dir/new.mp3"));
+
+		oldFilePath = "/dir/old";
+		assertThat(dialog.appendFileTypeToNewPath(newFilePath, oldFilePath), equalTo("/dir/new"));
+
+		oldFilePath = "/dir/old.old.mp3";
+		assertThat(dialog.appendFileTypeToNewPath(newFilePath, oldFilePath), equalTo("/dir/new.mp3"));
 	}
 }
