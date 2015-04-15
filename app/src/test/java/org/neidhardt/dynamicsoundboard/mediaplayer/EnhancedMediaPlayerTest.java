@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.mediaplayer;
 
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.ActivityTest;
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -22,5 +23,9 @@ public class EnhancedMediaPlayerTest extends ActivityTest
 		playerToTest.setSoundUri(testUri);
 
 		assertThat(playerToTest.getMediaPlayerData().getUri(), equalTo(testUri));
+
+		MediaPlayerData testData = TestDataGenerator.getRandomPlayerData();
+		playerToTest = new EnhancedMediaPlayer(testData);
+		playerToTest.setSoundUri(testData.getUri());
 	}
 }

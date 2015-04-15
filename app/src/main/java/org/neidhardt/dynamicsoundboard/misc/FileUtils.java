@@ -15,7 +15,10 @@ import java.util.List;
  */
 public class FileUtils
 {
+	private static final String TAG = FileUtils.class.getName();
+
 	public static final String MIME_AUDIO = "audio/*|application/ogg|application/x-ogg";
+
 	private static final String AUDIO = "audio";
 	private static final String[] MIME_AUDIO_TYPES = {"audio/*", "application/ogg", "application/x-ogg"};
 	private static final String SCHEME_CONTENT_URI = "content";
@@ -54,6 +57,22 @@ public class FileUtils
 			return null;
 
 		return file;
+	}
+
+	public static String stripFileTypeFromName(String fileName)
+	{
+		if (fileName == null)
+			throw new NullPointerException(TAG + ": cannot create new file name, either old name or new name is null");
+
+		String[] segments = fileName.split("\\.");
+		if (segments.length > 1) {
+			String strippedName = segments[0];
+			for (int i = 1; i < segments.length - 1; i++)
+				strippedName += "." + segments[i];
+			return strippedName;
+		}
+		else
+			return segments[0];
 	}
 
 	public static String getFileNameFromUri(Context context, String uriString)

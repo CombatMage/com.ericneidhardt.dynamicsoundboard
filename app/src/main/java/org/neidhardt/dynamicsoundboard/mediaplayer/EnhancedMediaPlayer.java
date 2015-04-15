@@ -127,6 +127,12 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.postStateChangedEvent(false);
 	}
 
+	@Override
+	public void prepare() throws IOException, IllegalStateException {
+		Logger.d(TAG, "preparing media player " + this.getMediaPlayerData().getLabel() + " with uri " + this.getMediaPlayerData().getUri());
+		super.prepare();
+	}
+
 	public MediaPlayerData getMediaPlayerData()
 	{
 		return this.rawData;

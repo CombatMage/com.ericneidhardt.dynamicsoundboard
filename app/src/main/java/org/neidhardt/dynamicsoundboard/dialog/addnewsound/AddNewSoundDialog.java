@@ -149,7 +149,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		this.soundsToAdd.add(soundUri);
 		AddSoundListItem item = new AddSoundListItem(this.getActivity());
 		item.setPath(soundUri.toString());
-		item.setSoundName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
+		item.setSoundName(FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri)));
 		this.soundsToAddLayout.addView(item);
 	}
 

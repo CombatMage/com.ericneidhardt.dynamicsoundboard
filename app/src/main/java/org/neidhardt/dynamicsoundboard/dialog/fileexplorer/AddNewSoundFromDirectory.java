@@ -127,7 +127,7 @@ public class AddNewSoundFromDirectory
 		for (File file : result)
 		{
 			Uri soundUri = Uri.parse(file.getAbsolutePath());
-			String soundLabel = FileUtils.getFileNameFromUri(this.getActivity(), soundUri);
+			String soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
 			MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.callingFragmentTag, soundUri, soundLabel);
 
 			fragment.getSoundService().addNewSoundToSoundsAndDatabase(playerData);

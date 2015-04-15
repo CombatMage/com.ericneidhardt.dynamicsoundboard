@@ -121,7 +121,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		this.soundName.setText(FileUtils.getFileNameFromUri(this.getActivity(), this.uri));
+		this.soundName.setText(FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), this.uri)));
 		this.soundSheetName.setHint(this.suggestedName);
 		if (this.soundSheetsAlreadyExists)
 		{

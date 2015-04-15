@@ -30,4 +30,10 @@ public class FileUtilsTest extends ActivityTest
 		assertEquals(file.getAbsolutePath(), testFile.getAbsolutePath());
 		assertEquals(file, testFile);
 	}
+
+	@Test
+	public void testStripFileTypeFromName() throws Exception
+	{
+		// TODO write test
+	}
 }
