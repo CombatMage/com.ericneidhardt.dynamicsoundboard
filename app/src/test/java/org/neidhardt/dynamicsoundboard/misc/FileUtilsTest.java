@@ -7,6 +7,7 @@ import org.neidhardt.dynamicsoundboard.ActivityTest;
 
 import java.io.File;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 /**
@@ -31,9 +32,28 @@ public class FileUtilsTest extends ActivityTest
 		assertEquals(file, testFile);
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	@Test
 	public void testStripFileTypeFromName() throws Exception
 	{
-		// TODO write test
+		String testName = null;
+		boolean wasExceptionThrown = false;
+		try
+		{
+			FileUtils.stripFileTypeFromName(testName);
+		}
+		catch (NullPointerException e) {
+			wasExceptionThrown = true;
+		}
+		assertTrue(wasExceptionThrown);
+
+		testName = "test";
+		assertThat(FileUtils.stripFileTypeFromName(testName), equalTo("test"));
+
+		testName = "test.mp3";
+		assertThat(FileUtils.stripFileTypeFromName(testName), equalTo("test"));
+
+		testName = "test.test.mp3";
+		assertThat(FileUtils.stripFileTypeFromName(testName), equalTo("test.test"));
 	}
 }

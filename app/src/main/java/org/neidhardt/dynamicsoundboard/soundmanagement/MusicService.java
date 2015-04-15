@@ -472,7 +472,10 @@ public class MusicService extends Service
 			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
 		EnhancedMediaPlayer player = createSound(data);
 		if (player == null)
+		{
 			showLoadingMediaPlayerFailed(data.getUri());
+			this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), data);
+		}
 		else
 			addSoundToSounds(player);
 	}
@@ -489,7 +492,10 @@ public class MusicService extends Service
 			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
 		EnhancedMediaPlayer player = createSound(data);
 		if (player == null)
+		{
 			showLoadingMediaPlayerFailed(data.getUri());
+			this.removeSoundFromDatabase(this.dbPlaylist.getMediaPlayerDataDao(), data);
+		}
 		else
 			addSoundToPlaylist(player);
 	}

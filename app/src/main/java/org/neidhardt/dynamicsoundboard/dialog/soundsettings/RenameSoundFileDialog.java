@@ -94,8 +94,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		}
 
 		List<EnhancedMediaPlayer> playersWithMatchingUri = this.getPlayersWithMatchingUri(playerData.getUri());
-		Uri uri = Uri.fromFile(newFile);
-		String newUri = uri.toString();
+		String newUri = Uri.fromFile(newFile).toString();
 		for (EnhancedMediaPlayer player : playersWithMatchingUri)
 		{
 			if (!this.setUriForPlayer(player, newUri))

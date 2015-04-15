@@ -265,6 +265,8 @@ public class SoundAdapter
 		public void onTextEdited(String text)
 		{
 			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
+			this.name.clearFocus();
+
 			if (player != null && !text.equals(player.getMediaPlayerData().getLabel()))
 			{
 				player.getMediaPlayerData().setLabel(text);
