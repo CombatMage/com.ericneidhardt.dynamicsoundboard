@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toast;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -30,6 +31,10 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 {
 	public static final String TAG = RenameSoundFileDialog.class.getName();
 
+	private CheckBox renameAllOccurrences;
+	private MediaPlayerData playerData;
+	private List<EnhancedMediaPlayer> playersWithMatchingUri;
+
 	public static void showInstance(FragmentManager manager, MediaPlayerData playerData)
 	{
 		RenameSoundFileDialog dialog = new RenameSoundFileDialog();
@@ -43,13 +48,31 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		@SuppressLint("InflateParams")
 		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_rename_sound_file_layout, null);
 
+		this.renameAllOccurrences = (CheckBox) view.findViewById(R.id.cb_rename_all_occurrences);
+
 		view.findViewById(R.id.b_ok).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
 
+		this.setMediaPlayerData(this.player.getMediaPlayerData());
+
 		return builder.create();
+	}
+
+	void setMediaPlayerData(MediaPlayerData playerData)
+	{
+		this.playerData = playerData;
+
+		this.playersWithMatchingUri = this.getPlayersWithMatchingUri(this.playerData.getUri());
+		if (playersWithMatchingUri.size() > 1)
+		{
+			this.renameAllOccurrences.setVisibility(View.VISIBLE);
+			this.renameAllOccurrences.setText(this.renameAllOccurrences.getText().toString().replace("{%s0}", Integer.toString(playersWithMatchingUri.size())));
+		}
+		else
+			this.renameAllOccurrences.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -69,16 +92,15 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 
 	private void deliverResult()
 	{
-		MediaPlayerData playerData = this.player.getMediaPlayerData();
 
-		File fileToRename = FileUtils.getFileForUri(this.getActivity(), Uri.parse(playerData.getUri()));
+		File fileToRename = FileUtils.getFileForUri(this.getActivity(), Uri.parse(this.playerData.getUri()));
 		if (fileToRename == null)
 		{
 			this.showErrorRenameFile();
 			return;
 		}
 
-		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.appendFileTypeToNewPath(playerData.getLabel(), fileToRename.getName());
+		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.appendFileTypeToNewPath(this.playerData.getLabel(), fileToRename.getName());
 		if (newFilePath.equals(fileToRename.getAbsolutePath()))
 		{
 			Logger.d(TAG, "old name and new name are equal, nothing to be done");
@@ -93,9 +115,8 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 			return;
 		}
 
-		List<EnhancedMediaPlayer> playersWithMatchingUri = this.getPlayersWithMatchingUri(playerData.getUri());
 		String newUri = Uri.fromFile(newFile).toString();
-		for (EnhancedMediaPlayer player : playersWithMatchingUri)
+		for (EnhancedMediaPlayer player : this.playersWithMatchingUri)
 		{
 			if (!this.setUriForPlayer(player, newUri))
 				this.showErrorRenameFile();

@@ -92,7 +92,6 @@ public class RenameSoundFileDialogTest extends ActivityTest
 	{
 		final RenameSoundFileDialog dialog = spy(new RenameSoundFileDialog());
 
-
 		boolean wasExceptionThrown = false;
 		try {
 			dialog.appendFileTypeToNewPath(null, null);
@@ -112,5 +111,10 @@ public class RenameSoundFileDialogTest extends ActivityTest
 
 		oldFilePath = "/dir/old.old.mp3";
 		assertThat(dialog.appendFileTypeToNewPath(newFilePath, oldFilePath), equalTo("/dir/new.mp3"));
+	}
+
+	@Test
+	public void testSetMediaPlayerData() throws Exception {
+
 	}
 }
