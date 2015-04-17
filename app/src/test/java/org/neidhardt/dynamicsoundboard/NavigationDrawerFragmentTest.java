@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * Created by eric.neidhardt on 02.04.2015.
  */
 @RunWith(CustomTestRunner.class)
-public class NavigationDrawerFragmentTest extends ActivityTest
+public class NavigationDrawerFragmentTest extends BaseTest
 {
 	protected NavigationDrawerFragment fragment;
 

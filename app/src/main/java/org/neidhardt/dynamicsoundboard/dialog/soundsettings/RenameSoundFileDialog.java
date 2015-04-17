@@ -47,7 +47,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 	{
 		@SuppressLint("InflateParams")
 		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_rename_sound_file_layout, null);
-
+		this.setMainView(view);
 		this.renameAllOccurrences = (CheckBox) view.findViewById(R.id.cb_rename_all_occurrences);
 
 		view.findViewById(R.id.b_ok).setOnClickListener(this);
@@ -56,7 +56,8 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
 
-		this.setMediaPlayerData(this.player.getMediaPlayerData());
+		if (this.player != null)
+			this.setMediaPlayerData(this.player.getMediaPlayerData());
 
 		return builder.create();
 	}
@@ -92,7 +93,6 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 
 	private void deliverResult()
 	{
-
 		File fileToRename = FileUtils.getFileForUri(this.getActivity(), Uri.parse(this.playerData.getUri()));
 		if (fileToRename == null)
 		{
@@ -100,7 +100,8 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 			return;
 		}
 
-		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.appendFileTypeToNewPath(this.playerData.getLabel(), fileToRename.getName());
+		String newFileLabel = this.playerData.getLabel();
+		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.appendFileTypeToNewPath(newFileLabel, fileToRename.getName());
 		if (newFilePath.equals(fileToRename.getAbsolutePath()))
 		{
 			Logger.d(TAG, "old name and new name are equal, nothing to be done");
@@ -120,6 +121,14 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		{
 			if (!this.setUriForPlayer(player, newUri))
 				this.showErrorRenameFile();
+
+			if (this.renameAllOccurrences.isChecked())
+				player.getMediaPlayerData().setLabel(newFileLabel);
+
+			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
+				this.getServiceManagerFragment().notifyPlaylist();
+			else
+				this.getServiceManagerFragment().notifyFragment(player.getMediaPlayerData().getFragmentTag());
 		}
 	}
 
@@ -155,15 +164,9 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		{
 			Logger.e(TAG, e.getMessage());
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
-			{
 				service.removeFromPlaylist(Collections.singletonList(player));
-				this.getServiceManagerFragment().notifyPlaylist();
-			}
 			else
-			{
 				service.removeSounds(Collections.singletonList(player));
-				this.getServiceManagerFragment().notifyFragment(player.getMediaPlayerData().getFragmentTag());
-			}
 			return false;
 		}
 	}

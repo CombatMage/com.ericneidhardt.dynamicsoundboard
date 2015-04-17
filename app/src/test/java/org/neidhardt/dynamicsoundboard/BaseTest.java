@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
  * Created by eric.neidhardt on 02.04.2015.
  */
 @RunWith(CustomTestRunner.class)
-public abstract class ActivityTest
+public abstract class BaseTest
 {
 	protected BaseActivity activity;
 	protected MusicService service;
@@ -48,5 +48,8 @@ public abstract class ActivityTest
 		SoundLayoutsManager.getInstance().clear();
 		this.soundSheetsManagerFragment.deleteAllSoundSheets();
 		this.service.deleteAllSounds();
+
+		this.service.stopSelf();
+		this.activity.getFragmentManager().beginTransaction().remove(this.soundSheetsManagerFragment).commit();
 	}
 }
