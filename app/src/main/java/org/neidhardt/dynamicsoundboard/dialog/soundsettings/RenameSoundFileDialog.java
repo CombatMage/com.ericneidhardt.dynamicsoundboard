@@ -91,7 +91,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		}
 	}
 
-	private void deliverResult()
+	void deliverResult()
 	{
 		File fileToRename = FileUtils.getFileForUri(this.getActivity(), Uri.parse(this.playerData.getUri()));
 		if (fileToRename == null)

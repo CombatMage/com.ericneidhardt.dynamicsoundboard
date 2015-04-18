@@ -4,13 +4,12 @@ import android.view.View;
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.neidhardt.dynamicsoundboard.BaseTest;
+import org.neidhardt.dynamicsoundboard.BaseActivityTest;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
-import org.robolectric.util.FragmentTestUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import static org.mockito.Mockito.spy;
 /**
  * Created by eric.neidhardt on 13.04.2015.
  */
-public class RenameSoundFileDialogTest extends BaseTest
+public class RenameSoundFileDialogTest extends BaseActivityTest
 {
 	private RenameSoundFileDialog dialog;
 	private MediaPlayerData testData;
@@ -151,5 +150,17 @@ public class RenameSoundFileDialogTest extends BaseTest
 		View renameCheckBox = dialogView.findViewById(R.id.cb_rename_all_occurrences);
 		assertNotNull(renameCheckBox);
 		assertThat(renameCheckBox.getVisibility(), equalTo(View.VISIBLE));
+	}
+
+	@Test
+	public void testDeliverResult() throws Exception
+	{
+		String originalFile = "testSound1.mp3";
+		String newLabel = "renamedTestSound";
+
+		//TODO create file
+		// TODO get Uri and add mediaplayers to service
+
+
 	}
 }
