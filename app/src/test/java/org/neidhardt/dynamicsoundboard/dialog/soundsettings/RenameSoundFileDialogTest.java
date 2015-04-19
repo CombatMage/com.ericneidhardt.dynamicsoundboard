@@ -158,19 +158,30 @@ public class RenameSoundFileDialogTest extends BaseActivityTest
 	@Test
 	public void testDeliverResult() throws Exception
 	{
+		// create files and verify they exists
 		String originalFileName = "testSound1.mp3";
 		String newLabel = "renamedTestSound";
 		File originalFile = this.createFile(originalFileName);
 		assertNotNull(originalFile);
 		assertTrue(originalFile.exists());
 
+		// mock test data
 		MediaPlayerData data = mock(MediaPlayerData.class);
 		when(data.getLabel()).thenReturn(originalFileName);
 		when(data.getUri()).thenReturn(Uri.fromFile(originalFile).toString());
+		when(data.getFragmentTag()).thenReturn(Playlist.TAG);
 
+		EnhancedMediaPlayer player = mock(EnhancedMediaPlayer.class);
+		when(player.getMediaPlayerData()).thenReturn(data);
+
+		// prepare test
+		Uri originalFileUri = Uri.fromFile(originalFile);
+		this.service.getPlaylist().add(player);
+		assertThat(this.dialog.getPlayersWithMatchingUri(originalFileUri.toString()).size(), equalTo(1));
 		this.dialog.setMediaPlayerData(data);
-		// TODO for strange reason Uri.toString and Uri.getPath are not interchangeable
-		this.dialog.deliverResult(newLabel, false);
-		assertThat(originalFile.getName(), equalTo("renamedTestSound.mp3"));
+
+		// actual test
+		this.dialog.deliverResult(Uri.fromFile(originalFile), newLabel, false);
+		assertTrue(this.getFileFromExternalStorage("renamedTestSound.mp3").exists());
 	}
 }

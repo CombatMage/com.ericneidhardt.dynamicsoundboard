@@ -19,7 +19,6 @@ import static junit.framework.TestCase.assertTrue;
 @RunWith(CustomTestRunner.class)
 public abstract class BaseTest
 {
-	private List<File> createdFiles = new ArrayList<>();
 
 	@Before
 	public void setUp() throws Exception
@@ -31,22 +30,27 @@ public abstract class BaseTest
 	@After
 	public void tearDown() throws Exception
 	{
-		for (File file : this.createdFiles)
+		File[] files = ShadowEnvironment.getExternalStorageDirectory().listFiles();
+		for(File file: files)
 		{
 			if (file.exists())
-				assertTrue(file.delete());
+				assertTrue("could not delete file " + file, file.delete());
 		}
+
 		ShadowEnvironment.setExternalStorageState(Environment.MEDIA_UNMOUNTED);
 		// TODO clear shared preferences
 	}
 
 	protected File createFile(String fileName) throws Exception
 	{
-		File newFile = new File(fileName);
+		File newFile = new File(ShadowEnvironment.getExternalStorageDirectory(), fileName);
 		if (!newFile.exists())
 			assertTrue(newFile.createNewFile());
-
-		this.createdFiles.add(newFile);
 		return newFile;
+	}
+
+	protected File getFileFromExternalStorage(String fileName)
+	{
+		return new File(ShadowEnvironment.getExternalStorageDirectory(), fileName);
 	}
 }

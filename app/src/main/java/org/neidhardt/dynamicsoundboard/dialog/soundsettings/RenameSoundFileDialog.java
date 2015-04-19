@@ -85,15 +85,15 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 				this.dismiss();
 				break;
 			case R.id.b_ok:
-				this.deliverResult(this.playerData.getLabel(), this.renameAllOccurrences.isChecked());
+				this.deliverResult(Uri.parse(this.playerData.getUri()), this.playerData.getLabel(), this.renameAllOccurrences.isChecked());
 				this.dismiss();
 				break;
 		}
 	}
 
-	void deliverResult(String newFileLabel, boolean renameAllOccurrences)
+	void deliverResult(Uri fileUriToRename, String newFileLabel, boolean renameAllOccurrences)
 	{
-		File fileToRename = FileUtils.getFileForUri(this.getActivity(), Uri.parse(this.playerData.getUri()));
+		File fileToRename = FileUtils.getFileForUri(this.getActivity(), fileUriToRename);
 		if (fileToRename == null)
 		{
 			this.showErrorRenameFile();
