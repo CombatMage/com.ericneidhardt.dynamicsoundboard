@@ -1,6 +1,9 @@
 package org.neidhardt.dynamicsoundboard.dialog.soundsettings;
 
+import android.net.Uri;
+import android.os.Environment;
 import android.view.View;
+import org.apache.tools.ant.util.FileUtils;
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -10,7 +13,9 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
+import org.robolectric.shadows.ShadowEnvironment;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +23,7 @@ import java.util.List;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by eric.neidhardt on 13.04.2015.
@@ -87,7 +90,7 @@ public class RenameSoundFileDialogTest extends BaseActivityTest
 		MediaPlayerData testPlayerData = TestDataGenerator.getRandomPlayerData();
 		testPlayer = mock(EnhancedMediaPlayer.class);
 		Mockito.doThrow(new IOException()).when(testPlayer).setSoundUri(any(String.class));
-		Mockito.when(testPlayer.getMediaPlayerData()).thenReturn(testPlayerData);
+		when(testPlayer.getMediaPlayerData()).thenReturn(testPlayerData);
 
 		List<EnhancedMediaPlayer> testSounds = new ArrayList<>();
 		testSounds.add(testPlayer);
@@ -155,12 +158,19 @@ public class RenameSoundFileDialogTest extends BaseActivityTest
 	@Test
 	public void testDeliverResult() throws Exception
 	{
-		String originalFile = "testSound1.mp3";
+		String originalFileName = "testSound1.mp3";
 		String newLabel = "renamedTestSound";
+		File originalFile = this.createFile(originalFileName);
+		assertNotNull(originalFile);
+		assertTrue(originalFile.exists());
 
-		//TODO create file
-		// TODO get Uri and add mediaplayers to service
+		MediaPlayerData data = mock(MediaPlayerData.class);
+		when(data.getLabel()).thenReturn(originalFileName);
+		when(data.getUri()).thenReturn(Uri.fromFile(originalFile).toString());
 
-
+		this.dialog.setMediaPlayerData(data);
+		// TODO for strange reason Uri.toString and Uri.getPath are not interchangeable
+		this.dialog.deliverResult(newLabel, false);
+		assertThat(originalFile.getName(), equalTo("renamedTestSound.mp3"));
 	}
 }

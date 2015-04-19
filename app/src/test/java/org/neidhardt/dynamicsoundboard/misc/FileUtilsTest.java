@@ -19,17 +19,19 @@ public class FileUtilsTest extends BaseActivityTest
 	@Test
 	public void testGetFileForUri() throws Exception
 	{
-		File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "test.mp3");
-		assertTrue(!file.exists());
+		File file = new File("test.mp3");
+		assertFalse(file.exists());
 		File testFile = FileUtils.getFileForUri(this.activity, Uri.fromFile(file));
 		assertNull(testFile);
 
-		assertTrue(file.createNewFile());
+		file = this.createFile("test.mp3");
+		assertNotNull(file);
+		assertTrue(file.exists());
 
 		testFile = FileUtils.getFileForUri(this.activity, Uri.fromFile(file));
 		assertNotNull(testFile);
 		assertEquals(file.getAbsolutePath(), testFile.getAbsolutePath());
-		assertEquals(file, testFile);
+		assertEquals(Uri.fromFile(file), Uri.fromFile(testFile));
 	}
 
 	@SuppressWarnings("ConstantConditions")

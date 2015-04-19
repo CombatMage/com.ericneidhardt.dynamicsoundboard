@@ -85,13 +85,13 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 				this.dismiss();
 				break;
 			case R.id.b_ok:
-				this.deliverResult();
+				this.deliverResult(this.playerData.getLabel(), this.renameAllOccurrences.isChecked());
 				this.dismiss();
 				break;
 		}
 	}
 
-	void deliverResult()
+	void deliverResult(String newFileLabel, boolean renameAllOccurrences)
 	{
 		File fileToRename = FileUtils.getFileForUri(this.getActivity(), Uri.parse(this.playerData.getUri()));
 		if (fileToRename == null)
@@ -100,7 +100,6 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 			return;
 		}
 
-		String newFileLabel = this.playerData.getLabel();
 		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.appendFileTypeToNewPath(newFileLabel, fileToRename.getName());
 		if (newFilePath.equals(fileToRename.getAbsolutePath()))
 		{
@@ -122,7 +121,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 			if (!this.setUriForPlayer(player, newUri))
 				this.showErrorRenameFile();
 
-			if (this.renameAllOccurrences.isChecked())
+			if (renameAllOccurrences)
 				player.getMediaPlayerData().setLabel(newFileLabel);
 
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
