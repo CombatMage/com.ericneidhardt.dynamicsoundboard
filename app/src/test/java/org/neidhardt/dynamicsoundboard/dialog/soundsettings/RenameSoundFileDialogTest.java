@@ -5,7 +5,7 @@ import android.view.View;
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.neidhardt.dynamicsoundboard.BaseActivityTest;
+import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by eric.neidhardt on 13.04.2015.
  */
-public class RenameSoundFileDialogTest extends BaseActivityTest
+public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 {
 	private RenameSoundFileDialog dialog;
 	private MediaPlayerData testData;

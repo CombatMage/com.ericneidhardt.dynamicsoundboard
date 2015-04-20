@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer;
 
 import org.junit.Test;
-import org.neidhardt.dynamicsoundboard.BaseActivityTest;
+import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 /**
  * Created by eric.neidhardt on 13.04.2015.
  */
-public class EnhancedMediaPlayerTest extends BaseActivityTest
+public class EnhancedMediaPlayerTest extends AbstractBaseActivityTest
 {
 
 	@Test

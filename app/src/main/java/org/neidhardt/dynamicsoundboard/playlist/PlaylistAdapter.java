@@ -112,6 +112,8 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	public void onEvent(MediaPlayerCompletedEvent event)
 	{
 		MediaPlayerData finishedPlayerData = event.getData();
+		if (this.currentItemIndex == null)
+			return;
 		MediaPlayerData currentPlayer = this.getItem(this.currentItemIndex).getMediaPlayerData();
 		if (currentPlayer != finishedPlayerData)
 			return;

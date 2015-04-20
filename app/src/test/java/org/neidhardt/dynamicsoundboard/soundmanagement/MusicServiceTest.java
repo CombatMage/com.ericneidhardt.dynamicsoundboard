@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement;
 
 import org.junit.Test;
-import org.neidhardt.dynamicsoundboard.BaseActivityTest;
+import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsLoadedEvent;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by eric.neidhardt on 08.04.2015.
  */
-public class MusicServiceTest extends BaseActivityTest
+public class MusicServiceTest extends AbstractBaseActivityTest
 {
 	@Test
 	public void testGetDatabaseNameSounds() throws Exception

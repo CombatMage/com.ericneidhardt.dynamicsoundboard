@@ -1,9 +1,8 @@
 package org.neidhardt.dynamicsoundboard.misc;
 
 import android.net.Uri;
-import android.os.Environment;
 import org.junit.Test;
-import org.neidhardt.dynamicsoundboard.BaseActivityTest;
+import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 
 import java.io.File;
 
@@ -13,7 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Created by eric.neidhardt on 14.04.2015.
  */
-public class FileUtilsTest extends BaseActivityTest
+public class FileUtilsTest extends AbstractBaseActivityTest
 {
 
 	@Test
