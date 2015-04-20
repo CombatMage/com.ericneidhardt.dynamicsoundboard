@@ -176,6 +176,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public boolean playSound()
 	{
+		if (this.isPlaying())
+			return true;
 		try
 		{
 			if (this.currentState == State.IDLE || this.currentState == State.DESTROYED)
@@ -219,6 +221,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public boolean pauseSound()
 	{
+		if (!this.isPlaying())
+			return true;
 		try
 		{
 			switch (this.currentState)

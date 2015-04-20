@@ -125,7 +125,6 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		}
 	}
 
-	// TODO check if label has changed and open dialog if required
 	private void deliverResult()
 	{
 		String soundLabel = this.soundName.getDisplayedText();
