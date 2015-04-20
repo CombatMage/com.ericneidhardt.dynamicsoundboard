@@ -116,13 +116,15 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 				this.dismiss();
 				break;
 			case R.id.b_ok:
+				boolean hasLabelChanged = !this.player.getMediaPlayerData().getLabel().equals(this.soundName.getDisplayedText());
 				this.deliverResult();
 				this.dismiss();
+				if (hasLabelChanged)
+					RenameSoundFileDialog.showInstance(this.getFragmentManager(), this.player.getMediaPlayerData());
 				break;
 		}
 	}
 
-	// TODO check if label has changed and open dialog if required
 	private void deliverResult()
 	{
 		String soundLabel = this.soundName.getDisplayedText();
