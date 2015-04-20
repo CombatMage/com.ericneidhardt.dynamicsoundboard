@@ -47,9 +47,13 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 		return this.getValues().get(position);
 	}
 
-	public void startOrStopPlayList(EnhancedMediaPlayer nextActivePlayer, int position)
+	public void startOrStopPlayList(EnhancedMediaPlayer nextActivePlayer)
 	{
-		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getPlayList();
+		List<EnhancedMediaPlayer> sounds = this.getValues();
+		if (!this.getValues().contains(nextActivePlayer))
+			throw new IllegalStateException("next active player " + nextActivePlayer + " is not in playlist");
+
+		this.currentItemIndex = sounds.indexOf(nextActivePlayer);
 		for (EnhancedMediaPlayer player : sounds)
 		{
 			if (player.equals(nextActivePlayer))
@@ -67,7 +71,6 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 			this.startProgressUpdateTimer();
 			nextActivePlayer.playSound();
 		}
-		this.currentItemIndex = position;
 		this.notifyDataSetChanged();
 	}
 
@@ -79,9 +82,11 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	}
 
 	@Override
-	public void onBindViewHolder(ViewHolder holder, int i)
+	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		EnhancedMediaPlayer player = this.getItem(i);
+		EnhancedMediaPlayer player = this.getItem(position);
+		if (holder == null || player == null || player.getMediaPlayerData() == null)
+			return;
 		holder.label.setText(player.getMediaPlayerData().getLabel());
 		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
 		holder.onProgressUpdate();
@@ -124,6 +129,16 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 
 		this.getItem(this.currentItemIndex).playSound();
 		this.notifyDataSetChanged();
+	}
+
+	public Integer getCurrentItemIndex()
+	{
+		return currentItemIndex;
+	}
+
+	public void setCurrentItemIndex(Integer currentItemIndex)
+	{
+		this.currentItemIndex = currentItemIndex;
 	}
 
 	public class ViewHolder

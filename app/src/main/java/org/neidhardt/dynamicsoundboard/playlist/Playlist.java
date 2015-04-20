@@ -78,7 +78,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 		if (super.isInSelectionMode)
 			super.onItemSelected(view, position);
 		else if (this.parent != null)
-			this.adapter.startOrStopPlayList(player, position);
+			this.adapter.startOrStopPlayList(player);
 	}
 
 	@Override
