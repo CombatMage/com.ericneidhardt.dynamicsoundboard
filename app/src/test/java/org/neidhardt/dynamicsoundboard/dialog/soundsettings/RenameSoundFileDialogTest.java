@@ -1,9 +1,7 @@
 package org.neidhardt.dynamicsoundboard.dialog.soundsettings;
 
 import android.net.Uri;
-import android.os.Environment;
 import android.view.View;
-import org.apache.tools.ant.util.FileUtils;
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -13,7 +11,6 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
-import org.robolectric.shadows.ShadowEnvironment;
 
 import java.io.File;
 import java.io.IOException;
@@ -166,13 +163,8 @@ public class RenameSoundFileDialogTest extends BaseActivityTest
 		assertTrue(originalFile.exists());
 
 		// mock test data
-		MediaPlayerData data = mock(MediaPlayerData.class);
-		when(data.getLabel()).thenReturn(originalFileName);
-		when(data.getUri()).thenReturn(Uri.fromFile(originalFile).toString());
-		when(data.getFragmentTag()).thenReturn(Playlist.TAG);
-
-		EnhancedMediaPlayer player = mock(EnhancedMediaPlayer.class);
-		when(player.getMediaPlayerData()).thenReturn(data);
+		MediaPlayerData data = TestDataGenerator.getMediaPlayerData(originalFileName, Uri.fromFile(originalFile).toString());
+		EnhancedMediaPlayer player = TestDataGenerator.getMockEnhancedMediaPlayer(data);
 
 		// prepare test
 		Uri originalFileUri = Uri.fromFile(originalFile);
@@ -183,5 +175,37 @@ public class RenameSoundFileDialogTest extends BaseActivityTest
 		// actual test
 		this.dialog.deliverResult(Uri.fromFile(originalFile), newLabel, false);
 		assertTrue(this.getFileFromExternalStorage("renamedTestSound.mp3").exists());
+	}
+
+	@Test
+	public void testDeliverResult1() throws Exception
+	{
+		// create files and verify they exists
+		String originalFileName = "testSound1.mp3";
+		String newLabel = "renamedTestSound";
+		File originalFile = this.createFile(originalFileName);
+
+		MediaPlayerData data1 = TestDataGenerator.getMediaPlayerData(originalFileName, Uri.fromFile(originalFile).toString());
+		EnhancedMediaPlayer player1 = TestDataGenerator.getMockEnhancedMediaPlayer(data1);
+
+		MediaPlayerData data2 = TestDataGenerator.getMediaPlayerData("data2", Uri.fromFile(originalFile).toString());
+		EnhancedMediaPlayer player2 = TestDataGenerator.getMockEnhancedMediaPlayer(data2);
+
+		MediaPlayerData data3 = TestDataGenerator.getMediaPlayerData("data3", Uri.fromFile(originalFile).toString());
+		EnhancedMediaPlayer player3 = TestDataGenerator.getMockEnhancedMediaPlayer(data3);
+
+		// prepare test
+		Uri originalFileUri = Uri.fromFile(originalFile);
+		this.service.getPlaylist().add(player1);
+		this.service.getPlaylist().add(player2);
+		this.service.getPlaylist().add(player3);
+		this.dialog.setMediaPlayerData(data1);
+		assertThat(this.dialog.getPlayersWithMatchingUri(originalFileUri.toString()).size(), equalTo(3));
+
+		// actual test
+		this.dialog.deliverResult(Uri.fromFile(originalFile), newLabel, true);
+		assertTrue(this.getFileFromExternalStorage("renamedTestSound.mp3").exists());
+		assertThat(this.service.getPlaylist().get(1).getMediaPlayerData().getLabel(), equalTo("renamedTestSound"));
+		assertThat(this.service.getPlaylist().get(2).getMediaPlayerData().getLabel(), equalTo("renamedTestSound"));
 	}
 }

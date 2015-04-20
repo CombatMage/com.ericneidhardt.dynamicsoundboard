@@ -1,11 +1,17 @@
 package org.neidhardt.dynamicsoundboard.testutils;
 
+import android.net.Uri;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 
 import java.util.Random;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by eric.neidhardt on 13.04.2015.
@@ -43,6 +49,15 @@ public class TestDataGenerator
 		return data;
 	}
 
+	public static MediaPlayerData getMediaPlayerData(String label, String uri)
+	{
+		MediaPlayerData data = new MediaPlayerData();
+		data.setLabel(label);
+		data.setUri(uri);
+		data.setFragmentTag(Playlist.TAG);
+		return data;
+	}
+
 	public static SoundLayout getRandomSoundLayout()
 	{
 		SoundLayout testLayout = new SoundLayout();
@@ -50,5 +65,12 @@ public class TestDataGenerator
 		testLayout.setDatabaseId(getRandomString());
 		testLayout.setIsSelected(false);
 		return testLayout;
+	}
+
+	public static EnhancedMediaPlayer getMockEnhancedMediaPlayer(MediaPlayerData data)
+	{
+		EnhancedMediaPlayer player = mock(EnhancedMediaPlayer.class);
+		when(player.getMediaPlayerData()).thenReturn(data);
+		return player;
 	}
 }

@@ -74,7 +74,9 @@ public class SoundSheetFragment
 		this.setRetainInstance(true);
 		this.setHasOptionsMenu(true);
 
-		this.fragmentTag = this.getArguments().getString(KEY_FRAGMENT_TAG);
+		Bundle args = this.getArguments();
+		if (args != null)
+			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
 		this.soundAdapter = new SoundAdapter(this);
 		this.soundAdapter.setOnItemDeleteListener(this);
 	}
