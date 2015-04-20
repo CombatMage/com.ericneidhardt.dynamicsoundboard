@@ -122,7 +122,10 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 				this.showErrorRenameFile();
 
 			if (renameAllOccurrences)
+			{
 				player.getMediaPlayerData().setLabel(newFileLabel);
+				player.getMediaPlayerData().setItemWasAltered();
+			}
 
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
 				this.getServiceManagerFragment().notifyPlaylist();

@@ -207,5 +207,8 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 		assertTrue(this.getFileFromExternalStorage("renamedTestSound.mp3").exists());
 		assertThat(this.service.getPlaylist().get(1).getMediaPlayerData().getLabel(), equalTo("renamedTestSound"));
 		assertThat(this.service.getPlaylist().get(2).getMediaPlayerData().getLabel(), equalTo("renamedTestSound"));
+
+		verify(this.service.getPlaylist().get(0).getMediaPlayerData(), atLeastOnce()).setItemWasAltered();
+		verify(this.service.getPlaylist().get(0).getMediaPlayerData(), atLeastOnce()).setItemWasAltered();
 	}
 }
