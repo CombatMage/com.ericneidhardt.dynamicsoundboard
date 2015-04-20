@@ -88,16 +88,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.rawData.setItemWasUpdated();
 		this.reset();
 
-		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		Uri soundUri = Uri.parse(this.rawData.getUri());
-		this.setDataSource(DynamicSoundboardApplication.getSoundboardContext(), soundUri);
-		this.setLooping(this.rawData.getIsLoop());
-		this.prepare();
-		this.currentState = State.PREPARED;
-
-		this.volume = INT_VOLUME_MAX;
-		this.duration = super.getDuration();
-		this.setOnCompletionListener(this);
+		this.init();
 	}
 
 	private void init() throws IOException
