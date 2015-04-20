@@ -61,20 +61,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	}
 
 	@Test
-	public void testOnEvent() throws Exception
-	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
-		MediaPlayerData data = TestDataGenerator.getMediaPlayerData("player1", "");
-		EnhancedMediaPlayer player = new EnhancedMediaPlayer(data);
-		this.serviceManagerFragment.getPlayList().add(player);
-
-		assertThat(adapter.getItemCount(), equalTo(1));
-		assertThat(adapter.getCurrentItemIndex(), equalTo(null));
-	}
-
-	@Test
 	public void testStartOrStopPlayList() throws Exception
 	{
 		PlaylistAdapter adapter = spy(new PlaylistAdapter());
@@ -193,4 +179,100 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 		verify(playerB, atLeastOnce()).stopSound();
 		assertThat(adapter.getCurrentItemIndex(), equalTo(0));
 	}
+
+	@Test
+	public void testStartOrStopPlayList6() throws Exception
+	{
+		PlaylistAdapter adapter = spy(new PlaylistAdapter());
+		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
+
+		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
+
+		this.serviceManagerFragment.getPlayList().add(playerA);
+
+		when(playerA.isPlaying()).thenReturn(false);
+
+		adapter.setCurrentItemIndex(1);
+		adapter.startOrStopPlayList(playerA);
+		verify(playerA, atLeastOnce()).playSound();
+		assertThat(adapter.getCurrentItemIndex(), equalTo(0));
+
+		when(playerA.isPlaying()).thenReturn(true);
+
+		adapter.setCurrentItemIndex(1);
+		adapter.startOrStopPlayList(playerA);
+		verify(playerA, atLeastOnce()).pauseSound();
+		assertThat(adapter.getCurrentItemIndex(), equalTo(0));
+	}
+
+	@Test
+	public void testOnEvent() throws Exception
+	{
+		PlaylistAdapter adapter = spy(new PlaylistAdapter());
+		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
+
+		MediaPlayerData dataA = mock(MediaPlayerData.class);
+
+		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
+		EnhancedMediaPlayer playerB = mock(EnhancedMediaPlayer.class);
+
+		when(playerA.isPlaying()).thenReturn(true);
+		when(playerA.getMediaPlayerData()).thenReturn(dataA);
+
+		this.serviceManagerFragment.getPlayList().add(playerA);
+		this.serviceManagerFragment.getPlayList().add(playerB);
+
+		adapter.setCurrentItemIndex(0);
+		adapter.onEvent(new MediaPlayerCompletedEvent(dataA));
+
+		assertThat(adapter.getCurrentItemIndex(), equalTo(1));
+		verify(playerB, atLeastOnce()).playSound();
+	}
+
+	@Test
+	public void testOnEvent1() throws Exception
+	{
+		PlaylistAdapter adapter = spy(new PlaylistAdapter());
+		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
+
+		MediaPlayerData dataB = mock(MediaPlayerData.class);
+
+		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
+		EnhancedMediaPlayer playerB = mock(EnhancedMediaPlayer.class);
+
+		when(playerB.isPlaying()).thenReturn(true);
+		when(playerB.getMediaPlayerData()).thenReturn(dataB);
+
+		this.serviceManagerFragment.getPlayList().add(playerA);
+		this.serviceManagerFragment.getPlayList().add(playerB);
+
+		adapter.setCurrentItemIndex(1);
+		adapter.onEvent(new MediaPlayerCompletedEvent(dataB));
+
+		assertThat(adapter.getCurrentItemIndex(), equalTo(0));
+		verify(playerA, atLeastOnce()).playSound();
+	}
+
+	@Test
+	public void testOnEvent2() throws Exception
+	{
+		PlaylistAdapter adapter = spy(new PlaylistAdapter());
+		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
+
+		MediaPlayerData data = mock(MediaPlayerData.class);
+
+		EnhancedMediaPlayer player = mock(EnhancedMediaPlayer.class);
+
+		when(player.isPlaying()).thenReturn(true);
+		when(player.getMediaPlayerData()).thenReturn(data);
+
+		this.serviceManagerFragment.getPlayList().add(player);
+
+		adapter.setCurrentItemIndex(0);
+		adapter.onEvent(new MediaPlayerCompletedEvent(data));
+
+		assertThat(adapter.getCurrentItemIndex(), equalTo(0));
+		verify(player, atLeastOnce()).playSound();
+	}
+
 }
