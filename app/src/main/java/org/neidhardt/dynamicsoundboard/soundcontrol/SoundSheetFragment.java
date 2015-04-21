@@ -30,8 +30,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.Collections;
 
-import static java.util.Arrays.asList;
-
 
 public class SoundSheetFragment
 		extends
@@ -52,6 +50,8 @@ public class SoundSheetFragment
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
 	private RecyclerView soundLayout;
+	private DragSortRecycler dragSortRecycler;
+	private SoundSheetScrollListener scrollListener;
 
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
 	{
@@ -79,6 +79,11 @@ public class SoundSheetFragment
 			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
 		this.soundAdapter = new SoundAdapter(this);
 		this.soundAdapter.setOnItemDeleteListener(this);
+
+		this.dragSortRecycler = new SoundSortRecycler();
+		this.dragSortRecycler.setOnItemMovedListener(this);
+		this.dragSortRecycler.setOnDragStateChangedListener(this);
+		this.scrollListener = new SoundSheetScrollListener(this.dragSortRecycler);
 	}
 
 	@Override
@@ -189,15 +194,11 @@ public class SoundSheetFragment
 		this.soundLayout.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
 		this.soundLayout.addItemDecoration(new DividerItemDecoration());
-		// TODO set scroll listener
 
-		DragSortRecycler dragSortRecycler = new SoundSortRecycler();
-		dragSortRecycler.setOnItemMovedListener(this);
-		dragSortRecycler.setOnDragStateChangedListener(this);
+		this.soundLayout.addItemDecoration(this.dragSortRecycler);
+		this.soundLayout.addOnItemTouchListener(this.dragSortRecycler);
 
-		this.soundLayout.addItemDecoration(dragSortRecycler);
-		this.soundLayout.addOnItemTouchListener(dragSortRecycler);
-		this.soundLayout.setOnScrollListener(dragSortRecycler.getScrollListener());
+		this.scrollListener.setSoundLayout(this.soundLayout);
 
 		this.soundAdapter.setRecyclerView(this.soundLayout);
 		this.soundAdapter.notifyDataSetChanged();
@@ -208,6 +209,7 @@ public class SoundSheetFragment
 	@Override
 	public void onDragStart()
 	{
+		this.scrollListener.setIsDragInProgress(true);
 		this.soundLayout.setItemAnimator(null); // drag does not work with default animator
 		this.soundAdapter.stopProgressUpdateTimer();
 	}
@@ -215,6 +217,7 @@ public class SoundSheetFragment
 	@Override
 	public void onDragStop()
 	{
+		this.scrollListener.setIsDragInProgress(false);
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator()); // add animator for delete animation
 		this.soundAdapter.startProgressUpdateTimer();
 	}
@@ -267,4 +270,5 @@ public class SoundSheetFragment
 			this.setAutoScrollWindow(AUTO_SCROLL_WINDOW);
 		}
 	}
+
 }
