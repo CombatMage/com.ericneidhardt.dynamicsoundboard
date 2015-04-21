@@ -189,6 +189,7 @@ public class SoundSheetFragment
 		this.soundLayout.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator());
 		this.soundLayout.addItemDecoration(new DividerItemDecoration());
+		// TODO set scroll listener
 
 		DragSortRecycler dragSortRecycler = new SoundSortRecycler();
 		dragSortRecycler.setOnItemMovedListener(this);
