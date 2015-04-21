@@ -185,13 +185,13 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 		String newLabel = "renamedTestSound";
 		File originalFile = this.createFile(originalFileName);
 
-		MediaPlayerData data1 = TestDataGenerator.getMediaPlayerData(originalFileName, Uri.fromFile(originalFile).toString());
+		MediaPlayerData data1 = spy(TestDataGenerator.getMediaPlayerData(originalFileName, Uri.fromFile(originalFile).toString()));
 		EnhancedMediaPlayer player1 = TestDataGenerator.getMockEnhancedMediaPlayer(data1);
 
-		MediaPlayerData data2 = TestDataGenerator.getMediaPlayerData("data2", Uri.fromFile(originalFile).toString());
+		MediaPlayerData data2 = spy(TestDataGenerator.getMediaPlayerData("data2", Uri.fromFile(originalFile).toString()));
 		EnhancedMediaPlayer player2 = TestDataGenerator.getMockEnhancedMediaPlayer(data2);
 
-		MediaPlayerData data3 = TestDataGenerator.getMediaPlayerData("data3", Uri.fromFile(originalFile).toString());
+		MediaPlayerData data3 = spy(TestDataGenerator.getMediaPlayerData("data3", Uri.fromFile(originalFile).toString()));
 		EnhancedMediaPlayer player3 = TestDataGenerator.getMockEnhancedMediaPlayer(data3);
 
 		// prepare test
@@ -208,7 +208,7 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 		assertThat(this.service.getPlaylist().get(1).getMediaPlayerData().getLabel(), equalTo("renamedTestSound"));
 		assertThat(this.service.getPlaylist().get(2).getMediaPlayerData().getLabel(), equalTo("renamedTestSound"));
 
-		verify(this.service.getPlaylist().get(0).getMediaPlayerData(), atLeastOnce()).setItemWasAltered();
-		verify(this.service.getPlaylist().get(0).getMediaPlayerData(), atLeastOnce()).setItemWasAltered();
+		verify(this.service.getPlaylist().get(1).getMediaPlayerData(), atLeastOnce()).setItemWasAltered();
+		verify(this.service.getPlaylist().get(2).getMediaPlayerData(), atLeastOnce()).setItemWasAltered();
 	}
 }

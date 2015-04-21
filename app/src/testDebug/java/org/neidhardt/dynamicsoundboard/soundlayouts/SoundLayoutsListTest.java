@@ -18,17 +18,12 @@ public class SoundLayoutsListTest extends NavigationDrawerFragmentTest
 {
 	private static final int NR_TEST_ITEMS = 3;
 
-	@Override
-	public void setUp() throws Exception
-	{
-		super.setUp();
-		for (long i = 0; i < NR_TEST_ITEMS; i++)
-			SoundLayoutsManager.getInstance().addSoundLayout(TestDataGenerator.getRandomSoundLayout());
-	}
-
 	@Test
 	public void testOnDeleteSelected() throws Exception
 	{
+		for (long i = 0; i < NR_TEST_ITEMS; i++)
+			SoundLayoutsManager.getInstance().addSoundLayout(TestDataGenerator.getRandomSoundLayout());
+
 		SoundLayoutsList soundLayoutsList = (SoundLayoutsList) this.activity.findViewById(R.id.layout_select_sound_layout);
 		assertNotNull(soundLayoutsList);
 
