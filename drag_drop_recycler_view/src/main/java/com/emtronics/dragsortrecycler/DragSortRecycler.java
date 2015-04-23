@@ -26,18 +26,18 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.support.annotation.Nullable;
 
 
 public class DragSortRecycler extends RecyclerView.ItemDecoration implements RecyclerView.OnItemTouchListener {
 
 	final String TAG = "DragSortRecycler";
 
-	final boolean DEBUG = false;
+	final boolean DEBUG = true;
 
 	private int dragHandleWidth = 0;
 
@@ -66,12 +66,13 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	OnItemMovedListener moveInterface;
 
 	private boolean isDragging;
+
 	@Nullable
 	OnDragStateChangedListener dragStateChangedListener;
 
 
 	public interface OnItemMovedListener {
-		public void onItemMoved(int from, int to);
+		void onItemMoved(int from, int to);
 	}
 
 	public interface OnDragStateChangedListener {
@@ -92,14 +93,15 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	/*
 	 * Set the item move interface
 	 */
-	public void setOnItemMovedListener(OnItemMovedListener swif) {
-		moveInterface = swif;
+	public void setOnItemMovedListener(OnItemMovedListener listener) {
+		moveInterface = listener;
 	}
 
 	public void setViewHandleId(int id) {
 		viewHandleId = id;
 	}
 
+	@SuppressWarnings("unused")
 	public void setLeftDragArea(int w) {
 		dragHandleWidth = w;
 	}
@@ -121,7 +123,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	}
 
 	/*
-	Set the autoscroll speed, default is 0.5
+	Set the auto scroll speed, default is 0.5
 	 */
 	public void setAutoScrollSpeed(float speed) {
 		autoScrollSpeed = speed;
@@ -233,73 +235,73 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 	@Override
 	public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+		this.
+
 		debugLog("onInterceptTouchEvent");
 
-		//if (e.getAction() == MotionEvent.ACTION_DOWN)
-		{
-			View itemView = rv.findChildViewUnder(e.getX(), e.getY());
+		View itemView = rv.findChildViewUnder(e.getX(), e.getY());
 
-			if (itemView == null)
+		if (itemView == null)
+			return false;
+
+		boolean dragging = false;
+
+		if ((dragHandleWidth > 0) && (e.getX() < dragHandleWidth)) {
+			dragging = true;
+		} else if (viewHandleId != -1) {
+			//Find the handle in the list item
+			View handleView = itemView.findViewById(viewHandleId);
+
+			if (handleView == null) {
+				Log.e(TAG, "The view ID " + viewHandleId + " was not found in the RecycleView item");
 				return false;
+			}
 
-			boolean dragging = false;
+			//View should be visible to drag
+			if (handleView.getVisibility() != View.VISIBLE) {
+				return false;
+			}
 
-			if ((dragHandleWidth > 0) && (e.getX() < dragHandleWidth)) {
+			//We need to find the relative position of the handle to the parent view
+			//Then we can work out if the touch is within the handle
+			int[] parentItemPos = new int[2];
+			itemView.getLocationInWindow(parentItemPos);
+
+			int[] handlePos = new int[2];
+			handleView.getLocationInWindow(handlePos);
+
+			int xRel = handlePos[0] - parentItemPos[0];
+			int yRel = handlePos[1] - parentItemPos[1];
+
+			Rect touchBounds = new Rect(itemView.getLeft() + xRel, itemView.getTop() + yRel,
+					itemView.getLeft() + xRel + handleView.getWidth(),
+					itemView.getTop() + yRel + handleView.getHeight()
+			);
+
+			if (touchBounds.contains((int) e.getX(), (int) e.getY()))
 				dragging = true;
-			} else if (viewHandleId != -1) {
-				//Find the handle in the list item
-				View handleView = itemView.findViewById(viewHandleId);
 
-				if (handleView == null) {
-					Log.e(TAG, "The view ID " + viewHandleId + " was not found in the RecycleView item");
-					return false;
-				}
-
-				//View should be visible to drag
-				if (handleView.getVisibility() != View.VISIBLE) {
-					return false;
-				}
-
-				//We need to find the relative position of the handle to the parent view
-				//Then we can work out if the touch is within the handle
-				int[] parentItemPos = new int[2];
-				itemView.getLocationInWindow(parentItemPos);
-
-				int[] handlePos = new int[2];
-				handleView.getLocationInWindow(handlePos);
-
-				int xRel = handlePos[0] - parentItemPos[0];
-				int yRel = handlePos[1] - parentItemPos[1];
-
-				Rect touchBounds = new Rect(itemView.getLeft() + xRel, itemView.getTop() + yRel,
-						itemView.getLeft() + xRel + handleView.getWidth(),
-						itemView.getTop() + yRel + handleView.getHeight()
-				);
-
-				if (touchBounds.contains((int) e.getX(), (int) e.getY()))
-					dragging = true;
-
-				debugLog("parentItemPos = " + parentItemPos[0] + " " + parentItemPos[1]);
-				debugLog("handlePos = " + handlePos[0] + " " + handlePos[1]);
-			}
+			debugLog("parentItemPos = " + parentItemPos[0] + " " + parentItemPos[1]);
+			debugLog("handlePos = " + handlePos[0] + " " + handlePos[1]);
+		}
 
 
-			if (dragging) {
-				debugLog("Started Drag");
+		if (dragging) {
+			debugLog("Started Drag");
 
-				setIsDragging(true);
+			setIsDragging(true);
 
-				floatingItem = createFloatingBitmap(itemView);
+			floatingItem = createFloatingBitmap(itemView);
 
-				fingerAnchorY = (int) e.getY();
-				fingerOffsetInViewY = fingerAnchorY - itemView.getTop();
-				fingerY = fingerAnchorY;
+			fingerAnchorY = (int) e.getY();
+			fingerOffsetInViewY = fingerAnchorY - itemView.getTop();
+			fingerY = fingerAnchorY;
 
-				selectedDragItemPos = rv.getChildPosition(itemView);
-				debugLog("selectedDragItemPos = " + selectedDragItemPos);
+			selectedDragItemPos = rv.getChildPosition(itemView);
+			debugLog("selectedDragItemPos = " + selectedDragItemPos);
 
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
@@ -397,7 +399,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	};
 
 	/**
-	 * @param position
+	 * @param position postion to drag over
 	 * @return True if we can drag the item over this position, False if not.
 	 */
 	protected boolean canDragOver(int position) {

@@ -42,15 +42,10 @@ public class SoundSheetFragment
 {
 	private static final String KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 
-	private static final float FLOATING_ITEM_ALPHA = 0.4f;
-	private static final int FLOATING_ITEM_BG_COLOR_ID = R.color.accent_200;
-	private static final float AUTO_SCROLL_SPEED = 0.3f;
-	private static final float AUTO_SCROLL_WINDOW = 0.1f;
-
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
 	private RecyclerView soundLayout;
-	private DragSortRecycler dragSortRecycler;
+	private SoundSortRecycler dragSortRecycler;
 	private SoundSheetScrollListener scrollListener;
 
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
@@ -80,7 +75,7 @@ public class SoundSheetFragment
 		this.soundAdapter = new SoundAdapter(this);
 		this.soundAdapter.setOnItemDeleteListener(this);
 
-		this.dragSortRecycler = new SoundSortRecycler();
+		this.dragSortRecycler = new SoundSortRecycler(this.getResources(), R.id.b_reorder);
 		this.dragSortRecycler.setOnItemMovedListener(this);
 		this.dragSortRecycler.setOnDragStateChangedListener(this);
 		this.scrollListener = new SoundSheetScrollListener(this.dragSortRecycler);
@@ -257,18 +252,6 @@ public class SoundSheetFragment
 	public void notifyDataSetChanged()
 	{
 		this.soundAdapter.notifyDataSetChanged();
-	}
-
-	private class SoundSortRecycler extends DragSortRecycler
-	{
-		public SoundSortRecycler()
-		{
-			this.setViewHandleId(R.id.b_reorder);
-			this.setFloatingAlpha(FLOATING_ITEM_ALPHA);
-			this.setFloatingBgColor(getResources().getColor(FLOATING_ITEM_BG_COLOR_ID));
-			this.setAutoScrollSpeed(AUTO_SCROLL_SPEED);
-			this.setAutoScrollWindow(AUTO_SCROLL_WINDOW);
-		}
 	}
 
 }

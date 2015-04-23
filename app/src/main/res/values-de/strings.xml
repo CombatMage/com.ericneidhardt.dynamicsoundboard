@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<!-- misc -->
+	<!-- com.emtronics.dragsortrecycler -->
 	<string name="app_name">Dynamic Soundboard</string>
 	<string name="suggested_sound_sheet_name">Kategorie</string>
 	<string name="suggested_sound_layout_name">Zusammenstellung</string>

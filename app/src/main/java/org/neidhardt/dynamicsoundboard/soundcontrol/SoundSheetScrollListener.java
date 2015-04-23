@@ -8,12 +8,12 @@ import com.emtronics.dragsortrecycler.DragSortRecycler;
  */
 class SoundSheetScrollListener extends RecyclerView.OnScrollListener
 {
-	private DragSortRecycler dragSortRecycler;
+	private SoundSortRecycler dragSortRecycler;
 	private RecyclerView soundLayout;
 
 	private boolean isDragInProgress = false;
 
-	public SoundSheetScrollListener(DragSortRecycler dragSortRecycler)
+	public SoundSheetScrollListener(SoundSortRecycler dragSortRecycler)
 	{
 		this.dragSortRecycler = dragSortRecycler;
 	}
@@ -34,19 +34,18 @@ class SoundSheetScrollListener extends RecyclerView.OnScrollListener
 	{
 		super.onScrollStateChanged(recyclerView, newState);
 		if (this.isDragInProgress) // if drag/drop currently in progress then pass the event to the DragSortRecycler
-			dragSortRecycler.getScrollListener().onScrollStateChanged(recyclerView, newState);
+			this.dragSortRecycler.getScrollListener().onScrollStateChanged(recyclerView, newState);
 
 		if (this.soundLayout == null) // should not happen
 			return;
 
 		if (newState == RecyclerView.SCROLL_STATE_DRAGGING || newState == RecyclerView.SCROLL_STATE_SETTLING) // Recycler view is not idle
 		{
-			if (!this.isDragInProgress)
-				soundLayout.removeOnItemTouchListener(dragSortRecycler); // if view is not currently dragged, we remove the DragSortRecycler to prevent undesired touching
+			this.dragSortRecycler.setViewHandleId(0);
 		}
 		else
 		{
-			soundLayout.addOnItemTouchListener(dragSortRecycler);
+			this.dragSortRecycler.setViewHandleId(this.dragSortRecycler.getDragViewId());
 		}
 	}
 
@@ -54,6 +53,6 @@ class SoundSheetScrollListener extends RecyclerView.OnScrollListener
 	public void onScrolled(RecyclerView recyclerView, int dx, int dy)
 	{
 		super.onScrolled(recyclerView, dx, dy);
-		dragSortRecycler.getScrollListener().onScrolled(recyclerView, dx, dy);
+		this.dragSortRecycler.getScrollListener().onScrolled(recyclerView, dx, dy);
 	}
 }
