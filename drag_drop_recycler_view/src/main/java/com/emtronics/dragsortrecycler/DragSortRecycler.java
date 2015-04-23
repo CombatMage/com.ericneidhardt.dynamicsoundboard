@@ -37,7 +37,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 	final String TAG = "DragSortRecycler";
 
-	final boolean DEBUG = true;
+	final boolean DEBUG = false;
 
 	private int dragHandleWidth = 0;
 
