@@ -298,10 +298,9 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 	@Override
 	public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-		debugLog("onTouchEvent");
+		debugLog("onTouchEvent " + e);
 
-		if ((e.getAction() == MotionEvent.ACTION_UP) ||
-				(e.getAction() == MotionEvent.ACTION_CANCEL)) {
+		if (e.getAction() == MotionEvent.ACTION_UP || e.getAction() == MotionEvent.ACTION_CANCEL) {
 			if ((e.getAction() == MotionEvent.ACTION_UP) && selectedDragItemPos != -1) {
 				int newPos = getNewPostion(rv);
 				if (moveInterface != null)
@@ -344,16 +343,16 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 		rv.invalidateItemDecorations();// Redraw
 	}
 
-	private void setIsDragging(final boolean dragging) {
-		if (dragging != isDragging) {
-			isDragging = dragging;
-			if (dragStateChangedListener != null) {
-				if (isDragging) {
-					dragStateChangedListener.onDragStart();
-				} else {
-					dragStateChangedListener.onDragStop();
-				}
-			}
+	private void setIsDragging(final boolean isDragging) {
+		if (this.isDragging == isDragging) // state has not changed
+			return;
+
+		this.isDragging = isDragging;
+		if (dragStateChangedListener != null) {
+			if (this.isDragging)
+				dragStateChangedListener.onDragStart();
+			else
+				dragStateChangedListener.onDragStop();
 		}
 	}
 
