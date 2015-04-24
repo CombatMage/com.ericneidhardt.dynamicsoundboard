@@ -29,24 +29,21 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 
 public class DragSortRecycler extends RecyclerView.ItemDecoration implements RecyclerView.OnItemTouchListener {
 
-	final String TAG = "DragSortRecycler";
-
-	final boolean DEBUG = false;
+	private static final String TAG = DragSortRecycler.class.getName();
+	private static final boolean DEBUG = false;
 
 	private int dragHandleWidth = 0;
-
 	private int selectedDragItemPos = -1;
 
 	private int fingerAnchorY;
-
 	private int fingerY;
-
 	private int fingerOffsetInViewY;
 
 	private float autoScrollWindow = 0.1f;
@@ -56,19 +53,16 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	private Rect floatingItemStatingBounds;
 	private Rect floatingItemBounds;
 
-
 	private float floatingItemAlpha = 0.5f;
 	private int floatingItemBgColor = 0;
 
 	private int viewHandleId = -1;
-
-
-	OnItemMovedListener moveInterface;
-
 	private boolean isDragging;
 
-	@Nullable
-	OnDragStateChangedListener dragStateChangedListener;
+	private OnDragStateChangedListener dragStateChangedListener;
+	private OnItemMovedListener moveInterface;
+
+	private GestureDetector gestureDetector;
 
 
 	public interface OnItemMovedListener {
@@ -150,7 +144,6 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 			if (itemPos == selectedDragItemPos) {
 				view.setVisibility(View.INVISIBLE);
 			} else {
-				//Make view visible incase invisible
 				view.setVisibility(View.VISIBLE);
 
 				//Find middle of the floatingItem
@@ -236,9 +229,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	@Override
 	public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
-		this.
-
-		debugLog("onInterceptTouchEvent");
+		this.debugLog("onInterceptTouchEvent");
 
 		View itemView = rv.findChildViewUnder(e.getX(), e.getY());
 
@@ -421,4 +412,5 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 		return retDrawable;
 	}
+
 }

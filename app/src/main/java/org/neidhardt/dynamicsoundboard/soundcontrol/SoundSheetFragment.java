@@ -213,6 +213,13 @@ public class SoundSheetFragment
 	{
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator()); // add animator for delete animation
 		this.soundAdapter.startProgressUpdateTimer();
+
+		this.soundLayout.post(new Runnable() {
+			@Override
+			public void run() {
+				soundLayout.invalidateItemDecorations();
+			}
+		});
 	}
 
 	@Override
