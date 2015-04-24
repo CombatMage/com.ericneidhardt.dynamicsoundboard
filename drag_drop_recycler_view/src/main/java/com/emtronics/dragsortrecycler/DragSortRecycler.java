@@ -28,7 +28,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -128,7 +127,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 		debugLog("View top = " + view.getTop());
 		if (selectedDragItemPos != -1) {
-			int itemPos = rv.getChildPosition(view);
+			int itemPos = rv.getChildAdapterPosition(view);
 			debugLog("itemPos =" + itemPos);
 
 			if (!canDragOver(itemPos)) {
@@ -176,7 +175,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	 * This *seems* to work, another method would be to use
 	 * getItemOffsets, but I think that could miss items?..
 	 */
-	private int getNewPostion(RecyclerView rv) {
+	private int getNewPosition(RecyclerView rv) {
 		int itemsOnScreen = rv.getLayoutManager().getChildCount();
 
 		float floatMiddleY = floatingItemBounds.top + floatingItemBounds.height() / 2;
@@ -300,7 +299,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 		if (e.getAction() == MotionEvent.ACTION_UP || e.getAction() == MotionEvent.ACTION_CANCEL) {
 			if ((e.getAction() == MotionEvent.ACTION_UP) && selectedDragItemPos != -1) {
-				int newPos = getNewPostion(rv);
+				int newPos = getNewPosition(rv);
 				if (moveInterface != null)
 					moveInterface.onItemMoved(selectedDragItemPos, newPos);
 			}
@@ -381,7 +380,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	};
 
 	/**
-	 * @param position postion to drag over
+	 * @param position position to drag over
 	 * @return True if we can drag the item over this position, False if not.
 	 */
 	protected boolean canDragOver(int position) {
