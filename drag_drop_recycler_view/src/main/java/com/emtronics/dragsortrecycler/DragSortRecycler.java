@@ -36,7 +36,7 @@ import android.view.View;
 public class DragSortRecycler extends RecyclerView.ItemDecoration implements RecyclerView.OnItemTouchListener {
 
 	private static final String TAG = DragSortRecycler.class.getName();
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private int dragHandleWidth = 0;
 	private int selectedDragItemPos = -1;
@@ -60,8 +60,6 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 	private OnDragStateChangedListener dragStateChangedListener;
 	private OnItemMovedListener moveInterface;
-
-	private GestureDetector gestureDetector;
 
 
 	public interface OnItemMovedListener {
@@ -232,8 +230,9 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 		View itemView = rv.findChildViewUnder(e.getX(), e.getY());
 
-		if (itemView == null)
+		if (itemView == null) {
 			return false;
+		}
 
 		boolean dragging = false;
 
@@ -278,8 +277,12 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 
 		if (dragging) {
-			debugLog("Started Drag");
+			this.debugLog("Started Drag");
+			this.selectedDragItemPos = rv.getChildAdapterPosition(itemView);
+			if (this.selectedDragItemPos == RecyclerView.NO_POSITION)
+				return false;
 
+			debugLog("selectedDragItemPos = " + selectedDragItemPos);
 			setIsDragging(true);
 
 			floatingItem = createFloatingBitmap(itemView);
@@ -287,9 +290,6 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 			fingerAnchorY = (int) e.getY();
 			fingerOffsetInViewY = fingerAnchorY - itemView.getTop();
 			fingerY = fingerAnchorY;
-
-			selectedDragItemPos = rv.getChildPosition(itemView);
-			debugLog("selectedDragItemPos = " + selectedDragItemPos);
 
 			return true;
 		}
@@ -328,7 +328,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 			floatingItem.setBounds(floatingItemBounds);
 		}
 
-		//Do auto scrolling at end of list
+		// do auto scrolling at end of list
 		float scrollAmount = 0;
 		if (fingerY > (rv.getHeight() * (1 - autoScrollWindow))) {
 			scrollAmount = (fingerY - (rv.getHeight() * (1 - autoScrollWindow)));
