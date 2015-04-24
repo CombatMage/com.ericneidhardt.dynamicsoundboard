@@ -26,16 +26,19 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 
-public class DragSortRecycler extends RecyclerView.ItemDecoration implements RecyclerView.OnItemTouchListener {
-
+public class DragSortRecycler extends RecyclerView.ItemDecoration implements RecyclerView.OnItemTouchListener, Runnable
+{
 	private static final String TAG = DragSortRecycler.class.getName();
-	private static final boolean DEBUG = true;
+
+	private static final boolean DEBUG = false;
+	private static final int TIMEOUT_DRAG = 2000; // sometimes stopping pending drag fails, after 3 sec without interaction, we stop dragging
 
 	private int dragHandleWidth = 0;
 	private int selectedDragItemPos = -1;
@@ -60,6 +63,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	private OnDragStateChangedListener dragStateChangedListener;
 	private OnItemMovedListener moveInterface;
 
+	private Handler handler = new Handler();
 
 	public interface OnItemMovedListener {
 		void onItemMoved(int from, int to);
@@ -209,11 +213,19 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 		return below - 1;
 	}
 
+	@Override
+	public void run() {
+		debugLog("timeout: stop dragging");
+		this.stopDragging(null);
+	}
 
 	@Override
 	public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
 		this.debugLog("onInterceptTouchEvent");
+
+		this.handler.removeCallbacks(this);
+		this.handler.postDelayed(this, TIMEOUT_DRAG);
 
 		View itemView = rv.findChildViewUnder(e.getX(), e.getY());
 
@@ -290,7 +302,8 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 		setIsDragging(false);
 		selectedDragItemPos = -1;
 		floatingItem = null;
-		rv.invalidateItemDecorations();
+		if (rv != null)
+			rv.invalidateItemDecorations();
 	}
 
 	@Override
@@ -336,8 +349,8 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	}
 
 	private void setIsDragging(final boolean isDragging) {
-		if (this.isDragging == isDragging) // state has not changed
-			return;
+		//if (this.isDragging == isDragging) // state has not changed
+		//	return;
 
 		this.isDragging = isDragging;
 		if (dragStateChangedListener != null) {

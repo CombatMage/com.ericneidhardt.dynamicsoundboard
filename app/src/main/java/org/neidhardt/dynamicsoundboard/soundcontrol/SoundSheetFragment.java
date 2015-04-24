@@ -47,7 +47,7 @@ public class SoundSheetFragment
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
 	private RecyclerView soundLayout;
-	private SoundSortRecycler dragSortRecycler;
+	private SoundDragSortRecycler dragSortRecycler;
 	private SoundSheetScrollListener scrollListener;
 
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
@@ -77,7 +77,7 @@ public class SoundSheetFragment
 		this.soundAdapter = new SoundAdapter(this);
 		this.soundAdapter.setOnItemDeleteListener(this);
 
-		this.dragSortRecycler = new SoundSortRecycler(this.getResources(), R.id.b_reorder);
+		this.dragSortRecycler = new SoundDragSortRecycler(this.getResources(), R.id.b_reorder);
 		this.dragSortRecycler.setOnItemMovedListener(this);
 		this.dragSortRecycler.setOnDragStateChangedListener(this);
 		this.scrollListener = new SoundSheetScrollListener(this.dragSortRecycler);
@@ -215,6 +215,8 @@ public class SoundSheetFragment
 	public void onDragStop()
 	{
 		Logger.d(LOG_TAG, "onDragStop");
+		this.soundLayout.invalidateItemDecorations();
+		this.soundAdapter.notifyDataSetChanged();
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator()); // add animator for delete animation
 		this.soundAdapter.startProgressUpdateTimer();
 	}

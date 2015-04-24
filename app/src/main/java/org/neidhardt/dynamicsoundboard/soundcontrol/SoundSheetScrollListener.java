@@ -1,16 +1,15 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol;
 
 import android.support.v7.widget.RecyclerView;
-import com.emtronics.dragsortrecycler.DragSortRecycler;
 
 /**
  * This class is used to intercept scroll events and pass events to drag-drop recycler its scroll listener
  */
 class SoundSheetScrollListener extends RecyclerView.OnScrollListener
 {
-	private SoundSortRecycler dragSortRecycler;
+	private SoundDragSortRecycler dragSortRecycler;
 
-	public SoundSheetScrollListener(SoundSortRecycler dragSortRecycler)
+	public SoundSheetScrollListener(SoundDragSortRecycler dragSortRecycler)
 	{
 		this.dragSortRecycler = dragSortRecycler;
 	}
