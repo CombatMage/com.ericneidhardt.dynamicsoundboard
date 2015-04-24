@@ -26,6 +26,7 @@ import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirect
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
+import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.Collections;
@@ -41,6 +42,7 @@ public class SoundSheetFragment
 			DragSortRecycler.OnItemMovedListener
 {
 	private static final String KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
+	private static final String LOG_TAG = SoundSheetFragment.class.getName();
 
 	private String fragmentTag;
 	private SoundAdapter soundAdapter;
@@ -204,6 +206,7 @@ public class SoundSheetFragment
 	@Override
 	public void onDragStart()
 	{
+		Logger.d(LOG_TAG, "onDragStart");
 		this.soundLayout.setItemAnimator(null); // drag does not work with default animator
 		this.soundAdapter.stopProgressUpdateTimer();
 	}
@@ -211,15 +214,9 @@ public class SoundSheetFragment
 	@Override
 	public void onDragStop()
 	{
+		Logger.d(LOG_TAG, "onDragStop");
 		this.soundLayout.setItemAnimator(new DefaultItemAnimator()); // add animator for delete animation
 		this.soundAdapter.startProgressUpdateTimer();
-
-		this.soundLayout.post(new Runnable() {
-			@Override
-			public void run() {
-				soundLayout.invalidateItemDecorations();
-			}
-		});
 	}
 
 	@Override

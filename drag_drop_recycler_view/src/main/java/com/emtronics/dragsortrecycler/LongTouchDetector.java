@@ -1,5 +1,6 @@
 package com.emtronics.dragsortrecycler;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -8,41 +9,55 @@ import android.view.View;
 /**
  * Created by eric.neidhardt on 24.04.2015.
  */
-public class LongTouchDetector extends GestureDetector.SimpleOnGestureListener
+public class LongTouchDetector implements RecyclerView.OnItemTouchListener
 {
-	private RecyclerView recyclerView;
-	private OnLongTouchListener onLongTouchListener;
-
-	public void setOnLongTouchListener(OnLongTouchListener onLongTouchListener)
+	public interface OnItemClickListener
 	{
-		this.onLongTouchListener = onLongTouchListener;
+		void onItemClick(View view, int position);
+		void onItemLongClick(View view, int position);
 	}
 
-	public void setRecyclerView(RecyclerView recyclerView)
-	{
-		this.recyclerView = recyclerView;
-	}
+	private OnItemClickListener mListener;
+	private GestureDetector mGestureDetector;
 
-	@Override
-	public boolean onSingleTapUp(MotionEvent e)
+	public LongTouchDetector(Context context, final RecyclerView recyclerView, OnItemClickListener listener)
 	{
-		return true;
-	}
+		mListener = listener;
 
-	@Override
-	public void onLongPress(MotionEvent e)
-	{
-		if (this.recyclerView != null) {
-			View childView = this.recyclerView.findChildViewUnder(e.getX(), e.getY());
-			if (childView != null && this.onLongTouchListener != null)
+		mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener()
+		{
+			@Override
+			public boolean onSingleTapUp(MotionEvent e)
 			{
-				this.onLongTouchListener.onLongTouch(e);
+				return true;
 			}
-		}
+
+			@Override
+			public void onLongPress(MotionEvent e)
+			{
+				View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
+
+				if(childView != null && mListener != null)
+				{
+					mListener.onItemLongClick(childView, recyclerView.getChildPosition(childView));
+				}
+			}
+		});
 	}
 
-	public interface OnLongTouchListener
+	@Override
+	public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e)
 	{
-		void onLongTouch(MotionEvent event);
+		View childView = view.findChildViewUnder(e.getX(), e.getY());
+
+		if(childView != null && mListener != null && mGestureDetector.onTouchEvent(e))
+		{
+			mListener.onItemClick(childView, view.getChildPosition(childView));
+		}
+
+		return false;
 	}
+
+	@Override
+	public void onTouchEvent(RecyclerView view, MotionEvent motionEvent){}
 }
