@@ -135,9 +135,6 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 				return;
 			}
 
-			//Movement of finger
-			float totalMovement = fingerY - fingerAnchorY;
-
 			if (itemPos == selectedDragItemPos) {
 				view.setVisibility(View.INVISIBLE);
 			} else {
@@ -146,32 +143,23 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 				//Find middle of the floatingItem
 				float floatMiddleY = floatingItemBounds.top + floatingItemBounds.height() / 2;
 
-				//Moving down the list
-				//These will auto-animate if the device continually sends touch motion events
-				// if (totalMovement>0)
-				{
-					if ((itemPos > selectedDragItemPos) && (view.getTop() < floatMiddleY)) {
-						float amountUp = (floatMiddleY - view.getTop()) / (float) view.getHeight();
-						//  amountUp *= 0.5f;
-						if (amountUp > 1)
-							amountUp = 1;
+				if ((itemPos > selectedDragItemPos) && (view.getTop() < floatMiddleY)) {
+					float amountUp = (floatMiddleY - view.getTop()) / (float) view.getHeight();
+					//  amountUp *= 0.5f;
+					if (amountUp > 1)
+						amountUp = 1;
 
-						outRect.top = -(int) (floatingItemBounds.height() * amountUp);
-						outRect.bottom = (int) (floatingItemBounds.height() * amountUp);
-					}
+					outRect.top = -(int) (floatingItemBounds.height() * amountUp);
+					outRect.bottom = (int) (floatingItemBounds.height() * amountUp);
+				}
+				if ((itemPos < selectedDragItemPos) && (view.getBottom() > floatMiddleY)) {
+					float amountDown = ((float) view.getBottom() - floatMiddleY) / (float) view.getHeight();
+					//  amountDown *= 0.5f;
+					if (amountDown > 1)
+						amountDown = 1;
 
-				}//Moving up the list
-				// else if (totalMovement < 0)
-				{
-					if ((itemPos < selectedDragItemPos) && (view.getBottom() > floatMiddleY)) {
-						float amountDown = ((float) view.getBottom() - floatMiddleY) / (float) view.getHeight();
-						//  amountDown *= 0.5f;
-						if (amountDown > 1)
-							amountDown = 1;
-
-						outRect.top = (int) (floatingItemBounds.height() * amountDown);
-						outRect.bottom = -(int) (floatingItemBounds.height() * amountDown);
-					}
+					outRect.top = (int) (floatingItemBounds.height() * amountDown);
+					outRect.bottom = -(int) (floatingItemBounds.height() * amountDown);
 				}
 			}
 		} else {
@@ -195,10 +183,10 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 		int above = 0;
 		int below = rv.getLayoutManager().getItemCount();
-		for (int n = 0; n < itemsOnScreen; n++) //Scan though items on screen, however they may not
-		{                                   // be in order!
+		for (int n = 0; n < itemsOnScreen; n++) //Scan though items on screen, however they may not be in order
+		{
 			View view = rv.getLayoutManager().getChildAt(n);
-			int itemPos = rv.getChildPosition(view);
+			int itemPos = rv.getChildAdapterPosition(view);
 
 			if (itemPos == selectedDragItemPos) //Don't check against itself!
 				continue;
@@ -231,6 +219,9 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 		View itemView = rv.findChildViewUnder(e.getX(), e.getY());
 
 		if (itemView == null) {
+			if (this.isDragging) { // drag was in progress, but no item was found
+				this.stopDragging(rv);
+			}
 			return false;
 		}
 
@@ -296,6 +287,13 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 		return false;
 	}
 
+	private void stopDragging(RecyclerView rv) {
+		setIsDragging(false);
+		selectedDragItemPos = -1;
+		floatingItem = null;
+		rv.invalidateItemDecorations();
+	}
+
 	@Override
 	public void onTouchEvent(RecyclerView rv, MotionEvent e) {
 		debugLog("onTouchEvent " + e);
@@ -306,14 +304,9 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 				if (moveInterface != null)
 					moveInterface.onItemMoved(selectedDragItemPos, newPos);
 			}
-
-			setIsDragging(false);
-			selectedDragItemPos = -1;
-			floatingItem = null;
-			rv.invalidateItemDecorations();
+			this.stopDragging(rv);
 			return;
 		}
-
 
 		fingerY = (int) e.getY();
 
