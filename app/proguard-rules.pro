@@ -15,3 +15,46 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keepattributes LineNumberTable,SourceFile,*Annotation*
+
+#jackson and pojos
+-dontwarn com.fasterxml.jackson.databind.**
+-keep class com.admiral.android.model.** { *; }
+-keep class com.admiral.android.apiresponse.** { *; }
+-keep class com.fasterxml.jackson.** { *; }
+
+# greenDAO
+-keep public class org.neidhardt.dynamicsoundboard.dao.** {
+	public static <fields>;
+}
+
+# greentobot EventBus
+-keepclassmembers class ** {
+    public void onEvent*(**);
+}
+-keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
+#ACRA
+-keep class org.acra.ACRA {
+    *;
+}
+-keep class org.acra.ReportingInteractionMode {
+    *;
+}
+-keepnames class org.acra.sender.HttpSender$** {
+    *;
+}
+-keepnames class org.acra.ReportField {
+    *;
+}
+-keep public class org.acra.ErrorReporter {
+    public void addCustomData(java.lang.String,java.lang.String);
+    public void putCustomData(java.lang.String,java.lang.String);
+    public void removeCustomData(java.lang.String);
+}
+-keep public class org.acra.ErrorReporter {
+    public void handleSilentException(java.lang.Throwable);
+}
