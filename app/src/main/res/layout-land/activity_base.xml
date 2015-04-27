@@ -14,23 +14,29 @@
 		<include layout="@layout/toolbar"/>
 
 		<FrameLayout
-				android:id="@+id/main_frame"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
+				android:layout_height="match_parent">
 
-				android:background="@color/background">
+			<FrameLayout
+					android:id="@+id/main_frame"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/background">
 
-			<include
-					layout="@layout/view_introduction"/>
+				<include layout="@layout/view_introduction"/>
+
+			</FrameLayout>
+
+			<include layout="@layout/progressbar"/>
 
 		</FrameLayout>
 
-
 	</LinearLayout>
 
-	<include layout="@layout/navigation_drawer"
-			 android:layout_width="@dimen/navigation_width"
-			 android:layout_height="match_parent"
-			 android:layout_gravity="start"/>
+	<include
+			layout="@layout/navigation_drawer"
+			android:layout_width="@dimen/navigation_width"
+			android:layout_height="match_parent"
+			android:layout_gravity="start"/>
 
 </android.support.v4.widget.DrawerLayout>

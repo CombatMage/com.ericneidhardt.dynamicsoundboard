@@ -33,12 +33,13 @@
 						android:layout_height="match_parent"
 						android:background="@color/background">
 
-					<include
-							layout="@layout/view_introduction"/>
+					<include layout="@layout/view_introduction"/>
 
 				</FrameLayout>
 
 				<include layout="@layout/layout_bottom_controls"/>
+
+				<include layout="@layout/progressbar"/>
 
 				<View
 						android:layout_width="@dimen/height_shadow"
