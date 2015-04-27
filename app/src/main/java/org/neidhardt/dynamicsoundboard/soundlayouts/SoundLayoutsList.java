@@ -54,9 +54,12 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 	{
 		LayoutInflater.from(context).inflate(R.layout.view_sound_layout_list, this, true);
 		this.soundLayouts = (RecyclerView) this.findViewById(R.id.rv_sound_layouts_list);
-		this.soundLayouts.addItemDecoration(new DividerItemDecoration());
-		this.soundLayouts.setLayoutManager(new LinearLayoutManager(context));
-		this.soundLayouts.setItemAnimator(new DefaultItemAnimator());
+		if (!this.isInEditMode())
+		{
+			this.soundLayouts.addItemDecoration(new DividerItemDecoration());
+			this.soundLayouts.setLayoutManager(new LinearLayoutManager(context));
+			this.soundLayouts.setItemAnimator(new DefaultItemAnimator());
+		}
 	}
 
 	public void setAdapter(SoundLayoutsListAdapter adapter)

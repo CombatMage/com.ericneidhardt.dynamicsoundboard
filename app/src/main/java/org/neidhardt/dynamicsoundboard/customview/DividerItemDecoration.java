@@ -10,9 +10,16 @@ import org.neidhardt.dynamicsoundboard.R;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration
 {
-	private int colorBackground = DynamicSoundboardApplication.getSoundboardContext().getResources().getColor(R.color.background);
-	private int colorDivider = DynamicSoundboardApplication.getSoundboardContext().getResources().getColor(R.color.divider);
-	private int heightDivider = DynamicSoundboardApplication.getSoundboardContext().getResources().getDimensionPixelSize(R.dimen.stroke);
+	private int colorBackground;
+	private int colorDivider;
+	private int heightDivider;
+
+	public DividerItemDecoration()
+	{
+		this.colorBackground = DynamicSoundboardApplication.getSoundboardContext().getResources().getColor(R.color.background);
+		this.colorDivider = DynamicSoundboardApplication.getSoundboardContext().getResources().getColor(R.color.divider);
+		this.heightDivider = DynamicSoundboardApplication.getSoundboardContext().getResources().getDimensionPixelSize(R.dimen.stroke);
+	}
 
 	@Override
 	public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state)
