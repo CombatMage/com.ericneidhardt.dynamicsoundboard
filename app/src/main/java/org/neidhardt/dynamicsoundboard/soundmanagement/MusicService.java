@@ -467,18 +467,18 @@ public class MusicService extends Service
 	@SuppressWarnings("unused")
 	public void onEvent(SoundsLoadedEvent event)
 	{
-		MediaPlayerData data = event.getLoadedSoundData();
-		if (data == null)
-			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
-		EnhancedMediaPlayer player = createSound(data);
-		if (player == null)
-		{
-			showLoadingMediaPlayerFailed(data.getUri());
-			this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), data);
-		}
-		else
-			addSoundToSounds(player);
+	MediaPlayerData data = event.getLoadedSoundData();
+	if (data == null)
+		throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
+	EnhancedMediaPlayer player = createSound(data);
+	if (player == null)
+	{
+		showLoadingMediaPlayerFailed(data.getUri());
+		this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), data);
 	}
+	else
+		addSoundToSounds(player);
+}
 
 	/**
 	 * This is called by greenDao EventBus in case loading the playlist from MusicService has finished

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.io.File;
@@ -124,7 +120,10 @@ public class AddNewSoundFromDirectory
 		List<File> result = this.buildResult();
 		ServiceManagerFragment fragment = this.getServiceManagerFragment();
 
-		for (File file : result)
+		LoadSoundsFromFileListTask task = new LoadSoundsFromFileListTask(result, this.callingFragmentTag, fragment);
+		task.execute();
+
+		/*for (File file : result)
 		{
 			Uri soundUri = Uri.parse(file.getAbsolutePath());
 			String soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
@@ -132,6 +131,6 @@ public class AddNewSoundFromDirectory
 
 			fragment.getSoundService().addNewSoundToSoundsAndDatabase(playerData);
 		}
-		fragment.notifyFragment(this.callingFragmentTag);
+		fragment.notifyFragment(this.callingFragmentTag);*/
 	}
 }
