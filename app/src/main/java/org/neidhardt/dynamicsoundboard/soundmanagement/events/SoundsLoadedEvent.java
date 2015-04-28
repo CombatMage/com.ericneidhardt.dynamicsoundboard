@@ -8,6 +8,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 public class SoundsLoadedEvent
 {
 	private MediaPlayerData loadedSoundData;
+	private boolean loadFromDatabase = true;
 
 	public SoundsLoadedEvent(MediaPlayerData loadedSoundData)
 	{
@@ -17,5 +18,10 @@ public class SoundsLoadedEvent
 	public MediaPlayerData getLoadedSoundData()
 	{
 		return loadedSoundData;
+	}
+
+	public boolean isLoadFromDatabase()
+	{
+		return loadFromDatabase;
 	}
 }
