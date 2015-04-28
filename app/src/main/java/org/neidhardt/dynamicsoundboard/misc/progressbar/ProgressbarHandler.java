@@ -4,6 +4,8 @@ import android.view.View;
 import de.greenrobot.event.EventBus;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LongTermTaskStartedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LongTermTaskStoppedEvent;
 
 /**
  * Created by eric.neidhardt on 28.04.2015.
@@ -38,7 +40,6 @@ public class ProgressbarHandler
 	public void onEvent(LongTermTaskStartedEvent event)
 	{
 		Logger.d(TAG, "onEvent() " + event);
-		EventBus.getDefault().removeStickyEvent(event);
 		this.pendingEventCounter++;
 		this.showProgressBar(true);
 	}
@@ -47,6 +48,7 @@ public class ProgressbarHandler
 	{
 		Logger.d(TAG, "onEvent() " + event);
 		EventBus.getDefault().removeStickyEvent(event);
+
 		if (this.pendingEventCounter > 0)
 			this.pendingEventCounter--;
 		if (this.pendingEventCounter == 0)
