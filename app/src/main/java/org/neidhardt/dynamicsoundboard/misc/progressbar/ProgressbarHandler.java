@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.misc.progressbar;
 
+import android.view.View;
 import de.greenrobot.event.EventBus;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -13,13 +14,12 @@ public class ProgressbarHandler
 
 	private SmoothProgressBar progressBar;
 	private int pendingEventCounter;
-	private boolean isActive;
 
 	public ProgressbarHandler(SmoothProgressBar progressBar)
 	{
 		this.progressBar = progressBar;
+		this.progressBar.setVisibility(View.GONE);
 		this.pendingEventCounter = 0;
-		this.isActive = false;
 	}
 
 	public void showProgressBar(boolean showProgressBar)
@@ -27,21 +27,11 @@ public class ProgressbarHandler
 		Logger.d(TAG, "showProgressBar() " + showProgressBar);
 		if (showProgressBar)
 		{
-			//if (this.progressBar.getVisibility() != View.VISIBLE)
-			//	this.progressBar.setVisibility(View.VISIBLE);
-
-			//this.progressBar.progressiveStart();
-
-			// TODO maybe play progressive Start
-
-			this.isActive = true;
+			this.progressBar.setVisibility(View.VISIBLE);
 		}
 		else
 		{
-			this.progressBar.progressiveStop();
-
-			//this.progressBar.setVisibility(View.GONE);
-			this.isActive = false;
+			this.progressBar.setVisibility(View.GONE);
 		}
 	}
 
