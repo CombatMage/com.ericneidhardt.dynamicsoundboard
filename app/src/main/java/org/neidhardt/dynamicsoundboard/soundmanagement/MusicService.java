@@ -485,7 +485,7 @@ public class MusicService extends Service
 	 * @param event delivered PlayListLoadedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEventMainThread(PlayListLoadedEvent event)
+	public void onEvent(PlayListLoadedEvent event)
 	{
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)
