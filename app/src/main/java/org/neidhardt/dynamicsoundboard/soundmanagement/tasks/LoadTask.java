@@ -15,14 +15,11 @@ public abstract class LoadTask<T> extends SafeAsyncTask<List<T>>
 {
 	private static final String TAG = LoadTask.class.getName();
 
-	private LongTermTaskEvent event;
-
 	@Override
 	protected void onPreExecute() throws Exception
 	{
 		super.onPreExecute();
-		this.event = new LongTermTaskEvent(true);
-		EventBus.getDefault().postSticky(this.event);
+		EventBus.getDefault().postSticky(new LongTermTaskEvent(true));
 	}
 
 	@Override
@@ -30,8 +27,7 @@ public abstract class LoadTask<T> extends SafeAsyncTask<List<T>>
 	{
 		super.onSuccess(ts);
 		Logger.d(TAG, "onSuccess: with " + ts.size() + " sounds loaded");
-		EventBus.getDefault().removeStickyEvent(this.event);
-		EventBus.getDefault().post(new LongTermTaskEvent(false));
+		//EventBus.getDefault().post(new LongTermTaskEvent(false));
 	}
 
 	@Override
@@ -39,8 +35,7 @@ public abstract class LoadTask<T> extends SafeAsyncTask<List<T>>
 	{
 		super.onException(e);
 		Logger.e(TAG, e.getMessage());
-		EventBus.getDefault().removeStickyEvent(this.event);
-		EventBus.getDefault().post(new LongTermTaskEvent(false));
+		//EventBus.getDefault().post(new LongTermTaskEvent(false));
 		throw new RuntimeException(e);
 	}
 

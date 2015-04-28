@@ -17,9 +17,9 @@ public class LongTermTaskEventTest extends BaseTest
 	public void testIsTaskFinished() throws Exception
 	{
 		LongTermTaskEvent event = new LongTermTaskEvent(false);
-		assertFalse(event.isTaskFinished());
+		assertFalse(event.isTaskStarted());
 
 		event = new LongTermTaskEvent(true);
-		assertTrue(event.isTaskFinished());
+		assertTrue(event.isTaskStarted());
 	}
 }

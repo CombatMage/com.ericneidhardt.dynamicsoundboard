@@ -5,23 +5,23 @@ package org.neidhardt.dynamicsoundboard.misc.progressbar;
  */
 public class LongTermTaskEvent
 {
-	private final boolean isTaskFinished;
+	private final boolean isTaskStarted;
 
 	public LongTermTaskEvent(boolean isTaskFinished)
 	{
-		this.isTaskFinished = isTaskFinished;
+		this.isTaskStarted = isTaskFinished;
 	}
 
-	public boolean isTaskFinished()
+	public boolean isTaskStarted()
 	{
-		return isTaskFinished;
+		return isTaskStarted;
 	}
 
 	@Override
 	public String toString()
 	{
 		return "LongTermTaskEvent{" +
-				"isTaskFinished=" + isTaskFinished +
+				"isTaskStarted=" + isTaskStarted +
 				'}';
 	}
 }

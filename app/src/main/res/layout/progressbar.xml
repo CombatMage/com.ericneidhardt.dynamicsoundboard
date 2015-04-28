@@ -15,5 +15,7 @@
 		app:spb_reversed="false"
 		app:spb_mirror_mode="false"
 		app:spb_progressiveStart_activated="true"
+		app:spb_progressiveStart_speed="1.5"
+		app:spb_progressiveStop_speed="3.4"
 		app:spb_interpolator="spb_interpolator_accelerate"
 		android:background="@android:color/transparent"/>

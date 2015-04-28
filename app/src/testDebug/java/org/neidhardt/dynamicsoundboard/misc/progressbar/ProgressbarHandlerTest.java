@@ -45,7 +45,7 @@ public class ProgressbarHandlerTest extends BaseTest
 	public void testOnEvent() throws Exception
 	{
 		LongTermTaskEvent event = mock(LongTermTaskEvent.class);
-		when(event.isTaskFinished()).thenReturn(false);
+		when(event.isTaskStarted()).thenReturn(false);
 
 		this.progressbarHandler.onEvent(event);
 		this.progressbarHandler.onEvent(event);
@@ -60,7 +60,7 @@ public class ProgressbarHandlerTest extends BaseTest
 	public void testOnEvent1() throws Exception
 	{
 		LongTermTaskEvent event = mock(LongTermTaskEvent.class);
-		when(event.isTaskFinished()).thenReturn(true);
+		when(event.isTaskStarted()).thenReturn(true);
 
 		this.progressbarHandler.onEvent(event);
 		this.progressbarHandler.onEvent(event);
@@ -75,7 +75,7 @@ public class ProgressbarHandlerTest extends BaseTest
 	public void testOnEvent2() throws Exception
 	{
 		LongTermTaskEvent event = mock(LongTermTaskEvent.class);
-		when(event.isTaskFinished()).thenReturn(true);
+		when(event.isTaskStarted()).thenReturn(true);
 
 		this.progressbarHandler.onEvent(event);
 
@@ -83,7 +83,7 @@ public class ProgressbarHandlerTest extends BaseTest
 		verify(this.progressBar, never()).setVisibility(View.GONE);
 		verify(this.progressBar, atLeastOnce()).setVisibility(View.VISIBLE);
 
-		when(event.isTaskFinished()).thenReturn(false);
+		when(event.isTaskStarted()).thenReturn(false);
 		this.progressbarHandler.onEvent(event);
 
 		assertThat(this.progressbarHandler.getPendingEventCounter(), equalTo(0));

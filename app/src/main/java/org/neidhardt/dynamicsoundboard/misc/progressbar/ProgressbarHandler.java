@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.misc.progressbar;
 
-import android.view.View;
-import android.widget.ProgressBar;
+import de.greenrobot.event.EventBus;
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 
 /**
@@ -11,34 +11,40 @@ public class ProgressbarHandler
 {
 	private static final String TAG = ProgressbarHandler.class.getName();
 
-	private ProgressBar progressBar;
+	private SmoothProgressBar progressBar;
 	private int pendingEventCounter;
+	private boolean isActive;
 
-	public ProgressbarHandler(ProgressBar progressBar)
+	public ProgressbarHandler(SmoothProgressBar progressBar)
 	{
 		this.progressBar = progressBar;
 		this.pendingEventCounter = 0;
+		this.isActive = false;
 	}
 
 	public void showProgressBar(boolean showProgressBar)
 	{
-		if (showProgressBar)
+		Logger.d(TAG, "showProgressBar() " + showProgressBar);
+		if (showProgressBar && !this.isActive)
 		{
-			this.progressBar.setVisibility(View.VISIBLE);
+			this.progressBar.progressiveStart();
+			this.isActive = true;
 		}
-		else
+		else if (this.isActive)
 		{
-			this.progressBar.setVisibility(View.GONE);
+			this.progressBar.progressiveStop();
+			this.isActive = false;
 		}
 	}
 
 	public void onEvent(LongTermTaskEvent event)
 	{
 		Logger.d(TAG, "onEvent() " + event);
-		if (event.isTaskFinished())
+		if (event.isTaskStarted())
 		{
 			this.pendingEventCounter++;
 			this.showProgressBar(true);
+			EventBus.getDefault().removeStickyEvent(event);
 		}
 		else
 		{

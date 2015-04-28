@@ -14,8 +14,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import de.greenrobot.event.EventBus;
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import org.neidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -164,7 +164,7 @@ public class BaseActivity
 
 	private void initProgressBar()
 	{
-		this.progressBarHandler = new ProgressbarHandler((ProgressBar) this.findViewById(R.id.progressbar));
+		this.progressBarHandler = new ProgressbarHandler((SmoothProgressBar) this.findViewById(R.id.progressbar));
 		this.progressBarHandler.showProgressBar(false);
 	}
 
@@ -209,7 +209,7 @@ public class BaseActivity
 	{
 		super.onStart();
 		this.startService(new Intent(this.getApplicationContext(), MusicService.class));
-		EventBus.getDefault().register(this);
+		EventBus.getDefault().registerSticky(this);
 	}
 
 	@Override
