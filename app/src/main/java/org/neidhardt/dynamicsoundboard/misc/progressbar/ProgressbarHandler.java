@@ -25,34 +25,42 @@ public class ProgressbarHandler
 	public void showProgressBar(boolean showProgressBar)
 	{
 		Logger.d(TAG, "showProgressBar() " + showProgressBar);
-		if (showProgressBar && !this.isActive)
+		if (showProgressBar)
 		{
-			this.progressBar.progressiveStart();
+			//if (this.progressBar.getVisibility() != View.VISIBLE)
+			//	this.progressBar.setVisibility(View.VISIBLE);
+
+			//this.progressBar.progressiveStart();
+
+			// TODO maybe play progressive Start
+
 			this.isActive = true;
 		}
-		else if (this.isActive)
+		else
 		{
 			this.progressBar.progressiveStop();
+
+			//this.progressBar.setVisibility(View.GONE);
 			this.isActive = false;
 		}
 	}
 
-	public void onEvent(LongTermTaskEvent event)
+	public void onEvent(LongTermTaskStartedEvent event)
 	{
 		Logger.d(TAG, "onEvent() " + event);
-		if (event.isTaskStarted())
-		{
-			this.pendingEventCounter++;
-			this.showProgressBar(true);
-			EventBus.getDefault().removeStickyEvent(event);
-		}
-		else
-		{
-			if (this.pendingEventCounter > 0)
-				this.pendingEventCounter--;
-			if (this.pendingEventCounter == 0)
-				this.showProgressBar(false);
-		}
+		EventBus.getDefault().removeStickyEvent(event);
+		this.pendingEventCounter++;
+		this.showProgressBar(true);
+	}
+
+	public void onEvent(LongTermTaskStoppedEvent event)
+	{
+		Logger.d(TAG, "onEvent() " + event);
+		EventBus.getDefault().removeStickyEvent(event);
+		if (this.pendingEventCounter > 0)
+			this.pendingEventCounter--;
+		if (this.pendingEventCounter == 0)
+			this.showProgressBar(false);
 	}
 
 	public int getPendingEventCounter()

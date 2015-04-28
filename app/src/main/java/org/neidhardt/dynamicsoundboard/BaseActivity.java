@@ -28,7 +28,8 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
-import org.neidhardt.dynamicsoundboard.misc.progressbar.LongTermTaskEvent;
+import org.neidhardt.dynamicsoundboard.misc.progressbar.LongTermTaskStartedEvent;
+import org.neidhardt.dynamicsoundboard.misc.progressbar.LongTermTaskStoppedEvent;
 import org.neidhardt.dynamicsoundboard.misc.progressbar.ProgressbarHandler;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
@@ -165,7 +166,6 @@ public class BaseActivity
 	private void initProgressBar()
 	{
 		this.progressBarHandler = new ProgressbarHandler((SmoothProgressBar) this.findViewById(R.id.progressbar));
-		this.progressBarHandler.showProgressBar(false);
 	}
 
 	@Override
@@ -285,11 +285,21 @@ public class BaseActivity
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case a background task starts or finishes his execution
-	 * @param event delivered LongTermTaskEvent
+	 * This is called by greenDao EventBus in case a background task starts his execution
+	 * @param event delivered LongTermTaskStartedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(LongTermTaskEvent event)
+	public void onEvent(LongTermTaskStartedEvent event)
+	{
+		this.progressBarHandler.onEvent(event);
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case a background task finishes his execution
+	 * @param event delivered LongTermTaskStartedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(LongTermTaskStoppedEvent event)
 	{
 		this.progressBarHandler.onEvent(event);
 	}

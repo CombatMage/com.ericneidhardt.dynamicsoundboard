@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.misc.progressbar;
 
 import android.view.View;
-import android.widget.ProgressBar;
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import org.junit.Before;
 import org.junit.Test;
 import org.neidhardt.robolectricutils.BaseTest;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
  */
 public class ProgressbarHandlerTest extends BaseTest
 {
-	private ProgressBar progressBar;
+	private SmoothProgressBar progressBar;
 	private ProgressbarHandler progressbarHandler;
 
 	@Override
@@ -23,7 +23,7 @@ public class ProgressbarHandlerTest extends BaseTest
 	public void setUp() throws Exception
 	{
 		super.setUp();
-		this.progressBar = mock(ProgressBar.class);
+		this.progressBar = mock(SmoothProgressBar.class);
 		this.progressbarHandler = new ProgressbarHandler(this.progressBar);
 	}
 
@@ -44,8 +44,7 @@ public class ProgressbarHandlerTest extends BaseTest
 	@Test
 	public void testOnEvent() throws Exception
 	{
-		LongTermTaskEvent event = mock(LongTermTaskEvent.class);
-		when(event.isTaskStarted()).thenReturn(false);
+		LongTermTaskStoppedEvent event = mock(LongTermTaskStoppedEvent.class);
 
 		this.progressbarHandler.onEvent(event);
 		this.progressbarHandler.onEvent(event);
@@ -59,8 +58,7 @@ public class ProgressbarHandlerTest extends BaseTest
 	@Test
 	public void testOnEvent1() throws Exception
 	{
-		LongTermTaskEvent event = mock(LongTermTaskEvent.class);
-		when(event.isTaskStarted()).thenReturn(true);
+		LongTermTaskStartedEvent event = mock(LongTermTaskStartedEvent.class);
 
 		this.progressbarHandler.onEvent(event);
 		this.progressbarHandler.onEvent(event);
@@ -74,17 +72,16 @@ public class ProgressbarHandlerTest extends BaseTest
 	@Test
 	public void testOnEvent2() throws Exception
 	{
-		LongTermTaskEvent event = mock(LongTermTaskEvent.class);
-		when(event.isTaskStarted()).thenReturn(true);
+		LongTermTaskStartedEvent startedEvent = mock(LongTermTaskStartedEvent.class);
 
-		this.progressbarHandler.onEvent(event);
+		this.progressbarHandler.onEvent(startedEvent);
 
 		assertThat(this.progressbarHandler.getPendingEventCounter(), equalTo(1));
 		verify(this.progressBar, never()).setVisibility(View.GONE);
 		verify(this.progressBar, atLeastOnce()).setVisibility(View.VISIBLE);
 
-		when(event.isTaskStarted()).thenReturn(false);
-		this.progressbarHandler.onEvent(event);
+		LongTermTaskStoppedEvent stoppedEvent = mock(LongTermTaskStoppedEvent.class);
+		this.progressbarHandler.onEvent(stoppedEvent);
 
 		assertThat(this.progressbarHandler.getPendingEventCounter(), equalTo(0));
 	}
