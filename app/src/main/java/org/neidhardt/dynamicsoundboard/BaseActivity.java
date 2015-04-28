@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -55,6 +54,8 @@ public class BaseActivity
 	private DrawerLayout navigationDrawerLayout;
 	private ActionBarDrawerToggle drawerToggle;
 
+	private ProgressBar progressBar;
+
 	private PauseSoundOnCallListener phoneStateListener;
 
 	@Override
@@ -63,8 +64,9 @@ public class BaseActivity
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_base);
 
-		this.createActionbar();
-		this.createNavigationDrawer();
+		this.initActionbar();
+		this.initNavigationDrawer();
+		this.initProgressBar();
 
 		this.addSoundSheetManagerFragment();
 		this.addSoundManagerFragment();
@@ -140,7 +142,7 @@ public class BaseActivity
 		return true;
 	}
 
-	private void createActionbar()
+	private void initActionbar()
 	{
 		Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
 		this.setSupportActionBar(toolbar);
@@ -152,7 +154,7 @@ public class BaseActivity
 		this.findViewById(R.id.tv_app_name).setVisibility(View.VISIBLE);
 	}
 
-	private void createNavigationDrawer()
+	private void initNavigationDrawer()
 	{  // The navigation drawer is fixed on tablets in landscape mode, therefore we need to check the Views type
 		View navigationDrawerLayout = this.findViewById(R.id.root_layout);
 		if (navigationDrawerLayout != null && navigationDrawerLayout instanceof DrawerLayout)
@@ -167,6 +169,12 @@ public class BaseActivity
 			this.drawerToggle.setDrawerIndicatorEnabled(true);
 			this.navigationDrawerLayout.setDrawerListener(drawerToggle);
 		}
+	}
+
+	private void initProgressBar()
+	{
+		this.progressBar = (ProgressBar) this.findViewById(R.id.progressbar);
+		this.progressBar.setVisibility(View.GONE);
 	}
 
 	@Override
