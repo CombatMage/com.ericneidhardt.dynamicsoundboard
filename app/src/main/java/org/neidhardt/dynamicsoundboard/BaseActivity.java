@@ -28,6 +28,8 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
+import org.neidhardt.dynamicsoundboard.misc.progressbar.LongTermTaskEvent;
+import org.neidhardt.dynamicsoundboard.misc.progressbar.ProgressbarHandler;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
@@ -53,8 +55,7 @@ public class BaseActivity
 
 	private DrawerLayout navigationDrawerLayout;
 	private ActionBarDrawerToggle drawerToggle;
-
-	private ProgressBar progressBar;
+	private ProgressbarHandler progressBarHandler;
 
 	private PauseSoundOnCallListener phoneStateListener;
 
@@ -74,16 +75,6 @@ public class BaseActivity
 		this.addNavigationDrawerFragment();
 
 		this.phoneStateListener = new PauseSoundOnCallListener();
-	}
-
-	/**
-	 * This is called by greenDao EventBus in case a mediaplayer changed his state
-	 * @param event delivered MediaPlayerStateChangedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEvent(MediaPlayerStateChangedEvent event)
-	{
-		this.setFloatActionButton();
 	}
 
 	private void setFloatActionButton()
@@ -173,8 +164,8 @@ public class BaseActivity
 
 	private void initProgressBar()
 	{
-		this.progressBar = (ProgressBar) this.findViewById(R.id.progressbar);
-		this.progressBar.setVisibility(View.GONE);
+		this.progressBarHandler = new ProgressbarHandler((ProgressBar) this.findViewById(R.id.progressbar));
+		this.progressBarHandler.showProgressBar(false);
 	}
 
 	@Override
@@ -281,6 +272,26 @@ public class BaseActivity
 			default:
 				Logger.e(TAG, "unknown item clicked " + view);
 		}
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * @param event delivered MediaPlayerStateChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(MediaPlayerStateChangedEvent event)
+	{
+		this.setFloatActionButton();
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case a background task starts or finishes his execution
+	 * @param event delivered LongTermTaskEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(LongTermTaskEvent event)
+	{
+		this.progressBarHandler.onEvent(event);
 	}
 
 	private void onFabClicked()

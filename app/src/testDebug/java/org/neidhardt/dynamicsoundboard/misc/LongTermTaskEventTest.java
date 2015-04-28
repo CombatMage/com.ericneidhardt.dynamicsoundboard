@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.misc;
 
 import org.junit.Test;
+import org.neidhardt.dynamicsoundboard.misc.progressbar.LongTermTaskEvent;
 import org.neidhardt.robolectricutils.BaseTest;
 
 import static junit.framework.Assert.assertFalse;
