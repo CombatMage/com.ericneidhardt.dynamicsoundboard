@@ -2,12 +2,15 @@ package org.neidhardt.dynamicsoundboard.misc.progressbar;
 
 import android.view.View;
 import android.widget.ProgressBar;
+import org.neidhardt.dynamicsoundboard.misc.Logger;
 
 /**
  * Created by eric.neidhardt on 28.04.2015.
  */
 public class ProgressbarHandler
 {
+	private static final String TAG = ProgressbarHandler.class.getName();
+
 	private ProgressBar progressBar;
 	private int pendingEventCounter;
 
@@ -31,6 +34,7 @@ public class ProgressbarHandler
 
 	public void onEvent(LongTermTaskEvent event)
 	{
+		Logger.d(TAG, "onEvent() " + event);
 		if (event.isTaskFinished())
 		{
 			this.pendingEventCounter++;

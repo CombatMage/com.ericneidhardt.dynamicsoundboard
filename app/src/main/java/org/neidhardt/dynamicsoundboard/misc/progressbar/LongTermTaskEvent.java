@@ -16,4 +16,12 @@ public class LongTermTaskEvent
 	{
 		return isTaskFinished;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "LongTermTaskEvent{" +
+				"isTaskFinished=" + isTaskFinished +
+				'}';
+	}
 }
