@@ -40,7 +40,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private int duration;
 	private int volume;
 
-	private Handler handler = new Handler();
+	private Handler handler = null;
 
 	public EnhancedMediaPlayer(MediaPlayerData data) throws IOException
 	{
@@ -110,7 +110,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public void destroy(boolean postStateChanged)
 	{
-		this.handler.removeCallbacks(this);
+		if (this.handler != null)
+			this.handler.removeCallbacks(this);
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
@@ -273,6 +274,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private void scheduleNextVolumeChange()
 	{
 		int delay = FADE_OUT_DURATION / INT_VOLUME_MAX;
+		if (this.handler == null)
+			this.handler = new Handler();
 		this.handler.postDelayed(this, delay);
 	}
 
