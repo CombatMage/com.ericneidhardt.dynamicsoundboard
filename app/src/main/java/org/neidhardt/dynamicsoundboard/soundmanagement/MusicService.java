@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
@@ -268,6 +268,10 @@ public class MusicService extends Service
 	 */
 	private EnhancedMediaPlayer createSound(MediaPlayerData playerData)
 	{
+		int itemsInFragment = this.sounds.get(playerData.getFragmentTag()).size();
+		if (playerData.getSortOrder() == null || playerData.getSortOrder() > itemsInFragment)
+			playerData.setSortOrder(itemsInFragment);
+
 		try
 		{
 			return new EnhancedMediaPlayer(playerData);
@@ -462,23 +466,31 @@ public class MusicService extends Service
 
 	/**
 	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
-	 * @param event delivered SoundsLoadedEvent
+	 * @param event delivered SoundLoadedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(SoundsLoadedEvent event)
+	public void onEvent(SoundLoadedEvent event)
 	{
-	MediaPlayerData data = event.getLoadedSoundData();
-	if (data == null)
-		throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
-	EnhancedMediaPlayer player = createSound(data);
-	if (player == null)
-	{
-		showLoadingMediaPlayerFailed(data.getUri());
-		this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), data);
+		MediaPlayerData data = event.getLoadedSoundData();
+		if (data == null)
+			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
+		EnhancedMediaPlayer player = createSound(data);
+		if (player == null)
+		{
+			showLoadingMediaPlayerFailed(data.getUri());
+			this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), data);
+		}
+		else
+		{
+			addSoundToSounds(player);
+
+			if (!event.isLoadFromDatabase()) // if the player was not loaded from the database, we need to add it to the database
+			{
+				MediaPlayerDataDao soundsDao = this.dbSounds.getMediaPlayerDataDao();
+				soundsDao.insert(player.getMediaPlayerData());
+			}
+		}
 	}
-	else
-		addSoundToSounds(player);
-}
 
 	/**
 	 * This is called by greenDao EventBus in case loading the playlist from MusicService has finished

@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundmanagement.tasks;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class LoadSoundsTask extends LoadTask<MediaPlayerData>
 		final EventBus bus = EventBus.getDefault();
 		for (final MediaPlayerData mediaPlayerData : mediaPlayersData)
 		{
-			bus.post(new SoundsLoadedEvent(mediaPlayerData));
+			bus.post(new SoundLoadedEvent(mediaPlayerData));
 		}
 		return mediaPlayersData;
 	}

@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 
 import java.util.*;
 
@@ -81,10 +81,10 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 
 	/**
 	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
-	 * @param event delivered SoundsLoadedEvent
+	 * @param event delivered SoundLoadedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEventMainThread(SoundsLoadedEvent event)
+	public void onEventMainThread(SoundLoadedEvent event)
 	{
 		this.notifySoundSheetFragments();
 	}
