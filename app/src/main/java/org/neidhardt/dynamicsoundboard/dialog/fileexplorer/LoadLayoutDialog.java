@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -19,6 +20,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.io.File;
@@ -102,8 +104,9 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 			this.addLoadedSoundSheets(soundSheets);
 
-			this.addLoadedSounds(sounds);
-			this.addLoadedPlayList(playList);
+			ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
+			addLoadedSounds(sounds);
+			addLoadedPlayList(playList, serviceManagerFragment);
 
 			this.dismiss();
 		}
@@ -123,9 +126,8 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 			soundSheetsManagerFragment.addSoundSheetAndNotifyFragment(soundSheet);
 	}
 
-	private void addLoadedPlayList(List<MediaPlayerData> playList)
+	private static void addLoadedPlayList(List<MediaPlayerData> playList, ServiceManagerFragment soundManagerFragment)
 	{
-		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
 		MusicService service = soundManagerFragment.getSoundService();
 
 		service.removeFromPlaylist(soundManagerFragment.getPlayList()); // clear playlist before adding new values
@@ -137,18 +139,15 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		soundManagerFragment.notifyPlaylist();
 	}
 
-	private void addLoadedSounds(Map<String, List<MediaPlayerData>> sounds)
+	private static void addLoadedSounds(Map<String, List<MediaPlayerData>> sounds)
 	{
-		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
-		MusicService service = soundManagerFragment.getSoundService();
-
+		EventBus bus = EventBus.getDefault();
 		for (String key : sounds.keySet())
 		{
 			List<MediaPlayerData> soundsPerFragment = sounds.get(key);
 			for (MediaPlayerData mediaPlayerData : soundsPerFragment)
-				service.addNewSoundToSoundsAndDatabase(mediaPlayerData);
+				bus.post(new SoundLoadedEvent(mediaPlayerData, false));
 		}
-		soundManagerFragment.notifySoundSheetFragments();
 	}
 
 }
