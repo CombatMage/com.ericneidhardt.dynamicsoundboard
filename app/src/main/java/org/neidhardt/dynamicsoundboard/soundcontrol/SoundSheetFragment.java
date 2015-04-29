@@ -19,6 +19,7 @@ import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundsDialog;
@@ -28,6 +29,7 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 
 import java.util.Collections;
 
@@ -142,9 +144,8 @@ public class SoundSheetFragment
 			{
 				Uri soundUri = data.getData();
 				String soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
-				ServiceManagerFragment fragment = this.getServiceManagerFragment();
-				fragment.getSoundService().addNewSoundToSoundsAndDatabase(EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel));
-				fragment.notifySoundSheetFragments();
+				MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel);
+				EventBus.getDefault().post(new SoundLoadedEvent(playerData, false));
 				return;
 			}
 		}

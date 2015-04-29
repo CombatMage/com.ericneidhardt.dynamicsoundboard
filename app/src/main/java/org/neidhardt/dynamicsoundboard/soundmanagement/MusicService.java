@@ -229,25 +229,6 @@ public class MusicService extends Service
 		return null;
 	}
 
-	public void addNewSoundToSoundsAndDatabase(MediaPlayerData playerData)
-	{
-		String fragmentTag = playerData.getFragmentTag();
-		List<EnhancedMediaPlayer> soundInFragment = this.sounds.get(fragmentTag);
-		int sortOrder = soundInFragment == null ? 0 : soundInFragment.size();
-		playerData.setSortOrder(sortOrder);
-
-		EnhancedMediaPlayer player = this.createSound(playerData);
-		if (player == null)
-		{
-			this.showLoadingMediaPlayerFailed(playerData.getUri());
-			return;
-		}
-		this.addSoundToSounds(player);
-
-		MediaPlayerDataDao soundsDao = this.dbSounds.getMediaPlayerDataDao();
-		soundsDao.insert(player.getMediaPlayerData());
-	}
-
 	public void addNewSoundToPlaylistAndDatabase(MediaPlayerData playerData)
 	{
 		EnhancedMediaPlayer player = this.createPlaylistSound(playerData);

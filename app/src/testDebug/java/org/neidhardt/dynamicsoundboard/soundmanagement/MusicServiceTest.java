@@ -33,7 +33,7 @@ public class MusicServiceTest extends AbstractBaseActivityTest
 	{
 		try
 		{
-			this.service.onEventMainThread(new SoundLoadedEvent(null));
+			this.service.onEvent(new SoundLoadedEvent(null, true));
 		}
 		catch (NullPointerException e)
 		{
@@ -41,7 +41,7 @@ public class MusicServiceTest extends AbstractBaseActivityTest
 		}
 
 		MediaPlayerData playerData = TestDataGenerator.getRandomPlayerData();
-		this.service.onEventMainThread(new SoundLoadedEvent(playerData));
+		this.service.onEvent(new SoundLoadedEvent(playerData, true));
 		assertThat(this.service.getSounds().get(playerData.getFragmentTag()).size(), equalTo(1));
 	}
 
@@ -50,26 +50,15 @@ public class MusicServiceTest extends AbstractBaseActivityTest
 	{
 		try
 		{
-			this.service.onEventMainThread(new PlayListLoadedEvent(null));
+			this.service.onEvent(new PlayListLoadedEvent(null));
 		}
 		catch (NullPointerException e)
 		{
 			assertTrue("this should throw a NullPointerException exception and the list should remain empty", this.service.getPlaylist().isEmpty());
 		}
 
-		this.service.onEventMainThread(new PlayListLoadedEvent(TestDataGenerator.getRandomPlayerData()));
+		this.service.onEvent(new PlayListLoadedEvent(TestDataGenerator.getRandomPlayerData()));
 		assertThat(this.service.getPlaylist().size(), equalTo(1));
 	}
 
-	@Test
-	public void testAddNewSoundToServiceAndDatabase() throws Exception
-	{
-		// TODO
-	}
-
-	@Test
-	public void testAddNewSoundToPlaylistAndDatabase() throws Exception
-	{
-		// TODO
-	}
 }

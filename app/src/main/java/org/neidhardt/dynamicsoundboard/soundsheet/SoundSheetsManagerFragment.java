@@ -24,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -273,9 +274,7 @@ public class SoundSheetsManagerFragment
 		MediaPlayerData mediaPlayerData;
 
 		mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);
-
-		service.addNewSoundToSoundsAndDatabase(mediaPlayerData);
-		soundManagerFragment.notifyFragment(mediaPlayerData.getFragmentTag());
+		EventBus.getDefault().post(new SoundLoadedEvent(mediaPlayerData, false));
 	}
 
 	public SoundSheet getNewSoundSheet(String label)

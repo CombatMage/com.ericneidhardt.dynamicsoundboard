@@ -10,6 +10,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import java.io.File;
@@ -57,8 +58,8 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 	@Test
 	public void testGetPlayersWithMatchingUri() throws Exception
 	{
-		this.service.addNewSoundToSoundsAndDatabase(TestDataGenerator.getRandomPlayerData());
-		this.service.addNewSoundToSoundsAndDatabase(TestDataGenerator.getRandomPlayerData());
+		this.service.onEvent(new SoundLoadedEvent(TestDataGenerator.getRandomPlayerData(), false));
+		this.service.onEvent(new SoundLoadedEvent(TestDataGenerator.getRandomPlayerData(), false));
 
 		MediaPlayerData data2 = TestDataGenerator.getRandomPlayerData();
 		data2.setUri(this.testData.getUri());
@@ -66,7 +67,7 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 
 		MediaPlayerData data3 = TestDataGenerator.getRandomPlayerData();
 		data3.setUri(this.testData.getUri());
-		this.service.addNewSoundToSoundsAndDatabase(data3);
+		this.service.onEvent(new SoundLoadedEvent(data3, false));
 
 		List<EnhancedMediaPlayer> players = this.dialog.getPlayersWithMatchingUri(this.testData.getUri());
 		assertThat(players.size(), equalTo(3)); // this.testData + data2 + data3
@@ -137,8 +138,8 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 		data1.setUri(this.testData.getUri());
 		data2.setUri(this.testData.getUri());
 
-		this.service.addNewSoundToSoundsAndDatabase(data1);
-		this.service.addNewSoundToSoundsAndDatabase(data2);
+		this.service.onEvent(new SoundLoadedEvent(data1, false));
+		this.service.onEvent(new SoundLoadedEvent(data2, false));
 
 		assertThat(this.dialog.getPlayersWithMatchingUri(this.testData.getUri()).size(), equalTo(3));  // this.testData + data2 + data3
 

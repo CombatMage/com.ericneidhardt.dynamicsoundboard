@@ -10,11 +10,6 @@ public class SoundLoadedEvent
 	private MediaPlayerData loadedSoundData;
 	private boolean loadFromDatabase = true;
 
-	public SoundLoadedEvent(MediaPlayerData loadedSoundData)
-	{
-		this.loadedSoundData = loadedSoundData;
-	}
-
 	public SoundLoadedEvent(MediaPlayerData loadedSoundData, boolean loadFromDatabase)
 	{
 		this.loadedSoundData = loadedSoundData;
