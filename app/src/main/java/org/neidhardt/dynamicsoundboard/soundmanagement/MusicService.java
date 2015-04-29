@@ -483,14 +483,18 @@ public class MusicService extends Service
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)
 			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
-		EnhancedMediaPlayer player = createSound(data);
+		EnhancedMediaPlayer player = createSound(data); // TODO why does this differ from creaPlaylistSound?
 		if (player == null)
 		{
 			showLoadingMediaPlayerFailed(data.getUri());
 			this.removeSoundFromDatabase(this.dbPlaylist.getMediaPlayerDataDao(), data);
 		}
 		else
+		{
 			addSoundToPlaylist(player);
+
+			// TODO check if store is required
+		}
 	}
 
 	private void showLoadingMediaPlayerFailed(String playerUriString)
