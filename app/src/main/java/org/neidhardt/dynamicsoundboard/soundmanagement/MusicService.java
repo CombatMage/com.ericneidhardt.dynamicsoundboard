@@ -268,10 +268,9 @@ public class MusicService extends Service
 	 */
 	private EnhancedMediaPlayer createSound(MediaPlayerData playerData)
 	{
-		int itemsInFragment = this.sounds.get(playerData.getFragmentTag()).size();
+		int itemsInFragment = this.sounds.get(playerData.getFragmentTag()) != null ? this.sounds.get(playerData.getFragmentTag()).size() : 0;
 		if (playerData.getSortOrder() == null || playerData.getSortOrder() > itemsInFragment)
 			playerData.setSortOrder(itemsInFragment);
-
 		try
 		{
 			return new EnhancedMediaPlayer(playerData);
@@ -283,6 +282,7 @@ public class MusicService extends Service
 			return null;
 		}
 	}
+
 	/**
 	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the playlist.
 	 * @param playerData raw data to create new MediaPlayer

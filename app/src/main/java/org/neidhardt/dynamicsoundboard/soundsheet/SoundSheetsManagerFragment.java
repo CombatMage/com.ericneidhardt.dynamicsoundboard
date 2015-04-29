@@ -155,6 +155,7 @@ public class SoundSheetsManagerFragment
 			service.removeSounds(soundsInSoundSheet);
 		}
 		this.soundSheets.clear();
+		this.daoSession.getSoundSheetDao().deleteAll();
 
 		fragment.notifyPlaylist();
 
