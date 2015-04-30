@@ -301,6 +301,7 @@ public class SoundAdapter
 				case R.id.b_add_to_playlist:
 					view.setSelected(!isSelected);
 					player.setIsInPlaylist(!isSelected);
+					player.getMediaPlayerData().setItemWasAltered();
 					ServiceManagerFragment fragment = serviceManagerFragment;
 					fragment.getSoundService().toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
 					fragment.notifyPlaylist();
