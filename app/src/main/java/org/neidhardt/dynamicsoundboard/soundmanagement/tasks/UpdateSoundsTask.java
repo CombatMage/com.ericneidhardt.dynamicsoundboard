@@ -103,4 +103,10 @@ public class UpdateSoundsTask extends SafeAsyncTask<Void>
 		Logger.e(TAG, e.getMessage());
 		throw new RuntimeException(e);
 	}
+
+	@Override
+	protected void onInterrupted(Exception e)
+	{
+		super.onInterrupted(e);
+	}
 }

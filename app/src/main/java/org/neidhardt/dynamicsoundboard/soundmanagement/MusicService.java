@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundmanagement;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
 import de.greenrobot.event.EventBus;
@@ -38,6 +39,8 @@ public class MusicService extends Service
 
 	private static final String DB_SOUNDS = "db_sounds";
 	private static final String DB_SOUNDS_PLAYLIST = "db_sounds_playlist";
+
+	private Handler handler = new Handler();
 
 	private DaoSession dbPlaylist;
 	private volatile List<EnhancedMediaPlayer> playlist = new ArrayList<>();
@@ -206,7 +209,7 @@ public class MusicService extends Service
 		SafeAsyncTask task = new UpdateSoundsTask(this.sounds, this.getDbSounds());
 		task.execute();
 
-		task = new UpdateSoundsTask(this.playlist, dbPlaylist);
+		task = new UpdateSoundsTask(this.playlist, getDbPlaylist());
 		task.execute();
 	}
 
@@ -509,11 +512,16 @@ public class MusicService extends Service
 		}
 	}
 
-	private void showLoadingMediaPlayerFailed(String playerUriString)
+	private void showLoadingMediaPlayerFailed(final String playerUriString)
 	{
-		String message = this.getResources().getString(R.string.music_service_loading_sound_failed) + " "
-				+ FileUtils.getFileNameFromUri(getApplicationContext(), playerUriString);
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+		this.handler.post(new Runnable() {
+			@Override
+			public void run() {
+				String message = getResources().getString(R.string.music_service_loading_sound_failed) + " "
+						+ FileUtils.getFileNameFromUri(getApplicationContext(), playerUriString);
+				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	public static class Binder extends android.os.Binder

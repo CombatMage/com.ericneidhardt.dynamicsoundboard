@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.util.TypedValue;
@@ -63,6 +64,11 @@ public abstract class CustomEditText
 	public void setOnTextEditedListener(OnTextEditedListener listener)
 	{
 		this.onTextEditedListener = listener;
+	}
+
+	public void addTextChangedListener(TextWatcher listener)
+	{
+		this.input.addTextChangedListener(listener);
 	}
 
 	@Override
@@ -232,9 +238,9 @@ public abstract class CustomEditText
 				};
 	}
 
-	public static interface OnTextEditedListener
+	public interface OnTextEditedListener
 	{
-		public void onTextEdited(String text);
+		void onTextEdited(String text);
 	}
 
 }
