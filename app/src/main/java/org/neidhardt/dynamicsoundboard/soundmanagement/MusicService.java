@@ -229,19 +229,6 @@ public class MusicService extends Service
 		return null;
 	}
 
-	public void addNewSoundToPlaylistAndDatabase(MediaPlayerData playerData)
-	{
-		EnhancedMediaPlayer player = this.createPlaylistSound(playerData);
-		if (player == null)
-		{
-			this.showLoadingMediaPlayerFailed(playerData.getUri());
-			return;
-		}
-		this.addSoundToPlaylist(player);
-		MediaPlayerDataDao playlistDao = this.dbPlaylist.getMediaPlayerDataDao();
-		playlistDao.insert(player.getMediaPlayerData()); // it is important to use data returned from createPlaylistSound, because it is a new instance
-	}
-
 	/**
 	 * Creates an new EnhancedMediaPlayer instance
 	 * @param playerData raw data to create new MediaPlayer
@@ -359,7 +346,7 @@ public class MusicService extends Service
 				return;
 
 			player.setIsInPlaylist(true);
-			addNewSoundToPlaylistAndDatabase(player.getMediaPlayerData());
+			this.onEvent(new PlayListLoadedEvent(player.getMediaPlayerData(), false));
 		}
 		else
 		{
@@ -454,7 +441,7 @@ public class MusicService extends Service
 	{
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)
-			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
+			throw new NullPointerException(TAG + ": onEvent() delivered data is null");
 		EnhancedMediaPlayer player = createSound(data);
 		if (player == null)
 		{
@@ -482,8 +469,8 @@ public class MusicService extends Service
 	{
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)
-			throw new NullPointerException(TAG + ": onEventMainThread() delivered data is null");
-		EnhancedMediaPlayer player = createSound(data); // TODO why does this differ from creaPlaylistSound?
+			throw new NullPointerException(TAG + ": onEvent() delivered data is null");
+		EnhancedMediaPlayer player = createPlaylistSound(data);
 		if (player == null)
 		{
 			showLoadingMediaPlayerFailed(data.getUri());
@@ -493,7 +480,11 @@ public class MusicService extends Service
 		{
 			addSoundToPlaylist(player);
 
-			// TODO check if store is required
+			if (!event.isLoadFromDatabase()) // if the player was not loaded from the database, we need to add it to the database
+			{
+				MediaPlayerDataDao playlistDap = this.dbPlaylist.getMediaPlayerDataDao();
+				playlistDap.insert(player.getMediaPlayerData());
+			}
 		}
 	}
 

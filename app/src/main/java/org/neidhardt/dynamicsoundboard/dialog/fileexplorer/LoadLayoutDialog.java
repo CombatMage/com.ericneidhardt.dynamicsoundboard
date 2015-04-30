@@ -20,6 +20,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
@@ -120,7 +121,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
 	{
 		SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();// clear soundsheets before adding new values
-		soundSheetsManagerFragment.deleteAllSoundSheets(); // this also removes all sounds
+		soundSheetsManagerFragment.deleteAllSoundSheets(); // this also removes all sounds in soundsheets, but no in playlist
 
 		for (SoundSheet soundSheet : soundSheets)
 			soundSheetsManagerFragment.addSoundSheetAndNotifyFragment(soundSheet);
@@ -129,14 +130,11 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 	private static void addLoadedPlayList(List<MediaPlayerData> playList, ServiceManagerFragment soundManagerFragment)
 	{
 		MusicService service = soundManagerFragment.getSoundService();
-
 		service.removeFromPlaylist(soundManagerFragment.getPlayList()); // clear playlist before adding new values
 
+		EventBus bus = EventBus.getDefault();
 		for (MediaPlayerData mediaPlayerData : playList)
-		{
-			service.addNewSoundToPlaylistAndDatabase(mediaPlayerData);
-		}
-		soundManagerFragment.notifyPlaylist();
+			bus.post(new PlayListLoadedEvent(mediaPlayerData, false));
 	}
 
 	private static void addLoadedSounds(Map<String, List<MediaPlayerData>> sounds)

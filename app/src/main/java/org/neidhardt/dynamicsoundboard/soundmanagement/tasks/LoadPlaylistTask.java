@@ -26,7 +26,7 @@ public class LoadPlaylistTask extends LoadTask<MediaPlayerData>
 		final EventBus bus = EventBus.getDefault();
 		for (final MediaPlayerData mediaPlayerData : mediaPlayersData)
 		{
-			bus.post(new PlayListLoadedEvent(mediaPlayerData));
+			bus.post(new PlayListLoadedEvent(mediaPlayerData, true));
 		}
 		return mediaPlayersData;
 	}

@@ -50,14 +50,14 @@ public class MusicServiceTest extends AbstractBaseActivityTest
 	{
 		try
 		{
-			this.service.onEvent(new PlayListLoadedEvent(null));
+			this.service.onEvent(new PlayListLoadedEvent(null, true));
 		}
 		catch (NullPointerException e)
 		{
 			assertTrue("this should throw a NullPointerException exception and the list should remain empty", this.service.getPlaylist().isEmpty());
 		}
 
-		this.service.onEvent(new PlayListLoadedEvent(TestDataGenerator.getRandomPlayerData()));
+		this.service.onEvent(new PlayListLoadedEvent(TestDataGenerator.getRandomPlayerData(), true));
 		assertThat(this.service.getPlaylist().size(), equalTo(1));
 	}
 
