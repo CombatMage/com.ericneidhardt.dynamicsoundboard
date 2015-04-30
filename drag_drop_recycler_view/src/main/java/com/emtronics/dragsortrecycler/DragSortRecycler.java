@@ -224,9 +224,6 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 		this.debugLog("onInterceptTouchEvent");
 
-		this.handler.removeCallbacks(this);
-		this.handler.postDelayed(this, TIMEOUT_DRAG);
-
 		View itemView = rv.findChildViewUnder(e.getX(), e.getY());
 
 		if (itemView == null) {
@@ -279,6 +276,9 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 
 
 		if (dragging) {
+
+			this.scheduleDragTimeout();
+
 			this.debugLog("Started Drag");
 			this.selectedDragItemPos = rv.getChildAdapterPosition(itemView);
 			if (this.selectedDragItemPos == RecyclerView.NO_POSITION)
@@ -298,8 +298,15 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 		return false;
 	}
 
+	private void scheduleDragTimeout() {
+		this.handler.removeCallbacks(this);
+		this.handler.postDelayed(this, TIMEOUT_DRAG);
+	}
+
 	private void stopDragging(RecyclerView rv) {
+		this.handler.removeCallbacks(this); // remove pending callbacks if dragging was finished
 		setIsDragging(false);
+
 		selectedDragItemPos = -1;
 		floatingItem = null;
 		if (rv != null)
@@ -320,6 +327,7 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 			return;
 		}
 
+		this.scheduleDragTimeout();
 		fingerY = (int) e.getY();
 
 		if (floatingItem != null) {
