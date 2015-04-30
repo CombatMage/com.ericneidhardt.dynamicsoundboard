@@ -86,7 +86,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	@SuppressWarnings("unused")
 	public void onEventMainThread(SoundLoadedEvent event)
 	{
-		this.notifySoundSheetFragments();
+		this.notifyFragment(event.getLoadedSoundData().getFragmentTag());
 	}
 
 	public void onUserLeaveHint()

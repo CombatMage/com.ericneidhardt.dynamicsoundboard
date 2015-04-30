@@ -92,7 +92,7 @@ public class MusicService extends Service
 
 		this.binder = new Binder(this);
 		this.notificationHandler = new NotificationHandler(this);
-		EventBus.getDefault().register(this, 1);
+		EventBus.getDefault().registerSticky(this, 1);
 
 		this.initSoundsAndPlayList();
 	}
@@ -125,6 +125,20 @@ public class MusicService extends Service
 		return baseName + DB_SOUNDS_PLAYLIST;
 	}
 
+	private DaoSession getDbSounds()
+	{
+		if (this.dbSounds == null)
+			this.dbSounds = Util.setupDatabase(this.getApplicationContext(), getDatabaseNameSounds());
+		return this.dbSounds;
+	}
+
+	private DaoSession getDbPlaylist()
+	{
+		if (this.dbPlaylist == null)
+			this.dbPlaylist = Util.setupDatabase(this.getApplicationContext(), getDatabaseNameSounds());
+		return this.dbPlaylist;
+	}
+
 	@Override
 	public void onDestroy()
 	{
@@ -152,8 +166,8 @@ public class MusicService extends Service
 	 */
 	public void deleteAllSounds()
 	{
-		this.dbPlaylist.getMediaPlayerDataDao().deleteAll();
-		this.dbSounds.getMediaPlayerDataDao().deleteAll();
+		this.getDbPlaylist().getMediaPlayerDataDao().deleteAll();
+		this.getDbSounds().getMediaPlayerDataDao().deleteAll();
 		this.notificationHandler.dismissAllNotifications();
 		this.releaseMediaPlayers();
 	}
@@ -189,7 +203,7 @@ public class MusicService extends Service
 
 	public void storeLoadedSounds()
 	{
-		SafeAsyncTask task = new UpdateSoundsTask(this.sounds, dbSounds);
+		SafeAsyncTask task = new UpdateSoundsTask(this.sounds, this.getDbSounds());
 		task.execute();
 
 		task = new UpdateSoundsTask(this.playlist, dbPlaylist);
@@ -246,7 +260,7 @@ public class MusicService extends Service
 		catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
-			this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), playerData);
+			this.removeSoundFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerData);
 			return null;
 		}
 	}
@@ -323,9 +337,9 @@ public class MusicService extends Service
 				EnhancedMediaPlayer correspondingPlayerInPlaylist = this.searchInPlaylistForId(data.getPlayerId());
 				this.playlist.remove(correspondingPlayerInPlaylist);
 
-				this.destroyPlayerAndUpdateDatabase(this.dbPlaylist.getMediaPlayerDataDao(), correspondingPlayerInPlaylist);
+				this.destroyPlayerAndUpdateDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), correspondingPlayerInPlaylist);
 			}
-			this.destroyPlayerAndUpdateDatabase(this.dbSounds.getMediaPlayerDataDao(), playerToRemove);
+			this.destroyPlayerAndUpdateDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerToRemove);
 		}
 	}
 
@@ -357,7 +371,7 @@ public class MusicService extends Service
 				player.setIsInPlaylist(false);
 
 			this.playlist.remove(playerInPlaylist);
-			this.destroyPlayerAndUpdateDatabase(this.dbPlaylist.getMediaPlayerDataDao(), playerInPlaylist);
+			this.destroyPlayerAndUpdateDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), playerInPlaylist);
 		}
 	}
 
@@ -442,11 +456,18 @@ public class MusicService extends Service
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)
 			throw new NullPointerException(TAG + ": onEvent() delivered data is null");
+
+		if (this.searchForId(data.getFragmentTag(), data.getPlayerId()) != null)
+		{
+			Logger.d(TAG, "player: " + data + " is already loaded");
+			return;
+		}
+
 		EnhancedMediaPlayer player = createSound(data);
 		if (player == null)
 		{
 			showLoadingMediaPlayerFailed(data.getUri());
-			this.removeSoundFromDatabase(this.dbSounds.getMediaPlayerDataDao(), data);
+			this.removeSoundFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), data);
 		}
 		else
 		{
@@ -454,7 +475,7 @@ public class MusicService extends Service
 
 			if (!event.isLoadFromDatabase()) // if the player was not loaded from the database, we need to add it to the database
 			{
-				MediaPlayerDataDao soundsDao = this.dbSounds.getMediaPlayerDataDao();
+				MediaPlayerDataDao soundsDao = this.getDbSounds().getMediaPlayerDataDao();
 				soundsDao.insert(player.getMediaPlayerData());
 			}
 		}
@@ -474,7 +495,7 @@ public class MusicService extends Service
 		if (player == null)
 		{
 			showLoadingMediaPlayerFailed(data.getUri());
-			this.removeSoundFromDatabase(this.dbPlaylist.getMediaPlayerDataDao(), data);
+			this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), data);
 		}
 		else
 		{
@@ -482,7 +503,7 @@ public class MusicService extends Service
 
 			if (!event.isLoadFromDatabase()) // if the player was not loaded from the database, we need to add it to the database
 			{
-				MediaPlayerDataDao playlistDap = this.dbPlaylist.getMediaPlayerDataDao();
+				MediaPlayerDataDao playlistDap = this.getDbPlaylist().getMediaPlayerDataDao();
 				playlistDap.insert(player.getMediaPlayerData());
 			}
 		}

@@ -15,6 +15,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
+import org.neidhardt.dynamicsoundboard.dialog.soundsettings.RenameSoundFileDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
@@ -182,12 +183,18 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 
 		int count = this.soundsToAdd.size();
 		List<MediaPlayerData> playersData = new ArrayList<>(count);
+		List<MediaPlayerData> renamedPlayers = new ArrayList<>();
 		for (int i = 0; i < count; i++)
 		{
+			AddSoundListItem item = (AddSoundListItem)this.soundsToAddLayout.getChildAt(i);
+
 			Uri soundUri = this.soundsToAdd.get(i);
-			String soundLabel = ((AddSoundListItem)this.soundsToAddLayout.getChildAt(i)).getSoundName();
+			String soundLabel = item.getSoundName();
 			MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.callingFragmentTag, soundUri, soundLabel);
 			playersData.add(playerData);
+
+			if (item.wasSoundNameAltered())
+				renamedPlayers.add(playerData);
 		}
 
 		EventBus bus = EventBus.getDefault();
@@ -201,6 +208,14 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 			for (MediaPlayerData playerData : playersData)
 				bus.post(new SoundLoadedEvent(playerData, false));
 		}
+
+		this.showRenameDialog(renamedPlayers); // show the rename dialog for all altered players
+	}
+
+	private void showRenameDialog(List<MediaPlayerData> renamedMediaPlayers)
+	{
+		for (MediaPlayerData data : renamedMediaPlayers)
+			RenameSoundFileDialog.showInstance(this.getFragmentManager(), data);
 	}
 
 	private void showInfoToast()

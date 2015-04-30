@@ -269,8 +269,6 @@ public class SoundSheetsManagerFragment
 
 	public void addSoundToSoundSheet(Uri soundUri, String soundLabel, SoundSheet existingSoundSheet)
 	{
-		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
-		MusicService service = soundManagerFragment.getSoundService();
 		MediaPlayerData mediaPlayerData;
 
 		mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(existingSoundSheet.getFragmentTag(), soundUri, soundLabel);

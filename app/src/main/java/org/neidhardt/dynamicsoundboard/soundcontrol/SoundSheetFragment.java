@@ -145,7 +145,7 @@ public class SoundSheetFragment
 				Uri soundUri = data.getData();
 				String soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
 				MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel);
-				EventBus.getDefault().post(new SoundLoadedEvent(playerData, false));
+				EventBus.getDefault().postSticky(new SoundLoadedEvent(playerData, false));
 				return;
 			}
 		}
