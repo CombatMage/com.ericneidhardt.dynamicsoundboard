@@ -1212,6 +1212,7 @@ android.support.v4.view.LayoutInflaterCompatBase$FactoryWrapper -> android.suppo
 android.support.v4.view.LayoutInflaterCompatHC -> android.support.v4.view.ag:
     java.lang.reflect.Field sLayoutInflaterFactory2Field -> a
     boolean sCheckedField -> b
+    71:90:void forceSetFactory2(android.view.LayoutInflater,android.view.LayoutInflater$Factory2) -> a
 android.support.v4.view.LayoutInflaterCompatHC$FactoryWrapperHC -> android.support.v4.view.ah:
     44:44:android.view.View onCreateView(android.view.View,java.lang.String,android.content.Context,android.util.AttributeSet) -> onCreateView
 android.support.v4.view.LayoutInflaterFactory -> android.support.v4.view.ai:
@@ -20265,9 +20266,9 @@ org.neidhardt.dynamicsoundboard.misc.FileUtils -> org.neidhardt.dynamicsoundboar
     51:59:java.io.File getFileForUri(android.content.Context,android.net.Uri) -> a
     64:75:java.lang.String stripFileTypeFromName(java.lang.String) -> a
     80:80:java.lang.String getFileNameFromUri(android.content.Context,java.lang.String) -> a
-    85:103:java.lang.String getFileNameFromUri(android.content.Context,android.net.Uri) -> b
-    124:134:boolean isAudioFile(java.io.File) -> b
-    139:149:boolean containsAudioFiles(java.io.File) -> c
+    85:101:java.lang.String getFileNameFromUri(android.content.Context,android.net.Uri) -> b
+    122:132:boolean isAudioFile(java.io.File) -> b
+    137:147:boolean containsAudioFiles(java.io.File) -> c
 org.neidhardt.dynamicsoundboard.misc.JsonPojo -> org.neidhardt.dynamicsoundboard.b.d:
     java.util.List soundSheets -> a
     java.util.List playList -> b

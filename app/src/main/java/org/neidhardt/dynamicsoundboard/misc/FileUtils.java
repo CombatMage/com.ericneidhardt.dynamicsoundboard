@@ -95,10 +95,8 @@ public class FileUtils
 			}
 			cursor.close();
 		}
-		else if (uri.getScheme() != null && uri.getScheme().equals(SCHEME_FILE_URI))
-			fileName = filePathUri.getLastPathSegment();
 		else
-			fileName = "_" + filePathUri.getLastPathSegment();
+			fileName = filePathUri.getLastPathSegment();
 
 		return fileName;
 	}
