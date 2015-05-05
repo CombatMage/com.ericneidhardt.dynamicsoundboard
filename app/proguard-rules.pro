@@ -24,12 +24,12 @@
 -keep class com.admiral.android.apiresponse.** { *; }
 -keep class com.fasterxml.jackson.** { *; }
 
-# greenDAO
+#greenDAO
 -keep public class org.neidhardt.dynamicsoundboard.dao.** {
 	public static <fields>;
 }
 
-# greentobot EventBus
+#greentobot EventBus
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
