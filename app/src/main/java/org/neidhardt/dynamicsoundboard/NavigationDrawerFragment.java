@@ -3,9 +3,11 @@ package org.neidhardt.dynamicsoundboard;
 import android.animation.Animator;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -71,51 +73,55 @@ public class NavigationDrawerFragment
 		this.soundSheetsAdapter.registerAdapterDataObserver(listObserver);
 	}
 
+	@Nullable
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		if (container == null)
+			return null;
 
-		this.tabContent = (ViewPager) this.getActivity().findViewById(R.id.vp_tab_content);
+		View fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false);
+
+		this.tabContent = (ViewPager) fragmentView.findViewById(R.id.vp_tab_content);
 		this.tabContent.setAdapter(this.tabContentAdapter);
 		this.tabContent.setOnPageChangeListener(this);
 
-		this.tabBar = (SlidingTabLayout) this.getActivity().findViewById(R.id.layout_tab);
-		tabBar.setOnPageChangeListener(this);
-		tabBar.setViewPager(tabContent);
-		tabBar.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-			@Override
-			public int getIndicatorColor(int position) {
-				return getResources().getColor(R.color.accent_200);
-			}
+		this.tabBar = (SlidingTabLayout) fragmentView.findViewById(R.id.layout_tab);
+		this.tabBar.setOnPageChangeListener(this);
+		this.tabBar.setViewPager(tabContent);
+		this.tabBar.setCustomTabColorizer(new NavigationDrawerTabColorizer());
 
-			@Override
-			public int getDividerColor(int position) {
-				return 0;
-			}
-		});
-
-		this.soundLayoutList = (SoundLayoutsList) this.getActivity().findViewById(R.id.layout_select_sound_layout);
-		this.playlist = (Playlist) this.getActivity().findViewById(R.id.playlist);
-		this.soundSheets = (SoundSheets) this.getActivity().findViewById(R.id.sound_sheets);
-
-		this.contextualActionContainer = this.getActivity().findViewById(R.id.layout_contextual_controls);
-		this.listContainer = (ViewGroup) this.getActivity().findViewById(R.id.layout_navigation_drawer_list_content);
-
-		this.deleteSelected = this.getActivity().findViewById(R.id.b_delete_selected);
-		this.deleteSelected.setOnClickListener(this);
-
+		this.soundLayoutList = (SoundLayoutsList) fragmentView.findViewById(R.id.layout_select_sound_layout);
 		this.soundLayoutList.setAdapter(this.soundLayoutListAdapter);
+
+		this.playlist = (Playlist) fragmentView.findViewById(R.id.playlist);
 		this.playlist.setAdapter(this.playlistAdapter);
+		this.initPlayListAndAdapter();
+
+		this.soundSheets = (SoundSheets) fragmentView.findViewById(R.id.sound_sheets);
 		this.soundSheets.setAdapter(this.soundSheetsAdapter);
 		this.initSoundSheetsAndAdapter();
-		this.initPlayListAndAdapter();
+
+		this.contextualActionContainer = fragmentView.findViewById(R.id.layout_contextual_controls);
+		this.listContainer = (ViewGroup) fragmentView.findViewById(R.id.layout_navigation_drawer_list_content);
+
+		this.deleteSelected = fragmentView.findViewById(R.id.b_delete_selected);
+		this.deleteSelected.setOnClickListener(this);
+
+		fragmentView.findViewById(R.id.b_delete).setOnClickListener(this);
+		fragmentView.findViewById(R.id.b_ok).setOnClickListener(this);
+		fragmentView.findViewById(R.id.layout_change_sound_layout).setOnClickListener(this);
+
+		return fragmentView;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
 
 		this.currentLayoutName = (TextView) this.getActivity().findViewById(R.id.tv_current_sound_layout_name);
 		this.currentLayoutName.setText(SoundLayoutsManager.getInstance().getActiveSoundLayout().getLabel());
-
-		this.getActivity().findViewById(R.id.b_delete).setOnClickListener(this);
-		this.getActivity().findViewById(R.id.b_ok).setOnClickListener(this);
-		this.getActivity().findViewById(R.id.layout_change_sound_layout).setOnClickListener(this);
 	}
 
 	@Override
@@ -365,6 +371,21 @@ public class NavigationDrawerFragment
 		{
 			super.onChanged();
 			adjustViewPagerToContent();
+		}
+	}
+
+	private class NavigationDrawerTabColorizer implements SlidingTabLayout.TabColorizer
+	{
+		@Override
+		public int getIndicatorColor(int position)
+		{
+			return getResources().getColor(R.color.accent_200);
+		}
+
+		@Override
+		public int getDividerColor(int position)
+		{
+			return 0;
 		}
 	}
 }
