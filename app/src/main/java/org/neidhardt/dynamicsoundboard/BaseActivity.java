@@ -74,8 +74,6 @@ public class BaseActivity
 		this.addSoundSheetManagerFragment();
 		this.addSoundManagerFragment();
 
-		this.addNavigationDrawerFragment();
-
 		this.phoneStateListener = new PauseSoundOnCallListener();
 		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 	}
@@ -398,21 +396,6 @@ public class BaseActivity
 		}
 	}
 
-	private ServiceManagerFragment getServiceManagerFragment()
-	{
-		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
-	}
-
-	private SoundSheetsManagerFragment getSoundSheetsManagerFragment()
-	{
-		return (SoundSheetsManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
-	}
-
-	private NavigationDrawerFragment getNavigationDrawerFragment()
-	{
-		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
-	}
-
 	private void addSoundSheetManagerFragment()
 	{
 		FragmentManager fragmentManager = this.getFragmentManager();
@@ -426,17 +409,19 @@ public class BaseActivity
 		}
 	}
 
-	private void addNavigationDrawerFragment()
+	private ServiceManagerFragment getServiceManagerFragment()
 	{
-		FragmentManager fragmentManager = this.getFragmentManager();
+		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
+	}
 
-		Fragment fragment =  fragmentManager.findFragmentByTag(NavigationDrawerFragment.TAG);
-		if (fragment == null)
-		{
-			fragment = new NavigationDrawerFragment();
-			fragmentManager.beginTransaction().add(fragment, NavigationDrawerFragment.TAG).commit();
-			fragmentManager.executePendingTransactions();
-		}
+	private SoundSheetsManagerFragment getSoundSheetsManagerFragment()
+	{
+		return (SoundSheetsManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
+	}
+
+	private NavigationDrawerFragment getNavigationDrawerFragment()
+	{
+		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
 	}
 
 	public void removeSoundFragment(List<SoundSheet> soundSheets)

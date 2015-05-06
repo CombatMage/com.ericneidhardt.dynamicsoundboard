@@ -4,11 +4,12 @@
 		android:layout_height="match_parent"
 		android:orientation="horizontal">
 
-	<include
-			layout="@layout/navigation_drawer"
+	<fragment
+			android:id="@+id/navigation_drawer_fragment"
+			android:name="org.neidhardt.dynamicsoundboard.NavigationDrawerFragment"
 			android:layout_width="@dimen/navigation_width"
-			android:layout_height="match_parent"
-			android:background="@color/background"/>
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"/>
 
 	<FrameLayout
 			android:layout_width="match_parent"

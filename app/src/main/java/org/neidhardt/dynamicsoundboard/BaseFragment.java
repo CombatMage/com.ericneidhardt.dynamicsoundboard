@@ -12,9 +12,9 @@ public abstract class BaseFragment extends Fragment
 		return (BaseActivity)this.getActivity();
 	}
 
-	protected NavigationDrawerFragment getNavigationDrawer()
+	protected NavigationDrawerFragment getNavigationDrawerFragment()
 	{
-		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
+		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
 	}
 
 	public SoundSheetsManagerFragment getSoundSheetManagerFragment()

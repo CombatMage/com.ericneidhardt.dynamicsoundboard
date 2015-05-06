@@ -249,8 +249,7 @@ public class SoundSheetFragment
 
 	private void notifySoundSheetList()
 	{
-		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
-				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
 		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
 	}
 

@@ -77,10 +77,17 @@ public class NavigationDrawerFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		if (container == null)
-			return null;
+		View fragmentView = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
-		View fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false);
+		this.contextualActionContainer = fragmentView.findViewById(R.id.layout_contextual_controls);
+		this.listContainer = (ViewGroup) fragmentView.findViewById(R.id.layout_navigation_drawer_list_content);
+
+		this.deleteSelected = fragmentView.findViewById(R.id.b_delete_selected);
+		this.deleteSelected.setOnClickListener(this);
+
+		fragmentView.findViewById(R.id.b_delete).setOnClickListener(this);
+		fragmentView.findViewById(R.id.b_ok).setOnClickListener(this);
+		fragmentView.findViewById(R.id.layout_change_sound_layout).setOnClickListener(this);
 
 		this.tabContent = (ViewPager) fragmentView.findViewById(R.id.vp_tab_content);
 		this.tabContent.setAdapter(this.tabContentAdapter);
@@ -101,16 +108,6 @@ public class NavigationDrawerFragment
 		this.soundSheets = (SoundSheets) fragmentView.findViewById(R.id.sound_sheets);
 		this.soundSheets.setAdapter(this.soundSheetsAdapter);
 		this.initSoundSheetsAndAdapter();
-
-		this.contextualActionContainer = fragmentView.findViewById(R.id.layout_contextual_controls);
-		this.listContainer = (ViewGroup) fragmentView.findViewById(R.id.layout_navigation_drawer_list_content);
-
-		this.deleteSelected = fragmentView.findViewById(R.id.b_delete_selected);
-		this.deleteSelected.setOnClickListener(this);
-
-		fragmentView.findViewById(R.id.b_delete).setOnClickListener(this);
-		fragmentView.findViewById(R.id.b_ok).setOnClickListener(this);
-		fragmentView.findViewById(R.id.layout_change_sound_layout).setOnClickListener(this);
 
 		return fragmentView;
 	}

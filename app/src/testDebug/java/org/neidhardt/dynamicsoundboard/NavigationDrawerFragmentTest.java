@@ -1,13 +1,14 @@
 package org.neidhardt.dynamicsoundboard;
 
 import android.widget.TextView;
-import org.neidhardt.robolectricutils.CustomTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.neidhardt.robolectricutils.CustomTestRunner;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by eric.neidhardt on 02.04.2015.
@@ -22,7 +23,7 @@ public class NavigationDrawerFragmentTest extends AbstractBaseActivityTest
 	public void setUp() throws Exception
 	{
 		super.setUp();
-		this.fragment = (NavigationDrawerFragment) activity.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
+		this.fragment = (NavigationDrawerFragment) activity.getFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
 		assertNotNull(this.fragment);
 	}
 

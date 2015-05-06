@@ -160,7 +160,7 @@ public class SoundSheetsManagerFragment
 
 		fragment.notifyPlaylist();
 
-		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawer();
+		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
 		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 	}
 
@@ -198,7 +198,7 @@ public class SoundSheetsManagerFragment
 			throw new NullPointerException("sound sheet label was edited, but no sound sheet is selected");
 
 		correspondingSoundSheetData.setLabel(text);
-		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawer();
+		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
 		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 	}
 
@@ -215,8 +215,7 @@ public class SoundSheetsManagerFragment
 	public void remove(SoundSheet soundSheet, boolean notifySoundSheets)
 	{
 		this.soundSheets.remove(soundSheet);
-		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
-				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
 
 		if (notifySoundSheets)
 			navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
@@ -251,8 +250,7 @@ public class SoundSheetsManagerFragment
 	public void addSoundSheetAndNotifyFragment(SoundSheet soundSheet)
 	{
 		this.soundSheets.add(soundSheet);
-		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)this.getFragmentManager()
-				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
 		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 
 		SafeAsyncTask task = new StoreSoundSheetTask(this.daoSession, soundSheet);
@@ -358,8 +356,7 @@ public class SoundSheetsManagerFragment
 		BaseActivity activity = this.getBaseActivity();
 		activity.handleIntent(activity.getIntent());
 
-		NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager()
-				.findFragmentByTag(NavigationDrawerFragment.TAG);
+		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
 		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 
 		SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetsManagerFragment.this.soundSheets);
