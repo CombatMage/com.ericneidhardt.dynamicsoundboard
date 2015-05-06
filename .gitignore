@@ -22,3 +22,4 @@ dao_generator/build/
 drag_drop_recycler_view/build/
 gradle.properties
 storage_helper/build/
+app/build/outputs/logs/manifest-merger-debug-report.txt
