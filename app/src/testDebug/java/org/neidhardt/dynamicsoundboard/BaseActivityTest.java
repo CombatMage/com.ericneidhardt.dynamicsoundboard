@@ -4,8 +4,7 @@ import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,5 +24,20 @@ public class BaseActivityTest extends AbstractBaseActivityTest
 		when(soundSheet.getFragmentTag()).thenReturn("testTag");
 		this.activity.removeSoundFragment(soundSheet);
 		assertNull(this.activity.getFragmentManager().findFragmentByTag("testTag"));
+	}
+
+	@Test
+	public void testServiceManagerFragmentAccess() throws Exception {
+		assertSame(this.serviceManagerFragment, this.serviceManagerFragment.getServiceManagerFragment());
+	}
+
+	@Test
+	public void testNavigationDrawerFragmentAccess() throws Exception {
+		assertSame(this.navigationDrawerFragment, this.navigationDrawerFragment.getNavigationDrawerFragment());
+	}
+
+	@Test
+	public void testSoundSheetManagerFragmentAccess() throws Exception {
+		assertSame(this.soundSheetsManagerFragment, this.soundSheetsManagerFragment.getSoundSheetManagerFragment());
 	}
 }

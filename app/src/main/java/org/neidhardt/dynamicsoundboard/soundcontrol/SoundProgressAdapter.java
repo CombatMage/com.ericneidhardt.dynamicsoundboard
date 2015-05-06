@@ -71,7 +71,7 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder & S
 	{
 		List<Integer> playingSounds = new ArrayList<>();
 		List<EnhancedMediaPlayer> allSounds = this.getValues();
-		int count = allSounds.size();
+		int count = allSounds != null ? allSounds.size() : 0;
 		for (int i = 0; i < count; i++)
 		{
 			if (allSounds.get(i).isPlaying())

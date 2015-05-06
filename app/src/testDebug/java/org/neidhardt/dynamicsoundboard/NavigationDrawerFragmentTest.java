@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.neidhardt.robolectricutils.CustomTestRunner;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -16,15 +16,12 @@ import static org.junit.Assert.assertThat;
 @RunWith(CustomTestRunner.class)
 public class NavigationDrawerFragmentTest extends AbstractBaseActivityTest
 {
-	protected NavigationDrawerFragment fragment;
-
 	@Override
 	@Before
 	public void setUp() throws Exception
 	{
 		super.setUp();
-		this.fragment = (NavigationDrawerFragment) activity.getFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-		assertNotNull(this.fragment);
+		assertSame(this.navigationDrawerFragment, this.navigationDrawerFragment.getNavigationDrawerFragment());
 	}
 
 	@Test
@@ -34,7 +31,7 @@ public class NavigationDrawerFragmentTest extends AbstractBaseActivityTest
 		assertThat(textView.getText().toString(), equalTo(activity.getResources().getString(R.string.sound_layout_default)));
 
 		String testString = "test";
-		this.fragment.setLayoutName(testString);
+		this.navigationDrawerFragment.setLayoutName(testString);
 		assertThat(textView.getText().toString(), equalTo(testString));
 	}
 
