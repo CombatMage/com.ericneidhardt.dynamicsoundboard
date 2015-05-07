@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.events.ActivityResumedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -40,7 +41,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 
 		this.notificationActionReceiver = new NotificationActionReceiver();
 
-		EventBus.getDefault().register(this);
+		EventBus.getDefault().registerSticky(this);
 		SoundboardPreferences.registerSharedPreferenceChangedListener(this);
 		musicService.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
 	}
@@ -154,7 +155,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 	{
 		for (PendingSoundNotification notification : notifications)
 		{
-			if (notification.getNotificationId() == NotificationIds.NOTIFICATION_ID_PLAYLIST)
+			if (notification.isPlaylistNotification())
 				continue;
 			if (notification.getPlayerId().equals(playerId))
 				return notification;
@@ -166,13 +167,45 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 	{
 		for (PendingSoundNotification notification : notifications)
 		{
-			if (notification.getNotificationId() == NotificationIds.NOTIFICATION_ID_PLAYLIST)
+			if (notification.isPlaylistNotification())
 				return notification;
 		}
 		return null;
 	}
 
 	// Update notifications, according to player state or notification actions
+
+	/**
+	 * This is called by greenDao EventBus in case the activity comes to foreground
+	 * @param event delivered MediaPlayerStateChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(ActivityResumedEvent event)
+	{
+		EventBus.getDefault().removeStickyEvent(event);
+
+		if (this.musicService == null)
+			return;
+
+		for (PendingSoundNotification notification : this.notifications)
+		{
+			String playerId = notification.getPlayerId();
+			boolean isInPlaylist = notification.isPlaylistNotification();
+
+			if (isInPlaylist)
+			{
+				EnhancedMediaPlayer player = this.musicService.searchInPlaylistForId(playerId);
+				if (!player.isPlaying())
+					this.removePlayListNotification();
+			}
+			else
+			{
+				EnhancedMediaPlayer player = this.musicService.searchInSoundsForId(playerId);
+				if (!player.isPlaying())
+					this.removeNotificationForPlayer(playerId);
+			}
+		}
+	}
 
 	/**
 	 * This is called by greenDao EventBus in case a mediaplayer changed his state

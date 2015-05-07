@@ -23,6 +23,9 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog;
+import org.neidhardt.dynamicsoundboard.events.ActivityResumedEvent;
+import org.neidhardt.dynamicsoundboard.events.LongTermTaskStartedEvent;
+import org.neidhardt.dynamicsoundboard.events.LongTermTaskStoppedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
@@ -37,8 +40,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LongTermTaskStartedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LongTermTaskStoppedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.util.List;
@@ -222,6 +223,8 @@ public class BaseActivity
 		SoundSheetFragment currentFragment = getCurrentFragment(this.getFragmentManager());
 		if (currentFragment != null)
 			currentFragment.notifyDataSetChanged(); // trigger update after return from settings activity
+
+		EventBus.getDefault().postSticky(new ActivityResumedEvent());
 
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener, this.getServiceManagerFragment());
 	}
