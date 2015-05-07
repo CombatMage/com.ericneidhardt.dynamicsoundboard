@@ -44,6 +44,7 @@ public class NavigationDrawerFragment
 	private TabContentAdapter tabContentAdapter;
 
 	private ViewGroup listContainer;
+	private ViewPagerContentObserver listObserver;
 	private SoundLayoutsList soundLayoutList;
 	private SoundLayoutsListAdapter soundLayoutListAdapter;
 	private Playlist playlist;
@@ -64,13 +65,11 @@ public class NavigationDrawerFragment
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
 
-		ViewPagerContentObserver listObserver = new ViewPagerContentObserver();
+		this.listObserver = new ViewPagerContentObserver();
 		this.tabContentAdapter = new TabContentAdapter();
 		this.soundLayoutListAdapter = new SoundLayoutsListAdapter();
 		this.playlistAdapter = new PlaylistAdapter();
-		this.playlistAdapter.registerAdapterDataObserver(listObserver);
 		this.soundSheetsAdapter = new SoundSheetsAdapter();
-		this.soundSheetsAdapter.registerAdapterDataObserver(listObserver);
 	}
 
 	@Nullable
@@ -131,6 +130,10 @@ public class NavigationDrawerFragment
 		this.initPlayListAndAdapter();
 
 		this.calculateMinHeightOfListContent();
+		this.adjustViewPagerToContent();
+
+		this.playlistAdapter.registerAdapterDataObserver(this.listObserver);
+		this.soundSheetsAdapter.registerAdapterDataObserver(this.listObserver);
 	}
 
 	/**
@@ -170,6 +173,9 @@ public class NavigationDrawerFragment
 		super.onPause();
 
 		EventBus.getDefault().unregister(this.playlistAdapter);
+		this.playlistAdapter.unregisterAdapterDataObserver(this.listObserver);
+		this.soundSheetsAdapter.unregisterAdapterDataObserver(this.listObserver);
+
 		this.playlistAdapter.stopProgressUpdateTimer();
 		this.playlist.setParentFragment(null);
 
