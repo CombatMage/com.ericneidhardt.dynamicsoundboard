@@ -1,5 +1,6 @@
 <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="horizontal">
@@ -8,8 +9,9 @@
 			android:id="@+id/navigation_drawer_fragment"
 			android:name="org.neidhardt.dynamicsoundboard.NavigationDrawerFragment"
 			android:layout_width="@dimen/navigation_width"
-			android:layout_height="wrap_content"
-			android:layout_gravity="start"/>
+			android:layout_height="match_parent"
+			android:layout_gravity="start"
+			tools:layout="@layout/fragment_navigation_drawer"/>
 
 	<FrameLayout
 			android:layout_width="match_parent"

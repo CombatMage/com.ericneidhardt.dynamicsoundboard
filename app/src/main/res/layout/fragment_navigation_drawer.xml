@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			 android:orientation="vertical"
 			 android:layout_width="match_parent"
 			 android:layout_height="match_parent"
 			 android:layout_marginRight="@dimen/abc_action_bar_default_height_material"
 			 android:layout_marginEnd="@dimen/abc_action_bar_default_height_material"
-			 android:elevation="@dimen/elevation_normal">
+			 android:elevation="@dimen/elevation_normal"
+			 android:background="@color/background">
 
-	<include layout="@layout/navigation_drawer"/>
+	<include layout="@layout/navigation_drawer_content"/>
+
+	<View
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_shadow"
+			android:background="@drawable/shape_shadow_horizontal"/>
 
 </FrameLayout>

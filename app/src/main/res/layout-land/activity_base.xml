@@ -37,7 +37,7 @@
 			android:id="@+id/navigation_drawer_fragment"
 			android:name="org.neidhardt.dynamicsoundboard.NavigationDrawerFragment"
 			android:layout_width="@dimen/navigation_width"
-			android:layout_height="wrap_content"
+			android:layout_height="match_parent"
 			android:layout_gravity="start"/>
 
 </android.support.v4.widget.DrawerLayout>
