@@ -177,7 +177,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 
 	/**
 	 * This is called by greenDao EventBus in case the activity comes to foreground
-	 * @param event delivered MediaPlayerStateChangedEvent
+	 * @param event delivered ActivityResumedEvent
 	 */
 	@SuppressWarnings("unused")
 	public void onEvent(ActivityResumedEvent event)
@@ -254,7 +254,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 			addNotification(getNotificationForPlaylist(player));
 	}
 
-	private void removePlayListNotification()
+	void removePlayListNotification()
 	{
 		PendingSoundNotification notification = this.findPlaylistNotification();
 		if (notification != null)
@@ -353,5 +353,11 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 			if (!musicService.isServiceBound() && notifications.size() == 0)
 				musicService.stopSelf();
 		}
+	}
+
+	// for testing
+	public void setNotifications(List<PendingSoundNotification> notifications)
+	{
+		this.notifications = notifications;
 	}
 }

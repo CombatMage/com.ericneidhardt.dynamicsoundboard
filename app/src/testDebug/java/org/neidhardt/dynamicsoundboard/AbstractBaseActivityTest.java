@@ -6,7 +6,6 @@ import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
-import org.neidhardt.robolectricutils.BaseTest;
 import org.robolectric.Robolectric;
 
 import static org.junit.Assert.*;

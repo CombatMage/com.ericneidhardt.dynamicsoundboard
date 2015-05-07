@@ -4,9 +4,9 @@ import android.view.View;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import org.junit.Before;
 import org.junit.Test;
+import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStartedEvent;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStoppedEvent;
-import org.neidhardt.robolectricutils.BaseTest;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
