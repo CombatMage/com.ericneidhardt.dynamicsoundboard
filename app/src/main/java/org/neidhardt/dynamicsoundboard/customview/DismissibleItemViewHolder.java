@@ -74,11 +74,18 @@ public abstract class DismissibleItemViewHolder
 			@Override
 			public void run() {
 				boolean isOneSwipeDeleteEnabled = SoundboardPreferences.isOneSwipeToDeleteEnabled();
-				if (selectedPage != getIndexOfContentPage() && isOneSwipeDeleteEnabled)
-					delete();
+				if (selectedPage != getIndexOfContentPage())
+				{
+					if (isOneSwipeDeleteEnabled)
+						delete();
+				}
 			}
 		}, SoundAdapter.UPDATE_INTERVAL);
 	}
+
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+	{}
 
 	protected abstract Handler getHandler();
 
