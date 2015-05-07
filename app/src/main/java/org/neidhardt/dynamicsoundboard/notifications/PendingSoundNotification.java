@@ -37,4 +37,9 @@ public class PendingSoundNotification
 		this.playerId = playerId;
 		this.notification = notification;
 	}
+
+	public boolean isPlaylistNotification()
+	{
+		return this.notificationId == NotificationIds.NOTIFICATION_ID_PLAYLIST;
+	}
 }

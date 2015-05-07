@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.events;
+package org.neidhardt.dynamicsoundboard.events;
 
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 

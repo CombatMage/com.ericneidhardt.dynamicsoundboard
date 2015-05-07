@@ -3,9 +3,9 @@ package org.neidhardt.dynamicsoundboard.misc.progressbar;
 import android.view.View;
 import de.greenrobot.event.EventBus;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
+import org.neidhardt.dynamicsoundboard.events.LongTermTaskStartedEvent;
+import org.neidhardt.dynamicsoundboard.events.LongTermTaskStoppedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LongTermTaskStartedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LongTermTaskStoppedEvent;
 
 /**
  * Created by eric.neidhardt on 28.04.2015.

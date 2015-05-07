@@ -3,8 +3,8 @@ package org.neidhardt.dynamicsoundboard.soundmanagement;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
+import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import static org.hamcrest.core.IsEqual.equalTo;

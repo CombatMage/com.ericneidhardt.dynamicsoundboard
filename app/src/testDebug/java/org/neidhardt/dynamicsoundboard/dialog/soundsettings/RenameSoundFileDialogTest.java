@@ -8,10 +8,10 @@ import org.mockito.Mockito;
 import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
+import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import java.io.File;

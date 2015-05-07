@@ -17,11 +17,11 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
+import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 import java.io.File;

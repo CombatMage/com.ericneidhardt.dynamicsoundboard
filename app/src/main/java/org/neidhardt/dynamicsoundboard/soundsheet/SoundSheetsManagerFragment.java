@@ -16,6 +16,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteAllSoundSheetsDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundSheetDialog;
+import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
@@ -24,7 +25,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
