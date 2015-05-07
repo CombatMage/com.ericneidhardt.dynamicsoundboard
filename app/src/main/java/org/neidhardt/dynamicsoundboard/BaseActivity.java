@@ -126,7 +126,6 @@ public class BaseActivity
 		}
 	}
 
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
