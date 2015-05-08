@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 
 /**
  * Created by eric.neidhardt on 21.01.2015.
  */
-public class PreferenceActivity extends ActionBarActivity
+public class PreferenceActivity extends AppCompatActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -22,13 +25,22 @@ public class PreferenceActivity extends ActionBarActivity
 		this.createActionbar();
 
 		this.getFragmentManager().beginTransaction().replace(R.id.main_frame, new SoundboardPreferenceFragment()).commit();
+
+		this.findViewById(R.id.main_layout).setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return false;
+			}
+		});
 	}
 
 	protected void createActionbar()
 	{
 		Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
 		this.setSupportActionBar(toolbar);
-		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		ActionBar actionBar = this.getSupportActionBar();
+		if (actionBar != null)
+			actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
