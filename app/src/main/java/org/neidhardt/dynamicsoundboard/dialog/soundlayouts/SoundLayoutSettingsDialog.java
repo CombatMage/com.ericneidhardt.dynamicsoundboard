@@ -2,8 +2,8 @@ package org.neidhardt.dynamicsoundboard.dialog.soundlayouts;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
-import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 
 /**

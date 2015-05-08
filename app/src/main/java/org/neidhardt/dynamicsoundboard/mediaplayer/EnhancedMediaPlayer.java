@@ -9,7 +9,7 @@ import org.acra.ACRA;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.playlist.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 
 import java.io.IOException;
 

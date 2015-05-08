@@ -6,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.SoundLayoutSettingsDialog;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 
 import java.util.ArrayList;
 import java.util.List;

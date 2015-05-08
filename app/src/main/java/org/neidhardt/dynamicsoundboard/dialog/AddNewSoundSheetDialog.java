@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 
 
 public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickListener

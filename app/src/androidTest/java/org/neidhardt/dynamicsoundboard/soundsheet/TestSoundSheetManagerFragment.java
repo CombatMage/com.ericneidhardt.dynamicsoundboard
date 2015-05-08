@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundsheet;
+package org.neidhardt.dynamicsoundboard.soundsheetmanagement;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;

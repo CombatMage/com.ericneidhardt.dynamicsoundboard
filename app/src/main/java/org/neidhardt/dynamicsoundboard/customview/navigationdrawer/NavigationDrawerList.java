@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 
 
 public abstract class NavigationDrawerList

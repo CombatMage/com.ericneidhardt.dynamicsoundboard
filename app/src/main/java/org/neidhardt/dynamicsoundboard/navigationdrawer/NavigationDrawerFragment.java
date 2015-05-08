@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard;
+package org.neidhardt.dynamicsoundboard.navigationdrawer;
 
 import android.animation.Animator;
 import android.content.res.Resources;
@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import de.greenrobot.event.EventBus;
+import org.neidhardt.dynamicsoundboard.BaseFragment;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
+import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
@@ -20,18 +23,18 @@ import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDial
 import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.events.SoundSheetsLoadedEvent;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
-import org.neidhardt.dynamicsoundboard.playlist.Playlist;
-import org.neidhardt.dynamicsoundboard.playlist.PlaylistAdapter;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsListAdapter;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsAdapter;
-import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 
 public class NavigationDrawerFragment
 		extends
-			BaseFragment
+		BaseFragment
 		implements
 			View.OnClickListener,
 			ViewPager.OnPageChangeListener

@@ -1,22 +1,15 @@
-package org.neidhardt.dynamicsoundboard.playlist;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist;
 
-import junit.framework.TestCase;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerCompletedEvent;
-import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.atLeastOnce;
 
 /**
  * Created by eric.neidhardt on 20.04.2015.

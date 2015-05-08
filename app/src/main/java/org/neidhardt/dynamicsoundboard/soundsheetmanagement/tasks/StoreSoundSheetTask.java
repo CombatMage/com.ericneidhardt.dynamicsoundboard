@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundsheet.tasks;
+package org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks;
 
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;

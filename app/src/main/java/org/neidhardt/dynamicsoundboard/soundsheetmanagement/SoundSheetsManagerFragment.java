@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundsheet;
+package org.neidhardt.dynamicsoundboard.soundsheetmanagement;
 
 
 import android.app.FragmentManager;
@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import de.greenrobot.event.EventBus;
-import org.neidhardt.dynamicsoundboard.*;
+import org.neidhardt.dynamicsoundboard.BaseActivity;
+import org.neidhardt.dynamicsoundboard.BaseFragment;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
+import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
@@ -22,14 +25,15 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheet.tasks.LoadSoundSheetsTask;
-import org.neidhardt.dynamicsoundboard.soundsheet.tasks.RemoveSoundSheetTask;
-import org.neidhardt.dynamicsoundboard.soundsheet.tasks.StoreSoundSheetTask;
-import org.neidhardt.dynamicsoundboard.soundsheet.tasks.UpdateSoundSheetsTask;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.RemoveSoundSheetTask;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundSheetTask;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.UpdateSoundSheetsTask;
 
 import java.util.ArrayList;
 import java.util.List;

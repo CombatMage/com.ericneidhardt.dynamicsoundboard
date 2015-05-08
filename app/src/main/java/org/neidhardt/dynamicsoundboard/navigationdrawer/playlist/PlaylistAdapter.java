@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.playlist;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

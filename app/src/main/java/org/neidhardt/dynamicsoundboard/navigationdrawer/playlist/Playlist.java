@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.playlist;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
