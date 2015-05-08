@@ -88,7 +88,7 @@ public class SoundSheetsManagerFragment
 	public void onStart()
 	{
 		super.onStart();
-		EventBus.getDefault().registerSticky(this);
+		EventBus.getDefault().registerSticky(this, 1);
 	}
 
 	@Override
@@ -355,9 +355,6 @@ public class SoundSheetsManagerFragment
 
 		BaseActivity activity = this.getBaseActivity();
 		activity.handleIntent(activity.getIntent());
-
-		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
-		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 
 		SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetsManagerFragment.this.soundSheets);
 		if (selectedSoundSheet != null)

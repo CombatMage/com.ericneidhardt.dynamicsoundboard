@@ -26,6 +26,7 @@ import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsListAdapter;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsAdapter;
+import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetsManagerFragment;
 
 public class NavigationDrawerFragment
@@ -299,6 +300,16 @@ public class NavigationDrawerFragment
 	public void onEventMainThread(SoundLoadedEvent event)
 	{
 		this.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
+	}
+
+	/**
+	 * Called by LoadSoundSheetsTask when loading of soundsheets has been finished.
+	 * @param event delivered SoundSheetsLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(SoundSheetsLoadedEvent event)
+	{
+		this.getSoundSheetsAdapter().notifyDataSetChanged();
 	}
 
 	/**
