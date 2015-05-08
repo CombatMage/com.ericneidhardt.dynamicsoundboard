@@ -17,6 +17,7 @@ import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLay
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDialog;
+import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 import org.neidhardt.dynamicsoundboard.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.playlist.PlaylistAdapter;
@@ -290,6 +291,55 @@ public class NavigationDrawerFragment
 			this.currentLayoutName.setText(layoutName);
 	}
 
+	/**
+	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
+	 * @param event delivered SoundLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(SoundLoadedEvent event)
+	{
+		this.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
+	}
+
+	/**
+	 * This function resize the viewpagers height to its content. It is necessary, because the viewpager can not
+	 * have layout parameter wrap_content.
+	 */
+	public void adjustViewPagerToContent()
+	{
+		Resources resources = DynamicSoundboardApplication.getSoundboardContext().getResources();
+		int childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item);
+		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
+		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);
+
+		int soundSheetCount = this.soundSheetsAdapter.getItemCount();
+		int playListCount = this.playlistAdapter.getItemCount();
+
+		int heightSoundSheetChildren = soundSheetCount * childHeight;
+		int heightDividerSoundSheet = soundSheetCount > 1 ? (soundSheetCount - 1) * dividerHeight : 0;
+		int heightSoundSheet = heightSoundSheetChildren + heightDividerSoundSheet + padding + this.tabBar.getHeight();
+
+		int heightPlayListChildren = playListCount * childHeight;
+		int heightDividerPlayList = playListCount > 1 ? (playListCount - 1) * dividerHeight : 0;
+		int heightPlayList = heightPlayListChildren + heightDividerPlayList + padding + this.tabBar.getHeight();
+
+		int largestList = Math.max(heightSoundSheet, heightPlayList);
+		if (this.minHeightOfListContent == 0) // 0 means the current height was not measured, remeasure
+			this.minHeightOfListContent = this.contextualActionContainer.getTop() - listContainer.getTop();
+
+		this.listContainer.getLayoutParams().height = Math.max(largestList, minHeightOfListContent);
+	}
+
+	public SoundSheetsAdapter getSoundSheetsAdapter()
+	{
+		return this.soundSheetsAdapter;
+	}
+
+	public Playlist getPlaylist()
+	{
+		return this.playlist;
+	}
+
 	private class TabContentAdapter extends PagerAdapter
 	{
 		@Override
@@ -326,45 +376,6 @@ public class NavigationDrawerFragment
 					throw new NullPointerException("instantiateItem: no view for position " + position + " is available");
 			}
 		}
-	}
-
-	/**
-	 * This function resize the viewpagers height to its content. It is necessary, because the viewpager can not
-	 * have layout parameter wrap_content.
-	 */
-	public void adjustViewPagerToContent()
-	{
-		Resources resources = DynamicSoundboardApplication.getSoundboardContext().getResources();
-		int childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item);
-		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
-		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);
-
-		int soundSheetCount = this.soundSheetsAdapter.getItemCount();
-		int playListCount = this.playlistAdapter.getItemCount();
-
-		int heightSoundSheetChildren = soundSheetCount * childHeight;
-		int heightDividerSoundSheet = soundSheetCount > 1 ? (soundSheetCount - 1) * dividerHeight : 0;
-		int heightSoundSheet = heightSoundSheetChildren + heightDividerSoundSheet + padding + this.tabBar.getHeight();
-
-		int heightPlayListChildren = playListCount * childHeight;
-		int heightDividerPlayList = playListCount > 1 ? (playListCount - 1) * dividerHeight : 0;
-		int heightPlayList = heightPlayListChildren + heightDividerPlayList + padding + this.tabBar.getHeight();
-
-		int largestList = Math.max(heightSoundSheet, heightPlayList);
-		if (this.minHeightOfListContent == 0) // 0 means the current height was not measured, remeasure
-			this.minHeightOfListContent = this.contextualActionContainer.getTop() - listContainer.getTop();
-
-		this.listContainer.getLayoutParams().height = Math.max(largestList, minHeightOfListContent);
-	}
-
-	public Playlist getPlaylist()
-	{
-		return this.playlist;
-	}
-
-	public SoundSheetsAdapter getSoundSheetsAdapter()
-	{
-		return this.soundSheetsAdapter;
 	}
 
 	private class ViewPagerContentObserver extends RecyclerView.AdapterDataObserver

@@ -63,7 +63,7 @@ public class SoundSheetFragment
 
 	public String getFragmentTag()
 	{
-		return fragmentTag;
+		return this.fragmentTag;
 	}
 
 	@Override
@@ -99,7 +99,9 @@ public class SoundSheetFragment
 
 		this.soundAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
 		this.soundAdapter.startProgressUpdateTimer();
+
 		EventBus.getDefault().register(this.soundAdapter);
+		EventBus.getDefault().register(this);
 	}
 
 	private void attachScrollViewToFab()
@@ -118,6 +120,7 @@ public class SoundSheetFragment
 		super.onPause();
 		this.soundAdapter.stopProgressUpdateTimer();
 		EventBus.getDefault().unregister(this.soundAdapter);
+		EventBus.getDefault().unregister(this);
 	}
 
 	public void deleteAllSoundsInSoundSheet()
@@ -245,6 +248,18 @@ public class SoundSheetFragment
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
 		if (fab != null)
 			fab.show(true);
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
+	 * @param event delivered SoundLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(SoundLoadedEvent event)
+	{
+		MediaPlayerData data = event.getLoadedSoundData();
+		if (data != null && this.getFragmentTag().equals(data.getFragmentTag()))
+			this.soundAdapter.notifyDataSetChanged();
 	}
 
 	private void notifySoundSheetList()

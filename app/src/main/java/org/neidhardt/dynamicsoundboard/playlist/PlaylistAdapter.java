@@ -9,6 +9,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
@@ -128,6 +129,16 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 			this.currentItemIndex = 0;
 
 		this.getItem(this.currentItemIndex).playSound();
+		this.notifyDataSetChanged();
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case loading the playlist from MusicService has finished
+	 * @param event delivered PlayListLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(PlayListLoadedEvent event)
+	{
 		this.notifyDataSetChanged();
 	}
 

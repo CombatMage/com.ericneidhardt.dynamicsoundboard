@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.BaseFragment;
 import org.neidhardt.dynamicsoundboard.NavigationDrawerFragment;
-import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
-import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
@@ -48,9 +45,6 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	public void onStart()
 	{
 		super.onStart();
-
-		EventBus.getDefault().register(this);
-
 		this.startSoundManagerService();
 	}
 
@@ -60,33 +54,11 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		super.onStop();
 		if (this.isServiceBound)
 			this.getActivity().unbindService(this);
-
-		EventBus.getDefault().unregister(this);
 	}
 
 	public boolean isServiceBound()
 	{
 		return this.isServiceBound;
-	}
-
-	/**
-	 * This is called by greenDao EventBus in case loading the playlist from MusicService has finished
-	 * @param event delivered PlayListLoadedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(PlayListLoadedEvent event)
-	{
-		this.notifyPlaylist();
-	}
-
-	/**
-	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
-	 * @param event delivered SoundLoadedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(SoundLoadedEvent event)
-	{
-		this.notifyFragment(event.getLoadedSoundData().getFragmentTag());
 	}
 
 	public void onUserLeaveHint()
@@ -132,7 +104,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 
 	public void notifyPlaylist()
 	{
-		NavigationDrawerFragment fragment = (NavigationDrawerFragment)this.getNavigationDrawerFragment();
+		NavigationDrawerFragment fragment = this.getNavigationDrawerFragment();
 		fragment.getPlaylist().notifyDataSetChanged();
 	}
 
