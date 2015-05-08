@@ -8,8 +8,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
 		targetSdkVersion 22
-		versionCode 20806
-		versionName "2.8.6"
+		versionCode 20906
+		versionName "2.9.0"
 	}
 
 	packagingOptions {
@@ -31,18 +31,25 @@ android {
 		checkReleaseBuilds false
 	}
 
+	applicationVariants.all { variant ->
+		variant.mergeAssets.doFirst {
+			File fonts = file("${projectDir}/build/intermediates/exploded-aar/com.github.johnkil.android-robototextview/robototextview/2.4.0/assets/fonts")
+			if (fonts.exists()) {
+				for (File file : fonts.listFiles()) {
+					if (file.getName().contains("RobotoSlab")) {
+						println("delete " + file.getName() + " font")
+						file.delete()
+					};
+				}
+			}
+		}
+	}
+
 	buildTypes {
 		release {
 			signingConfig signingConfigs.release
 			minifyEnabled true
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-			applicationVariants.all { variant ->
-				variant.outputs.each { output ->
-					//def file = output.outputFile
-					//output.outputFile = new File(file.parent, defaultConfig.applicationId + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk")
-				}
-			}
 		}
 		debug {
 			applicationIdSuffix ".debug"
@@ -65,7 +72,7 @@ dependencies {
 	compile 'ch.acra:acra:4.5.0'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
 	compile 'com.melnykov:floatingactionbutton:1.3.0'
-	compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
+	compile 'com.github.johnkil.android-robototextview:robototextview:2.4.0'
 	compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
 
 	testCompile 'junit:junit:4.12'
