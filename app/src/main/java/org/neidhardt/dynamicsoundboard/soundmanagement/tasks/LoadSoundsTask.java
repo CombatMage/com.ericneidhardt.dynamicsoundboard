@@ -4,14 +4,14 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
-import org.neidhardt.dynamicsoundboard.misc.LongTermTask;
+import org.neidhardt.dynamicsoundboard.misc.progressbar.LongTermTask;
 
 import java.util.List;
 
 /**
  * Created by eric.neidhardt on 10.04.2015.
  */
-public class LoadSoundsTask extends LongTermTask<MediaPlayerData>
+public class LoadSoundsTask extends LongTermTask<List<MediaPlayerData>>
 {
 	private static final String TAG = LoadSoundsTask.class.getName();
 

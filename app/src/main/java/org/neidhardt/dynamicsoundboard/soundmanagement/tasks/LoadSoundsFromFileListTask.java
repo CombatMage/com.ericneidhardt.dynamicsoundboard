@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
-import org.neidhardt.dynamicsoundboard.misc.LongTermTask;
+import org.neidhardt.dynamicsoundboard.misc.progressbar.LongTermTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.io.File;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 28.04.2015.
  */
-public class LoadSoundsFromFileListTask extends LongTermTask<File>
+public class LoadSoundsFromFileListTask extends LongTermTask<List<File>>
 {
 	private static final String TAG = LoadSoundsFromFileListTask.class.getName();
 
