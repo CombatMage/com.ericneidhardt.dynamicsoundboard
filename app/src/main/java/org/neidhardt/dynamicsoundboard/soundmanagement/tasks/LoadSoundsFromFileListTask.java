@@ -17,6 +17,8 @@ import java.util.List;
  */
 public class LoadSoundsFromFileListTask extends LoadTask<File>
 {
+	private static final String TAG = LoadSoundsFromFileListTask.class.getName();
+
 	private List<File> filesToLoad;
 	private String fragmentTag;
 	private ServiceManagerFragment serviceManagerFragment;
@@ -53,5 +55,11 @@ public class LoadSoundsFromFileListTask extends LoadTask<File>
 	{
 		super.onSuccess(files);
 		this.serviceManagerFragment.notifyFragment(this.fragmentTag);
+	}
+
+	@Override
+	protected String getTag()
+	{
+		return TAG;
 	}
 }

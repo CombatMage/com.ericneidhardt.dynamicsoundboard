@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class LoadPlaylistTask extends LoadTask<MediaPlayerData>
 {
+	private static final String TAG = LoadPlaylistTask.class.getName();
+
 	private DaoSession daoSession;
 
 	public LoadPlaylistTask(DaoSession daoSession)
@@ -29,5 +31,11 @@ public class LoadPlaylistTask extends LoadTask<MediaPlayerData>
 			bus.post(new PlayListLoadedEvent(mediaPlayerData, true));
 		}
 		return mediaPlayersData;
+	}
+
+	@Override
+	protected String getTag()
+	{
+		return TAG;
 	}
 }

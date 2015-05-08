@@ -17,6 +17,7 @@ import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteAllSoundSheetsDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.events.SoundSheetsLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
@@ -25,6 +26,10 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheet.tasks.LoadSoundSheetsTask;
+import org.neidhardt.dynamicsoundboard.soundsheet.tasks.RemoveSoundSheetTask;
+import org.neidhardt.dynamicsoundboard.soundsheet.tasks.StoreSoundSheetTask;
+import org.neidhardt.dynamicsoundboard.soundsheet.tasks.UpdateSoundSheetsTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -220,7 +225,7 @@ public class SoundSheetsManagerFragment
 		if (notifySoundSheets)
 			navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
 
-		SafeAsyncTask task = new RemoveSoundSheetTask(soundSheet);
+		SafeAsyncTask task = new RemoveSoundSheetTask(this.daoSession, soundSheet);
 		task.execute();
 	}
 
@@ -284,66 +289,6 @@ public class SoundSheetsManagerFragment
 		return this.getActivity().getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size();
 	}
 
-	private class RemoveSoundSheetTask extends SafeAsyncTask<Void>
-	{
-		private SoundSheet soundSheet;
-
-		public RemoveSoundSheetTask(SoundSheet soundSheet)
-		{
-			this.soundSheet = soundSheet;
-		}
-
-		@Override
-		public Void call() throws Exception
-		{
-			daoSession.getSoundSheetDao().delete(this.soundSheet);
-			return null;
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
-	}
-
-	private class LoadSoundSheetsTask extends SafeAsyncTask<List<SoundSheet>>
-	{
-		private DaoSession daoSession;
-
-		public LoadSoundSheetsTask(DaoSession daoSession)
-		{
-			this.daoSession = daoSession;
-		}
-
-		@Override
-		public List<SoundSheet> call() throws Exception
-		{
-			return this.daoSession.getSoundSheetDao().queryBuilder().list();
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
-
-		@Override
-		protected void onSuccess(List<SoundSheet> loadedSoundSheets) throws Exception
-		{
-			super.onSuccess(loadedSoundSheets);
-
-			if (loadedSoundSheets.size() > 0)
-				SoundSheetsManagerFragment.this.soundSheets.addAll(loadedSoundSheets);
-
-			EventBus.getDefault().postSticky(new SoundSheetsLoadedEvent());
-		}
-	}
-
 	/**
 	 * Called by LoadSoundSheetsTask when loading of soundsheets has been finished.
 	 * @param event delivered SoundSheetsLoadedEvent
@@ -352,6 +297,8 @@ public class SoundSheetsManagerFragment
 	public void onEventMainThread(SoundSheetsLoadedEvent event)
 	{
 		EventBus.getDefault().removeStickyEvent(event);
+
+		this.soundSheets.addAll(event.getLoadedSoundSheets());
 
 		BaseActivity activity = this.getBaseActivity();
 		activity.handleIntent(activity.getIntent());
@@ -375,62 +322,5 @@ public class SoundSheetsManagerFragment
 			}
 		}
 		return selected;
-	}
-
-	private class StoreSoundSheetTask extends SafeAsyncTask<Void>
-	{
-		private final String TAG = StoreSoundSheetTask.class.getName();
-
-		private DaoSession daoSession;
-		private SoundSheet soundSheet;
-
-		public StoreSoundSheetTask(DaoSession daoSession, SoundSheet soundSheet)
-		{
-			this.daoSession = daoSession;
-			this.soundSheet = soundSheet;
-		}
-
-		@Override
-		public Void call() throws Exception
-		{
-			this.daoSession.getSoundSheetDao().insertInTx(this.soundSheet);
-			return null;
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
-	}
-
-	private class UpdateSoundSheetsTask extends SafeAsyncTask<Void>
-	{
-		private final DaoSession daoSession;
-		private final List<SoundSheet> soundSheets;
-
-		private UpdateSoundSheetsTask(DaoSession daoSession, List<SoundSheet> soundSheets)
-		{
-			this.daoSession = daoSession;
-			this.soundSheets = soundSheets;
-		}
-
-		@Override
-		public Void call() throws Exception
-		{
-			this.daoSession.getSoundSheetDao().deleteAll();
-			this.daoSession.getSoundSheetDao().insertInTx(soundSheets);
-			return null;
-		}
-
-		@Override
-		protected void onException(Exception e) throws RuntimeException
-		{
-			super.onException(e);
-			Logger.e(TAG, e.getMessage());
-			throw new RuntimeException(e);
-		}
 	}
 }
