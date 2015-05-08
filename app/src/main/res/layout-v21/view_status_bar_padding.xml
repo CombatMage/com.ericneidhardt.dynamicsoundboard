@@ -6,4 +6,5 @@
 		android:id="@+id/v_status_bar_padding"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/status_bar_padding"
+		android:elevation="@dimen/elevation_toolbar"
 		android:background="@color/primary_500"/>

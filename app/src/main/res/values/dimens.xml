@@ -19,7 +19,6 @@
 
 	<dimen name="elevation_toolbar">4dp</dimen>
 	<dimen name="elevation_normal">4dp</dimen>
-	<dimen name="elevation_small">2dp</dimen>
 
 	<dimen name="margin_xlarge">24dp</dimen>
 	<dimen name="margin_large">20dp</dimen>

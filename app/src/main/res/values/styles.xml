@@ -21,6 +21,8 @@
 		<item name="android:actionModeCloseDrawable">@drawable/ic_action_done</item>
 		<item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Actionbar</item>
 
+		<item name="android:background">@null</item>
+
 	</style>
 
 	<style name="ActionBarThemeOverlay" parent="Theme.AppTheme">

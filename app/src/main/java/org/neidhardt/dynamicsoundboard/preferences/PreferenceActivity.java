@@ -8,8 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 
 /**
@@ -25,13 +23,6 @@ public class PreferenceActivity extends AppCompatActivity
 		this.createActionbar();
 
 		this.getFragmentManager().beginTransaction().replace(R.id.main_frame, new SoundboardPreferenceFragment()).commit();
-
-		this.findViewById(R.id.main_layout).setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				return false;
-			}
-		});
 	}
 
 	protected void createActionbar()
