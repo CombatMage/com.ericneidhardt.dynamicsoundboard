@@ -34,7 +34,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFr
 
 public class NavigationDrawerFragment
 		extends
-		BaseFragment
+			BaseFragment
 		implements
 			View.OnClickListener,
 			ViewPager.OnPageChangeListener
@@ -170,6 +170,26 @@ public class NavigationDrawerFragment
 		this.playlistAdapter.startProgressUpdateTimer();
 		if (!EventBus.getDefault().isRegistered(this.playlistAdapter))
 			EventBus.getDefault().register(this.playlistAdapter);
+	}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		EventBus bus = EventBus.getDefault();
+		if (!bus.isRegistered(this.playlistAdapter))
+			bus.register(this.playlistAdapter);
+
+		if (!EventBus.getDefault().isRegistered(this))
+			bus.register(this);
+	}
+
+	@Override
+	public void onStop()
+	{
+		super.onStop();
+		EventBus.getDefault().unregister(this.playlistAdapter);
+		EventBus.getDefault().unregister(this);
 	}
 
 	@Override

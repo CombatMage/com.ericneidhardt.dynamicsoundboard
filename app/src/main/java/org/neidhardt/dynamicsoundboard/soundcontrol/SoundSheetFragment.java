@@ -99,9 +99,6 @@ public class SoundSheetFragment
 
 		this.soundAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
 		this.soundAdapter.startProgressUpdateTimer();
-
-		EventBus.getDefault().register(this.soundAdapter);
-		EventBus.getDefault().register(this);
 	}
 
 	private void attachScrollViewToFab()
@@ -119,6 +116,23 @@ public class SoundSheetFragment
 	{
 		super.onPause();
 		this.soundAdapter.stopProgressUpdateTimer();
+	}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		EventBus bus = EventBus.getDefault();
+		if (!bus.isRegistered(this))
+			bus.register(this);
+		if (!bus.isRegistered(this.soundAdapter))
+			bus.register(this.soundAdapter);
+	}
+
+	@Override
+	public void onStop()
+	{
+		super.onStop();
 		EventBus.getDefault().unregister(this.soundAdapter);
 		EventBus.getDefault().unregister(this);
 	}
