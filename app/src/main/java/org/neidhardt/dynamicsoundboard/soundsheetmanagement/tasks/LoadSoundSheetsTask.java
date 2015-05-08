@@ -4,14 +4,14 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.events.SoundSheetsLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadTask;
+import org.neidhardt.dynamicsoundboard.misc.LongTermTask;
 
 import java.util.List;
 
 /**
  * Created by eric.neidhardt on 08.05.2015.
  */
-public class LoadSoundSheetsTask extends LoadTask<SoundSheet>
+public class LoadSoundSheetsTask extends LongTermTask<SoundSheet>
 {
 	private static final String TAG = LoadSoundSheetsTask.class.getName();
 

@@ -1,9 +1,8 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.tasks;
+package org.neidhardt.dynamicsoundboard.misc;
 
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStartedEvent;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStoppedEvent;
-import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
  * Created by eric.neidhardt on 24.03.2015.
  */
 
-public abstract class LoadTask<T> extends SafeAsyncTask<List<T>>
+public abstract class LongTermTask<T> extends SafeAsyncTask<List<T>>
 {
 	private LongTermTaskStartedEvent event;
 
@@ -28,7 +27,6 @@ public abstract class LoadTask<T> extends SafeAsyncTask<List<T>>
 	protected void onSuccess(List<T> ts) throws Exception
 	{
 		super.onSuccess(ts);
-		Logger.d(getTag(), "onSuccess: with " + ts.size() + " sounds loaded");
 		EventBus.getDefault().removeStickyEvent(this.event);
 		EventBus.getDefault().postSticky(new LongTermTaskStoppedEvent());
 	}

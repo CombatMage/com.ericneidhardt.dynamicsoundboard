@@ -7,7 +7,6 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.ViewPropertyAnimator;
 
 /**
  * Created by eric.neidhardt on 31.03.2015.
@@ -15,8 +14,6 @@ import android.view.ViewPropertyAnimator;
 public class AnimationUtils
 {
 	private static final String TAG = AnimationUtils.class.getName();
-
-
 
 	public static Animator createSlowCircularReveal(final View view, int startX, int startY, float startRadius, float endRadius)
 	{
