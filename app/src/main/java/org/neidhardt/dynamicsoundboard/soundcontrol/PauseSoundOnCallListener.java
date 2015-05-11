@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Set;
 
 
 public class PauseSoundOnCallListener extends PhoneStateListener
@@ -28,7 +28,7 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 
 		if (state == TelephonyManager.CALL_STATE_RINGING)
 		{
-			List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getSoundService().getCurrentlyPlayingSounds();
+			Set<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 			if (currentlyPlayingSounds.size() > 0)
 			{
 				for (EnhancedMediaPlayer sound : currentlyPlayingSounds)

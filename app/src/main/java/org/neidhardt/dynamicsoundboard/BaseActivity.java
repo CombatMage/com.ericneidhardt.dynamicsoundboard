@@ -44,6 +44,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 
 import java.util.List;
+import java.util.Set;
 
 
 public class BaseActivity
@@ -91,7 +92,7 @@ public class BaseActivity
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
 		if (serviceManagerFragment != null && serviceManagerFragment.getSoundService() != null)
 		{
-			List<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
+			Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 			if (currentlyPlayingSounds.size() > 0)
 			{
 				fab.setPauseState();
@@ -311,7 +312,7 @@ public class BaseActivity
 	{
 		SoundSheetFragment soundSheetFragment = getCurrentFragment(this.getFragmentManager());
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
-		List<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
+		Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
 		{
 			for (EnhancedMediaPlayer sound : currentlyPlayingSounds)

@@ -61,4 +61,9 @@ public class MusicServiceTest extends AbstractBaseActivityTest
 		assertThat(this.service.getPlaylist().size(), equalTo(1));
 	}
 
+	@Test
+	public void testOnEvent() throws Exception
+	{
+		// TODO write test
+	}
 }

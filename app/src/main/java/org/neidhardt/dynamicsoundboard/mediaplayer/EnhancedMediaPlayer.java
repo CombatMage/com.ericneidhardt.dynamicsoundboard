@@ -366,7 +366,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	private void postStateChangedEvent(boolean isAlive)
 	{
-		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(isAlive, this.rawData.getPlayerId(), this.rawData.getFragmentTag()));
+		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(this, isAlive));
 	}
 
 	private void postCompletedEvent()

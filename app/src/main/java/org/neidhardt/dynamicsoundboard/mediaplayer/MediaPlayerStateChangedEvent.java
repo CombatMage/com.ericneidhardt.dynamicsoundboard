@@ -5,15 +5,13 @@ package org.neidhardt.dynamicsoundboard.mediaplayer;
  */
 public class MediaPlayerStateChangedEvent
 {
+	private final EnhancedMediaPlayer player;
 	private final boolean isAlive;
-	private final String playerId;
-	private final String fragmentTag;
 
-	public MediaPlayerStateChangedEvent(boolean isAlive, String playerId, String fragmentTag)
+	public MediaPlayerStateChangedEvent(EnhancedMediaPlayer player, boolean isAlive)
 	{
 		this.isAlive = isAlive;
-		this.playerId = playerId;
-		this.fragmentTag = fragmentTag;
+		this.player = player;
 	}
 
 	public boolean isAlive()
@@ -23,21 +21,24 @@ public class MediaPlayerStateChangedEvent
 
 	public String getPlayerId()
 	{
-		return this.playerId;
+		return this.player.getMediaPlayerData().getPlayerId();
 	}
 
 	public String getFragmentTag()
 	{
-		return this.fragmentTag;
+		return this.player.getMediaPlayerData().getFragmentTag();
+	}
+
+	public EnhancedMediaPlayer getPlayer()
+	{
+		return player;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "MediaPlayerStateChangedEvent{" +
-				"isAlive=" + isAlive +
-				", playerId='" + playerId + '\'' +
-				", fragmentTag='" + fragmentTag + '\'' +
+				"player=" + player +
+				", isAlive=" + isAlive +
 				'}';
 	}
 }

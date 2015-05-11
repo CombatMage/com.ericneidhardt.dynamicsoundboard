@@ -13,6 +13,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
@@ -54,6 +55,12 @@ public class MusicService extends Service
 	public Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		return sounds;
+	}
+
+	private Set<EnhancedMediaPlayer> currentlyPlayingSounds = new HashSet<>();
+	public Set<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
+	{
+		return currentlyPlayingSounds;
 	}
 
 	private Binder binder;
@@ -199,8 +206,7 @@ public class MusicService extends Service
 	public void onActivityClosed()
 	{
 		Logger.d(TAG, "onActivityClosed");
-		List<EnhancedMediaPlayer> pendingPlayers = this.getCurrentlyPlayingSounds();
-		if (pendingPlayers.size() == 0)
+		if (this.currentlyPlayingSounds.size() == 0)
 			this.stopSelf();
 	}
 
@@ -211,15 +217,6 @@ public class MusicService extends Service
 
 		task = new UpdateSoundsTask(this.playlist, getDbPlaylist());
 		task.execute();
-	}
-
-	public List<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
-	{
-		List<EnhancedMediaPlayer> currentlyPlayingSounds = this.getPlayingSoundsFromSoundList();
-		EnhancedMediaPlayer soundFromPlaylist = this.getPlayingSoundFromPlaylist();
-		if (soundFromPlaylist != null)
-			currentlyPlayingSounds.add(soundFromPlaylist);
-		return currentlyPlayingSounds;
 	}
 
 	public List<EnhancedMediaPlayer> getPlayingSoundsFromSoundList()
@@ -447,6 +444,20 @@ public class MusicService extends Service
 			soundsInFragment.get(i).getMediaPlayerData().setSortOrder(i);
 			soundsInFragment.get(i).getMediaPlayerData().setItemWasAltered();
 		}
+	}
+
+	/**
+	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * @param event delivered MediaPlayerStateChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(MediaPlayerStateChangedEvent event)
+	{
+		EnhancedMediaPlayer player = event.getPlayer();
+		if (player.isPlaying())
+			this.currentlyPlayingSounds.add(player);
+		else
+			this.currentlyPlayingSounds.remove(player);
 	}
 
 	/**
