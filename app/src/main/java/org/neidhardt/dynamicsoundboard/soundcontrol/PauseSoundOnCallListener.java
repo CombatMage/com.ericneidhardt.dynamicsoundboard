@@ -31,7 +31,10 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 			Set<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getSoundService().getCurrentlyPlayingSounds(); // TODO handle concurrent modification exception
 			if (currentlyPlayingSounds.size() > 0)
 			{
-				for (EnhancedMediaPlayer sound : currentlyPlayingSounds)
+				List<EnhancedMediaPlayer> copyCurrentlyPlayingSounds = new ArrayList<>(currentlyPlayingSounds.size()); // copy to prevent concurrent modification exception
+				copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds);
+
+				for (EnhancedMediaPlayer sound : copyCurrentlyPlayingSounds)
 					sound.pauseSound();
 			}
 			this.pauseSounds.addAll(currentlyPlayingSounds);

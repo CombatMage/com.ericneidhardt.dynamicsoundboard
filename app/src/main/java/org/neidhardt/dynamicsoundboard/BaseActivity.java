@@ -43,6 +43,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -315,7 +316,10 @@ public class BaseActivity
 		Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
 		{
-			for (EnhancedMediaPlayer sound : currentlyPlayingSounds) // TODO fix concurrent modification exception
+			List<EnhancedMediaPlayer> copyCurrentlyPlayingSounds = new ArrayList<>(currentlyPlayingSounds.size()); // copy to prevent concurrent modification exception
+			copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds);
+
+			for (EnhancedMediaPlayer sound : copyCurrentlyPlayingSounds)
 				sound.pauseSound();
 			serviceManagerFragment.notifySoundSheetFragments();
 			serviceManagerFragment.notifyPlaylist();
