@@ -2,11 +2,13 @@ package org.neidhardt.dynamicsoundboard;
 
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by eric.neidhardt on 20.04.2015.
@@ -45,8 +47,24 @@ public class BaseActivityTest extends AbstractBaseActivityTest
 	}
 
 	@Test
-	public void testOnFabClicked() throws Exception
+	public void testOnFabClickedPauseSounds() throws Exception
 	{
-		// TODO test
+		// mock test data
+		EnhancedMediaPlayer player = spy(new EnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData()));
+		this.service.getPlaylist().add(player);
+		player.playSound();
+
+		player = spy(new EnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData()));
+		this.service.getPlaylist().add(player);
+		player.playSound();
+
+		player = spy(new EnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData()));
+		this.service.getPlaylist().add(player);
+
+		assertThat(this.service.getCurrentlyPlayingSounds().size(), equalTo(2));
+
+		// actual test
+		this.activity.onFabClicked();
+		assertThat(this.service.getCurrentlyPlayingSounds().size(), equalTo(0));
 	}
 }

@@ -316,13 +316,10 @@ public class BaseActivity
 		Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
 		{
-			List<EnhancedMediaPlayer> copyCurrentlyPlayingSounds = new ArrayList<>(currentlyPlayingSounds.size()); // copy to prevent concurrent modification exception
+			List<EnhancedMediaPlayer> copyCurrentlyPlayingSounds = new ArrayList<>(currentlyPlayingSounds.size());
 			copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds);
-
 			for (EnhancedMediaPlayer sound : copyCurrentlyPlayingSounds)
 				sound.pauseSound();
-			serviceManagerFragment.notifySoundSheetFragments();
-			serviceManagerFragment.notifyPlaylist();
 		}
 		else if (soundSheetFragment == null)
 		{
