@@ -5,11 +5,14 @@ import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by eric.neidhardt on 08.04.2015.
@@ -62,8 +65,17 @@ public class MusicServiceTest extends AbstractBaseActivityTest
 	}
 
 	@Test
-	public void testOnEvent() throws Exception
+	public void testOnMediaPlayerStateChangedEvent() throws Exception
 	{
-		// TODO write test
+		EnhancedMediaPlayer testPlayer = TestDataGenerator.getMockEnhancedMediaPlayer(null);
+		when(testPlayer.isPlaying()).thenReturn(true);
+
+		this.service.onEvent(new MediaPlayerStateChangedEvent(testPlayer, true));
+		assertThat(this.service.getCurrentlyPlayingSounds().size(), equalTo(1));
+
+		when(testPlayer.isPlaying()).thenReturn(false);
+		this.service.onEvent(new MediaPlayerStateChangedEvent(testPlayer, true));
+
+		assertThat(this.service.getCurrentlyPlayingSounds().size(), equalTo(0));
 	}
 }
