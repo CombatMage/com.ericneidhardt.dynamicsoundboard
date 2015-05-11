@@ -17,6 +17,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by eric.neidhardt on 23.03.2015.
@@ -67,16 +68,20 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 
 	private void showAllNotifications()
 	{
-		List<EnhancedMediaPlayer> pendingSounds = this.musicService.getPlayingSoundsFromSoundList();
+		EnhancedMediaPlayer pendingPlaylistPlayer = null;
+
+		Set<EnhancedMediaPlayer> pendingSounds = this.musicService.getCurrentlyPlayingSounds();
 		for (EnhancedMediaPlayer player : pendingSounds)
 		{
-			this.addNotification(this.getNotificationForSound(player));
+			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG)) // playlist sound is added as the last notification
+				pendingPlaylistPlayer = player;
+			else
+				this.addNotification(this.getNotificationForSound(player));
 		}
 
-		EnhancedMediaPlayer player = this.musicService.getPlayingSoundFromPlaylist();
-		if (player != null)
+		if (pendingPlaylistPlayer != null)
 		{
-			PendingSoundNotificationBuilder builder = this.getNotificationForPlaylist(player);
+			PendingSoundNotificationBuilder builder = this.getNotificationForPlaylist(pendingPlaylistPlayer);
 			this.addNotification(builder);
 		}
 	}

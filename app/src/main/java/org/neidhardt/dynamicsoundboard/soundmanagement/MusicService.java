@@ -219,25 +219,11 @@ public class MusicService extends Service
 		task.execute();
 	}
 
-	public List<EnhancedMediaPlayer> getPlayingSoundsFromSoundList()
-	{
-		List<EnhancedMediaPlayer> currentlyPlayingSounds = new ArrayList<>();
-		for (String fragmentTag : this.sounds.keySet())
-		{
-			for (EnhancedMediaPlayer player : this.sounds.get(fragmentTag))
-			{
-				if (player.isPlaying())
-					currentlyPlayingSounds.add(player);
-			}
-		}
-		return currentlyPlayingSounds;
-	}
-
 	public EnhancedMediaPlayer getPlayingSoundFromPlaylist()
 	{
-		for (EnhancedMediaPlayer sound : this.playlist)
+		for (EnhancedMediaPlayer sound : this.currentlyPlayingSounds)
 		{
-			if (sound.isPlaying())
+			if (sound.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
 				return sound;
 		}
 		return null;

@@ -27,17 +27,26 @@ public class BaseActivityTest extends AbstractBaseActivityTest
 	}
 
 	@Test
-	public void testServiceManagerFragmentAccess() throws Exception {
+	public void testServiceManagerFragmentAccess() throws Exception
+	{
 		assertSame(this.serviceManagerFragment, this.serviceManagerFragment.getServiceManagerFragment());
 	}
 
 	@Test
-	public void testNavigationDrawerFragmentAccess() throws Exception {
+	public void testNavigationDrawerFragmentAccess() throws Exception
+	{
 		assertSame(this.navigationDrawerFragment, this.navigationDrawerFragment.getNavigationDrawerFragment());
 	}
 
 	@Test
-	public void testSoundSheetManagerFragmentAccess() throws Exception {
+	public void testSoundSheetManagerFragmentAccess() throws Exception
+	{
 		assertSame(this.soundSheetsManagerFragment, this.soundSheetsManagerFragment.getSoundSheetManagerFragment());
+	}
+
+	@Test
+	public void testOnFabClicked() throws Exception
+	{
+		// TODO test
 	}
 }

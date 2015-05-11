@@ -308,14 +308,14 @@ public class BaseActivity
 		this.progressBarHandler.onEvent(event);
 	}
 
-	private void onFabClicked()
+	public void onFabClicked()
 	{
 		SoundSheetFragment soundSheetFragment = getCurrentFragment(this.getFragmentManager());
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
 		Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
 		{
-			for (EnhancedMediaPlayer sound : currentlyPlayingSounds)
+			for (EnhancedMediaPlayer sound : currentlyPlayingSounds) // TODO fix concurrent modification exception
 				sound.pauseSound();
 			serviceManagerFragment.notifySoundSheetFragments();
 			serviceManagerFragment.notifyPlaylist();
