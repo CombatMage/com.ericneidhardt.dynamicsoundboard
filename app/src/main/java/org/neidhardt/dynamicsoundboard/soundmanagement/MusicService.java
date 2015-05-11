@@ -60,7 +60,7 @@ public class MusicService extends Service
 	private Set<EnhancedMediaPlayer> currentlyPlayingSounds = new HashSet<>();
 	public Set<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
 	{
-		return currentlyPlayingSounds;
+		return Collections.unmodifiableSet(this.currentlyPlayingSounds);
 	}
 
 	private Binder binder;
