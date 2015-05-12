@@ -13,8 +13,8 @@ import android.view.animation.Interpolator;
 import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
-import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
 
 import java.util.ArrayList;
 import java.util.List;
