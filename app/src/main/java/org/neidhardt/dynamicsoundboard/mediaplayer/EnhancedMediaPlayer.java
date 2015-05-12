@@ -138,10 +138,17 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		return this.duration;
 	}
 
+	/**
+	 * Check if this mediaplayer is currently playingm, ie. State.STARTED.
+	 * The call is not forwared to the native implementation super.isPlaying, because
+	 * of ab described here:
+	 * @see <a href="https://code.google.com/p/android/issues/detail?id=9732">#9732: internal/external state mismatch corrected</a>
+	 * @return true if player ist playing, false otherwise
+	 */
 	@Override
 	public boolean isPlaying()
 	{
-		return this.currentState != State.DESTROYED && super.isPlaying();
+		return this.currentState == State.STARTED;
 	}
 
 	@Override
