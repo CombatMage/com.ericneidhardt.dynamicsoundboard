@@ -27,21 +27,4 @@
 		<item name="android:windowBackground">@null</item>
 	</style>
 
-	<style name="ActionBarThemeOverlay" parent="Theme.AppTheme">
-		<item name="android:textColorPrimary">@color/text_header</item>
-		<item name="colorControlNormal">@color/text_header</item>
-		<item name="colorControlHighlight">@color/text_header</item>
-	</style>
-
-	<style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-	<style name="ActionBarItemMargin">
-		<item name="android:layout_marginLeft">1dp</item>
-		<item name="android:layout_marginRight">1dp</item>
-	</style>
-
-	<style name="ActionButton.CloseMode.Actionbar" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
-		<item name="android:background">@drawable/btn_cab_done_actionbar</item>
-	</style>
-
 </resources>
