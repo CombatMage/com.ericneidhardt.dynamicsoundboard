@@ -367,6 +367,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
+		this.currentState = State.STOPPED;
 		this.postStateChangedEvent(true);
 		this.postCompletedEvent();
 	}
