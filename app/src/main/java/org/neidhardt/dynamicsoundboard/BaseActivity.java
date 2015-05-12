@@ -223,7 +223,7 @@ public class BaseActivity
 		this.setSoundSheetActionsEnable(false);
 		this.setFloatActionButton();
 
-		SoundSheetFragment currentFragment = getCurrentFragment(this.getFragmentManager());
+		SoundSheetFragment currentFragment = getCurrentSoundFragment(this.getFragmentManager());
 		if (currentFragment != null)
 			currentFragment.notifyDataSetChanged(); // trigger update after return from settings activity
 
@@ -311,7 +311,7 @@ public class BaseActivity
 
 	public void onFabClicked()
 	{
-		SoundSheetFragment soundSheetFragment = getCurrentFragment(this.getFragmentManager());
+		SoundSheetFragment soundSheetFragment = getCurrentSoundFragment(this.getFragmentManager());
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
 		Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
@@ -482,7 +482,7 @@ public class BaseActivity
 		((ActionbarEditText) this.findViewById(R.id.et_set_label)).setText(soundSheet.getLabel());
 	}
 
-	public static SoundSheetFragment getCurrentFragment(FragmentManager manager)
+	public static SoundSheetFragment getCurrentSoundFragment(FragmentManager manager)
 	{
 		Fragment currentFragment = manager.findFragmentById(R.id.main_frame);
 		if (currentFragment != null && currentFragment.isVisible() && currentFragment instanceof SoundSheetFragment)

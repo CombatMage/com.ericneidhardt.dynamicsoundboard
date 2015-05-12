@@ -12,7 +12,10 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * File created by eric.neidhardt on 02.12.2014.
@@ -106,13 +109,6 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	{
 		NavigationDrawerFragment fragment = this.getNavigationDrawerFragment();
 		fragment.getPlaylist().notifyDataSetChanged();
-	}
-
-	public void notifySoundSheetFragments()
-	{
-		Set<String> soundSheets = this.service.getSounds().keySet();
-		for (String fragmentTag : soundSheets)
-			this.notifyFragment(fragmentTag);
 	}
 
 	public void notifyFragment(String fragmentTag)

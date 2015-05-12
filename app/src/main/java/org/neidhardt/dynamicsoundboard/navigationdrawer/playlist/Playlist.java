@@ -12,6 +12,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.customview.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
@@ -94,14 +95,17 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
 		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>(selectedItems.size());
-		for(int i = 0; i < selectedItems.size(); i++) {
+		for(int i = 0; i < selectedItems.size(); i++)
+		{
 			int index = selectedItems.keyAt(i);
 			playersToRemove.add(this.adapter.getValues().get(index));
 		}
 		ServiceManagerFragment soundManagerFragment = this.parent.getServiceManagerFragment();
-
 		soundManagerFragment.getSoundService().removeFromPlaylist(playersToRemove);
-		soundManagerFragment.notifySoundSheetFragments();
+
+		SoundSheetFragment fragment = this.parent.getCurrentSoundFragment();
+		if (fragment != null)
+			fragment.notifyDataSetChanged();
 
 		this.adapter.notifyDataSetChanged();
 	}
