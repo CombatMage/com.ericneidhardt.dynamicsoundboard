@@ -101,7 +101,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
 	 * @param event delivered MediaPlayerStateChangedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -111,7 +111,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
 	 * @param event delivered MediaPlayerStateChangedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -133,7 +133,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case loading the playlist from MusicService has finished
+	 * This is called by greenRobot EventBus in case loading the playlist from MusicService has finished
 	 * @param event delivered PlayListLoadedEvent
 	 */
 	@SuppressWarnings("unused")

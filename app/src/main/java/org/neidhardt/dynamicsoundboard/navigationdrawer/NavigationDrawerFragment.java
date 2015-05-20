@@ -315,7 +315,7 @@ public class NavigationDrawerFragment
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
+	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished
 	 * @param event delivered SoundLoadedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -325,7 +325,7 @@ public class NavigationDrawerFragment
 	}
 
 	/**
-	 * Called by LoadSoundSheetsTask when loading of soundsheets has been finished.
+	 * This is called by greenRobot EventBus when LoadSoundSheetsTask has been finished loading sound sheets.
 	 * @param event delivered SoundSheetsLoadedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -335,7 +335,7 @@ public class NavigationDrawerFragment
 	}
 
 	/**
-	 * This function resize the viewpagers height to its content. It is necessary, because the viewpager can not
+	 * This function resize the view pagers height to its content. It is necessary, because the viewpager can not
 	 * have layout parameter wrap_content.
 	 */
 	public void adjustViewPagerToContent()

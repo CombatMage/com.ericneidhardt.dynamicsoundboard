@@ -433,7 +433,7 @@ public class MusicService extends Service
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
 	 * @param event delivered MediaPlayerStateChangedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -447,7 +447,7 @@ public class MusicService extends Service
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
+	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished
 	 * @param event delivered SoundLoadedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -482,7 +482,7 @@ public class MusicService extends Service
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case loading the playlist from MusicService has finished
+	 * This is called by greenRobot EventBus in case loading the playlist from MusicService has finished
 	 * @param event delivered PlayListLoadedEvent
 	 */
 	@SuppressWarnings("unused")

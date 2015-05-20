@@ -280,7 +280,7 @@ public class BaseActivity
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
 	 * @param event delivered MediaPlayerStateChangedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -290,7 +290,7 @@ public class BaseActivity
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case a background task starts his execution
+	 * This is called by greenRobot EventBus in case a background task starts his execution
 	 * @param event delivered LongTermTaskStartedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -300,7 +300,7 @@ public class BaseActivity
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case a background task finishes his execution
+	 * This is called by greenRobot EventBus in case a background task finishes his execution
 	 * @param event delivered LongTermTaskStartedEvent
 	 */
 	@SuppressWarnings("unused")

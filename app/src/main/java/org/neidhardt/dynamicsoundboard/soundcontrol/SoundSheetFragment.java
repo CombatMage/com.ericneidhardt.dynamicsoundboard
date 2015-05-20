@@ -265,7 +265,7 @@ public class SoundSheetFragment
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case sound loading from MusicService has finished
+	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished
 	 * @param event delivered SoundLoadedEvent
 	 */
 	@SuppressWarnings("unused")

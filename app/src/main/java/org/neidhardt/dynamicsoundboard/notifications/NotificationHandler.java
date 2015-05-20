@@ -181,7 +181,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 	// Update notifications, according to player state or notification actions
 
 	/**
-	 * This is called by greenDao EventBus in case the activity comes to foreground
+	 * This is called by greenRobot EventBus in case the activity comes to foreground
 	 * @param event delivered ActivityResumedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -213,7 +213,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
 	 * @param event delivered MediaPlayerStateChangedEvent
 	 */
 	@SuppressWarnings("unused")

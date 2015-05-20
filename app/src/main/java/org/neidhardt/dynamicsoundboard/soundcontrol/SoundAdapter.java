@@ -43,7 +43,7 @@ public class SoundAdapter
 	}
 
 	/**
-	 * This is called by greenDao EventBus in case a mediaplayer changed his state
+	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
 	 * @param event delivered MediaPlayerStateChangedEvent
 	 */
 	@SuppressWarnings("unused")
