@@ -4,7 +4,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStartedEvent;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStoppedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import roboguice.util.SafeAsyncTask;
 
 /**
  * Created by eric.neidhardt on 24.03.2015.

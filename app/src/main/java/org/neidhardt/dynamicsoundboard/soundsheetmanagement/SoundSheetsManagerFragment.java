@@ -24,7 +24,6 @@ import org.neidhardt.dynamicsoundboard.events.SoundSheetsLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
-import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
@@ -34,6 +33,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheet
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.RemoveSoundSheetTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundSheetTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.UpdateSoundSheetsTask;
+import roboguice.util.SafeAsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;

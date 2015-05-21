@@ -6,7 +6,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import roboguice.util.SafeAsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;

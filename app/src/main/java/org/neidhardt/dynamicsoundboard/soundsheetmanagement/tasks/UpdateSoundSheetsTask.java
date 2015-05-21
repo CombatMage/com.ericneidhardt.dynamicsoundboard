@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.misc.safeasyncTask.SafeAsyncTask;
+import roboguice.util.SafeAsyncTask;
 
 import java.util.List;
 
