@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard;
 
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.events.FabClickedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
@@ -47,7 +48,7 @@ public class BaseActivityTest extends AbstractBaseActivityTest
 	}
 
 	@Test
-	public void testOnFabClickedPauseSounds() throws Exception
+	public void testOnEvent() throws Exception
 	{
 		// mock test data
 		EnhancedMediaPlayer player = spy(new EnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData()));
@@ -64,7 +65,7 @@ public class BaseActivityTest extends AbstractBaseActivityTest
 		assertThat(this.service.getCurrentlyPlayingSounds().size(), equalTo(2));
 
 		// actual test
-		this.activity.onFabClicked();
+		this.activity.onEvent(new FabClickedEvent());
 		assertThat(this.service.getCurrentlyPlayingSounds().size(), equalTo(0));
 	}
 }

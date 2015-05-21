@@ -17,13 +17,14 @@ import android.view.MenuItem;
 import android.view.View;
 import de.greenrobot.event.EventBus;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
-import org.neidhardt.dynamicsoundboard.customview.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
+import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.events.ActivityResumedEvent;
+import org.neidhardt.dynamicsoundboard.events.FabClickedEvent;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStartedEvent;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStoppedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -51,8 +52,6 @@ import java.util.Set;
 public class BaseActivity
 		extends
 			AppCompatActivity
-		implements
-			View.OnClickListener
 {
 	private static final String TAG = BaseActivity.class.getName();
 
@@ -87,8 +86,6 @@ public class BaseActivity
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.findViewById(R.id.fab_add);
 		if (fab == null)
 			return;
-
-		fab.setOnClickListener(this);
 
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
 		if (serviceManagerFragment != null && serviceManagerFragment.getSoundService() != null)
@@ -141,9 +138,6 @@ public class BaseActivity
 	{
 		Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
 		this.setSupportActionBar(toolbar);
-
-		this.findViewById(R.id.action_add_sound).setOnClickListener(this);
-		this.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 
 		this.findViewById(R.id.et_set_label).setVisibility(View.GONE);
 		this.findViewById(R.id.tv_app_name).setVisibility(View.VISIBLE);
@@ -266,19 +260,6 @@ public class BaseActivity
 		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
 	}
 
-	@Override
-	public void onClick(View view)
-	{
-		switch (view.getId())
-		{
-			case R.id.fab_add:
-				this.onFabClicked();
-				break;
-			default:
-				Logger.e(TAG, "unknown item clicked " + view);
-		}
-	}
-
 	/**
 	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
 	 * @param event delivered MediaPlayerStateChangedEvent
@@ -309,8 +290,15 @@ public class BaseActivity
 		this.progressBarHandler.onEvent(event);
 	}
 
-	public void onFabClicked()
+	/**
+	 * This is called by greenRobot EventBus in case a the floating action button was clicked
+	 * @param event delivered FabClickedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(FabClickedEvent event)
 	{
+		Logger.d(TAG, "onEvent: " + event);
+
 		SoundSheetFragment soundSheetFragment = getCurrentSoundFragment(this.getFragmentManager());
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
 		Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
