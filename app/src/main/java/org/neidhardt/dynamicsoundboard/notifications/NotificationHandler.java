@@ -7,12 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.events.ActivityResumedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 
 import java.util.ArrayList;

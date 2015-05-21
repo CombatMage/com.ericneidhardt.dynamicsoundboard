@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerCompletedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;

@@ -16,7 +16,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 
 	private boolean isStatePause = false;
 
-	private AddPauseFloatingActionButtonPresenter presenter;
+	private AddPauseFloatingActionButtonViewPresenter presenter;
 
 	@SuppressWarnings("unused")
 	public AddPauseFloatingActionButton(Context context)
@@ -41,7 +41,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 
 	private void init()
 	{
-		this.presenter = new AddPauseFloatingActionButtonPresenter();
+		this.presenter = new AddPauseFloatingActionButtonViewPresenter();
 	}
 
 	@Override
@@ -50,6 +50,20 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 		super.onFinishInflate();
 		this.setOnClickListener(this);
 		this.presenter.setView(this);
+	}
+
+	@Override
+	protected void onAttachedToWindow()
+	{
+		super.onAttachedToWindow();
+		this.presenter.onAttachToWindow();
+	}
+
+	@Override
+	protected void onDetachedFromWindow()
+	{
+		this.presenter.onDetachedFromWindow();
+		super.onDetachedFromWindow();
 	}
 
 	@Override
@@ -68,7 +82,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 		return state;
 	}
 
-	public void setPauseState()
+	void setPauseState()
 	{
 		if (this.isStatePause)
 			return;
@@ -78,7 +92,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 		this.post(this);
 	}
 
-	public void setAddState()
+	void setAddState()
 	{
 		if (!this.isStatePause)
 			return;

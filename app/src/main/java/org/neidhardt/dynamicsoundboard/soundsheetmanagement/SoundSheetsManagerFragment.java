@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import de.greenrobot.event.EventBus;
-import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.BaseFragment;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
@@ -25,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
@@ -141,7 +141,7 @@ public class SoundSheetsManagerFragment
 
 	public void deleteCurrentActiveSoundSheet()
 	{
-		SoundSheetFragment fragment = BaseActivity.getCurrentSoundFragment(this.getFragmentManager());
+		SoundSheetFragment fragment = SoundActivity.getCurrentSoundFragment(this.getFragmentManager());
 		if (fragment != null)
 		{
 			fragment.removeAllSounds();
@@ -153,7 +153,7 @@ public class SoundSheetsManagerFragment
 
 	public void deleteAllSoundSheets()
 	{
-		BaseActivity activity = (BaseActivity) this.getActivity();
+		SoundActivity activity = (SoundActivity) this.getActivity();
 		activity.removeSoundFragment(this.soundSheets);
 		activity.setSoundSheetActionsEnable(false);
 
@@ -198,7 +198,7 @@ public class SoundSheetsManagerFragment
 		if (manager == null)
 			return;
 
-		SoundSheetFragment currentSoundSheetFragment = BaseActivity.getCurrentSoundFragment(manager);
+		SoundSheetFragment currentSoundSheetFragment = SoundActivity.getCurrentSoundFragment(manager);
 		if (currentSoundSheetFragment == null)
 			return;
 
@@ -252,7 +252,7 @@ public class SoundSheetsManagerFragment
 
 	public SoundSheet getSoundSheetForCurrentFragment()
 	{
-		SoundSheetFragment currentSoundSheetFragment = BaseActivity.getCurrentSoundFragment(this.getFragmentManager());
+		SoundSheetFragment currentSoundSheetFragment = SoundActivity.getCurrentSoundFragment(this.getFragmentManager());
 		return currentSoundSheetFragment != null ? this.get(currentSoundSheetFragment.getFragmentTag()) : null;
 	}
 
@@ -304,7 +304,7 @@ public class SoundSheetsManagerFragment
 
 		this.soundSheets.addAll(event.getLoadedSoundSheets());
 
-		BaseActivity activity = this.getBaseActivity();
+		SoundActivity activity = this.getBaseActivity();
 		activity.handleIntent(activity.getIntent());
 
 		SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetsManagerFragment.this.soundSheets);

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.emtronics.dragsortrecycler.DragSortRecycler;
 import de.greenrobot.event.EventBus;
-import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.BaseFragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
@@ -29,6 +28,7 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.Collections;
@@ -90,7 +90,7 @@ public class SoundSheetFragment
 	{
 		super.onResume();
 
-		BaseActivity activity = this.getBaseActivity();
+		SoundActivity activity = this.getBaseActivity();
 		activity.setSoundSheetActionsEnable(true);
 		activity.findViewById(R.id.action_add_sound).setOnClickListener(this);
 		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);

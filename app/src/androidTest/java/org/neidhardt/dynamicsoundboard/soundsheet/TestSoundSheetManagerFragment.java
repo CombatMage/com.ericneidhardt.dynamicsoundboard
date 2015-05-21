@@ -3,24 +3,24 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
-import org.neidhardt.dynamicsoundboard.BaseActivity;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
 
 /**
  * Created by eric.neidhardt on 12.02.2015.
  */
-public class TestSoundSheetManagerFragment extends ActivityInstrumentationTestCase2<BaseActivity>
+public class TestSoundSheetManagerFragment extends ActivityInstrumentationTestCase2<SoundActivity>
 {
 	private static final String TAG = TestSoundSheetManagerFragment.class.getName();
 
 	private Instrumentation instrumentation;
-	private BaseActivity activity;
+	private SoundActivity activity;
 	private SoundSheetsManagerFragment fragment;
 
 	public TestSoundSheetManagerFragment()
 	{
-		super(BaseActivity.class);
+		super(SoundActivity.class);
 	}
 
 	@Override

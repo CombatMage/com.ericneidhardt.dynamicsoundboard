@@ -14,7 +14,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dialog.soundsettings.RenameSoundFileDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundsettings.SoundSettingsDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 

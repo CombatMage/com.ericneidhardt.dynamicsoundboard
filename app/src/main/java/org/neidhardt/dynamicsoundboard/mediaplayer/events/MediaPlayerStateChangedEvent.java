@@ -1,4 +1,6 @@
-package org.neidhardt.dynamicsoundboard.mediaplayer;
+package org.neidhardt.dynamicsoundboard.mediaplayer.events;
+
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 /**
  * Created by eric.neidhardt on 11.02.2015.

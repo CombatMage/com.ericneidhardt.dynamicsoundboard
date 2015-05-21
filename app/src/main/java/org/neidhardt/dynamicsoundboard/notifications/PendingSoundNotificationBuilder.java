@@ -12,11 +12,11 @@ import android.graphics.Point;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
-import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Util;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 
 /**
  * File created by eric.neidhardt on 04.12.2014.
@@ -151,7 +151,7 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 
 	private PendingIntent getOpenActivityIntent(Context context)
 	{
-		Intent intent = new Intent(context, BaseActivity.class);
+		Intent intent = new Intent(context, SoundActivity.class);
 		return PendingIntent.getActivity(context, IntentRequest.NOTIFICATION_OPEN_ACTIVITY, intent, 0);
 	}
 

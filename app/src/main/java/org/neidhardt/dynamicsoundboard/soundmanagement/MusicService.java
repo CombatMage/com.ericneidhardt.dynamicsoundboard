@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;

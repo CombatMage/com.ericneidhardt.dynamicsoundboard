@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard;
 import org.junit.After;
 import org.junit.Before;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
@@ -16,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public abstract class AbstractBaseActivityTest extends BaseTest
 {
-	protected BaseActivity activity;
+	protected SoundActivity activity;
 	protected MusicService service;
 
 	protected SoundSheetsManagerFragment soundSheetsManagerFragment;
@@ -29,7 +30,7 @@ public abstract class AbstractBaseActivityTest extends BaseTest
 	{
 		super.setUp();
 		this.service = Robolectric.setupService(MusicService.class);
-		this.activity = Robolectric.setupActivity(BaseActivity.class);
+		this.activity = Robolectric.setupActivity(SoundActivity.class);
 		this.soundSheetsManagerFragment = this.activity.getSoundSheetsManagerFragment();
 		this.serviceManagerFragment = this.activity.getServiceManagerFragment();
 		this.navigationDrawerFragment = this.activity.getNavigationDrawerFragment();

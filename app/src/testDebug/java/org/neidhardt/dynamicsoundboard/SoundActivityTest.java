@@ -1,8 +1,8 @@
 package org.neidhardt.dynamicsoundboard;
 
 import org.junit.Test;
+import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.events.FabClickedEvent;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.events.FabClickedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by eric.neidhardt on 20.04.2015.
  */
-public class BaseActivityTest extends AbstractBaseActivityTest
+public class SoundActivityTest extends AbstractBaseActivityTest
 {
 	@Test
 	public void testRemoveSoundFragment() throws Exception

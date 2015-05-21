@@ -8,12 +8,12 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import org.neidhardt.dynamicsoundboard.BaseActivity;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
@@ -94,7 +94,7 @@ public class SoundSheets
 			soundSheetsToRemove.add(this.adapter.getValues().get(index));
 		}
 
-		BaseActivity activity = (BaseActivity)this.parent.getActivity();
+		SoundActivity activity = (SoundActivity)this.parent.getActivity();
 		SoundSheetsManagerFragment soundSheetsManagerfragment = this.parent.getSoundSheetManagerFragment();
 		ServiceManagerFragment soundManagerFragment = this.parent.getServiceManagerFragment();
 		MusicService service = soundManagerFragment.getSoundService();

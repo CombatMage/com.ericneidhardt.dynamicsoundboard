@@ -6,7 +6,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import static org.hamcrest.core.IsEqual.equalTo;

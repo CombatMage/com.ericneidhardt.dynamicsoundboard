@@ -8,6 +8,8 @@ import de.greenrobot.event.EventBus;
 import org.acra.ACRA;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 

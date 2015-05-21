@@ -11,8 +11,8 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerCompletedEvent;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
 

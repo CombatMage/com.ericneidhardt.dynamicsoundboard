@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.neidhardt.dynamicsoundboard.BaseTest;
-import org.neidhardt.dynamicsoundboard.events.ActivityResumedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 
 import java.util.ArrayList;

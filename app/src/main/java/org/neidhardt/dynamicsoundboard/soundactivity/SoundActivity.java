@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard;
+package org.neidhardt.dynamicsoundboard.soundactivity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -17,18 +17,18 @@ import android.view.MenuItem;
 import android.view.View;
 import de.greenrobot.event.EventBus;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
+import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.AddPauseFloatingActionButton;
+import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.events.FabClickedEvent;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog;
-import org.neidhardt.dynamicsoundboard.events.ActivityResumedEvent;
-import org.neidhardt.dynamicsoundboard.events.FabClickedEvent;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStartedEvent;
 import org.neidhardt.dynamicsoundboard.events.LongTermTaskStoppedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -38,6 +38,8 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
@@ -49,11 +51,11 @@ import java.util.List;
 import java.util.Set;
 
 
-public class BaseActivity
+public class SoundActivity
 		extends
 			AppCompatActivity
 {
-	private static final String TAG = BaseActivity.class.getName();
+	private static final String TAG = SoundActivity.class.getName();
 
 	private boolean isActivityVisible = true;
 	private boolean isActionModeActive = false;
@@ -93,11 +95,11 @@ public class BaseActivity
 			Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
 			if (currentlyPlayingSounds.size() > 0)
 			{
-				fab.setPauseState();
+				EventBus.getDefault().postSticky(new ActivitySoundsStateChangedEvent(true));
 				return;
 			}
 		}
-		fab.setAddState();
+		EventBus.getDefault().postSticky(new ActivitySoundsStateChangedEvent(false));
 	}
 
 	@Override
