@@ -3,13 +3,14 @@ package org.neidhardt.dynamicsoundboard.views.progressbar;
 import android.content.Context;
 import android.util.AttributeSet;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
+import org.neidhardt.dynamicsoundboard.views.ViewPresenter;
 
 /**
  * Created by eric.neidhardt on 22.05.2015.
  */
 public class ActivityProgressBar extends SmoothProgressBar
 {
-	private ActivityProgressBarPresenter presenter;
+	private ViewPresenter<ActivityProgressBar> presenter;
 
 	public ActivityProgressBar(Context context)
 	{

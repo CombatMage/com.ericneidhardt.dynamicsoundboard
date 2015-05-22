@@ -130,7 +130,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
 				this.getServiceManagerFragment().notifyPlaylist();
 			else
-				this.getServiceManagerFragment().notifyFragment(player.getMediaPlayerData().getFragmentTag());
+				this.getServiceManagerFragment().notifyFragment(player.getMediaPlayerData().getFragmentTag()); // TODO replace this with post event
 		}
 	}
 

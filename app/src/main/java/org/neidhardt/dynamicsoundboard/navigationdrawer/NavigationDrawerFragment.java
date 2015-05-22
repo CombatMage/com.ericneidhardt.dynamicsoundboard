@@ -314,6 +314,7 @@ public class NavigationDrawerFragment
 			this.currentLayoutName.setText(layoutName);
 	}
 
+	// TODO move this to SoundSheets
 	/**
 	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished
 	 * @param event delivered SoundLoadedEvent
@@ -324,6 +325,7 @@ public class NavigationDrawerFragment
 		this.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
 	}
 
+	// TODO move this to SoundSheets
 	/**
 	 * This is called by greenRobot EventBus when LoadSoundSheetsTask has been finished loading sound sheets.
 	 * @param event delivered SoundSheetsLoadedEvent
