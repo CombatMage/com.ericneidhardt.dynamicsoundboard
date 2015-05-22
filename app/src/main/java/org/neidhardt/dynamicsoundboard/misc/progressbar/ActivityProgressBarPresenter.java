@@ -4,7 +4,6 @@ import android.view.View;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.misc.BaseViewPresenter;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStateChangedEvent;
 
 /**
@@ -27,7 +26,7 @@ public class ActivityProgressBarPresenter extends BaseViewPresenter<ActivityProg
 	public void onEventMainThread(LongTermTaskStateChangedEvent event)
 	{
 		Logger.d(TAG, "onEvent() " + event);
-		int countOngingTasks = LongTermTask.getTaskCounter();
+		int countOngingTasks = event.getNrOngoingTasks();
 
 		if (countOngingTasks > 0)
 			this.showProgressBar(true);

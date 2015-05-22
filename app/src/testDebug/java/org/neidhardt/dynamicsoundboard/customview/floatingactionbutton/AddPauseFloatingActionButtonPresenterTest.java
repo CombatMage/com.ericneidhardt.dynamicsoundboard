@@ -43,11 +43,11 @@ public class AddPauseFloatingActionButtonPresenterTest extends BaseTest {
 	public void testOnActivitySoundsStateChangedEvent() throws Exception
 	{
 		this.fabPresenter.isStatePause = false;
-		this.fabPresenter.onEvent(new ActivitySoundsStateChangedEvent(true));
+		this.fabPresenter.onEventMainThread(new ActivitySoundsStateChangedEvent(true));
 		verify(this.mockView, times(1)).refreshDrawableState();
 		verify(this.mockView, times(1)).animateUiChanges();
 
-		this.fabPresenter.onEvent(new ActivitySoundsStateChangedEvent(false));
+		this.fabPresenter.onEventMainThread(new ActivitySoundsStateChangedEvent(false));
 		verify(this.mockView, times(2)).refreshDrawableState();
 		verify(this.mockView, times(2)).animateUiChanges();
 	}
@@ -56,12 +56,12 @@ public class AddPauseFloatingActionButtonPresenterTest extends BaseTest {
 	public void testOnActivitySoundsStateChangedEvent_1() throws Exception
 	{
 		this.fabPresenter.isStatePause = false;
-		this.fabPresenter.onEvent(new ActivitySoundsStateChangedEvent(false));
+		this.fabPresenter.onEventMainThread(new ActivitySoundsStateChangedEvent(false));
 		verify(this.mockView, never()).refreshDrawableState();
 		verify(this.mockView, never()).animateUiChanges();
 
 		this.fabPresenter.isStatePause = true;
-		this.fabPresenter.onEvent(new ActivitySoundsStateChangedEvent(true));
+		this.fabPresenter.onEventMainThread(new ActivitySoundsStateChangedEvent(true));
 		verify(this.mockView, never()).refreshDrawableState();
 		verify(this.mockView, never()).animateUiChanges();
 	}

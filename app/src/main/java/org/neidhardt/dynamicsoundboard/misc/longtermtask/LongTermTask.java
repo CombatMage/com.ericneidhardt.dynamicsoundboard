@@ -18,7 +18,7 @@ public abstract class LongTermTask<T> extends SafeAsyncTask<T>
 	{
 		super.onPreExecute();
 		taskCounter++;
-		EventBus.getDefault().postSticky(new LongTermTaskStateChangedEvent(true));
+		EventBus.getDefault().postSticky(new LongTermTaskStateChangedEvent(true, taskCounter));
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public abstract class LongTermTask<T> extends SafeAsyncTask<T>
 	{
 		super.onSuccess(t);
 		taskCounter--;
-		EventBus.getDefault().postSticky(new LongTermTaskStateChangedEvent(false));
+		EventBus.getDefault().postSticky(new LongTermTaskStateChangedEvent(false, taskCounter));
 	}
 
 	@Override
@@ -35,14 +35,10 @@ public abstract class LongTermTask<T> extends SafeAsyncTask<T>
 		super.onException(e);
 		Logger.e(getTag(), e.getMessage());
 		taskCounter--;
-		EventBus.getDefault().postSticky(new LongTermTaskStateChangedEvent(false));
+		EventBus.getDefault().postSticky(new LongTermTaskStateChangedEvent(false, taskCounter));
 		throw new RuntimeException(e);
 	}
 
 	protected abstract String getTag();
 
-	public static int getTaskCounter()
-	{
-		return taskCounter;
-	}
 }
