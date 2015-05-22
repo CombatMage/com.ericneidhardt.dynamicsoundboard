@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import de.greenrobot.event.EventBus;
-import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.AddPauseFloatingActionButton;
@@ -25,15 +24,12 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog;
-import org.neidhardt.dynamicsoundboard.events.LongTermTaskStartedEvent;
-import org.neidhardt.dynamicsoundboard.events.LongTermTaskStoppedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
-import org.neidhardt.dynamicsoundboard.misc.progressbar.ProgressbarHandler;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
@@ -62,7 +58,6 @@ public class SoundActivity
 
 	private DrawerLayout navigationDrawerLayout;
 	private ActionBarDrawerToggle drawerToggle;
-	private ProgressbarHandler progressBarHandler;
 
 	private PauseSoundOnCallListener phoneStateListener;
 
@@ -74,7 +69,6 @@ public class SoundActivity
 
 		this.initActionbar();
 		this.initNavigationDrawer();
-		this.initProgressBar();
 
 		this.addSoundSheetManagerFragment();
 		this.addSoundManagerFragment();
@@ -160,11 +154,6 @@ public class SoundActivity
 			this.drawerToggle.setDrawerIndicatorEnabled(true);
 			this.navigationDrawerLayout.setDrawerListener(drawerToggle);
 		}
-	}
-
-	private void initProgressBar()
-	{
-		this.progressBarHandler = new ProgressbarHandler((SmoothProgressBar) this.findViewById(R.id.progressbar));
 	}
 
 	@Override
@@ -270,26 +259,6 @@ public class SoundActivity
 	public void onEvent(MediaPlayerStateChangedEvent event)
 	{
 		this.setFloatActionButton();
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case a background task starts his execution
-	 * @param event delivered LongTermTaskStartedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEvent(LongTermTaskStartedEvent event)
-	{
-		this.progressBarHandler.onEvent(event);
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case a background task finishes his execution
-	 * @param event delivered LongTermTaskStartedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEvent(LongTermTaskStoppedEvent event)
-	{
-		this.progressBarHandler.onEvent(event);
 	}
 
 	/**

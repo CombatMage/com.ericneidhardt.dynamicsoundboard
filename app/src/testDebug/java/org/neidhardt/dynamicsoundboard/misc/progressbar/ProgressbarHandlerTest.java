@@ -5,8 +5,7 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import org.junit.Before;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.BaseTest;
-import org.neidhardt.dynamicsoundboard.events.LongTermTaskStartedEvent;
-import org.neidhardt.dynamicsoundboard.events.LongTermTaskStoppedEvent;
+import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStateChangedEvent;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -60,7 +59,7 @@ public class ProgressbarHandlerTest extends BaseTest
 	@Test
 	public void testOnEvent1() throws Exception
 	{
-		LongTermTaskStartedEvent event = mock(LongTermTaskStartedEvent.class);
+		LongTermTaskStateChangedEvent event = mock(LongTermTaskStateChangedEvent.class);
 
 		this.progressbarHandler.onEvent(event);
 		this.progressbarHandler.onEvent(event);
@@ -74,7 +73,7 @@ public class ProgressbarHandlerTest extends BaseTest
 	@Test
 	public void testOnEvent2() throws Exception
 	{
-		LongTermTaskStartedEvent startedEvent = mock(LongTermTaskStartedEvent.class);
+		LongTermTaskStateChangedEvent startedEvent = mock(LongTermTaskStateChangedEvent.class);
 
 		this.progressbarHandler.onEvent(startedEvent);
 

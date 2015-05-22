@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
-import org.neidhardt.dynamicsoundboard.misc.progressbar.LongTermTask;
+import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.io.File;

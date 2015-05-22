@@ -1,8 +1,8 @@
 package org.neidhardt.dynamicsoundboard.customview.floatingactionbutton;
 
 import de.greenrobot.event.EventBus;
-import org.neidhardt.dynamicsoundboard.customview.BaseViewPresenter;
 import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.events.FabClickedEvent;
+import org.neidhardt.dynamicsoundboard.misc.BaseViewPresenter;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
 
 /**
@@ -26,7 +26,7 @@ public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter
 	 * @param event delivered ActivitySoundsStateChangedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(ActivitySoundsStateChangedEvent event)
+	public void onEventMainThread(ActivitySoundsStateChangedEvent event)
 	{
 		AddPauseFloatingActionButton button = this.getView();
 		if (button == null)

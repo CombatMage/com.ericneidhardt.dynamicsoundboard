@@ -1,9 +1,9 @@
-package org.neidhardt.dynamicsoundboard;
+package org.neidhardt.dynamicsoundboard.soundactivity;
 
 
 import android.app.Fragment;
+import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
@@ -15,7 +15,7 @@ public abstract class BaseFragment extends Fragment
 		return (SoundActivity)this.getActivity();
 	}
 
-	protected NavigationDrawerFragment getNavigationDrawerFragment()
+	public NavigationDrawerFragment getNavigationDrawerFragment()
 	{
 		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
 	}
