@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.views.progressbar;
 
 import android.view.View;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.views.BaseViewPresenter;
@@ -15,8 +14,8 @@ public class ActivityProgressBarPresenter extends BaseViewPresenter<ActivityProg
 
 	ActivityProgressBarPresenter()
 	{
+		super();
 		this.showProgressBar(false);
-		this.setBus(EventBus.getDefault());
 	}
 	/**
 	 * This is called by greenRobot EventBus in case a background task starts or finishes his execution

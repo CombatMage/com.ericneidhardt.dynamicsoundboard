@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton;
 
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.views.BaseViewPresenter;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
@@ -11,11 +10,6 @@ import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClic
 public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter<AddPauseFloatingActionButton>
 {
 	boolean isStatePause = false;
-
-	AddPauseFloatingActionButtonViewPresenter()
-	{
-		this.setBus(EventBus.getDefault());
-	}
 
 	void onFabClicked()
 	{

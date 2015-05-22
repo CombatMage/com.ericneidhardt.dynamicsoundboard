@@ -11,9 +11,14 @@ public abstract class BaseViewPresenter<T extends View> implements ViewPresenter
 	private T view;
 	EventBus bus;
 
+	public BaseViewPresenter()
+	{
+		this.bus = EventBus.getDefault();
+	}
+
 	public EventBus getBus()
 	{
-		return bus;
+		return this.bus;
 	}
 
 	public void setBus(EventBus bus)
