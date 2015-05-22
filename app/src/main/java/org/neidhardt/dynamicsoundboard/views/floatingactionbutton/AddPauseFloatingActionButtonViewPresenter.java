@@ -17,7 +17,8 @@ public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter
 		this.setBus(EventBus.getDefault());
 	}
 
-	void onFabClicked() {
+	void onFabClicked()
+	{
 		this.getBus().post(new FabClickedEvent());
 	}
 
@@ -28,10 +29,6 @@ public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter
 	@SuppressWarnings("unused")
 	public void onEventMainThread(ActivitySoundsStateChangedEvent event)
 	{
-		AddPauseFloatingActionButton button = this.getView();
-		if (button == null)
-			return;
-		
 		this.changeState(event.isAnySoundPlaying());
 	}
 
@@ -43,11 +40,11 @@ public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter
 		this.isStatePause = isStatePause;
 
 		AddPauseFloatingActionButton button = this.getView();
-		if (button == null)
-			return;
-
-		button.refreshDrawableState();
-		button.animateUiChanges();
+		if (button != null)
+		{
+			button.refreshDrawableState();
+			button.animateUiChanges();
+		}
 	}
 
 	public boolean isStatePause()
