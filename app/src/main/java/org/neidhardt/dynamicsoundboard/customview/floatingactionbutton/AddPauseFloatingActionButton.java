@@ -14,8 +14,6 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 {
 	private static final int[] PAUSE_STATE = new int[] { R.attr.state_pause };
 
-	private boolean isStatePause = false;
-
 	private AddPauseFloatingActionButtonViewPresenter presenter;
 
 	@SuppressWarnings("unused")
@@ -76,29 +74,14 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 	public int[] onCreateDrawableState(int extraSpace)
 	{
 		int[] state = super.onCreateDrawableState(extraSpace + PAUSE_STATE.length);
-		if (this.isStatePause)
+		if (this.presenter != null && this.presenter.isStatePause())
 			mergeDrawableStates(state, PAUSE_STATE);
 
 		return state;
 	}
 
-	void setPauseState()
+	void animateUiChanges()
 	{
-		if (this.isStatePause)
-			return;
-		this.isStatePause = true;
-		refreshDrawableState();
-
-		this.post(this);
-	}
-
-	void setAddState()
-	{
-		if (!this.isStatePause)
-			return;
-		this.isStatePause = false;
-		refreshDrawableState();
-
 		this.post(this);
 	}
 

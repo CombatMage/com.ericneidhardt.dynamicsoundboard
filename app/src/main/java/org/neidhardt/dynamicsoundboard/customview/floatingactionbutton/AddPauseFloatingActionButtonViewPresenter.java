@@ -10,13 +10,14 @@ import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateC
  */
 public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter<AddPauseFloatingActionButton>
 {
+	boolean isStatePause = false;
+
 	AddPauseFloatingActionButtonViewPresenter()
 	{
 		this.setBus(EventBus.getDefault());
 	}
 
-	void onFabClicked()
-	{
+	void onFabClicked() {
 		this.getBus().post(new FabClickedEvent());
 	}
 
@@ -30,10 +31,27 @@ public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter
 		AddPauseFloatingActionButton button = this.getView();
 		if (button == null)
 			return;
-		if (event.isAnySoundPlaying())
-			button.setPauseState();
-		else
-			button.setAddState();
+		
+		this.changeState(event.isAnySoundPlaying());
 	}
 
+	private void changeState(boolean isStatePause)
+	{
+		if (this.isStatePause == isStatePause)
+			return;
+
+		this.isStatePause = isStatePause;
+
+		AddPauseFloatingActionButton button = this.getView();
+		if (button == null)
+			return;
+
+		button.refreshDrawableState();
+		button.animateUiChanges();
+	}
+
+	public boolean isStatePause()
+	{
+		return isStatePause;
+	}
 }
