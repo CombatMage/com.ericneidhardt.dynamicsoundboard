@@ -12,12 +12,12 @@ import android.view.View;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
-import org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
+import org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText;
 
 import java.io.File;
 import java.io.IOException;

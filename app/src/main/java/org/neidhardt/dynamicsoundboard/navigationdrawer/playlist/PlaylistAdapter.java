@@ -9,12 +9,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
 
 import java.util.ArrayList;
 import java.util.List;

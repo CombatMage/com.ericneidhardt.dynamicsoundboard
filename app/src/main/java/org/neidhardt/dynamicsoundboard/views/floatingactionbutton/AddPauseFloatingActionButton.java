@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.customview.floatingactionbutton;
+package org.neidhardt.dynamicsoundboard.views.floatingactionbutton;
 
 import android.animation.Animator;
 import android.content.Context;

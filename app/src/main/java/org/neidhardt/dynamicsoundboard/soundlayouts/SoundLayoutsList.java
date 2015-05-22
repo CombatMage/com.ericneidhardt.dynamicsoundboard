@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
+import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;

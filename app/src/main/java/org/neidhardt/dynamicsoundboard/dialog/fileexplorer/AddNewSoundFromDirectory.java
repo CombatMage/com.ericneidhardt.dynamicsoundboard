@@ -10,9 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromFileListTask;
+import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
 
 import java.io.File;
 import java.util.ArrayList;

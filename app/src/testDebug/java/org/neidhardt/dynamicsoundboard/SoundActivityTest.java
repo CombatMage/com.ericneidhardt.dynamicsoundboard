@@ -1,11 +1,11 @@
 package org.neidhardt.dynamicsoundboard;
 
 import org.junit.Test;
-import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.events.FabClickedEvent;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
+import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;

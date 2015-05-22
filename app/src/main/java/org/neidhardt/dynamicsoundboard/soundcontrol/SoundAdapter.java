@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.DismissibleItemViewHolder;
-import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dialog.soundsettings.RenameSoundFileDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundsettings.SoundSettingsDialog;
@@ -17,6 +15,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.views.DismissibleItemViewHolder;
+import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 
 import java.util.ArrayList;
 import java.util.List;

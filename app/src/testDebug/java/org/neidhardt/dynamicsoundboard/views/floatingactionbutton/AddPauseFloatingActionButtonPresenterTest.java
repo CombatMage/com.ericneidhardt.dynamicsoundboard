@@ -1,12 +1,12 @@
-package org.neidhardt.dynamicsoundboard.customview.floatingactionbutton;
+package org.neidhardt.dynamicsoundboard.views.floatingactionbutton;
 
 import de.greenrobot.event.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.neidhardt.dynamicsoundboard.BaseTest;
-import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.events.FabClickedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
 import static org.mockito.Mockito.*;
 

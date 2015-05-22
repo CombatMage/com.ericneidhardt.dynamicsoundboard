@@ -18,8 +18,6 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDialog;
-import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
-import org.neidhardt.dynamicsoundboard.events.SoundSheetsLoadedEvent;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter;
@@ -29,7 +27,9 @@ import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsListAdapter;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
 
 public class NavigationDrawerFragment
 		extends

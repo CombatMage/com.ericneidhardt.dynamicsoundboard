@@ -5,7 +5,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText;
+import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
 
 /**
  * Created by eric.neidhardt on 12.02.2015.

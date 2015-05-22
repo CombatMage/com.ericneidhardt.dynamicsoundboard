@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.customview;
+package org.neidhardt.dynamicsoundboard.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;

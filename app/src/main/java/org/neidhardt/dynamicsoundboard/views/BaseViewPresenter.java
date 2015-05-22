@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.misc;
+package org.neidhardt.dynamicsoundboard.views;
 
 import android.view.View;
 import de.greenrobot.event.EventBus;

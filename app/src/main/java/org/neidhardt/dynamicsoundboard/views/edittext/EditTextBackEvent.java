@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.customview.edittext;
+package org.neidhardt.dynamicsoundboard.views.edittext;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

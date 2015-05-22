@@ -6,8 +6,8 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
+import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 
 /**
  * Created by eric.neidhardt on 12.03.2015.

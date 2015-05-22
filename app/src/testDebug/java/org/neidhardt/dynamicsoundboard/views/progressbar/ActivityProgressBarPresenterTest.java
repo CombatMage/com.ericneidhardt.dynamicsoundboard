@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.misc.progressbar;
+package org.neidhardt.dynamicsoundboard.views.progressbar;
 
 import android.view.View;
 import org.junit.Before;

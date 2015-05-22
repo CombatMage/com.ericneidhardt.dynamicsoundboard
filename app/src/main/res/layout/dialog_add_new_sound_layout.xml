@@ -18,7 +18,7 @@
 			android:textSize="@dimen/text_headline"
 			android:text="@string/dialog_add_new_sound_layout_title"/>
 
-	<org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText
+	<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
 			android:id="@+id/et_name_sound_layout"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

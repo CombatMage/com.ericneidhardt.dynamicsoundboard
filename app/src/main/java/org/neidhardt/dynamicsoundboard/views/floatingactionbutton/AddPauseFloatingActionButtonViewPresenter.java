@@ -1,9 +1,9 @@
-package org.neidhardt.dynamicsoundboard.customview.floatingactionbutton;
+package org.neidhardt.dynamicsoundboard.views.floatingactionbutton;
 
 import de.greenrobot.event.EventBus;
-import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.events.FabClickedEvent;
-import org.neidhardt.dynamicsoundboard.misc.BaseViewPresenter;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.views.BaseViewPresenter;
+import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
 /**
  * Created by eric.neidhardt on 21.05.2015.

@@ -68,7 +68,7 @@
 				android:textColor="@color/text_header"
 				android:textSize="@dimen/text_title"/>
 
-		<org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText
+		<org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText
 				android:id="@+id/et_set_label"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

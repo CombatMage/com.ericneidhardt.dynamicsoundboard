@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.events;
+package org.neidhardt.dynamicsoundboard.soundsheetmanagement.events;
 
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 

@@ -9,11 +9,11 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;

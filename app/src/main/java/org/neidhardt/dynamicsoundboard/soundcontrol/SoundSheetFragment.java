@@ -14,14 +14,11 @@ import android.view.ViewGroup;
 import com.emtronics.dragsortrecycler.DragSortRecycler;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.DividerItemDecoration;
-import org.neidhardt.dynamicsoundboard.customview.floatingactionbutton.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundsDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectory;
-import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
@@ -30,6 +27,9 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
+import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton;
 
 import java.util.Collections;
 

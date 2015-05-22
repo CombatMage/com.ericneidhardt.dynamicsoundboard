@@ -3,8 +3,8 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.events.SoundSheetsLoadedEvent;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
 
 import java.util.List;
 

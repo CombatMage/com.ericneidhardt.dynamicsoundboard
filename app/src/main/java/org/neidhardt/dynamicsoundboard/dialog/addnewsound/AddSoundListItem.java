@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.customview.edittext.CustomEditText;
+import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 
 public class AddSoundListItem extends LinearLayout implements TextWatcher
 {

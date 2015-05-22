@@ -1,10 +1,10 @@
-package org.neidhardt.dynamicsoundboard.misc.progressbar;
+package org.neidhardt.dynamicsoundboard.views.progressbar;
 
 import android.view.View;
 import de.greenrobot.event.EventBus;
-import org.neidhardt.dynamicsoundboard.misc.BaseViewPresenter;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.views.BaseViewPresenter;
 
 /**
  * Created by eric.neidhardt on 22.05.2015.

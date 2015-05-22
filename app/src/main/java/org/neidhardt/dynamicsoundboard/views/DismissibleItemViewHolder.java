@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.customview;
+package org.neidhardt.dynamicsoundboard.views;
 
 
 import android.os.Handler;

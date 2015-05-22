@@ -16,13 +16,13 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundsettings.RenameSoundFileDialog;
-import org.neidhardt.dynamicsoundboard.events.PlayListLoadedEvent;
-import org.neidhardt.dynamicsoundboard.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
