@@ -19,6 +19,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
@@ -310,6 +311,16 @@ public class SoundSheetsManagerFragment
 		SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetsManagerFragment.this.soundSheets);
 		if (selectedSoundSheet != null)
 			activity.openSoundFragment(selectedSoundSheet);
+	}
+
+	/**
+	 * Called by LoadSoundSheetsTask when loading of soundsheets has been finished.
+	 * @param event delivered SoundSheetsLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(SoundSheetsRemovedEvent event)
+	{
+		this.remove(event.getRemovedSoundSheet(), false);
 	}
 
 	private SoundSheet findSelectedAndSelectRemaining(List<SoundSheet> soundSheets)

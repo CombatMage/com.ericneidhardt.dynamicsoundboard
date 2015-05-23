@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
@@ -66,6 +67,22 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 			this.playlist.setLayoutManager(new LinearLayoutManager(context));
 			this.playlist.setItemAnimator(new DefaultItemAnimator());
 		}
+	}
+
+	@Override
+	protected void onAttachedToWindow()
+	{
+		super.onAttachedToWindow();
+		EventBus bus = EventBus.getDefault();
+		if (!bus.isRegistered(this.adapter))
+			bus.register(this.adapter);
+	}
+
+	@Override
+	protected void onDetachedFromWindow()
+	{
+		EventBus.getDefault().unregister(this.adapter);
+		super.onDetachedFromWindow();
 	}
 
 	public void setAdapter(PlaylistAdapter adapter)

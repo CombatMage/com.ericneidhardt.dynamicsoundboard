@@ -11,6 +11,8 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +81,26 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 			List<EnhancedMediaPlayer> sounds = fragment.getSounds().get(data.getFragmentTag());
 			holder.setSoundCount(sounds != null ? sounds.size() : 0);
 		}
+	}
+
+	/**
+	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished
+	 * @param event delivered SoundLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(SoundLoadedEvent event)
+	{
+		this.notifyDataSetChanged(); // updates sound count in sound sheet list
+	}
+
+	/**
+	 * This is called by greenRobot EventBus when LoadSoundSheetsTask has been finished loading sound sheets.
+	 * @param event delivered SoundSheetsLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(SoundSheetsLoadedEvent event)
+	{
+		this.notifyDataSetChanged();
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener

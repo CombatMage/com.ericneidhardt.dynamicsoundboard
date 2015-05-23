@@ -10,11 +10,13 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
@@ -455,7 +457,7 @@ public class MusicService extends Service
 	{
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)
-			throw new NullPointerException(TAG + ": onEvent() delivered data is null");
+			throw new NullPointerException(TAG + ": onEvent() delivered data is null " + event);
 
 		if (this.searchForId(data.getFragmentTag(), data.getPlayerId()) != null)
 		{
@@ -479,6 +481,22 @@ public class MusicService extends Service
 				soundsDao.insert(player.getMediaPlayerData());
 			}
 		}
+	}
+
+	/**
+	 * This is called by greenRobot EventBus in case a sound sheet was removed.
+	 * playlist entries.
+	 * @param event delivered SoundSheetsRemovedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(SoundSheetsRemovedEvent event)
+	{
+		SoundSheet soundSheet = event.getRemovedSoundSheet();
+		if (soundSheet == null)
+			throw new NullPointerException(TAG + ": onEvent() delivered Data is null " + event);
+
+		List<EnhancedMediaPlayer> soundsInSoundSheet = this.getSounds().get(soundSheet.getFragmentTag());
+		this.removeSounds(soundsInSoundSheet);
 	}
 
 	/**

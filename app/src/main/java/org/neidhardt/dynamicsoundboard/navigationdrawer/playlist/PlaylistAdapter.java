@@ -12,6 +12,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
@@ -101,7 +102,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	}
 
 	/**
-	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
+	 * This is called by greenRobot EventBus in case a mediaplayer changed his state.
 	 * @param event delivered MediaPlayerStateChangedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -111,7 +112,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	}
 
 	/**
-	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
+	 * This is called by greenRobot EventBus in case a mediaplayer changed his state.
 	 * @param event delivered MediaPlayerStateChangedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -133,7 +134,18 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	}
 
 	/**
-	 * This is called by greenRobot EventBus in case loading the playlist from MusicService has finished
+	 * This is called by greenRobot EventBus in case a sound sheet was removed. Retrieve new data, because this soundsheet might contains
+	 * playlist entries.
+	 * @param event delivered SoundSheetsRemovedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(SoundSheetsRemovedEvent event)
+	{
+		this.notifyDataSetChanged();
+	}
+
+	/**
+	 * This is called by greenRobot EventBus in case loading the playlist from MusicService has finished.
 	 * @param event delivered PlayListLoadedEvent
 	 */
 	@SuppressWarnings("unused")

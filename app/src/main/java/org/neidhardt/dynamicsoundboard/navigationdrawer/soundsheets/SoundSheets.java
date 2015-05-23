@@ -8,14 +8,11 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
-import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
-import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -35,33 +32,27 @@ public class SoundSheets
 	public SoundSheets(Context context)
 	{
 		super(context);
-		this.inflateLayout(context);
-		this.initRecycleView(context);
+		this.init(context);
 	}
 
 	@SuppressWarnings("unused")
 	public SoundSheets(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
-		this.inflateLayout(context);
-		this.initRecycleView(context);
+		this.init(context);
 	}
 
 	@SuppressWarnings("unused")
 	public SoundSheets(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
-		this.inflateLayout(context);
-		this.initRecycleView(context);
+		this.init(context);
 	}
 
-	private void inflateLayout(Context context)
+	private void init(Context context)
 	{
 		LayoutInflater.from(context).inflate(R.layout.view_sound_sheets, this, true);
-	}
 
-	private void initRecycleView(Context context)
-	{
 		this.soundSheets = (RecyclerView)this.findViewById(R.id.rv_sound_sheets);
 		if (!this.isInEditMode())
 		{
@@ -71,6 +62,7 @@ public class SoundSheets
 		}
 	}
 
+	@Deprecated
 	public void setAdapter(SoundSheetsAdapter adapter)
 	{
 		this.adapter = adapter;
@@ -94,30 +86,16 @@ public class SoundSheets
 			soundSheetsToRemove.add(this.adapter.getValues().get(index));
 		}
 
-		SoundActivity activity = (SoundActivity)this.parent.getActivity();
-		SoundSheetsManagerFragment soundSheetsManagerfragment = this.parent.getSoundSheetManagerFragment();
-		ServiceManagerFragment soundManagerFragment = this.parent.getServiceManagerFragment();
-		MusicService service = soundManagerFragment.getSoundService();
-
 		for (SoundSheet soundSheet: soundSheetsToRemove)
 		{
-			List<EnhancedMediaPlayer> soundsInSoundSheet = soundManagerFragment.getSounds().get(soundSheet.getFragmentTag());
-
-			soundSheetsManagerfragment.remove(soundSheet, false);
-			service.removeSounds(soundsInSoundSheet);
-			activity.removeSoundFragment(soundSheet);
-
+			EventBus.getDefault().post(new SoundSheetsRemovedEvent(soundSheet));
 			if (soundSheet.getIsSelected())
 			{
 				List<SoundSheet> remainingSoundSheets = this.adapter.getValues();
 				if (remainingSoundSheets.size() > 0)
-				{
 					this.adapter.setSelectedItem(0);
-					this.parent.getBaseActivity().openSoundFragment(remainingSoundSheets.get(0));
-				}
 			}
 		}
-		soundManagerFragment.notifyPlaylist();
 		this.adapter.notifyDataSetChanged();
 	}
 

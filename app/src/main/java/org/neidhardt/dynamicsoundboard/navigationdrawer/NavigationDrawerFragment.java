@@ -27,9 +27,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsListAdapter;
 import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
 
 public class NavigationDrawerFragment
 		extends
@@ -178,9 +176,6 @@ public class NavigationDrawerFragment
 		EventBus bus = EventBus.getDefault();
 		if (!bus.isRegistered(this.playlistAdapter))
 			bus.register(this.playlistAdapter);
-
-		if (!EventBus.getDefault().isRegistered(this))
-			bus.register(this);
 	}
 
 	@Override
@@ -188,7 +183,6 @@ public class NavigationDrawerFragment
 	{
 		super.onStop();
 		EventBus.getDefault().unregister(this.playlistAdapter);
-		EventBus.getDefault().unregister(this);
 	}
 
 	@Override
@@ -312,28 +306,6 @@ public class NavigationDrawerFragment
 	{
 		if (this.currentLayoutName != null)
 			this.currentLayoutName.setText(layoutName);
-	}
-
-	// TODO move this to SoundSheets
-	/**
-	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished
-	 * @param event delivered SoundLoadedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(SoundLoadedEvent event)
-	{
-		this.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
-	}
-
-	// TODO move this to SoundSheets
-	/**
-	 * This is called by greenRobot EventBus when LoadSoundSheetsTask has been finished loading sound sheets.
-	 * @param event delivered SoundSheetsLoadedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(SoundSheetsLoadedEvent event)
-	{
-		this.getSoundSheetsAdapter().notifyDataSetChanged();
 	}
 
 	/**
