@@ -40,6 +40,7 @@ public abstract class NavigationDrawerList
 		else
 			this.selectedItems.put(indexOfSelectedItem, view);
 
+		// TODO send action mode event
 		this.actionMode.invalidate(); // update item count in cab
 
 		view.setSelected(!view.isSelected());
@@ -50,12 +51,12 @@ public abstract class NavigationDrawerList
 		if (this.parent == null)
 			throw new NullPointerException("Cannot prepare deletion, because the containing fragment is null");
 
-		this.actionMode = this.parent.getBaseActivity().startSupportActionMode(this);
+		this.actionMode = this.parent.getBaseActivity().startSupportActionMode(this); // TODO send action mode event
 	}
 
 	public void deleteSelected()
 	{
-		actionMode.finish();
+		this.actionMode.finish(); // TODO send action mode event
 		onDeleteSelected(selectedItems);
 	}
 

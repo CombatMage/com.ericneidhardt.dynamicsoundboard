@@ -28,7 +28,9 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.StartActionModeEvent;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
@@ -250,6 +252,29 @@ public class SoundActivity
 
 		viewState = !enable ? View.VISIBLE : View.GONE;
 		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
+	}
+
+	/**
+	 * This is called by greenRobot EventBus in case a sound sheet should be opened by the activity.
+	 * playlist entries.
+	 * @param event delivered OpenSoundSheetEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(OpenSoundSheetEvent event)
+	{
+		this.openSoundFragment(event.getSoundSheet());
+	}
+
+	// TODO update doc
+	/**
+	 * This is called by greenRobot EventBus in case a sound sheet should be opened by the activity.
+	 * playlist entries.
+	 * @param event delivered OpenSoundSheetEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(StartActionModeEvent event)
+	{
+		// TODO handle events
 	}
 
 	/**
