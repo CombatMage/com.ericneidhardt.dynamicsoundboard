@@ -98,6 +98,8 @@ public abstract class NavigationDrawerList
 		this.isInSelectionMode = false;
 		for(int i = 0; i < this.selectedItems.size(); i++)
 			this.selectedItems.valueAt(i).setSelected(false);
+
+		EventBus.getDefault().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOPPED));
 	}
 
 	public void setParentFragment(NavigationDrawerFragment parent)

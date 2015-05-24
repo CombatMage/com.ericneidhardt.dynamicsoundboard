@@ -53,6 +53,7 @@ public class SoundSheets
 	private void init(Context context)
 	{
 		this.adapter = new SoundSheetsAdapter();
+		this.adapter.setOnItemClickListener(this);
 
 		LayoutInflater.from(context).inflate(R.layout.view_sound_sheets, this, true);
 

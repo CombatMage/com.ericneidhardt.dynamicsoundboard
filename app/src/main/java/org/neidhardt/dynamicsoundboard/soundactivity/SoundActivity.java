@@ -275,17 +275,22 @@ public class SoundActivity
 	public void onEvent(ActionModeEvent event)
 	{
 		ActionModeEvent.REQUEST requestedAction = event.getRequestedAction();
-		switch (requestedAction)
+		if (requestedAction == ActionModeEvent.REQUEST.START)
 		{
-			case START:
-				this.actionMode = this.startSupportActionMode(event.getActionModeCallback());
-				return;
-			case STOP:
+			this.actionMode = this.startSupportActionMode(event.getActionModeCallback());
+			return;
+		}
+		if (this.actionMode != null)
+		{
+			if (requestedAction == ActionModeEvent.REQUEST.STOP)
+			{
 				this.actionMode.finish();
 				this.actionMode = null;
-				return;
-			case INVALIDATE:
+			}
+			else if (requestedAction == ActionModeEvent.REQUEST.INVALIDATE)
+			{
 				this.actionMode.invalidate();
+			}
 		}
 	}
 

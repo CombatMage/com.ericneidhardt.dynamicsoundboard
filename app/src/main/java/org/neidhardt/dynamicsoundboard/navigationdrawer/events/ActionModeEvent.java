@@ -11,7 +11,8 @@ public class ActionModeEvent
 	{
 		START,
 		STOP,
-		INVALIDATE
+		INVALIDATE,
+		STOPPED // not really a request, but used to transform a click on action mode finish button into an action
 	}
 
 	private android.support.v7.view.ActionMode.Callback actionModeCallback;

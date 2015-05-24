@@ -284,7 +284,7 @@ public class NavigationDrawerFragment
 			case START:
 				this.onActionModeStart();
 				return;
-			case STOP:
+			case STOPPED:
 				this.onActionModeFinished();
 		}
 	}
