@@ -19,6 +19,7 @@ import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets;
@@ -40,6 +41,8 @@ public class NavigationDrawerFragment
 
 	private static final int INDEX_SOUND_SHEETS = 0;
 	private static final int INDEX_PLAYLIST = 1;
+
+	private EventBus bus;
 
 	private SlidingTabLayout tabBar;
 	private ViewPager tabContent;
@@ -69,6 +72,8 @@ public class NavigationDrawerFragment
 		this.tabContentAdapter = new TabContentAdapter();
 		this.soundLayoutListAdapter = new SoundLayoutsListAdapter();
 		this.playlistAdapter = new PlaylistAdapter();
+
+		this.bus = EventBus.getDefault();
 	}
 
 	@Nullable
@@ -169,16 +174,18 @@ public class NavigationDrawerFragment
 	public void onStart()
 	{
 		super.onStart();
-		EventBus bus = EventBus.getDefault();
-		if (!bus.isRegistered(this.playlistAdapter))
-			bus.register(this.playlistAdapter);
+		if (!this.bus.isRegistered(this.playlistAdapter))
+			this.bus.register(this.playlistAdapter);
+		if (!this.bus.isRegistered(this))
+			this.bus.register(this);
 	}
 
 	@Override
 	public void onStop()
 	{
 		super.onStop();
-		EventBus.getDefault().unregister(this.playlistAdapter);
+		this.bus.unregister(this.playlistAdapter);
+		this.bus.unregister(this);
 	}
 
 	@Override
@@ -263,7 +270,26 @@ public class NavigationDrawerFragment
 		this.soundLayoutListAdapter.notifyDataSetChanged();
 	}
 
-	public void onActionModeStart()
+	/**
+	 * This is called by greenRobot EventBus in case a request to change the current contextual action mode has benn submitted.
+	 * playlist entries.
+	 * @param event delivered OpenSoundSheetEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(ActionModeEvent event)
+	{
+		ActionModeEvent.REQUEST requestedAction = event.getRequestedAction();
+		switch (requestedAction)
+		{
+			case START:
+				this.onActionModeStart();
+				return;
+			case STOP:
+				this.onActionModeFinished();
+		}
+	}
+
+	private void onActionModeStart()
 	{
 		this.deleteSelected.setVisibility(View.VISIBLE);
 		int distance = this.contextualActionContainer.getWidth();
@@ -276,7 +302,7 @@ public class NavigationDrawerFragment
 				start();
 	}
 
-	public void onActionModeFinished()
+	private void onActionModeFinished()
 	{
 		this.deleteSelected.setVisibility(View.GONE);
 	}

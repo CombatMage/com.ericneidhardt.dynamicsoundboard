@@ -129,10 +129,9 @@ public class SoundSheets
 	{
 		if (super.isInSelectionMode)
 			super.onItemSelected(view, position);
-		else if (this.parent != null)
+		else
 		{
 			this.adapter.setSelectedItem(position);
-
 			EventBus.getDefault().post(new OpenSoundSheetEvent(data));
 		}
 	}

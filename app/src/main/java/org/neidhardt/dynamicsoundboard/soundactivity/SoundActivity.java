@@ -266,7 +266,6 @@ public class SoundActivity
 		this.openSoundFragment(event.getSoundSheet());
 	}
 
-	// TODO update doc
 	/**
 	 * This is called by greenRobot EventBus in case a request to change the current contextual action mode has benn submitted.
 	 * playlist entries.

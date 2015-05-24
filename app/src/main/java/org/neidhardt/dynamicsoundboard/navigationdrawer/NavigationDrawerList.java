@@ -47,9 +47,6 @@ public abstract class NavigationDrawerList
 
 	public void prepareItemDeletion()
 	{
-		if (this.parent == null)
-			throw new NullPointerException("Cannot prepare deletion, because the containing fragment is null");
-
 		EventBus.getDefault().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.START));
 	}
 
@@ -68,7 +65,6 @@ public abstract class NavigationDrawerList
 	@Override
 	public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu)
 	{
-		this.parent.onActionModeStart();
 		this.isInSelectionMode = true;
 		this.selectedItems = new SparseArray<>(this.getItemCount());
 
@@ -99,7 +95,6 @@ public abstract class NavigationDrawerList
 	@Override
 	public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode)
 	{
-		this.parent.onActionModeFinished();
 		this.isInSelectionMode = false;
 		for(int i = 0; i < this.selectedItems.size(); i++)
 			this.selectedItems.valueAt(i).setSelected(false);
