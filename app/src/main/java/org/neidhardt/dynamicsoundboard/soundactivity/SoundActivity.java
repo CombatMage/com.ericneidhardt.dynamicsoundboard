@@ -28,9 +28,9 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.StartActionModeEvent;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
@@ -61,6 +61,7 @@ public class SoundActivity
 
 	private DrawerLayout navigationDrawerLayout;
 	private ActionBarDrawerToggle drawerToggle;
+	private android.support.v7.view.ActionMode actionMode;
 
 	private PauseSoundOnCallListener phoneStateListener;
 
@@ -267,14 +268,26 @@ public class SoundActivity
 
 	// TODO update doc
 	/**
-	 * This is called by greenRobot EventBus in case a sound sheet should be opened by the activity.
+	 * This is called by greenRobot EventBus in case a request to change the current contextual action mode has benn submitted.
 	 * playlist entries.
 	 * @param event delivered OpenSoundSheetEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(StartActionModeEvent event)
+	public void onEvent(ActionModeEvent event)
 	{
-		// TODO handle events
+		ActionModeEvent.REQUEST requestedAction = event.getRequestedAction();
+		switch (requestedAction)
+		{
+			case START:
+				this.actionMode = this.startSupportActionMode(event.getActionModeCallback());
+				return;
+			case STOP:
+				this.actionMode.finish();
+				this.actionMode = null;
+				return;
+			case INVALIDATE:
+				this.actionMode.invalidate();
+		}
 	}
 
 	/**

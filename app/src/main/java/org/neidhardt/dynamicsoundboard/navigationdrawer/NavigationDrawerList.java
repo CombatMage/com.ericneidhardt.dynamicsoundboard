@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import de.greenrobot.event.EventBus;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
 
 
 public abstract class NavigationDrawerList
@@ -16,7 +18,6 @@ public abstract class NavigationDrawerList
 			android.support.v7.view.ActionMode.Callback
 {
 	protected NavigationDrawerFragment parent;
-	private android.support.v7.view.ActionMode actionMode;
 	protected boolean isInSelectionMode;
 
 	private SparseArray<View> selectedItems;
@@ -40,9 +41,7 @@ public abstract class NavigationDrawerList
 		else
 			this.selectedItems.put(indexOfSelectedItem, view);
 
-		// TODO send action mode event
-		this.actionMode.invalidate(); // update item count in cab
-
+		EventBus.getDefault().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.INVALIDATE));
 		view.setSelected(!view.isSelected());
 	}
 
@@ -51,12 +50,12 @@ public abstract class NavigationDrawerList
 		if (this.parent == null)
 			throw new NullPointerException("Cannot prepare deletion, because the containing fragment is null");
 
-		this.actionMode = this.parent.getBaseActivity().startSupportActionMode(this); // TODO send action mode event
+		EventBus.getDefault().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.START));
 	}
 
 	public void deleteSelected()
 	{
-		this.actionMode.finish(); // TODO send action mode event
+		EventBus.getDefault().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOP));
 		onDeleteSelected(selectedItems);
 	}
 
@@ -100,7 +99,6 @@ public abstract class NavigationDrawerList
 	@Override
 	public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode)
 	{
-		this.actionMode = null;
 		this.parent.onActionModeFinished();
 		this.isInSelectionMode = false;
 		for(int i = 0; i < this.selectedItems.size(); i++)
