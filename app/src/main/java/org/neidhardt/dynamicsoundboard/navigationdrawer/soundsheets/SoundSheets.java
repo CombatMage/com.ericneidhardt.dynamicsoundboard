@@ -60,14 +60,32 @@ public class SoundSheets
 			this.soundSheets.setLayoutManager(new LinearLayoutManager(context));
 			this.soundSheets.addItemDecoration(new DividerItemDecoration());
 		}
+
+		this.adapter = new SoundSheetsAdapter();
+		this.adapter.setOnItemClickListener(this);
+		this.soundSheets.setAdapter(this.adapter);
 	}
 
-	@Deprecated
-	public void setAdapter(SoundSheetsAdapter adapter)
+	@Override
+	protected void onAttachedToWindow()
 	{
-		this.adapter = adapter;
-		this.adapter.setOnItemClickListener(this);
-		this.soundSheets.setAdapter(adapter);
+		super.onAttachedToWindow();
+		if (EventBus.getDefault().isRegistered(this.adapter))
+			EventBus.getDefault().register(this.adapter);
+
+		this.adapter.notifyDataSetChanged();
+	}
+
+	@Override
+	protected void onDetachedFromWindow()
+	{
+		EventBus.getDefault().unregister(this);
+		super.onDetachedFromWindow();
+	}
+
+	public SoundSheetsAdapter getAdapter()
+	{
+		return adapter;
 	}
 
 	@Override

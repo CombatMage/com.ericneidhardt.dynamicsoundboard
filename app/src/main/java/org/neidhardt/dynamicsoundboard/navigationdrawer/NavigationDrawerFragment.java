@@ -52,8 +52,6 @@ public class NavigationDrawerFragment
 	private Playlist playlist;
 	private PlaylistAdapter playlistAdapter;
 	private SoundSheets soundSheets;
-	private SoundSheetsAdapter soundSheetsAdapter;
-
 	private TextView currentLayoutName;
 
 	private View contextualActionContainer;
@@ -71,7 +69,6 @@ public class NavigationDrawerFragment
 		this.tabContentAdapter = new TabContentAdapter();
 		this.soundLayoutListAdapter = new SoundLayoutsListAdapter();
 		this.playlistAdapter = new PlaylistAdapter();
-		this.soundSheetsAdapter = new SoundSheetsAdapter();
 	}
 
 	@Nullable
@@ -107,7 +104,6 @@ public class NavigationDrawerFragment
 		this.initPlayListAndAdapter();
 
 		this.soundSheets = (SoundSheets) fragmentView.findViewById(R.id.sound_sheets);
-		this.soundSheets.setAdapter(this.soundSheetsAdapter);
 		this.initSoundSheetsAndAdapter();
 
 		return fragmentView;
@@ -135,7 +131,7 @@ public class NavigationDrawerFragment
 		this.adjustViewPagerToContent();
 
 		this.playlistAdapter.registerAdapterDataObserver(this.listObserver);
-		this.soundSheetsAdapter.registerAdapterDataObserver(this.listObserver);
+		this.soundSheets.getAdapter().registerAdapterDataObserver(this.listObserver);
 	}
 
 	/**
@@ -156,8 +152,8 @@ public class NavigationDrawerFragment
 	private void initSoundSheetsAndAdapter()
 	{
 		this.soundSheets.setParentFragment(this);
-		this.soundSheetsAdapter.setNavigationDrawerFragment(this);
-		this.soundSheetsAdapter.notifyDataSetChanged();
+		this.soundSheets.getAdapter().setNavigationDrawerFragment(this);
+		this.soundSheets.getAdapter().notifyDataSetChanged();
 	}
 
 	private void initPlayListAndAdapter()
@@ -192,7 +188,7 @@ public class NavigationDrawerFragment
 
 		EventBus.getDefault().unregister(this.playlistAdapter);
 		this.playlistAdapter.unregisterAdapterDataObserver(this.listObserver);
-		this.soundSheetsAdapter.unregisterAdapterDataObserver(this.listObserver);
+		this.soundSheets.getAdapter().unregisterAdapterDataObserver(this.listObserver);
 
 		this.playlistAdapter.stopProgressUpdateTimer();
 		this.playlist.setParentFragment(null);
@@ -319,7 +315,7 @@ public class NavigationDrawerFragment
 		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
 		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);
 
-		int soundSheetCount = this.soundSheetsAdapter.getItemCount();
+		int soundSheetCount = this.getSoundSheetManagerFragment().getSoundSheets().size();
 		int playListCount = this.playlistAdapter.getItemCount();
 
 		int heightSoundSheetChildren = soundSheetCount * childHeight;
@@ -339,7 +335,7 @@ public class NavigationDrawerFragment
 
 	public SoundSheetsAdapter getSoundSheetsAdapter()
 	{
-		return this.soundSheetsAdapter;
+		return this.soundSheets.getAdapter();
 	}
 
 	public Playlist getPlaylist()
