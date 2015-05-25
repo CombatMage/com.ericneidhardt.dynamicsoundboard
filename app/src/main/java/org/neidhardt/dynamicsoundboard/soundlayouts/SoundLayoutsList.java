@@ -10,10 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundLayoutChangedEvent;
 import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 		manager.delete(soundLayoutsToRemove);
 		this.adapter.notifyDataSetChanged();
 
-		this.parent.setLayoutName(manager.getActiveSoundLayout().getLabel());
+		EventBus.getDefault().post(new SoundLayoutChangedEvent(manager.getActiveSoundLayout()));
 	}
 
 	@Override
@@ -102,14 +103,10 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 	{
 		if (super.isInSelectionMode)
 			super.onItemSelected(view, position);
-		else if (this.parent != null)
+		else
 		{
 			this.adapter.setSelectedItem(position);
-
-			SoundActivity activity = this.parent.getBaseActivity();
-			activity.switchToActiveSoundLayout();
-
-			this.parent.setLayoutName(data.getLabel());
+			EventBus.getDefault().post(new SoundLayoutChangedEvent(data));
 
 			this.toggleVisibility();
 		}

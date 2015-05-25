@@ -24,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.PlaylistSoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
@@ -265,7 +266,7 @@ public class SoundSheetFragment
 	}
 
 	/**
-	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished
+	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished.
 	 * @param event delivered SoundLoadedEvent
 	 */
 	@SuppressWarnings("unused")
@@ -274,6 +275,16 @@ public class SoundSheetFragment
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data != null && this.getFragmentTag().equals(data.getFragmentTag()))
 			this.soundAdapter.notifyDataSetChanged();
+	}
+
+	/**
+	 * This is called by greenRobot EventBus in case a sound was removed from the playlist.
+	 * @param event delivered SoundLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(PlaylistSoundsRemovedEvent event)
+	{
+		this.soundAdapter.notifyDataSetChanged();
 	}
 
 	private void notifySoundSheetList()

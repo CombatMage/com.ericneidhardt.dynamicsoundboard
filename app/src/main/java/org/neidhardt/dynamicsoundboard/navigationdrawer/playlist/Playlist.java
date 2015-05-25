@@ -12,8 +12,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.PlaylistSoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -117,13 +116,8 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 			int index = selectedItems.keyAt(i);
 			playersToRemove.add(this.adapter.getValues().get(index));
 		}
-		ServiceManagerFragment soundManagerFragment = this.parent.getServiceManagerFragment();
-		soundManagerFragment.getSoundService().removeFromPlaylist(playersToRemove);
 
-		SoundSheetFragment fragment = this.parent.getCurrentSoundFragment();
-		if (fragment != null)
-			fragment.notifyDataSetChanged();
-
+		EventBus.getDefault().post(new PlaylistSoundsRemovedEvent(playersToRemove));
 		this.adapter.notifyDataSetChanged();
 	}
 

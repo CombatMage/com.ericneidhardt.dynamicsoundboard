@@ -20,6 +20,7 @@ import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundLayoutChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets;
@@ -150,20 +151,17 @@ public class NavigationDrawerFragment
 
 	private void initSoundLayoutsAndAdapter()
 	{
-		this.soundLayoutList.setParentFragment(this);
 		this.soundLayoutListAdapter.setNavigationDrawerFragment(this);
 	}
 
 	private void initSoundSheetsAndAdapter()
 	{
-		this.soundSheets.setParentFragment(this);
 		this.soundSheets.getAdapter().setNavigationDrawerFragment(this);
 		this.soundSheets.getAdapter().notifyDataSetChanged();
 	}
 
 	private void initPlayListAndAdapter()
 	{
-		this.playlist.setParentFragment(this);
 		this.playlistAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
 		this.playlistAdapter.startProgressUpdateTimer();
 		if (!EventBus.getDefault().isRegistered(this.playlistAdapter))
@@ -198,9 +196,6 @@ public class NavigationDrawerFragment
 		this.soundSheets.getAdapter().unregisterAdapterDataObserver(this.listObserver);
 
 		this.playlistAdapter.stopProgressUpdateTimer();
-		this.playlist.setParentFragment(null);
-
-		this.soundSheets.setParentFragment(null);
 	}
 
 	@Override
@@ -287,6 +282,16 @@ public class NavigationDrawerFragment
 			case STOPPED:
 				this.onActionModeFinished();
 		}
+	}
+
+	/**
+	 * This is called by greenRobot EventBus in case the current sound layout has changed.
+	 * @param event delivered OpenSoundSheetEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(SoundLayoutChangedEvent event)
+	{
+		this.setLayoutName(event.getNewSoundLayout().getLabel());
 	}
 
 	private void onActionModeStart()

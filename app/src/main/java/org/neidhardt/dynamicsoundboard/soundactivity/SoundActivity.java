@@ -30,6 +30,7 @@ import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundSheetEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundLayoutChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
@@ -253,6 +254,24 @@ public class SoundActivity
 
 		viewState = !enable ? View.VISIBLE : View.GONE;
 		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
+	}
+
+	/**
+	 * This is called by greenRobot EventBus in case the current sound layout has changed. Activity must switch to new sound layout
+	 * @param event delivered OpenSoundSheetEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(SoundLayoutChangedEvent event)
+	{
+		SoundSheetsManagerFragment fragment = this.getSoundSheetsManagerFragment();
+		this.removeSoundFragment(fragment.getSoundSheets());
+		this.setSoundSheetActionsEnable(false);
+		fragment.storeSoundSheets();
+		fragment.initSoundSheets();
+
+		MusicService service = this.getServiceManagerFragment().getSoundService();
+		service.clearAndStoreSoundsAndPlayList();
+		service.initSoundsAndPlayList();
 	}
 
 	/**
@@ -511,18 +530,5 @@ public class SoundActivity
 		if (currentFragment != null && currentFragment.isVisible() && currentFragment instanceof SoundSheetFragment)
 			return (SoundSheetFragment) currentFragment;
 		return null;
-	}
-
-	public void switchToActiveSoundLayout()
-	{
-		SoundSheetsManagerFragment fragment = (SoundSheetsManagerFragment) this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
-		this.removeSoundFragment(fragment.getSoundSheets());
-		this.setSoundSheetActionsEnable(false);
-		fragment.storeSoundSheets();
-		fragment.initSoundSheets();
-
-		MusicService service = this.getServiceManagerFragment().getSoundService();
-		service.clearAndStoreSoundsAndPlayList();
-		service.initSoundsAndPlayList();
 	}
 }
