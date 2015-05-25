@@ -157,15 +157,12 @@ public class NavigationDrawerFragment
 	private void initSoundSheetsAndAdapter()
 	{
 		this.soundSheets.getAdapter().setNavigationDrawerFragment(this);
-		this.soundSheets.getAdapter().notifyDataSetChanged();
 	}
 
 	private void initPlayListAndAdapter()
 	{
 		this.playlistAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
 		this.playlistAdapter.startProgressUpdateTimer();
-		if (!EventBus.getDefault().isRegistered(this.playlistAdapter))
-			EventBus.getDefault().register(this.playlistAdapter);
 	}
 
 	@Override
@@ -182,7 +179,6 @@ public class NavigationDrawerFragment
 	public void onStop()
 	{
 		super.onStop();
-		this.bus.unregister(this.playlistAdapter);
 		this.bus.unregister(this);
 	}
 
@@ -191,7 +187,6 @@ public class NavigationDrawerFragment
 	{
 		super.onPause();
 
-		EventBus.getDefault().unregister(this.playlistAdapter);
 		this.playlistAdapter.unregisterAdapterDataObserver(this.listObserver);
 		this.soundSheets.getAdapter().unregisterAdapterDataObserver(this.listObserver);
 

@@ -75,6 +75,8 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 		EventBus bus = EventBus.getDefault();
 		if (!bus.isRegistered(this.adapter))
 			bus.register(this.adapter);
+
+		this.adapter.notifyDataSetChanged();
 	}
 
 	@Override
