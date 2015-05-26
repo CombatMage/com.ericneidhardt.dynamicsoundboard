@@ -6,7 +6,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutChangedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent;
 
 /**
  * Created by eric.neidhardt on 12.03.2015.
@@ -63,6 +63,6 @@ public class AddNewSoundLayoutDialog extends SoundLayoutDialog
 
 		SoundLayoutsManager.getInstance().addSoundLayout(layout);
 
-		EventBus.getDefault().post(new SoundLayoutChangedEvent(layout, SoundLayoutChangedEvent.REQUEST.LAYOUT_ADDED));
+		EventBus.getDefault().post(new SoundLayoutAddedEvent());
 	}
 }

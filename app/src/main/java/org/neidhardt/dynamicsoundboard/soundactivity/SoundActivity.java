@@ -29,7 +29,7 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutChangedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
@@ -261,7 +261,7 @@ public class SoundActivity
 	 * @param event delivered OpenSoundSheetEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutChangedEvent event)
+	public void onEvent(SoundLayoutRenamedEvent event)
 	{
 		SoundSheetsManagerFragment fragment = this.getSoundSheetsManagerFragment();
 		this.removeSoundFragment(fragment.getSoundSheets());

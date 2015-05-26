@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutChangedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,10 +92,10 @@ public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsLi
 
 	/**
 	 * This is called by greenRobot EventBus in case the sound layout has changed.
-	 * @param event delivered SoundLayoutChangedEvent
+	 * @param event delivered SoundLayoutRenamedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutChangedEvent event)
+	public void onEvent(SoundLayoutRenamedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}

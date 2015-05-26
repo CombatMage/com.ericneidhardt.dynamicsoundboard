@@ -4,8 +4,9 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutChangedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 
 /**
  * Created by eric.neidhardt on 12.03.2015.
@@ -56,8 +57,8 @@ public class SoundLayoutSettingsDialog extends SoundLayoutDialog
 	{
 		String name = super.soundLayoutName.getDisplayedText();
 		SoundLayoutsManager.getInstance().updateSoundLayoutById(this.databaseId, name);
+		SoundLayout renamedLayout = SoundLayoutsManager.getInstance().getSoundLayoutById(this.databaseId);
 
-		EventBus.getDefault().post(new SoundLayoutChangedEvent(SoundLayoutsManager.getInstance().getSoundLayoutById(this.databaseId),
-				SoundLayoutChangedEvent.REQUEST.LAYOUT_RENAMED));
+		EventBus.getDefault().post(new SoundLayoutRenamedEvent(renamedLayout));
 	}
 }

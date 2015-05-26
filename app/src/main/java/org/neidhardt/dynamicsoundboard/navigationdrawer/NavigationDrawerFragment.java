@@ -21,7 +21,7 @@ import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutChangedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
@@ -258,10 +258,10 @@ public class NavigationDrawerFragment
 
 	/**
 	 * This is called by greenRobot EventBus in case the sound layout has changed.
-	 * @param event delivered SoundLayoutChangedEvent
+	 * @param event delivered SoundLayoutRenamedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutChangedEvent event)
+	public void onEvent(SoundLayoutRenamedEvent event)
 	{
 		this.setLayoutName(SoundLayoutsManager.getInstance().getActiveSoundLayout().getLabel());
 	}
