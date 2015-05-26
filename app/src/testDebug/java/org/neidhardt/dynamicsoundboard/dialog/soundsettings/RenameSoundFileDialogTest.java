@@ -10,7 +10,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent2;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
@@ -37,7 +37,7 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 	{
 		super.setUp();
 		this.testData = TestDataGenerator.getRandomPlayerDataForPlayList();
-		this.service.onEvent(new PlaylistLoadedEvent2(this.testData, false));
+		this.service.onEvent(new PlaylistLoadedEvent(this.testData, false));
 
 		RenameSoundFileDialog.showInstance(this.activity.getFragmentManager(), this.testData);
 		this.activity.getFragmentManager().executePendingTransactions();
@@ -64,7 +64,7 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 
 		MediaPlayerData data2 = TestDataGenerator.getRandomPlayerData();
 		data2.setUri(this.testData.getUri());
-		this.service.onEvent(new PlaylistLoadedEvent2(data2, false));
+		this.service.onEvent(new PlaylistLoadedEvent(data2, false));
 
 		MediaPlayerData data3 = TestDataGenerator.getRandomPlayerData();
 		data3.setUri(this.testData.getUri());

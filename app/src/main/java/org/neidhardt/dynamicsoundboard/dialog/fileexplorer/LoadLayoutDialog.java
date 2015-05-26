@@ -19,7 +19,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent2;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
@@ -134,7 +134,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 		EventBus bus = EventBus.getDefault();
 		for (MediaPlayerData mediaPlayerData : playList)
-			bus.post(new PlaylistLoadedEvent2(mediaPlayerData, false));
+			bus.post(new PlaylistLoadedEvent(mediaPlayerData, false));
 	}
 
 	private static void addLoadedSounds(Map<String, List<MediaPlayerData>> sounds)

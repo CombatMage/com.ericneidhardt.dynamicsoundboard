@@ -5,7 +5,7 @@ import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent2;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
@@ -53,14 +53,14 @@ public class MusicServiceTest extends AbstractBaseActivityTest
 	{
 		try
 		{
-			this.service.onEvent(new PlaylistLoadedEvent2(null, true));
+			this.service.onEvent(new PlaylistLoadedEvent(null, true));
 		}
 		catch (NullPointerException e)
 		{
 			assertTrue("this should throw a NullPointerException exception and the list should remain empty", this.service.getPlaylist().isEmpty());
 		}
 
-		this.service.onEvent(new PlaylistLoadedEvent2(TestDataGenerator.getRandomPlayerData(), true));
+		this.service.onEvent(new PlaylistLoadedEvent(TestDataGenerator.getRandomPlayerData(), true));
 		assertThat(this.service.getPlaylist().size(), equalTo(1));
 	}
 

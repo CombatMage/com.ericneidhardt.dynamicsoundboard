@@ -21,7 +21,7 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent2;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 
 import java.util.ArrayList;
@@ -201,7 +201,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		if (this.callingFragmentTag.equals(Playlist.TAG))
 		{
 			for (MediaPlayerData playerData : playersData)
-				bus.post(new PlaylistLoadedEvent2(playerData, false));
+				bus.post(new PlaylistLoadedEvent(playerData, false));
 		}
 		else
 		{

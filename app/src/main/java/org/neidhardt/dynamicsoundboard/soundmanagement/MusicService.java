@@ -21,7 +21,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent2;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
@@ -359,7 +359,7 @@ public class MusicService extends Service
 				return;
 
 			player.setIsInPlaylist(true);
-			this.onEvent(new PlaylistLoadedEvent2(player.getMediaPlayerData(), false));
+			this.onEvent(new PlaylistLoadedEvent(player.getMediaPlayerData(), false));
 		}
 		else
 		{
@@ -512,10 +512,10 @@ public class MusicService extends Service
 
 	/**
 	 * This is called by greenRobot EventBus in case loading the playlist from MusicService has finished
-	 * @param event delivered PlaylistLoadedEvent2
+	 * @param event delivered PlaylistLoadedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(PlaylistLoadedEvent2 event)
+	public void onEvent(PlaylistLoadedEvent event)
 	{
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)

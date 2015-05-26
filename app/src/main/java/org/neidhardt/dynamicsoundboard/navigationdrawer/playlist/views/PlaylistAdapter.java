@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChagedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent2;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,10 +172,10 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 
 	/**
 	 * This is called by greenRobot EventBus in case loading the playlist from MusicService has finished.
-	 * @param event delivered PlaylistLoadedEvent2
+	 * @param event delivered PlaylistLoadedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEventMainThread(PlaylistLoadedEvent2 event)
+	public void onEventMainThread(PlaylistLoadedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}
