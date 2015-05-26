@@ -15,6 +15,7 @@ import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
@@ -23,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
@@ -35,7 +37,8 @@ public class NavigationDrawerFragment
 		implements
 			View.OnClickListener,
 			ViewPager.OnPageChangeListener,
-		NavigationDrawerListPresenter.OnNavigationDrawerListEventListener
+			NavigationDrawerListPresenter.OnNavigationDrawerListEventListener,
+			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEvent
 {
 	public static final String TAG = NavigationDrawerFragment.class.getName();
 
@@ -256,14 +259,15 @@ public class NavigationDrawerFragment
 		}
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case the sound layout has changed.
-	 * @param event delivered SoundLayoutRenamedEvent
-	 */
+	@Override
 	@SuppressWarnings("unused")
 	public void onEvent(SoundLayoutRenamedEvent event)
 	{
-		this.setLayoutName(SoundLayoutsManager.getInstance().getActiveSoundLayout().getLabel());
+		SoundLayout renamedLayout = event.getRenamedSoundLayout();
+		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
+
+		if (renamedLayout.equals(manager.getActiveSoundLayout()))
+			this.setLayoutName(renamedLayout.getLabel());
 	}
 
 	private void onActionModeStart()

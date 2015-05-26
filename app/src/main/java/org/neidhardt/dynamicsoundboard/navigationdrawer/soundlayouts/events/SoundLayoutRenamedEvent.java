@@ -14,6 +14,11 @@ public class SoundLayoutRenamedEvent
 		this.renamedSoundLayout = renamedSoundLayout;
 	}
 
+	public SoundLayout getRenamedSoundLayout()
+	{
+		return renamedSoundLayout;
+	}
+
 	@Override
 	public String toString()
 	{

@@ -19,7 +19,11 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 08.03.2015.
  */
-public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsListAdapter.ViewHolder>
+public class SoundLayoutsListAdapter
+		extends
+			RecyclerView.Adapter<SoundLayoutsListAdapter.ViewHolder>
+		implements
+			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEvent
 {
 	private NavigationDrawerFragment parent;
 	private OnItemClickListener onItemClickListener;
@@ -90,14 +94,12 @@ public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsLi
 		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case the sound layout has changed.
-	 * @param event delivered SoundLayoutRenamedEvent
-	 */
+	@Override
 	@SuppressWarnings("unused")
 	public void onEvent(SoundLayoutRenamedEvent event)
 	{
-		this.notifyDataSetChanged();
+		SoundLayout renamedLayout = event.getRenamedSoundLayout();
+		this.notifyItemChanged(this.getValues().indexOf(renamedLayout));
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
