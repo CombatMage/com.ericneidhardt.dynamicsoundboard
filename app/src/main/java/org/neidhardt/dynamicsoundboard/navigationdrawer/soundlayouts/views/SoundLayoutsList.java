@@ -83,6 +83,13 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 		super.onDetachedFromWindow();
 	}
 
+	@Override
+	protected void onFinishInflate()
+	{
+		super.onFinishInflate();
+		this.presenter.setView(this);
+	}
+
 	public void setAdapter(SoundLayoutsListAdapter adapter)
 	{
 		this.adapter = adapter;

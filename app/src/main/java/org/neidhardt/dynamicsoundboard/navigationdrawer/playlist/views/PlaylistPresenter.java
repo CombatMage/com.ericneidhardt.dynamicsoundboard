@@ -17,6 +17,12 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist>
 {
 	private static final String TAG = PlaylistPresenter.class.getName();
 
+	@Override
+	protected boolean isEventBusSubscriber()
+	{
+		return false;
+	}
+
 	public void onItemClicked(View view, EnhancedMediaPlayer player, int position)
 	{
 		if (super.isInSelectionMode)

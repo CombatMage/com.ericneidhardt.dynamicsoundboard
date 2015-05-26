@@ -19,6 +19,12 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 	private static final String TAG = SoundLayoutsPresenter.class.getName();
 
 	@Override
+	protected boolean isEventBusSubscriber()
+	{
+		return false;
+	}
+
+	@Override
 	public void onDeleteSelected(SparseArray<View> selectedItems)
 	{
 		if (this.getView() == null)
@@ -34,7 +40,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 		manager.delete(soundLayoutsToRemove);
 		this.getView().getAdapter().notifyDataSetChanged();
 
-		EventBus.getDefault().post(new SoundLayoutChangedEvent(manager.getActiveSoundLayout(), SoundLayoutChangedEvent.REQUEST.LAYOUT_LIST_CHANGE));
+		EventBus.getDefault().post(new SoundLayoutChangedEvent(manager.getActiveSoundLayout(), SoundLayoutChangedEvent.REQUEST.LAYOUT_REMOVED));
 	}
 
 	public void onItemClick(View view, SoundLayout data, int position)

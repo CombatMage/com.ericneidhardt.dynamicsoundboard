@@ -17,6 +17,13 @@ public class ActivityProgressBarPresenter extends BaseViewPresenter<ActivityProg
 		super();
 		this.showProgressBar(false);
 	}
+
+	@Override
+	protected boolean isEventBusSubscriber()
+	{
+		return true;
+	}
+
 	/**
 	 * This is called by greenRobot EventBus in case a background task starts or finishes his execution
 	 * @param event delivered LongTermTaskStateChangedEvent

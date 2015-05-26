@@ -81,6 +81,13 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 		super.onDetachedFromWindow();
 	}
 
+	@Override
+	protected void onFinishInflate()
+	{
+		super.onFinishInflate();
+		this.presenter.setView(this);
+	}
+
 	public void setAdapter(PlaylistAdapter adapter)
 	{
 		this.adapter = adapter;

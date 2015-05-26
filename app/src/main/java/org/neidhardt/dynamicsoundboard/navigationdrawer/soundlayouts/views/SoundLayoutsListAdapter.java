@@ -11,6 +11,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutChangedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,16 @@ public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsLi
 		SoundLayout data = this.getValues().get(position);
 		holder.label.setText(data.getLabel());
 		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
+	}
+
+	/**
+	 * This is called by greenRobot EventBus in case the sound layout has changed.
+	 * @param event delivered SoundLayoutChangedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(SoundLayoutChangedEvent event)
+	{
+		this.notifyDataSetChanged();
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener

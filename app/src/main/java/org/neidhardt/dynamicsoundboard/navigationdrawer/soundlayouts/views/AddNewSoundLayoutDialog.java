@@ -63,6 +63,6 @@ public class AddNewSoundLayoutDialog extends SoundLayoutDialog
 
 		SoundLayoutsManager.getInstance().addSoundLayout(layout);
 
-		EventBus.getDefault().post(new SoundLayoutChangedEvent(layout, SoundLayoutChangedEvent.REQUEST.LAYOUT_LIST_CHANGE));
+		EventBus.getDefault().post(new SoundLayoutChangedEvent(layout, SoundLayoutChangedEvent.REQUEST.LAYOUT_ADDED));
 	}
 }

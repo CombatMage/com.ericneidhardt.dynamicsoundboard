@@ -11,6 +11,12 @@ public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter
 {
 	boolean isStatePause = false;
 
+	@Override
+	protected boolean isEventBusSubscriber()
+	{
+		return true;
+	}
+
 	void onFabClicked()
 	{
 		this.getBus().post(new FabClickedEvent());

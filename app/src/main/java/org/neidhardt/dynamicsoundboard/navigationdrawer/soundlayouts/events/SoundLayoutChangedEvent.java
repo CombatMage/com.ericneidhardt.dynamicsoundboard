@@ -10,7 +10,9 @@ public class SoundLayoutChangedEvent
 	public enum REQUEST
 	{
 		CURRENT_LAYOUT_CHANGED,
-		LAYOUT_LIST_CHANGE,
+		LAYOUT_ADDED,
+		LAYOUT_REMOVED,
+		LAYOUT_RENAMED
 	}
 
 	private final SoundLayout newSoundLayout;

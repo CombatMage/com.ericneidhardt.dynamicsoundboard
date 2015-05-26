@@ -257,13 +257,13 @@ public class NavigationDrawerFragment
 	}
 
 	/**
-	 * This is called by greenRobot EventBus in case the current sound layout has changed.
-	 * @param event delivered OpenSoundSheetEvent
+	 * This is called by greenRobot EventBus in case the sound layout has changed.
+	 * @param event delivered SoundLayoutChangedEvent
 	 */
 	@SuppressWarnings("unused")
 	public void onEvent(SoundLayoutChangedEvent event)
 	{
-		this.setLayoutName(event.getNewSoundLayout().getLabel());
+		this.setLayoutName(SoundLayoutsManager.getInstance().getActiveSoundLayout().getLabel());
 	}
 
 	private void onActionModeStart()

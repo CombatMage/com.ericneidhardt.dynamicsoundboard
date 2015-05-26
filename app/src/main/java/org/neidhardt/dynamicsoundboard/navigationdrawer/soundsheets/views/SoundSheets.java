@@ -83,6 +83,13 @@ public class SoundSheets
 		super.onDetachedFromWindow();
 	}
 
+	@Override
+	protected void onFinishInflate()
+	{
+		super.onFinishInflate();
+		this.presenter.setView(this);
+	}
+
 	public SoundSheetsAdapter getAdapter()
 	{
 		return this.adapter;

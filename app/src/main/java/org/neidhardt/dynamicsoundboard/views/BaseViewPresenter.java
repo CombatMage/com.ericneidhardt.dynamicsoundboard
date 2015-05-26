@@ -41,14 +41,19 @@ public abstract class BaseViewPresenter<T extends View> implements ViewPresenter
 	@Override
 	public void onAttachedToWindow()
 	{
-		if (this.bus != null && !this.bus.isRegistered(this))
+		if (this.bus != null && !this.bus.isRegistered(this) && this.isEventBusSubscriber())
 			this.bus.registerSticky(this);
 	}
 
 	@Override
 	public void onDetachedFromWindow()
 	{
-		if (this.bus != null && this.bus.isRegistered(this))
+		if (this.bus != null && this.bus.isRegistered(this) && this.isEventBusSubscriber())
 			this.bus.unregister(this);
 	}
+
+	/**
+	 * @return true if this presenter should register on eventBus, else fals
+	 */
+	protected abstract boolean isEventBusSubscriber();
 }

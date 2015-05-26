@@ -58,6 +58,6 @@ public class SoundLayoutSettingsDialog extends SoundLayoutDialog
 		SoundLayoutsManager.getInstance().updateSoundLayoutById(this.databaseId, name);
 
 		EventBus.getDefault().post(new SoundLayoutChangedEvent(SoundLayoutsManager.getInstance().getSoundLayoutById(this.databaseId),
-				SoundLayoutChangedEvent.REQUEST.LAYOUT_LIST_CHANGE));
+				SoundLayoutChangedEvent.REQUEST.LAYOUT_RENAMED));
 	}
 }

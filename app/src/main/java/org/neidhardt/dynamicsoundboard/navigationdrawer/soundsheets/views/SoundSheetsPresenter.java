@@ -2,7 +2,6 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views;
 
 import android.util.SparseArray;
 import android.view.View;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.OpenSoundSheetEvent;
@@ -19,10 +18,16 @@ public class SoundSheetsPresenter extends NavigationDrawerListPresenter<SoundShe
 	private static final String TAG = SoundSheetsPresenter.class.getName();
 
 	@Override
+	protected boolean isEventBusSubscriber()
+	{
+		return false;
+	}
+
+	@Override
 	public void onDeleteSelected(SparseArray<View> selectedItems)
 	{
 		if (this.getView() == null)
-			throw new NullPointerException(TAG + ".onDeleteSelected failed, supplied view is null ");
+			throw new NullPointerException(TAG + ".onDeleteSelected failed, supplied view is null");
 
 		SoundSheetsAdapter adapter = this.getView().getAdapter();
 
@@ -35,7 +40,7 @@ public class SoundSheetsPresenter extends NavigationDrawerListPresenter<SoundShe
 
 		for (SoundSheet soundSheet: soundSheetsToRemove)
 		{
-			EventBus.getDefault().post(new SoundSheetsRemovedEvent(soundSheet));
+			this.getBus().post(new SoundSheetsRemovedEvent(soundSheet));
 			if (soundSheet.getIsSelected())
 			{
 				List<SoundSheet> remainingSoundSheets = adapter.getValues();
@@ -49,14 +54,14 @@ public class SoundSheetsPresenter extends NavigationDrawerListPresenter<SoundShe
 	public void onItemClick(View view, SoundSheet data, int position)
 	{
 		if (this.getView() == null)
-			throw new NullPointerException(TAG + ".onItemClick failed, supplied view is null ");
+			throw new NullPointerException(TAG + ".onItemClick failed, supplied view is null");
 
 		if (super.isInSelectionMode)
 			super.onItemSelected(view, position);
 		else
 		{
 			this.getView().getAdapter().setSelectedItem(position);
-			EventBus.getDefault().post(new OpenSoundSheetEvent(data));
+			this.getBus().post(new OpenSoundSheetEvent(data));
 		}
 	}
 }
