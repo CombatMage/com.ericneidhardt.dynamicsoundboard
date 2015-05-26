@@ -180,7 +180,7 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 	}
 
 	@Test
-	public void testDeliverResult1() throws Exception
+	public void testDeliverResult_1() throws Exception
 	{
 		// create files and verify they exists
 		String originalFileName = "testSound1.mp3";

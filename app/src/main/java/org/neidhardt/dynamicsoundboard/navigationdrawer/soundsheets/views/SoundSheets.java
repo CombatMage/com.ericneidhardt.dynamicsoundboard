@@ -22,7 +22,6 @@ public class SoundSheets
 		implements
 			SoundSheetsAdapter.OnItemClickListener
 {
-	private RecyclerView soundSheets;
 	private SoundSheetsPresenter presenter;
 	private SoundSheetsAdapter adapter;
 
@@ -56,14 +55,14 @@ public class SoundSheets
 
 		LayoutInflater.from(context).inflate(R.layout.view_sound_sheets, this, true);
 
-		this.soundSheets = (RecyclerView)this.findViewById(R.id.rv_sound_sheets);
+		RecyclerView soundSheets = (RecyclerView) this.findViewById(R.id.rv_sound_sheets);
 		if (!this.isInEditMode())
 		{
-			this.soundSheets.setItemAnimator(new DefaultItemAnimator());
-			this.soundSheets.setLayoutManager(new LinearLayoutManager(context));
-			this.soundSheets.addItemDecoration(new DividerItemDecoration());
+			soundSheets.setItemAnimator(new DefaultItemAnimator());
+			soundSheets.setLayoutManager(new LinearLayoutManager(context));
+			soundSheets.addItemDecoration(new DividerItemDecoration());
 		}
-		this.soundSheets.setAdapter(this.adapter);
+		soundSheets.setAdapter(this.adapter);
 	}
 
 	@Override

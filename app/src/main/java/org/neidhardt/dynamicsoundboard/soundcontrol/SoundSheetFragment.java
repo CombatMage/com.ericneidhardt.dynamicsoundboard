@@ -23,10 +23,10 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.events.PlaylistSoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
+import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
@@ -141,7 +141,7 @@ public class SoundSheetFragment
 	public void deleteAllSoundsInSoundSheet()
 	{
 		this.removeAllSounds();
-		this.notifySoundSheetList();
+		EventBus.getDefault().post(new SoundRemovedEvent());
 		this.soundAdapter.notifyDataSetChanged();
 	}
 
@@ -258,7 +258,7 @@ public class SoundSheetFragment
 		fragment.getSoundService().removeSounds(Collections.singletonList(player));
 		fragment.notifyPlaylist();
 
-		this.notifySoundSheetList();
+		EventBus.getDefault().post(new SoundRemovedEvent());
 
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
 		if (fab != null)
@@ -287,15 +287,18 @@ public class SoundSheetFragment
 		this.soundAdapter.notifyDataSetChanged();
 	}
 
-	private void notifySoundSheetList()
-	{
-		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
-		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
-	}
-
 	public void notifyDataSetChanged()
 	{
 		this.soundAdapter.notifyDataSetChanged();
+	}
+
+	public interface OnSoundRemovedEventListener
+	{
+		/**
+		 * This is called by greenRobot EventBus in case a sound was removed from current sound sheet.
+		 * @param event delivered SoundRemovedEvent
+		 */
+		void onEvent(SoundRemovedEvent event);
 	}
 
 }

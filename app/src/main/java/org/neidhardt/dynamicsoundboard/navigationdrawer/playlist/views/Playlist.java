@@ -21,7 +21,6 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 {
 	public static final String TAG = Playlist.class.getName();
 
-	private RecyclerView playlist;
 	private PlaylistAdapter adapter;
 	private PlaylistPresenter presenter;
 
@@ -55,14 +54,14 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 		LayoutInflater.from(context).inflate(R.layout.view_playlist, this, true);
 
-		this.playlist = (RecyclerView)this.findViewById(R.id.rv_playlist);
+		RecyclerView playlist = (RecyclerView) this.findViewById(R.id.rv_playlist);
 		if (!this.isInEditMode())
 		{
-			this.playlist.addItemDecoration(new DividerItemDecoration());
-			this.playlist.setLayoutManager(new LinearLayoutManager(context));
-			this.playlist.setItemAnimator(new DefaultItemAnimator());
+			playlist.addItemDecoration(new DividerItemDecoration());
+			playlist.setLayoutManager(new LinearLayoutManager(context));
+			playlist.setItemAnimator(new DefaultItemAnimator());
 		}
-		this.playlist.setAdapter(this.adapter);
+		playlist.setAdapter(this.adapter);
 	}
 
 	@Override
@@ -86,14 +85,6 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	{
 		super.onFinishInflate();
 		this.presenter.setView(this);
-	}
-
-	public void setAdapter(PlaylistAdapter adapter)
-	{
-		this.adapter = adapter;
-		this.adapter.setOnItemClickListener(this);
-		this.playlist.setAdapter(adapter);
-		this.adapter.setRecyclerView(this.playlist);
 	}
 
 	@Override

@@ -11,6 +11,8 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
@@ -18,7 +20,11 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLo
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
+public class SoundSheetsAdapter
+		extends
+			RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
+		implements
+			SoundSheetFragment.OnSoundRemovedEventListener
 {
 	private NavigationDrawerFragment parent;
 	private OnItemClickListener onItemClickListener;
@@ -118,6 +124,12 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 	 */
 	@SuppressWarnings("unused")
 	public void onEventMainThread(SoundSheetsLoadedEvent event)
+	{
+		this.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onEvent(SoundRemovedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}

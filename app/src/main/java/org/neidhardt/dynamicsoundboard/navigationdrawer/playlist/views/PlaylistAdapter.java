@@ -105,12 +105,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		EnhancedMediaPlayer player = this.getItem(position);
-		if (holder == null || player == null || player.getMediaPlayerData() == null)
-			return;
-		holder.label.setText(player.getMediaPlayerData().getLabel());
-		holder.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
-		holder.onProgressUpdate();
+		holder.bindData(position);
 	}
 
 	@Override
@@ -199,28 +194,41 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	{
 		private TextView label;
 		private ImageView selectionIndicator;
-		private SeekBar progress;
+		private SeekBar timePosition;
 
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
 			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
-			this.progress = (SeekBar)itemView.findViewById(R.id.sb_progress);
+			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_progress);
 			itemView.setOnClickListener(this);
 		}
 
+		protected void bindData(int positionInDataSet)
+		{
+			EnhancedMediaPlayer player = getItem(positionInDataSet);
+			if (player == null)
+				return;
+
+			this.label.setText(player.getMediaPlayerData().getLabel());
+			this.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+
+			this.timePosition.setMax(player.getDuration());
+			this.onProgressUpdate();
+		}
+
+		@Override
 		public void onProgressUpdate()
 		{
 			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
 			if (player != null && player.isPlaying())
 			{
-				progress.setMax(player.getDuration());
-				progress.setProgress(player.getCurrentPosition());
-				progress.setVisibility(View.VISIBLE);
+				timePosition.setProgress(player.getCurrentPosition());
+				timePosition.setVisibility(View.VISIBLE);
 			}
 			else
-				progress.setVisibility(View.INVISIBLE);
+				timePosition.setVisibility(View.INVISIBLE);
 		}
 
 		@Override
