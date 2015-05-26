@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;

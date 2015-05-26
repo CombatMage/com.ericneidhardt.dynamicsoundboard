@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog.soundlayouts;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

@@ -39,7 +39,7 @@ public abstract class BaseViewPresenter<T extends View> implements ViewPresenter
 	}
 
 	@Override
-	public void onAttachToWindow()
+	public void onAttachedToWindow()
 	{
 		if (this.bus != null && !this.bus.isRegistered(this))
 			this.bus.registerSticky(this);

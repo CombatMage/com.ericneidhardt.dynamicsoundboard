@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.testutils;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 
 import java.util.Random;
 

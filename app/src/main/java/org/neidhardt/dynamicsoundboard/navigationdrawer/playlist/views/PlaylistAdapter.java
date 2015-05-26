@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,15 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChagedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +26,26 @@ import java.util.List;
 /**
  * Project created by eric.neidhardt on 27.08.2014.
  */
-public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHolder>
+public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHolder> implements ServiceManagerFragment.OnServiceManagerFragmentEvent
 {
 	private Integer currentItemIndex;
 	private OnItemClickListener onItemClickListener;
+
+	public void onAttachToWindow()
+	{
+		EventBus bus = EventBus.getDefault();
+		if (!bus.isRegistered(this))
+			bus.register(this);
+
+		this.notifyDataSetChanged();
+		this.startProgressUpdateTimer();
+	}
+
+	public void onDetachedFromWindow()
+	{
+		EventBus.getDefault().unregister(this);
+		this.stopProgressUpdateTimer();
+	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
@@ -144,12 +163,19 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 		this.notifyDataSetChanged();
 	}
 
+	@Override
+	@SuppressWarnings("unused")
+	public void onEvent(PlaylistChagedEvent event)
+	{
+		this.notifyDataSetChanged();
+	}
+
 	/**
 	 * This is called by greenRobot EventBus in case loading the playlist from MusicService has finished.
-	 * @param event delivered PlayListLoadedEvent
+	 * @param event delivered PlaylistLoadedEvent2
 	 */
 	@SuppressWarnings("unused")
-	public void onEventMainThread(PlayListLoadedEvent event)
+	public void onEventMainThread(PlaylistLoadedEvent2 event)
 	{
 		this.notifyDataSetChanged();
 	}

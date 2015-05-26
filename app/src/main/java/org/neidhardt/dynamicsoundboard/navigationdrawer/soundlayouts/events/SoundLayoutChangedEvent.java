@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.events;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events;
 
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 
@@ -7,16 +7,29 @@ import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
  */
 public class SoundLayoutChangedEvent
 {
-	private final SoundLayout newSoundLayout;
+	public enum REQUEST
+	{
+		CURRENT_LAYOUT_CHANGED,
+		LAYOUT_LIST_CHANGE,
+	}
 
-	public SoundLayoutChangedEvent(SoundLayout newSoundLayout)
+	private final SoundLayout newSoundLayout;
+	private final REQUEST requestedAction;
+
+	public SoundLayoutChangedEvent(SoundLayout newSoundLayout, REQUEST requestedAction)
 	{
 		this.newSoundLayout = newSoundLayout;
+		this.requestedAction = requestedAction;
 	}
 
 	public SoundLayout getNewSoundLayout()
 	{
 		return newSoundLayout;
+	}
+
+	public REQUEST getRequestedAction()
+	{
+		return requestedAction;
 	}
 
 	@Override

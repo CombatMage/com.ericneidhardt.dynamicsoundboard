@@ -46,7 +46,7 @@ public class ActivityProgressBar extends SmoothProgressBar
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		this.presenter.onAttachToWindow();
+		this.presenter.onAttachedToWindow();
 	}
 
 	@Override

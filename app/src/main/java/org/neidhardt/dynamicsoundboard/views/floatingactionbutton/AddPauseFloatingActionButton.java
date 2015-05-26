@@ -54,7 +54,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		this.presenter.onAttachToWindow();
+		this.presenter.onAttachedToWindow();
 	}
 
 	@Override

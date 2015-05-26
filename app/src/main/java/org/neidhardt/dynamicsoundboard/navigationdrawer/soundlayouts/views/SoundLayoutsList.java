@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundlayouts;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,15 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundLayoutChangedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by eric.neidhardt on 08.03.2015.
@@ -29,6 +25,7 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 
 	private RecyclerView soundLayouts;
 	private SoundLayoutsListAdapter adapter;
+	private SoundLayoutsPresenter presenter;
 
 	@SuppressWarnings("unused")
 	public SoundLayoutsList(Context context)
@@ -53,7 +50,13 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 
 	private void init(Context context)
 	{
+		this.presenter = new SoundLayoutsPresenter();
+
+		this.adapter = new SoundLayoutsListAdapter();
+		this.adapter.setOnItemClickListener(this);
+
 		LayoutInflater.from(context).inflate(R.layout.view_sound_layout_list, this, true);
+
 		this.soundLayouts = (RecyclerView) this.findViewById(R.id.rv_sound_layouts_list);
 		if (!this.isInEditMode())
 		{
@@ -61,6 +64,23 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 			this.soundLayouts.setLayoutManager(new LinearLayoutManager(context));
 			this.soundLayouts.setItemAnimator(new DefaultItemAnimator());
 		}
+		this.soundLayouts.setAdapter(this.adapter);
+	}
+
+	@Override
+	protected void onAttachedToWindow()
+	{
+		super.onAttachedToWindow();
+		this.presenter.onAttachedToWindow();
+		this.adapter.onAttachedToWindow();
+	}
+
+	@Override
+	protected void onDetachedFromWindow()
+	{
+		this.adapter.onDetachedFromWindow();
+		this.presenter.onDetachedFromWindow();
+		super.onDetachedFromWindow();
 	}
 
 	public void setAdapter(SoundLayoutsListAdapter adapter)
@@ -73,17 +93,7 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 	@Override
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
-		List<SoundLayout> soundLayoutsToRemove = new ArrayList<>(selectedItems.size());
-		for(int i = 0; i < selectedItems.size(); i++)
-		{
-			int index = selectedItems.keyAt(i);
-			soundLayoutsToRemove.add(this.adapter.getValues().get(index));
-		}
-		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
-		manager.delete(soundLayoutsToRemove);
-		this.adapter.notifyDataSetChanged();
-
-		EventBus.getDefault().post(new SoundLayoutChangedEvent(manager.getActiveSoundLayout()));
+		this.presenter.onDeleteSelected(selectedItems);
 	}
 
 	@Override
@@ -101,15 +111,7 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 	@Override
 	public void onItemClick(View view, SoundLayout data, int position)
 	{
-		if (super.isInSelectionMode)
-			super.onItemSelected(view, position);
-		else
-		{
-			this.adapter.setSelectedItem(position);
-			EventBus.getDefault().post(new SoundLayoutChangedEvent(data));
-
-			this.toggleVisibility();
-		}
+		this.presenter.onItemClick(view, data, position);
 	}
 
 	public boolean isActive()
@@ -135,4 +137,14 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 		this.setVisibility(INVISIBLE);
 	}
 
+	public SoundLayoutsListAdapter getAdapter()
+	{
+		return this.adapter;
+	}
+
+	@Override
+	public NavigationDrawerListPresenter getPresenter()
+	{
+		return this.presenter;
+	}
 }

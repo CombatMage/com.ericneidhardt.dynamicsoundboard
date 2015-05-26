@@ -5,12 +5,12 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 /**
  * Created by eric.neidhardt on 24.03.2015.
  */
-public class PlayListLoadedEvent
+public class PlaylistLoadedEvent2
 {
 	private MediaPlayerData loadedSoundData;
 	private boolean loadFromDatabase = true;
 
-	public PlayListLoadedEvent(MediaPlayerData loadedSoundData, boolean loadFromDatabase)
+	public PlaylistLoadedEvent2(MediaPlayerData loadedSoundData, boolean loadFromDatabase)
 	{
 		this.loadedSoundData = loadedSoundData;
 		this.loadFromDatabase = loadFromDatabase;

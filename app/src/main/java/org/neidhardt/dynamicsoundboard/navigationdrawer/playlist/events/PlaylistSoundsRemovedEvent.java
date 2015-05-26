@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.events;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.events;
 
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 

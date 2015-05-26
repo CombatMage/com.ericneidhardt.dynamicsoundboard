@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundlayouts;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts;
 
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;

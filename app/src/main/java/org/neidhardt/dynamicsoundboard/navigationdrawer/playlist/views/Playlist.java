@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,15 +8,11 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.PlaylistSoundsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Project created by eric.neidhardt on 27.08.2014.
@@ -27,38 +23,38 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 	private RecyclerView playlist;
 	private PlaylistAdapter adapter;
+	private PlaylistPresenter presenter;
 
 	@SuppressWarnings("unused")
 	public Playlist(Context context)
 	{
 		super(context);
-		this.inflateLayout(context);
-		this.initRecycleView(context);
+		this.init(context);
 	}
 
 	@SuppressWarnings("unused")
 	public Playlist(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
-		this.inflateLayout(context);
-		this.initRecycleView(context);
+		this.init(context);
 	}
 
 	@SuppressWarnings("unused")
 	public Playlist(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
-		this.inflateLayout(context);
-		this.initRecycleView(context);
+		this.init(context);
 	}
 
-	private void inflateLayout(Context context)
+	private void init(Context context)
 	{
+		this.presenter = new PlaylistPresenter();
+
+		this.adapter = new PlaylistAdapter();
+		this.adapter.setOnItemClickListener(this);
+
 		LayoutInflater.from(context).inflate(R.layout.view_playlist, this, true);
-	}
 
-	private void initRecycleView(Context context)
-	{
 		this.playlist = (RecyclerView)this.findViewById(R.id.rv_playlist);
 		if (!this.isInEditMode())
 		{
@@ -66,23 +62,22 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 			this.playlist.setLayoutManager(new LinearLayoutManager(context));
 			this.playlist.setItemAnimator(new DefaultItemAnimator());
 		}
+		this.playlist.setAdapter(this.adapter);
 	}
 
 	@Override
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		EventBus bus = EventBus.getDefault();
-		if (!bus.isRegistered(this.adapter))
-			bus.register(this.adapter);
-
-		this.adapter.notifyDataSetChanged();
+		this.presenter.onAttachedToWindow();
+		this.adapter.onAttachToWindow();
 	}
 
 	@Override
 	protected void onDetachedFromWindow()
 	{
-		EventBus.getDefault().unregister(this.adapter);
+		this.adapter.onDetachedFromWindow();
+		this.presenter.onDetachedFromWindow();
 		super.onDetachedFromWindow();
 	}
 
@@ -97,10 +92,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	@Override
 	public void onItemClick(View view, EnhancedMediaPlayer player, int position)
 	{
-		if (super.isInSelectionMode)
-			super.onItemSelected(view, position);
-		else
-			this.adapter.startOrStopPlayList(player);
+		this.presenter.onItemClicked(view, player, position);
 	}
 
 	@Override
@@ -112,25 +104,23 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	@Override
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
-		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>(selectedItems.size());
-		for(int i = 0; i < selectedItems.size(); i++)
-		{
-			int index = selectedItems.keyAt(i);
-			playersToRemove.add(this.adapter.getValues().get(index));
-		}
-
-		EventBus.getDefault().post(new PlaylistSoundsRemovedEvent(playersToRemove));
-		this.adapter.notifyDataSetChanged();
+		this.presenter.onDeleteSelected(selectedItems);
 	}
 
 	@Override
-	protected int getItemCount() {
+	protected int getItemCount()
+	{
 		return this.adapter.getItemCount();
 	}
 
-	public void notifyDataSetChanged()
+	@Override
+	public NavigationDrawerListPresenter getPresenter()
 	{
-		this.adapter.notifyDataSetChanged();
+		return this.presenter;
 	}
 
+	public PlaylistAdapter getAdapter()
+	{
+		return adapter;
+	}
 }

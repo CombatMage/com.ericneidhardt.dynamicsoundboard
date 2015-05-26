@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChagedEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,8 +109,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 
 	public void notifyPlaylist()
 	{
-		NavigationDrawerFragment fragment = this.getNavigationDrawerFragment();
-		fragment.getPlaylist().notifyDataSetChanged();
+		EventBus.getDefault().post(new PlaylistChagedEvent());
 	}
 
 	public void notifyFragment(String fragmentTag)
@@ -120,4 +121,14 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 
 		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
 	}
+
+	public interface OnServiceManagerFragmentEvent
+	{
+		/**
+		 * This is called by greenRobot EventBus in case the playlist has changed.
+		 * @param event delivered PlaylistChagedEvent
+		 */
+		void onEvent(PlaylistChagedEvent event);
+	}
+
 }

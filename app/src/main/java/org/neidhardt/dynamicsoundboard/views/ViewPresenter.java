@@ -22,10 +22,11 @@ public interface ViewPresenter<T>
 	 * Notifies the presenter, that corresponding view has been attached to main window. EventBus should be registered in
 	 * this step.
 	 */
-	void onAttachToWindow();
+	void onAttachedToWindow();
 
 	/**
 	 * Notifies the presenter, that corresponding view has been detached from main window. EventBus should be unregistered in this step.
 	 */
 	void onDetachedFromWindow();
+
 }

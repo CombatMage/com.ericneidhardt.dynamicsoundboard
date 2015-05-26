@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,12 +12,8 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundSheetEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class SoundSheets
@@ -27,6 +23,7 @@ public class SoundSheets
 			SoundSheetsAdapter.OnItemClickListener
 {
 	private RecyclerView soundSheets;
+	private SoundSheetsPresenter presenter;
 	private SoundSheetsAdapter adapter;
 
 	@SuppressWarnings("unused")
@@ -52,6 +49,8 @@ public class SoundSheets
 
 	private void init(Context context)
 	{
+		this.presenter = new SoundSheetsPresenter();
+
 		this.adapter = new SoundSheetsAdapter();
 		this.adapter.setOnItemClickListener(this);
 
@@ -71,15 +70,16 @@ public class SoundSheets
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		if (!EventBus.getDefault().isRegistered(this.adapter))
-			EventBus.getDefault().register(this.adapter);
-		this.adapter.notifyDataSetChanged();
+		this.adapter.onAttachedToWindow();
+		this.presenter.onAttachedToWindow();
 	}
 
 	@Override
 	protected void onDetachedFromWindow()
 	{
 		EventBus.getDefault().unregister(this.adapter);
+		this.adapter.onDetachedFromWindow();
+		this.presenter.onDetachedFromWindow();
 		super.onDetachedFromWindow();
 	}
 
@@ -97,26 +97,7 @@ public class SoundSheets
 	@Override
 	protected void onDeleteSelected(SparseArray<View> selectedItems)
 	{
-		SoundSheetsAdapter adapter = this.adapter;
-
-		List<SoundSheet> soundSheetsToRemove = new ArrayList<>(selectedItems.size());
-		for(int i = 0; i < selectedItems.size(); i++)
-		{
-			int index = selectedItems.keyAt(i);
-			soundSheetsToRemove.add(adapter.getValues().get(index));
-		}
-
-		for (SoundSheet soundSheet: soundSheetsToRemove)
-		{
-			EventBus.getDefault().post(new SoundSheetsRemovedEvent(soundSheet));
-			if (soundSheet.getIsSelected())
-			{
-				List<SoundSheet> remainingSoundSheets = adapter.getValues();
-				if (remainingSoundSheets.size() > 0)
-					adapter.setSelectedItem(0);
-			}
-		}
-		adapter.notifyDataSetChanged();
+		this.presenter.onDeleteSelected(selectedItems);
 	}
 
 	@Override
@@ -128,18 +109,13 @@ public class SoundSheets
 	@Override
 	public void onItemClick(View view, SoundSheet data, int position)
 	{
-		if (super.isInSelectionMode)
-			super.onItemSelected(view, position);
-		else
-		{
-			this.adapter.setSelectedItem(position);
-			EventBus.getDefault().post(new OpenSoundSheetEvent(data));
-		}
+		this.presenter.onItemClick(view, data, position);
 	}
 
-	public RecyclerView getSoundSheets()
+	@Override
+	public NavigationDrawerListPresenter getPresenter()
 	{
-		return soundSheets;
+		return this.presenter;
 	}
 }
 

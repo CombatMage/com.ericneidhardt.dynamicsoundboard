@@ -16,12 +16,12 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.PlaylistSoundsRemovedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundSheetsRemovedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.events.PlaylistSoundsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
-import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlayListLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent2;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
@@ -359,7 +359,7 @@ public class MusicService extends Service
 				return;
 
 			player.setIsInPlaylist(true);
-			this.onEvent(new PlayListLoadedEvent(player.getMediaPlayerData(), false));
+			this.onEvent(new PlaylistLoadedEvent2(player.getMediaPlayerData(), false));
 		}
 		else
 		{
@@ -512,10 +512,10 @@ public class MusicService extends Service
 
 	/**
 	 * This is called by greenRobot EventBus in case loading the playlist from MusicService has finished
-	 * @param event delivered PlayListLoadedEvent
+	 * @param event delivered PlaylistLoadedEvent2
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(PlayListLoadedEvent event)
+	public void onEvent(PlaylistLoadedEvent2 event)
 	{
 		MediaPlayerData data = event.getLoadedSoundData();
 		if (data == null)

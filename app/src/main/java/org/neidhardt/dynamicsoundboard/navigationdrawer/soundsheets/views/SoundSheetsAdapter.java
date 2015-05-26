@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -21,6 +22,24 @@ public class SoundSheetsAdapter extends RecyclerView.Adapter<SoundSheetsAdapter.
 {
 	private NavigationDrawerFragment parent;
 	private OnItemClickListener onItemClickListener;
+	private EventBus bus;
+
+	public SoundSheetsAdapter()
+	{
+		this.bus = EventBus.getDefault();
+	}
+
+	public void onAttachedToWindow()
+	{
+		if (!this.bus.isRegistered(this))
+			this.bus.register(this);
+		this.notifyDataSetChanged();
+	}
+
+	public void onDetachedFromWindow()
+	{
+		this.bus.unregister(this);
+	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{

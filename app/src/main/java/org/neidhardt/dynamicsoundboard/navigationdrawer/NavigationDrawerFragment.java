@@ -17,18 +17,16 @@ import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
-import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.SoundLayoutChangedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutChangedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsList;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
-import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList;
-import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsListAdapter;
-import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 
 public class NavigationDrawerFragment
@@ -36,7 +34,8 @@ public class NavigationDrawerFragment
 			BaseFragment
 		implements
 			View.OnClickListener,
-			ViewPager.OnPageChangeListener
+			ViewPager.OnPageChangeListener,
+		NavigationDrawerListPresenter.OnNavigationDrawerListEventListener
 {
 	public static final String TAG = NavigationDrawerFragment.class.getName();
 
@@ -50,16 +49,15 @@ public class NavigationDrawerFragment
 	private TabContentAdapter tabContentAdapter;
 
 	private ViewGroup listContainer;
-	private ViewPagerContentObserver listObserver;
 	private SoundLayoutsList soundLayoutList;
-	private SoundLayoutsListAdapter soundLayoutListAdapter;
 	private Playlist playlist;
-	private PlaylistAdapter playlistAdapter;
 	private SoundSheets soundSheets;
-	private TextView currentLayoutName;
 
+	private TextView currentLayoutName;
 	private View contextualActionContainer;
 	private View deleteSelected;
+
+	private ViewPagerContentObserver listObserver;
 
 	private int minHeightOfListContent = 0;
 
@@ -71,8 +69,6 @@ public class NavigationDrawerFragment
 
 		this.listObserver = new ViewPagerContentObserver();
 		this.tabContentAdapter = new TabContentAdapter();
-		this.soundLayoutListAdapter = new SoundLayoutsListAdapter();
-		this.playlistAdapter = new PlaylistAdapter();
 
 		this.bus = EventBus.getDefault();
 	}
@@ -103,13 +99,10 @@ public class NavigationDrawerFragment
 		this.tabBar.setCustomTabColorizer(new NavigationDrawerTabColorizer());
 
 		this.soundLayoutList = (SoundLayoutsList) fragmentView.findViewById(R.id.layout_select_sound_layout);
-		this.soundLayoutList.setAdapter(this.soundLayoutListAdapter);
-
 		this.playlist = (Playlist) fragmentView.findViewById(R.id.playlist);
-		this.playlist.setAdapter(this.playlistAdapter);
-		this.initPlayListAndAdapter();
-
 		this.soundSheets = (SoundSheets) fragmentView.findViewById(R.id.sound_sheets);
+
+		this.initPlayListAndAdapter();
 		this.initSoundSheetsAndAdapter();
 
 		return fragmentView;
@@ -136,7 +129,7 @@ public class NavigationDrawerFragment
 		this.calculateMinHeightOfListContent();
 		this.adjustViewPagerToContent();
 
-		this.playlistAdapter.registerAdapterDataObserver(this.listObserver);
+		this.playlist.getAdapter().registerAdapterDataObserver(this.listObserver);
 		this.soundSheets.getAdapter().registerAdapterDataObserver(this.listObserver);
 	}
 
@@ -151,7 +144,7 @@ public class NavigationDrawerFragment
 
 	private void initSoundLayoutsAndAdapter()
 	{
-		this.soundLayoutListAdapter.setNavigationDrawerFragment(this);
+		this.soundLayoutList.getAdapter().setNavigationDrawerFragment(this);
 	}
 
 	private void initSoundSheetsAndAdapter()
@@ -161,16 +154,13 @@ public class NavigationDrawerFragment
 
 	private void initPlayListAndAdapter()
 	{
-		this.playlistAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
-		this.playlistAdapter.startProgressUpdateTimer();
+		this.playlist.getAdapter().setServiceManagerFragment(this.getServiceManagerFragment());
 	}
 
 	@Override
 	public void onStart()
 	{
 		super.onStart();
-		if (!this.bus.isRegistered(this.playlistAdapter))
-			this.bus.register(this.playlistAdapter);
 		if (!this.bus.isRegistered(this))
 			this.bus.register(this);
 	}
@@ -187,10 +177,8 @@ public class NavigationDrawerFragment
 	{
 		super.onPause();
 
-		this.playlistAdapter.unregisterAdapterDataObserver(this.listObserver);
+		this.playlist.getAdapter().unregisterAdapterDataObserver(this.listObserver);
 		this.soundSheets.getAdapter().unregisterAdapterDataObserver(this.listObserver);
-
-		this.playlistAdapter.stopProgressUpdateTimer();
 	}
 
 	@Override
@@ -200,20 +188,20 @@ public class NavigationDrawerFragment
 		if (id == R.id.b_delete)
 		{
 			if (this.soundLayoutList.isActive())
-				this.soundLayoutList.prepareItemDeletion();
+				this.soundLayoutList.getPresenter().prepareItemDeletion();
 			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
-				this.playlist.prepareItemDeletion();
+				this.playlist.getPresenter().prepareItemDeletion();
 			else
-				this.soundSheets.prepareItemDeletion();
+				this.soundSheets.getPresenter().prepareItemDeletion();
 		}
 		else if (id == R.id.b_delete_selected)
 		{
 			if (this.soundLayoutList.isActive())
-				this.soundLayoutList.deleteSelected();
+				this.soundLayoutList.getPresenter().deleteSelected();
 			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
-				this.playlist.deleteSelected();
+				this.playlist.getPresenter().deleteSelected();
 			else
-				this.soundSheets.deleteSelected();
+				this.soundSheets.getPresenter().deleteSelected();
 		}
 		else if (id  == R.id.b_ok)
 		{
@@ -232,7 +220,7 @@ public class NavigationDrawerFragment
 			this.animateSoundLayoutsListAppear();
 			this.soundLayoutList.toggleVisibility();
 			if (this.getBaseActivity().isActionModeActive() && this.soundLayoutList.isActive())
-				this.soundLayoutList.prepareItemDeletion();
+				this.soundLayoutList.getPresenter().prepareItemDeletion();
 		}
 	}
 
@@ -253,18 +241,7 @@ public class NavigationDrawerFragment
 			animator.start();
 	}
 
-	public void triggerSoundLayoutUpdate()
-	{
-		if (this.currentLayoutName != null)
-			this.currentLayoutName.setText(SoundLayoutsManager.getInstance().getActiveSoundLayout().getLabel());
-		this.soundLayoutListAdapter.notifyDataSetChanged();
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case a request to change the current contextual action mode has benn submitted.
-	 * playlist entries.
-	 * @param event delivered OpenSoundSheetEvent
-	 */
+	@Override
 	@SuppressWarnings("unused")
 	public void onEvent(ActionModeEvent event)
 	{
@@ -316,9 +293,9 @@ public class NavigationDrawerFragment
 		if (!this.getBaseActivity().isActionModeActive())
 			return;
 		if (position == INDEX_SOUND_SHEETS)
-			this.soundSheets.prepareItemDeletion();
+			this.soundSheets.getPresenter().prepareItemDeletion();
 		else if (position == INDEX_PLAYLIST)
-			this.playlist.prepareItemDeletion();
+			this.playlist.getPresenter().prepareItemDeletion();
 	}
 
 	@Override
@@ -342,7 +319,7 @@ public class NavigationDrawerFragment
 		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);
 
 		int soundSheetCount = this.getSoundSheetManagerFragment().getSoundSheets().size();
-		int playListCount = this.playlistAdapter.getItemCount();
+		int playListCount = this.playlist.getAdapter().getItemCount();
 
 		int heightSoundSheetChildren = soundSheetCount * childHeight;
 		int heightDividerSoundSheet = soundSheetCount > 1 ? (soundSheetCount - 1) * dividerHeight : 0;

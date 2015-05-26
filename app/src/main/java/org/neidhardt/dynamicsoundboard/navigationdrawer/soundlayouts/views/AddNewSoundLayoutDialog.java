@@ -1,11 +1,12 @@
-package org.neidhardt.dynamicsoundboard.dialog.soundlayouts;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
-import org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutChangedEvent;
 
 /**
  * Created by eric.neidhardt on 12.03.2015.
@@ -62,8 +63,6 @@ public class AddNewSoundLayoutDialog extends SoundLayoutDialog
 
 		SoundLayoutsManager.getInstance().addSoundLayout(layout);
 
-		NavigationDrawerFragment fragment = this.getNavigationDrawerFragment();
-		if (fragment != null)
-			fragment.triggerSoundLayoutUpdate();
+		EventBus.getDefault().post(new SoundLayoutChangedEvent(layout, SoundLayoutChangedEvent.REQUEST.LAYOUT_LIST_CHANGE));
 	}
 }

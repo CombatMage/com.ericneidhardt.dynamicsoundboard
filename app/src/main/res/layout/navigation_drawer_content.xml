@@ -94,7 +94,7 @@
 
 				<include layout="@layout/navigation_drawer_view_pager"/>
 
-				<org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList
+				<org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsList
 						android:id="@+id/layout_select_sound_layout"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"

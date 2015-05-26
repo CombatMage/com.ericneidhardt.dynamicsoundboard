@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundlayouts;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,10 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
-import org.neidhardt.dynamicsoundboard.dialog.soundlayouts.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,24 @@ public class SoundLayoutsListAdapter extends RecyclerView.Adapter<SoundLayoutsLi
 {
 	private NavigationDrawerFragment parent;
 	private OnItemClickListener onItemClickListener;
+	private EventBus bus;
+
+	public SoundLayoutsListAdapter()
+	{
+		this.bus = EventBus.getDefault();
+	}
+
+	public void onAttachedToWindow()
+	{
+		if (!this.bus.isRegistered(this))
+			this.bus.register(this);
+		this.notifyDataSetChanged();
+	}
+
+	public void onDetachedFromWindow()
+	{
+		this.bus.unregister(this);
+	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
