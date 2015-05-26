@@ -58,4 +58,25 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 			EventBus.getDefault().post(new SoundLayoutSelectedEvent(data));
 		}
 	}
+
+	public interface OnSoundLayoutRemovedEventListener
+	{
+		/**
+		 * This is called by greenRobot EventBus in case a new SoundLayout was renamed.
+		 * @param event delivered SoundLayoutRenamedEvent
+		 */
+		@SuppressWarnings("unused")
+		void onEvent(SoundLayoutRemovedEvent event);
+	}
+
+	public interface OnSoundLayoutSelectedEventListener
+	{
+		/**
+		 * This is called by greenRobot EventBus in case a new SoundLayout was selected.
+		 * @param event delivered SoundLayoutRenamedEvent
+		 */
+		@SuppressWarnings("unused")
+		void onEvent(SoundLayoutSelectedEvent event);
+	}
+
 }

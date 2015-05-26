@@ -22,10 +22,13 @@ import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsList;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
@@ -38,7 +41,9 @@ public class NavigationDrawerFragment
 			View.OnClickListener,
 			ViewPager.OnPageChangeListener,
 			NavigationDrawerListPresenter.OnNavigationDrawerListEventListener,
-			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEvent
+			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
+			SoundLayoutsPresenter.OnSoundLayoutRemovedEventListener,
+			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener
 {
 	public static final String TAG = NavigationDrawerFragment.class.getName();
 
@@ -268,6 +273,22 @@ public class NavigationDrawerFragment
 
 		if (renamedLayout.equals(manager.getActiveSoundLayout()))
 			this.setLayoutName(renamedLayout.getLabel());
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void onEvent(SoundLayoutRemovedEvent event)
+	{
+		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
+		this.setLayoutName(manager.getActiveSoundLayout().getLabel());
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void onEvent(SoundLayoutSelectedEvent event)
+	{
+		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
+		this.setLayoutName(manager.getActiveSoundLayout().getLabel());
 	}
 
 	private void onActionModeStart()

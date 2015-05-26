@@ -62,10 +62,10 @@ public class SoundLayoutSettingsDialog extends SoundLayoutDialog
 		EventBus.getDefault().post(new SoundLayoutRenamedEvent(renamedLayout));
 	}
 
-	public interface OnSoundLayoutRenamedEvent
+	public interface OnSoundLayoutRenamedEventListener
 	{
 		/**
-		 * This is called by greenRobot EventBus in case the sound layout was renamed.
+		 * This is called by greenRobot EventBus in case the SoundLayout was renamed.
 		 * @param event delivered SoundLayoutRenamedEvent
 		 */
 		@SuppressWarnings("unused")

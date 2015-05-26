@@ -11,6 +11,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 
 import java.util.ArrayList;
@@ -23,7 +24,8 @@ public class SoundLayoutsListAdapter
 		extends
 			RecyclerView.Adapter<SoundLayoutsListAdapter.ViewHolder>
 		implements
-			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEvent
+			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
+			AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener
 {
 	private NavigationDrawerFragment parent;
 	private OnItemClickListener onItemClickListener;
@@ -100,6 +102,13 @@ public class SoundLayoutsListAdapter
 	{
 		SoundLayout renamedLayout = event.getRenamedSoundLayout();
 		this.notifyItemChanged(this.getValues().indexOf(renamedLayout));
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void onEvent(SoundLayoutAddedEvent event)
+	{
+		this.notifyDataSetChanged();
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener

@@ -65,4 +65,14 @@ public class AddNewSoundLayoutDialog extends SoundLayoutDialog
 
 		EventBus.getDefault().post(new SoundLayoutAddedEvent());
 	}
+
+	public interface OnSoundLayoutAddedEventListener
+	{
+		/**
+		 * This is called by greenRobot EventBus in case a new SoundLayout was renamed.
+		 * @param event delivered SoundLayoutRenamedEvent
+		 */
+		@SuppressWarnings("unused")
+		void onEvent(SoundLayoutAddedEvent event);
+	}
 }

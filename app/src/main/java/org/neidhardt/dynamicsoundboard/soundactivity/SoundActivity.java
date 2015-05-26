@@ -29,7 +29,8 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
@@ -54,6 +55,8 @@ import java.util.Set;
 public class SoundActivity
 		extends
 			AppCompatActivity
+		implements
+			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener
 {
 	private static final String TAG = SoundActivity.class.getName();
 
@@ -256,12 +259,9 @@ public class SoundActivity
 		this.findViewById(R.id.tv_app_name).setVisibility(viewState);
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case the current sound layout has changed. Activity must switch to new sound layout
-	 * @param event delivered OpenSoundSheetEvent
-	 */
+	@Override
 	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutRenamedEvent event)
+	public void onEvent(SoundLayoutSelectedEvent event)
 	{
 		SoundSheetsManagerFragment fragment = this.getSoundSheetsManagerFragment();
 		this.removeSoundFragment(fragment.getSoundSheets());
