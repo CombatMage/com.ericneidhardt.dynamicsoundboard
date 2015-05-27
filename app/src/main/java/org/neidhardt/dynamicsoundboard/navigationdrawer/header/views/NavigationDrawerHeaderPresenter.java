@@ -1,5 +1,7 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.header.views;
 
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
@@ -18,7 +20,8 @@ public class NavigationDrawerHeaderPresenter
 		implements
 			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
 			SoundLayoutsPresenter.OnSoundLayoutRemovedEventListener,
-			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener
+			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
+			EnhancedMediaPlayer.OnMediaPlayerStateChangedEvent
 {
 	private SoundLayoutModel model;
 
@@ -39,7 +42,10 @@ public class NavigationDrawerHeaderPresenter
 	{
 		super.setView(view);
 		if (view != null)
+		{
 			view.showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
+			view.setCurrentSoundCount(42); // TODO get sound count
+		}
 	}
 
 	@Override
@@ -72,6 +78,17 @@ public class NavigationDrawerHeaderPresenter
 		this.getView().showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
 	}
 
+	@Override
+	@SuppressWarnings("unused")
+	public void onEventMainThread(MediaPlayerStateChangedEvent event)
+	{
+		if (this.getView() == null)
+			return;
+
+		this.getView().setCurrentSoundCount(42); // TODO get sound count
+		this.getView().animateHeaderAvatarRotate();
+	}
+
 	public void onChangeLayoutClicked()
 	{
 		this.getView().animateLayoutChanges();
@@ -80,6 +97,10 @@ public class NavigationDrawerHeaderPresenter
 
 	public interface OnOpenSoundLayoutsEvent
 	{
+		/**
+		 * This is called by greenRobot EventBus when the user clicks on the open SoundLayouts button in navigation drawer header.
+		 * @param event delivered OpenSoundLayoutsEvent
+		 */
 		void onEvent(OpenSoundLayoutsEvent event);
 	}
 }

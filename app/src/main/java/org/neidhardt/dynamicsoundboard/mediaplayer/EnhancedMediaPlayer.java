@@ -384,4 +384,13 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		EventBus.getDefault().post(new MediaPlayerCompletedEvent(this.rawData));
 	}
 
+	public interface OnMediaPlayerStateChangedEvent
+	{
+		/**
+		 * This is called by greenRobot EventBus when the state of a EnhancedMediaPlayer has changed.
+		 * @param event delivered MediaPlayerStateChangedEvent
+		 */
+		void onEventMainThread(MediaPlayerStateChangedEvent event);
+	}
+
 }

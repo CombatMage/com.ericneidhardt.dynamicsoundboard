@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
@@ -17,8 +18,8 @@ import static org.mockito.Mockito.*;
 /**
  * Created by eric.neidhardt on 27.05.2015.
  */
-public class NavigationDrawerHeaderPresenterTest extends BaseTest {
-
+public class NavigationDrawerHeaderPresenterTest extends BaseTest
+{
 	private NavigationDrawerHeaderPresenter presenter;
 
 	private NavigationDrawerHeader view;
@@ -55,12 +56,12 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest {
 	public void testSetView() throws Exception
 	{
 		verify(this.view, times(1)).showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
+		verify(this.view, times(1)).setCurrentSoundCount(anyInt());
 
 		this.presenter.setView(null);
 		verify(this.view, times(1)).showCurrentLayoutName(anyString());
+		verify(this.view, times(1)).setCurrentSoundCount(anyInt());
 	}
-
-
 
 	@Test
 	public void testOnSoundLayoutRenamedEvent() throws Exception
@@ -93,6 +94,17 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest {
 		this.presenter.setView(null);
 		this.presenter.onEvent(new SoundLayoutSelectedEvent(null));
 		verify(this.view, times(2)).showCurrentLayoutName(anyString());
+	}
+
+	@Test
+	public void testMediaPlayerStateChangedEventMainThread() throws Exception
+	{
+		this.presenter.onEventMainThread(new MediaPlayerStateChangedEvent(null, false));
+		verify(this.view, times(2)).setCurrentSoundCount(anyInt());
+
+		this.presenter.setView(null);
+		this.presenter.onEventMainThread(new MediaPlayerStateChangedEvent(null, false));
+		verify(this.view, times(2)).setCurrentSoundCount(anyInt());
 	}
 
 	@Test

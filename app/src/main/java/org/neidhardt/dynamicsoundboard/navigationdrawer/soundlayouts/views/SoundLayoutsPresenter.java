@@ -73,7 +73,6 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 		 * This is called by greenRobot EventBus in case a new SoundLayout was renamed.
 		 * @param event delivered SoundLayoutRenamedEvent
 		 */
-		@SuppressWarnings("unused")
 		void onEvent(SoundLayoutRemovedEvent event);
 	}
 
@@ -83,7 +82,6 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 		 * This is called by greenRobot EventBus in case a new SoundLayout was selected.
 		 * @param event delivered SoundLayoutRenamedEvent
 		 */
-		@SuppressWarnings("unused")
 		void onEvent(SoundLayoutSelectedEvent event);
 	}
 
