@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 26.05.2015.
  */
-public class SoundSheetsPresenter extends NavigationDrawerListPresenter<SoundSheets>
+public class SoundSheetsPresenter extends NavigationDrawerListPresenter<SoundSheets> implements SoundSheetsAdapter.OnItemClickListener
 {
 	private static final String TAG = SoundSheetsPresenter.class.getName();
 
@@ -51,6 +51,7 @@ public class SoundSheetsPresenter extends NavigationDrawerListPresenter<SoundShe
 		adapter.notifyDataSetChanged();
 	}
 
+	@Override
 	public void onItemClick(View view, SoundSheet data, int position)
 	{
 		if (this.getView() == null)

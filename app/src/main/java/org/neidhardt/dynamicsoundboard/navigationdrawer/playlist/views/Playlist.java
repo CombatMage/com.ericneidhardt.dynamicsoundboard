@@ -90,7 +90,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	@Override
 	public void onItemClick(View view, EnhancedMediaPlayer player, int position)
 	{
-		this.presenter.onItemClicked(view, player, position);
+		this.presenter.onItemClick(view, player, position);
 	}
 
 	@Override

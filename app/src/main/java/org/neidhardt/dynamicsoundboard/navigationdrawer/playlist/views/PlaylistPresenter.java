@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 26.05.2015.
  */
-public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist>
+public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> implements PlaylistAdapter.OnItemClickListener
 {
 	private static final String TAG = PlaylistPresenter.class.getName();
 
@@ -23,7 +23,8 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist>
 		return false;
 	}
 
-	public void onItemClicked(View view, EnhancedMediaPlayer player, int position)
+	@Override
+	public void onItemClick(View view, EnhancedMediaPlayer player, int position)
 	{
 		if (super.isInSelectionMode)
 			super.onItemSelected(view, position);
