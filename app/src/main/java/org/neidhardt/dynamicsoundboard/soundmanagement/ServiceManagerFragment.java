@@ -29,10 +29,10 @@ public class ServiceManagerFragment
 {
 	public static final String TAG = ServiceManagerFragment.class.getName();
 
-	private static SoundDataModel model = null;
-	public static SoundDataModel getModel()
+	private static SoundDataModel soundDataModel = null;
+	public static SoundDataModel getSoundDataModel()
 	{
-		return model;
+		return soundDataModel;
 	}
 
 	private boolean isServiceBound = false;
@@ -45,7 +45,7 @@ public class ServiceManagerFragment
 
 	public ServiceManagerFragment()
 	{
-		model = this;
+		soundDataModel = this;
 	}
 
 	@Override

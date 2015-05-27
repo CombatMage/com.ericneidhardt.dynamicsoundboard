@@ -28,6 +28,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.RemoveSoundSheetTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundSheetTask;
@@ -44,15 +45,27 @@ public class SoundSheetsManagerFragment
 			BaseFragment
 		implements
 			View.OnClickListener,
-			CustomEditText.OnTextEditedListener
+			CustomEditText.OnTextEditedListener,
+			SoundSheetsDataModel
 {
 	public static final String TAG = SoundSheetsManagerFragment.class.getName();
 
 	private static final String DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets";
 	private static final String DB_SOUND_SHEETS = "db_sound_sheets";
 
+	private static SoundSheetsDataModel model;
+	public static SoundSheetsDataModel getSoundSheetsDataModel()
+	{
+		return model;
+	}
+
 	private List<SoundSheet> soundSheets;
 	private DaoSession daoSession;
+
+	public SoundSheetsManagerFragment()
+	{
+		model = this;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -246,6 +259,7 @@ public class SoundSheetsManagerFragment
 			this.remove(soundSheetToRemove, true);
 	}
 
+	@Override
 	public List<SoundSheet> getSoundSheets()
 	{
 		return this.soundSheets;

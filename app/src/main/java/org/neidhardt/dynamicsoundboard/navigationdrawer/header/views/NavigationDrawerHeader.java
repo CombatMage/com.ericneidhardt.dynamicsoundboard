@@ -64,7 +64,7 @@ public class NavigationDrawerHeader extends FrameLayout implements View.OnClickL
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		this.presenter.setSoundDataModel(ServiceManagerFragment.getModel());
+		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
 		this.presenter.setSoundLayoutModel(SoundLayoutsManager.getInstance());
 		this.presenter.onAttachedToWindow();
 	}

@@ -12,10 +12,10 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,25 +27,25 @@ public class SoundSheetsAdapter
 			SoundSheetFragment.OnSoundRemovedEventListener
 {
 	private OnItemClickListener onItemClickListener;
-	private EventBus bus;
-	private SoundSheetsManagerFragment soundSheetManagerFragment;
-	private ServiceManagerFragment serviceManagerFragment;
+	private EventBus eventBus;
+	private SoundSheetsDataModel soundSheetsDataModel;
+	private SoundDataModel soundDataModel;
 
 	public SoundSheetsAdapter()
 	{
-		this.bus = EventBus.getDefault();
+		this.eventBus = EventBus.getDefault();
 	}
 
 	public void onAttachedToWindow()
 	{
-		if (!this.bus.isRegistered(this))
-			this.bus.register(this);
+		if (!this.eventBus.isRegistered(this))
+			this.eventBus.register(this);
 		this.notifyDataSetChanged();
 	}
 
 	public void onDetachedFromWindow()
 	{
-		this.bus.unregister(this);
+		this.eventBus.unregister(this);
 	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
@@ -53,14 +53,14 @@ public class SoundSheetsAdapter
 		this.onItemClickListener = onItemClickListener;
 	}
 
-	public void setSoundSheetManagerFragment(SoundSheetsManagerFragment soundSheetManagerFragment)
+	void setSoundSheetsDataModel(SoundSheetsDataModel soundSheetsDataModel)
 	{
-		this.soundSheetManagerFragment = soundSheetManagerFragment;
+		this.soundSheetsDataModel = soundSheetsDataModel;
 	}
 
-	public void setServiceManagerFragment(ServiceManagerFragment serviceManagerFragment)
+	void setSoundDataModel(SoundDataModel soundDataModel)
 	{
-		this.serviceManagerFragment = serviceManagerFragment;
+		this.soundDataModel = soundDataModel;
 	}
 
 	/**
@@ -81,9 +81,9 @@ public class SoundSheetsAdapter
 
 	public List<SoundSheet> getValues()
 	{
-		if (this.soundSheetManagerFragment == null)
+		if (this.soundSheetsDataModel == null)
 			return new ArrayList<>();
-		return this.soundSheetManagerFragment.getSoundSheets();
+		return this.soundSheetsDataModel.getSoundSheets();
 	}
 
 	@Override
@@ -106,9 +106,9 @@ public class SoundSheetsAdapter
 		holder.label.setText(data.getLabel());
 		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 
-		if (this.serviceManagerFragment != null)
+		if (this.soundDataModel != null)
 		{
-			List<EnhancedMediaPlayer> sounds = this.serviceManagerFragment.getSounds().get(data.getFragmentTag());
+			List<EnhancedMediaPlayer> sounds = this.soundDataModel.getSounds().get(data.getFragmentTag());
 			holder.setSoundCount(sounds != null ? sounds.size() : 0);
 		}
 	}
