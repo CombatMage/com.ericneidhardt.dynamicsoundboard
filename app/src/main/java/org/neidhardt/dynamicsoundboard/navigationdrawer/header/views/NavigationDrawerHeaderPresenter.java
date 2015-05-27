@@ -38,21 +38,14 @@ public class NavigationDrawerHeaderPresenter
 	}
 
 	@Override
-	public void setView(NavigationDrawerHeader view)
-	{
-		super.setView(view);
-		if (view != null) // TODO move this to onAttachedView , TODO update test
-		{
-			view.showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
-			view.setCurrentSoundCount(42); // TODO get sound count
-		}
-	}
-
-	@Override
 	public void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		// TODO write test
+		if (this.getView() != null)
+		{
+			this.getView().showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
+			this.getView().setCurrentSoundCount(42); // TODO get sound count
+		}
 	}
 
 	@Override

@@ -53,8 +53,9 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	}
 
 	@Test
-	public void testSetView() throws Exception
+	public void testOnAttachedToWindow() throws Exception
 	{
+		this.presenter.onAttachedToWindow();
 		verify(this.view, times(1)).showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
 		verify(this.view, times(1)).setCurrentSoundCount(anyInt());
 
@@ -67,44 +68,44 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	public void testOnSoundLayoutRenamedEvent() throws Exception
 	{
 		this.presenter.onEvent(new SoundLayoutRenamedEvent(null));
-		verify(this.view, times(2)).showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
+		verify(this.view, times(1)).showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
 
 		this.presenter.setView(null);
 		this.presenter.onEvent(new SoundLayoutRenamedEvent(null));
-		verify(this.view, times(2)).showCurrentLayoutName(anyString());
+		verify(this.view, times(1)).showCurrentLayoutName(anyString());
 	}
 
 	@Test
 	public void testOnSoundLayoutRemovedEvent() throws Exception
 	{
 		this.presenter.onEvent(new SoundLayoutRemovedEvent());
-		verify(this.view, times(2)).showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
+		verify(this.view, times(1)).showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
 
 		this.presenter.setView(null);
 		this.presenter.onEvent(new SoundLayoutRemovedEvent());
-		verify(this.view, times(2)).showCurrentLayoutName(anyString());
+		verify(this.view, times(1)).showCurrentLayoutName(anyString());
 	}
 
 	@Test
 	public void testOnSoundLayoutSelectedEvent() throws Exception
 	{
 		this.presenter.onEvent(new SoundLayoutSelectedEvent(null));
-		verify(this.view, times(2)).showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
+		verify(this.view, times(1)).showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
 
 		this.presenter.setView(null);
 		this.presenter.onEvent(new SoundLayoutSelectedEvent(null));
-		verify(this.view, times(2)).showCurrentLayoutName(anyString());
+		verify(this.view, times(1)).showCurrentLayoutName(anyString());
 	}
 
 	@Test
 	public void testMediaPlayerStateChangedEventMainThread() throws Exception
 	{
 		this.presenter.onEventMainThread(new MediaPlayerStateChangedEvent(null, false));
-		verify(this.view, times(2)).setCurrentSoundCount(anyInt());
+		verify(this.view, times(1)).setCurrentSoundCount(anyInt());
 
 		this.presenter.setView(null);
 		this.presenter.onEventMainThread(new MediaPlayerStateChangedEvent(null, false));
-		verify(this.view, times(2)).setCurrentSoundCount(anyInt());
+		verify(this.view, times(1)).setCurrentSoundCount(anyInt());
 	}
 
 	@Test
