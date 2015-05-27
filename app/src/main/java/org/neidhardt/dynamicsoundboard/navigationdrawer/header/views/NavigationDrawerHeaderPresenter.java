@@ -24,13 +24,18 @@ public class NavigationDrawerHeaderPresenter
 			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
 			EnhancedMediaPlayer.OnMediaPlayerStateChangedEvent
 {
+	private static final String TAG = NavigationDrawerHeaderPresenter.class.getName();
+
 	private SoundLayoutModel soundLayoutModel;
 	private SoundDataModel soundDataModel;
 
-	public NavigationDrawerHeaderPresenter(SoundLayoutModel soundLayoutModel, SoundDataModel soundDataModel)
+	public void setSoundLayoutModel(SoundLayoutModel soundLayoutModel)
 	{
-		super();
 		this.soundLayoutModel = soundLayoutModel;
+	}
+
+	public void setSoundDataModel(SoundDataModel soundDataModel)
+	{
 		this.soundDataModel = soundDataModel;
 	}
 
@@ -44,18 +49,21 @@ public class NavigationDrawerHeaderPresenter
 	public void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		if (this.getView() != null)
-		{
-			this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
-			this.getView().setCurrentSoundCount(this.soundDataModel.getCurrentlyPlayingSounds().size());
-		}
+		if (this.getView() == null)
+			throw new NullPointerException(TAG +": supplied view is null");
+
+		if (this.soundLayoutModel == null || this.soundDataModel == null)
+			throw new NullPointerException(TAG +": supplied model is null");
+
+		this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
+		this.getView().setCurrentSoundCount(this.soundDataModel.getCurrentlyPlayingSounds().size());
 	}
 
 	@Override
 	@SuppressWarnings("unused")
 	public void onEvent(SoundLayoutRenamedEvent event)
 	{
-		if (this.getView() == null)
+		if (this.getView() == null || this.soundLayoutModel == null)
 			return;
 
 		this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
@@ -65,7 +73,7 @@ public class NavigationDrawerHeaderPresenter
 	@SuppressWarnings("unused")
 	public void onEvent(SoundLayoutRemovedEvent event)
 	{
-		if (this.getView() == null)
+		if (this.getView() == null || this.soundLayoutModel == null)
 			return;
 
 		this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
@@ -75,7 +83,7 @@ public class NavigationDrawerHeaderPresenter
 	@SuppressWarnings("unused")
 	public void onEvent(SoundLayoutSelectedEvent event)
 	{
-		if (this.getView() == null)
+		if (this.getView() == null || this.soundLayoutModel == null)
 			return;
 
 		this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
@@ -85,7 +93,7 @@ public class NavigationDrawerHeaderPresenter
 	@SuppressWarnings("unused")
 	public void onEventMainThread(MediaPlayerStateChangedEvent event)
 	{
-		if (this.getView() == null)
+		if (this.getView() == null || this.soundDataModel == null)
 			return;
 
 		this.getView().setCurrentSoundCount(this.soundDataModel.getCurrentlyPlayingSounds().size());
@@ -95,7 +103,7 @@ public class NavigationDrawerHeaderPresenter
 	public void onChangeLayoutClicked()
 	{
 		this.getView().animateLayoutChanges();
-		this.getBus().post(new OpenSoundLayoutsEvent());
+		this.getEventBus().post(new OpenSoundLayoutsEvent());
 	}
 
 	public interface OnOpenSoundLayoutsEvent
