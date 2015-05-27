@@ -28,6 +28,8 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 
 	private boolean isServiceBound = false;
 
+	// TODO provide static access
+
 	private MusicService service;
 	public MusicService getSoundService()
 	{
