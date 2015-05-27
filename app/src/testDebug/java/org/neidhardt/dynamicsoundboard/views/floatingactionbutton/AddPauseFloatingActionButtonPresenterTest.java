@@ -32,7 +32,7 @@ public class AddPauseFloatingActionButtonPresenterTest extends BaseTest {
 	{
 		// test setup
 		EventBus mockBus = mock(EventBus.class);
-		this.fabPresenter.setBus(mockBus);
+		this.fabPresenter.setEventBus(mockBus);
 		// trigger test
 		this.fabPresenter.onFabClicked();
 		// check

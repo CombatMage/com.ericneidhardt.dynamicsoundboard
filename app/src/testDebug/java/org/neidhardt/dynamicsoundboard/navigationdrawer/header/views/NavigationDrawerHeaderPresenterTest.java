@@ -50,9 +50,11 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 		this.soundLayoutModel = mock(SoundLayoutModel.class);
 		when(this.soundLayoutModel.getActiveSoundLayout()).thenReturn(activeSoundLayout);
 
-		this.presenter = new NavigationDrawerHeaderPresenter(this.soundLayoutModel, this.soundDataModel);
+		this.presenter = new NavigationDrawerHeaderPresenter();
+		this.presenter.setSoundDataModel(this.soundDataModel);
+		this.presenter.setSoundLayoutModel(this.soundLayoutModel);
 		this.presenter.setView(this.view);
-		this.presenter.setBus(this.bus);
+		this.presenter.setEventBus(this.bus);
 	}
 
 	@Test
@@ -62,15 +64,32 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	}
 
 	@Test
-	public void testOnAttachedToWindow() throws Exception
+	public void testOnAttachedToWindow_1() throws Exception
 	{
 		this.presenter.onAttachedToWindow();
 		verify(this.view, times(1)).showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
 		verify(this.view, times(1)).setCurrentSoundCount(eq(this.soundDataModel.getCurrentlyPlayingSounds().size()));
+	}
 
+	@Test(expected = NullPointerException.class)
+	public void testOnAttachedToWindow_2() throws Exception
+	{
 		this.presenter.setView(null);
-		verify(this.view, times(1)).showCurrentLayoutName(anyString());
-		verify(this.view, times(1)).setCurrentSoundCount(eq(this.soundDataModel.getCurrentlyPlayingSounds().size()));
+		this.presenter.onAttachedToWindow();
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testOnAttachedToWindow_3() throws Exception
+	{
+		this.presenter.setSoundLayoutModel(null);
+		this.presenter.onAttachedToWindow();
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testOnAttachedToWindow_4() throws Exception
+	{
+		this.presenter.setSoundDataModel(null);
+		this.presenter.onAttachedToWindow();
 	}
 
 	@Test

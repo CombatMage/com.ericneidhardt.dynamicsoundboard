@@ -19,7 +19,7 @@ public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter
 
 	void onFabClicked()
 	{
-		this.getBus().post(new FabClickedEvent());
+		this.getEventBus().post(new FabClickedEvent());
 	}
 
 	/**

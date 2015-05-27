@@ -40,7 +40,7 @@ public class SoundSheetsPresenter extends NavigationDrawerListPresenter<SoundShe
 
 		for (SoundSheet soundSheet: soundSheetsToRemove)
 		{
-			this.getBus().post(new SoundSheetsRemovedEvent(soundSheet));
+			this.getEventBus().post(new SoundSheetsRemovedEvent(soundSheet));
 			if (soundSheet.getIsSelected())
 			{
 				List<SoundSheet> remainingSoundSheets = adapter.getValues();
@@ -62,7 +62,7 @@ public class SoundSheetsPresenter extends NavigationDrawerListPresenter<SoundShe
 		else
 		{
 			this.getView().getAdapter().setSelectedItem(position);
-			this.getBus().post(new OpenSoundSheetEvent(data));
+			this.getEventBus().post(new OpenSoundSheetEvent(data));
 		}
 	}
 }

@@ -9,21 +9,21 @@ import de.greenrobot.event.EventBus;
 public abstract class BaseViewPresenter<T extends View> implements ViewPresenter<T>
 {
 	private T view;
-	EventBus bus;
+	EventBus eventBus;
 
 	public BaseViewPresenter()
 	{
-		this.bus = EventBus.getDefault();
+		this.eventBus = EventBus.getDefault();
 	}
 
-	public EventBus getBus()
+	public EventBus getEventBus()
 	{
-		return this.bus;
+		return this.eventBus;
 	}
 
-	public void setBus(EventBus bus)
+	public void setEventBus(EventBus bus)
 	{
-		this.bus = bus;
+		this.eventBus = bus;
 	}
 
 	@Override
@@ -41,15 +41,15 @@ public abstract class BaseViewPresenter<T extends View> implements ViewPresenter
 	@Override
 	public void onAttachedToWindow()
 	{
-		if (this.bus != null && !this.bus.isRegistered(this) && this.isEventBusSubscriber())
-			this.bus.registerSticky(this);
+		if (this.eventBus != null && !this.eventBus.isRegistered(this) && this.isEventBusSubscriber())
+			this.eventBus.registerSticky(this);
 	}
 
 	@Override
 	public void onDetachedFromWindow()
 	{
-		if (this.bus != null && this.bus.isRegistered(this) && this.isEventBusSubscriber())
-			this.bus.unregister(this);
+		if (this.eventBus != null && this.eventBus.isRegistered(this) && this.isEventBusSubscriber())
+			this.eventBus.unregister(this);
 	}
 
 	/**

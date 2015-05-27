@@ -29,18 +29,18 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 		else
 			this.selectedItems.put(indexOfSelectedItem, view);
 
-		this.getBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.INVALIDATE));
+		this.getEventBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.INVALIDATE));
 		view.setSelected(!view.isSelected());
 	}
 
 	public void prepareItemDeletion()
 	{
-		this.getBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.START));
+		this.getEventBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.START));
 	}
 
 	public void deleteSelected()
 	{
-		this.getBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOP));
+		this.getEventBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOP));
 		this.getView().onDeleteSelected(selectedItems);
 	}
 
@@ -86,7 +86,7 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 		for(int i = 0; i < this.selectedItems.size(); i++)
 			this.selectedItems.valueAt(i).setSelected(false);
 
-		this.getBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOPPED));
+		this.getEventBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOPPED));
 	}
 
 	public abstract void onDeleteSelected(SparseArray<View> selectedItems);

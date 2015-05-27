@@ -64,7 +64,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 	@Override
 	public void onItemSettingsClicked(SoundLayout data)
 	{
-		this.getBus().post(new OpenSoundLayoutSettingsEvent(data));
+		this.getEventBus().post(new OpenSoundLayoutSettingsEvent(data));
 	}
 
 	public interface OnSoundLayoutRemovedEventListener
