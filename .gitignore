@@ -24,3 +24,4 @@ gradle.properties
 storage_helper/build/
 app/build/outputs/logs/manifest-merger-debug-report.txt
 safe_async_task/build/
+app/build/jacoco/testDebug.exec
