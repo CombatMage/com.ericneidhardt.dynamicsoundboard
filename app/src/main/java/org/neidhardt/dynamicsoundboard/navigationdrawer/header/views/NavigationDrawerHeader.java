@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 /**
  * Created by eric.neidhardt on 27.05.2015.
@@ -47,7 +48,7 @@ public class NavigationDrawerHeader extends FrameLayout implements View.OnClickL
 
 	private void init(Context context)
 	{
-		this.presenter = new NavigationDrawerHeaderPresenter(SoundLayoutsManager.getInstance());
+		this.presenter = new NavigationDrawerHeaderPresenter(SoundLayoutsManager.getInstance(), ServiceManagerFragment.getModel());
 
 		LayoutInflater.from(context).inflate(R.layout.navigation_drawer_header, this, true);
 		this.currentLayoutName = (TextView) this.findViewById(R.id.tv_current_sound_layout_name);

@@ -10,6 +10,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.Sound
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
 import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 
 /**
  * Created by eric.neidhardt on 27.05.2015.
@@ -23,12 +24,14 @@ public class NavigationDrawerHeaderPresenter
 			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
 			EnhancedMediaPlayer.OnMediaPlayerStateChangedEvent
 {
-	private SoundLayoutModel model;
+	private SoundLayoutModel soundLayoutModel;
+	private SoundDataModel soundDataModel;
 
-	public NavigationDrawerHeaderPresenter(SoundLayoutModel model)
+	public NavigationDrawerHeaderPresenter(SoundLayoutModel soundLayoutModel, SoundDataModel soundDataModel)
 	{
 		super();
-		this.model = model;
+		this.soundLayoutModel = soundLayoutModel;
+		this.soundDataModel = soundDataModel;
 	}
 
 	@Override
@@ -43,8 +46,8 @@ public class NavigationDrawerHeaderPresenter
 		super.onAttachedToWindow();
 		if (this.getView() != null)
 		{
-			this.getView().showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
-			this.getView().setCurrentSoundCount(42); // TODO get sound count
+			this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
+			this.getView().setCurrentSoundCount(this.soundDataModel.getCurrentlyPlayingSounds().size());
 		}
 	}
 
@@ -55,7 +58,7 @@ public class NavigationDrawerHeaderPresenter
 		if (this.getView() == null)
 			return;
 
-		this.getView().showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
+		this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
 	}
 
 	@Override
@@ -65,7 +68,7 @@ public class NavigationDrawerHeaderPresenter
 		if (this.getView() == null)
 			return;
 
-		this.getView().showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
+		this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
 	}
 
 	@Override
@@ -75,7 +78,7 @@ public class NavigationDrawerHeaderPresenter
 		if (this.getView() == null)
 			return;
 
-		this.getView().showCurrentLayoutName(this.model.getActiveSoundLayout().getLabel());
+		this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
 	}
 
 	@Override
@@ -85,7 +88,7 @@ public class NavigationDrawerHeaderPresenter
 		if (this.getView() == null)
 			return;
 
-		this.getView().setCurrentSoundCount(42); // TODO get sound count
+		this.getView().setCurrentSoundCount(this.soundDataModel.getCurrentlyPlayingSounds().size());
 		this.getView().animateHeaderAvatarRotate();
 	}
 
