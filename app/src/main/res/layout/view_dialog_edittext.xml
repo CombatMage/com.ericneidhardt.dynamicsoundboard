@@ -16,7 +16,8 @@
 			android:textColor="@color/text_content_secondary"
 			android:textSize="@dimen/text_body"
 			android:background="@android:color/transparent"
-			tools:text="Edittext Label"/>
+			android:textCursorDrawable="@drawable/shape_cursor_edittext_accent"
+			tools:text="EditText Label"/>
 
 	<View
 			android:id="@+id/v_divider"
