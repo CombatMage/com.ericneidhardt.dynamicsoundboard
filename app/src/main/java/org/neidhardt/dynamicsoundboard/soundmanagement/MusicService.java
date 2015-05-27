@@ -23,7 +23,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.Sound
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
@@ -38,8 +37,6 @@ import java.util.*;
 public class MusicService
 		extends
 			Service
-		implements
-			SoundDataModel
 {
 	public static final String TAG = MusicService.class.getName();
 

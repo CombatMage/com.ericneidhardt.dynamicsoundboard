@@ -13,22 +13,29 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChagedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * File created by eric.neidhardt on 02.12.2014.
  */
-public class ServiceManagerFragment extends BaseFragment implements ServiceConnection
+public class ServiceManagerFragment
+		extends
+			BaseFragment
+		implements
+			ServiceConnection,
+			SoundDataModel
 {
 	public static final String TAG = ServiceManagerFragment.class.getName();
 
-	private boolean isServiceBound = false;
+	private static SoundDataModel model = null;
+	public static SoundDataModel getModel()
+	{
+		return model;
+	}
 
-	// TODO provide static access
+	private boolean isServiceBound = false;
 
 	private MusicService service;
 	public MusicService getSoundService()
@@ -41,6 +48,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
+		model = this;
 	}
 
 	private void startSoundManagerService()
@@ -95,6 +103,7 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		this.isServiceBound = false;
 	}
 
+	@Override
 	public List<EnhancedMediaPlayer> getPlayList()
 	{
 		if (this.service == null)
@@ -102,11 +111,28 @@ public class ServiceManagerFragment extends BaseFragment implements ServiceConne
 		return this.service.getPlaylist();
 	}
 
+	@Override
 	public Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
 		if (this.service == null)
 			return new HashMap<>();
 		return this.service.getSounds();
+	}
+
+	@Override
+	public List<EnhancedMediaPlayer> getSoundsInFragment(String fragmentTag)
+	{
+		if (this.service == null)
+			return new ArrayList<>();
+		return this.getSounds().get(fragmentTag);
+	}
+
+	@Override
+	public Set<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
+	{
+		if (this.service == null)
+			return new HashSet<>();
+		return this.service.getCurrentlyPlayingSounds();
 	}
 
 	public void notifyPlaylist()
