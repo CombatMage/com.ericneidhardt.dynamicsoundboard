@@ -59,14 +59,29 @@
 				app:typeface="roboto_regular"/>
 
 	</RelativeLayout>
-	
-	<ImageView
+
+	<FrameLayout
+			android:id="@+id/layout_header_avatar"
 			android:layout_width="70dp"
 			android:layout_height="70dp"
 			android:layout_marginLeft="@dimen/margin_default"
 			android:layout_marginStart="@dimen/margin_default"
-			android:layout_marginTop="@dimen/margin_default"
-			android:contentDescription="@string/navigation_drawer_content_description_avatar"
-			android:src="@drawable/ic_launcher"/>
+			android:layout_marginTop="@dimen/margin_default">
 
+		<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:contentDescription="@string/navigation_drawer_content_description_avatar"
+				android:src="@drawable/ic_launcher"/>
+
+		<com.devspark.robototextview.widget.RobotoTextView
+				android:id="@+id/tv_header_active_sound_counter"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:textColor="@color/text_header"
+				android:textSize="@dimen/text_title"
+				android:background="@drawable/shape_circular_background"/>
+
+	</FrameLayout>
 </RelativeLayout>
