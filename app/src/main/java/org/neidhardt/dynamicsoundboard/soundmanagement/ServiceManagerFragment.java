@@ -43,12 +43,16 @@ public class ServiceManagerFragment
 		return this.service;
 	}
 
+	public ServiceManagerFragment()
+	{
+		model = this;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
-		model = this;
 	}
 
 	private void startSoundManagerService()
@@ -106,7 +110,7 @@ public class ServiceManagerFragment
 	@Override
 	public List<EnhancedMediaPlayer> getPlayList()
 	{
-		if (this.service == null)
+		if (this.service == null || this.service.getPlaylist() == null)
 			return new ArrayList<>();
 		return this.service.getPlaylist();
 	}
@@ -114,7 +118,7 @@ public class ServiceManagerFragment
 	@Override
 	public Map<String, List<EnhancedMediaPlayer>> getSounds()
 	{
-		if (this.service == null)
+		if (this.service == null || this.service.getSounds() == null)
 			return new HashMap<>();
 		return this.service.getSounds();
 	}
@@ -122,7 +126,7 @@ public class ServiceManagerFragment
 	@Override
 	public List<EnhancedMediaPlayer> getSoundsInFragment(String fragmentTag)
 	{
-		if (this.service == null)
+		if (this.service == null || this.service.getSounds() == null || this.service.getSounds().get(fragmentTag) == null)
 			return new ArrayList<>();
 		return this.getSounds().get(fragmentTag);
 	}
@@ -130,7 +134,7 @@ public class ServiceManagerFragment
 	@Override
 	public Set<EnhancedMediaPlayer> getCurrentlyPlayingSounds()
 	{
-		if (this.service == null)
+		if (this.service == null || this.service.getCurrentlyPlayingSounds() == null)
 			return new HashSet<>();
 		return this.service.getCurrentlyPlayingSounds();
 	}

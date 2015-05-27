@@ -48,6 +48,7 @@ public class NavigationDrawerHeader extends FrameLayout implements View.OnClickL
 
 	private void init(Context context)
 	{
+		// TODO move settings models to onAttachedToWindow
 		this.presenter = new NavigationDrawerHeaderPresenter(SoundLayoutsManager.getInstance(), ServiceManagerFragment.getModel());
 
 		LayoutInflater.from(context).inflate(R.layout.navigation_drawer_header, this, true);
@@ -64,6 +65,7 @@ public class NavigationDrawerHeader extends FrameLayout implements View.OnClickL
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
+		// TODO setModel
 		this.presenter.onAttachedToWindow();
 	}
 
