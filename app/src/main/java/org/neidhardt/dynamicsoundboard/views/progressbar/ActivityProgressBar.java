@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.views.progressbar;
 import android.content.Context;
 import android.util.AttributeSet;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
-import org.neidhardt.dynamicsoundboard.views.ViewPresenter;
+import org.neidhardt.dynamicsoundboard.presenter.ViewPresenter;
 
 /**
  * Created by eric.neidhardt on 22.05.2015.

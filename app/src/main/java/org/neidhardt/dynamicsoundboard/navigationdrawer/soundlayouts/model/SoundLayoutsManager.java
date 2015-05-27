@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model;
 
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 09.03.2015.
  */
-public class SoundLayoutsManager
+public class SoundLayoutsManager implements SoundLayoutModel
 {
 	public static final String DB_DEFAULT = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default";
 

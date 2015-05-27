@@ -5,7 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
-import org.neidhardt.dynamicsoundboard.views.BaseViewPresenter;
+import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
 
 /**
  * Created by eric.neidhardt on 26.05.2015.

@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.views.progressbar;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStateChangedEvent;
-import org.neidhardt.dynamicsoundboard.views.BaseViewPresenter;
+import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
 
 /**
  * Created by eric.neidhardt on 22.05.2015.
@@ -12,16 +12,25 @@ public class ActivityProgressBarPresenter extends BaseViewPresenter<ActivityProg
 {
 	private static final String TAG = ActivityProgressBarPresenter.class.getName();
 
-	ActivityProgressBarPresenter()
+	private LongTermTaskStateChangedEvent lastReceivedEvent;
+
+	public ActivityProgressBarPresenter()
 	{
-		super();
-		this.showProgressBar(false);
+		this.lastReceivedEvent = null;
 	}
 
 	@Override
 	protected boolean isEventBusSubscriber()
 	{
 		return true;
+	}
+
+	@Override
+	public void setView(ActivityProgressBar view)
+	{
+		super.setView(view); // setView takes place after construction of presenter. Therefore we store the last received event and adjust view state accordingly
+		if (this.lastReceivedEvent != null)
+			this.onEventMainThread(this.lastReceivedEvent);
 	}
 
 	/**
@@ -32,6 +41,7 @@ public class ActivityProgressBarPresenter extends BaseViewPresenter<ActivityProg
 	public void onEventMainThread(LongTermTaskStateChangedEvent event)
 	{
 		Logger.d(TAG, "onEvent() " + event);
+		this.lastReceivedEvent = event;
 		int countOngingTasks = event.getNrOngoingTasks();
 
 		if (countOngingTasks > 0)

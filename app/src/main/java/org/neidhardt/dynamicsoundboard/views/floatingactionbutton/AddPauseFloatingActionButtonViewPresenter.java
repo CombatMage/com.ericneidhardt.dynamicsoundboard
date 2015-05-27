@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton;
 
+import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
-import org.neidhardt.dynamicsoundboard.views.BaseViewPresenter;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
 /**

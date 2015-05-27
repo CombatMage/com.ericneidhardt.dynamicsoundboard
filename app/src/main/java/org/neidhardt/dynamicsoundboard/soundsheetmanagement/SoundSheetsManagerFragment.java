@@ -19,7 +19,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;

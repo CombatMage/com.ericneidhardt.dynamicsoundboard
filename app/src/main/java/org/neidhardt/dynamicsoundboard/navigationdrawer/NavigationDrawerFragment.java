@@ -11,24 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutsEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsList;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
@@ -41,9 +36,7 @@ public class NavigationDrawerFragment
 			View.OnClickListener,
 			ViewPager.OnPageChangeListener,
 			NavigationDrawerListPresenter.OnNavigationDrawerListEventListener,
-			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
-			SoundLayoutsPresenter.OnSoundLayoutRemovedEventListener,
-			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener
+			NavigationDrawerHeaderPresenter.OnOpenSoundLayoutsEvent
 {
 	public static final String TAG = NavigationDrawerFragment.class.getName();
 
@@ -61,7 +54,6 @@ public class NavigationDrawerFragment
 	private Playlist playlist;
 	private SoundSheets soundSheets;
 
-	private TextView currentLayoutName;
 	private View contextualActionContainer;
 	private View deleteSelected;
 
@@ -95,7 +87,6 @@ public class NavigationDrawerFragment
 
 		fragmentView.findViewById(R.id.b_delete).setOnClickListener(this);
 		fragmentView.findViewById(R.id.b_ok).setOnClickListener(this);
-		fragmentView.findViewById(R.id.layout_change_sound_layout).setOnClickListener(this);
 
 		this.tabContent = (ViewPager) fragmentView.findViewById(R.id.vp_tab_content);
 		this.tabContent.setAdapter(this.tabContentAdapter);
@@ -115,15 +106,6 @@ public class NavigationDrawerFragment
 		this.soundSheets.getAdapter().setServiceManagerFragment(this.getServiceManagerFragment());
 
 		return fragmentView;
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
-
-		this.currentLayoutName = (TextView) this.getActivity().findViewById(R.id.tv_current_sound_layout_name);
-		this.currentLayoutName.setText(SoundLayoutsManager.getInstance().getActiveSoundLayout().getLabel());
 	}
 
 	@Override
@@ -209,23 +191,10 @@ public class NavigationDrawerFragment
 				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), fragment.getSuggestedSoundSheetName());
 			}
 		}
-		else if (id == R.id.layout_change_sound_layout)
-		{
-			this.animateSoundLayoutsListAppear();
-			this.soundLayoutList.toggleVisibility();
-			if (this.getBaseActivity().isActionModeActive() && this.soundLayoutList.isActive())
-				this.soundLayoutList.getPresenter().prepareItemDeletion();
-		}
 	}
 
 	private void animateSoundLayoutsListAppear()
 	{
-		View indicator = this.getActivity().findViewById(R.id.iv_change_sound_layout_indicator);
-		indicator.animate()
-				.rotationXBy(180)
-				.setDuration(this.getResources().getInteger(android.R.integer.config_shortAnimTime))
-				.start();
-
 		final View viewToAnimate = this.getActivity().findViewById(R.id.v_reveal_shadow);
 		Animator animator = AnimationUtils.createSlowCircularReveal(viewToAnimate,
 				this.listContainer.getWidth(), 0,
@@ -233,6 +202,16 @@ public class NavigationDrawerFragment
 
 		if (animator != null)
 			animator.start();
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void onEvent(OpenSoundLayoutsEvent event)
+	{
+		this.soundLayoutList.toggleVisibility();
+		this.animateSoundLayoutsListAppear();
+		if (this.getBaseActivity().isActionModeActive() && this.soundLayoutList.isActive())
+			this.soundLayoutList.getPresenter().prepareItemDeletion();
 	}
 
 	@Override
@@ -248,39 +227,6 @@ public class NavigationDrawerFragment
 			case STOPPED:
 				this.onActionModeFinished();
 		}
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutRenamedEvent event)
-	{
-		SoundLayout renamedLayout = event.getRenamedSoundLayout();
-		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
-
-		if (renamedLayout.equals(manager.getActiveSoundLayout()))
-			this.setLayoutName(renamedLayout.getLabel());
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutRemovedEvent event)
-	{
-		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
-		this.setLayoutName(manager.getActiveSoundLayout().getLabel());
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutSelectedEvent event)
-	{
-		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
-		this.setLayoutName(manager.getActiveSoundLayout().getLabel());
-	}
-
-	void setLayoutName(String layoutName)
-	{
-		if (this.currentLayoutName != null)
-			this.currentLayoutName.setText(layoutName);
 	}
 
 	private void onActionModeStart()

@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard;
 import org.junit.After;
 import org.junit.Before;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;

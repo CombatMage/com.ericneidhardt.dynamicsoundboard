@@ -9,9 +9,9 @@ import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 
 import java.util.List;
 

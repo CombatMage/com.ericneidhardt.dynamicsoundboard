@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.events.PlaylistSoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;

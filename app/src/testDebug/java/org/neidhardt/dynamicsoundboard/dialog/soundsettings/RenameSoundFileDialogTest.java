@@ -1,12 +1,10 @@
 package org.neidhardt.dynamicsoundboard.dialog.soundsettings;
 
 import android.net.Uri;
-import android.view.View;
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
-import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
@@ -132,29 +130,6 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 	}
 
 	@Test
-	public void testSetMediaPlayerData() throws Exception
-	{
-		MediaPlayerData data1 = TestDataGenerator.getRandomPlayerData();
-		MediaPlayerData data2 = TestDataGenerator.getRandomPlayerData();
-		data1.setUri(this.testData.getUri());
-		data2.setUri(this.testData.getUri());
-
-		this.service.onEvent(new SoundLoadedEvent(data1, false));
-		this.service.onEvent(new SoundLoadedEvent(data2, false));
-
-		assertThat(this.dialog.getPlayersWithMatchingUri(this.testData.getUri()).size(), equalTo(3));  // this.testData + data2 + data3
-
-		this.dialog.setMediaPlayerData(data1);
-
-		View dialogView = this.dialog.getMainView();
-		assertNotNull(dialogView);
-
-		View renameCheckBox = dialogView.findViewById(R.id.cb_rename_all_occurrences);
-		assertNotNull(renameCheckBox);
-		assertThat(renameCheckBox.getVisibility(), equalTo(View.VISIBLE));
-	}
-
-	@Test
 	public void testDeliverResult() throws Exception
 	{
 		// create files and verify they exists
@@ -177,40 +152,5 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 		// actual test
 		this.dialog.deliverResult(Uri.fromFile(originalFile), newLabel, false);
 		assertTrue(this.getFileFromExternalStorage("renamedTestSound.mp3").exists());
-	}
-
-	@Test
-	public void testDeliverResult_1() throws Exception
-	{
-		// create files and verify they exists
-		String originalFileName = "testSound1.mp3";
-		String newLabel = "renamedTestSound";
-		File originalFile = this.createFile(originalFileName);
-
-		MediaPlayerData data1 = spy(TestDataGenerator.getMediaPlayerData(originalFileName, Uri.fromFile(originalFile).toString()));
-		EnhancedMediaPlayer player1 = TestDataGenerator.getMockEnhancedMediaPlayer(data1);
-
-		MediaPlayerData data2 = spy(TestDataGenerator.getMediaPlayerData("data2", Uri.fromFile(originalFile).toString()));
-		EnhancedMediaPlayer player2 = TestDataGenerator.getMockEnhancedMediaPlayer(data2);
-
-		MediaPlayerData data3 = spy(TestDataGenerator.getMediaPlayerData("data3", Uri.fromFile(originalFile).toString()));
-		EnhancedMediaPlayer player3 = TestDataGenerator.getMockEnhancedMediaPlayer(data3);
-
-		// prepare test
-		Uri originalFileUri = Uri.fromFile(originalFile);
-		this.service.getPlaylist().add(player1);
-		this.service.getPlaylist().add(player2);
-		this.service.getPlaylist().add(player3);
-		this.dialog.setMediaPlayerData(data1);
-		assertThat(this.dialog.getPlayersWithMatchingUri(originalFileUri.toString()).size(), equalTo(3));
-
-		// actual test
-		this.dialog.deliverResult(Uri.fromFile(originalFile), newLabel, true);
-		assertTrue(this.getFileFromExternalStorage("renamedTestSound.mp3").exists());
-		assertThat(this.service.getPlaylist().get(1).getMediaPlayerData().getLabel(), equalTo("renamedTestSound"));
-		assertThat(this.service.getPlaylist().get(2).getMediaPlayerData().getLabel(), equalTo("renamedTestSound"));
-
-		verify(this.service.getPlaylist().get(1).getMediaPlayerData(), atLeastOnce()).setItemWasAltered();
-		verify(this.service.getPlaylist().get(2).getMediaPlayerData(), atLeastOnce()).setItemWasAltered();
 	}
 }

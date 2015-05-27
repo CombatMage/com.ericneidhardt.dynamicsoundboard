@@ -5,10 +5,10 @@ import android.view.View;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 
 import java.util.ArrayList;
 import java.util.List;

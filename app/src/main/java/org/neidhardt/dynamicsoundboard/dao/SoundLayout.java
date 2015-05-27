@@ -5,7 +5,7 @@ package org.neidhardt.dynamicsoundboard.dao;
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
 
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 
 /**
  * Entity mapped to table SOUND_LAYOUT.

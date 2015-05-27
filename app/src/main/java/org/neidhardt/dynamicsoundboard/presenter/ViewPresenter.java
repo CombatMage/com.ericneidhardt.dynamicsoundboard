@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.views;
+package org.neidhardt.dynamicsoundboard.presenter;
 
 /**
  * Created by eric.neidhardt on 22.05.2015.
