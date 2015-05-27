@@ -110,8 +110,9 @@ public class NavigationDrawerFragment
 		this.playlist = (Playlist) fragmentView.findViewById(R.id.playlist);
 		this.soundSheets = (SoundSheets) fragmentView.findViewById(R.id.sound_sheets);
 
-		this.initPlayListAndAdapter();
-		this.initSoundSheetsAndAdapter();
+		this.playlist.getAdapter().setServiceManagerFragment(this.getServiceManagerFragment());
+		this.soundSheets.getAdapter().setSoundSheetManagerFragment(this.getSoundSheetManagerFragment());
+		this.soundSheets.getAdapter().setServiceManagerFragment(this.getServiceManagerFragment());
 
 		return fragmentView;
 	}
@@ -130,9 +131,9 @@ public class NavigationDrawerFragment
 	{
 		super.onResume();
 
-		this.initSoundLayoutsAndAdapter();
-		this.initSoundSheetsAndAdapter();
-		this.initPlayListAndAdapter();
+		this.soundSheets.getAdapter().setSoundSheetManagerFragment(this.getSoundSheetManagerFragment());
+		this.soundSheets.getAdapter().setServiceManagerFragment(this.getServiceManagerFragment());
+		this.playlist.getAdapter().setServiceManagerFragment(this.getServiceManagerFragment());
 
 		this.calculateMinHeightOfListContent();
 		this.adjustViewPagerToContent();
@@ -148,21 +149,6 @@ public class NavigationDrawerFragment
 	public void calculateMinHeightOfListContent()
 	{
 		this.minHeightOfListContent = this.contextualActionContainer.getTop() - listContainer.getTop();  // this is the minimal height required to fill the screen properly
-	}
-
-	private void initSoundLayoutsAndAdapter()
-	{
-		this.soundLayoutList.getAdapter().setNavigationDrawerFragment(this);
-	}
-
-	private void initSoundSheetsAndAdapter()
-	{
-		this.soundSheets.getAdapter().setNavigationDrawerFragment(this);
-	}
-
-	private void initPlayListAndAdapter()
-	{
-		this.playlist.getAdapter().setServiceManagerFragment(this.getServiceManagerFragment());
 	}
 
 	@Override
@@ -291,6 +277,12 @@ public class NavigationDrawerFragment
 		this.setLayoutName(manager.getActiveSoundLayout().getLabel());
 	}
 
+	void setLayoutName(String layoutName)
+	{
+		if (this.currentLayoutName != null)
+			this.currentLayoutName.setText(layoutName);
+	}
+
 	private void onActionModeStart()
 	{
 		this.deleteSelected.setVisibility(View.VISIBLE);
@@ -325,12 +317,6 @@ public class NavigationDrawerFragment
 
 	@Override
 	public void onPageScrollStateChanged(int state) {}
-
-	public void setLayoutName(String layoutName)
-	{
-		if (this.currentLayoutName != null)
-			this.currentLayoutName.setText(layoutName);
-	}
 
 	/**
 	 * This function resize the view pagers height to its content. It is necessary, because the viewpager can not

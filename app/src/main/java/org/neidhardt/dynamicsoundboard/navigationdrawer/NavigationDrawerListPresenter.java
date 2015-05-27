@@ -4,7 +4,6 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
 import org.neidhardt.dynamicsoundboard.views.BaseViewPresenter;
 
@@ -30,18 +29,18 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 		else
 			this.selectedItems.put(indexOfSelectedItem, view);
 
-		EventBus.getDefault().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.INVALIDATE));
+		this.getBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.INVALIDATE));
 		view.setSelected(!view.isSelected());
 	}
 
 	public void prepareItemDeletion()
 	{
-		EventBus.getDefault().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.START));
+		this.getBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.START));
 	}
 
 	public void deleteSelected()
 	{
-		EventBus.getDefault().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOP));
+		this.getBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOP));
 		this.getView().onDeleteSelected(selectedItems);
 	}
 
@@ -87,7 +86,7 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 		for(int i = 0; i < this.selectedItems.size(); i++)
 			this.selectedItems.valueAt(i).setSelected(false);
 
-		EventBus.getDefault().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOPPED));
+		this.getBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOPPED));
 	}
 
 	public abstract void onDeleteSelected(SparseArray<View> selectedItems);

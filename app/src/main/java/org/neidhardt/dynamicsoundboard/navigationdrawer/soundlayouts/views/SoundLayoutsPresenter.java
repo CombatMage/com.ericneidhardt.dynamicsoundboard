@@ -6,6 +6,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
 
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 26.05.2015.
  */
-public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLayoutsList>
+public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLayoutsList> implements SoundLayoutsListAdapter.OnItemClickListener
 {
 	private static final String TAG = SoundLayoutsPresenter.class.getName();
 
@@ -44,6 +45,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 		EventBus.getDefault().post(new SoundLayoutRemovedEvent());
 	}
 
+	@Override
 	public void onItemClick(View view, SoundLayout data, int position)
 	{
 		if (this.getView() == null)
@@ -57,6 +59,12 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 			this.getView().toggleVisibility();
 			EventBus.getDefault().post(new SoundLayoutSelectedEvent(data));
 		}
+	}
+
+	@Override
+	public void onItemSettingsClicked(SoundLayout data)
+	{
+		this.getBus().post(new OpenSoundLayoutSettingsEvent(data));
 	}
 
 	public interface OnSoundLayoutRemovedEventListener
@@ -79,4 +87,12 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 		void onEvent(SoundLayoutSelectedEvent event);
 	}
 
+	public interface OnOpenSoundLayoutSettingsEvent
+	{
+		/**
+		 * This is called by greenRobot EventBus when the settings dialog for a certain SoundLayout is requested.
+		 * @param event Delivered OpenSoundLayoutSettingsEvent
+		 */
+		void onEvent(OpenSoundLayoutSettingsEvent event);
+	}
 }

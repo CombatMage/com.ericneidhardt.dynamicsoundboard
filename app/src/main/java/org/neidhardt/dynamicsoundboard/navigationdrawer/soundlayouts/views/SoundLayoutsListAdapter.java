@@ -9,12 +9,10 @@ import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +25,6 @@ public class SoundLayoutsListAdapter
 			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
 			AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener
 {
-	private NavigationDrawerFragment parent;
 	private OnItemClickListener onItemClickListener;
 	private EventBus bus;
 
@@ -53,11 +50,6 @@ public class SoundLayoutsListAdapter
 		this.onItemClickListener = onItemClickListener;
 	}
 
-	public void setNavigationDrawerFragment(NavigationDrawerFragment parent)
-	{
-		this.parent = parent;
-	}
-
 	/**
 	 * Set the item with this position selected and all other items deselected
 	 * @param position index of item to be selected
@@ -70,8 +62,6 @@ public class SoundLayoutsListAdapter
 
 	public List<SoundLayout> getValues()
 	{
-		if (this.parent == null || this.parent.getSoundSheetManagerFragment() == null)
-			return new ArrayList<>();
 		return SoundLayoutsManager.getInstance().getSoundLayouts();
 	}
 
@@ -121,19 +111,22 @@ public class SoundLayoutsListAdapter
 			super(itemView);
 			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
-			itemView.findViewById(R.id.b_settings).setOnClickListener(this);
 
+			itemView.findViewById(R.id.b_settings).setOnClickListener(this);
 			itemView.setOnClickListener(this);
 		}
 
 		@Override
 		public void onClick(View view)
 		{
+			if (onItemClickListener == null)
+				return;
+
 			int id = view.getId();
 			int position = this.getLayoutPosition();
 			SoundLayout item = getValues().get(position);
 			if (id == R.id.b_settings)
-				SoundLayoutSettingsDialog.showInstance(parent.getFragmentManager(), item.getDatabaseId());
+				onItemClickListener.onItemSettingsClicked(item);
 			else if (onItemClickListener != null)
 				onItemClickListener.onItemClick(view, item, position);
 		}
@@ -142,5 +135,8 @@ public class SoundLayoutsListAdapter
 	public interface OnItemClickListener
 	{
 		void onItemClick(View view, SoundLayout data, int position);
+
+		void onItemSettingsClicked(SoundLayout data);
 	}
+
 }

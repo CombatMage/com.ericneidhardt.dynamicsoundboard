@@ -29,7 +29,9 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
@@ -56,7 +58,8 @@ public class SoundActivity
 		extends
 			AppCompatActivity
 		implements
-			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener
+			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
+		SoundLayoutsPresenter.OnOpenSoundLayoutSettingsEvent
 {
 	private static final String TAG = SoundActivity.class.getName();
 
@@ -272,6 +275,13 @@ public class SoundActivity
 		MusicService service = this.getServiceManagerFragment().getSoundService();
 		service.clearAndStoreSoundsAndPlayList();
 		service.initSoundsAndPlayList();
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void onEvent(OpenSoundLayoutSettingsEvent event)
+	{
+		SoundLayoutSettingsDialog.showInstance(this.getFragmentManager(), event.getSoundLayout().getDatabaseId());
 	}
 
 	/**

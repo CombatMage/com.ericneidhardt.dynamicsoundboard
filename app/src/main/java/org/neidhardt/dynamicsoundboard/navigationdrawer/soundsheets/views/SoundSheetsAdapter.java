@@ -10,11 +10,11 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
 
 import java.util.ArrayList;
@@ -26,9 +26,10 @@ public class SoundSheetsAdapter
 		implements
 			SoundSheetFragment.OnSoundRemovedEventListener
 {
-	private NavigationDrawerFragment parent;
 	private OnItemClickListener onItemClickListener;
 	private EventBus bus;
+	private SoundSheetsManagerFragment soundSheetManagerFragment;
+	private ServiceManagerFragment serviceManagerFragment;
 
 	public SoundSheetsAdapter()
 	{
@@ -52,9 +53,14 @@ public class SoundSheetsAdapter
 		this.onItemClickListener = onItemClickListener;
 	}
 
-	public void setNavigationDrawerFragment(NavigationDrawerFragment parent)
+	public void setSoundSheetManagerFragment(SoundSheetsManagerFragment soundSheetManagerFragment)
 	{
-		this.parent = parent;
+		this.soundSheetManagerFragment = soundSheetManagerFragment;
+	}
+
+	public void setServiceManagerFragment(ServiceManagerFragment serviceManagerFragment)
+	{
+		this.serviceManagerFragment = serviceManagerFragment;
 	}
 
 	/**
@@ -75,9 +81,9 @@ public class SoundSheetsAdapter
 
 	public List<SoundSheet> getValues()
 	{
-		if (this.parent == null || this.parent.getSoundSheetManagerFragment() == null)
+		if (this.soundSheetManagerFragment == null)
 			return new ArrayList<>();
-		return this.parent.getSoundSheetManagerFragment().getSoundSheets();
+		return this.soundSheetManagerFragment.getSoundSheets();
 	}
 
 	@Override
@@ -100,10 +106,9 @@ public class SoundSheetsAdapter
 		holder.label.setText(data.getLabel());
 		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 
-		if (this.parent != null)
+		if (this.serviceManagerFragment != null)
 		{
-			ServiceManagerFragment fragment = this.parent.getServiceManagerFragment();
-			List<EnhancedMediaPlayer> sounds = fragment.getSounds().get(data.getFragmentTag());
+			List<EnhancedMediaPlayer> sounds = this.serviceManagerFragment.getSounds().get(data.getFragmentTag());
 			holder.setSoundCount(sounds != null ? sounds.size() : 0);
 		}
 	}
