@@ -5,4 +5,6 @@
 
 	<solid android:color="@color/primary_700"/>
 
+	<stroke android:color="@color/accent_200" android:width="@dimen/stroke_thick" />
+
 </shape>

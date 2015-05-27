@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 				xmlns:app="http://schemas.android.com/apk/res-auto"
+				xmlns:tools="http://schemas.android.com/tools"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_navigation_drawer_header"
 				android:paddingTop="@dimen/status_bar_padding"
@@ -57,13 +58,12 @@
 				android:text="@string/sound_layout_default"
 				android:textColor="@color/text_header"
 				app:typeface="roboto_regular"/>
-
 	</RelativeLayout>
 
 	<FrameLayout
 			android:id="@+id/layout_header_avatar"
-			android:layout_width="70dp"
-			android:layout_height="70dp"
+			android:layout_width="@dimen/size_avatar_navigation_drawer"
+			android:layout_height="@dimen/size_avatar_navigation_drawer"
 			android:layout_marginLeft="@dimen/margin_default"
 			android:layout_marginStart="@dimen/margin_default"
 			android:layout_marginTop="@dimen/margin_default">
@@ -80,10 +80,13 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:gravity="center"
-				android:textColor="@color/text_header"
-				android:textSize="@dimen/text_title"
 				android:background="@drawable/shape_circular_background"
-				android:visibility="invisible"/>
+				android:visibility="invisible"
+				android:textColor="@color/text_header"
+				android:textSize="@dimen/text_headline"
+				app:typeface="roboto_bold"
+				tools:visibility="invisible"
+				tools:text="9"/>
 
 	</FrameLayout>
 </RelativeLayout>
