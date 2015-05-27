@@ -7,5 +7,9 @@ import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
  */
 public interface SoundLayoutModel
 {
+	/**
+	 * Retrieve the currently selected SoundLayout.
+	 * @return currently active SoundLayout
+	 */
 	SoundLayout getActiveSoundLayout();
 }
