@@ -1,7 +1,5 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.header.views;
 
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
@@ -10,7 +8,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.Sound
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
 import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 
 /**
  * Created by eric.neidhardt on 27.05.2015.
@@ -21,22 +18,15 @@ public class NavigationDrawerHeaderPresenter
 		implements
 			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
 			SoundLayoutsPresenter.OnSoundLayoutRemovedEventListener,
-			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
-			EnhancedMediaPlayer.OnMediaPlayerStateChangedEvent
+			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener
 {
 	private static final String TAG = NavigationDrawerHeaderPresenter.class.getName();
 
 	private SoundLayoutModel soundLayoutModel;
-	private SoundDataModel soundDataModel;
 
 	public void setSoundLayoutModel(SoundLayoutModel soundLayoutModel)
 	{
 		this.soundLayoutModel = soundLayoutModel;
-	}
-
-	public void setSoundDataModel(SoundDataModel soundDataModel)
-	{
-		this.soundDataModel = soundDataModel;
 	}
 
 	@Override
@@ -52,11 +42,10 @@ public class NavigationDrawerHeaderPresenter
 		if (this.getView() == null)
 			throw new NullPointerException(TAG +": supplied view is null");
 
-		if (this.soundLayoutModel == null || this.soundDataModel == null)
+		if (this.soundLayoutModel == null)
 			throw new NullPointerException(TAG +": supplied model is null");
 
 		this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
-		this.getView().setCurrentSoundCount(this.soundDataModel.getCurrentlyPlayingSounds().size());
 	}
 
 	@Override
@@ -86,18 +75,8 @@ public class NavigationDrawerHeaderPresenter
 		if (this.getView() == null || this.soundLayoutModel == null)
 			return;
 
+		this.getView().animateLayoutChanges();
 		this.getView().showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public void onEventMainThread(MediaPlayerStateChangedEvent event)
-	{
-		if (this.getView() == null || this.soundDataModel == null)
-			return;
-
-		this.getView().setCurrentSoundCount(this.soundDataModel.getCurrentlyPlayingSounds().size());
-		this.getView().animateHeaderAvatarRotate();
 	}
 
 	public void onChangeLayoutClicked()

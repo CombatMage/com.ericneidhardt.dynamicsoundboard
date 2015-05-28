@@ -5,17 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutModel;
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
-
-import java.util.Collections;
-import java.util.HashSet;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -29,7 +23,6 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 
 	private NavigationDrawerHeader view;
 	private SoundLayoutModel soundLayoutModel;
-	private SoundDataModel soundDataModel;
 	private EventBus bus;
 
 	@Override
@@ -44,14 +37,10 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 		SoundLayout activeSoundLayout = mock(SoundLayout.class);
 		when(activeSoundLayout.getLabel()).thenReturn("testLabel");
 
-		this.soundDataModel = mock(SoundDataModel.class);
-		when(this.soundDataModel.getCurrentlyPlayingSounds()).thenReturn(new HashSet<>(Collections.singletonList(mock(EnhancedMediaPlayer.class))));
-
 		this.soundLayoutModel = mock(SoundLayoutModel.class);
 		when(this.soundLayoutModel.getActiveSoundLayout()).thenReturn(activeSoundLayout);
 
 		this.presenter = new NavigationDrawerHeaderPresenter();
-		this.presenter.setSoundDataModel(this.soundDataModel);
 		this.presenter.setSoundLayoutModel(this.soundLayoutModel);
 		this.presenter.setView(this.view);
 		this.presenter.setEventBus(this.bus);
@@ -68,7 +57,6 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	{
 		this.presenter.onAttachedToWindow();
 		verify(this.view, times(1)).showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
-		verify(this.view, times(1)).setCurrentSoundCount(eq(this.soundDataModel.getCurrentlyPlayingSounds().size()));
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -82,13 +70,6 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	public void testOnAttachedToWindow_3() throws Exception
 	{
 		this.presenter.setSoundLayoutModel(null);
-		this.presenter.onAttachedToWindow();
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void testOnAttachedToWindow_4() throws Exception
-	{
-		this.presenter.setSoundDataModel(null);
 		this.presenter.onAttachedToWindow();
 	}
 
@@ -123,17 +104,6 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 		this.presenter.setView(null);
 		this.presenter.onEvent(new SoundLayoutSelectedEvent(null));
 		verify(this.view, times(1)).showCurrentLayoutName(anyString());
-	}
-
-	@Test
-	public void testMediaPlayerStateChangedEventMainThread() throws Exception
-	{
-		this.presenter.onEventMainThread(new MediaPlayerStateChangedEvent(null, false));
-		verify(this.view, times(1)).setCurrentSoundCount(eq(this.soundDataModel.getCurrentlyPlayingSounds().size()));
-
-		this.presenter.setView(null);
-		this.presenter.onEventMainThread(new MediaPlayerStateChangedEvent(null, false));
-		verify(this.view, times(1)).setCurrentSoundCount(eq(this.soundDataModel.getCurrentlyPlayingSounds().size()));
 	}
 
 	@Test

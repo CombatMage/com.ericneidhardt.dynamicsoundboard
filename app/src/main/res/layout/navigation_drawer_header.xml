@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 				xmlns:app="http://schemas.android.com/apk/res-auto"
-				xmlns:tools="http://schemas.android.com/tools"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_navigation_drawer_header"
 				android:paddingTop="@dimen/status_bar_padding"
@@ -74,19 +73,6 @@
 				android:layout_height="match_parent"
 				android:contentDescription="@string/navigation_drawer_content_description_avatar"
 				android:src="@drawable/ic_launcher"/>
-
-		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/tv_header_active_sound_counter"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:gravity="center"
-				android:background="@drawable/shape_circular_background"
-				android:visibility="invisible"
-				android:textColor="@color/text_header"
-				android:textSize="@dimen/text_headline"
-				app:typeface="roboto_bold"
-				tools:visibility="invisible"
-				tools:text="9"/>
 
 	</FrameLayout>
 </RelativeLayout>
