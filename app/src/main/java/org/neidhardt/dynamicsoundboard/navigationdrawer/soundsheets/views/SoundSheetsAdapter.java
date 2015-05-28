@@ -14,6 +14,8 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModel;
 
@@ -24,7 +26,8 @@ public class SoundSheetsAdapter
 		extends
 			RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
 		implements
-			SoundSheetFragment.OnSoundRemovedEventListener
+			SoundSheetFragment.OnSoundRemovedEventListener,
+			SoundSheetsChangedEventListener
 {
 	private OnItemClickListener onItemClickListener;
 	private EventBus eventBus;
@@ -135,6 +138,12 @@ public class SoundSheetsAdapter
 
 	@Override
 	public void onEvent(SoundRemovedEvent event)
+	{
+		this.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onEvent(SoundSheetsChangedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}

@@ -179,7 +179,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 	{
 		ServiceManagerFragment fragment = this.getServiceManagerFragment();
 		if (fragment == null)
-			throw new NullPointerException("cannot addSoundSheetAndNotifyFragment sound, SoundManagerFragment is null");
+			throw new NullPointerException("cannot addSoundSheetAndOpenFragment sound, SoundManagerFragment is null");
 
 		int count = this.soundsToAdd.size();
 		List<MediaPlayerData> playersData = new ArrayList<>(count);

@@ -4,8 +4,8 @@ import android.util.SparseArray;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,11 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 26.05.2015.
  */
-public class SoundSheetsPresenter extends NavigationDrawerListPresenter<SoundSheets> implements SoundSheetsAdapter.OnItemClickListener
+public class SoundSheetsPresenter
+		extends
+			NavigationDrawerListPresenter<SoundSheets>
+		implements
+			SoundSheetsAdapter.OnItemClickListener
 {
 	private static final String TAG = SoundSheetsPresenter.class.getName();
 

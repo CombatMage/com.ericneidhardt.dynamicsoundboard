@@ -40,7 +40,7 @@ import org.neidhardt.dynamicsoundboard.R;
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
  * the user's scroll progress.
  * <p>
- * To use the component, simply addSoundSheetAndNotifyFragment it to your view hierarchy. Then in your
+ * To use the component, simply addSoundSheetAndOpenFragment it to your view hierarchy. Then in your
  * {@link android.app.Activity} or {@link android.support.v4.app.Fragment} call
  * {@link #setViewPager(ViewPager)} providing it the ViewPager this layout is being used for.
  * <p>

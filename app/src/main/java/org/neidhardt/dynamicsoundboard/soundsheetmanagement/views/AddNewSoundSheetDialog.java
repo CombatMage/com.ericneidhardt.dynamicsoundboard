@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog;
+package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 
@@ -15,7 +16,7 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 {
 	private static final String TAG = AddNewSoundSheetDialog.class.getSimpleName();
 
-	private static final String KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog.suggestedName";
+	private static final String KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog.suggestedName";
 
 	private CustomEditText soundSheetName;
 	private String suggestedName;
@@ -77,7 +78,7 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 		if (caller == null)
 			return;
 		String label = this.soundSheetName.getDisplayedText();
-		caller.addSoundSheetAndNotifyFragment(caller.getNewSoundSheet(label));
+		caller.addSoundSheetAndOpenFragment(caller.getNewSoundSheet(label));
 	}
 
 }

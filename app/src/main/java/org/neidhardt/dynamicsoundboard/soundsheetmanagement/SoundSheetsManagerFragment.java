@@ -12,7 +12,6 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.dialog.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteAllSoundSheetsDialog;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -27,12 +26,16 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.RemoveSoundSheetTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundSheetTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.UpdateSoundSheetsTask;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import roboguice.util.SafeAsyncTask;
@@ -271,25 +274,25 @@ public class SoundSheetsManagerFragment
 		return currentSoundSheetFragment != null ? this.get(currentSoundSheetFragment.getFragmentTag()) : null;
 	}
 
-	public void addSoundSheetAndNotifyFragment(SoundSheet soundSheet)
+	public void addSoundToNewSoundSheet(Uri soundUri, String soundLabel, String newSoundSheetName)
+	{
+		SoundSheet newSoundSheet = this.getNewSoundSheet(newSoundSheetName);
+		this.addSoundSheetAndOpenFragment(newSoundSheet);
+		this.addSoundToNewSoundSheet(soundUri, soundLabel, newSoundSheet);
+	}
+
+	public void addSoundSheetAndOpenFragment(SoundSheet soundSheet)
 	{
 		this.soundSheets.add(soundSheet);
-		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
-		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged();
+
+		EventBus.getDefault().post(new SoundSheetsChangedEvent());
+		EventBus.getDefault().post(new OpenSoundSheetEvent(soundSheet));
 
 		SafeAsyncTask task = new StoreSoundSheetTask(this.daoSession, soundSheet);
 		task.execute();
 	}
 
-	public void addSoundToSoundSheet(Uri soundUri, String soundLabel, String newSoundSheetName)
-	{
-		SoundSheet newSoundSheet = this.getNewSoundSheet(newSoundSheetName);
-		this.addSoundSheetAndNotifyFragment(newSoundSheet);
-
-		this.addSoundToSoundSheet(soundUri, soundLabel, newSoundSheet);
-	}
-
-	public void addSoundToSoundSheet(Uri soundUri, String soundLabel, SoundSheet existingSoundSheet)
+	public void addSoundToNewSoundSheet(Uri soundUri, String soundLabel, SoundSheet existingSoundSheet)
 	{
 		MediaPlayerData mediaPlayerData;
 
@@ -306,6 +309,28 @@ public class SoundSheetsManagerFragment
 	public String getSuggestedSoundSheetName()
 	{
 		return this.getActivity().getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size();
+	}
+
+	/**
+	 * Called by greenRobot eventBus when SoundSheets have been loaded form file.
+	 * This sheets needed to be added to the database.
+	 * @param event delivered SoundSheetsFromFileLoadedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEvent(SoundSheetsFromFileLoadedEvent event)
+	{
+		// clear SoundSheets before adding new values
+		// this removes all sounds in SoundSheets, but no in playlist
+		this.deleteAllSoundSheets();
+		this.soundSheets.addAll(event.getSoundSheetList());
+
+		EventBus.getDefault().post(new SoundSheetsChangedEvent());
+
+		for (SoundSheet soundSheet : soundSheets)
+		{
+			SafeAsyncTask task = new StoreSoundSheetTask(this.daoSession, soundSheet);
+			task.execute();
+		}
 	}
 
 	/**

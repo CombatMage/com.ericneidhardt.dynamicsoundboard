@@ -21,7 +21,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
 
 import java.io.File;
@@ -120,11 +120,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
 	{
-		SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();// clear soundsheets before adding new values
-		soundSheetsManagerFragment.deleteAllSoundSheets(); // this also removes all sounds in soundsheets, but no in playlist
-
-		for (SoundSheet soundSheet : soundSheets)
-			soundSheetsManagerFragment.addSoundSheetAndNotifyFragment(soundSheet);
+		EventBus.getDefault().post(new SoundSheetsFromFileLoadedEvent(soundSheets));
 	}
 
 	private static void addLoadedPlayList(List<MediaPlayerData> playList, ServiceManagerFragment soundManagerFragment)

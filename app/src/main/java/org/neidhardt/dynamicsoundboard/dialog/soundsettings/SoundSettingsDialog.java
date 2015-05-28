@@ -147,10 +147,10 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 			if (addNewSoundSheet)
 			{
 				String soundSheetName = this.soundSheetName.getDisplayedText();
-				soundSheetsManagerFragment.addSoundToSoundSheet(uri, soundLabel, soundSheetName);
+				soundSheetsManagerFragment.addSoundToNewSoundSheet(uri, soundLabel, soundSheetName);
 			}
 			else
-				soundSheetsManagerFragment.addSoundToSoundSheet(uri, soundLabel, soundSheetsManagerFragment.get(this.fragmentTag));
+				soundSheetsManagerFragment.addSoundToNewSoundSheet(uri, soundLabel, soundSheetsManagerFragment.get(this.fragmentTag));
 		}
 	}
 

@@ -33,7 +33,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.Open
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
@@ -45,6 +44,8 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEventListener;
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
@@ -59,7 +60,8 @@ public class SoundActivity
 			AppCompatActivity
 		implements
 			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
-		SoundLayoutsPresenter.OnOpenSoundLayoutSettingsEvent
+			SoundLayoutsPresenter.OnOpenSoundLayoutSettingsEvent,
+			OpenSoundSheetEventListener
 {
 	private static final String TAG = SoundActivity.class.getName();
 
@@ -263,7 +265,6 @@ public class SoundActivity
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void onEvent(SoundLayoutSelectedEvent event)
 	{
 		SoundSheetsManagerFragment fragment = this.getSoundSheetsManagerFragment();
@@ -278,21 +279,15 @@ public class SoundActivity
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void onEvent(OpenSoundLayoutSettingsEvent event)
 	{
 		SoundLayoutSettingsDialog.showInstance(this.getFragmentManager(), event.getSoundLayout().getDatabaseId());
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case a sound sheet should be opened by the activity.
-	 * playlist entries.
-	 * @param event delivered OpenSoundSheetEvent
-	 */
-	@SuppressWarnings("unused")
+	@Override
 	public void onEvent(OpenSoundSheetEvent event)
 	{
-		this.openSoundFragment(event.getSoundSheet());
+		this.openSoundFragment(event.getSoundSheetToOpen());
 	}
 
 	/**
