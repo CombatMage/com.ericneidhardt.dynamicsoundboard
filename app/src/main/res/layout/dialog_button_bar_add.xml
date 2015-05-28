@@ -27,7 +27,7 @@
 		android:padding="@dimen/margin_small"
 		android:text="@string/dialog_add"
 		android:textSize="@dimen/text_subheading"
-		android:textColor="@color/text_accent"
+		android:textColor="@color/selector_text_accent"
 		android:background="@drawable/selector_background_accent"/>
 
 </LinearLayout>

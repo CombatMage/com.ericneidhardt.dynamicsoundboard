@@ -21,5 +21,6 @@
 	<color name="text_content_primary">#de000000</color>
 	<color name="text_content_secondary">#a8000000</color>
 	<color name="text_hint">#42000000</color>
-	<color name="text_accent">#ff4081</color>
+	<color name="text_accent">@color/accent_200</color>
+	<color name="text_accent_disabled">@color/accent_100</color>
 </resources>

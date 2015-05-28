@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog.addnewsound;
+package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -28,17 +29,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AddNewSoundDialog extends BaseDialog implements View.OnClickListener
+public class AddNewSoundDialog extends BaseDialog implements View.OnClickListener, View.OnTouchListener
 {
 	private static final String TAG = AddNewSoundDialog.class.getName();
 
-	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog.callingFragmentTag";
-	private static final String KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog.soundsToAdd";
-	private static final String KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.dialog.addnewsound.AddNewSoundDialog.soundsToAddLabels";
+	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.callingFragmentTag";
+	private static final String KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.soundsToAdd";
+	private static final String KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.soundsToAddLabels";
 
 	private ViewGroup soundsToAddLayout;
 	private String callingFragmentTag;
 	private List<Uri> soundsToAdd;
+	private View addSoundsButton;
 
 	public static void showInstance(FragmentManager manager, String callingFragmentTag)
 	{
@@ -67,7 +69,11 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound, null);
 
-		view.findViewById(R.id.b_ok).setOnClickListener(this);
+		this.addSoundsButton = view.findViewById(R.id.b_ok);
+		this.addSoundsButton.setOnClickListener(this);
+		this.addSoundsButton.setOnTouchListener(this);
+		this.addSoundsButton.setEnabled(false);
+
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_add_another_sound).setOnClickListener(this);
 
@@ -115,7 +121,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 					this.dismiss();
 				}
 				else
-					showInfoToast();
+					this.showInfoToast();
 				break;
 			case R.id.b_cancel:
 				this.dismiss();
@@ -124,6 +130,14 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 				this.startIntentForNewSound();
 				break;
 		}
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event)
+	{
+		if (v == this.addSoundsButton && !v.isEnabled())
+			this.showInfoToast();
+		return false;
 	}
 
 	private void startIntentForNewSound()
@@ -142,6 +156,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 			{
 				Uri soundUri = data.getData();
 				this.addNewSoundToLoad(soundUri);
+				this.addSoundsButton.setEnabled(true);
 				return;
 			}
 		}
