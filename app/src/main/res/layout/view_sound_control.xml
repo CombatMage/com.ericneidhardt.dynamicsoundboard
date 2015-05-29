@@ -73,11 +73,6 @@
 				android:layout_height="wrap_content"/>
 
 		<include
-				layout="@layout/button_fade_out"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"/>
-
-		<include
 				layout="@layout/button_loop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>

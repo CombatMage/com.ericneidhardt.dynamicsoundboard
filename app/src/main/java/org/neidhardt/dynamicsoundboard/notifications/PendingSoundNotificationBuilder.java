@@ -56,14 +56,13 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		if (player.isPlaying())
 		{
 			this.setOngoing(true);
-			this.setActionPause(context, isLollipopStyleAvailable);
+			this.setActionFadeOut(context, isLollipopStyleAvailable);
 		}
 		else
 		{
 			this.setOngoing(false);
 			this.setActionPlay(context, isLollipopStyleAvailable);
 		}
-		this.setActionFadeOut(context, isLollipopStyleAvailable);
 
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds);
 		this.setDeleteIntent(this.getPendingIntent(context, NotificationIds.ACTION_DISMISS));
@@ -123,12 +122,6 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 				this.getPendingIntent(context, NotificationIds.ACTION_STOP));
 	}
 
-	private void setActionPause(Context context, boolean isLollipopStyleAvailable)
-	{
-		this.addAction(R.drawable.ic_notification_pause, isLollipopStyleAvailable ? context.getString(R.string.notification_pause_sound) : "",
-				this.getPendingIntent(context, NotificationIds.ACTION_PAUSE));
-	}
-
 	private void setActionPlay(Context context, boolean isLollipopStyleAvailable)
 	{
 		this.addAction(R.drawable.ic_notification_play, isLollipopStyleAvailable ? context.getString(R.string.notification_play_sound) : "",
@@ -137,7 +130,7 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 
 	private void setActionFadeOut(Context context, boolean isLollipopStyleAvailable)
 	{
-		this.addAction(R.drawable.ic_notification_fade_out, isLollipopStyleAvailable ? context.getString(R.string.notification_fade_out_sound) : "",
+		this.addAction(R.drawable.ic_notification_pause, isLollipopStyleAvailable ? context.getString(R.string.notification_pause_sound) : "",
 				this.getPendingIntent(context, NotificationIds.ACTION_FADE_OUT));
 	}
 
@@ -167,7 +160,6 @@ public class PendingSoundNotificationBuilder extends Notification.Builder
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(NotificationIds.ACTION_DISMISS);
 		filter.addAction(NotificationIds.ACTION_PLAY);
-		filter.addAction(NotificationIds.ACTION_PAUSE);
 		filter.addAction(NotificationIds.ACTION_STOP);
 		filter.addAction(NotificationIds.ACTION_FADE_OUT);
 		return filter;

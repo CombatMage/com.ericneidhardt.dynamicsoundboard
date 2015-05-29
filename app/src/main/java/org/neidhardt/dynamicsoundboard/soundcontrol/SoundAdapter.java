@@ -122,7 +122,6 @@ public class SoundAdapter
 		private final View loop;
 		private final View inPlaylist;
 		private final View stop;
-		private final View fadeOut;
 		private final View settings;
 		private final SeekBar timePosition;
 
@@ -141,7 +140,6 @@ public class SoundAdapter
 			this.loop = itemView.findViewById(R.id.b_loop);
 			this.inPlaylist = itemView.findViewById(R.id.b_add_to_playlist);
 			this.stop = itemView.findViewById(R.id.b_stop);
-			this.fadeOut = itemView.findViewById(R.id.b_fade_out);
 			this.settings = itemView.findViewById(R.id.b_settings);
 			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_progress);
 
@@ -150,7 +148,6 @@ public class SoundAdapter
 			this.loop.setOnClickListener(this);
 			this.inPlaylist.setOnClickListener(this);
 			this.stop.setOnClickListener(this);
-			this.fadeOut.setOnClickListener(this);
 			this.settings.setOnClickListener(this);
 			this.timePosition.setOnSeekBarChangeListener(this);
 
@@ -292,9 +289,6 @@ public class SoundAdapter
 				case R.id.b_stop:
 					player.stopSound();
 					break;
-				case R.id.b_fade_out:
-					player.fadeOutSound();
-					break;
 				case R.id.b_loop:
 					view.setSelected(!isSelected);
 					player.setLooping(!isSelected);
@@ -327,7 +321,7 @@ public class SoundAdapter
 					}
 					else
 					{
-						player.pauseSound();
+						player.fadeOutSound();
 					}
 					break;
 				case R.id.b_settings:
