@@ -54,6 +54,7 @@ public class SoundSheets
 
 		this.adapter = new SoundSheetsAdapter();
 		this.adapter.setOnItemClickListener(this);
+		this.adapter.setPresenter(this.presenter);
 
 		LayoutInflater.from(context).inflate(R.layout.view_sound_sheets, this, true);
 
@@ -71,8 +72,10 @@ public class SoundSheets
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		this.adapter.setSoundSheetsDataModel(SoundSheetsManagerFragment.getSoundSheetsDataModel());
-		this.adapter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
+
+		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
+		this.presenter.setSoundSheetsDataModel(SoundSheetsManagerFragment.getSoundSheetsDataModel());
+
 		this.adapter.onAttachedToWindow();
 		this.presenter.onAttachedToWindow();
 	}

@@ -5,7 +5,9 @@ import android.view.View;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ public class SoundSheetsPresenter
 			SoundSheetsAdapter.OnItemClickListener
 {
 	private static final String TAG = SoundSheetsPresenter.class.getName();
+	private SoundSheetsDataModel soundSheetsDataModel;
+	private SoundDataModel soundDataModel;
 
 	@Override
 	protected boolean isEventBusSubscriber()
@@ -49,7 +53,7 @@ public class SoundSheetsPresenter
 			{
 				List<SoundSheet> remainingSoundSheets = adapter.getValues();
 				if (remainingSoundSheets.size() > 0)
-					adapter.setSelectedItem(0);
+					this.soundSheetsDataModel.setSelectedItem(0);
 			}
 		}
 		adapter.notifyDataSetChanged();
@@ -65,8 +69,26 @@ public class SoundSheetsPresenter
 			super.onItemSelected(view, position);
 		else
 		{
-			this.getView().getAdapter().setSelectedItem(position);
+			this.soundSheetsDataModel.setSelectedItem(position);
 			this.getEventBus().post(new OpenSoundSheetEvent(data));
 		}
+	}
+
+	void setSoundDataModel(SoundDataModel soundDataModel)
+	{
+		this.soundDataModel = soundDataModel;
+	}
+
+	void setSoundSheetsDataModel(SoundSheetsDataModel soundSheetsDataModel)
+	{
+		this.soundSheetsDataModel = soundSheetsDataModel;
+	}
+
+	SoundSheetsDataModel getSoundSheetsDataModel() {
+		return soundSheetsDataModel;
+	}
+
+	SoundDataModel getSoundDataModel() {
+		return soundDataModel;
 	}
 }

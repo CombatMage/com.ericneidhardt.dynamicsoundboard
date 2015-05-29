@@ -14,9 +14,8 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEventListener;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModel;
 
 import java.util.ArrayList;
@@ -27,12 +26,11 @@ public class SoundSheetsAdapter
 			RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
 		implements
 			SoundSheetFragment.OnSoundRemovedEventListener,
-			SoundSheetsChangedEventListener
+		OnSoundSheetsChangedEventListener
 {
-	private OnItemClickListener onItemClickListener;
+	private SoundSheetsPresenter presenter;
 	private EventBus eventBus;
-	private SoundSheetsDataModel soundSheetsDataModel;
-	private SoundDataModel soundDataModel;
+	private OnItemClickListener onItemClickListener;
 
 	public SoundSheetsAdapter()
 	{
@@ -56,37 +54,12 @@ public class SoundSheetsAdapter
 		this.onItemClickListener = onItemClickListener;
 	}
 
-	void setSoundSheetsDataModel(SoundSheetsDataModel soundSheetsDataModel)
-	{
-		this.soundSheetsDataModel = soundSheetsDataModel;
-	}
-
-	void setSoundDataModel(SoundDataModel soundDataModel)
-	{
-		this.soundDataModel = soundDataModel;
-	}
-
-	/**
-	 * Set the item with this position selected and all other items deselected
-	 * @param position index of item to be selected
-	 */
-	public void setSelectedItem(int position)
-	{
-		List<SoundSheet> soundSheets = this.getValues();
-		int size = soundSheets.size();
-		for (int i = 0; i < size; i++)
-		{
-			boolean isSelected = i == position;
-			soundSheets.get(i).setIsSelected(isSelected);
-		}
-		this.notifyDataSetChanged();
-	}
-
 	public List<SoundSheet> getValues()
 	{
-		if (this.soundSheetsDataModel == null)
+		SoundSheetsDataModel model = this.presenter.getSoundSheetsDataModel();
+		if (model == null)
 			return new ArrayList<>();
-		return this.soundSheetsDataModel.getSoundSheets();
+		return model.getSoundSheets();
 	}
 
 	@Override
@@ -105,15 +78,16 @@ public class SoundSheetsAdapter
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
+		SoundDataModel model = this.presenter.getSoundDataModel();
 		SoundSheet data = this.getValues().get(position);
-		holder.label.setText(data.getLabel());
-		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
-
-		if (this.soundDataModel != null)
+		int soundCount = 0;
+		if (model != null)
 		{
-			List<EnhancedMediaPlayer> sounds = this.soundDataModel.getSounds().get(data.getFragmentTag());
-			holder.setSoundCount(sounds != null ? sounds.size() : 0);
+			List<EnhancedMediaPlayer> sounds = model.getSoundsInFragment(data.getFragmentTag());
+			soundCount = sounds != null ? sounds.size() : 0;
 		}
+
+		holder.bindData(data, soundCount);
 	}
 
 	/**
@@ -126,16 +100,6 @@ public class SoundSheetsAdapter
 		this.notifyDataSetChanged(); // updates sound count in sound sheet list
 	}
 
-	/**
-	 * This is called by greenRobot EventBus when LoadSoundSheetsTask has been finished loading sound sheets.
-	 * @param event delivered SoundSheetsLoadedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(SoundSheetsLoadedEvent event)
-	{
-		this.notifyDataSetChanged();
-	}
-
 	@Override
 	public void onEvent(SoundRemovedEvent event)
 	{
@@ -146,6 +110,11 @@ public class SoundSheetsAdapter
 	public void onEvent(SoundSheetsChangedEvent event)
 	{
 		this.notifyDataSetChanged();
+	}
+
+	void setPresenter(SoundSheetsPresenter presenter)
+	{
+		this.presenter = presenter;
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -164,6 +133,15 @@ public class SoundSheetsAdapter
 			this.soundCountLabel = itemView.findViewById(R.id.tv_sound_count_label);
 
 			itemView.setOnClickListener(this);
+		}
+
+		public void bindData(SoundSheet data, int soundCount)
+		{
+			this.label.setText(data.getLabel());
+			this.label.setSelected(data.getIsSelected());
+			this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
+
+			this.setSoundCount(soundCount);
 		}
 
 		@Override

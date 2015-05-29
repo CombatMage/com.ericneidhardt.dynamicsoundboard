@@ -6,6 +6,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.events.PlaylistSoundsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.List;
 public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> implements PlaylistAdapter.OnItemClickListener
 {
 	private static final String TAG = PlaylistPresenter.class.getName();
+
+	private SoundDataModel model;
 
 	@Override
 	protected boolean isEventBusSubscriber()
@@ -47,5 +50,15 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 
 		EventBus.getDefault().post(new PlaylistSoundsRemovedEvent(playersToRemove));
 		this.getView().getAdapter().notifyDataSetChanged();
+	}
+
+	SoundDataModel getSoundDataModel()
+	{
+		return model;
+	}
+
+	void setSoundDataModel(SoundDataModel model)
+	{
+		this.model = model;
 	}
 }

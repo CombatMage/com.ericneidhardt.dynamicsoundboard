@@ -82,8 +82,7 @@ public class SoundLayoutsListAdapter
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
 		SoundLayout data = this.getValues().get(position);
-		holder.label.setText(data.getLabel());
-		holder.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
+		holder.bindData(data);
 	}
 
 	@Override
@@ -114,6 +113,13 @@ public class SoundLayoutsListAdapter
 
 			itemView.findViewById(R.id.b_settings).setOnClickListener(this);
 			itemView.setOnClickListener(this);
+		}
+
+		public void bindData(SoundLayout data)
+		{
+			this.label.setText(data.getLabel());
+			this.label.setSelected(data.getIsSelected());
+			this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 		}
 
 		@Override

@@ -35,4 +35,11 @@ public interface SoundDataModel
 	 * @return a List of sounds in the requested SoundSheet
 	 */
 	List<EnhancedMediaPlayer> getSoundsInFragment(String fragmentTag);
+
+	/**
+	 * Add or remove the sound from playlist.
+	 * @param playerId id of player to toggle
+	 * @param addToPlayList player's state in playlist
+	 */
+	void toggleSoundInPlaylist(String playerId, boolean addToPlayList);
 }

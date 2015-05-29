@@ -123,6 +123,7 @@ public abstract class FileExplorerDialog extends BaseDialog
 		{
 			this.selectionIndicator.setVisibility(selected ? View.VISIBLE : View.INVISIBLE);
 			this.fileType.setSelected(selected);
+			this.fileName.setSelected(selected);
 		}
 
 		private void bindFile(File file)

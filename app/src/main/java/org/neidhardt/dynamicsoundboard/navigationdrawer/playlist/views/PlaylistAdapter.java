@@ -17,8 +17,9 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnServiceManagerFragmentEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +31,10 @@ public class PlaylistAdapter
 		extends
 			SoundProgressAdapter<PlaylistAdapter.ViewHolder>
 		implements
-			OnServiceManagerFragmentEvent,
+			OnPlaylistChangedEventListener,
 			MediaPlayerEventListener
 {
+	private PlaylistPresenter presenter;
 	private Integer currentItemIndex;
 	private OnItemClickListener onItemClickListener;
 
@@ -60,12 +62,10 @@ public class PlaylistAdapter
 	@Override
 	protected List<EnhancedMediaPlayer> getValues()
 	{
-		if (super.serviceManagerFragment == null)
-			return null;
-		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getPlayList();
-		if (sounds == null)
-			sounds = new ArrayList<>();
-		return sounds;
+		SoundDataModel model = this.presenter.getSoundDataModel();
+		if (model == null)
+			return new ArrayList<>();
+		return model.getPlayList();
 	}
 
 	private EnhancedMediaPlayer getItem(int position)
@@ -156,7 +156,7 @@ public class PlaylistAdapter
 	}
 
 	@Override
-	public void onEvent(PlaylistChangedEvent event)
+	public void onEventMainThread(PlaylistChangedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}
@@ -169,6 +169,10 @@ public class PlaylistAdapter
 	public void setCurrentItemIndex(Integer currentItemIndex)
 	{
 		this.currentItemIndex = currentItemIndex;
+	}
+
+	void setPresenter(PlaylistPresenter presenter) {
+		this.presenter = presenter;
 	}
 
 	public class ViewHolder

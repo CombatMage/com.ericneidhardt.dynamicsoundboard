@@ -26,10 +26,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.RemoveSoundSheetTask;
@@ -49,6 +46,8 @@ public class SoundSheetsManagerFragment
 		implements
 			View.OnClickListener,
 			CustomEditText.OnTextEditedListener,
+		OnOpenSoundSheetEventListener,
+			OnSoundSheetsLoadedEventListener,
 			SoundSheetsDataModel
 {
 	public static final String TAG = SoundSheetsManagerFragment.class.getName();
@@ -64,10 +63,12 @@ public class SoundSheetsManagerFragment
 
 	private List<SoundSheet> soundSheets;
 	private DaoSession daoSession;
+	private EventBus eventBus;
 
 	public SoundSheetsManagerFragment()
 	{
 		model = this;
+		this.eventBus = EventBus.getDefault();
 	}
 
 	@Override
@@ -285,8 +286,8 @@ public class SoundSheetsManagerFragment
 	{
 		this.soundSheets.add(soundSheet);
 
-		EventBus.getDefault().post(new SoundSheetsChangedEvent());
-		EventBus.getDefault().post(new OpenSoundSheetEvent(soundSheet));
+		this.eventBus.post(new SoundSheetsChangedEvent());
+		this.eventBus.post(new OpenSoundSheetEvent(soundSheet));
 
 		SafeAsyncTask task = new StoreSoundSheetTask(this.daoSession, soundSheet);
 		task.execute();
@@ -311,6 +312,25 @@ public class SoundSheetsManagerFragment
 		return this.getActivity().getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size();
 	}
 
+	@Override
+	public void onEvent(OpenSoundSheetEvent event)
+	{
+		int indexOfSelectedItem = this.soundSheets.indexOf(event.getSoundSheetToOpen());
+		this.setSelectedItem(indexOfSelectedItem);
+		EventBus.getDefault().post(new SoundSheetsChangedEvent());
+	}
+
+	@Override
+	public void setSelectedItem(int position)
+	{
+		int size = this.soundSheets.size();
+		for (int i = 0; i < size; i++)
+		{
+			boolean isSelected = i == position;
+			this.soundSheets.get(i).setIsSelected(isSelected);
+		}
+	}
+
 	/**
 	 * Called by greenRobot eventBus when SoundSheets have been loaded form file.
 	 * This sheets needed to be added to the database.
@@ -324,7 +344,7 @@ public class SoundSheetsManagerFragment
 		this.deleteAllSoundSheets();
 		this.soundSheets.addAll(event.getSoundSheetList());
 
-		EventBus.getDefault().post(new SoundSheetsChangedEvent());
+		this.eventBus.post(new SoundSheetsChangedEvent());
 
 		for (SoundSheet soundSheet : soundSheets)
 		{
@@ -333,14 +353,10 @@ public class SoundSheetsManagerFragment
 		}
 	}
 
-	/**
-	 * Called by LoadSoundSheetsTask when loading of soundsheets has been finished.
-	 * @param event delivered SoundSheetsLoadedEvent
-	 */
-	@SuppressWarnings("unused")
+	@Override
 	public void onEventMainThread(SoundSheetsLoadedEvent event)
 	{
-		EventBus.getDefault().removeStickyEvent(event);
+		this.eventBus.removeStickyEvent(event);
 
 		this.soundSheets.addAll(event.getLoadedSoundSheets());
 
@@ -350,6 +366,8 @@ public class SoundSheetsManagerFragment
 		SoundSheet selectedSoundSheet = findSelectedAndSelectRemaining(SoundSheetsManagerFragment.this.soundSheets);
 		if (selectedSoundSheet != null)
 			activity.openSoundFragment(selectedSoundSheet);
+
+		this.eventBus.post(new SoundSheetsChangedEvent());
 	}
 
 	/**

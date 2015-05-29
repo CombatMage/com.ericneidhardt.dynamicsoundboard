@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.dialog.soundsettings.RenameSoundFileDialog;
-import org.neidhardt.dynamicsoundboard.dialog.soundsettings.SoundSettingsDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
+import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolder;
 
@@ -34,6 +36,7 @@ public class SoundAdapter
 	private final int heightShadow;
 
 	private OnItemDeleteListener onItemDeleteListener;
+	private SoundDataModel soundDataModel;
 
 	public SoundAdapter(SoundSheetFragment parent)
 	{
@@ -75,10 +78,9 @@ public class SoundAdapter
 	@Override
 	protected List<EnhancedMediaPlayer> getValues()
 	{
-		List<EnhancedMediaPlayer> sounds = super.serviceManagerFragment.getSounds().get(this.parentFragmentTag);
-		if (sounds == null)
+		if (this.soundDataModel == null)
 			return new ArrayList<>();
-		return sounds;
+		return this.soundDataModel.getSoundsInFragment(this.parentFragmentTag);
 	}
 
 	@Override
@@ -98,6 +100,11 @@ public class SoundAdapter
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
 		holder.bindData(position);
+	}
+
+	void setSoundDataModel(SoundDataModel soundDataModel)
+	{
+		this.soundDataModel = soundDataModel;
 	}
 
 	public class ViewHolder
@@ -247,14 +254,7 @@ public class SoundAdapter
 			if (player != null && onItemDeleteListener != null)
 				onItemDeleteListener.onItemDelete(player, position);
 
-			handler.postDelayed(new Runnable()
-			{ // delay restart of update timer, to allow deletion animation to settle
-				@Override
-				public void run()
-				{
-					startProgressUpdateTimer();
-				}
-			}, 2 * UPDATE_INTERVAL);
+			handler.postDelayed(SoundAdapter.this::startProgressUpdateTimer, 2 * UPDATE_INTERVAL);
 		}
 
 		@Override
@@ -268,7 +268,7 @@ public class SoundAdapter
 				player.getMediaPlayerData().setLabel(text);
 				player.getMediaPlayerData().setItemWasAltered();
 
-				RenameSoundFileDialog.showInstance(serviceManagerFragment.getFragmentManager(), player.getMediaPlayerData());
+				EventBus.getDefault().post(new OpenSoundRenameEvent(player.getMediaPlayerData()));
 			}
 		}
 
@@ -295,12 +295,16 @@ public class SoundAdapter
 					player.setLooping(!isSelected);
 					break;
 				case R.id.b_add_to_playlist:
+					if (soundDataModel == null)
+						return;
+
 					view.setSelected(!isSelected);
 					player.setIsInPlaylist(!isSelected);
 					player.getMediaPlayerData().setItemWasAltered();
-					ServiceManagerFragment fragment = serviceManagerFragment;
-					fragment.getSoundService().toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
-					fragment.notifyPlaylist();
+
+					soundDataModel.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
+					EventBus.getDefault().post(new PlaylistChangedEvent());
+
 					break;
 				case R.id.b_play:
 					name.clearFocus();
@@ -317,7 +321,7 @@ public class SoundAdapter
 					break;
 				case R.id.b_settings:
 					player.pauseSound();
-					SoundSettingsDialog.showInstance(serviceManagerFragment.getFragmentManager(), player.getMediaPlayerData());
+					EventBus.getDefault().post(new OpenSoundSettingsEvent(player.getMediaPlayerData()));
 					break;
 			}
 			notifyItemChanged(getLayoutPosition());

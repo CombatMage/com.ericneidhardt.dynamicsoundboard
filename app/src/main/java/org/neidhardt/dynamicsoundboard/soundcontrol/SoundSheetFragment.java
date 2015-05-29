@@ -18,6 +18,8 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundsDialog;
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectory;
+import org.neidhardt.dynamicsoundboard.dialog.soundsettings.RenameSoundFileDialog;
+import org.neidhardt.dynamicsoundboard.dialog.soundsettings.SoundSettingsDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
@@ -25,6 +27,9 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.events.PlaylistSoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
+import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener;
+import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
+import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
@@ -42,7 +47,8 @@ public class SoundSheetFragment
 			View.OnClickListener,
 			SoundAdapter.OnItemDeleteListener,
 			DragSortRecycler.OnDragStateChangedListener,
-			DragSortRecycler.OnItemMovedListener
+			DragSortRecycler.OnItemMovedListener,
+			OnOpenSoundDialogEventListener
 {
 	private static final String KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 	private static final String LOG_TAG = SoundSheetFragment.class.getName();
@@ -98,7 +104,7 @@ public class SoundSheetFragment
 
 		this.attachScrollViewToFab();
 
-		this.soundAdapter.setServiceManagerFragment(this.getServiceManagerFragment());
+		this.soundAdapter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
 		this.soundAdapter.startProgressUpdateTimer();
 	}
 
@@ -263,6 +269,18 @@ public class SoundSheetFragment
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
 		if (fab != null)
 			fab.show(true);
+	}
+
+	@Override
+	public void onEvent(OpenSoundRenameEvent event)
+	{
+		RenameSoundFileDialog.showInstance(this.getFragmentManager(), event.getData());
+	}
+
+	@Override
+	public void onEvent(OpenSoundSettingsEvent event)
+	{
+		SoundSettingsDialog.showInstance(this.getFragmentManager(), event.getData());
 	}
 
 	/**

@@ -14,4 +14,10 @@ public interface SoundSheetsDataModel
 	 * @return list of all SoundSheets
 	 */
 	List<SoundSheet> getSoundSheets();
+
+	/**
+	 * Set the item with this position selected and all other items deselected
+	 * @param position index of item to be selected
+	 */
+	void setSelectedItem(int position);
 }

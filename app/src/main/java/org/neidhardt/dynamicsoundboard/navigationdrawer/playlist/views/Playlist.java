@@ -12,6 +12,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
+import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 /**
@@ -51,6 +52,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 		this.adapter = new PlaylistAdapter();
 		this.adapter.setOnItemClickListener(this);
+		this.adapter.setPresenter(this.presenter);
 
 		LayoutInflater.from(context).inflate(R.layout.view_playlist, this, true);
 
@@ -70,6 +72,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	{
 		super.onAttachedToWindow();
 		this.presenter.onAttachedToWindow();
+		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
 		this.adapter.onAttachToWindow();
 	}
 

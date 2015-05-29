@@ -72,7 +72,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		this.addSoundsButton = view.findViewById(R.id.b_ok);
 		this.addSoundsButton.setOnClickListener(this);
 		this.addSoundsButton.setOnTouchListener(this);
-		this.addSoundsButton.setEnabled(false);
+		this.addSoundsButton.setClickable(false);
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_add_another_sound).setOnClickListener(this);
@@ -135,7 +135,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
-		if (v == this.addSoundsButton && !v.isEnabled())
+		if (v == this.addSoundsButton && !v.isClickable())
 			this.showInfoToast();
 		return false;
 	}

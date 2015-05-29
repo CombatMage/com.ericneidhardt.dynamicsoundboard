@@ -3,7 +3,6 @@ package org.neidhardt.dynamicsoundboard.soundcontrol;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +19,7 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder & S
 
 	protected final Handler handler = new Handler();
 
-	protected ServiceManagerFragment serviceManagerFragment;
-
 	private RecyclerView recyclerView;
-
-	public void setServiceManagerFragment(ServiceManagerFragment serviceManagerFragment)
-	{
-		this.serviceManagerFragment = serviceManagerFragment;
-	}
-
-	public void setRecyclerView(RecyclerView recyclerView)
-	{
-		this.recyclerView = recyclerView;
-	}
 
 	/**
 	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
@@ -83,4 +70,8 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder & S
 
 	protected abstract List<EnhancedMediaPlayer> getValues();
 
+	public void setRecyclerView(RecyclerView recyclerView)
+	{
+		this.recyclerView = recyclerView;
+	}
 }
