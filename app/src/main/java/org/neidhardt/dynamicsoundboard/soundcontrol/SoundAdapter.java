@@ -254,7 +254,12 @@ public class SoundAdapter
 			if (player != null && onItemDeleteListener != null)
 				onItemDeleteListener.onItemDelete(player, position);
 
-			handler.postDelayed(SoundAdapter.this::startProgressUpdateTimer, 2 * UPDATE_INTERVAL);
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					startProgressUpdateTimer();
+				}
+			}, 2 * UPDATE_INTERVAL);
 		}
 
 		@Override
