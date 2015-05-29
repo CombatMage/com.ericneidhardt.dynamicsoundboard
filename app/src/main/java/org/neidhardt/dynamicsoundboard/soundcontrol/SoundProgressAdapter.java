@@ -14,7 +14,10 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder & S
 		implements
 			Runnable
 {
+	private static final String TAG = SoundProgressAdapter.class.getName();
+
 	public static final int UPDATE_INTERVAL = 500;
+
 	protected final Handler handler = new Handler();
 
 	protected ServiceManagerFragment serviceManagerFragment;
@@ -56,13 +59,11 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder & S
 		for (Integer index : itemsWithProgressChanged)
 		{
 			if (this.recyclerView == null)
-				this.notifyItemChanged(index);
-			else
-			{
-				SoundProgressViewHolder viewHolderToUpdate = (SoundProgressViewHolder) this.recyclerView.findViewHolderForAdapterPosition(index);
-				if (viewHolderToUpdate != null)
-					viewHolderToUpdate.onProgressUpdate();
-			}
+				throw new NullPointerException(TAG + ": update sound progress failed, RecyclerView is null");
+
+			SoundProgressViewHolder viewHolderToUpdate = (SoundProgressViewHolder) this.recyclerView.findViewHolderForAdapterPosition(index);
+			if (viewHolderToUpdate != null)
+				viewHolderToUpdate.onProgressUpdate();
 		}
 		this.startProgressUpdateTimer();
 	}

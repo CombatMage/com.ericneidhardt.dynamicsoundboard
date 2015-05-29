@@ -12,11 +12,11 @@ import android.widget.CompoundButton;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.CustomSpinner;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
+import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
 
 import java.util.ArrayList;
 import java.util.Collections;

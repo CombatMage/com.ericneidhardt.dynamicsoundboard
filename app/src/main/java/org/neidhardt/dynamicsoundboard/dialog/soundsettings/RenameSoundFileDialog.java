@@ -47,7 +47,6 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 	{
 		@SuppressLint("InflateParams")
 		View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_rename_sound_file_layout, null);
-		this.setMainView(view);
 		this.renameAllOccurrences = (CheckBox) view.findViewById(R.id.cb_rename_all_occurrences);
 
 		view.findViewById(R.id.b_ok).setOnClickListener(this);

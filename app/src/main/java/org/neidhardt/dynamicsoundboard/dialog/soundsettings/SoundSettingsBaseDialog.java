@@ -2,8 +2,8 @@ package org.neidhardt.dynamicsoundboard.dialog.soundsettings;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 /**
  * Created by eric.neidhardt on 12.04.2015.

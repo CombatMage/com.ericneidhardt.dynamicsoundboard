@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent;
+package org.neidhardt.dynamicsoundboard.views.spinner;
 
 import android.content.Context;
 import android.util.AttributeSet;

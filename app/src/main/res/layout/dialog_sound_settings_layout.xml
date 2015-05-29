@@ -44,7 +44,7 @@
 			android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_checkbox"
 			tools:checked="true"/>
 
-	<org.neidhardt.dynamicsoundboard.dialog.addnewsoundfromintent.CustomSpinner
+	<org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner
 			android:id="@+id/s_sound_sheets"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_input_field"

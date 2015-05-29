@@ -10,8 +10,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.dialog.BaseDialog;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
+import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 import java.io.File;
 import java.util.List;

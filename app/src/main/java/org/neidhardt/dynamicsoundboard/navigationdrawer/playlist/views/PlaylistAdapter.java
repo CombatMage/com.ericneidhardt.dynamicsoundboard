@@ -12,13 +12,13 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
-import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChagedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnServiceManagerFragmentEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,12 @@ import java.util.List;
 /**
  * Project created by eric.neidhardt on 27.08.2014.
  */
-public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHolder> implements ServiceManagerFragment.OnServiceManagerFragmentEvent
+public class PlaylistAdapter
+		extends
+			SoundProgressAdapter<PlaylistAdapter.ViewHolder>
+		implements
+			OnServiceManagerFragmentEvent,
+			MediaPlayerEventListener
 {
 	private Integer currentItemIndex;
 	private OnItemClickListener onItemClickListener;
@@ -115,21 +120,13 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 		return players != null ? this.getValues().size() : 0;
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case a mediaplayer changed his state.
-	 * @param event delivered MediaPlayerStateChangedEvent
-	 */
-	@SuppressWarnings("unused")
+	@Override
 	public void onEvent(MediaPlayerStateChangedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case a mediaplayer changed his state.
-	 * @param event delivered MediaPlayerStateChangedEvent
-	 */
-	@SuppressWarnings("unused")
+	@Override
 	public void onEvent(MediaPlayerCompletedEvent event)
 	{
 		MediaPlayerData finishedPlayerData = event.getData();
@@ -159,18 +156,7 @@ public class PlaylistAdapter extends SoundProgressAdapter<PlaylistAdapter.ViewHo
 	}
 
 	@Override
-	@SuppressWarnings("unused")
-	public void onEvent(PlaylistChagedEvent event)
-	{
-		this.notifyDataSetChanged();
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case loading the playlist from MusicService has finished.
-	 * @param event delivered PlaylistLoadedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(PlaylistLoadedEvent event)
+	public void onEvent(PlaylistChangedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}

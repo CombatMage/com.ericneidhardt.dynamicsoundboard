@@ -62,6 +62,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 			playlist.setItemAnimator(new DefaultItemAnimator());
 		}
 		playlist.setAdapter(this.adapter);
+		this.adapter.setRecyclerView(playlist);
 	}
 
 	@Override
