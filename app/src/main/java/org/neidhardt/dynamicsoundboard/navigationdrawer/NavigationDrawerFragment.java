@@ -101,8 +101,6 @@ public class NavigationDrawerFragment
 		this.playlist = (Playlist) fragmentView.findViewById(R.id.playlist);
 		this.soundSheets = (SoundSheets) fragmentView.findViewById(R.id.sound_sheets);
 
-		this.playlist.getAdapter().setServiceManagerFragment(this.getServiceManagerFragment());
-
 		return fragmentView;
 	}
 
@@ -110,8 +108,6 @@ public class NavigationDrawerFragment
 	public void onResume()
 	{
 		super.onResume();
-
-		this.playlist.getAdapter().setServiceManagerFragment(this.getServiceManagerFragment());
 
 		this.calculateMinHeightOfListContent();
 		this.adjustViewPagerToContent();

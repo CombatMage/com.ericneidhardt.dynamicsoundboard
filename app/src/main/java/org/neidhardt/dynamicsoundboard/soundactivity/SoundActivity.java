@@ -61,7 +61,7 @@ public class SoundActivity
 		implements
 			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
 			SoundLayoutsPresenter.OnOpenSoundLayoutSettingsEvent,
-		OnOpenSoundSheetEventListener
+			OnOpenSoundSheetEventListener
 {
 	private static final String TAG = SoundActivity.class.getName();
 
@@ -162,7 +162,14 @@ public class SoundActivity
 					this.navigationDrawerLayout,
 					(Toolbar) this.findViewById(R.id.toolbar),
 					R.string.navigation_drawer_content_description_open,
-					R.string.navigation_drawer_content_description_close);
+					R.string.navigation_drawer_content_description_close) {
+
+				// override onDrawerSlide and pass 0 to super disable arrow animation
+				@Override
+				public void onDrawerSlide(View drawerView, float slideOffset) {
+					super.onDrawerSlide(drawerView, 0);
+				}
+			};
 
 			this.drawerToggle.setDrawerIndicatorEnabled(true);
 			this.navigationDrawerLayout.setDrawerListener(drawerToggle);

@@ -41,5 +41,5 @@ public interface SoundDataModel
 	 * @param playerId id of player to toggle
 	 * @param addToPlayList player's state in playlist
 	 */
-	void toggleSoundInPlaylist(String playerId, boolean addToPlayList);
+	boolean toggleSoundInPlaylist(String playerId, boolean addToPlayList);
 }

@@ -108,6 +108,16 @@ public class ServiceManagerFragment
 	}
 
 	@Override
+	public boolean toggleSoundInPlaylist(String playerId, boolean addToPlayList)
+	{
+		if (this.service == null)
+			return false;
+
+		this.service.toggleSoundInPlaylist(playerId, addToPlayList);
+		return true;
+	}
+
+	@Override
 	public List<EnhancedMediaPlayer> getPlayList()
 	{
 		if (this.service == null || this.service.getPlaylist() == null)

@@ -307,8 +307,14 @@ public class SoundAdapter
 					player.setIsInPlaylist(!isSelected);
 					player.getMediaPlayerData().setItemWasAltered();
 
-					soundDataModel.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
-					EventBus.getDefault().post(new PlaylistChangedEvent());
+					boolean success = soundDataModel.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
+					if (!success) // if toggle was not successful, revert changes
+					{
+						view.setSelected(isSelected);
+						player.setIsInPlaylist(isSelected);
+					}
+					else
+						EventBus.getDefault().post(new PlaylistChangedEvent());
 
 					break;
 				case R.id.b_play:
