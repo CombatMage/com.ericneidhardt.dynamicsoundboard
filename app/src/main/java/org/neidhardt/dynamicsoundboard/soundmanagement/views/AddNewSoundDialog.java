@@ -72,7 +72,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		this.addSoundsButton = view.findViewById(R.id.b_ok);
 		this.addSoundsButton.setOnClickListener(this);
 		this.addSoundsButton.setOnTouchListener(this);
-		this.addSoundsButton.setClickable(false);
+		this.addSoundsButton.setEnabled(false);
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_add_another_sound).setOnClickListener(this);
