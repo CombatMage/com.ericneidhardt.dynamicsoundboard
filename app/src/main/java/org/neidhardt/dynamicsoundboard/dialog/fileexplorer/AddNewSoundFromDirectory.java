@@ -12,7 +12,7 @@ import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromFileListTask;
-import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 import java.io.File;
 import java.util.ArrayList;

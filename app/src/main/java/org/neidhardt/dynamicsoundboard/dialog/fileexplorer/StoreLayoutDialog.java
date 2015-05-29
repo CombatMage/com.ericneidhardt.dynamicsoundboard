@@ -16,8 +16,8 @@ import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
-import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
 import org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 import java.io.File;
 import java.io.IOException;

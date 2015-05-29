@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
-import org.neidhardt.dynamicsoundboard.views.DividerItemDecoration;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 
 public class SoundSheets

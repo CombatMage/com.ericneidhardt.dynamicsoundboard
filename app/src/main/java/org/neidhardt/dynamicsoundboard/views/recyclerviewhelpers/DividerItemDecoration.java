@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.views;
+package org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
