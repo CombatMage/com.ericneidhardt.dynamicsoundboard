@@ -16849,7 +16849,6 @@ org.neidhardt.dynamicsoundboard.dao.SoundSheetDao$Properties: de.greenrobot.dao.
 org.neidhardt.dynamicsoundboard.dao.SoundSheetDao$Properties: de.greenrobot.dao.Property Label
 org.neidhardt.dynamicsoundboard.dao.SoundSheetDao$Properties: de.greenrobot.dao.Property IsSelected
 org.neidhardt.dynamicsoundboard.dao.SoundboardDaoOpenHelper
-org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer$OnMediaPlayerStateChangedEvent: void onEventMainThread(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent)
 org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer$State: org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer$State[] values()
 org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer$State: org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer$State valueOf(java.lang.String)
 org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener: void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent)
@@ -16947,6 +16946,7 @@ org.neidhardt.dynamicsoundboard.soundactivity.views.IntroductionListItem: Introd
 org.neidhardt.dynamicsoundboard.soundactivity.views.IntroductionListItem: IntroductionListItem(android.content.Context,android.util.AttributeSet)
 org.neidhardt.dynamicsoundboard.soundactivity.views.IntroductionListItem: IntroductionListItem(android.content.Context,android.util.AttributeSet,int)
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter: void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent)
+org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter: void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent)
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment: void onEvent(org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent)
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment: void onEvent(org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent)
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent)

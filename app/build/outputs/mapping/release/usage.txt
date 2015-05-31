@@ -4839,7 +4839,6 @@ org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer:
     private static final int INT_VOLUME_MIN
     private static final float FLOAT_VOLUME_MAX
     private static final float FLOAT_VOLUME_MIN
-org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer$OnMediaPlayerStateChangedEvent
 org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 org.neidhardt.dynamicsoundboard.misc.FileUtils:
     public static final java.lang.String MIME_AUDIO

@@ -20093,6 +20093,7 @@ org.neidhardt.dynamicsoundboard.dao.MediaPlayerData -> org.neidhardt.dynamicsoun
     java.lang.Long timePosition -> h
     java.lang.Integer sortOrder -> i
     boolean wasAltered -> j
+    144:144:java.lang.String toString() -> toString
 org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao -> org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao:
     java.lang.String TABLENAME -> TABLENAME
     48:59:void createTable$78b50e66(android.database.sqlite.SQLiteDatabase) -> a
@@ -20274,8 +20275,8 @@ org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer -> org.neidhardt
     294:302:void run() -> run
     306:324:void updateVolume(int) -> b
     330:365:boolean setPositionTo(int) -> a
-    372:375:void onCompletion(android.media.MediaPlayer) -> onCompletion
-    379:380:void postStateChangedEvent(boolean) -> c
+    373:380:void onCompletion(android.media.MediaPlayer) -> onCompletion
+    384:385:void postStateChangedEvent(boolean) -> c
 org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer$1 -> org.neidhardt.dynamicsoundboard.b.b:
     int[] $SwitchMap$org$neidhardt$dynamicsoundboard$mediaplayer$EnhancedMediaPlayer$State -> a
 org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer$State -> org.neidhardt.dynamicsoundboard.b.c:
@@ -20290,6 +20291,7 @@ org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer$State -> org.nei
     29:29:int[] values$6680e4a9() -> a
 org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent -> org.neidhardt.dynamicsoundboard.b.a.a:
     org.neidhardt.dynamicsoundboard.dao.MediaPlayerData data -> a
+    24:24:java.lang.String toString() -> toString
 org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent -> org.neidhardt.dynamicsoundboard.b.a.b:
     org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer player -> a
     boolean isAlive -> b
@@ -20787,23 +20789,24 @@ org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter -> org.neidhardt.dynam
     org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter$OnItemDeleteListener onItemDeleteListener -> c
     org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel soundDataModel -> d
     55:63:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent) -> onEvent
-    81:83:java.util.List getValues() -> b
-    89:89:int getItemCount() -> a
-    27:27:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
-    27:27:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder$6c143e34(android.view.ViewGroup) -> a
-    27:27:org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer access$000(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter,int) -> a
-    27:27:int access$100(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter) -> a
-    27:27:int access$200(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter) -> b
-    27:27:org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter$OnItemDeleteListener access$400(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter) -> c
-    27:27:org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel access$500(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter) -> d
-    27:27:java.lang.String access$600() -> c
+    68:69:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent) -> onEvent
+    87:89:java.util.List getValues() -> b
+    95:95:int getItemCount() -> a
+    29:29:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
+    29:29:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder$6c143e34(android.view.ViewGroup) -> a
+    29:29:org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer access$000(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter,int) -> a
+    29:29:int access$100(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter) -> a
+    29:29:int access$200(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter) -> b
+    29:29:org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter$OnItemDeleteListener access$400(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter) -> c
+    29:29:org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel access$500(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter) -> d
+    29:29:java.lang.String access$600() -> c
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter$OnItemDeleteListener -> org.neidhardt.dynamicsoundboard.f.c:
     void onItemDelete(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int) -> a
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter$SoundItemPagerAdapter -> org.neidhardt.dynamicsoundboard.f.d:
     org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter this$0 -> b
-    366:366:int getCount() -> a
-    372:372:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    378:383:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
+    372:372:int getCount() -> a
+    378:378:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
+    384:389:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter$ViewHolder -> org.neidhardt.dynamicsoundboard.f.e:
     android.view.View container -> n
     org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText name -> o
@@ -20817,20 +20820,20 @@ org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter$ViewHolder -> org.neid
     android.view.View shadowBottomDeleteViewRight -> w
     android.view.View shadowBottom -> x
     org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter this$0 -> l
-    162:165:void onProgressUpdate() -> q
-    170:201:void bindData(int) -> d
-    222:222:android.os.Handler getHandler() -> r
-    228:228:android.support.v4.view.PagerAdapter getPagerAdapter() -> s
-    240:244:void onPageScrollStateChanged(int) -> b
-    249:260:void delete() -> t
-    265:275:void onTextEdited(java.lang.String) -> a
-    280:333:void onClick(android.view.View) -> onClick
-    338:344:void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
-    349:351:void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
-    356:358:void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
+    168:171:void onProgressUpdate() -> q
+    176:207:void bindData(int) -> d
+    228:228:android.os.Handler getHandler() -> r
+    234:234:android.support.v4.view.PagerAdapter getPagerAdapter() -> s
+    246:250:void onPageScrollStateChanged(int) -> b
+    255:266:void delete() -> t
+    271:281:void onTextEdited(java.lang.String) -> a
+    286:339:void onClick(android.view.View) -> onClick
+    344:350:void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
+    355:357:void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
+    362:364:void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter$ViewHolder$1 -> org.neidhardt.dynamicsoundboard.f.f:
     org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter$ViewHolder this$1 -> a
-    257:258:void run() -> run
+    263:264:void run() -> run
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundDragSortRecycler -> org.neidhardt.dynamicsoundboard.f.g:
     int dragViewId -> j
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter -> org.neidhardt.dynamicsoundboard.f.h:
