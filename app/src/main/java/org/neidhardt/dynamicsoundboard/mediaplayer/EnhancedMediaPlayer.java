@@ -368,7 +368,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	@Override
 	public void onCompletion(MediaPlayer mp)
-	{ // for unknown reason, this must be set to paused instead of stopped. This contradicts MediaPlayer Documentation, but calling prepare for restart throws illegal state exception
+	{
+		if (this.isLooping())
+			return;
+
+		// for unknown reason, this must be set to paused instead of stopped. This contradicts MediaPlayer Documentation, but calling prepare for restart throws illegal state exception
 		this.currentState = State.PAUSED;
 		this.postStateChangedEvent(true);
 		this.postCompletedEvent();
