@@ -138,6 +138,23 @@ public class MediaPlayerData {
     public void setItemWasUpdated() {
         this.wasAltered = false;
     }
+
+    @Override
+    public String toString() {
+        return "MediaPlayerData{" +
+                "id=" + id +
+                ", playerId='" + playerId + '\'' +
+                ", fragmentTag='" + fragmentTag + '\'' +
+                ", label='" + label + '\'' +
+                ", uri='" + uri + '\'' +
+                ", isLoop=" + isLoop +
+                ", isInPlaylist=" + isInPlaylist +
+                ", timePosition=" + timePosition +
+                ", sortOrder=" + sortOrder +
+                ", wasAltered=" + wasAltered +
+                '}';
+    }
+
     // KEEP METHODS END
 
 }

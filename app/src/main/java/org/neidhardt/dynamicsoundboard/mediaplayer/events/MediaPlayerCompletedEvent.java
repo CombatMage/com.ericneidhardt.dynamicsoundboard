@@ -18,4 +18,11 @@ public class MediaPlayerCompletedEvent
 	{
 		return data;
 	}
+
+	@Override
+	public String toString() {
+		return "MediaPlayerCompletedEvent{" +
+				"data=" + data +
+				'}';
+	}
 }

@@ -11,6 +11,8 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
@@ -27,6 +29,8 @@ import java.util.List;
 public class SoundAdapter
 		extends
 			SoundProgressAdapter<SoundAdapter.ViewHolder>
+		implements
+			MediaPlayerEventListener
 {
 	private static final String TAG = SoundAdapter.class.getName();
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
@@ -45,11 +49,7 @@ public class SoundAdapter
 		this.heightShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_shadow);
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
-	 * @param event delivered MediaPlayerStateChangedEvent
-	 */
-	@SuppressWarnings("unused")
+	@Override
 	public void onEvent(MediaPlayerStateChangedEvent event)
 	{
 		String playerId = event.getPlayerId();
@@ -60,6 +60,12 @@ public class SoundAdapter
 			if (players.get(i).getMediaPlayerData().getPlayerId().equals(playerId))
 				this.notifyItemChanged(i);
 		}
+	}
+
+	@Override
+	public void onEvent(MediaPlayerCompletedEvent event)
+	{
+		Logger.d(TAG, "onEvent :" +  event);
 	}
 
 	public void setOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener)

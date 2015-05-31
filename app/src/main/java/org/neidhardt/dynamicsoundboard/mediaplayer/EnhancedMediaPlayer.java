@@ -141,8 +141,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	}
 
 	/**
-	 * Check if this mediaplayer is currently playingm, ie. State.STARTED.
-	 * The call is not forwared to the native implementation super.isPlaying, because
+	 * Check if this mediaplayer is currently playing, ie. State.STARTED.
+	 * The call is not forwarded to the native implementation super.isPlaying, because
 	 * of ab described here:
 	 * @see <a href="https://code.google.com/p/android/issues/detail?id=9732">#9732: internal/external state mismatch corrected</a>
 	 * @return true if player ist playing, false otherwise
@@ -382,15 +382,6 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private void postCompletedEvent()
 	{
 		EventBus.getDefault().post(new MediaPlayerCompletedEvent(this.rawData));
-	}
-
-	public interface OnMediaPlayerStateChangedEvent
-	{
-		/**
-		 * This is called by greenRobot EventBus when the state of a EnhancedMediaPlayer has changed.
-		 * @param event delivered MediaPlayerStateChangedEvent
-		 */
-		void onEventMainThread(MediaPlayerStateChangedEvent event);
 	}
 
 }
