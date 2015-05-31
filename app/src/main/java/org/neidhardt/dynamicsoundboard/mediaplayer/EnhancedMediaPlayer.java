@@ -369,6 +369,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
+		// for unknown reason, onCompletion is called even if the player is set to looping, therefore we needs to do an additional check
 		if (this.isLooping())
 			return;
 
