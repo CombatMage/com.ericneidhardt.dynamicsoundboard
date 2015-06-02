@@ -27,6 +27,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -355,10 +356,12 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 		rv.invalidateItemDecorations();// Redraw
 	}
 
-	private void setIsDragging(final boolean isDragging) {
-		//if (this.isDragging == isDragging) // state has not changed
-		//	return;
+	@Override
+	public void onRequestDisallowInterceptTouchEvent(boolean 	b) {
 
+	}
+
+	private void setIsDragging(final boolean isDragging) {
 		this.isDragging = isDragging;
 		if (dragStateChangedListener != null) {
 			if (this.isDragging)
