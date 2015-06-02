@@ -16,20 +16,19 @@
 #   public *;
 #}
 
--keepattributes LineNumberTable,SourceFile,*Annotation*
+-keepattributes LineNumberTable,SourceFile,*Annotation*,Signature
 
 #jackson and pojos
 -dontwarn com.fasterxml.jackson.databind.**
--keep class com.admiral.android.model.** { *; }
--keep class com.admiral.android.apiresponse.** { *; }
 -keep class com.fasterxml.jackson.** { *; }
+-keep class org.neidhardt.dynamicsoundboard.misc.JsonPojo { *; }
 
 #greenDAO
 -keep public class org.neidhardt.dynamicsoundboard.dao.** {
 	public static <fields>;
 }
 
-#greentobot EventBus
+#greenrobot EventBus
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
