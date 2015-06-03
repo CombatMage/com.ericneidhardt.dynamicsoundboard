@@ -10,6 +10,11 @@ import java.util.List;
 public interface SoundSheetsDataModel
 {
 	/**
+	 * Get suggested SoundSheet name to create a new SoundSheets
+	 */
+	String getSuggestedName();
+
+	/**
 	 * Retrieve all SoundSheets in the sound board.
 	 * @return list of all SoundSheets
 	 */
@@ -20,4 +25,15 @@ public interface SoundSheetsDataModel
 	 * @param position index of item to be selected
 	 */
 	void setSelectedItem(int position);
+
+	/**
+	 * Get the currently selected SoundSheet item.
+	 */
+	SoundSheet getSelectedItem();
+
+	/**
+	 * Get the SoundSheet item which corresponds to the given fragmentTag or null if no such items exists.
+	 * @return SoundSheet or null
+	 */
+	SoundSheet getSoundSheetForFragmentTag(String fragmentTag);
 }

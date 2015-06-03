@@ -10,14 +10,14 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 08.05.2015.
  */
-public class UpdateSoundSheetsTask extends SafeAsyncTask<Void>
+public class StoreSoundSheetsTask extends SafeAsyncTask<Void>
 {
-	private static final String TAG = UpdateSoundSheetsTask.class.getName();
+	private static final String TAG = StoreSoundSheetsTask.class.getName();
 
 	private final DaoSession daoSession;
 	private final List<SoundSheet> soundSheets;
 
-	public UpdateSoundSheetsTask(DaoSession daoSession, List<SoundSheet> soundSheets)
+	public StoreSoundSheetsTask(DaoSession daoSession, List<SoundSheet> soundSheets)
 	{
 		this.daoSession = daoSession;
 		this.soundSheets = soundSheets;
@@ -26,7 +26,6 @@ public class UpdateSoundSheetsTask extends SafeAsyncTask<Void>
 	@Override
 	public Void call() throws Exception
 	{
-		this.daoSession.getSoundSheetDao().deleteAll();
 		this.daoSession.getSoundSheetDao().insertInTx(soundSheets);
 		return null;
 	}

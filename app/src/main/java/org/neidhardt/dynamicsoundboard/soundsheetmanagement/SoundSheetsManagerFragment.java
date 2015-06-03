@@ -31,7 +31,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.RemoveSoundSheetTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundSheetTask;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.UpdateSoundSheetsTask;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundSheetsTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
@@ -40,7 +40,7 @@ import roboguice.util.SafeAsyncTask;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundSheetsManagerFragment
+public class SoundSheetsManagerFragmentOld
 		extends
 			BaseFragment
 		implements
@@ -106,7 +106,7 @@ public class SoundSheetsManagerFragment
 
 		ActionbarEditText labelCurrentSoundSheet = (ActionbarEditText)this.getActivity().findViewById(R.id.et_set_label);
 		labelCurrentSoundSheet.setOnTextEditedListener(this);
-		SoundSheet currentActiveSoundSheet = this.getSoundSheetForCurrentFragment();
+		SoundSheet currentActiveSoundSheet = this.getSoundSheetForFragmentTag();
 		if (currentActiveSoundSheet != null)
 			labelCurrentSoundSheet.setText(currentActiveSoundSheet.getLabel());
 	}
@@ -123,7 +123,7 @@ public class SoundSheetsManagerFragment
 	{
 		super.onPause();
 
-		SafeAsyncTask task = new UpdateSoundSheetsTask(this.daoSession, this.soundSheets);
+		SafeAsyncTask task = new StoreSoundSheetsTask(this.daoSession, this.soundSheets);
 		task.execute();
 	}
 
@@ -136,7 +136,7 @@ public class SoundSheetsManagerFragment
 
 	public void storeSoundSheets()
 	{
-		SafeAsyncTask task = new UpdateSoundSheetsTask(this.daoSession, this.soundSheets);
+		SafeAsyncTask task = new StoreSoundSheetsTask(this.daoSession, this.soundSheets);
 		task.execute();
 	}
 
@@ -269,7 +269,7 @@ public class SoundSheetsManagerFragment
 		return this.soundSheets;
 	}
 
-	public SoundSheet getSoundSheetForCurrentFragment()
+	public SoundSheet getSoundSheetForFragmentTag()
 	{
 		SoundSheetFragment currentSoundSheetFragment = SoundActivity.getCurrentSoundFragment(this.getFragmentManager());
 		return currentSoundSheetFragment != null ? this.get(currentSoundSheetFragment.getFragmentTag()) : null;

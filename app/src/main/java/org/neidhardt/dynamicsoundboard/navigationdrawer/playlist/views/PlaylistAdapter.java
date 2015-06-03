@@ -20,6 +20,8 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,8 @@ public class PlaylistAdapter
 			SoundProgressAdapter<PlaylistAdapter.ViewHolder>
 		implements
 			OnPlaylistChangedEventListener,
-			MediaPlayerEventListener
+			MediaPlayerEventListener,
+			OnSoundSheetsChangedEventListener
 {
 	private PlaylistPresenter presenter;
 	private Integer currentItemIndex;
@@ -141,6 +144,12 @@ public class PlaylistAdapter
 			this.currentItemIndex = 0;
 
 		this.getItem(this.currentItemIndex).playSound();
+		this.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onEvent(SoundSheetsChangedEvent event)
+	{
 		this.notifyDataSetChanged();
 	}
 
