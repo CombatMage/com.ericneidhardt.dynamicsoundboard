@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import de.greenrobot.event.EventBus;
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
@@ -14,6 +15,8 @@ import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsFromFileLoadedEventListener;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 
 import java.util.*;
 
@@ -25,7 +28,8 @@ public class ServiceManagerFragment
 			BaseFragment
 		implements
 			ServiceConnection,
-			SoundDataModel
+			SoundDataModel,
+			OnSoundSheetsFromFileLoadedEventListener
 {
 	public static final String TAG = ServiceManagerFragment.class.getName();
 
@@ -149,6 +153,32 @@ public class ServiceManagerFragment
 		return this.service.getCurrentlyPlayingSounds();
 	}
 
+	@Override
+	public void onEvent(SoundSheetsFromFileLoadedEvent event)
+	{
+		List<SoundSheet> newSoundSheets = event.getSoundSheetList();
+		Set<String> fragmentTagsForSounds = this.service.getSounds().keySet();
+		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>();
+
+		for (String fragmentTag : fragmentTagsForSounds)
+		{
+			if (!doesSoundSheetsContainFragmentTag(newSoundSheets, fragmentTag))
+				playersToRemove.addAll(this.getSoundsInFragment(fragmentTag));
+		}
+
+		this.service.removeSounds(playersToRemove);
+	}
+
+	private boolean doesSoundSheetsContainFragmentTag(List<SoundSheet> searchedSoundSheets, String fragmentTag)
+	{
+		for (SoundSheet soundSheet : searchedSoundSheets)
+		{
+			if (soundSheet.getFragmentTag().equals(fragmentTag))
+				return true;
+		}
+		return false;
+	}
+
 	public void notifyPlaylist()
 	{
 		EventBus.getDefault().post(new PlaylistChangedEvent());
@@ -163,5 +193,4 @@ public class ServiceManagerFragment
 
 		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
 	}
-
 }

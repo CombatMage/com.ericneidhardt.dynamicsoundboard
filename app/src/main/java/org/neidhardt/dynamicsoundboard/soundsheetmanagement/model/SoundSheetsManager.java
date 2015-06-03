@@ -5,17 +5,12 @@ import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Util;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
-import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
-import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundSheetTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundSheetsTask;
 import roboguice.util.SafeAsyncTask;
 
@@ -23,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 02.06.2015.
+ * File created by eric.neidhardt on 02.06.2015.
  */
 public class SoundSheetsManager
 		implements
@@ -31,7 +26,8 @@ public class SoundSheetsManager
 			SoundSheetsDataStorage,
 			OnSoundSheetRenamedEventListener,
 			OnOpenSoundSheetEventListener,
-			OnSoundSheetsLoadedEventListener
+			OnSoundSheetsLoadedEventListener,
+		OnSoundSheetsFromFileLoadedEventListener
 {
 	public static final String TAG = SoundSheetsManager.class.getName();
 
@@ -189,43 +185,16 @@ public class SoundSheetsManager
 		this.soundSheets.remove(event.getRemovedSoundSheet());
 	}
 
-	/**
-	 * Called by greenRobot eventBus when SoundSheets have been loaded form file.
-	 * This sheets needed to be added to the database.
-	 * @param event delivered SoundSheetsFromFileLoadedEvent
-	 */
-	@SuppressWarnings("unused")
+	@Override
 	public void onEvent(SoundSheetsFromFileLoadedEvent event)
 	{
 		// clear SoundSheets before adding new values
 		// this removes all sounds in SoundSheets, but no in playlist
-		this.deleteAllSoundSheets();
-		this.soundSheets.addAll(event.getSoundSheetList());
-
-		this.eventBus.post(new SoundSheetsChangedEvent());
-
-		for (SoundSheet soundSheet : soundSheets)
-		{
-			SafeAsyncTask task = new StoreSoundSheetTask(this.daoSession, soundSheet);
-			task.execute();
-		}
-	}
-
-	private void deleteAllSoundSheets()
-	{
-		SoundActivity activity = (SoundActivity) this.getActivity();
-		activity.removeSoundFragment(this.soundSheets);
-		activity.setSoundSheetActionsEnable(false);
-
-		ServiceManagerFragment fragment = this.getServiceManagerFragment();
-		MusicService service = fragment.getSoundService();
-		for (SoundSheet soundSheet : this.soundSheets)
-		{
-			List<EnhancedMediaPlayer> soundsInSoundSheet = fragment.getSounds().get(soundSheet.getFragmentTag());
-			service.removeSounds(soundsInSoundSheet);
-		}
 		this.soundSheets.clear();
 		this.daoSession.getSoundSheetDao().deleteAll();
+
+		this.soundSheets.addAll(event.getSoundSheetList());
+		this.eventBus.post(new SoundSheetsChangedEvent());
 	}
 
 }

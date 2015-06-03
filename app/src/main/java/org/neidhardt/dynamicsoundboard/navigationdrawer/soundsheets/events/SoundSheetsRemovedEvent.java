@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 
 /**
- * Created by eric.neidhardt on 23.05.2015.
+ * File created by eric.neidhardt on 23.05.2015.
  */
 public class SoundSheetsRemovedEvent
 {

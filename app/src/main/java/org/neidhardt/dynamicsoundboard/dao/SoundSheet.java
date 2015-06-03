@@ -69,6 +69,16 @@ public class SoundSheet {
         this.isSelected = isSelected;
     }
 
+    @Override
+    public String toString() {
+        return "SoundSheet{" +
+                "id=" + id +
+                ", fragmentTag='" + fragmentTag + '\'' +
+                ", label='" + label + '\'' +
+                ", isSelected=" + isSelected +
+                '}';
+    }
+
     // KEEP METHODS - put your custom methods here
     // KEEP METHODS END
 

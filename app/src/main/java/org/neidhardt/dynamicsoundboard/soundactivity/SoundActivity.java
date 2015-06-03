@@ -67,7 +67,8 @@ public class SoundActivity
 			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
 			SoundLayoutsPresenter.OnOpenSoundLayoutSettingsEvent,
 			OnOpenSoundSheetEventListener,
-			OnSoundSheetsLoadedEventListener
+			OnSoundSheetsLoadedEventListener,
+			OnSoundSheetsFromFileLoadedEventListener
 {
 	private static final String TAG = SoundActivity.class.getName();
 
@@ -307,7 +308,7 @@ public class SoundActivity
 	@Override
 	public void onEvent(SoundLayoutSelectedEvent event)
 	{
-		this.removeSoundFragment(soundSheetsManager.getSoundSheets());
+		this.removeSoundFragments(soundSheetsManager.getSoundSheets());
 		this.setSoundSheetActionsEnable(false);
 		soundSheetsManager.writeCacheBack();
 		soundSheetsManager.init();
@@ -315,6 +316,13 @@ public class SoundActivity
 		MusicService service = this.getServiceManagerFragment().getSoundService();
 		service.clearAndStoreSoundsAndPlayList();
 		service.initSoundsAndPlayList();
+	}
+
+	@Override
+	public void onEvent(SoundSheetsFromFileLoadedEvent event)
+	{
+		this.removeSoundFragment(this.soundSheets);
+		this.setSoundSheetActionsEnable(false);
 	}
 
 	@Override
@@ -532,7 +540,7 @@ public class SoundActivity
 		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
 	}
 
-	public void removeSoundFragment(List<SoundSheet> soundSheets)
+	public void removeSoundFragments(List<SoundSheet> soundSheets)
 	{
 		if (soundSheets == null || soundSheets.size() == 0)
 			return;
