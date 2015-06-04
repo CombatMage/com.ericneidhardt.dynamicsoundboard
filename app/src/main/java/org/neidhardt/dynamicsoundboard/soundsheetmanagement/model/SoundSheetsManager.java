@@ -8,7 +8,6 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundSheetsTask;
@@ -22,12 +21,12 @@ import java.util.List;
  */
 public class SoundSheetsManager
 		implements
-			SoundSheetsDataModel,
-			SoundSheetsDataStorage,
+		SoundSheetsDataAccess,
+		SoundSheetsDataUtil,
 			OnSoundSheetRenamedEventListener,
 			OnOpenSoundSheetEventListener,
 			OnSoundSheetsLoadedEventListener,
-		OnSoundSheetsFromFileLoadedEventListener
+			OnSoundSheetsFromFileLoadedEventListener
 {
 	public static final String TAG = SoundSheetsManager.class.getName();
 
@@ -193,7 +192,7 @@ public class SoundSheetsManager
 		this.soundSheets.clear();
 		this.daoSession.getSoundSheetDao().deleteAll();
 
-		this.soundSheets.addAll(event.getSoundSheetList());
+		this.soundSheets.addAll(event.getNewSoundSheetList());
 		this.eventBus.post(new SoundSheetsChangedEvent());
 	}
 

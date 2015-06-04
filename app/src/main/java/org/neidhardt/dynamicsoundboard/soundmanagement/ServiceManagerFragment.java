@@ -156,27 +156,13 @@ public class ServiceManagerFragment
 	@Override
 	public void onEvent(SoundSheetsFromFileLoadedEvent event)
 	{
-		List<SoundSheet> newSoundSheets = event.getSoundSheetList();
-		Set<String> fragmentTagsForSounds = this.service.getSounds().keySet();
-		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>();
+		List<SoundSheet> oldSoundSheets = event.getOldSoundSheetList();
 
-		for (String fragmentTag : fragmentTagsForSounds)
-		{
-			if (!doesSoundSheetsContainFragmentTag(newSoundSheets, fragmentTag))
-				playersToRemove.addAll(this.getSoundsInFragment(fragmentTag));
-		}
+		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>();
+		for (SoundSheet soundSheet : oldSoundSheets)
+			playersToRemove.addAll(this.getSoundsInFragment(soundSheet.getFragmentTag()));
 
 		this.service.removeSounds(playersToRemove);
-	}
-
-	private boolean doesSoundSheetsContainFragmentTag(List<SoundSheet> searchedSoundSheets, String fragmentTag)
-	{
-		for (SoundSheet soundSheet : searchedSoundSheets)
-		{
-			if (soundSheet.getFragmentTag().equals(fragmentTag))
-				return true;
-		}
-		return false;
 	}
 
 	public void notifyPlaylist()

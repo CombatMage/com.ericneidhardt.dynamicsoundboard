@@ -74,7 +74,7 @@ public class SoundSheets
 		super.onAttachedToWindow();
 
 		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
-		this.presenter.setSoundSheetsDataModel(SoundSheetsManagerFragment.getSoundSheetsDataModel());
+		this.presenter.setSoundSheetsDataAccess(SoundSheetsManagerFragment.getSoundSheetsDataModel());
 
 		this.adapter.onAttachedToWindow();
 		this.presenter.onAttachedToWindow();

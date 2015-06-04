@@ -6,7 +6,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 
 public abstract class BaseFragment extends Fragment
 {
@@ -18,11 +18,6 @@ public abstract class BaseFragment extends Fragment
 	public NavigationDrawerFragment getNavigationDrawerFragment()
 	{
 		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-	}
-
-	public SoundSheetsManagerFragment getSoundSheetManagerFragment()
-	{
-		return (SoundSheetsManagerFragment)this.getFragmentManager().findFragmentByTag(SoundSheetsManagerFragment.TAG);
 	}
 
 	public ServiceManagerFragment getServiceManagerFragment()
@@ -38,4 +33,8 @@ public abstract class BaseFragment extends Fragment
 		return null;
 	}
 
+	public SoundSheetsDataAccess getSoundSheetDataModel()
+	{
+		return SoundActivity.getSoundSheetsDataModel();
+	}
 }

@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model;
 /**
  * Created by eric.neidhardt on 02.06.2015.
  */
-public interface SoundSheetsDataStorage
+public interface SoundSheetsDataUtil
 {
 	/**
 	 * Starts async task to retrieve sound sheets from cache.

@@ -50,9 +50,8 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	{
 		this.presenter = new PlaylistPresenter();
 
-		this.adapter = new PlaylistAdapter();
+		this.adapter = new PlaylistAdapter(this.presenter);
 		this.adapter.setOnItemClickListener(this);
-		this.adapter.setPresenter(this.presenter);
 
 		LayoutInflater.from(context).inflate(R.layout.view_playlist, this, true);
 

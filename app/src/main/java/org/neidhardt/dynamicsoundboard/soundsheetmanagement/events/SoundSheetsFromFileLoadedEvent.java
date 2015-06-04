@@ -5,19 +5,26 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 28.05.2015.
+ * File created by eric.neidhardt on 28.05.2015.
  */
 public class SoundSheetsFromFileLoadedEvent
 {
-	private List<SoundSheet> soundSheetList;
+	private List<SoundSheet> newSoundSheetList;
+	private List<SoundSheet> oldSoundSheetList;
 
-	public SoundSheetsFromFileLoadedEvent(List<SoundSheet> soundSheetList)
+	public SoundSheetsFromFileLoadedEvent(List<SoundSheet> newSoundSheetList, List<SoundSheet> oldSoundSheetList)
 	{
-		this.soundSheetList = soundSheetList;
+		this.newSoundSheetList = newSoundSheetList;
+		this.oldSoundSheetList = oldSoundSheetList;
 	}
 
-	public List<SoundSheet> getSoundSheetList()
+	public List<SoundSheet> getNewSoundSheetList()
 	{
-		return soundSheetList;
+		return newSoundSheetList;
+	}
+
+	public List<SoundSheet> getOldSoundSheetList()
+	{
+		return oldSoundSheetList;
 	}
 }

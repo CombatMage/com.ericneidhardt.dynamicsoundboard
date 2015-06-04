@@ -26,7 +26,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundS
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
 
 public class NavigationDrawerFragment
@@ -90,7 +89,7 @@ public class NavigationDrawerFragment
 
 		this.tabContent = (ViewPager) fragmentView.findViewById(R.id.vp_tab_content);
 		this.tabContent.setAdapter(this.tabContentAdapter);
-		this.tabContent.setOnPageChangeListener(this);
+		this.tabContent.addOnPageChangeListener(this);
 
 		this.tabBar = (SlidingTabLayout) fragmentView.findViewById(R.id.layout_tab);
 		this.tabBar.setOnPageChangeListener(this);
@@ -179,8 +178,7 @@ public class NavigationDrawerFragment
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), Playlist.TAG);
 			else
 			{
-				SoundSheetsManagerFragment fragment = this.getSoundSheetManagerFragment();
-				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), fragment.getSuggestedSoundSheetName());
+				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.getSoundSheetDataModel().getSuggestedName());
 			}
 		}
 	}
@@ -267,7 +265,7 @@ public class NavigationDrawerFragment
 		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
 		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);
 
-		int soundSheetCount = this.getSoundSheetManagerFragment().getSoundSheets().size();
+		int soundSheetCount = this.getSoundSheetDataModel().getSoundSheets().size();
 		int playListCount = this.playlist.getAdapter().getItemCount();
 
 		int heightSoundSheetChildren = soundSheetCount * childHeight;

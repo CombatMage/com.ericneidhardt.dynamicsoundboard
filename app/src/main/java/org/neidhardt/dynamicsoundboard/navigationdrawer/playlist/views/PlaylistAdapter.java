@@ -41,6 +41,11 @@ public class PlaylistAdapter
 	private Integer currentItemIndex;
 	private OnItemClickListener onItemClickListener;
 
+	public PlaylistAdapter(PlaylistPresenter presenter)
+	{
+		this.presenter = presenter;
+	}
+
 	public void onAttachToWindow()
 	{
 		EventBus bus = EventBus.getDefault();
@@ -178,10 +183,6 @@ public class PlaylistAdapter
 	public void setCurrentItemIndex(Integer currentItemIndex)
 	{
 		this.currentItemIndex = currentItemIndex;
-	}
-
-	void setPresenter(PlaylistPresenter presenter) {
-		this.presenter = presenter;
 	}
 
 	public class ViewHolder

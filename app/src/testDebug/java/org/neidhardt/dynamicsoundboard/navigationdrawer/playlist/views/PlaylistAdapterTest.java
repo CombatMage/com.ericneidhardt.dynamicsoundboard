@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -12,18 +13,28 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by eric.neidhardt on 20.04.2015.
+ * File created by eric.neidhardt on 20.04.2015.
  */
 public class PlaylistAdapterTest extends AbstractBaseActivityTest
 {
+	private PlaylistAdapter adapter;
+
+	@Override
+	@Before
+	public void setUp() throws Exception
+	{
+		super.setUp();
+
+		PlaylistPresenter mockPresenter = mock(PlaylistPresenter.class);
+		when(mockPresenter.getSoundDataModel()).thenReturn(this.serviceManagerFragment);
+
+		this.adapter = spy(new PlaylistAdapter(mockPresenter));
+	}
 
 	@Test
 	public void testGetValues() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
-		adapter.setServiceManagerFragment(this.serviceManagerFragment);
-
-		assertTrue(adapter.getValues().isEmpty());
+		assertTrue(this.adapter.getValues().isEmpty());
 
 		this.serviceManagerFragment.getPlayList().add(mock(EnhancedMediaPlayer.class));
 		this.serviceManagerFragment.getPlayList().add(mock(EnhancedMediaPlayer.class));
@@ -33,7 +44,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testGetItemCount() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		assertThat(adapter.getItemCount(), equalTo(0));
@@ -46,7 +56,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testGetCurrentItemIndex() throws Exception
 	{
-		PlaylistAdapter adapter = new PlaylistAdapter();
 		assertThat(adapter.getCurrentItemIndex(), equalTo(null));
 
 		adapter.setCurrentItemIndex(1);
@@ -56,7 +65,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
@@ -75,7 +83,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList1() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
@@ -95,7 +102,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList2() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
@@ -115,7 +121,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList3() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
@@ -135,7 +140,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList4() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
@@ -155,7 +159,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList5() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
@@ -176,7 +179,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList6() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
@@ -201,7 +203,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testOnEvent() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		MediaPlayerData dataA = mock(MediaPlayerData.class);
@@ -225,7 +226,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testOnEvent1() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		MediaPlayerData dataB = mock(MediaPlayerData.class);
@@ -249,7 +249,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testOnEvent2() throws Exception
 	{
-		PlaylistAdapter adapter = spy(new PlaylistAdapter());
 		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
 
 		MediaPlayerData data = mock(MediaPlayerData.class);

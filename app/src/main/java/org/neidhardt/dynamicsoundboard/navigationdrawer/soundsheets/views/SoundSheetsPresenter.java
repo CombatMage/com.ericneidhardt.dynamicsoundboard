@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPres
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModel;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class SoundSheetsPresenter
 			SoundSheetsAdapter.OnItemClickListener
 {
 	private static final String TAG = SoundSheetsPresenter.class.getName();
-	private SoundSheetsDataModel soundSheetsDataModel;
+	private SoundSheetsDataAccess soundSheetsDataAccess;
 	private SoundDataModel soundDataModel;
 
 	@Override
@@ -53,7 +53,7 @@ public class SoundSheetsPresenter
 			{
 				List<SoundSheet> remainingSoundSheets = adapter.getValues();
 				if (remainingSoundSheets.size() > 0)
-					this.soundSheetsDataModel.setSelectedItem(0);
+					this.soundSheetsDataAccess.setSelectedItem(0);
 			}
 		}
 		adapter.notifyDataSetChanged();
@@ -69,7 +69,7 @@ public class SoundSheetsPresenter
 			super.onItemSelected(view, position);
 		else
 		{
-			this.soundSheetsDataModel.setSelectedItem(position);
+			this.soundSheetsDataAccess.setSelectedItem(position);
 			this.getEventBus().post(new OpenSoundSheetEvent(data));
 		}
 	}
@@ -79,13 +79,13 @@ public class SoundSheetsPresenter
 		this.soundDataModel = soundDataModel;
 	}
 
-	void setSoundSheetsDataModel(SoundSheetsDataModel soundSheetsDataModel)
+	void setSoundSheetsDataAccess(SoundSheetsDataAccess soundSheetsDataAccess)
 	{
-		this.soundSheetsDataModel = soundSheetsDataModel;
+		this.soundSheetsDataAccess = soundSheetsDataAccess;
 	}
 
-	SoundSheetsDataModel getSoundSheetsDataModel() {
-		return soundSheetsDataModel;
+	SoundSheetsDataAccess getSoundSheetsDataAccess() {
+		return soundSheetsDataAccess;
 	}
 
 	SoundDataModel getSoundDataModel() {

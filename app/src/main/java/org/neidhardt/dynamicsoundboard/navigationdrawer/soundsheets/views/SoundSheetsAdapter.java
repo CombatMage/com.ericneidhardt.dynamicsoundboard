@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetR
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetRenamedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModel;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class SoundSheetsAdapter
 
 	public List<SoundSheet> getValues()
 	{
-		SoundSheetsDataModel model = this.presenter.getSoundSheetsDataModel();
+		SoundSheetsDataAccess model = this.presenter.getSoundSheetsDataAccess();
 		if (model == null)
 			return new ArrayList<>();
 		return model.getSoundSheets();

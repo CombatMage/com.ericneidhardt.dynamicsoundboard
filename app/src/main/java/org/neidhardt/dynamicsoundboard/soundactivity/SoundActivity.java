@@ -46,6 +46,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
@@ -321,7 +322,7 @@ public class SoundActivity
 	@Override
 	public void onEvent(SoundSheetsFromFileLoadedEvent event)
 	{
-		this.removeSoundFragment(this.soundSheets);
+		this.removeSoundFragments(event.getOldSoundSheetList());
 		this.setSoundSheetActionsEnable(false);
 	}
 
@@ -599,5 +600,10 @@ public class SoundActivity
 		if (currentFragment != null && currentFragment.isVisible() && currentFragment instanceof SoundSheetFragment)
 			return (SoundSheetFragment) currentFragment;
 		return null;
+	}
+
+	public static SoundSheetsDataAccess getSoundSheetsDataModel()
+	{
+		return soundSheetsManager;
 	}
 }

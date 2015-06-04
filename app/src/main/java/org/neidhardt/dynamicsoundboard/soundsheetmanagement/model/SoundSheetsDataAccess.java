@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by eric.neidhardt on 27.05.2015.
  */
-public interface SoundSheetsDataModel
+public interface SoundSheetsDataAccess
 {
 	/**
 	 * Get suggested SoundSheet name to create a new SoundSheets
