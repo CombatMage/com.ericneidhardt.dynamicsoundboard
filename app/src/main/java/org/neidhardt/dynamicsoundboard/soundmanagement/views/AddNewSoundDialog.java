@@ -15,14 +15,13 @@ import android.widget.Toast;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.dialog.soundsettings.RenameSoundFileDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 import java.util.ArrayList;
@@ -221,7 +220,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		else
 		{
 			for (MediaPlayerData playerData : playersData)
-				bus.post(new SoundLoadedEvent(playerData, false));
+				bus.post(new AddNewSoundEvent(playerData, false));
 		}
 
 		this.showRenameDialog(renamedPlayers); // show the rename dialog for all altered players

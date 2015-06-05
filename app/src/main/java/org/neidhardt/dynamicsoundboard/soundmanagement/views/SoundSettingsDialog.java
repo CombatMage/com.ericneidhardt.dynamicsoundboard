@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog.soundsettings;
+package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
 
@@ -23,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 23.02.2015.
+ * File created by eric.neidhardt on 23.02.2015.
  */
 public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
 {
@@ -62,7 +65,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 
 		this.setAvailableSoundSheets();
 
-		this.soundSheetName.setText(this.getSoundSheetManagerFragment().getSuggestedSoundSheetName());
+		this.soundSheetName.setText(this.soundSheetsDataUtil.getSuggestedName());
 		this.soundSheetName.setVisibility(View.GONE);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
@@ -73,7 +76,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 
 	private void setAvailableSoundSheets()
 	{
-		List<SoundSheet> soundSheets = this.getSoundSheetManagerFragment().getSoundSheets();
+		List<SoundSheet> soundSheets = this.soundSheetsDataAccess.getSoundSheets();
 		ArrayList<String> labels = new ArrayList<>();
 		for (int i = 0; i < soundSheets.size(); i++)
 		{
@@ -141,16 +144,22 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 			serviceManagerFragment.getSoundService().removeSounds(Collections.singletonList(this.player));
 			soundSheetFragment.notifyDataSetChanged();
 
-			SoundSheetsManagerFragment soundSheetsManagerFragment = this.getSoundSheetManagerFragment();
 			Uri uri = Uri.parse(this.player.getMediaPlayerData().getUri());
+
+			MediaPlayerData mediaPlayerData;
 
 			if (addNewSoundSheet)
 			{
 				String soundSheetName = this.soundSheetName.getDisplayedText();
-				soundSheetsManagerFragment.addSoundToNewSoundSheet(uri, soundLabel, soundSheetName);
+				SoundSheet soundSheet = SoundActivity.getSoundSheetsDataUtil().getNewSoundSheet(soundSheetName);
+				String fragmentTag = SoundActivity.getSoundSheetsDataStorage().addOrUpdateSoundSheet(soundSheet);
+
+				mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(fragmentTag, uri, soundLabel);
 			}
 			else
-				soundSheetsManagerFragment.addSoundToNewSoundSheet(uri, soundLabel, soundSheetsManagerFragment.get(this.fragmentTag));
+				mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, uri, soundLabel);
+
+			EventBus.getDefault().post(new AddNewSoundEvent(mediaPlayerData, false));
 		}
 	}
 

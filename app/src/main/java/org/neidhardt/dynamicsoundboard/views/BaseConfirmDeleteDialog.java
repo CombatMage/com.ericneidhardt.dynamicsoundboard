@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog;
+package org.neidhardt.dynamicsoundboard.views;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -10,18 +10,16 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 /**
- * Created by eric.neidhardt on 16.02.2015.
+ * File created by eric.neidhardt on 16.02.2015.
  */
-public abstract class ConfirmDeleteDialog extends BaseDialog implements View.OnClickListener
+public abstract class BaseConfirmDeleteDialog extends BaseDialog implements View.OnClickListener
 {
-	private TextView infoText;
-
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_confirm_delete, null);
-		this.infoText = (TextView)view.findViewById(R.id.tv_message);
-		this.infoText.setText(this.getInfoTextResource());
+		TextView infoText = (TextView) view.findViewById(R.id.tv_message);
+		infoText.setText(this.getInfoTextResource());
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_delete).setOnClickListener(this);

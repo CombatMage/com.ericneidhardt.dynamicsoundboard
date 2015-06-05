@@ -9,10 +9,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
@@ -28,6 +35,9 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	private static final String KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.suggestedName";
 	private static final String KEY_AVAILABLE_SOUND_SHEET_LABELS = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.availableSoundSheetLabels";
 	private static final String KEY_AVAILABLE_SOUND_SHEET_IDS = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.availableSoundSheetIds";
+
+	private SoundSheetsDataStorage soundSheetsDataStorage;
+	private SoundSheetsDataUtil soundSheetsDataUtil;
 
 	private CustomEditText soundName;
 	private CustomEditText soundSheetName;
@@ -72,6 +82,9 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 			this.availableSoundSheetIds = args.getStringArrayList(KEY_AVAILABLE_SOUND_SHEET_IDS);
 		}
 		this.soundSheetsAlreadyExists = this.availableSoundSheetLabels != null;
+
+		this.soundSheetsDataStorage = SoundActivity.getSoundSheetsDataStorage();
+		this.soundSheetsDataUtil = SoundActivity.getSoundSheetsDataUtil();
 	}
 
 	@Override
@@ -163,26 +176,22 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 
 	private void deliverResult()
 	{
-		SoundSheetsManagerFragment caller = this.getSoundSheetManagerFragment();
-		if (caller == null)
-			return;
+		String newSoundSheetLabel = soundSheetName.getDisplayedText();
+		String soundSheetFragmentTag = this.availableSoundSheetIds.get(this.soundSheetSpinner.getSelectedItemPosition());
+		if (!this.soundSheetsAlreadyExists || this.addNewSoundSheet.isChecked())
+			soundSheetFragmentTag = this.addNewSoundSheet(newSoundSheetLabel);
 
 		String soundLabel = this.soundName.getText().toString();
-		String newSoundSheet = soundSheetName.getDisplayedText();
-		if (!this.soundSheetsAlreadyExists)
-			caller.addSoundToNewSoundSheet(this.uri, soundLabel, newSoundSheet);
-		else
-		{
-			String selectedSoundSheetId = this.availableSoundSheetIds.get(this.soundSheetSpinner.getSelectedItemPosition());
+		Uri soundUri = this.uri;
 
-			if (this.addNewSoundSheet.isChecked())
-				caller.addSoundToNewSoundSheet(this.uri, soundLabel, newSoundSheet);
-			else
-			{
-				SoundSheet existingSoundSheet = caller.get(selectedSoundSheetId);
-				caller.addSoundToNewSoundSheet(this.uri, soundLabel, existingSoundSheet);
-			}
-		}
+		MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(soundSheetFragmentTag, soundUri, soundLabel);
+		EventBus.getDefault().post(new AddNewSoundEvent(mediaPlayerData, false));
+	}
+
+	private String addNewSoundSheet(String label)
+	{
+		SoundSheet newSoundSheet = this.soundSheetsDataUtil.getNewSoundSheet(label);
+		return this.soundSheetsDataStorage.addOrUpdateSoundSheet(newSoundSheet);
 	}
 
 	private static ArrayList<String> getLabelsFromSoundSheets(List<SoundSheet> soundSheets)

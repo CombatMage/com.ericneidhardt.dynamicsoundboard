@@ -8,8 +8,9 @@ import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import java.io.File;
@@ -57,8 +58,8 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 	@Test
 	public void testGetPlayersWithMatchingUri() throws Exception
 	{
-		this.service.onEvent(new SoundLoadedEvent(TestDataGenerator.getRandomPlayerData(), false));
-		this.service.onEvent(new SoundLoadedEvent(TestDataGenerator.getRandomPlayerData(), false));
+		this.service.onEvent(new AddNewSoundEvent(TestDataGenerator.getRandomPlayerData(), false));
+		this.service.onEvent(new AddNewSoundEvent(TestDataGenerator.getRandomPlayerData(), false));
 
 		MediaPlayerData data2 = TestDataGenerator.getRandomPlayerData();
 		data2.setUri(this.testData.getUri());
@@ -66,7 +67,7 @@ public class RenameSoundFileDialogTest extends AbstractBaseActivityTest
 
 		MediaPlayerData data3 = TestDataGenerator.getRandomPlayerData();
 		data3.setUri(this.testData.getUri());
-		this.service.onEvent(new SoundLoadedEvent(data3, false));
+		this.service.onEvent(new AddNewSoundEvent(data3, false));
 
 		List<EnhancedMediaPlayer> players = this.dialog.getPlayersWithMatchingUri(this.testData.getUri());
 		assertThat(players.size(), equalTo(3)); // this.testData + data2 + data3

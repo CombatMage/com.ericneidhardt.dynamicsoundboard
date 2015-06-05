@@ -70,6 +70,22 @@ public class SoundSheet {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SoundSheet that = (SoundSheet) o;
+
+        return fragmentTag.equals(that.fragmentTag);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return fragmentTag.hashCode();
+    }
+
+    @Override
     public String toString() {
         return "SoundSheet{" +
                 "id=" + id +

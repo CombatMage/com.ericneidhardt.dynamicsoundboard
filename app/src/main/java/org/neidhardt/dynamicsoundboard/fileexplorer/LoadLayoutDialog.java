@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
+package org.neidhardt.dynamicsoundboard.fileexplorer;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -21,7 +21,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
@@ -121,7 +121,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
 	{
-		List<SoundSheet> currentSoundSheet = SoundActivity.getSoundSheetsDataModel().getSoundSheets();
+		List<SoundSheet> currentSoundSheet = SoundActivity.getSoundSheetsDataAccess().getSoundSheets();
 		EventBus.getDefault().post(new SoundSheetsFromFileLoadedEvent(soundSheets, currentSoundSheet));
 	}
 
@@ -142,7 +142,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		{
 			List<MediaPlayerData> soundsPerFragment = sounds.get(key);
 			for (MediaPlayerData mediaPlayerData : soundsPerFragment)
-				bus.post(new SoundLoadedEvent(mediaPlayerData, false));
+				bus.post(new AddNewSoundEvent(mediaPlayerData, false));
 		}
 	}
 

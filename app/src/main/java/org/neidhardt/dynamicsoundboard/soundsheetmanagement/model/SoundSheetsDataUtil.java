@@ -1,5 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model;
 
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+
 /**
  * Created by eric.neidhardt on 02.06.2015.
  */
@@ -24,4 +26,16 @@ public interface SoundSheetsDataUtil
 	 * Unregister the storage class on eventBus, should be called in onStop() of holding activity.
 	 */
 	void unregisterOnEventBus();
+
+	/**
+	 * Generate a new SoundSheet instance with unique fragmentTag, derived from the given label.
+	 * @param label label of the new {@code SoundSheet}
+	 * @return new {@code SoundSheet} instance
+	 */
+	SoundSheet getNewSoundSheet(String label);
+
+	/**
+	 * Get suggested SoundSheet name to create a new SoundSheets
+	 */
+	String getSuggestedName();
 }

@@ -23,7 +23,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.Sound
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
@@ -337,7 +337,7 @@ public class MusicService
 
 	/**
 	 * This is called by greenRobot EventBus in case a sounds was removed from the playlist.
-	 * @param event delivered SoundLoadedEvent
+	 * @param event delivered AddNewSoundEvent
 	 */
 	@SuppressWarnings("unused")
 	public void onEventMainThread(PlaylistSoundsRemovedEvent event)
@@ -464,12 +464,12 @@ public class MusicService
 
 	/**
 	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished
-	 * @param event delivered SoundLoadedEvent
+	 * @param event delivered AddNewSoundEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(SoundLoadedEvent event)
+	public void onEvent(AddNewSoundEvent event)
 	{
-		MediaPlayerData data = event.getLoadedSoundData();
+		MediaPlayerData data = event.getNewSoundData();
 		if (data == null)
 			throw new NullPointerException(TAG + ": onEvent() delivered data is null " + event);
 

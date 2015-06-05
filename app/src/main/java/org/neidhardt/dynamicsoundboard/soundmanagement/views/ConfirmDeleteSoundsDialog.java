@@ -1,13 +1,14 @@
-package org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog;
+package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.app.FragmentManager;
 import org.neidhardt.dynamicsoundboard.R;
+import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 
 /**
  * Created by eric.neidhardt on 16.02.2015.
  */
-public class ConfirmDeleteSoundsDialog extends ConfirmDeleteDialog
+public class ConfirmDeleteSoundsDialog extends BaseConfirmDeleteDialog
 {
 	private static final String TAG = ConfirmDeleteSoundsDialog.class.getName();
 

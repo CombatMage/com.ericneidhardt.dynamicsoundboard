@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
 
 import java.io.File;
 import java.util.List;
@@ -38,7 +38,7 @@ public class LoadSoundsFromFileListTask extends LongTermTask<List<File>>
 		for (File file : this.filesToLoad)
 		{
 			MediaPlayerData data = getMediaPlayerDataFromFile(file, this.fragmentTag);
-			bus.post(new SoundLoadedEvent(data, false));
+			bus.post(new AddNewSoundEvent(data, false));
 		}
 
 		return filesToLoad;
@@ -55,7 +55,7 @@ public class LoadSoundsFromFileListTask extends LongTermTask<List<File>>
 	protected void onSuccess(List<File> files) throws Exception
 	{
 		super.onSuccess(files);
-		this.serviceManagerFragment.notifyFragment(this.fragmentTag); // TODO remove this, cause SoundLoadedEvent should take care
+		this.serviceManagerFragment.notifyFragment(this.fragmentTag); // TODO remove this, cause AddNewSoundEvent should take care
 	}
 
 	@Override

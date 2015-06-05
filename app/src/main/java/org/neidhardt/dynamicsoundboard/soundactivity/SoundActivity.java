@@ -18,10 +18,10 @@ import android.view.View;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteAllSoundSheetsDialog;
-import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundSheetDialog;
-import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog;
-import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog;
+import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog;
+import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
@@ -46,7 +46,9 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
@@ -554,6 +556,9 @@ public class SoundActivity
 				fragmentManager.beginTransaction().remove(fragment).commit();
 		}
 		fragmentManager.executePendingTransactions();
+
+		if (getSoundSheetsDataAccess().getSoundSheets().size() == 0)
+			this.setSoundSheetActionsEnable(false);
 	}
 
 	public void removeSoundFragment(SoundSheet soundSheet)
@@ -602,7 +607,17 @@ public class SoundActivity
 		return null;
 	}
 
-	public static SoundSheetsDataAccess getSoundSheetsDataModel()
+	public static SoundSheetsDataAccess getSoundSheetsDataAccess()
+	{
+		return soundSheetsManager;
+	}
+
+	public static SoundSheetsDataUtil getSoundSheetsDataUtil()
+	{
+		return soundSheetsManager;
+	}
+
+	public static SoundSheetsDataStorage getSoundSheetsDataStorage()
 	{
 		return soundSheetsManager;
 	}

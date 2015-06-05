@@ -9,10 +9,6 @@ import java.util.List;
  */
 public interface SoundSheetsDataAccess
 {
-	/**
-	 * Get suggested SoundSheet name to create a new SoundSheets
-	 */
-	String getSuggestedName();
 
 	/**
 	 * Retrieve all SoundSheets in the sound board.

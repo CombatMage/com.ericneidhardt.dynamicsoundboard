@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
+package org.neidhardt.dynamicsoundboard.fileexplorer;
 
 import android.animation.Animator;
 import android.os.Environment;

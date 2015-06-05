@@ -16,10 +16,10 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.dialog.deleteconfirmdialog.ConfirmDeleteSoundsDialog;
-import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectory;
-import org.neidhardt.dynamicsoundboard.dialog.soundsettings.RenameSoundFileDialog;
-import org.neidhardt.dynamicsoundboard.dialog.soundsettings.SoundSettingsDialog;
+import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog;
+import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory;
+import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog;
+import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
@@ -32,7 +32,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
@@ -169,7 +169,7 @@ public class SoundSheetFragment
 				Uri soundUri = data.getData();
 				String soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
 				MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel);
-				EventBus.getDefault().postSticky(new SoundLoadedEvent(playerData, false));
+				EventBus.getDefault().postSticky(new AddNewSoundEvent(playerData, false));
 				return;
 			}
 		}
@@ -285,19 +285,19 @@ public class SoundSheetFragment
 
 	/**
 	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished.
-	 * @param event delivered SoundLoadedEvent
+	 * @param event delivered AddNewSoundEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEventMainThread(SoundLoadedEvent event)
+	public void onEventMainThread(AddNewSoundEvent event)
 	{
-		MediaPlayerData data = event.getLoadedSoundData();
+		MediaPlayerData data = event.getNewSoundData();
 		if (data != null && this.getFragmentTag().equals(data.getFragmentTag()))
 			this.soundAdapter.notifyDataSetChanged();
 	}
 
 	/**
 	 * This is called by greenRobot EventBus in case a sound was removed from the playlist.
-	 * @param event delivered SoundLoadedEvent
+	 * @param event delivered AddNewSoundEvent
 	 */
 	@SuppressWarnings("unused")
 	public void onEventMainThread(PlaylistSoundsRemovedEvent event)

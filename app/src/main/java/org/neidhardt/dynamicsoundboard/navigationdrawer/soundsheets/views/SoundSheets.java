@@ -13,8 +13,8 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.SoundSheetsManagerFragment;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 
@@ -74,7 +74,7 @@ public class SoundSheets
 		super.onAttachedToWindow();
 
 		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
-		this.presenter.setSoundSheetsDataAccess(SoundSheetsManagerFragment.getSoundSheetsDataModel());
+		this.presenter.setSoundSheetsDataAccess(SoundActivity.getSoundSheetsDataAccess());
 
 		this.adapter.onAttachedToWindow();
 		this.presenter.onAttachedToWindow();

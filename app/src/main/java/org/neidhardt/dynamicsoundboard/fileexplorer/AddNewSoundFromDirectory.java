@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
+package org.neidhardt.dynamicsoundboard.fileexplorer;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -30,7 +30,7 @@ public class AddNewSoundFromDirectory
 {
 	private static final String TAG = AddNewSoundFromDirectory.class.getName();
 
-	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectory.callingFragmentTag";
+	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory.callingFragmentTag";
 
 	private String callingFragmentTag;
 

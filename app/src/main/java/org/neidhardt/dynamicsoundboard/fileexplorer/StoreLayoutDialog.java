@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog.fileexplorer;
+package org.neidhardt.dynamicsoundboard.fileexplorer;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -133,7 +133,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	{
 		ObjectMapper mapper = new ObjectMapper();
 
-		SoundSheetsDataAccess soundSheetDataModel = this.getSoundSheetDataModel();
+		SoundSheetsDataAccess soundSheetDataModel = this.getSoundSheetDataAccess();
 
 		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
 

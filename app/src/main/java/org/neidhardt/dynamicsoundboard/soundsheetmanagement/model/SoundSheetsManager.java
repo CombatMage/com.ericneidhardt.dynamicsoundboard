@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundShee
 import roboguice.util.SafeAsyncTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,8 +22,9 @@ import java.util.List;
  */
 public class SoundSheetsManager
 		implements
-		SoundSheetsDataAccess,
-		SoundSheetsDataUtil,
+			SoundSheetsDataAccess,
+		SoundSheetsDataStorage,
+			SoundSheetsDataUtil,
 			OnSoundSheetRenamedEventListener,
 			OnOpenSoundSheetEventListener,
 			OnSoundSheetsLoadedEventListener,
@@ -77,7 +79,32 @@ public class SoundSheetsManager
 	@Override
 	public List<SoundSheet> getSoundSheets()
 	{
-		return this.soundSheets;
+		return Collections.unmodifiableList(this.soundSheets);
+	}
+
+	@Override
+	public String addOrUpdateSoundSheet(SoundSheet soundSheet)
+	{
+		SoundSheet existingSoundSheet = null;
+		int index = this.soundSheets.indexOf(soundSheet);
+		if (index == -1)
+			this.soundSheets.add(soundSheet);
+		else
+		{
+			existingSoundSheet = this.soundSheets.get(index);
+			existingSoundSheet.setFragmentTag(soundSheet.getFragmentTag());
+			existingSoundSheet.setLabel(soundSheet.getLabel());
+		}
+		this.eventBus.post(new SoundSheetsChangedEvent());
+		if (existingSoundSheet == null)
+			this.eventBus.post(new OpenSoundSheetEvent(soundSheet));
+		else
+			this.eventBus.post(new OpenSoundSheetEvent(existingSoundSheet));
+
+		if (existingSoundSheet != null)
+			return existingSoundSheet.getFragmentTag();
+		else
+			return soundSheet.getFragmentTag();
 	}
 
 	@Override
@@ -125,6 +152,13 @@ public class SoundSheetsManager
 	public String getSuggestedName()
 	{
 		return DynamicSoundboardApplication.getSoundboardContext().getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size();
+	}
+
+	@Override
+	public SoundSheet getNewSoundSheet(String label)
+	{
+		String tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode());
+		return new SoundSheet(null, tag, label, false);
 	}
 
 	@Override

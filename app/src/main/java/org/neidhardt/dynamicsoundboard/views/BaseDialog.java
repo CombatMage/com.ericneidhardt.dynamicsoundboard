@@ -12,6 +12,11 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 public abstract class BaseDialog extends DialogFragment
 {
 
+	public SoundActivity getSoundActivity()
+	{
+		return (SoundActivity) this.getActivity();
+	}
+
 	public ServiceManagerFragment getServiceManagerFragment()
 	{
 		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
@@ -20,11 +25,6 @@ public abstract class BaseDialog extends DialogFragment
 	public SoundSheetFragment getSoundSheetFragment(String fragmentTag)
 	{
 		return (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
-	}
-
-	public SoundSheetsDataAccess getSoundSheetDataModel()
-	{
-		return SoundActivity.getSoundSheetsDataModel();
 	}
 
 }
