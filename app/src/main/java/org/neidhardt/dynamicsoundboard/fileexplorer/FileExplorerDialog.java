@@ -88,7 +88,6 @@ public abstract class FileExplorerDialog extends BaseDialog
 		private ImageView selectionIndicator;
 		private TextView fileName;
 
-
 		public DirectoryEntry(View itemView)
 		{
 			super(itemView);
