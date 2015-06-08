@@ -3,6 +3,8 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model;
 import de.greenrobot.event.EventBus;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
@@ -19,13 +21,15 @@ import static org.mockito.Mockito.*;
 public class SoundSheetsManagerTest extends BaseTest
 {
 	private SoundSheetsManager manager;
-	private EventBus mockEventBus;
+
+	@Mock private EventBus mockEventBus;
 
 	@Override
 	@Before
 	public void setUp() throws Exception
 	{
-		this.mockEventBus = mock(EventBus.class);
+		super.setUp();
+		MockitoAnnotations.initMocks(this);
 
 		this.manager = spy(new SoundSheetsManager());
 		this.manager.eventBus = this.mockEventBus;
