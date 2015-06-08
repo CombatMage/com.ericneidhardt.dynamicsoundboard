@@ -66,15 +66,21 @@ public class SoundSheetsAdapter
 	}
 
 	@Override
+	public int getItemViewType(int position)
+	{
+		return R.layout.view_sound_sheet_item;
+	}
+
+	@Override
 	public int getItemCount()
 	{
 		return this.getValues().size();
 	}
 
 	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup parent, int position)
+	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sound_sheet_item, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
 		return new ViewHolder(view);
 	}
 

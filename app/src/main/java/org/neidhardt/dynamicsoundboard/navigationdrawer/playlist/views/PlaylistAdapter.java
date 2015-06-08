@@ -109,9 +109,14 @@ public class PlaylistAdapter
 	}
 
 	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup parent, int position)
+	public int getItemViewType(int position) {
+		return R.layout.view_playlist_item;
+	}
+
+	@Override
+	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_playlist_item, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
 		return new ViewHolder(view);
 	}
 

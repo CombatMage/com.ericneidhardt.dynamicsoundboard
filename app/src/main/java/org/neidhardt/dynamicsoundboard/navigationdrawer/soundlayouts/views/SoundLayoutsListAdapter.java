@@ -72,9 +72,15 @@ public class SoundLayoutsListAdapter
 	}
 
 	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup parent, int position)
+	public int getItemViewType(int position)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sound_layout_item, parent, false);
+		return R.layout.view_sound_layout_item;
+	}
+
+	@Override
+	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+	{
+		View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
 		return new ViewHolder(view);
 	}
 
