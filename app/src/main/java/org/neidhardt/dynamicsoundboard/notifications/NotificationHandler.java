@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by eric.neidhardt on 23.03.2015.
+ * File created by eric.neidhardt on 23.03.2015.
  */
 public class NotificationHandler implements SharedPreferences.OnSharedPreferenceChangeListener
 {

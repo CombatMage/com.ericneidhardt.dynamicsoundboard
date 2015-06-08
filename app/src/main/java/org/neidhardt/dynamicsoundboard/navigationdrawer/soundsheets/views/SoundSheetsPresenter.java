@@ -8,12 +8,13 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.Sound
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 26.05.2015.
+ * File created by eric.neidhardt on 26.05.2015.
  */
 public class SoundSheetsPresenter
 		extends
@@ -23,6 +24,7 @@ public class SoundSheetsPresenter
 {
 	private static final String TAG = SoundSheetsPresenter.class.getName();
 	private SoundSheetsDataAccess soundSheetsDataAccess;
+	private SoundSheetsDataStorage soundSheetsDataStorage;
 	private SoundDataModel soundDataModel;
 
 	@Override
@@ -48,7 +50,7 @@ public class SoundSheetsPresenter
 
 		for (SoundSheet soundSheet: soundSheetsToRemove)
 		{
-			this.getEventBus().post(new SoundSheetsRemovedEvent(soundSheet));
+			this.soundSheetsDataStorage.removeSoundSheet(soundSheet);
 			if (soundSheet.getIsSelected())
 			{
 				List<SoundSheet> remainingSoundSheets = adapter.getValues();
@@ -82,6 +84,11 @@ public class SoundSheetsPresenter
 	void setSoundSheetsDataAccess(SoundSheetsDataAccess soundSheetsDataAccess)
 	{
 		this.soundSheetsDataAccess = soundSheetsDataAccess;
+	}
+
+	public void setSoundSheetsDataStorage(SoundSheetsDataStorage soundSheetsDataStorage)
+	{
+		this.soundSheetsDataStorage = soundSheetsDataStorage;
 	}
 
 	SoundSheetsDataAccess getSoundSheetsDataAccess() {

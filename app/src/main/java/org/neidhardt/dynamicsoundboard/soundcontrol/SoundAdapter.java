@@ -313,8 +313,6 @@ public class SoundAdapter
 						view.setSelected(isSelected);
 						player.setIsInPlaylist(isSelected);
 					}
-					else
-						EventBus.getDefault().post(new PlaylistChangedEvent());
 
 					break;
 				case R.id.b_play:

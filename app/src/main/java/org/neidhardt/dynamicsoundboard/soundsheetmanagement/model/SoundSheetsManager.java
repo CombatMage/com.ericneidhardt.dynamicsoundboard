@@ -23,7 +23,7 @@ import java.util.List;
 public class SoundSheetsManager
 		implements
 			SoundSheetsDataAccess,
-		SoundSheetsDataStorage,
+			SoundSheetsDataStorage,
 			SoundSheetsDataUtil,
 			OnSoundSheetRenamedEventListener,
 			OnOpenSoundSheetEventListener,
@@ -159,6 +159,20 @@ public class SoundSheetsManager
 	{
 		String tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode());
 		return new SoundSheet(null, tag, label, false);
+	}
+
+	@Override
+	public void removeSoundSheet(SoundSheet soundSheet)
+	{
+		this.soundSheets.remove(soundSheet);
+		this.eventBus.post(new SoundSheetsRemovedEvent(soundSheet));
+	}
+
+	@Override
+	public void removeAllSoundSheets()
+	{
+		this.soundSheets.clear();
+		this.eventBus.post(new SoundSheetsChangedEvent());
 	}
 
 	@Override

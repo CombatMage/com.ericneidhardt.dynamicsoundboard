@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by eric.neidhardt on 27.05.2015.
+ * File created by eric.neidhardt on 27.05.2015.
  */
 public interface SoundDataModel
 {
@@ -42,4 +42,16 @@ public interface SoundDataModel
 	 * @param addToPlayList player's state in playlist
 	 */
 	boolean toggleSoundInPlaylist(String playerId, boolean addToPlayList);
+
+	/**
+	 * Remove all given Sounds from the currently loaded sounds, but not from the playlist.
+	 * @param soundsToRemove list of sounds to remove
+	 */
+	void removeSounds(List<EnhancedMediaPlayer> soundsToRemove);
+
+	/**
+	 * Remove all given Sounds from the currently loaded sounds, from the playlist.
+	 * @param soundsToRemove list of sounds to remove
+	 */
+	void removeSoundsFromPlaylist(List<EnhancedMediaPlayer> soundsToRemove);
 }

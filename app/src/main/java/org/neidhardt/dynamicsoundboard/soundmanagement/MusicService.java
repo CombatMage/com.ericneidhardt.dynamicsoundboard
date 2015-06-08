@@ -16,14 +16,13 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.events.PlaylistSoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
@@ -333,16 +332,6 @@ public class MusicService
 			}
 			this.destroyPlayerAndUpdateDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerToRemove);
 		}
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case a sounds was removed from the playlist.
-	 * @param event delivered AddNewSoundEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(PlaylistSoundsRemovedEvent event)
-	{
-		this.removeFromPlaylist(event.getPlayersToRemove());
 	}
 
 	public void removeFromPlaylist(List<EnhancedMediaPlayer> playersToRemove)

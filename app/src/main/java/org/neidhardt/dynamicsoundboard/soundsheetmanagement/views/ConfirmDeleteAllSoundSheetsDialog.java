@@ -3,7 +3,10 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views;
 import android.app.FragmentManager;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
+import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog;
 
 import java.util.List;
@@ -32,6 +35,13 @@ public class ConfirmDeleteAllSoundSheetsDialog extends BaseConfirmDeleteDialog
 	{
 		List<SoundSheet> soundSheets = SoundActivity.getSoundSheetsDataAccess().getSoundSheets();
 		this.getSoundActivity().removeSoundFragments(soundSheets);
+
+		SoundDataModel model = ServiceManagerFragment.getSoundDataModel();
+		for (SoundSheet soundSheet : soundSheets)
+		{
+			List<EnhancedMediaPlayer> soundsInSoundSheet = model.getSoundsInFragment(soundSheet.getFragmentTag());
+			model.removeSounds(soundsInSoundSheet);
+		}
 
 		SoundActivity.getSoundSheetsDataStorage().removeAllSoundSheets();
 	}

@@ -25,6 +25,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.Sound
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
 
@@ -178,7 +179,7 @@ public class NavigationDrawerFragment
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), Playlist.TAG);
 			else
 			{
-				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.getSoundSheetDataModel().getSuggestedName());
+				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), SoundActivity.getSoundSheetsDataUtil().getSuggestedName());
 			}
 		}
 	}

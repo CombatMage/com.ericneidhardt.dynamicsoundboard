@@ -2,17 +2,15 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 
 import android.util.SparseArray;
 import android.view.View;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.events.PlaylistSoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 26.05.2015.
+ * File created by eric.neidhardt on 26.05.2015.
  */
 public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> implements PlaylistAdapter.OnItemClickListener
 {
@@ -48,7 +46,7 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 			playersToRemove.add(this.getView().getAdapter().getValues().get(index));
 		}
 
-		EventBus.getDefault().post(new PlaylistSoundsRemovedEvent(playersToRemove));
+		this.model.removeSoundsFromPlaylist(playersToRemove);
 		this.getView().getAdapter().notifyDataSetChanged();
 	}
 

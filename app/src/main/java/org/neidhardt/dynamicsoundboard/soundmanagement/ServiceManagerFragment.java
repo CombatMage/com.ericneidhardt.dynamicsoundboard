@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsFromFileLoadedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
@@ -112,12 +113,33 @@ public class ServiceManagerFragment
 	}
 
 	@Override
+	public void removeSounds(List<EnhancedMediaPlayer> soundsToRemove)
+	{
+		if (this.service == null)
+			return;
+
+		this.service.removeSounds(soundsToRemove);
+	}
+
+	@Override
+	public void removeSoundsFromPlaylist(List<EnhancedMediaPlayer> soundsToRemove)
+	{
+		if (this.service == null)
+			return;
+
+		this.service.removeFromPlaylist(soundsToRemove);
+		EventBus.getDefault().post(new PlaylistRemovedEvent(soundsToRemove));
+	}
+
+	@Override
 	public boolean toggleSoundInPlaylist(String playerId, boolean addToPlayList)
 	{
 		if (this.service == null)
 			return false;
 
 		this.service.toggleSoundInPlaylist(playerId, addToPlayList);
+		EventBus.getDefault().post(new PlaylistChangedEvent());
+
 		return true;
 	}
 

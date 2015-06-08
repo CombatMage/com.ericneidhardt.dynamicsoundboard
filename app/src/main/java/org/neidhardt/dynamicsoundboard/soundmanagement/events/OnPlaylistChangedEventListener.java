@@ -7,7 +7,7 @@ public interface OnPlaylistChangedEventListener
 {
 	/**
 	 * This is called by greenRobot EventBus in case the playlist has changed.*
-	 * @param event delivered PlaylistChangedEvent
+	 * @param event delivered PlaylistRemovedEvent
 	 */
 	void onEventMainThread(PlaylistChangedEvent event);
 }

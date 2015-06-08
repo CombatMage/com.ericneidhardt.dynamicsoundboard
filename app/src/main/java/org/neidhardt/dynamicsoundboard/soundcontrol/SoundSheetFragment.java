@@ -16,6 +16,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog;
@@ -24,7 +25,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.events.PlaylistSoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener;
@@ -300,7 +300,7 @@ public class SoundSheetFragment
 	 * @param event delivered AddNewSoundEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEventMainThread(PlaylistSoundsRemovedEvent event)
+	public void onEventMainThread(PlaylistRemovedEvent event)
 	{
 		this.soundAdapter.notifyDataSetChanged();
 	}
