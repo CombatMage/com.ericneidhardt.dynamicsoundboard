@@ -8,8 +8,8 @@
 		android:layout_width="match_parent"
 		android:minHeight="?attr/actionBarSize"
 		android:background="?attr/colorPrimary"
-		app:theme="@style/ActionBarThemeOverlay"
-		app:popupTheme="@style/ActionBarPopupThemeOverlay">
+		android:theme="@style/ActionBarThemeOverlay"
+		android:popupTheme="@style/ActionBarPopupThemeOverlay">
 
 	<RelativeLayout
 			android:layout_width="match_parent"
