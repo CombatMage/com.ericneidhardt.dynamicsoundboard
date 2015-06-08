@@ -72,7 +72,11 @@ public class MusicService
 	private NotificationHandler notificationHandler;
 
 	private boolean isServiceBound = false;
-
+	public boolean isServiceBound()
+	{
+		return this.isServiceBound;
+	}
+	
 	@Override
 	public IBinder onBind(Intent intent)
 	{
@@ -85,11 +89,6 @@ public class MusicService
 	{
 		this.isServiceBound = false;
 		return true; // this is necessary to ensure onRebind is called
-	}
-
-	public boolean isServiceBound()
-	{
-		return this.isServiceBound;
 	}
 
 	@Override
