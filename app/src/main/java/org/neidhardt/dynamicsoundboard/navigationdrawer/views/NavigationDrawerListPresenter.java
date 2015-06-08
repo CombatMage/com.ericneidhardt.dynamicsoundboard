@@ -4,7 +4,7 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent;
 import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
 
 /**
@@ -29,18 +29,18 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 		else
 			this.selectedItems.put(indexOfSelectedItem, view);
 
-		this.getEventBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.INVALIDATE));
+		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.INVALIDATE));
 		view.setSelected(!view.isSelected());
 	}
 
 	public void prepareItemDeletion()
 	{
-		this.getEventBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.START));
+		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.START));
 	}
 
 	public void deleteSelected()
 	{
-		this.getEventBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOP));
+		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOP));
 		this.getView().onDeleteSelected(selectedItems);
 	}
 
@@ -86,17 +86,9 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 		for(int i = 0; i < this.selectedItems.size(); i++)
 			this.selectedItems.valueAt(i).setSelected(false);
 
-		this.getEventBus().post(new ActionModeEvent(this, ActionModeEvent.REQUEST.STOPPED));
+		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOPPED));
 	}
 
 	public abstract void onDeleteSelected(SparseArray<View> selectedItems);
 
-	interface OnNavigationDrawerListEventListener
-	{
-		/**
-		 * This is called by greenRobot EventBus in case a request to change the current contextual action mode has benn submitted.
-		 * @param event delivered OpenSoundSheetEvent
-		 */
-		void onEvent(ActionModeEvent event);
-	}
 }

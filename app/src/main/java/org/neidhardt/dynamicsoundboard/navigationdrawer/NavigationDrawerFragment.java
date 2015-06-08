@@ -15,7 +15,8 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
@@ -24,7 +25,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNe
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
@@ -37,7 +37,7 @@ public class NavigationDrawerFragment
 		implements
 			View.OnClickListener,
 			ViewPager.OnPageChangeListener,
-			NavigationDrawerListPresenter.OnNavigationDrawerListEventListener,
+			OnActionModeChangeRequestedEventListener,
 			NavigationDrawerHeaderPresenter.OnOpenSoundLayoutsEvent
 {
 	public static final String TAG = NavigationDrawerFragment.class.getName();
@@ -208,10 +208,9 @@ public class NavigationDrawerFragment
 	}
 
 	@Override
-	@SuppressWarnings("unused")
-	public void onEvent(ActionModeEvent event)
+	public void onEvent(ActionModeChangeRequestedEvent event)
 	{
-		ActionModeEvent.REQUEST requestedAction = event.getRequestedAction();
+		ActionModeChangeRequestedEvent.REQUEST requestedAction = event.getRequestedAction();
 		switch (requestedAction)
 		{
 			case START:

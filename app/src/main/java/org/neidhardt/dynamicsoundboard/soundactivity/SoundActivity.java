@@ -18,6 +18,7 @@ import android.view.View;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog;
@@ -29,7 +30,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
@@ -67,6 +68,7 @@ public class SoundActivity
 		implements
 			View.OnClickListener,
 			CustomEditText.OnTextEditedListener,
+		OnActionModeChangeRequestedEventListener,
 			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
 			SoundLayoutsPresenter.OnOpenSoundLayoutSettingsEvent,
 			OnOpenSoundSheetEventListener,
@@ -347,28 +349,23 @@ public class SoundActivity
 		this.openSoundFragment(soundSheetsManager.getSelectedItem());
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case a request to change the current contextual action mode has benn submitted.
-	 * playlist entries.
-	 * @param event delivered OpenSoundSheetEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEvent(ActionModeEvent event)
+	@Override
+	public void onEvent(ActionModeChangeRequestedEvent event)
 	{
-		ActionModeEvent.REQUEST requestedAction = event.getRequestedAction();
-		if (requestedAction == ActionModeEvent.REQUEST.START)
+		ActionModeChangeRequestedEvent.REQUEST requestedAction = event.getRequestedAction();
+		if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.START)
 		{
 			this.actionMode = this.startSupportActionMode(event.getActionModeCallback());
 			return;
 		}
 		if (this.actionMode != null)
 		{
-			if (requestedAction == ActionModeEvent.REQUEST.STOP)
+			if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.STOP)
 			{
 				this.actionMode.finish();
 				this.actionMode = null;
 			}
-			else if (requestedAction == ActionModeEvent.REQUEST.INVALIDATE)
+			else if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.INVALIDATE)
 			{
 				this.actionMode.invalidate();
 			}
