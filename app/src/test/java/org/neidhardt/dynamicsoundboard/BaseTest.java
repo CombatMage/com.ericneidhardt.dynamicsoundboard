@@ -12,7 +12,7 @@ import java.io.File;
 import static junit.framework.TestCase.assertTrue;
 
 /**
- * Created by eric.neidhardt on 18.04.2015.
+ * File created by eric.neidhardt on 18.04.2015.
  */
 @RunWith(CustomTestRunner.class)
 public abstract class BaseTest
@@ -39,7 +39,7 @@ public abstract class BaseTest
 		// TODO clear shared preferences
 	}
 
-	protected File createFile(String fileName) throws Exception
+	public static File createFile(String fileName) throws Exception
 	{
 		File newFile = new File(ShadowEnvironment.getExternalStorageDirectory(), fileName);
 		if (!newFile.exists())

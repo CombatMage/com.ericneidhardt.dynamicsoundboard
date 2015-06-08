@@ -1,18 +1,21 @@
 package org.neidhardt.dynamicsoundboard;
 
 import org.junit.Test;
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
+import java.io.IOException;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by eric.neidhardt on 20.04.2015.
+ * File created by eric.neidhardt on 20.04.2015.
  */
 public class SoundActivityTest extends AbstractBaseActivityTest
 {
@@ -41,31 +44,4 @@ public class SoundActivityTest extends AbstractBaseActivityTest
 		assertSame(this.navigationDrawerFragment, this.navigationDrawerFragment.getNavigationDrawerFragment());
 	}
 
-	@Test
-	public void testSoundSheetManagerFragmentAccess() throws Exception
-	{
-		assertSame(this.soundSheetsManagerFragment, this.soundSheetsManagerFragment.getSoundSheetManagerFragment());
-	}
-
-	@Test
-	public void testOnEvent() throws Exception
-	{
-		// mock test data
-		EnhancedMediaPlayer player = spy(new EnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData()));
-		this.service.getPlaylist().add(player);
-		player.playSound();
-
-		player = spy(new EnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData()));
-		this.service.getPlaylist().add(player);
-		player.playSound();
-
-		player = spy(new EnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData()));
-		this.service.getPlaylist().add(player);
-
-		assertThat(this.service.getCurrentlyPlayingSounds().size(), equalTo(2));
-
-		// actual test
-		this.activity.onEvent(new FabClickedEvent());
-		assertThat(this.service.getCurrentlyPlayingSounds().size(), equalTo(0));
-	}
 }

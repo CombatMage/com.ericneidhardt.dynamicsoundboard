@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -38,11 +39,12 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	}
 
 	private State currentState;
-	private MediaPlayerData rawData;
 	private int duration;
 	private int volume;
 
 	private Handler handler = null;
+
+	MediaPlayerData rawData;
 
 	public EnhancedMediaPlayer(MediaPlayerData data) throws IOException
 	{
@@ -52,7 +54,18 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.setLooping(data.getIsLoop());
 
 		this.currentState = State.IDLE;
-		this.init();
+		this.init(DynamicSoundboardApplication.getSoundboardContext());
+	}
+
+	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
+	{
+		super();
+
+		this.rawData = data;
+		this.setLooping(data.getIsLoop());
+
+		this.currentState = State.IDLE;
+		this.init(context);
 	}
 
 	public static EnhancedMediaPlayer getInstanceForPlayList(MediaPlayerData data) throws IOException
@@ -90,17 +103,17 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.rawData.setItemWasUpdated();
 		this.reset();
 
-		this.init();
+		this.init(DynamicSoundboardApplication.getSoundboardContext());
 	}
 
-	private void init() throws IOException
+	private void init(Context context) throws IOException
 	{
 		if (this.rawData.getUri() == null)
 			throw new NullPointerException("cannot init media player, sound uri is null");
 
 		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		Uri soundUri = Uri.parse(this.rawData.getUri());
-		this.setDataSource(DynamicSoundboardApplication.getSoundboardContext(), soundUri);
+		this.setDataSource(context, soundUri);
 		this.setLooping(this.rawData.getIsLoop());
 		this.prepare();
 		this.currentState = State.PREPARED;
@@ -182,7 +195,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		try
 		{
 			if (this.currentState == State.IDLE || this.currentState == State.DESTROYED)
-				this.init();
+				this.init(DynamicSoundboardApplication.getSoundboardContext());
 
 			if (this.currentState == State.INIT || this.currentState == State.STOPPED)
 				this.prepare();
@@ -229,11 +242,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			switch (this.currentState)
 			{
 				case IDLE:
-					this.init();
+					this.init(DynamicSoundboardApplication.getSoundboardContext());
 					this.start();
 					break;
 				case DESTROYED:
-					this.init();
+					this.init(DynamicSoundboardApplication.getSoundboardContext());
 					this.start();
 					break;
 				case INIT:

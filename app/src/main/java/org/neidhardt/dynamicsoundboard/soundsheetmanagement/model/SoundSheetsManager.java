@@ -35,10 +35,10 @@ public class SoundSheetsManager
 	private static final String DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets";
 	private static final String DB_SOUND_SHEETS = "db_sound_sheets";
 
-	private List<SoundSheet> soundSheets;
 	private DaoSession daoSession;
+	List<SoundSheet> soundSheets;
 
-	private EventBus eventBus;
+	EventBus eventBus;
 
 	public SoundSheetsManager()
 	{
@@ -48,7 +48,7 @@ public class SoundSheetsManager
 	@Override
 	public void registerOnEventBus()
 	{
-		if (this.eventBus.isRegistered(this))
+		if (!this.eventBus.isRegistered(this))
 			this.eventBus.registerSticky(this, 1);
 	}
 

@@ -1,11 +1,17 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model;
 
+import de.greenrobot.event.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.BaseTest;
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 /**
  * File created by eric.neidhardt on 04.06.2015.
@@ -13,83 +19,39 @@ import static org.mockito.Mockito.mock;
 public class SoundSheetsManagerTest extends BaseTest
 {
 	private SoundSheetsManager manager;
-
+	private EventBus mockEventBus;
 
 	@Override
 	@Before
 	public void setUp() throws Exception
 	{
-		this.manager = mock(SoundSheetsManager.class);
+		this.mockEventBus = mock(EventBus.class);
 
+		this.manager = spy(new SoundSheetsManager());
+		this.manager.eventBus = this.mockEventBus;
 	}
 
 	@Test
-	public void testRegisterOnEventBus() throws Exception {
-
+	public void testRegisterOnEventBus() throws Exception
+	{
+		when(this.mockEventBus.isRegistered(this.manager)).thenReturn(false);
+		this.manager.registerOnEventBus();
+		verify(this.mockEventBus, times(1)).registerSticky(this.manager, 1);
 	}
 
 	@Test
-	public void testUnregisterOnEventBus() throws Exception {
-
+	public void testUnregisterOnEventBus() throws Exception
+	{
+		this.manager.unregisterOnEventBus();
+		verify(this.mockEventBus, times(1)).unregister(this.manager);
 	}
 
 	@Test
-	public void testInit() throws Exception {
+	public void testGetSoundSheets() throws Exception
+	{
+		List<SoundSheet> soundSheetList = new ArrayList<>();
+		this.manager.soundSheets = soundSheetList;
 
-	}
-
-	@Test
-	public void testGetSoundSheets() throws Exception {
-
-	}
-
-	@Test
-	public void testGetSoundSheetForFragmentTag() throws Exception {
-
-	}
-
-	@Test
-	public void testSetSelectedItem() throws Exception {
-
-	}
-
-	@Test
-	public void testGetSelectedItem() throws Exception {
-
-	}
-
-	@Test
-	public void testWriteCacheBack() throws Exception {
-
-	}
-
-	@Test
-	public void testGetSuggestedName() throws Exception {
-
-	}
-
-	@Test
-	public void testOnEvent() throws Exception {
-
-	}
-
-	@Test
-	public void testOnEvent1() throws Exception {
-
-	}
-
-	@Test
-	public void testOnEventMainThread() throws Exception {
-
-	}
-
-	@Test
-	public void testOnEventMainThread1() throws Exception {
-
-	}
-
-	@Test
-	public void testOnEvent2() throws Exception {
-
+		assertThat(this.manager.getSoundSheets(), equalTo(soundSheetList));
 	}
 }

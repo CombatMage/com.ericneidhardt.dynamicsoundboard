@@ -2,11 +2,10 @@ package org.neidhardt.dynamicsoundboard.soundmanagement;
 
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -15,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by eric.neidhardt on 08.04.2015.
+ * File created by eric.neidhardt on 08.04.2015.
  */
 public class MusicServiceTest extends AbstractBaseActivityTest
 {
@@ -31,37 +30,16 @@ public class MusicServiceTest extends AbstractBaseActivityTest
 		assertTrue(MusicService.getDatabaseNamePlayList().equals(MusicService.DB_SOUNDS_PLAYLIST_DEFAULT));
 	}
 
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void testOnSoundsLoadedEventMainThread() throws Exception
 	{
-		try
-		{
-			this.service.onEvent(new AddNewSoundEvent(null, true));
-		}
-		catch (NullPointerException e)
-		{
-			assertTrue("this should throw a NullPointerException exception and the list should remain empty", this.service.getSounds().isEmpty());
-		}
-
-		MediaPlayerData playerData = TestDataGenerator.getRandomPlayerData();
-		this.service.onEvent(new AddNewSoundEvent(playerData, true));
-		assertThat(this.service.getSounds().get(playerData.getFragmentTag()).size(), equalTo(1));
+		this.service.onEvent(new AddNewSoundEvent(null, true));
 	}
 
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void testOnPlayListLoadedEventMainThread1() throws Exception
 	{
-		try
-		{
-			this.service.onEvent(new PlaylistLoadedEvent(null, true));
-		}
-		catch (NullPointerException e)
-		{
-			assertTrue("this should throw a NullPointerException exception and the list should remain empty", this.service.getPlaylist().isEmpty());
-		}
-
-		this.service.onEvent(new PlaylistLoadedEvent(TestDataGenerator.getRandomPlayerData(), true));
-		assertThat(this.service.getPlaylist().size(), equalTo(1));
+		this.service.onEvent(new PlaylistLoadedEvent(null, true));
 	}
 
 	@Test

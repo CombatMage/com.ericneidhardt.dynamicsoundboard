@@ -44,8 +44,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testGetItemCount() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		assertThat(adapter.getItemCount(), equalTo(0));
 
 		this.serviceManagerFragment.getPlayList().add(mock(EnhancedMediaPlayer.class));
@@ -62,29 +60,16 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 		assertThat(adapter.getCurrentItemIndex(), equalTo(1));
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testStartOrStopPlayList() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
-
-		boolean wasExceptionThrown = false;
-		try {
-			adapter.startOrStopPlayList(playerA); // should throw exception cause player is not in playlist
-		}
-		catch (IllegalStateException e)
-		{
-			wasExceptionThrown = true;
-		}
-		assertTrue(wasExceptionThrown);
+		adapter.startOrStopPlayList(playerA);
 	}
 
 	@Test
 	public void testStartOrStopPlayList1() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
 		EnhancedMediaPlayer playerB = mock(EnhancedMediaPlayer.class);
 
@@ -102,8 +87,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList2() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
 		EnhancedMediaPlayer playerB = mock(EnhancedMediaPlayer.class);
 
@@ -121,8 +104,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList3() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
 		EnhancedMediaPlayer playerB = mock(EnhancedMediaPlayer.class);
 
@@ -140,8 +121,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList4() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
 		EnhancedMediaPlayer playerB = mock(EnhancedMediaPlayer.class);
 
@@ -159,8 +138,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList5() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
 		EnhancedMediaPlayer playerB = mock(EnhancedMediaPlayer.class);
 
@@ -179,8 +156,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testStartOrStopPlayList6() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
 
 		this.serviceManagerFragment.getPlayList().add(playerA);
@@ -203,8 +178,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testOnEvent() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		MediaPlayerData dataA = mock(MediaPlayerData.class);
 
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
@@ -226,8 +199,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testOnEvent1() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		MediaPlayerData dataB = mock(MediaPlayerData.class);
 
 		EnhancedMediaPlayer playerA = mock(EnhancedMediaPlayer.class);
@@ -249,8 +220,6 @@ public class PlaylistAdapterTest extends AbstractBaseActivityTest
 	@Test
 	public void testOnEvent2() throws Exception
 	{
-		when(adapter.getValues()).thenReturn(this.serviceManagerFragment.getPlayList());
-
 		MediaPlayerData data = mock(MediaPlayerData.class);
 
 		EnhancedMediaPlayer player = mock(EnhancedMediaPlayer.class);
