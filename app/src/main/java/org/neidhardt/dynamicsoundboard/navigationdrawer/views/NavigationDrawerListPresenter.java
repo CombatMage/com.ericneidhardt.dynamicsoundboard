@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.views;
 
 import android.util.SparseArray;
 import android.view.Menu;
@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeEvent;
 import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
 
 /**
- * Created by eric.neidhardt on 26.05.2015.
+ * File created by eric.neidhardt on 26.05.2015.
  */
 public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerList>
 		extends

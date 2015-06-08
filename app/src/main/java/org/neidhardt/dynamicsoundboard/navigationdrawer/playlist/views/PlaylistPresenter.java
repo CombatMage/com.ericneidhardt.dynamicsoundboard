@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 import android.util.SparseArray;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 
 import java.util.ArrayList;

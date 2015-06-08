@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerList;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 /**

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.views;
 
 /**
  *
