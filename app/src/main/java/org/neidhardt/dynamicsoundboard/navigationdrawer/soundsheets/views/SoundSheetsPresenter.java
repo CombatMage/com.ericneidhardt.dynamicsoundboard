@@ -66,7 +66,7 @@ public class SoundSheetsPresenter
 		if (this.getView() == null)
 			throw new NullPointerException(TAG + ".onItemClick failed, supplied view is null");
 
-		if (super.isInSelectionMode)
+		if (this.isInSelectionMode())
 			super.onItemSelected(view, position);
 		else
 		{

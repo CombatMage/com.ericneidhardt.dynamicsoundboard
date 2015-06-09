@@ -18,10 +18,11 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 {
 	private static final String TAG = NavigationDrawerListPresenter.class.getName();
 
-	protected boolean isInSelectionMode;
+	private boolean isInSelectionMode;
 
 	private SparseArray<View> selectedItems;
 
+	@Deprecated
 	protected void onItemSelected(View view, int indexOfSelectedItem)
 	{
 		if (view.isSelected())
@@ -31,6 +32,11 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 
 		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.INVALIDATE));
 		view.setSelected(!view.isSelected());
+	}
+
+	protected void onItemSelectedForDeletion(int position)
+	{
+		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.INVALIDATE));
 	}
 
 	public void prepareItemDeletion()
@@ -91,4 +97,13 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 
 	public abstract void onDeleteSelected(SparseArray<View> selectedItems);
 
+	public boolean isInSelectionMode()
+	{
+		return isInSelectionMode;
+	}
+
+	public void setIsInSelectionMode(boolean isInSelectionMode)
+	{
+		this.isInSelectionMode = isInSelectionMode;
+	}
 }

@@ -10,12 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 /**
- * Created by eric.neidhardt on 08.03.2015.
+ * File created by eric.neidhardt on 08.03.2015.
  */
 public class SoundLayoutsList extends NavigationDrawerList implements SoundLayoutsListAdapter.OnItemClickListener
 {
@@ -45,10 +46,10 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 
 	private void init(Context context)
 	{
-		this.presenter = new SoundLayoutsPresenter();
-
 		this.adapter = new SoundLayoutsListAdapter();
 		this.adapter.setOnItemClickListener(this);
+
+		this.presenter = new SoundLayoutsPresenter(SoundLayoutsManager.getInstance(), this.adapter);
 
 		LayoutInflater.from(context).inflate(R.layout.view_sound_layout_list, this, true);
 

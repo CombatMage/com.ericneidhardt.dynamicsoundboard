@@ -14,11 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 26.05.2015.
+ * File created by eric.neidhardt on 26.05.2015.
  */
 public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLayoutsList> implements SoundLayoutsListAdapter.OnItemClickListener
 {
 	private static final String TAG = SoundLayoutsPresenter.class.getName();
+
+	private SoundLayoutsManager soundLayoutsManager;
+	private SoundLayoutsListAdapter adapter;
+
+	public SoundLayoutsPresenter(SoundLayoutsManager soundLayoutsManager, SoundLayoutsListAdapter adapter)
+	{
+		this.soundLayoutsManager = soundLayoutsManager;
+		this.adapter = adapter;
+	}
 
 	@Override
 	protected boolean isEventBusSubscriber()
@@ -40,7 +49,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 		}
 		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
 		manager.delete(soundLayoutsToRemove);
-		this.getView().getAdapter().notifyDataSetChanged();
+		this.adapter.notifyDataSetChanged();
 
 		EventBus.getDefault().post(new SoundLayoutRemovedEvent());
 	}
@@ -51,14 +60,19 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 		if (this.getView() == null)
 			throw new NullPointerException(TAG + ".onItemClick failed, supplied view is null");
 
-		if (super.isInSelectionMode)
-			super.onItemSelected(view, position);
+		if (this.isInSelectionMode())
+		{
+			super.onItemSelectedForDeletion(position);
+			data.setIsSelectedForDeletion(!data.isSelectedForDeletion());
+		}
 		else
 		{
-			this.getView().getAdapter().setSelectedItem(position);
+			this.soundLayoutsManager.setSelected(position);
+
 			this.getView().toggleVisibility();
 			EventBus.getDefault().post(new SoundLayoutSelectedEvent(data));
 		}
+		this.adapter.notifyItemChanged(position);
 	}
 
 	@Override

@@ -20,6 +20,7 @@ public class SoundLayout {
     private boolean isSelected;
 
     // KEEP FIELDS - put your custom fields here
+    private boolean isSelectedForDeletion = false;
     // KEEP FIELDS END
 
     public SoundLayout() {
@@ -77,6 +78,15 @@ public class SoundLayout {
     {
         return this.databaseId.equals(SoundLayoutsManager.DB_DEFAULT);
     }
+
+    public boolean isSelectedForDeletion() {
+        return isSelectedForDeletion;
+    }
+
+    public void setIsSelectedForDeletion(boolean isSelectedForDeletion) {
+        this.isSelectedForDeletion = isSelectedForDeletion;
+    }
+
     // KEEP METHODS END
 
 }

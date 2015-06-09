@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 /**
- * Created by eric.neidhardt on 14.04.2015.
+ * File created by eric.neidhardt on 14.04.2015.
  */
 public class FileUtilsTest extends AbstractBaseActivityTest
 {

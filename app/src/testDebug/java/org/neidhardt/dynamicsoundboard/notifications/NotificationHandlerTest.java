@@ -14,7 +14,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by eric.neidhardt on 07.05.2015.
+ * File created by eric.neidhardt on 07.05.2015.
  */
 public class NotificationHandlerTest extends BaseTest
 {

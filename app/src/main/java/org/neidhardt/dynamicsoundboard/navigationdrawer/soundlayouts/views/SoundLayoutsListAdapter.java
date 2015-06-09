@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.Sound
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 08.03.2015.
+ * File created by eric.neidhardt on 08.03.2015.
  */
 public class SoundLayoutsListAdapter
 		extends
@@ -48,16 +48,6 @@ public class SoundLayoutsListAdapter
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
 		this.onItemClickListener = onItemClickListener;
-	}
-
-	/**
-	 * Set the item with this position selected and all other items deselected
-	 * @param position index of item to be selected
-	 */
-	public void setSelectedItem(int position)
-	{
-		SoundLayoutsManager.getInstance().setSelected(position);
-		this.notifyDataSetChanged();
 	}
 
 	public List<SoundLayout> getValues()
@@ -92,7 +82,6 @@ public class SoundLayoutsListAdapter
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void onEvent(SoundLayoutRenamedEvent event)
 	{
 		SoundLayout renamedLayout = event.getRenamedSoundLayout();
@@ -100,7 +89,6 @@ public class SoundLayoutsListAdapter
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void onEvent(SoundLayoutAddedEvent event)
 	{
 		this.notifyDataSetChanged();
@@ -124,8 +112,16 @@ public class SoundLayoutsListAdapter
 		public void bindData(SoundLayout data)
 		{
 			this.label.setText(data.getLabel());
-			this.label.setSelected(data.getIsSelected());
-			this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
+			if (data.isSelectedForDeletion())
+			{
+				this.label.setSelected(true);
+				this.selectionIndicator.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				this.label.setSelected(data.getIsSelected());
+				this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
+			}
 		}
 
 		@Override

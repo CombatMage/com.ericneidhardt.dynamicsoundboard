@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by eric.neidhardt on 27.05.2015.
+ * File created by eric.neidhardt on 27.05.2015.
  */
 public class NavigationDrawerHeaderPresenterTest extends BaseTest
 {

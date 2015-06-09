@@ -27,7 +27,7 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 	@Override
 	public void onItemClick(View view, EnhancedMediaPlayer player, int position)
 	{
-		if (super.isInSelectionMode)
+		if (this.isInSelectionMode())
 			super.onItemSelected(view, position);
 		else
 			this.getView().getAdapter().startOrStopPlayList(player);
