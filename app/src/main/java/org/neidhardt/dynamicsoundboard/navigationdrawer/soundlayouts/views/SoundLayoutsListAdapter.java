@@ -112,16 +112,9 @@ public class SoundLayoutsListAdapter
 		public void bindData(SoundLayout data)
 		{
 			this.label.setText(data.getLabel());
-			if (data.isSelectedForDeletion())
-			{
-				this.label.setSelected(true);
-				this.selectionIndicator.setVisibility(View.VISIBLE);
-			}
-			else
-			{
-				this.label.setSelected(data.getIsSelected());
-				this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
-			}
+			this.label.setSelected(data.getIsSelected());
+			this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
+			this.itemView.setSelected(data.isSelectedForDeletion());
 		}
 
 		@Override

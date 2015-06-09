@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.misc.Util;
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 09.03.2015.
+ * File created by eric.neidhardt on 09.03.2015.
  */
 public class SoundLayoutsManager implements SoundLayoutModel
 {
@@ -19,10 +19,10 @@ public class SoundLayoutsManager implements SoundLayoutModel
 
 	private static SoundLayoutsManager instance;
 
-	private List<SoundLayout> soundLayouts;
-	private DaoSession daoSession;
+	List<SoundLayout> soundLayouts;
+	DaoSession daoSession;
 
-	private SoundLayoutsManager()
+	SoundLayoutsManager()
 	{
 		this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), DB_SOUND_LAYOUTS);
 		this.soundLayouts = this.getSoundLayouts();

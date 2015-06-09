@@ -1,12 +1,14 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 
 import android.view.View;
+import de.greenrobot.event.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 
 import static org.junit.Assert.*;
@@ -18,9 +20,10 @@ import static org.mockito.Mockito.*;
 public class SoundLayoutsPresenterTest extends BaseTest
 {
 	private SoundLayoutsPresenter presenter;
-	@Mock private SoundLayoutsList mockList;
+	@Mock private SoundLayoutsList mockView;
 	@Mock private SoundLayoutsListAdapter mockAdapter;
 	@Mock private SoundLayoutsManager mockManager;
+	@Mock private EventBus mockEventBus;
 
 	@Override
 	@Before
@@ -29,7 +32,8 @@ public class SoundLayoutsPresenterTest extends BaseTest
 		MockitoAnnotations.initMocks(this);
 
 		this.presenter = spy(new SoundLayoutsPresenter(this.mockManager, this.mockAdapter));
-		this.presenter.setView(this.mockList);
+		this.presenter.setView(this.mockView);
+		this.presenter.eventBus = this.mockEventBus;
 	}
 
 	@Test
@@ -56,6 +60,22 @@ public class SoundLayoutsPresenterTest extends BaseTest
 		this.presenter.onItemClick(view, data, position);
 
 		verify(data, times(1)).setIsSelectedForDeletion(true);
+		verify(this.mockAdapter, times(1)).notifyItemChanged(position);
+	}
+
+	@Test
+	public void testOnItemClickNotInSelectionMode() throws Exception
+	{
+		this.presenter.setIsInSelectionMode(false);
+		View view = mock(View.class);
+		int position = 2;
+		SoundLayout data = mock(SoundLayout.class);
+
+		this.presenter.onItemClick(view, data, position);
+
+		verify(this.mockManager, times(1)).setSelected(position);
+		verify(this.mockView, times(1)).toggleVisibility();
+		verify(this.mockEventBus, times(1)).post(any(SoundLayoutSelectedEvent.class));
 		verify(this.mockAdapter, times(1)).notifyItemChanged(position);
 	}
 }

@@ -23,10 +23,13 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 	private SoundLayoutsManager soundLayoutsManager;
 	private SoundLayoutsListAdapter adapter;
 
+	EventBus eventBus;
+
 	public SoundLayoutsPresenter(SoundLayoutsManager soundLayoutsManager, SoundLayoutsListAdapter adapter)
 	{
 		this.soundLayoutsManager = soundLayoutsManager;
 		this.adapter = adapter;
+		this.eventBus = EventBus.getDefault();
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 		manager.delete(soundLayoutsToRemove);
 		this.adapter.notifyDataSetChanged();
 
-		EventBus.getDefault().post(new SoundLayoutRemovedEvent());
+		this.eventBus.post(new SoundLayoutRemovedEvent());
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 			this.soundLayoutsManager.setSelected(position);
 
 			this.getView().toggleVisibility();
-			EventBus.getDefault().post(new SoundLayoutSelectedEvent(data));
+			this.eventBus.post(new SoundLayoutSelectedEvent(data));
 		}
 		this.adapter.notifyItemChanged(position);
 	}
@@ -78,7 +81,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 	@Override
 	public void onItemSettingsClicked(SoundLayout data)
 	{
-		this.getEventBus().post(new OpenSoundLayoutSettingsEvent(data));
+		this.eventBus.post(new OpenSoundLayoutSettingsEvent(data));
 	}
 
 	public interface OnSoundLayoutRemovedEventListener
