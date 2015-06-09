@@ -198,7 +198,6 @@ public class NavigationDrawerFragment
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void onEvent(OpenSoundLayoutsEvent event)
 	{
 		this.soundLayoutList.toggleVisibility();
