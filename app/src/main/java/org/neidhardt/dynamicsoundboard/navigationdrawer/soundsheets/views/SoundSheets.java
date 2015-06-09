@@ -5,7 +5,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import de.greenrobot.event.EventBus;
@@ -51,10 +50,11 @@ public class SoundSheets
 	private void init(Context context)
 	{
 		this.adapter = new SoundSheetsAdapter();
+		this.presenter = new SoundSheetsPresenter();
+
 		this.adapter.setOnItemClickListener(this);
 		this.adapter.setPresenter(this.presenter);
-
-		this.presenter = new SoundSheetsPresenter(this.adapter);
+		this.presenter.setAdapter(this.adapter);
 
 		LayoutInflater.from(context).inflate(R.layout.view_sound_sheets, this, true);
 
@@ -109,9 +109,9 @@ public class SoundSheets
 	}
 
 	@Override
-	protected void onDeleteSelected(SparseArray<View> selectedItems)
+	protected void onDeleteSelected()
 	{
-		this.presenter.onDeleteSelected(selectedItems);
+		this.presenter.onDeleteSelected();
 	}
 
 	@Override

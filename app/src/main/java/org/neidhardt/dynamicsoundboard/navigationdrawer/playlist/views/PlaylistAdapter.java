@@ -123,7 +123,7 @@ public class PlaylistAdapter
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		holder.bindData(position);
+		holder.bindData(this.getValues().get(position));
 	}
 
 	@Override
@@ -197,6 +197,7 @@ public class PlaylistAdapter
 				View.OnClickListener,
 				SoundProgressViewHolder
 	{
+		private View itemView;
 		private TextView label;
 		private ImageView selectionIndicator;
 		private SeekBar timePosition;
@@ -204,22 +205,20 @@ public class PlaylistAdapter
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
+			this.itemView = itemView;
 			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
 			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_progress);
 			itemView.setOnClickListener(this);
 		}
 
-		protected void bindData(int positionInDataSet)
+		protected void bindData(EnhancedMediaPlayer player)
 		{
-			EnhancedMediaPlayer player = getItem(positionInDataSet);
-			if (player == null)
-				return;
-
+			this.timePosition.setMax(player.getDuration());
 			this.label.setText(player.getMediaPlayerData().getLabel());
 			this.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+			this.itemView.setSelected(player.getMediaPlayerData().isSelectedForDeletion());
 
-			this.timePosition.setMax(player.getDuration());
 			this.onProgressUpdate();
 		}
 

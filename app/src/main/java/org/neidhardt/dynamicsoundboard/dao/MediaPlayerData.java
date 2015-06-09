@@ -25,6 +25,8 @@ public class MediaPlayerData {
 
     // KEEP FIELDS - put your custom fields here
     private boolean wasAltered = false;
+
+    private boolean isSelectedForDeletion = false;
     // KEEP FIELDS END
 
     public MediaPlayerData() {
@@ -137,6 +139,14 @@ public class MediaPlayerData {
 
     public void setItemWasUpdated() {
         this.wasAltered = false;
+    }
+
+    public boolean isSelectedForDeletion() {
+        return isSelectedForDeletion;
+    }
+
+    public void setIsSelectedForDeletion(boolean isSelectedForDeletion) {
+        this.isSelectedForDeletion = isSelectedForDeletion;
     }
 
     @Override

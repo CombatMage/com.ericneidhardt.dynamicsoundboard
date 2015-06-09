@@ -22,7 +22,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationD
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsList;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout;
@@ -52,7 +52,7 @@ public class NavigationDrawerFragment
 	private TabContentAdapter tabContentAdapter;
 
 	private ViewGroup listContainer;
-	private SoundLayoutsList soundLayoutList;
+	private SoundLayouts soundLayoutList;
 	private Playlist playlist;
 	private SoundSheets soundSheets;
 
@@ -99,7 +99,7 @@ public class NavigationDrawerFragment
 		this.tabBar.setViewPager(tabContent);
 		this.tabBar.setCustomTabColorizer(new NavigationDrawerTabColorizer());
 
-		this.soundLayoutList = (SoundLayoutsList) fragmentView.findViewById(R.id.layout_select_sound_layout);
+		this.soundLayoutList = (SoundLayouts) fragmentView.findViewById(R.id.layout_select_sound_layout);
 		this.playlist = (Playlist) fragmentView.findViewById(R.id.playlist);
 		this.soundSheets = (SoundSheets) fragmentView.findViewById(R.id.sound_sheets);
 

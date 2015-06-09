@@ -20,8 +20,8 @@ import static org.mockito.Mockito.*;
 public class SoundLayoutsPresenterTest extends BaseTest
 {
 	private SoundLayoutsPresenter presenter;
-	@Mock private SoundLayoutsList mockView;
-	@Mock private SoundLayoutsListAdapter mockAdapter;
+	@Mock private SoundLayouts mockView;
+	@Mock private SoundLayoutsAdapter mockAdapter;
 	@Mock private SoundLayoutsManager mockManager;
 	@Mock private EventBus mockEventBus;
 

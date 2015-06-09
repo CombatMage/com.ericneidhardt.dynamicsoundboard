@@ -28,11 +28,6 @@ public class SoundSheetsPresenter
 	private SoundDataModel soundDataModel;
 	private SoundSheetsAdapter adapter;
 
-	public SoundSheetsPresenter(SoundSheetsAdapter adapter)
-	{
-		this.adapter = adapter;
-	}
-
 	@Override
 	protected boolean isEventBusSubscriber()
 	{
@@ -40,16 +35,15 @@ public class SoundSheetsPresenter
 	}
 
 	@Override
-	public void onDeleteSelected(SparseArray<View> selectedItems)
+	public void onDeleteSelected()
 	{
-		if (this.getView() == null)
-			throw new NullPointerException(TAG + ".onDeleteSelected failed, supplied view is null");
+		List<SoundSheet> soundSheetsToRemove = new ArrayList<>();
+		List<SoundSheet> existingSoundSheets = this.adapter.getValues();
 
-		List<SoundSheet> soundSheetsToRemove = new ArrayList<>(selectedItems.size());
-		for(int i = 0; i < selectedItems.size(); i++)
+		for(SoundSheet soundSheet : existingSoundSheets)
 		{
-			int index = selectedItems.keyAt(i);
-			soundSheetsToRemove.add(adapter.getValues().get(index));
+			if (soundSheet.isSelectedForDeletion())
+				soundSheetsToRemove.add(soundSheet);
 		}
 
 		for (SoundSheet soundSheet: soundSheetsToRemove)
@@ -73,16 +67,15 @@ public class SoundSheetsPresenter
 
 		if (this.isInSelectionMode())
 		{
-			super.onItemSelectedForDeletion(position);
+			super.onItemSelectedForDeletion();
 			data.setIsSelectedForDeletion(!data.isSelectedForDeletion());
-
-			this.adapter.notifyItemChanged(position);
 		}
 		else
 		{
 			this.soundSheetsDataAccess.setSelectedItem(position);
 			this.getEventBus().post(new OpenSoundSheetEvent(data));
 		}
+		this.adapter.notifyItemChanged(position);
 	}
 
 	void setSoundDataModel(SoundDataModel soundDataModel)
@@ -100,11 +93,18 @@ public class SoundSheetsPresenter
 		this.soundSheetsDataStorage = soundSheetsDataStorage;
 	}
 
-	SoundSheetsDataAccess getSoundSheetsDataAccess() {
+	SoundSheetsDataAccess getSoundSheetsDataAccess()
+	{
 		return soundSheetsDataAccess;
 	}
 
-	SoundDataModel getSoundDataModel() {
+	SoundDataModel getSoundDataModel()
+	{
 		return soundDataModel;
+	}
+
+	public void setAdapter(SoundSheetsAdapter adapter)
+	{
+		this.adapter = adapter;
 	}
 }

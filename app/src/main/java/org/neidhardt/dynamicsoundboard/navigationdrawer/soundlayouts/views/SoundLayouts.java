@@ -18,27 +18,27 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDeco
 /**
  * File created by eric.neidhardt on 08.03.2015.
  */
-public class SoundLayoutsList extends NavigationDrawerList implements SoundLayoutsListAdapter.OnItemClickListener
+public class SoundLayouts extends NavigationDrawerList implements SoundLayoutsAdapter.OnItemClickListener
 {
-	private SoundLayoutsListAdapter adapter;
+	private SoundLayoutsAdapter adapter;
 	private SoundLayoutsPresenter presenter;
 
 	@SuppressWarnings("unused")
-	public SoundLayoutsList(Context context)
+	public SoundLayouts(Context context)
 	{
 		super(context);
 		this.init(context);
 	}
 
 	@SuppressWarnings("unused")
-	public SoundLayoutsList(Context context, AttributeSet attrs)
+	public SoundLayouts(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		this.init(context);
 	}
 
 	@SuppressWarnings("unused")
-	public SoundLayoutsList(Context context, AttributeSet attrs, int defStyle)
+	public SoundLayouts(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
 		this.init(context);
@@ -46,7 +46,7 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 
 	private void init(Context context)
 	{
-		this.adapter = new SoundLayoutsListAdapter();
+		this.adapter = new SoundLayoutsAdapter();
 		this.adapter.setOnItemClickListener(this);
 
 		this.presenter = new SoundLayoutsPresenter(SoundLayoutsManager.getInstance(), this.adapter);
@@ -87,9 +87,9 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 	}
 
 	@Override
-	protected void onDeleteSelected(SparseArray<View> selectedItems)
+	protected void onDeleteSelected()
 	{
-		this.presenter.onDeleteSelected(selectedItems);
+		this.presenter.onDeleteSelected();
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class SoundLayoutsList extends NavigationDrawerList implements SoundLayou
 		this.setVisibility(INVISIBLE);
 	}
 
-	public SoundLayoutsListAdapter getAdapter()
+	public SoundLayoutsAdapter getAdapter()
 	{
 		return this.adapter;
 	}

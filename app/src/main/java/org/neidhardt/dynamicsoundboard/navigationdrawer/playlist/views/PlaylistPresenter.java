@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 
 import android.util.SparseArray;
 import android.view.View;
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
@@ -16,6 +17,7 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 {
 	private static final String TAG = PlaylistPresenter.class.getName();
 
+	private PlaylistAdapter adapter;
 	private SoundDataModel model;
 
 	@Override
@@ -28,22 +30,25 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 	public void onItemClick(View view, EnhancedMediaPlayer player, int position)
 	{
 		if (this.isInSelectionMode())
-			super.onItemSelected(view, position);
+		{
+			super.onItemSelectedForDeletion();
+			player.getMediaPlayerData().setIsSelectedForDeletion(true);
+			this.adapter.notifyItemChanged(position);
+		}
 		else
-			this.getView().getAdapter().startOrStopPlayList(player);
+			this.adapter.startOrStopPlayList(player);
 	}
 
 	@Override
-	public void onDeleteSelected(SparseArray<View> selectedItems)
+	public void onDeleteSelected()
 	{
-		if (this.getView() == null)
-			throw new NullPointerException(TAG + ".onPrepareActionMode failed, supplied view is null ");
+		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>();
+		List<EnhancedMediaPlayer> existingSoundSheets = this.adapter.getValues();
 
-		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>(selectedItems.size());
-		for(int i = 0; i < selectedItems.size(); i++)
+		for(EnhancedMediaPlayer player : existingSoundSheets)
 		{
-			int index = selectedItems.keyAt(i);
-			playersToRemove.add(this.getView().getAdapter().getValues().get(index));
+			if (player.getMediaPlayerData().isSelectedForDeletion())
+				playersToRemove.add(player);
 		}
 
 		this.model.removeSoundsFromPlaylist(playersToRemove);
@@ -58,5 +63,10 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 	void setSoundDataModel(SoundDataModel model)
 	{
 		this.model = model;
+	}
+
+	public void setAdapter(PlaylistAdapter adapter)
+	{
+		this.adapter = adapter;
 	}
 }

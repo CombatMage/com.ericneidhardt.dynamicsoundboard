@@ -9,19 +9,22 @@ import android.widget.FrameLayout;
 
 public abstract class NavigationDrawerList extends FrameLayout
 {
-	public NavigationDrawerList(Context context) {
+	public NavigationDrawerList(Context context)
+	{
 		super(context);
 	}
 
-	public NavigationDrawerList(Context context, AttributeSet attrs) {
+	public NavigationDrawerList(Context context, AttributeSet attrs)
+	{
 		super(context, attrs);
 	}
 
-	public NavigationDrawerList(Context context, AttributeSet attrs, int defStyleAttr) {
+	public NavigationDrawerList(Context context, AttributeSet attrs, int defStyleAttr)
+	{
 		super(context, attrs, defStyleAttr);
 	}
 
-	protected abstract void onDeleteSelected(SparseArray<View> selectedItems);
+	protected abstract void onDeleteSelected();
 
 	protected abstract int getItemCount();
 

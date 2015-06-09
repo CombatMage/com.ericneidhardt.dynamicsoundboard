@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.events;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 
 /**
- * Created by eric.neidhardt on 28.05.2015.
+ * File created by eric.neidhardt on 28.05.2015.
  */
 public class OpenSoundSheetEvent
 {

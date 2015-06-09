@@ -16,16 +16,16 @@ import java.util.List;
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
-public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLayoutsList> implements SoundLayoutsListAdapter.OnItemClickListener
+public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLayouts> implements SoundLayoutsAdapter.OnItemClickListener
 {
 	private static final String TAG = SoundLayoutsPresenter.class.getName();
 
 	private SoundLayoutsManager soundLayoutsManager;
-	private SoundLayoutsListAdapter adapter;
+	private SoundLayoutsAdapter adapter;
 
 	EventBus eventBus;
 
-	public SoundLayoutsPresenter(SoundLayoutsManager soundLayoutsManager, SoundLayoutsListAdapter adapter)
+	public SoundLayoutsPresenter(SoundLayoutsManager soundLayoutsManager, SoundLayoutsAdapter adapter)
 	{
 		this.soundLayoutsManager = soundLayoutsManager;
 		this.adapter = adapter;
@@ -39,16 +39,15 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 	}
 
 	@Override
-	public void onDeleteSelected(SparseArray<View> selectedItems)
+	public void onDeleteSelected()
 	{
-		if (this.getView() == null)
-			throw new NullPointerException(TAG + ".onPrepareActionMode failed, supplied view is null");
+		List<SoundLayout> soundLayoutsToRemove = new ArrayList<>();
+		List<SoundLayout> existingSoundLayouts = this.adapter.getValues();
 
-		List<SoundLayout> soundLayoutsToRemove = new ArrayList<>(selectedItems.size());
-		for(int i = 0; i < selectedItems.size(); i++)
+		for (SoundLayout layout : existingSoundLayouts)
 		{
-			int index = selectedItems.keyAt(i);
-			soundLayoutsToRemove.add(this.getView().getAdapter().getValues().get(index));
+			if (layout.isSelectedForDeletion())
+				soundLayoutsToRemove.add(layout);
 		}
 		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
 		manager.delete(soundLayoutsToRemove);
@@ -65,7 +64,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 
 		if (this.isInSelectionMode())
 		{
-			super.onItemSelectedForDeletion(position);
+			super.onItemSelectedForDeletion();
 			data.setIsSelectedForDeletion(!data.isSelectedForDeletion());
 		}
 		else

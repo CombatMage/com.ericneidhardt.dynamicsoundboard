@@ -134,6 +134,7 @@ public class SoundSheetsAdapter
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 	{
+		private View itemView;
 		private TextView label;
 		private ImageView selectionIndicator;
 		private TextView soundCount;
@@ -142,6 +143,7 @@ public class SoundSheetsAdapter
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
+			this.itemView = itemView;
 			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
 			this.soundCount = (TextView)itemView.findViewById(R.id.tv_sound_count);
@@ -152,11 +154,10 @@ public class SoundSheetsAdapter
 
 		public void bindData(SoundSheet data, int soundCount)
 		{
-			// TODO update similar to soundLayoutAdapter
 			this.label.setText(data.getLabel());
 			this.label.setSelected(data.getIsSelected());
 			this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
-
+			this.itemView.setSelected(data.isSelectedForDeletion());
 			this.setSoundCount(soundCount);
 		}
 

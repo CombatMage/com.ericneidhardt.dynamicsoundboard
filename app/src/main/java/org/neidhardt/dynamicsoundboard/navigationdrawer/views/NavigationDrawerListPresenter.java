@@ -20,21 +20,13 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 
 	private boolean isInSelectionMode;
 
-	private SparseArray<View> selectedItems;
-
-	@Deprecated
-	protected void onItemSelected(View view, int indexOfSelectedItem)
+	public void deleteSelected()
 	{
-		if (view.isSelected())
-			this.selectedItems.remove(indexOfSelectedItem);
-		else
-			this.selectedItems.put(indexOfSelectedItem, view);
-
-		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.INVALIDATE));
-		view.setSelected(!view.isSelected());
+		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOP));
+		this.getView().onDeleteSelected();
 	}
 
-	protected void onItemSelectedForDeletion(int position)
+	protected void onItemSelectedForDeletion()
 	{
 		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.INVALIDATE));
 	}
@@ -44,12 +36,6 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.START));
 	}
 
-	public void deleteSelected()
-	{
-		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOP));
-		this.getView().onDeleteSelected(selectedItems);
-	}
-
 	@Override
 	public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu)
 	{
@@ -57,7 +43,6 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 			throw new NullPointerException(TAG + ".onCreateActionMode failed, supplied view is null ");
 
 		this.isInSelectionMode = true;
-		this.selectedItems = new SparseArray<>(this.getView().getItemCount());
 		return true;
 	}
 
@@ -95,7 +80,7 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOPPED));
 	}
 
-	public abstract void onDeleteSelected(SparseArray<View> selectedItems);
+	public abstract void onDeleteSelected();
 
 	public boolean isInSelectionMode()
 	{

@@ -103,9 +103,9 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	}
 
 	@Override
-	protected void onDeleteSelected(SparseArray<View> selectedItems)
+	protected void onDeleteSelected()
 	{
-		this.presenter.onDeleteSelected(selectedItems);
+		this.presenter.onDeleteSelected();
 	}
 
 	@Override

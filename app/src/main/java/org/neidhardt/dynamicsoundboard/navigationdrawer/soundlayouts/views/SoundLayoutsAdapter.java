@@ -18,9 +18,9 @@ import java.util.List;
 /**
  * File created by eric.neidhardt on 08.03.2015.
  */
-public class SoundLayoutsListAdapter
+public class SoundLayoutsAdapter
 		extends
-			RecyclerView.Adapter<SoundLayoutsListAdapter.ViewHolder>
+			RecyclerView.Adapter<SoundLayoutsAdapter.ViewHolder>
 		implements
 			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
 			AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener
@@ -28,7 +28,7 @@ public class SoundLayoutsListAdapter
 	private OnItemClickListener onItemClickListener;
 	private EventBus bus;
 
-	public SoundLayoutsListAdapter()
+	public SoundLayoutsAdapter()
 	{
 		this.bus = EventBus.getDefault();
 	}
@@ -96,12 +96,14 @@ public class SoundLayoutsListAdapter
 
 	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 	{
+		private View itemView;
 		private TextView label;
 		private ImageView selectionIndicator;
 
 		public ViewHolder(View itemView)
 		{
 			super(itemView);
+			this.itemView = itemView;
 			this.label = (TextView)itemView.findViewById(R.id.tv_label);
 			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
 
