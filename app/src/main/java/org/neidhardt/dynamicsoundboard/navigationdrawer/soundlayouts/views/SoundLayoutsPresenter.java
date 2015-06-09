@@ -75,7 +75,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 			this.getView().toggleVisibility();
 			this.eventBus.post(new SoundLayoutSelectedEvent(data));
 		}
-		this.adapter.notifyItemChanged(position);
+		this.adapter.notifyDataSetChanged();
 	}
 
 	@Override

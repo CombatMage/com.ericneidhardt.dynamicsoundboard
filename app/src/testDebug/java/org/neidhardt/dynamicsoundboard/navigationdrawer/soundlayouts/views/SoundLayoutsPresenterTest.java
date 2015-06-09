@@ -60,7 +60,7 @@ public class SoundLayoutsPresenterTest extends BaseTest
 		this.presenter.onItemClick(view, data, position);
 
 		verify(data, times(1)).setIsSelectedForDeletion(true);
-		verify(this.mockAdapter, times(1)).notifyItemChanged(position);
+		verify(this.mockAdapter, times(1)).notifyDataSetChanged();
 	}
 
 	@Test
@@ -76,6 +76,6 @@ public class SoundLayoutsPresenterTest extends BaseTest
 		verify(this.mockManager, times(1)).setSelected(position);
 		verify(this.mockView, times(1)).toggleVisibility();
 		verify(this.mockEventBus, times(1)).post(any(SoundLayoutSelectedEvent.class));
-		verify(this.mockAdapter, times(1)).notifyItemChanged(position);
+		verify(this.mockAdapter, times(1)).notifyDataSetChanged();
 	}
 }
