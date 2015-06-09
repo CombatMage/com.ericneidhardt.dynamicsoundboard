@@ -17,6 +17,7 @@ public class SoundSheet {
     private boolean isSelected;
 
     // KEEP FIELDS - put your custom fields here
+    private boolean isSelectedForDeletion = false;
     // KEEP FIELDS END
 
     public SoundSheet() {
@@ -78,6 +79,14 @@ public class SoundSheet {
 
         return fragmentTag.equals(that.fragmentTag);
 
+    }
+
+    public boolean isSelectedForDeletion() {
+        return isSelectedForDeletion;
+    }
+
+    public void setIsSelectedForDeletion(boolean isSelectedForDeletion) {
+        this.isSelectedForDeletion = isSelectedForDeletion;
     }
 
     @Override

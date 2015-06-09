@@ -152,6 +152,7 @@ public class SoundSheetsAdapter
 
 		public void bindData(SoundSheet data, int soundCount)
 		{
+			// TODO update similar to soundLayoutAdapter
 			this.label.setText(data.getLabel());
 			this.label.setSelected(data.getIsSelected());
 			this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);

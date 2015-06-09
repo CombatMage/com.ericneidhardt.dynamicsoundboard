@@ -22,9 +22,16 @@ public class SoundSheetsPresenter
 			SoundSheetsAdapter.OnItemClickListener
 {
 	private static final String TAG = SoundSheetsPresenter.class.getName();
+
 	private SoundSheetsDataAccess soundSheetsDataAccess;
 	private SoundSheetsDataStorage soundSheetsDataStorage;
 	private SoundDataModel soundDataModel;
+	private SoundSheetsAdapter adapter;
+
+	public SoundSheetsPresenter(SoundSheetsAdapter adapter)
+	{
+		this.adapter = adapter;
+	}
 
 	@Override
 	protected boolean isEventBusSubscriber()
@@ -37,8 +44,6 @@ public class SoundSheetsPresenter
 	{
 		if (this.getView() == null)
 			throw new NullPointerException(TAG + ".onDeleteSelected failed, supplied view is null");
-
-		SoundSheetsAdapter adapter = this.getView().getAdapter();
 
 		List<SoundSheet> soundSheetsToRemove = new ArrayList<>(selectedItems.size());
 		for(int i = 0; i < selectedItems.size(); i++)
@@ -57,7 +62,7 @@ public class SoundSheetsPresenter
 					this.soundSheetsDataAccess.setSelectedItem(0);
 			}
 		}
-		adapter.notifyDataSetChanged();
+		this.adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -67,7 +72,12 @@ public class SoundSheetsPresenter
 			throw new NullPointerException(TAG + ".onItemClick failed, supplied view is null");
 
 		if (this.isInSelectionMode())
-			super.onItemSelected(view, position);
+		{
+			super.onItemSelectedForDeletion(position);
+			data.setIsSelectedForDeletion(!data.isSelectedForDeletion());
+
+			this.adapter.notifyItemChanged(position);
+		}
 		else
 		{
 			this.soundSheetsDataAccess.setSelectedItem(position);
