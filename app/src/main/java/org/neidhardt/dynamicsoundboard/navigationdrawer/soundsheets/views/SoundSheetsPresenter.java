@@ -37,15 +37,7 @@ public class SoundSheetsPresenter
 	@Override
 	public void onDeleteSelected()
 	{
-		List<SoundSheet> soundSheetsToRemove = new ArrayList<>();
-		List<SoundSheet> existingSoundSheets = this.adapter.getValues();
-
-		for(SoundSheet soundSheet : existingSoundSheets)
-		{
-			if (soundSheet.isSelectedForDeletion())
-				soundSheetsToRemove.add(soundSheet);
-		}
-
+		List<SoundSheet> soundSheetsToRemove = this.getSoundSheetsSelectedForDeletion();
 		for (SoundSheet soundSheet: soundSheetsToRemove)
 		{
 			this.soundSheetsDataStorage.removeSoundSheet(soundSheet);
@@ -76,6 +68,35 @@ public class SoundSheetsPresenter
 			this.getEventBus().post(new OpenSoundSheetEvent(data));
 		}
 		this.adapter.notifyItemChanged(position);
+	}
+
+	@Override
+	protected int getNumberOfItemsSelectedForDeletion()
+	{
+		return this.getSoundSheetsSelectedForDeletion().size();
+	}
+
+	@Override
+	protected void deselectAllItemsSelectedForDeletion()
+	{
+		List<SoundSheet> selectedSoundSheets = this.getSoundSheetsSelectedForDeletion();
+		for (SoundSheet soundSheet : selectedSoundSheets)
+		{
+			soundSheet.setIsSelectedForDeletion(false);
+			// TODO adapter.notify item changed
+		}
+	}
+
+	private List<SoundSheet> getSoundSheetsSelectedForDeletion()
+	{
+		List<SoundSheet> selectedSoundSheets = new ArrayList<>();
+		List<SoundSheet> existingSoundSheets = this.adapter.getValues();
+		for(SoundSheet soundSheet : existingSoundSheets)
+		{
+			if (soundSheet.isSelectedForDeletion())
+				selectedSoundSheets.add(soundSheet);
+		}
+		return selectedSoundSheets;
 	}
 
 	void setSoundDataModel(SoundDataModel soundDataModel)

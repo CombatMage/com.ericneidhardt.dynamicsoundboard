@@ -1,9 +1,9 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 
-import android.util.SparseArray;
 import android.view.View;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
@@ -41,14 +41,8 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 	@Override
 	public void onDeleteSelected()
 	{
-		List<SoundLayout> soundLayoutsToRemove = new ArrayList<>();
-		List<SoundLayout> existingSoundLayouts = this.adapter.getValues();
+		List<SoundLayout> soundLayoutsToRemove = this.getSoundLayoutsSelectedForDeletion();
 
-		for (SoundLayout layout : existingSoundLayouts)
-		{
-			if (layout.isSelectedForDeletion())
-				soundLayoutsToRemove.add(layout);
-		}
 		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
 		manager.delete(soundLayoutsToRemove);
 		this.adapter.notifyDataSetChanged();
@@ -75,6 +69,35 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 			this.eventBus.post(new SoundLayoutSelectedEvent(data));
 		}
 		this.adapter.notifyDataSetChanged();
+	}
+
+	@Override
+	protected int getNumberOfItemsSelectedForDeletion()
+	{
+		return this.getSoundLayoutsSelectedForDeletion().size();
+	}
+
+	@Override
+	protected void deselectAllItemsSelectedForDeletion()
+	{
+		List<SoundLayout> selectedSoundLayouts = this.getSoundLayoutsSelectedForDeletion();
+		for (SoundLayout soundLayout : selectedSoundLayouts)
+		{
+			soundLayout.setIsSelectedForDeletion(false);
+			// TODO adapter.notify item changed
+		}
+	}
+
+	private List<SoundLayout> getSoundLayoutsSelectedForDeletion()
+	{
+		List<SoundLayout> selectedSoundLayouts = new ArrayList<>();
+		List<SoundLayout> existingSoundLayouts = this.adapter.getValues();
+		for(SoundLayout soundLayout : existingSoundLayouts)
+		{
+			if (soundLayout.isSelectedForDeletion())
+				selectedSoundLayouts.add(soundLayout);
+		}
+		return selectedSoundLayouts;
 	}
 
 	@Override

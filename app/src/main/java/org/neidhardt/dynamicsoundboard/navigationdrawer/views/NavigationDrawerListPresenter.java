@@ -1,9 +1,7 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.views;
 
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent;
 import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
 
@@ -54,7 +52,7 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 
 		actionMode.setTitle(this.getView().getActionModeTitle());
 
-		int count = this.selectedItems.size();
+		int count = this.getNumberOfItemsSelectedForDeletion();
 		String countString = Integer.toString(count);
 		if (countString.length() == 1)
 			countString = " " + countString;
@@ -74,11 +72,14 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 	public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode)
 	{
 		this.isInSelectionMode = false;
-		for(int i = 0; i < this.selectedItems.size(); i++)
-			this.selectedItems.valueAt(i).setSelected(false);
+		this.deselectAllItemsSelectedForDeletion();
 
 		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOPPED));
 	}
+
+	protected abstract int getNumberOfItemsSelectedForDeletion();
+
+	protected abstract void deselectAllItemsSelectedForDeletion();
 
 	public abstract void onDeleteSelected();
 

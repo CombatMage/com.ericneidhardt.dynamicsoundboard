@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 
 import android.util.SparseArray;
 import android.view.View;
+import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
@@ -42,17 +43,39 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 	@Override
 	public void onDeleteSelected()
 	{
-		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>();
-		List<EnhancedMediaPlayer> existingSoundSheets = this.adapter.getValues();
-
-		for(EnhancedMediaPlayer player : existingSoundSheets)
-		{
-			if (player.getMediaPlayerData().isSelectedForDeletion())
-				playersToRemove.add(player);
-		}
+		List<EnhancedMediaPlayer> playersToRemove = this.getPlayersSelectedForDeletion();
 
 		this.model.removeSoundsFromPlaylist(playersToRemove);
 		this.getView().getAdapter().notifyDataSetChanged();
+	}
+
+	@Override
+	protected int getNumberOfItemsSelectedForDeletion()
+	{
+		return this.getPlayersSelectedForDeletion().size();
+	}
+
+	@Override
+	protected void deselectAllItemsSelectedForDeletion()
+	{
+		List<EnhancedMediaPlayer> selectedPlayers = this.getPlayersSelectedForDeletion();
+		for (EnhancedMediaPlayer player : selectedPlayers)
+		{
+			player.getMediaPlayerData().setIsSelectedForDeletion(false);
+			// TODO adapter.notify item changed
+		}
+	}
+
+	private List<EnhancedMediaPlayer> getPlayersSelectedForDeletion()
+	{
+		List<EnhancedMediaPlayer> selectedPlayers = new ArrayList<>();
+		List<EnhancedMediaPlayer> existingPlayers = this.adapter.getValues();
+		for(EnhancedMediaPlayer players : existingPlayers)
+		{
+			if (players.getMediaPlayerData().isSelectedForDeletion())
+				selectedPlayers.add(players);
+		}
+		return selectedPlayers;
 	}
 
 	SoundDataModel getSoundDataModel()
