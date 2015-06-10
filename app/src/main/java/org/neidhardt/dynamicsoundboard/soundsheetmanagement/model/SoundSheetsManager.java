@@ -79,7 +79,7 @@ public class SoundSheetsManager
 	@Override
 	public List<SoundSheet> getSoundSheets()
 	{
-		return Collections.unmodifiableList(this.soundSheets);
+		return this.soundSheets;
 	}
 
 	@Override

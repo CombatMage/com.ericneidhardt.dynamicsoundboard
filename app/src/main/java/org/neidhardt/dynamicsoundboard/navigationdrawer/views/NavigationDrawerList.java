@@ -24,8 +24,6 @@ public abstract class NavigationDrawerList extends FrameLayout
 		super(context, attrs, defStyleAttr);
 	}
 
-	protected abstract void onDeleteSelected();
-
 	protected abstract int getItemCount();
 
 	protected abstract int getActionModeTitle();

@@ -18,12 +18,6 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 
 	private boolean isInSelectionMode;
 
-	public void deleteSelected()
-	{
-		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOP));
-		this.getView().onDeleteSelected();
-	}
-
 	protected void onItemSelectedForDeletion()
 	{
 		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.INVALIDATE));
@@ -32,6 +26,11 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 	public void prepareItemDeletion()
 	{
 		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.START));
+	}
+
+	protected void onSelectedItemsDeleted()
+	{
+		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOP));
 	}
 
 	@Override
@@ -77,11 +76,11 @@ public abstract class NavigationDrawerListPresenter<T extends NavigationDrawerLi
 		this.getEventBus().post(new ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOPPED));
 	}
 
+	public abstract void deleteSelectedItems();
+
 	protected abstract int getNumberOfItemsSelectedForDeletion();
 
 	protected abstract void deselectAllItemsSelectedForDeletion();
-
-	public abstract void onDeleteSelected();
 
 	public boolean isInSelectionMode()
 	{

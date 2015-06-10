@@ -1,9 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 
-import android.util.SparseArray;
 import android.view.View;
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
@@ -16,8 +13,6 @@ import java.util.List;
  */
 public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> implements PlaylistAdapter.OnItemClickListener
 {
-	private static final String TAG = PlaylistPresenter.class.getName();
-
 	private PlaylistAdapter adapter;
 	private SoundDataModel model;
 
@@ -32,21 +27,23 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 	{
 		if (this.isInSelectionMode())
 		{
-			super.onItemSelectedForDeletion();
 			player.getMediaPlayerData().setIsSelectedForDeletion(true);
 			this.adapter.notifyItemChanged(position);
+			super.onItemSelectedForDeletion();
 		}
 		else
 			this.adapter.startOrStopPlayList(player);
 	}
 
 	@Override
-	public void onDeleteSelected()
+	public void deleteSelectedItems()
 	{
 		List<EnhancedMediaPlayer> playersToRemove = this.getPlayersSelectedForDeletion();
 
 		this.model.removeSoundsFromPlaylist(playersToRemove);
-		this.getView().getAdapter().notifyDataSetChanged();
+		this.adapter.notifyDataSetChanged();
+
+		super.onSelectedItemsDeleted();
 	}
 
 	@Override

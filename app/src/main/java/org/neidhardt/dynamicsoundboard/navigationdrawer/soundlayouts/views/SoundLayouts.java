@@ -5,7 +5,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
@@ -84,12 +83,6 @@ public class SoundLayouts extends NavigationDrawerList implements SoundLayoutsAd
 	{
 		super.onFinishInflate();
 		this.presenter.setView(this);
-	}
-
-	@Override
-	protected void onDeleteSelected()
-	{
-		this.presenter.onDeleteSelected();
 	}
 
 	@Override

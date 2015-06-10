@@ -167,11 +167,11 @@ public class NavigationDrawerFragment
 		else if (id == R.id.b_delete_selected)
 		{
 			if (this.soundLayoutList.isActive())
-				this.soundLayoutList.getPresenter().deleteSelected();
+				this.soundLayoutList.getPresenter().deleteSelectedItems();
 			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
-				this.playlist.getPresenter().deleteSelected();
+				this.playlist.getPresenter().deleteSelectedItems();
 			else
-				this.soundSheets.getPresenter().deleteSelected();
+				this.soundSheets.getPresenter().deleteSelectedItems();
 		}
 		else if (id  == R.id.b_ok)
 		{

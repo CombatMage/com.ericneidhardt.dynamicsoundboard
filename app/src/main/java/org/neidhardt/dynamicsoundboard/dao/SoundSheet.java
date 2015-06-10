@@ -101,6 +101,7 @@ public class SoundSheet {
                 ", fragmentTag='" + fragmentTag + '\'' +
                 ", label='" + label + '\'' +
                 ", isSelected=" + isSelected +
+                ", isSelectedForDeletion=" + isSelectedForDeletion +
                 '}';
     }
 

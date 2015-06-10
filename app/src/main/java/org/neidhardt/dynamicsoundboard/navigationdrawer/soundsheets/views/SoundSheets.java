@@ -109,12 +109,6 @@ public class SoundSheets
 	}
 
 	@Override
-	protected void onDeleteSelected()
-	{
-		this.presenter.onDeleteSelected();
-	}
-
-	@Override
 	protected int getItemCount()
 	{
 		return this.adapter.getItemCount();

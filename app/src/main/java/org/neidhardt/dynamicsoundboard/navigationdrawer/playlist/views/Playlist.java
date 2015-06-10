@@ -5,7 +5,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
@@ -100,12 +99,6 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	protected int getActionModeTitle()
 	{
 		return R.string.cab_title_delete_play_list_sounds;
-	}
-
-	@Override
-	protected void onDeleteSelected()
-	{
-		this.presenter.onDeleteSelected();
 	}
 
 	@Override
