@@ -24,24 +24,27 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	@Override
 	public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state)
 	{
-		final int childCount = parent.getChildCount();
+		if (parent.getAdapter() == null)
+			return;
+
+		final int childCount = parent.getAdapter().getItemCount();
 		if (childCount == 0)
 			return;
 
-		for (int i = 0; i < childCount; i++)
+		for (int i = 0; i < childCount - 1; i++) // do not draw divider after last item
 		{
-			if (i < childCount - 1) // do not draw divider after last item
-			{
-				View child = parent.getChildAt(i);
-				final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-				final int left = parent.getPaddingLeft();
-				final int right = parent.getWidth() - parent.getPaddingRight();
-				final int top = child.getBottom() + params.bottomMargin;
-				final int bottom = top + this.heightDivider;
+			View child = parent.getChildAt(i);
+			if (child == null)
+				continue;
 
-				this.drawDividerBackground(canvas, left, top, right, bottom);
-				this.drawDivider(canvas, left, top, right, bottom);
-			}
+			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+			final int left = parent.getPaddingLeft();
+			final int right = parent.getWidth() - parent.getPaddingRight();
+			final int top = child.getBottom() + params.bottomMargin;
+			final int bottom = top + this.heightDivider;
+
+			this.drawDividerBackground(canvas, left, top, right, bottom);
+			this.drawDivider(canvas, left, top, right, bottom);
 		}
 	}
 

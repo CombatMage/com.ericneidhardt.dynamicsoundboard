@@ -131,6 +131,8 @@ public class SoundLayoutsAdapter
 			this.label.setText(data.getLabel());
 			this.label.setSelected(data.getIsSelected());
 			this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
+
+			this.label.setActivated(data.isSelectedForDeletion());
 			this.itemView.setSelected(data.isSelectedForDeletion());
 		}
 
