@@ -14,7 +14,6 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.StoreSoundShee
 import roboguice.util.SafeAsyncTask;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -79,6 +78,8 @@ public class SoundSheetsManager
 	@Override
 	public List<SoundSheet> getSoundSheets()
 	{
+		if (this.soundSheets == null)
+			this.soundSheets = new ArrayList<>();
 		return this.soundSheets;
 	}
 
