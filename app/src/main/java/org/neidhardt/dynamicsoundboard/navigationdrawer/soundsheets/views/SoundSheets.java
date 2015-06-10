@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerLi
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModule;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 
@@ -49,8 +50,10 @@ public class SoundSheets
 
 	private void init(Context context)
 	{
+		PresenterComponent component = DaggerPresenterComponent.builder().soundSheetsDataModule(new SoundSheetsDataModule()).build();
+		this.presenter = component.providePresenter();
+
 		this.adapter = new SoundSheetsAdapter();
-		this.presenter = new SoundSheetsPresenter();
 
 		this.adapter.setOnItemClickListener(this);
 		this.adapter.setPresenter(this.presenter);
@@ -74,8 +77,8 @@ public class SoundSheets
 		super.onAttachedToWindow();
 
 		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
-		this.presenter.setSoundSheetsDataAccess(SoundActivity.getSoundSheetsDataAccess());
-		this.presenter.setSoundSheetsDataStorage(SoundActivity.getSoundSheetsDataStorage());
+		//this.presenter.setSoundSheetsDataAccess(SoundActivity.getSoundSheetsDataAccess());
+		//this.presenter.setSoundSheetsDataStorage(SoundActivity.getSoundSheetsDataStorage());
 
 		this.adapter.onAttachedToWindow();
 		this.presenter.onAttachedToWindow();

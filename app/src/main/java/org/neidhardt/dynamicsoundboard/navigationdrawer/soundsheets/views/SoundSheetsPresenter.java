@@ -8,6 +8,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundShee
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,13 @@ public class SoundSheetsPresenter
 	private SoundSheetsDataStorage soundSheetsDataStorage;
 	private SoundDataModel soundDataModel;
 	private SoundSheetsAdapter adapter;
+
+	@Inject
+	public SoundSheetsPresenter(SoundSheetsDataAccess soundSheetsDataAccess, SoundSheetsDataStorage soundSheetsDataStorage)
+	{
+		this.soundSheetsDataAccess = soundSheetsDataAccess;
+		this.soundSheetsDataStorage = soundSheetsDataStorage;
+	}
 
 	@Override
 	protected boolean isEventBusSubscriber()
