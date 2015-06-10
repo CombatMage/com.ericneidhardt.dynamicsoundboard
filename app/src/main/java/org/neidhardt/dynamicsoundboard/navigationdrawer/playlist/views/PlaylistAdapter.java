@@ -231,6 +231,8 @@ public class PlaylistAdapter
 			this.timePosition.setMax(player.getDuration());
 			this.label.setText(player.getMediaPlayerData().getLabel());
 			this.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+
+			this.label.setActivated(player.getMediaPlayerData().isSelectedForDeletion());
 			this.itemView.setSelected(player.getMediaPlayerData().isSelectedForDeletion());
 
 			this.onProgressUpdate();

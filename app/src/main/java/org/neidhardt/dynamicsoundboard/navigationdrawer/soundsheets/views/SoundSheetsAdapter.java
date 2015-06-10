@@ -169,10 +169,14 @@ public class SoundSheetsAdapter
 		public void bindData(SoundSheet data, int soundCount)
 		{
 			this.label.setText(data.getLabel());
+			this.setSoundCount(soundCount);
+
 			this.label.setSelected(data.getIsSelected());
 			this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
+
+			this.label.setActivated(data.isSelectedForDeletion());
 			this.itemView.setSelected(data.isSelectedForDeletion());
-			this.setSoundCount(soundCount);
+
 		}
 
 		@Override

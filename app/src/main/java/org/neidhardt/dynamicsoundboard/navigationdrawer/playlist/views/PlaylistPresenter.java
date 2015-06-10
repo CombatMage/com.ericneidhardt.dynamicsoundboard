@@ -27,7 +27,7 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 	{
 		if (this.isInSelectionMode())
 		{
-			player.getMediaPlayerData().setIsSelectedForDeletion(true);
+			player.getMediaPlayerData().setIsSelectedForDeletion(!player.getMediaPlayerData().isSelectedForDeletion());
 			this.adapter.notifyItemChanged(position);
 			super.onItemSelectedForDeletion();
 		}

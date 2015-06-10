@@ -68,7 +68,7 @@ public class SoundActivity
 		implements
 			View.OnClickListener,
 			CustomEditText.OnTextEditedListener,
-		OnActionModeChangeRequestedEventListener,
+			OnActionModeChangeRequestedEventListener,
 			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
 			SoundLayoutsPresenter.OnOpenSoundLayoutSettingsEvent,
 			OnOpenSoundSheetEventListener,
