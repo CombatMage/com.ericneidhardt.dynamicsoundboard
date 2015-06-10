@@ -42,6 +42,5 @@ public class SoundSheetsPresenterTest extends BaseTest
 		this.presenter.onItemClick(null, data, 0);
 
 		verify(data, times(1)).setIsSelectedForDeletion(true);
-		verify(this.mockSoundSheetsDataStorage, times(1)).addOrUpdateSoundSheet(data);
 	}
 }
