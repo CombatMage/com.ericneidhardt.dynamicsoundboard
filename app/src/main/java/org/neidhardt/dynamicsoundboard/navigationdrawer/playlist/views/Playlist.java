@@ -72,7 +72,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 		super.onAttachedToWindow();
 		this.presenter.onAttachedToWindow();
 		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
-		this.adapter.onAttachToWindow();
+		this.adapter.onAttachedToWindow();
 	}
 
 	@Override

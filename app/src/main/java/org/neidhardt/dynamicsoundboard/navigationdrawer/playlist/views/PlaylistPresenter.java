@@ -62,7 +62,7 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 		for (EnhancedMediaPlayer player : selectedPlayers)
 		{
 			player.getMediaPlayerData().setIsSelectedForDeletion(false);
-			// TODO adapter.notify item changed
+			this.adapter.notifyItemChanged(player);
 		}
 	}
 

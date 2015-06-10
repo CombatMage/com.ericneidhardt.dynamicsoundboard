@@ -9,9 +9,11 @@ import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListAdapter;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class SoundLayoutsAdapter
 		extends
 			RecyclerView.Adapter<SoundLayoutsAdapter.ViewHolder>
 		implements
+			NavigationDrawerListAdapter<SoundLayout>,
 			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
 			AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener
 {
@@ -33,6 +36,7 @@ public class SoundLayoutsAdapter
 		this.bus = EventBus.getDefault();
 	}
 
+	@Override
 	public void onAttachedToWindow()
 	{
 		if (!this.bus.isRegistered(this))
@@ -40,6 +44,7 @@ public class SoundLayoutsAdapter
 		this.notifyDataSetChanged();
 	}
 
+	@Override
 	public void onDetachedFromWindow()
 	{
 		this.bus.unregister(this);
@@ -79,6 +84,16 @@ public class SoundLayoutsAdapter
 	{
 		SoundLayout data = this.getValues().get(position);
 		holder.bindData(data);
+	}
+
+	@Override
+	public void notifyItemChanged(SoundLayout data)
+	{
+		int index = this.getValues().indexOf(data);
+		if (index == -1)
+			this.notifyDataSetChanged();
+		else
+			this.notifyItemChanged(index);
 	}
 
 	@Override

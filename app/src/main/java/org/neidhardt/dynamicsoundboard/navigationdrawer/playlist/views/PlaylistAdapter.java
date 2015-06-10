@@ -15,6 +15,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener;
@@ -33,6 +34,7 @@ public class PlaylistAdapter
 		extends
 			SoundProgressAdapter<PlaylistAdapter.ViewHolder>
 		implements
+			NavigationDrawerListAdapter<EnhancedMediaPlayer>,
 			OnPlaylistChangedEventListener,
 			MediaPlayerEventListener,
 			OnSoundSheetsChangedEventListener
@@ -46,7 +48,8 @@ public class PlaylistAdapter
 		this.presenter = presenter;
 	}
 
-	public void onAttachToWindow()
+	@Override
+	public void onAttachedToWindow()
 	{
 		EventBus bus = EventBus.getDefault();
 		if (!bus.isRegistered(this))
@@ -56,6 +59,7 @@ public class PlaylistAdapter
 		this.startProgressUpdateTimer();
 	}
 
+	@Override
 	public void onDetachedFromWindow()
 	{
 		EventBus.getDefault().unregister(this);
@@ -106,6 +110,16 @@ public class PlaylistAdapter
 			nextActivePlayer.playSound();
 		}
 		this.notifyDataSetChanged();
+	}
+
+	@Override
+	public void notifyItemChanged(EnhancedMediaPlayer data)
+	{
+		int index = this.getValues().indexOf(data);
+		if (index == -1)
+			this.notifyDataSetChanged();
+		else
+			this.notifyItemChanged(index);
 	}
 
 	@Override

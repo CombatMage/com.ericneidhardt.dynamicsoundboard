@@ -10,6 +10,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
@@ -27,6 +28,7 @@ public class SoundSheetsAdapter
 		extends
 			RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
 		implements
+			NavigationDrawerListAdapter<SoundSheet>,
 			SoundSheetFragment.OnSoundRemovedEventListener,
 			OnSoundSheetsChangedEventListener,
 			OnSoundSheetRenamedEventListener
@@ -40,6 +42,7 @@ public class SoundSheetsAdapter
 		this.eventBus = EventBus.getDefault();
 	}
 
+	@Override
 	public void onAttachedToWindow()
 	{
 		if (!this.eventBus.isRegistered(this))
@@ -47,6 +50,7 @@ public class SoundSheetsAdapter
 		this.notifyDataSetChanged();
 	}
 
+	@Override
 	public void onDetachedFromWindow()
 	{
 		this.eventBus.unregister(this);
@@ -97,6 +101,16 @@ public class SoundSheetsAdapter
 		}
 
 		holder.bindData(data, soundCount);
+	}
+
+	@Override
+	public void notifyItemChanged(SoundSheet data)
+	{
+		int index = this.getValues().indexOf(data);
+		if (index == -1)
+			this.notifyDataSetChanged();
+		else
+			this.notifyItemChanged(index);
 	}
 
 	/**

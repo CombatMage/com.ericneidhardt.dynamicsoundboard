@@ -84,7 +84,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 		for (SoundLayout soundLayout : selectedSoundLayouts)
 		{
 			soundLayout.setIsSelectedForDeletion(false);
-			// TODO adapter.notify item changed
+			this.adapter.notifyItemChanged(soundLayout);
 		}
 	}
 

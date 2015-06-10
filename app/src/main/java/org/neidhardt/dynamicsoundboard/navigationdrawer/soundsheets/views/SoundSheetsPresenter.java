@@ -83,7 +83,7 @@ public class SoundSheetsPresenter
 		for (SoundSheet soundSheet : selectedSoundSheets)
 		{
 			soundSheet.setIsSelectedForDeletion(false);
-			// TODO adapter.notify item changed
+			this.adapter.notifyItemChanged(soundSheet);
 		}
 	}
 
