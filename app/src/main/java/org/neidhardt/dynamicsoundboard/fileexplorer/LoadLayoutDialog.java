@@ -39,21 +39,11 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 {
 	private static final String TAG = LoadLayoutDialog.class.getName();
 
-	@Inject
-	SoundSheetsDataAccess soundSheetsDataAccess;
-
 	public static void showInstance(FragmentManager manager)
 	{
 		LoadLayoutDialog dialog = new LoadLayoutDialog();
 
 		dialog.show(manager, TAG);
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
-		super.onCreate(savedInstanceState);
 	}
 
 	@Override

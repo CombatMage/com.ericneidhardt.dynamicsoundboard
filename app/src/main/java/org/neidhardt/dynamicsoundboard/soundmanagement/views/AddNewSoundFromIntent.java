@@ -24,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +36,6 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	private static final String KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.suggestedName";
 	private static final String KEY_AVAILABLE_SOUND_SHEET_LABELS = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.availableSoundSheetLabels";
 	private static final String KEY_AVAILABLE_SOUND_SHEET_IDS = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.availableSoundSheetIds";
-
-	private SoundSheetsDataStorage soundSheetsDataStorage;
-	private SoundSheetsDataUtil soundSheetsDataUtil;
 
 	private CustomEditText soundName;
 	private CustomEditText soundSheetName;
@@ -82,9 +80,6 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 			this.availableSoundSheetIds = args.getStringArrayList(KEY_AVAILABLE_SOUND_SHEET_IDS);
 		}
 		this.soundSheetsAlreadyExists = this.availableSoundSheetLabels != null;
-
-		this.soundSheetsDataStorage = SoundActivity.getSoundSheetsDataStorage();
-		this.soundSheetsDataUtil = SoundActivity.getSoundSheetsDataUtil();
 	}
 
 	@Override

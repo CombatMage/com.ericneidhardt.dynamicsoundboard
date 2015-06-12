@@ -27,9 +27,12 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundS
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
+
+import javax.inject.Inject;
 
 public class NavigationDrawerFragment
 		extends
@@ -44,6 +47,9 @@ public class NavigationDrawerFragment
 
 	private static final int INDEX_SOUND_SHEETS = 0;
 	private static final int INDEX_PLAYLIST = 1;
+
+	@Inject SoundSheetsDataUtil soundSheetsDataUtil;
+	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
 
 	private EventBus bus;
 
@@ -66,6 +72,7 @@ public class NavigationDrawerFragment
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
+		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
 
@@ -181,7 +188,7 @@ public class NavigationDrawerFragment
 				AddNewSoundDialog.showInstance(this.getFragmentManager(), Playlist.TAG);
 			else
 			{
-				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), SoundActivity.getSoundSheetsDataUtil().getSuggestedName());
+				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.soundSheetsDataUtil.getSuggestedName());
 			}
 		}
 	}
@@ -266,7 +273,7 @@ public class NavigationDrawerFragment
 		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
 		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);
 
-		int soundSheetCount = this.getSoundSheetDataModel().getSoundSheets().size();
+		int soundSheetCount = this.soundSheetsDataAccess.getSoundSheets().size();
 		int playListCount = this.playlist.getAdapter().getItemCount();
 
 		int heightSoundSheetChildren = soundSheetCount * childHeight;

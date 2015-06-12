@@ -33,8 +33,8 @@ public class ConfirmDeleteSoundSheetDialog extends BaseConfirmDeleteDialog
 		if (fragment != null)
 		{
 			fragment.removeAllSounds();
-			SoundSheet soundSheet = SoundActivity.getSoundSheetsDataAccess().getSoundSheetForFragmentTag(fragment.getFragmentTag());
-			SoundActivity.getSoundSheetsDataStorage().removeSoundSheet(soundSheet);
+			SoundSheet soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragment.getFragmentTag());
+			this.soundSheetsDataStorage.removeSoundSheet(soundSheet);
 
 			this.getSoundActivity().removeSoundFragment(soundSheet);
 		}

@@ -11,15 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 
@@ -134,14 +135,12 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	{
 		ObjectMapper mapper = new ObjectMapper();
 
-		SoundSheetsDataAccess soundSheetDataModel = SoundActivity.getSoundSheetsDataAccess();
-
 		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
 
 		JsonPojo pojo = new JsonPojo();
 		try
 		{
-			pojo.setSoundSheets(soundSheetDataModel.getSoundSheets());
+			pojo.setSoundSheets(this.soundSheetsDataAccess.getSoundSheets());
 			pojo.addPlayList(soundManagerFragment.getPlayList());
 			pojo.addSounds(soundManagerFragment.getSounds());
 

@@ -20,10 +20,6 @@ public abstract class SoundSettingsBaseDialog extends BaseDialog
 	protected String fragmentTag;
 	protected EnhancedMediaPlayer player;
 
-	protected SoundSheetsDataUtil soundSheetsDataUtil;
-	protected SoundSheetsDataAccess soundSheetsDataAccess;
-	protected SoundSheetsDataStorage soundSheetsDataStorage;
-
 	protected static void addArguments(BaseDialog dialog, String playerId, String fragmentTag)
 	{
 		Bundle args = new Bundle();
@@ -44,10 +40,6 @@ public abstract class SoundSettingsBaseDialog extends BaseDialog
 			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
 			this.player = this.getServiceManagerFragment().getSoundService().searchForId(this.fragmentTag, playerId);
 		}
-
-		this.soundSheetsDataUtil = SoundActivity.getSoundSheetsDataUtil();
-		this.soundSheetsDataAccess = SoundActivity.getSoundSheetsDataAccess();
-		this.soundSheetsDataStorage = SoundActivity.getSoundSheetsDataStorage();
 	}
 
 	@Override

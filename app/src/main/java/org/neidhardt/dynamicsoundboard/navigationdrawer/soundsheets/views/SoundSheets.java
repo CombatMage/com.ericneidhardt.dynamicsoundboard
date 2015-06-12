@@ -8,14 +8,16 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import de.greenrobot.event.EventBus;
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModule;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
+
+import javax.inject.Inject;
 
 
 public class SoundSheets
@@ -26,6 +28,8 @@ public class SoundSheets
 {
 	private SoundSheetsPresenter presenter;
 	private SoundSheetsAdapter adapter;
+	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
+	@Inject SoundSheetsDataStorage soundSheetsDataStorage;
 
 	@SuppressWarnings("unused")
 	public SoundSheets(Context context)
@@ -50,8 +54,7 @@ public class SoundSheets
 
 	private void init(Context context)
 	{
-		this.presenter = new SoundSheetsPresenter(DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataAccess(),
-				DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataStorage());
+		this.presenter = new SoundSheetsPresenter(this.soundSheetsDataAccess, this.soundSheetsDataStorage);
 
 		this.adapter = new SoundSheetsAdapter();
 
@@ -77,8 +80,6 @@ public class SoundSheets
 		super.onAttachedToWindow();
 
 		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
-		//this.presenter.setSoundSheetsDataAccess(SoundActivity.getSoundSheetsDataAccess());
-		//this.presenter.setSoundSheetsDataStorage(SoundActivity.getSoundSheetsDataStorage());
 
 		this.adapter.onAttachedToWindow();
 		this.presenter.onAttachedToWindow();
