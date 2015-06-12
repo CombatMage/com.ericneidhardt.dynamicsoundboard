@@ -11,15 +11,23 @@ import javax.inject.Singleton;
 @Module
 public class SoundSheetsDataModule
 {
-	@Provides @Singleton
-	SoundSheetsDataAccess provideSoundSheetsDataAccess()
+	@Provides @Singleton SoundSheetsManager provideSoundSheetsManager()
 	{
 		return new SoundSheetsManager();
 	}
 
-	@Provides
-	@Singleton
-	SoundSheetsDataStorage provideSoundSheetsDataStorage(){
-		return new SoundSheetsManager();
+	@Provides @Singleton SoundSheetsDataAccess provideSoundSheetsDataAccess(SoundSheetsManager manager)
+	{
+		return manager;
+	}
+
+	@Provides @Singleton SoundSheetsDataStorage provideSoundSheetsDataStorage(SoundSheetsManager manager)
+	{
+		return manager;
+	}
+
+	@Provides @Singleton SoundSheetsDataUtil provideSoundSheetsDataUtil(SoundSheetsManager manager)
+	{
+		return manager;
 	}
 }

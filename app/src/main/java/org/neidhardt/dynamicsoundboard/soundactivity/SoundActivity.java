@@ -16,11 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import de.greenrobot.event.EventBus;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -31,6 +29,7 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
@@ -47,16 +46,19 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -77,8 +79,6 @@ public class SoundActivity
 {
 	private static final String TAG = SoundActivity.class.getName();
 
-	private static SoundSheetsManager soundSheetsManager = null;
-
 	private boolean isActivityVisible = true;
 	private boolean isActionModeActive = false;
 
@@ -88,13 +88,18 @@ public class SoundActivity
 
 	private PauseSoundOnCallListener phoneStateListener;
 
+	private SoundSheetsDataUtil soundSheetsDataUtil;
+	private SoundSheetsDataAccess soundSheetsDataAccess;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_base);
 
-		this.initSoundSheetsManager();
+		this.soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataUtil();
+		this.soundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataAccess();
+
 		this.initActionbar();
 		this.initNavigationDrawer();
 
@@ -142,10 +147,12 @@ public class SoundActivity
 		if (intent.getAction().equals(Intent.ACTION_VIEW)
 				&& intent.getData() != null)
 		{
-			if (soundSheetsManager.getSoundSheets().size() == 0)
-				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(), soundSheetsManager.getSuggestedName(), null);
+			if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
+				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(),
+						this.soundSheetsDataUtil.getSuggestedName(), null);
 			else
-				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(), soundSheetsManager.getSuggestedName(), soundSheetsManager.getSoundSheets());
+				AddNewSoundFromIntent.showInstance(this.getFragmentManager(), intent.getData(),
+						this.soundSheetsDataUtil.getSuggestedName(), soundSheetsDataAccess.getSoundSheets());
 		}
 	}
 
@@ -154,15 +161,6 @@ public class SoundActivity
 	{
 		this.getMenuInflater().inflate(R.menu.overflow_menu, menu);
 		return true;
-	}
-
-	private void initSoundSheetsManager()
-	{
-		if (soundSheetsManager == null)
-		{
-			soundSheetsManager = new SoundSheetsManager();
-			soundSheetsManager.init();
-		}
 	}
 
 	private void initActionbar()
@@ -180,7 +178,7 @@ public class SoundActivity
 		SoundSheetFragment currentSoundSheetFragment = getCurrentSoundFragment(this.getFragmentManager());
 		if (currentSoundSheetFragment != null)
 		{
-			SoundSheet currentActiveSoundSheet = soundSheetsManager.getSoundSheetForFragmentTag(currentSoundSheetFragment.getFragmentTag());
+			SoundSheet currentActiveSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.getFragmentTag());
 			if (currentActiveSoundSheet != null)
 				soundSheetLabel.setText(currentActiveSoundSheet.getLabel());
 		}
@@ -251,7 +249,7 @@ public class SoundActivity
 	{
 		super.onStart();
 		this.startService(new Intent(this.getApplicationContext(), MusicService.class));
-		soundSheetsManager.registerOnEventBus();
+		this.soundSheetsDataUtil.registerOnEventBus();
 		EventBus.getDefault().registerSticky(this);
 	}
 
@@ -281,14 +279,14 @@ public class SoundActivity
 		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener);
 
 		if (this.isFinishing())
-			soundSheetsManager.writeCacheBack();
+			this.soundSheetsDataUtil.writeCacheBack();
 	}
 
 	@Override
 	protected void onStop()
 	{
 		EventBus.getDefault().unregister(this);
-		soundSheetsManager.unregisterOnEventBus();
+		this.soundSheetsDataUtil.unregisterOnEventBus();
 		super.onStop();
 	}
 
@@ -313,10 +311,10 @@ public class SoundActivity
 	@Override
 	public void onEvent(SoundLayoutSelectedEvent event)
 	{
-		this.removeSoundFragments(soundSheetsManager.getSoundSheets());
+		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets());
 		this.setSoundSheetActionsEnable(false);
-		soundSheetsManager.writeCacheBack();
-		soundSheetsManager.init();
+		this.soundSheetsDataUtil.writeCacheBack();
+		this.soundSheetsDataUtil.init();
 
 		MusicService service = this.getServiceManagerFragment().getSoundService();
 		service.clearAndStoreSoundsAndPlayList();
@@ -346,7 +344,7 @@ public class SoundActivity
 	public void onEventMainThread(SoundSheetsLoadedEvent event)
 	{
 		this.handleIntent(this.getIntent()); // sound sheets have been loaded, check if there is pending intent to handle
-		this.openSoundFragment(soundSheetsManager.getSelectedItem());
+		this.openSoundFragment(this.soundSheetsDataAccess.getSelectedItem());
 	}
 
 	@Override
@@ -387,7 +385,7 @@ public class SoundActivity
 		this.removeSoundFragment(soundSheet);
 		if (soundSheet.getIsSelected())
 		{
-			List<SoundSheet> remainingSoundSheets = soundSheetsManager.getSoundSheets();
+			List<SoundSheet> remainingSoundSheets = this.soundSheetsDataAccess.getSoundSheets();
 			if (remainingSoundSheets.size() > 0)
 				this.openSoundFragment(remainingSoundSheets.get(0));
 		}
@@ -424,7 +422,7 @@ public class SoundActivity
 		}
 		else if (soundSheetFragment == null)
 		{
-			AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), soundSheetsManager.getSuggestedName());
+			AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.soundSheetsDataUtil.getSuggestedName());
 		}
 		else
 		{
@@ -474,7 +472,7 @@ public class SoundActivity
 		switch (view.getId())
 		{
 			case R.id.action_add_sound_sheet:
-				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), soundSheetsManager.getSuggestedName());
+				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.soundSheetsDataUtil.getSuggestedName());
 				break;
 			default:
 				Logger.e(TAG, "unknown item clicked " + view);
@@ -606,16 +604,16 @@ public class SoundActivity
 
 	public static SoundSheetsDataAccess getSoundSheetsDataAccess()
 	{
-		return soundSheetsManager;
+		return DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataAccess();
 	}
 
 	public static SoundSheetsDataUtil getSoundSheetsDataUtil()
 	{
-		return soundSheetsManager;
+		return DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataUtil();
 	}
 
 	public static SoundSheetsDataStorage getSoundSheetsDataStorage()
 	{
-		return soundSheetsManager;
+		return DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataStorage();
 	}
 }

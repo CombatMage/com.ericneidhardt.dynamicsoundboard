@@ -8,11 +8,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import de.greenrobot.event.EventBus;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModule;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
@@ -50,8 +50,8 @@ public class SoundSheets
 
 	private void init(Context context)
 	{
-		PresenterComponent component = DaggerPresenterComponent.builder().soundSheetsDataModule(new SoundSheetsDataModule()).build();
-		this.presenter = component.providePresenter();
+		this.presenter = new SoundSheetsPresenter(DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataAccess(),
+				DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataStorage());
 
 		this.adapter = new SoundSheetsAdapter();
 

@@ -42,6 +42,7 @@ public class SoundSheetsManager
 	public SoundSheetsManager()
 	{
 		this.eventBus = EventBus.getDefault();
+		this.init();
 	}
 
 	@Override
@@ -152,7 +153,8 @@ public class SoundSheetsManager
 	@Override
 	public String getSuggestedName()
 	{
-		return DynamicSoundboardApplication.getSoundboardContext().getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size();
+		int count = (this.soundSheets != null) ? this.soundSheets.size() : 0;
+		return DynamicSoundboardApplication.getSoundboardContext().getResources().getString(R.string.suggested_sound_sheet_name) + count;
 	}
 
 	@Override
