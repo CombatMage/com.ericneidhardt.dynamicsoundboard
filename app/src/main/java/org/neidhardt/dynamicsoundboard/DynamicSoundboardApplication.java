@@ -15,16 +15,14 @@ import java.util.Random;
 	formKey = "", // This is required for backward compatibility but not used
 	mailTo = "eric@neidhardt-erkner.de"
 )
-public class DynamicSoundboardApplication extends Application
-{
+public class DynamicSoundboardApplication extends Application {
 	private static Random random;
 	private static Context applicationContext;
 
 	private static SoundSheetsDataComponent soundSheetsDataComponent;
 
 	@Override
-	public void onCreate()
-	{
+	public void onCreate() {
 		super.onCreate();
 		ACRA.init(this);
 
@@ -34,18 +32,15 @@ public class DynamicSoundboardApplication extends Application
 		soundSheetsDataComponent = DaggerSoundSheetsDataComponent.create();
 	}
 
-	public static Context getSoundboardContext()
-	{
+	public static Context getSoundboardContext() {
 		return applicationContext;
 	}
 
-	public static int getRandomNumber()
-	{
+	public static int getRandomNumber() {
 		return random.nextInt(Integer.MAX_VALUE);
 	}
 
-	public static SoundSheetsDataComponent getSoundSheetsDataComponent()
-	{
+	public static SoundSheetsDataComponent getSoundSheetsDataComponent() {
 		return soundSheetsDataComponent;
 	}
 

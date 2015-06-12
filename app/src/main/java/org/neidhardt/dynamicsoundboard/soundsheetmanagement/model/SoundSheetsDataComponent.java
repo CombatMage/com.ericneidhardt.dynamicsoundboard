@@ -1,7 +1,10 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model;
 
 import dagger.Component;
+import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsPresenter;
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
+import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 import javax.inject.Singleton;
 
@@ -17,4 +20,8 @@ public interface SoundSheetsDataComponent
 	SoundSheetsDataAccess provideSoundSheetsDataAccess();
 
 	SoundSheetsDataUtil provideSoundSheetsDataUtil();
+
+	void inject(SoundActivity activity);
+
+	void inject(LoadLayoutDialog dialog);
 }

@@ -33,8 +33,4 @@ public abstract class BaseFragment extends Fragment
 		return null;
 	}
 
-	public SoundSheetsDataAccess getSoundSheetDataModel()
-	{
-		return SoundActivity.getSoundSheetsDataAccess();
-	}
 }

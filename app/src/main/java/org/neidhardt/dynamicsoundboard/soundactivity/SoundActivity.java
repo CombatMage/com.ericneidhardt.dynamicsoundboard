@@ -88,17 +88,16 @@ public class SoundActivity
 
 	private PauseSoundOnCallListener phoneStateListener;
 
-	private SoundSheetsDataUtil soundSheetsDataUtil;
-	private SoundSheetsDataAccess soundSheetsDataAccess;
+	@Inject SoundSheetsDataUtil soundSheetsDataUtil;
+	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
+
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_base);
-
-		this.soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataUtil();
-		this.soundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataAccess();
 
 		this.initActionbar();
 		this.initNavigationDrawer();
@@ -552,7 +551,7 @@ public class SoundActivity
 		}
 		fragmentManager.executePendingTransactions();
 
-		if (getSoundSheetsDataAccess().getSoundSheets().size() == 0)
+		if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
 			this.setSoundSheetActionsEnable(false);
 	}
 
@@ -602,18 +601,4 @@ public class SoundActivity
 		return null;
 	}
 
-	public static SoundSheetsDataAccess getSoundSheetsDataAccess()
-	{
-		return DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataAccess();
-	}
-
-	public static SoundSheetsDataUtil getSoundSheetsDataUtil()
-	{
-		return DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataUtil();
-	}
-
-	public static SoundSheetsDataStorage getSoundSheetsDataStorage()
-	{
-		return DynamicSoundboardApplication.getSoundSheetsDataComponent().provideSoundSheetsDataStorage();
-	}
 }

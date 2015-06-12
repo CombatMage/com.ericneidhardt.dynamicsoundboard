@@ -123,15 +123,5 @@ public class AddNewSoundFromDirectory
 
 		LoadSoundsFromFileListTask task = new LoadSoundsFromFileListTask(result, this.callingFragmentTag, fragment);
 		task.execute();
-
-		/*for (File file : result)
-		{
-			Uri soundUri = Uri.parse(file.getAbsolutePath());
-			String soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
-			MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.callingFragmentTag, soundUri, soundLabel);
-
-			fragment.getSoundService().addNewSoundToSoundsAndDatabase(playerData);
-		}
-		fragment.notifyFragment(this.callingFragmentTag);*/
 	}
 }

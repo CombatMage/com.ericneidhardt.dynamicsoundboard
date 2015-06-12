@@ -13,18 +13,20 @@ import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.greenrobot.event.EventBus;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -37,11 +39,21 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 {
 	private static final String TAG = LoadLayoutDialog.class.getName();
 
+	@Inject
+	SoundSheetsDataAccess soundSheetsDataAccess;
+
 	public static void showInstance(FragmentManager manager)
 	{
 		LoadLayoutDialog dialog = new LoadLayoutDialog();
 
 		dialog.show(manager, TAG);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
+		super.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -121,7 +133,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
 	{
-		List<SoundSheet> currentSoundSheet = SoundActivity.getSoundSheetsDataAccess().getSoundSheets();
+		List<SoundSheet> currentSoundSheet = this.soundSheetsDataAccess.getSoundSheets();
 		EventBus.getDefault().post(new SoundSheetsFromFileLoadedEvent(soundSheets, currentSoundSheet));
 	}
 
