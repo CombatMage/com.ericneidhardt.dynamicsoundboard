@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 public interface SoundSheetsDataUtil
 {
 	/**
-	 * Starts async task to retrieve sound sheets from cache.
+	 * Starts async task to retrieve sound sheets from database.
 	 */
 	void init();
 
