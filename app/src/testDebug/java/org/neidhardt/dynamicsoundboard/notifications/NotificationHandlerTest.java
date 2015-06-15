@@ -6,7 +6,7 @@ import org.mockito.Mockito;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
+import org.neidhardt.dynamicsoundboard.soundmanagement_old.MusicService;
 
 import java.util.ArrayList;
 import java.util.List;

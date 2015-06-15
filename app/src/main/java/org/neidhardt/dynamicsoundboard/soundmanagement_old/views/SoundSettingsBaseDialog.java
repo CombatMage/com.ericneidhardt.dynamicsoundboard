@@ -1,12 +1,8 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.views;
+package org.neidhardt.dynamicsoundboard.soundmanagement_old.views;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 /**

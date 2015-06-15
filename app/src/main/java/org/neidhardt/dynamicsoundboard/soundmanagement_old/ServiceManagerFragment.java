@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement;
+package org.neidhardt.dynamicsoundboard.soundmanagement_old;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,12 +10,10 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
+import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.PlaylistRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsFromFileLoadedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.views;
+package org.neidhardt.dynamicsoundboard.soundmanagement_old.views;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -16,8 +16,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
+import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.views;
+package org.neidhardt.dynamicsoundboard.soundmanagement_old.views;
 
 import android.app.FragmentManager;
 import org.neidhardt.dynamicsoundboard.R;

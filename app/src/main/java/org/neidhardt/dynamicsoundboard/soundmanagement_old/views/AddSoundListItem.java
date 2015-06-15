@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.views;
+package org.neidhardt.dynamicsoundboard.soundmanagement_old.views;
 
 import android.content.Context;
 import android.text.Editable;

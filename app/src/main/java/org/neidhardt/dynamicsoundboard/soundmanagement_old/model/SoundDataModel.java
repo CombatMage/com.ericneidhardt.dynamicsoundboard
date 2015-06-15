@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.model;
+package org.neidhardt.dynamicsoundboard.soundmanagement_old.model;
 
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
