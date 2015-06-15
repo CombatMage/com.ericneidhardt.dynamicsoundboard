@@ -385,7 +385,7 @@ public class MusicService
 	public EnhancedMediaPlayer searchForId(String fragmentTag, String playerId)
 	{
 		if (fragmentTag.equals(Playlist.TAG))
-			return this.searchInPlaylistForId(playerId);
+			return this.searchInListForId(playerId, playlist);
 		else
 			return this.searchInListForId(playerId, this.sounds.get(fragmentTag));
 	}

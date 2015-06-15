@@ -15,7 +15,7 @@ public interface SoundsDataStorage
 	 * @param playerId id of player to toggle
 	 * @param addToPlayList player's state in playlist
 	 */
-	boolean toggleSoundInPlaylist(String playerId, boolean addToPlayList);
+	void toggleSoundInPlaylist(String playerId, boolean addToPlayList);
 
 	/**
 	 * Remove all given Sounds from the currently loaded sounds, but not from the playlist.
