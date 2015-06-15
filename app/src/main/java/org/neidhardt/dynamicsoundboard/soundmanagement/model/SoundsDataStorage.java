@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model;
 
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 import java.util.List;
@@ -9,6 +10,12 @@ import java.util.List;
  */
 public interface SoundsDataStorage
 {
+	/**
+	 * Create an new {@code EnhancedMediaPlayer} from given data and adds this player to the playlist.
+	 * If creation failed, a new {@code CreatingPlayerFailedEvent} is posted.
+	 * @param data {@code MediaPlayerData} to construct new {@code EnhancedMediaPlayer}.
+	 */
+	void addSoundsToPlayList(MediaPlayerData data);
 
 	/**
 	 * Add or remove the sound from playlist.
