@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
+import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.DaggerSoundsDataComponent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.SoundsDataComponent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.SoundSheetsDataComponent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.DaggerSoundSheetsDataComponent;
 
@@ -19,6 +21,7 @@ public class DynamicSoundboardApplication extends Application {
 	private static Context applicationContext;
 
 	private static SoundSheetsDataComponent soundSheetsDataComponent;
+	private static SoundsDataComponent soundsDataComponent;
 
 	@Override
 	public void onCreate() {
@@ -29,6 +32,7 @@ public class DynamicSoundboardApplication extends Application {
 		applicationContext = this.getApplicationContext();
 
 		soundSheetsDataComponent = DaggerSoundSheetsDataComponent.create();
+		soundsDataComponent = DaggerSoundsDataComponent.create();
 	}
 
 	public static Context getSoundboardContext() {
@@ -43,4 +47,8 @@ public class DynamicSoundboardApplication extends Application {
 		return soundSheetsDataComponent;
 	}
 
+	public static SoundsDataComponent getSoundsDataComponent()
+	{
+		return soundsDataComponent;
+	}
 }

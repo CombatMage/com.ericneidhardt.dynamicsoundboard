@@ -305,10 +305,6 @@ public class MusicService
 		this.playlist.add(player);
 	}
 
-	public void removeSounds(String fragmentTag) {
-		this.removeSounds(this.sounds.get(fragmentTag));
-	}
-
 	public void removeSounds(List<EnhancedMediaPlayer> soundsToRemove)
 	{
 		if (soundsToRemove == null || soundsToRemove.size() == 0)

@@ -30,4 +30,14 @@ public class RequestMoveSoundEvent
 	{
 		return to;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "RequestMoveSoundEvent{" +
+				"playerId='" + playerId + '\'' +
+				", from=" + from +
+				", to=" + to +
+				'}';
+	}
 }
