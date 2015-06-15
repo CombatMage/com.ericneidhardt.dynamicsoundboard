@@ -4,9 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.DaggerSoundSheetsDataComponent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataComponent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataModule;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.SoundSheetsDataComponent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.DaggerSoundSheetsDataComponent;
 
 import java.util.Random;
 

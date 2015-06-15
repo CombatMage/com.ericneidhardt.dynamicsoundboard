@@ -1,10 +1,7 @@
-package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model;
+package org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger;
 
 import dagger.Component;
-import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog;
-import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsPresenter;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
