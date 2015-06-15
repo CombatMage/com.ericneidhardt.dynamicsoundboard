@@ -14,7 +14,6 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.AddNewSoundEvent;
@@ -141,7 +140,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		else
 		{
 			ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
-			serviceManagerFragment.getSoundService().removeSounds(Collections.singletonList(this.player));
+			serviceManagerFragment.removeSounds(Collections.singletonList(this.player));
 			soundSheetFragment.notifyDataSetChanged();
 
 			Uri uri = Uri.parse(this.player.getMediaPlayerData().getUri());

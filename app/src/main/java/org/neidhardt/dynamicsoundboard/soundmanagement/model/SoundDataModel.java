@@ -54,4 +54,12 @@ public interface SoundDataModel
 	 * @param soundsToRemove list of sounds to remove
 	 */
 	void removeSoundsFromPlaylist(List<EnhancedMediaPlayer> soundsToRemove);
+
+	void moveSoundInFragment(String fragmentTag, int from, int to);
+
+	EnhancedMediaPlayer getSoundById(String fragmentTag, String playerId);
+
+	void writeCachBack();
+
+	void init();
 }

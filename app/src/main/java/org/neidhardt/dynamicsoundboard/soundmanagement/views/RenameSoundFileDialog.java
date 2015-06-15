@@ -9,13 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
-import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by eric.neidhardt on 12.04.2015.
+ * File created by eric.neidhardt on 12.04.2015.
  */
 public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements View.OnClickListener
 {
@@ -90,46 +92,40 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		}
 	}
 
-	void deliverResult(Uri fileUriToRename, String newFileLabel, boolean renameAllOccurrences)
-	{
+	void deliverResult(Uri fileUriToRename, String newFileLabel, boolean renameAllOccurrences) {
 		File fileToRename = FileUtils.getFileForUri(this.getActivity(), fileUriToRename);
-		if (fileToRename == null)
-		{
+		if (fileToRename == null) {
 			this.showErrorRenameFile();
 			return;
 		}
 
 		String newFilePath = fileToRename.getAbsolutePath().replace(fileToRename.getName(), "") + this.appendFileTypeToNewPath(newFileLabel, fileToRename.getName());
-		if (newFilePath.equals(fileToRename.getAbsolutePath()))
-		{
+		if (newFilePath.equals(fileToRename.getAbsolutePath())) {
 			Logger.d(TAG, "old name and new name are equal, nothing to be done");
 			return;
 		}
 
 		File newFile = new File(newFilePath);
 		boolean success = fileToRename.renameTo(newFile);
-		if (!success)
-		{
+		if (!success) {
 			this.showErrorRenameFile();
 			return;
 		}
 
 		String newUri = Uri.fromFile(newFile).toString();
-		for (EnhancedMediaPlayer player : this.playersWithMatchingUri)
-		{
+		for (EnhancedMediaPlayer player : this.playersWithMatchingUri) {
 			if (!this.setUriForPlayer(player, newUri))
 				this.showErrorRenameFile();
 
-			if (renameAllOccurrences)
-			{
+			if (renameAllOccurrences) {
 				player.getMediaPlayerData().setLabel(newFileLabel);
 				player.getMediaPlayerData().setItemWasAltered();
 			}
 
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
-				this.getServiceManagerFragment().notifyPlaylist();
+				EventBus.getDefault().post(new PlaylistChangedEvent());
 			else
-				this.getServiceManagerFragment().notifyFragment(player.getMediaPlayerData().getFragmentTag()); // TODO replace this with post event
+				this.notifyFragment(player.getMediaPlayerData().getFragmentTag());
 		}
 	}
 
@@ -155,7 +151,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 
 	boolean setUriForPlayer(EnhancedMediaPlayer player, String uri)
 	{
-		MusicService service = this.getServiceManagerFragment().getSoundService();
+		SoundDataModel model = this.getServiceManagerFragment();
 		try
 		{
 			player.setSoundUri(uri);
@@ -165,28 +161,28 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		{
 			Logger.e(TAG, e.getMessage());
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
-				service.removeFromPlaylist(Collections.singletonList(player));
+				model.removeSoundsFromPlaylist(Collections.singletonList(player));
 			else
-				service.removeSounds(Collections.singletonList(player));
+				model.removeSounds(Collections.singletonList(player));
 			return false;
 		}
 	}
 
 	List<EnhancedMediaPlayer> getPlayersWithMatchingUri(String uri)
 	{
-		MusicService service = this.getServiceManagerFragment().getSoundService();
+		SoundDataModel model = this.getServiceManagerFragment();
 		List<EnhancedMediaPlayer> players = new ArrayList<>();
 
-		for (EnhancedMediaPlayer player : service.getPlaylist())
+		for (EnhancedMediaPlayer player : model.getPlayList())
 		{
 			if (player.getMediaPlayerData().getUri().equals(uri))
 				players.add(player);
 		}
 
-		Set<String> fragments = service.getSounds().keySet();
+		Set<String> fragments = model.getSounds().keySet();
 		for (String fragment : fragments)
 		{
-			List<EnhancedMediaPlayer> soundsInFragment = service.getSounds().get(fragment);
+			List<EnhancedMediaPlayer> soundsInFragment = model.getSoundsInFragment(fragment);
 			for (EnhancedMediaPlayer player : soundsInFragment)
 			{
 				if (player.getMediaPlayerData().getUri().equals(uri))

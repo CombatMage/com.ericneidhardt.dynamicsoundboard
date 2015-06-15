@@ -44,6 +44,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.MusicService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
@@ -115,9 +116,9 @@ public class SoundActivity
 			return;
 
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
-		if (serviceManagerFragment != null && serviceManagerFragment.getSoundService() != null)
+		if (serviceManagerFragment != null)
 		{
-			Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
+			Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getCurrentlyPlayingSounds();
 			if (currentlyPlayingSounds.size() > 0)
 			{
 				EventBus.getDefault().postSticky(new ActivitySoundsStateChangedEvent(true));
@@ -315,9 +316,9 @@ public class SoundActivity
 		this.soundSheetsDataUtil.writeCacheBack();
 		this.soundSheetsDataUtil.init();
 
-		MusicService service = this.getServiceManagerFragment().getSoundService();
-		service.clearAndStoreSoundsAndPlayList();
-		service.initSoundsAndPlayList();
+		SoundDataModel model = this.getServiceManagerFragment();
+		model.writeCachBack();
+		model.init();
 	}
 
 	@Override
@@ -411,7 +412,7 @@ public class SoundActivity
 
 		SoundSheetFragment soundSheetFragment = getCurrentSoundFragment(this.getFragmentManager());
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
-		Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getSoundService().getCurrentlyPlayingSounds();
+		Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
 		{
 			List<EnhancedMediaPlayer> copyCurrentlyPlayingSounds = new ArrayList<>(currentlyPlayingSounds.size());

@@ -16,7 +16,9 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog;
@@ -153,7 +155,9 @@ public class SoundSheetFragment
 
 	public void removeAllSounds()
 	{
-		this.getServiceManagerFragment().getSoundService().removeSounds(this.fragmentTag);
+		SoundDataModel model = this.getServiceManagerFragment();
+		model.removeSounds(model.getSoundsInFragment(this.fragmentTag));
+
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
 		if (fab != null)
 			fab.show();
@@ -249,7 +253,7 @@ public class SoundSheetFragment
 	@Override
 	public void onItemMoved(int from, int to)
 	{
-		this.getServiceManagerFragment().getSoundService().moveSoundInFragment(fragmentTag, from, to);
+		this.getServiceManagerFragment().moveSoundInFragment(fragmentTag, from, to);
 		this.soundAdapter.notifyDataSetChanged();
 	}
 
@@ -260,10 +264,10 @@ public class SoundSheetFragment
 		if (position > 0)
 			this.soundAdapter.notifyItemChanged(position - 1);
 
-		ServiceManagerFragment fragment = this.getServiceManagerFragment();
-		fragment.getSoundService().removeSounds(Collections.singletonList(player));
-		fragment.notifyPlaylist();
+		SoundDataModel model = this.getServiceManagerFragment();
+		model.removeSounds(Collections.singletonList(player));
 
+		EventBus.getDefault().post(new PlaylistChangedEvent());
 		EventBus.getDefault().post(new SoundRemovedEvent());
 
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);

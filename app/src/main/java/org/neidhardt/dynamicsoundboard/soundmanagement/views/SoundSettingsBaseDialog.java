@@ -38,7 +38,7 @@ public abstract class SoundSettingsBaseDialog extends BaseDialog
 		{
 			String playerId = args.getString(KEY_PLAYER_ID);
 			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
-			this.player = this.getServiceManagerFragment().getSoundService().searchForId(this.fragmentTag, playerId);
+			this.player = this.getServiceManagerFragment().getSoundById(this.fragmentTag, playerId);
 		}
 	}
 

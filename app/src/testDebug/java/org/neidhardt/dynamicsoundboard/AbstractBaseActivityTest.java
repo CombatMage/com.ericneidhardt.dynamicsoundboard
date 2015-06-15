@@ -39,7 +39,6 @@ public abstract class AbstractBaseActivityTest extends BaseTest
 
 		this.serviceManagerFragment.onServiceConnected(null, new MusicService.Binder(this.service));
 		assertTrue(this.serviceManagerFragment.isServiceBound());
-		assertSame(this.service, this.serviceManagerFragment.getSoundService());
 	}
 
 	@Override

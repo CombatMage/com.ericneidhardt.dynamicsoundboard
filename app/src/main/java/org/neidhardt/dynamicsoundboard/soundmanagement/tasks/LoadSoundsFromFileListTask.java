@@ -55,7 +55,6 @@ public class LoadSoundsFromFileListTask extends LongTermTask<List<File>>
 	protected void onSuccess(List<File> files) throws Exception
 	{
 		super.onSuccess(files);
-		this.serviceManagerFragment.notifyFragment(this.fragmentTag); // TODO remove this, cause AddNewSoundEvent should take care
 	}
 
 	@Override

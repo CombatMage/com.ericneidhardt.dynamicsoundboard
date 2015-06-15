@@ -129,8 +129,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private static void addLoadedPlayList(List<MediaPlayerData> playList, ServiceManagerFragment soundManagerFragment)
 	{
-		MusicService service = soundManagerFragment.getSoundService();
-		service.removeFromPlaylist(soundManagerFragment.getPlayList()); // clear playlist before adding new values
+		soundManagerFragment.removeSoundsFromPlaylist(soundManagerFragment.getPlayList()); // clear playlist before adding new values
 
 		EventBus bus = EventBus.getDefault();
 		for (MediaPlayerData mediaPlayerData : playList)

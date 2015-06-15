@@ -43,10 +43,6 @@ public class ServiceManagerFragment
 	private boolean isServiceBound = false;
 
 	private MusicService service;
-	public MusicService getSoundService()
-	{
-		return this.service;
-	}
 
 	public ServiceManagerFragment()
 	{
@@ -176,6 +172,37 @@ public class ServiceManagerFragment
 	}
 
 	@Override
+	public void moveSoundInFragment(String fragmentTag, int from, int to)
+	{
+		if (this.service == null)
+			return;
+		this.service.moveSoundInFragment(fragmentTag, from, to);
+	}
+
+	@Override
+	public EnhancedMediaPlayer getSoundById(String fragmentTag, String playerId) {
+		if (this.service == null)
+			return null;
+		return this.service.searchForId(fragmentTag, playerId);
+	}
+
+	@Override
+	public void writeCachBack()
+	{
+		if (this.service == null)
+			return;
+		this.service.clearAndStoreSoundsAndPlayList();
+	}
+
+	@Override
+	public void init()
+	{
+		if (this.service == null)
+			return;
+		this.service.initSoundsAndPlayList();
+	}
+
+	@Override
 	public void onEvent(SoundSheetsFromFileLoadedEvent event)
 	{
 		List<SoundSheet> oldSoundSheets = event.getOldSoundSheetList();
@@ -185,20 +212,5 @@ public class ServiceManagerFragment
 			playersToRemove.addAll(this.getSoundsInFragment(soundSheet.getFragmentTag()));
 
 		this.service.removeSounds(playersToRemove);
-	}
-
-	public void notifyPlaylist()
-	{
-		EventBus.getDefault().post(new PlaylistChangedEvent());
-	}
-
-	public void notifyFragment(String fragmentTag)
-	{
-		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
-		SoundSheetFragment fragment = (SoundSheetFragment) this.getFragmentManager().findFragmentByTag(fragmentTag);
-		if (fragment != null)
-			fragment.notifyDataSetChanged();
-
-		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
 	}
 }

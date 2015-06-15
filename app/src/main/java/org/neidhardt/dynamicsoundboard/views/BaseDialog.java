@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.views;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
@@ -42,4 +43,18 @@ public abstract class BaseDialog extends DialogFragment
 		return (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
 	}
 
+	protected void notifyFragment(String fragmentTag)
+	{
+		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
+		SoundSheetFragment fragment = (SoundSheetFragment) this.getFragmentManager().findFragmentByTag(fragmentTag);
+		if (fragment != null)
+			fragment.notifyDataSetChanged();
+
+		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
+	}
+
+	private NavigationDrawerFragment getNavigationDrawerFragment()
+	{
+		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
+	}
 }
