@@ -20,11 +20,9 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,10 +72,7 @@ public class PlaylistAdapter
 	@Override
 	protected List<EnhancedMediaPlayer> getValues()
 	{
-		SoundDataModel model = this.presenter.getSoundDataModel();
-		if (model == null)
-			return new ArrayList<>();
-		return model.getPlayList();
+		return this.presenter.getPlaylist();
 	}
 
 	private EnhancedMediaPlayer getItem(int position)
@@ -156,7 +151,7 @@ public class PlaylistAdapter
 	@Override
 	public void onEvent(MediaPlayerCompletedEvent event)
 	{
-		MediaPlayerData finishedPlayerData = event.getData();
+		MediaPlayerData finishedPlayerData = event.getPlayer().getMediaPlayerData();
 		if (this.currentItemIndex == null)
 			return;
 		MediaPlayerData currentPlayer = this.getItem(this.currentItemIndex).getMediaPlayerData();

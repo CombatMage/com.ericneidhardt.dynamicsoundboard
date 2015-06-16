@@ -44,9 +44,10 @@ import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateC
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.MusicService;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
+import org.neidhardt.dynamicsoundboard.soundmanagement.service.MediaPlayerService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
@@ -92,11 +93,16 @@ public class SoundActivity
 	@Inject SoundSheetsDataUtil soundSheetsDataUtil;
 	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
 
+	@Inject SoundsDataUtil soundsDataUtil;
+	@Inject SoundsDataAccess soundsDataAccess;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
+		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
+
 		this.setContentView(R.layout.activity_base);
 
 		this.initActionbar();
@@ -117,7 +123,7 @@ public class SoundActivity
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
 		if (serviceManagerFragment != null)
 		{
-			Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getCurrentlyPlayingSounds();
+			Set<EnhancedMediaPlayer> currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
 			if (currentlyPlayingSounds.size() > 0)
 			{
 				EventBus.getDefault().postSticky(new ActivitySoundsStateChangedEvent(true));
@@ -247,7 +253,7 @@ public class SoundActivity
 	protected void onStart()
 	{
 		super.onStart();
-		this.startService(new Intent(this.getApplicationContext(), MusicService.class));
+		this.startService(new Intent(this.getApplicationContext(), MediaPlayerService.class));
 		this.soundSheetsDataUtil.registerOnEventBus();
 		EventBus.getDefault().registerSticky(this);
 	}
@@ -315,9 +321,8 @@ public class SoundActivity
 		this.soundSheetsDataUtil.writeCacheBack();
 		this.soundSheetsDataUtil.init();
 
-		SoundDataModel model = this.getServiceManagerFragment();
-		model.writeCachBack();
-		model.init();
+		this.soundsDataUtil.writeCacheBackAndRelease();
+		this.soundSheetsDataUtil.init();
 	}
 
 	@Override
@@ -411,7 +416,7 @@ public class SoundActivity
 
 		SoundSheetFragment soundSheetFragment = getCurrentSoundFragment(this.getFragmentManager());
 		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
-		Set<EnhancedMediaPlayer> currentlyPlayingSounds = serviceManagerFragment.getCurrentlyPlayingSounds();
+		Set<EnhancedMediaPlayer> currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
 		{
 			List<EnhancedMediaPlayer> copyCurrentlyPlayingSounds = new ArrayList<>(currentlyPlayingSounds.size());

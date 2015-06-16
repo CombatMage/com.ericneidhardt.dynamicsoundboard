@@ -8,10 +8,12 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import de.greenrobot.event.EventBus;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
@@ -28,6 +30,8 @@ public class SoundSheets
 {
 	private SoundSheetsPresenter presenter;
 	private SoundSheetsAdapter adapter;
+
+	@Inject SoundsDataAccess soundsDataAccess;
 	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
 	@Inject SoundSheetsDataStorage soundSheetsDataStorage;
 
@@ -54,7 +58,10 @@ public class SoundSheets
 
 	private void init(Context context)
 	{
-		this.presenter = new SoundSheetsPresenter(this.soundSheetsDataAccess, this.soundSheetsDataStorage);
+		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
+		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
+
+		this.presenter = new SoundSheetsPresenter(this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess);
 
 		this.adapter = new SoundSheetsAdapter();
 
@@ -78,9 +85,6 @@ public class SoundSheets
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-
-		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
-
 		this.adapter.onAttachedToWindow();
 		this.presenter.onAttachedToWindow();
 	}

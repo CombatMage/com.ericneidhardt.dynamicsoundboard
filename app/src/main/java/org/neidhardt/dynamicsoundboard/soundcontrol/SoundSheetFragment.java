@@ -13,32 +13,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.emtronics.dragsortrecycler.DragSortRecycler;
 import de.greenrobot.event.EventBus;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory;
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog;
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog;
+import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog;
+import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog;
+import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
+import javax.inject.Inject;
 import java.util.Collections;
 
 
@@ -61,6 +64,10 @@ public class SoundSheetFragment
 	private SoundDragSortRecycler dragSortRecycler;
 	private SoundSheetScrollListener scrollListener;
 
+	@Inject SoundsDataStorage soundsDataStorage;
+	@Inject SoundsDataAccess soundsDataAccess;
+	@Inject SoundsDataUtil soundsDataUtil;
+
 	public static SoundSheetFragment getNewInstance(SoundSheet soundSheet)
 	{
 		SoundSheetFragment fragment = new SoundSheetFragment();
@@ -79,13 +86,14 @@ public class SoundSheetFragment
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
 		this.setRetainInstance(true);
 		this.setHasOptionsMenu(true);
 
 		Bundle args = this.getArguments();
 		if (args != null)
 			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
-		this.soundAdapter = new SoundAdapter(this);
+		this.soundAdapter = new SoundAdapter(this, this.soundsDataAccess, this.soundsDataStorage);
 		this.soundAdapter.setOnItemDeleteListener(this);
 
 		this.dragSortRecycler = new SoundDragSortRecycler(this.getResources(), R.id.b_reorder);
@@ -105,8 +113,6 @@ public class SoundSheetFragment
 		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 
 		this.attachScrollViewToFab();
-
-		this.soundAdapter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
 		this.soundAdapter.startProgressUpdateTimer();
 	}
 
@@ -155,8 +161,8 @@ public class SoundSheetFragment
 
 	public void removeAllSounds()
 	{
-		SoundDataModel model = this.getServiceManagerFragment();
-		model.removeSounds(model.getSoundsInFragment(this.fragmentTag));
+		this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag));
+		this.soundAdapter.notifyDataSetChanged();
 
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
 		if (fab != null)
@@ -253,7 +259,7 @@ public class SoundSheetFragment
 	@Override
 	public void onItemMoved(int from, int to)
 	{
-		this.getServiceManagerFragment().moveSoundInFragment(fragmentTag, from, to);
+		this.soundsDataStorage.moveSoundInFragment(fragmentTag, from, to);
 		this.soundAdapter.notifyDataSetChanged();
 	}
 
@@ -264,8 +270,7 @@ public class SoundSheetFragment
 		if (position > 0)
 			this.soundAdapter.notifyItemChanged(position - 1);
 
-		SoundDataModel model = this.getServiceManagerFragment();
-		model.removeSounds(Collections.singletonList(player));
+		this.soundsDataStorage.removeSounds(Collections.singletonList(player));
 
 		EventBus.getDefault().post(new PlaylistChangedEvent());
 		EventBus.getDefault().post(new SoundRemovedEvent());

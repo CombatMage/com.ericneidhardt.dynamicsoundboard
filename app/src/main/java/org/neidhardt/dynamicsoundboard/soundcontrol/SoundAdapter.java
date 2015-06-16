@@ -17,11 +17,11 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,13 +39,16 @@ public class SoundAdapter
 	private final int heightShadow;
 
 	private OnItemDeleteListener onItemDeleteListener;
-	private SoundDataModel soundDataModel;
+	private SoundsDataAccess soundsDataAccess;
+	private SoundsDataStorage soundsDataStorage;
 
-	public SoundAdapter(SoundSheetFragment parent)
+	public SoundAdapter(SoundSheetFragment parent, SoundsDataAccess soundsDataAccess, SoundsDataStorage soundsDataStorage)
 	{
 		this.parentFragmentTag = parent.getFragmentTag();
 		this.heightListItem = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_xlarge);
 		this.heightShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_shadow);
+		this.soundsDataAccess = soundsDataAccess;
+		this.soundsDataStorage = soundsDataStorage;
 	}
 
 	@Override
@@ -83,9 +86,7 @@ public class SoundAdapter
 	@Override
 	protected List<EnhancedMediaPlayer> getValues()
 	{
-		if (this.soundDataModel == null)
-			return new ArrayList<>();
-		return this.soundDataModel.getSoundsInFragment(this.parentFragmentTag);
+		return this.soundsDataAccess.getSoundsInFragment(this.parentFragmentTag);
 	}
 
 	@Override
@@ -111,11 +112,6 @@ public class SoundAdapter
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
 		holder.bindData(position);
-	}
-
-	void setSoundDataModel(SoundDataModel soundDataModel)
-	{
-		this.soundDataModel = soundDataModel;
 	}
 
 	public class ViewHolder
@@ -305,19 +301,16 @@ public class SoundAdapter
 					player.setLooping(!isSelected);
 					break;
 				case R.id.b_add_to_playlist:
-					if (soundDataModel == null)
+					if (soundsDataStorage == null)
 						return;
 
 					view.setSelected(!isSelected);
 					player.setIsInPlaylist(!isSelected);
 					player.getMediaPlayerData().setItemWasAltered();
 
-					boolean success = soundDataModel.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
-					if (!success) // if toggle was not successful, revert changes
-					{
-						view.setSelected(isSelected);
-						player.setIsInPlaylist(isSelected);
-					}
+					soundsDataStorage.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
+					view.setSelected(isSelected);
+					player.setIsInPlaylist(isSelected);
 
 					break;
 				case R.id.b_play:

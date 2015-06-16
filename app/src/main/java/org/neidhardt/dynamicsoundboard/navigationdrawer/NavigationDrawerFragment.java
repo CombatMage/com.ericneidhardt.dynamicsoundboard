@@ -72,8 +72,8 @@ public class NavigationDrawerFragment
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
-		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
 		super.onCreate(savedInstanceState);
+		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
 		this.setRetainInstance(true);
 
 		this.listObserver = new ViewPagerContentObserver();

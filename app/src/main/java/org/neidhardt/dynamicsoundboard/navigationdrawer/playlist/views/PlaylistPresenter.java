@@ -3,7 +3,8 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,15 @@ import java.util.List;
 public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> implements PlaylistAdapter.OnItemClickListener
 {
 	private PlaylistAdapter adapter;
-	private SoundDataModel model;
+
+	private SoundsDataStorage soundsDataStorage;
+	private SoundsDataAccess soundsDataAccess;
+
+	public PlaylistPresenter(SoundsDataStorage soundsDataStorage, SoundsDataAccess soundsDataAccess)
+	{
+		this.soundsDataStorage = soundsDataStorage;
+		this.soundsDataAccess = soundsDataAccess;
+	}
 
 	@Override
 	protected boolean isEventBusSubscriber()
@@ -40,7 +49,7 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 	{
 		List<EnhancedMediaPlayer> playersToRemove = this.getPlayersSelectedForDeletion();
 
-		this.model.removeSoundsFromPlaylist(playersToRemove);
+		this.soundsDataStorage.removeSoundsFromPlaylist(playersToRemove);
 		this.adapter.notifyDataSetChanged();
 
 		super.onSelectedItemsDeleted();
@@ -75,18 +84,12 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 		return selectedPlayers;
 	}
 
-	SoundDataModel getSoundDataModel()
-	{
-		return model;
-	}
-
-	void setSoundDataModel(SoundDataModel model)
-	{
-		this.model = model;
-	}
-
 	public void setAdapter(PlaylistAdapter adapter)
 	{
 		this.adapter = adapter;
+	}
+
+	public List<EnhancedMediaPlayer> getPlaylist() {
+		return this.soundsDataAccess.getPlaylist();
 	}
 }

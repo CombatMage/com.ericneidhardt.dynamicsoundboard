@@ -1,8 +1,5 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.service;
 
-import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.MusicService;
-
 /**
  * File created by eric.neidhardt on 16.06.2015.
  */

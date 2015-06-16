@@ -14,14 +14,11 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerLi
 import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetRenamedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetRenamedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SoundSheetsAdapter
@@ -63,10 +60,7 @@ public class SoundSheetsAdapter
 
 	public List<SoundSheet> getValues()
 	{
-		SoundSheetsDataAccess model = this.presenter.getSoundSheetsDataAccess();
-		if (model == null)
-			return new ArrayList<>();
-		return model.getSoundSheets();
+		return this.presenter.getSoundSheets();
 	}
 
 	@Override
@@ -91,14 +85,10 @@ public class SoundSheetsAdapter
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		SoundDataModel model = this.presenter.getSoundDataModel();
 		SoundSheet data = this.getValues().get(position);
-		int soundCount = 0;
-		if (model != null)
-		{
-			List<EnhancedMediaPlayer> sounds = model.getSoundsInFragment(data.getFragmentTag());
-			soundCount = sounds != null ? sounds.size() : 0;
-		}
+
+		List<EnhancedMediaPlayer> sounds = this.presenter.getSoundsInFragment(data.getFragmentTag());
+		int soundCount = sounds != null ? sounds.size() : 0;
 
 		holder.bindData(data, soundCount);
 	}

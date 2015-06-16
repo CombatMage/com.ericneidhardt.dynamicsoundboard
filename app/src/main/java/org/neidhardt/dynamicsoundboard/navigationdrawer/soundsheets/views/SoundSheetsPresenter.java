@@ -2,8 +2,9 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views;
 
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
@@ -23,14 +24,15 @@ public class SoundSheetsPresenter
 {
 	private SoundSheetsDataAccess soundSheetsDataAccess;
 	private SoundSheetsDataStorage soundSheetsDataStorage;
-	private SoundDataModel soundDataModel;
+	private SoundsDataAccess soundsDataAccess;
 	private SoundSheetsAdapter adapter;
 
 	@Inject
-	public SoundSheetsPresenter(SoundSheetsDataAccess soundSheetsDataAccess, SoundSheetsDataStorage soundSheetsDataStorage)
+	public SoundSheetsPresenter(SoundSheetsDataAccess soundSheetsDataAccess, SoundSheetsDataStorage soundSheetsDataStorage, SoundsDataAccess soundsDataAccess)
 	{
 		this.soundSheetsDataAccess = soundSheetsDataAccess;
 		this.soundSheetsDataStorage = soundSheetsDataStorage;
+		this.soundsDataAccess = soundsDataAccess;
 	}
 
 	@Override
@@ -102,11 +104,6 @@ public class SoundSheetsPresenter
 		return selectedSoundSheets;
 	}
 
-	void setSoundDataModel(SoundDataModel soundDataModel)
-	{
-		this.soundDataModel = soundDataModel;
-	}
-
 	void setSoundSheetsDataAccess(SoundSheetsDataAccess soundSheetsDataAccess)
 	{
 		this.soundSheetsDataAccess = soundSheetsDataAccess;
@@ -117,18 +114,18 @@ public class SoundSheetsPresenter
 		this.soundSheetsDataStorage = soundSheetsDataStorage;
 	}
 
-	SoundSheetsDataAccess getSoundSheetsDataAccess()
-	{
-		return soundSheetsDataAccess;
-	}
-
-	SoundDataModel getSoundDataModel()
-	{
-		return soundDataModel;
-	}
-
 	public void setAdapter(SoundSheetsAdapter adapter)
 	{
 		this.adapter = adapter;
+	}
+
+	public List<SoundSheet> getSoundSheets()
+	{
+		return this.soundSheetsDataAccess.getSoundSheets();
+	}
+
+	public List<EnhancedMediaPlayer> getSoundsInFragment(String fragmentTag)
+	{
+		return this.soundsDataAccess.getSoundsInFragment(fragmentTag);
 	}
 }

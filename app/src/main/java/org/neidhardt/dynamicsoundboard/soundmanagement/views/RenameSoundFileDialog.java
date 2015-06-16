@@ -17,7 +17,6 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -151,7 +150,6 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 
 	boolean setUriForPlayer(EnhancedMediaPlayer player, String uri)
 	{
-		SoundDataModel model = this.getServiceManagerFragment();
 		try
 		{
 			player.setSoundUri(uri);
@@ -161,28 +159,28 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 		{
 			Logger.e(TAG, e.getMessage());
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
-				model.removeSoundsFromPlaylist(Collections.singletonList(player));
+				this.soundsDataStorage.removeSoundsFromPlaylist(Collections.singletonList(player));
 			else
-				model.removeSounds(Collections.singletonList(player));
+				this.soundsDataStorage.removeSounds(Collections.singletonList(player));
 			return false;
 		}
 	}
 
 	List<EnhancedMediaPlayer> getPlayersWithMatchingUri(String uri)
 	{
-		SoundDataModel model = this.getServiceManagerFragment();
 		List<EnhancedMediaPlayer> players = new ArrayList<>();
 
-		for (EnhancedMediaPlayer player : model.getPlayList())
+		List<EnhancedMediaPlayer> playlist = this.soundsDataAccess.getPlaylist();
+		for (EnhancedMediaPlayer player : playlist)
 		{
 			if (player.getMediaPlayerData().getUri().equals(uri))
 				players.add(player);
 		}
 
-		Set<String> fragments = model.getSounds().keySet();
+		Set<String> fragments = this.soundsDataAccess.getSounds().keySet();
 		for (String fragment : fragments)
 		{
-			List<EnhancedMediaPlayer> soundsInFragment = model.getSoundsInFragment(fragment);
+			List<EnhancedMediaPlayer> soundsInFragment = this.soundsDataAccess.getSoundsInFragment(fragment);
 			for (EnhancedMediaPlayer player : soundsInFragment)
 			{
 				if (player.getMediaPlayerData().getUri().equals(uri))

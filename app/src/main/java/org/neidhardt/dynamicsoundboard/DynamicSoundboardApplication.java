@@ -6,8 +6,8 @@ import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.DaggerSoundsDataComponent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.SoundsDataComponent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.SoundSheetsDataComponent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.DaggerSoundSheetsDataComponent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.SoundSheetsDataComponent;
 
 import java.util.Random;
 

@@ -7,12 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
-import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
+
+import javax.inject.Inject;
 
 /**
  * Project created by eric.neidhardt on 27.08.2014.
@@ -23,6 +26,8 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 	private PlaylistAdapter adapter;
 	private PlaylistPresenter presenter;
+
+	@Inject SoundsDataStorage soundsDataStorage;
 
 	@SuppressWarnings("unused")
 	public Playlist(Context context)
@@ -47,7 +52,9 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 	private void init(Context context)
 	{
-		this.presenter = new PlaylistPresenter();
+		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
+
+		this.presenter = new PlaylistPresenter(this.soundsDataStorage);
 
 		this.adapter = new PlaylistAdapter(this.presenter);
 		this.adapter.setOnItemClickListener(this);
@@ -71,7 +78,6 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	{
 		super.onAttachedToWindow();
 		this.presenter.onAttachedToWindow();
-		this.presenter.setSoundDataModel(ServiceManagerFragment.getSoundDataModel());
 		this.adapter.onAttachedToWindow();
 	}
 

@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger;
 
 import dagger.Component;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
@@ -19,4 +20,6 @@ public interface SoundSheetsDataComponent
 	void inject(BaseDialog dialog);
 
 	void inject(NavigationDrawerFragment fragment);
+
+	void inject(SoundSheets soundSheets);
 }
