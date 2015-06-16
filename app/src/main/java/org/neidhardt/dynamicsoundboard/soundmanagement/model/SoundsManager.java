@@ -238,6 +238,8 @@ public class SoundsManager
 			soundsInFragment.add(index, player);
 		else
 			soundsInFragment.add(player); // if the list is to short, just append
+
+		this.eventBus.post(new SoundsChangedEvent());
 	}
 
 	@Override
@@ -265,6 +267,8 @@ public class SoundsManager
 			this.removeSoundFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerToRemove.getMediaPlayerData());
 			playerToRemove.destroy(true);
 		}
+
+		this.eventBus.post(new SoundsChangedEvent());
 	}
 
 	@Override
@@ -272,6 +276,8 @@ public class SoundsManager
 	{
 		for (EnhancedMediaPlayer player : soundsToRemove)
 			this.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), false);
+
+		this.eventBus.post(new SoundsChangedEvent());
 	}
 
 	@Override
