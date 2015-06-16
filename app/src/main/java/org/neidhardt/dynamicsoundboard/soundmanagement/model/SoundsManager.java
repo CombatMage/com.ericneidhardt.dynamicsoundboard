@@ -47,8 +47,12 @@ public class SoundsManager
 	private List<EnhancedMediaPlayer> playlist;
 	private Set<EnhancedMediaPlayer> currentlyPlayingSounds;
 
+	private boolean isInitDone;
+
 	public SoundsManager()
 	{
+		this.isInitDone = false;
+
 		this.eventBus = EventBus.getDefault();
 		this.init();
 	}
@@ -70,6 +74,9 @@ public class SoundsManager
 	@Override
 	public void init()
 	{
+		if (this.isInitDone)
+			throw new IllegalStateException(TAG + ": ini() was called, but SoundsManager was already initialized");
+
 		this.sounds = new HashMap<>();
 		this.playlist = new ArrayList<>();
 		this.currentlyPlayingSounds = new HashSet<>();
@@ -82,6 +89,12 @@ public class SoundsManager
 
 		task = new LoadPlaylistTask(this.dbPlaylist);
 		task.execute();
+	}
+
+	@Override
+	public boolean isInit()
+	{
+		return this.isInitDone;
 	}
 
 	@Override
@@ -100,6 +113,8 @@ public class SoundsManager
 	@Override
 	public void writeCacheBackAndRelease()
 	{
+		this.isInitDone = false;
+
 		this.storeLoadedSounds();
 		this.releaseMediaPlayers();
 	}

@@ -14,6 +14,8 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerLi
 import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetRenamedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetRenamedEvent;
@@ -28,7 +30,8 @@ public class SoundSheetsAdapter
 			NavigationDrawerListAdapter<SoundSheet>,
 			SoundSheetFragment.OnSoundRemovedEventListener,
 			OnSoundSheetsChangedEventListener,
-			OnSoundSheetRenamedEventListener
+			OnSoundSheetRenamedEventListener,
+			OnSoundsChangedEventListener
 {
 	private SoundSheetsPresenter presenter;
 	private EventBus eventBus;
@@ -103,14 +106,10 @@ public class SoundSheetsAdapter
 			this.notifyItemChanged(index);
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished
-	 * @param event delivered SoundLoadedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(SoundLoadedEvent event)
+	@Override
+	public void onEvent(SoundsChangedEvent event)
 	{
-		this.notifyDataSetChanged(); // updates sound count in sound sheet list
+		this.notifyDataSetChanged();
 	}
 
 	@Override

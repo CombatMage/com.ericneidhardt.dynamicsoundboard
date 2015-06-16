@@ -8,14 +8,21 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 public interface SoundSheetsDataUtil
 {
 	/**
-	 * Starts async task to retrieve sound sheets from database.
+	 * Starts async task to retrieve sound sheets from database. If {@code SoundSheetsDataUtil} was initialized before,
+	 * you must call {@code SoundSheetsDataUtil.writeCacheBackAndRelease()} prior.
 	 */
 	void init();
 
 	/**
+	 * Check if {@code SoundSheetsDataUtil.init()} was called.
+	 * @return true if {@code SoundSheetsDataUtil} is init, else false.
+	 */
+	boolean isInit();
+
+	/**
 	 * Write back all existing SoundSheets to database.
 	 */
-	void writeCacheBack();
+	void writeCacheBackAndRelease();
 
 	/**
 	 * Register the storage class on eventBus, should be called in onStart() of holding activity.

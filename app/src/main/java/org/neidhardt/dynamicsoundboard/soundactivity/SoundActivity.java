@@ -103,10 +103,15 @@ public class SoundActivity
 		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 		this.setContentView(R.layout.activity_base);
 
+		if (!this.soundsDataUtil.isInit())
+			this.soundsDataUtil.init();
+		if (!this.soundSheetsDataUtil.isInit())
+			this.soundSheetsDataUtil.init();
+
 		this.initActionbar();
 		this.initNavigationDrawer();
 
-		this.addSoundManagerFragment();
+		this.addNotificationHandlerFragment();
 
 		this.phoneStateListener = new PauseSoundOnCallListener();
 		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -252,6 +257,7 @@ public class SoundActivity
 	{
 		super.onStart();
 		this.startService(new Intent(this.getApplicationContext(), MediaPlayerService.class));
+
 		this.soundSheetsDataUtil.registerOnEventBus();
 		this.soundsDataUtil.registerOnEventBus();
 		EventBus.getDefault().registerSticky(this);
@@ -281,17 +287,19 @@ public class SoundActivity
 		this.isActivityVisible = false;
 
 		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener);
-
-		if (this.isFinishing())
-			this.soundSheetsDataUtil.writeCacheBack();
 	}
 
 	@Override
 	protected void onStop()
 	{
 		EventBus.getDefault().unregister(this);
+
 		this.soundSheetsDataUtil.unregisterOnEventBus();
 		this.soundsDataUtil.unregisterOnEventBus();
+
+		if (this.isFinishing())
+			this.soundSheetsDataUtil.writeCacheBackAndRelease();
+
 		super.onStop();
 	}
 
@@ -318,7 +326,7 @@ public class SoundActivity
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets());
 		this.setSoundSheetActionsEnable(false);
-		this.soundSheetsDataUtil.writeCacheBack();
+		this.soundSheetsDataUtil.writeCacheBackAndRelease();
 		this.soundSheetsDataUtil.init();
 
 		this.soundsDataUtil.writeCacheBackAndRelease();
@@ -531,7 +539,7 @@ public class SoundActivity
 			this.navigationDrawerLayout.closeDrawer(Gravity.START);
 	}
 
-	private void addSoundManagerFragment()
+	private void addNotificationHandlerFragment()
 	{
 		FragmentManager fragmentManager = this.getFragmentManager();
 

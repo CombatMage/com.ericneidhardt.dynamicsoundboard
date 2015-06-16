@@ -34,13 +34,16 @@ public class SoundSheetsManager
 	private static final String DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets";
 	private static final String DB_SOUND_SHEETS = "db_sound_sheets";
 
-	private DaoSession daoSession;
 	List<SoundSheet> soundSheets;
-
 	EventBus eventBus;
+
+	private DaoSession daoSession;
+	private boolean isInitDone;
 
 	public SoundSheetsManager()
 	{
+		this.isInitDone = false;
+
 		this.eventBus = EventBus.getDefault();
 		this.init();
 	}
@@ -61,11 +64,22 @@ public class SoundSheetsManager
 	@Override
 	public void init()
 	{
+		if (this.isInitDone)
+			throw new IllegalStateException(TAG + ": ini() was called, but SoundSheetsManager was already initialized");
+
+		this.isInitDone = true;
+
 		this.soundSheets = new ArrayList<>();
 		this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), this.getDatabaseName());
 
 		SafeAsyncTask task = new LoadSoundSheetsTask(this.daoSession);
 		task.execute();
+	}
+
+	@Override
+	public boolean isInit()
+	{
+		return this.isInitDone;
 	}
 
 	private String getDatabaseName()
@@ -143,8 +157,10 @@ public class SoundSheetsManager
 	}
 
 	@Override
-	public void writeCacheBack()
+	public void writeCacheBackAndRelease()
 	{
+		this.isInitDone = false;
+
 		this.daoSession.getSoundSheetDao().deleteAll();
 		SafeAsyncTask task = new StoreSoundSheetsTask(this.daoSession, this.soundSheets);
 		task.execute();

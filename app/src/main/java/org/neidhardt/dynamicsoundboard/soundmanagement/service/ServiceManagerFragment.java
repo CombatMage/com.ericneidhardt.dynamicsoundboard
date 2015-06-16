@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.os.IBinder;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
+
+import javax.inject.Inject;
 
 /**
  * File created by eric.neidhardt on 02.12.2014.
@@ -41,12 +45,14 @@ public class ServiceManagerFragment
 	{
 		super.onStart();
 		this.startSoundManagerService();
+
 	}
 
 	@Override
 	public void onStop()
 	{
 		super.onStop();
+
 		if (this.isServiceBound)
 			this.getActivity().unbindService(this);
 	}

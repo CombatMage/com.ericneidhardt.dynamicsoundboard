@@ -30,7 +30,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
@@ -302,16 +301,6 @@ public class SoundSheetFragment
 		MediaPlayerData data = event.getNewSoundData();
 		if (data != null && this.getFragmentTag().equals(data.getFragmentTag()))
 			this.soundAdapter.notifyDataSetChanged();
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case a sound was removed from the playlist.
-	 * @param event delivered SoundLoadedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(PlaylistRemovedEvent event)
-	{
-		this.soundAdapter.notifyDataSetChanged();
 	}
 
 	public void notifyDataSetChanged()
