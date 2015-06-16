@@ -5,7 +5,7 @@ import android.app.Fragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 
 public abstract class BaseFragment extends Fragment
 {

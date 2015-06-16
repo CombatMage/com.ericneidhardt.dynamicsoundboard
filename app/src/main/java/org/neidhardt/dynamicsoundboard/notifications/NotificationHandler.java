@@ -17,7 +17,7 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManagerUtil;
-import org.neidhardt.dynamicsoundboard.soundmanagement.service.MediaPlayerService;
+import org.neidhardt.dynamicsoundboard.notifications.service.MediaPlayerService;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

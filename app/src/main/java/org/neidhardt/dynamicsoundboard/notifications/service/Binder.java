@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.service;
+package org.neidhardt.dynamicsoundboard.notifications.service;
 
 /**
  * File created by eric.neidhardt on 16.06.2015.

@@ -6,7 +6,6 @@ import android.telephony.TelephonyManager;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
-import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;

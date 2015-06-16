@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.service;
+package org.neidhardt.dynamicsoundboard.notifications.service;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -8,10 +8,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
-
-import javax.inject.Inject;
 
 /**
  * File created by eric.neidhardt on 02.12.2014.

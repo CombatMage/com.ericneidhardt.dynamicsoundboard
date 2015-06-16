@@ -39,6 +39,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.Sound
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityClosedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
@@ -47,8 +48,8 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFail
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
-import org.neidhardt.dynamicsoundboard.soundmanagement.service.MediaPlayerService;
-import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.notifications.service.MediaPlayerService;
+import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
@@ -321,6 +322,8 @@ public class SoundActivity
 				this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(fragmentTag));
 
 			this.soundSheetsDataUtil.writeCacheBackAndRelease();
+
+			EventBus.getDefault().post(new ActivityClosedEvent());
 		}
 
 		super.onStop();
