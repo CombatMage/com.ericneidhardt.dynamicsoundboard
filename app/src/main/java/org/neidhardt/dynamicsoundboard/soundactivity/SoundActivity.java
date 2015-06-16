@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
@@ -42,10 +43,11 @@ import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.MusicService;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.views.AddNewSoundFromIntent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
@@ -427,6 +429,18 @@ public class SoundActivity
 			intent.setType(FileUtils.MIME_AUDIO);
 			soundSheetFragment.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
 		}
+	}
+
+	/**
+	 * This is called by greenRobot EventBus in case creating a new sound failed.
+	 * @param event delivered CreatingPlayerFailedEvent
+	 */
+	@SuppressWarnings("unused")
+	public void onEventMainThread(CreatingPlayerFailedEvent event)
+	{
+		String message = getResources().getString(R.string.music_service_loading_sound_failed) + " "
+				+ FileUtils.getFileNameFromUri(getApplicationContext(), event.getFailingPlayerData().getUri());
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

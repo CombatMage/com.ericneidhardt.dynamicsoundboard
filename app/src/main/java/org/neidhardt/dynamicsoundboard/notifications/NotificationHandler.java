@@ -8,13 +8,18 @@ import android.content.SharedPreferences;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.MusicService;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManagerUtil;
+import org.neidhardt.dynamicsoundboard.soundmanagement.service.MediaPlayerService;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -22,38 +27,41 @@ import java.util.Set;
 /**
  * File created by eric.neidhardt on 23.03.2015.
  */
-public class NotificationHandler implements SharedPreferences.OnSharedPreferenceChangeListener
+public class NotificationHandler implements SharedPreferences.OnSharedPreferenceChangeListener, MediaPlayerEventListener
 {
 	private static final String TAG = NotificationHandler.class.getName();
 
-	private MusicService musicService;
+	@Inject SoundsDataAccess soundsDataAccess;
+
+	private MediaPlayerService service;
 
 	private BroadcastReceiver notificationActionReceiver;
 
 	private NotificationManager notificationManager;
 	private List<PendingSoundNotification> notifications;
 
-	public NotificationHandler(MusicService musicService)
+	public NotificationHandler(MediaPlayerService service, SoundsDataAccess soundsDataAccess)
 	{
-		this.musicService = musicService;
+		this.service = service;
+		this.soundsDataAccess = soundsDataAccess;
 
-		this.notificationManager = (NotificationManager) musicService.getSystemService(Context.NOTIFICATION_SERVICE);
+		this.notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
 		this.notifications = new ArrayList<>();
 
 		this.notificationActionReceiver = new NotificationActionReceiver();
 
 		EventBus.getDefault().registerSticky(this);
 		SoundboardPreferences.registerSharedPreferenceChangedListener(this);
-		musicService.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
+		service.registerReceiver(this.notificationActionReceiver, PendingSoundNotificationBuilder.getNotificationIntentFilter());
 	}
 
 	public void onServiceDestroyed()
 	{
 		EventBus.getDefault().unregister(this);
 		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this);
-		this.musicService.unregisterReceiver(this.notificationActionReceiver);
+		this.service.unregisterReceiver(this.notificationActionReceiver);
 
-		this.musicService = null;
+		this.service = null;
 	}
 
 	public void dismissAllNotifications()
@@ -70,7 +78,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 	{
 		EnhancedMediaPlayer pendingPlaylistPlayer = null;
 
-		Set<EnhancedMediaPlayer> pendingSounds = this.musicService.getCurrentlyPlayingSounds();
+		Set<EnhancedMediaPlayer> pendingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
 		for (EnhancedMediaPlayer player : pendingSounds)
 		{
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG)) // playlist sound is added as the last notification
@@ -88,16 +96,16 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 
 	private PendingSoundNotificationBuilder getNotificationForSound(EnhancedMediaPlayer player)
 	{
-		return new PendingSoundNotificationBuilder(this.musicService.getApplicationContext(), player);
+		return new PendingSoundNotificationBuilder(this.service.getApplicationContext(), player);
 	}
 
 	private PendingSoundNotificationBuilder getNotificationForPlaylist(EnhancedMediaPlayer player)
 	{
 		return new PendingSoundNotificationBuilder(
-				this.musicService.getApplicationContext(),
+				this.service.getApplicationContext(),
 				player,
 				NotificationIds.NOTIFICATION_ID_PLAYLIST,
-				this.musicService.getString(R.string.notification_playlist),
+				this.service.getString(R.string.notification_playlist),
 				player.getMediaPlayerData().getLabel());
 	}
 
@@ -115,7 +123,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
-		if (key.equals(musicService.getString(R.string.preferences_enable_notifications_key)))
+		if (key.equals(service.getString(R.string.preferences_enable_notifications_key)))
 		{
 			boolean areNotificationsEnabledEnabled = SoundboardPreferences.areNotificationsEnabled();
 			Logger.d(TAG, "onSharedPreferenceChanged " + key + " to " + areNotificationsEnabledEnabled);
@@ -133,15 +141,15 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 			return false;
 
 		int notificationId = correspondingNotification.getNotificationId();
-		EnhancedMediaPlayer player = this.musicService.searchInSoundsForId(playerId);
+		EnhancedMediaPlayer player = SoundsManagerUtil.searchInMapForId(playerId, soundsDataAccess.getSounds());
 
-		if (!player.isPlaying() && this.musicService.isServiceBound()) // if player stops playing and the service is still bound, we remove the notification
+		if (player == null || !player.isPlaying() && this.service.isServiceBound()) // if player stops playing and the service is still bound, we remove the notification
 		{
 			this.removeNotificationForPlayer(playerId);
 			return true;
 		}
 
-		PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(this.musicService.getApplicationContext(), player, notificationId);
+		PendingSoundNotificationBuilder builder = new PendingSoundNotificationBuilder(this.service.getApplicationContext(), player, notificationId);
 
 		correspondingNotification.setNotification(builder.build());
 		notificationManager.notify(notificationId, correspondingNotification.getNotification());
@@ -189,7 +197,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 	{
 		EventBus.getDefault().removeStickyEvent(event);
 
-		if (this.musicService == null)
+		if (this.service == null)
 			return;
 
 		for (PendingSoundNotification notification : this.notifications)
@@ -199,24 +207,20 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 
 			if (isInPlaylist)
 			{
-				EnhancedMediaPlayer player = this.musicService.searchInPlaylistForId(playerId);
+				EnhancedMediaPlayer player = SoundsManagerUtil.searchInListForId(playerId, soundsDataAccess.getPlaylist());
 				if (!player.isPlaying())
 					this.removePlayListNotification();
 			}
 			else
 			{
-				EnhancedMediaPlayer player = this.musicService.searchInSoundsForId(playerId);
-				if (!player.isPlaying())
+				EnhancedMediaPlayer player = SoundsManagerUtil.searchInMapForId(playerId, soundsDataAccess.getSounds());
+				if (player == null || !player.isPlaying())
 					this.removeNotificationForPlayer(playerId);
 			}
 		}
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
-	 * @param event delivered MediaPlayerStateChangedEvent
-	 */
-	@SuppressWarnings("unused")
+	@Override
 	public void onEvent(MediaPlayerStateChangedEvent event)
 	{
 		Logger.d(TAG, event.toString());
@@ -234,7 +238,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 
 		if (fragmentTag.equals(Playlist.TAG)) // update special playlist notification
 		{
-			EnhancedMediaPlayer player = this.musicService.searchInPlaylistForId(playerId);
+			EnhancedMediaPlayer player = SoundsManagerUtil.searchInListForId(playerId, soundsDataAccess.getPlaylist());
 			if (player != null)
 			{
 				if (isAlive)
@@ -250,6 +254,12 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 			else
 				this.removeNotificationForPlayer(playerId);
 		}
+	}
+
+	@Override
+	public void onEvent(MediaPlayerCompletedEvent event)
+	{
+		// nothing to be done
 	}
 
 	private void handlePlaylistPlayerStateChanged(EnhancedMediaPlayer player)
@@ -273,11 +283,11 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 			return false;
 
 		int notificationId = correspondingNotification.getNotificationId();
-		EnhancedMediaPlayer player = this.musicService.getPlayingSoundFromPlaylist();
+		EnhancedMediaPlayer player = this.getPlayingSoundFromPlaylist();
 		if (player == null)
-			player = this.musicService.searchInPlaylistForId(correspondingNotification.getPlayerId());
+			player = SoundsManagerUtil.searchInListForId(correspondingNotification.getPlayerId(), soundsDataAccess.getPlaylist());
 
-		if (!player.isPlaying() && this.musicService.isServiceBound()) // if player stops playing and the service is still bound, we remove the notification
+		if (!player.isPlaying() && this.service.isServiceBound()) // if player stops playing and the service is still bound, we remove the notification
 		{
 			this.removePlayListNotification();
 			return true;
@@ -296,7 +306,18 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 	{
 		boolean isPendingNotification = this.updateOrRemovePendingNotification(playerId);
 		if (!isPendingNotification)
-			addNotification(getNotificationForSound(this.musicService.searchInSoundsForId(playerId)));
+			addNotification(getNotificationForSound(SoundsManagerUtil.searchInMapForId(playerId, soundsDataAccess.getSounds())));
+	}
+
+	private EnhancedMediaPlayer getPlayingSoundFromPlaylist()
+	{
+		List<EnhancedMediaPlayer> playlist = soundsDataAccess.getPlaylist();
+		for (EnhancedMediaPlayer player : playlist)
+		{
+			if (player.isPlaying())
+				return player;
+		}
+		return null;
 	}
 
 	private class NotificationActionReceiver extends BroadcastReceiver
@@ -321,9 +342,9 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 			{
 				EnhancedMediaPlayer player;
 				if (notificationId == NotificationIds.NOTIFICATION_ID_PLAYLIST)
-					player = musicService.searchInPlaylistForId(playerId);
+					player = SoundsManagerUtil.searchInListForId(playerId, soundsDataAccess.getPlaylist());
 				else
-					player = musicService.searchInSoundsForId(playerId);
+					player = SoundsManagerUtil.searchInMapForId(playerId, soundsDataAccess.getSounds());
 				if (player == null)
 					return;
 				switch (action)
@@ -355,8 +376,8 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 			if (notificationToRemove != null)
 				notifications.remove(notificationToRemove);
 
-			if (!musicService.isServiceBound() && notifications.size() == 0)
-				musicService.stopSelf();
+			if (!service.isServiceBound() && notifications.size() == 0)
+				service.stopSelf();
 		}
 	}
 

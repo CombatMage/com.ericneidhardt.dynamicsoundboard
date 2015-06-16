@@ -1,9 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.dagger;
 
 import dagger.Component;
-import dagger.Provides;
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.service.MediaPlayerService;
+import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 import javax.inject.Singleton;
 
@@ -15,4 +14,6 @@ import javax.inject.Singleton;
 public interface SoundsDataComponent
 {
 	void inject(MediaPlayerService service);
+
+	void inject(BaseDialog dialog);
 }

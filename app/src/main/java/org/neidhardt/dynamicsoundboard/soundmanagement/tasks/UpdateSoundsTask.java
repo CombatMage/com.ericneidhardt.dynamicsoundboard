@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement_old.tasks;
+package org.neidhardt.dynamicsoundboard.soundmanagement.tasks;
 
 import org.acra.ACRA;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;

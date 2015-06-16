@@ -6,10 +6,14 @@ import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
+import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
+
+import javax.inject.Inject;
 
 /**
  * File created by eric.neidhardt on 14.11.2014.
@@ -17,15 +21,19 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 public abstract class BaseDialog extends DialogFragment
 {
 
-	protected SoundSheetsDataAccess soundSheetsDataAccess;
-	protected SoundSheetsDataUtil soundSheetsDataUtil;
-	protected SoundSheetsDataStorage soundSheetsDataStorage;
+	@Inject protected SoundSheetsDataAccess soundSheetsDataAccess;
+	@Inject protected SoundSheetsDataUtil soundSheetsDataUtil;
+	@Inject protected SoundSheetsDataStorage soundSheetsDataStorage;
+
+	@Inject protected SoundsDataStorage soundsDataStorage;
+	@Inject protected SoundsDataAccess soundsDataAccess;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
+		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
 	}
 
 	public SoundActivity getSoundActivity()

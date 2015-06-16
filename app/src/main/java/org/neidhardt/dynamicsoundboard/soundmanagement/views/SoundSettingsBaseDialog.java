@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement_old.views;
+package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.app.Dialog;
 import android.os.Bundle;

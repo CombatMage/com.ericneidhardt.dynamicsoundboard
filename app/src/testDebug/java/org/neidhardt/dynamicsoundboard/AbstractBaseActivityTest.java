@@ -6,7 +6,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.MusicService;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
 import org.robolectric.Robolectric;
 
 import static org.junit.Assert.*;

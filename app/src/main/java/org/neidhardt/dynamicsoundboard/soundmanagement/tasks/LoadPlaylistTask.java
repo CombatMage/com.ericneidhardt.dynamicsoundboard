@@ -1,23 +1,23 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement_old.tasks;
+package org.neidhardt.dynamicsoundboard.soundmanagement.tasks;
 
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.PlaylistLoadedEvent;
 
 import java.util.List;
 
 /**
  * Created by eric.neidhardt on 10.04.2015.
  */
-public class LoadSoundsTask extends LongTermTask<List<MediaPlayerData>>
+public class LoadPlaylistTask extends LongTermTask<List<MediaPlayerData>>
 {
-	private static final String TAG = LoadSoundsTask.class.getName();
+	private static final String TAG = LoadPlaylistTask.class.getName();
 
 	private DaoSession daoSession;
 
-	public LoadSoundsTask(DaoSession daoSession)
+	public LoadPlaylistTask(DaoSession daoSession)
 	{
 		this.daoSession = daoSession;
 	}
@@ -29,7 +29,7 @@ public class LoadSoundsTask extends LongTermTask<List<MediaPlayerData>>
 		final EventBus bus = EventBus.getDefault();
 		for (final MediaPlayerData mediaPlayerData : mediaPlayersData)
 		{
-			bus.post(new SoundLoadedEvent(mediaPlayerData, true));
+			bus.post(new PlaylistLoadedEvent(mediaPlayerData, true));
 		}
 		return mediaPlayersData;
 	}

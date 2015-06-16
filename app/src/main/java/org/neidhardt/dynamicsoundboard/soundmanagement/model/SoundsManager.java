@@ -16,10 +16,10 @@ import org.neidhardt.dynamicsoundboard.soundactivity.events.OnSoundsLoadedEventL
 import org.neidhardt.dynamicsoundboard.soundactivity.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.tasks.LoadPlaylistTask;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.tasks.LoadSoundsTask;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.tasks.UpdateSoundsTask;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
 import roboguice.util.SafeAsyncTask;
 
 import java.io.IOException;
@@ -135,7 +135,7 @@ public class SoundsManager
 	}
 
 	@Override
-	public List<EnhancedMediaPlayer> getPlayList()
+	public List<EnhancedMediaPlayer> getPlaylist()
 	{
 		return this.playlist;
 	}

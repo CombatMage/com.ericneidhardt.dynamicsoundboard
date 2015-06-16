@@ -16,15 +16,17 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.PlaylistLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -114,18 +116,24 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
 	{
-		List<SoundSheet> currentSoundSheet = this.soundSheetsDataAccess.getSoundSheets();
-		EventBus.getDefault().post(new SoundSheetsFromFileLoadedEvent(soundSheets, currentSoundSheet));
+		List<SoundSheet> oldCurrentSoundSheet = this.soundSheetsDataAccess.getSoundSheets();
+
+		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>();
+		for (SoundSheet soundSheet : oldCurrentSoundSheet)
+			playersToRemove.addAll(this.soundsDataAccess.getSoundsInFragment(soundSheet.getFragmentTag()));
+
+		this.soundsDataStorage.removeSounds(playersToRemove);
+
+		EventBus.getDefault().post(new SoundSheetsFromFileLoadedEvent(soundSheets, oldCurrentSoundSheet));
 	}
 
-	private static void addLoadedPlayList(List<MediaPlayerData> playList, ServiceManagerFragment soundManagerFragment)
+	private void addLoadedPlayList(List<MediaPlayerData> playList, ServiceManagerFragment soundManagerFragment)
 	{
-		soundManagerFragment.removeSoundsFromPlaylist(soundManagerFragment.getPlayList()); // clear playlist before adding new values
+		this.soundsDataStorage.removeSoundsFromPlaylist(this.soundsDataAccess.getPlaylist()); // clear playlist before adding new values
 
 		EventBus bus = EventBus.getDefault();
 		for (MediaPlayerData mediaPlayerData : playList)

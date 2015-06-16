@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 

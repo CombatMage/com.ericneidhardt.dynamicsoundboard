@@ -18,8 +18,8 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.Sound
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.OnPlaylistChangedEventListener;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.model.SoundDataModel;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement_old.tasks;
+package org.neidhardt.dynamicsoundboard.soundmanagement.tasks;
 
 import android.net.Uri;
 import de.greenrobot.event.EventBus;
@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 
 import java.io.File;

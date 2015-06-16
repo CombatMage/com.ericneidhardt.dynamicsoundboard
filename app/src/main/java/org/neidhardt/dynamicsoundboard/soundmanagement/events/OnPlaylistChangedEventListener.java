@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement_old.events;
+package org.neidhardt.dynamicsoundboard.soundmanagement.events;
 
 /**
  * Created by eric.neidhardt on 29.05.2015.

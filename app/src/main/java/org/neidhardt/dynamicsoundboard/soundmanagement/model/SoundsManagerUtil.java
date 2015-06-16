@@ -34,7 +34,7 @@ public class SoundsManagerUtil
 		return baseName + DB_SOUNDS_PLAYLIST;
 	}
 
-	static EnhancedMediaPlayer searchInListForId(String playerId, List<EnhancedMediaPlayer> sounds)
+	public static EnhancedMediaPlayer searchInListForId(String playerId, List<EnhancedMediaPlayer> sounds)
 	{
 		if (sounds == null)
 			return null;
@@ -46,7 +46,7 @@ public class SoundsManagerUtil
 		return null;
 	}
 
-	static EnhancedMediaPlayer searchInMapForId(String playerId, Map<String, List<EnhancedMediaPlayer>> sounds)
+	public static EnhancedMediaPlayer searchInMapForId(String playerId, Map<String, List<EnhancedMediaPlayer>> sounds)
 	{
 		Set<String> soundSheets = sounds.keySet();
 		for (String soundSheet : soundSheets)

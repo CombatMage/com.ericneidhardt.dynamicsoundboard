@@ -24,8 +24,6 @@ public class MediaPlayerService extends Service
 	@Inject SoundsDataAccess soundSheetsDataAccess;
 	@Inject SoundsDataStorage soundsDataStorage;
 
-	private EventBus eventBus;
-
 	private Binder binder;
 	private NotificationHandler notificationHandler;
 
@@ -61,9 +59,15 @@ public class MediaPlayerService extends Service
 		super.onCreate();
 		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
 
-		this.eventBus = EventBus.getDefault();
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.register(this);
+		this.binder = new Binder(this);
+		this.notificationHandler = new NotificationHandler(this, this.soundSheetsDataAccess);
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId)
+	{
+		Logger.d(TAG, "onStartCommand");
+		return START_STICKY;
 	}
 
 	@Override
@@ -71,12 +75,16 @@ public class MediaPlayerService extends Service
 	{
 		Logger.d(TAG, "onDestroy");
 
-		EventBus.getDefault().unregister(this);
 		this.notificationHandler.onServiceDestroyed();
-
 		this.soundSheetsDataUtil.writeCacheBackAndRelease();
 
 		super.onDestroy();
 	}
 
+	public void onActivityClosed()
+	{
+		Logger.d(TAG, "onActivityClosed");
+		if (this.soundSheetsDataAccess.getCurrentlyPlayingSounds().size() == 0)
+			this.stopSelf();
+	}
 }

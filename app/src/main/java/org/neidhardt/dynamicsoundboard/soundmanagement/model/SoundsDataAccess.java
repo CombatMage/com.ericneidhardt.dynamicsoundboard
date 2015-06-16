@@ -21,7 +21,7 @@ public interface SoundsDataAccess
 	 * Retrieve a list of sounds currently in Playlist
 	 * @return a list of sound in the current Playlist
 	 */
-	List<EnhancedMediaPlayer> getPlayList();
+	List<EnhancedMediaPlayer> getPlaylist();
 
 	/**
 	 * Retrieve a map of all sound in every SoundSheet.
