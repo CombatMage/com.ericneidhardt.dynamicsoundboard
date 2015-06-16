@@ -15,8 +15,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
 

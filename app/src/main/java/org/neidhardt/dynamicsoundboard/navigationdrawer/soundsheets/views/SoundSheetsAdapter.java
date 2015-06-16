@@ -11,7 +11,6 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListAdapter;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;

@@ -24,7 +24,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
@@ -115,6 +115,7 @@ public class SoundSheetFragment
 		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener(this);
 
 		this.attachScrollViewToFab();
+		this.soundAdapter.notifyDataSetChanged();
 		this.soundAdapter.startProgressUpdateTimer();
 	}
 

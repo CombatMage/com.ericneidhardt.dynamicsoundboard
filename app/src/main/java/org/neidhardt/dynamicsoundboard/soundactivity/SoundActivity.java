@@ -274,6 +274,11 @@ public class SoundActivity
 		this.setSoundSheetActionsEnable(false);
 		this.setFloatActionButton();
 
+		if (!this.soundsDataUtil.isInit())
+			this.soundsDataUtil.init();
+		if (!this.soundSheetsDataUtil.isInit())
+			this.soundSheetsDataUtil.init();
+
 		SoundSheetFragment currentFragment = getCurrentSoundFragment(this.getFragmentManager());
 		if (currentFragment != null)
 			currentFragment.notifyDataSetChanged(); // trigger update after return from settings activity

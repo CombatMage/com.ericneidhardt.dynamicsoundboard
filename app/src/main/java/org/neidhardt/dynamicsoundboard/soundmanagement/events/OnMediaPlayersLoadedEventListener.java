@@ -1,9 +1,9 @@
-package org.neidhardt.dynamicsoundboard.soundactivity.events;
+package org.neidhardt.dynamicsoundboard.soundmanagement.events;
 
 /**
  * File created by eric.neidhardt on 16.06.2015.
  */
-public interface OnSoundsLoadedEventListener
+public interface OnMediaPlayersLoadedEventListener
 {
 	/**
 	 * This is called by greenRobot EventBus, in case a sounds have been loaded from database or file system and is ready to

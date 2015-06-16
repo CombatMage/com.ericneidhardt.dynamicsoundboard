@@ -12,9 +12,9 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.OnSoundsLoadedEventListener;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.PlaylistLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnMediaPlayersLoadedEventListener;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsChangedEvent;
@@ -35,7 +35,7 @@ public class SoundsManager
 		SoundsDataStorage,
 		SoundsDataUtil,
 		MediaPlayerEventListener,
-		OnSoundsLoadedEventListener
+		OnMediaPlayersLoadedEventListener
 {
 	private static final String TAG = SoundsManager.class.getName();
 
