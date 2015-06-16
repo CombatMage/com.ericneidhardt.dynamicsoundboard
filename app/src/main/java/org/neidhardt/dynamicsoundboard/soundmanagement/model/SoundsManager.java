@@ -77,6 +77,8 @@ public class SoundsManager
 		if (this.isInitDone)
 			throw new IllegalStateException(TAG + ": ini() was called, but SoundsManager was already initialized");
 
+		this.isInitDone = true;
+
 		this.sounds = new HashMap<>();
 		this.playlist = new ArrayList<>();
 		this.currentlyPlayingSounds = new HashSet<>();
