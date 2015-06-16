@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 
 /**
- * Created by Eric Neidhardt on 12.11.2014.
+ * File created by Eric Neidhardt on 12.11.2014.
  */
 public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActionButton implements Runnable, View.OnClickListener
 {

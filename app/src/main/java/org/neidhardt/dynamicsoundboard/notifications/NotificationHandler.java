@@ -14,10 +14,9 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManagerUtil;
-import org.neidhardt.dynamicsoundboard.notifications.service.MediaPlayerService;
+import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -33,14 +32,14 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 
 	@Inject SoundsDataAccess soundsDataAccess;
 
-	private MediaPlayerService service;
+	private NotificationService service;
 
 	private BroadcastReceiver notificationActionReceiver;
 
 	private NotificationManager notificationManager;
 	private List<PendingSoundNotification> notifications;
 
-	public NotificationHandler(MediaPlayerService service, SoundsDataAccess soundsDataAccess)
+	public NotificationHandler(NotificationService service, SoundsDataAccess soundsDataAccess)
 	{
 		this.service = service;
 		this.soundsDataAccess = soundsDataAccess;
@@ -143,7 +142,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 		int notificationId = correspondingNotification.getNotificationId();
 		EnhancedMediaPlayer player = SoundsManagerUtil.searchInMapForId(playerId, soundsDataAccess.getSounds());
 
-		if (player == null || !player.isPlaying() && this.service.isServiceBound()) // if player stops playing and the service is still bound, we remove the notification
+		if (player == null || !player.isPlaying() && this.service.isActivityVisible()) // if player stops playing and the service is still bound, we remove the notification
 		{
 			this.removeNotificationForPlayer(playerId);
 			return true;
@@ -186,20 +185,8 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 		return null;
 	}
 
-	// Update notifications, according to player state or notification actions
-
-	/**
-	 * This is called by greenRobot EventBus in case the activity comes to foreground
-	 * @param event delivered ActivityResumedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEvent(ActivityResumedEvent event)
+	public void removeNotificationsForPausedSounds()
 	{
-		EventBus.getDefault().removeStickyEvent(event);
-
-		if (this.service == null)
-			return;
-
 		for (PendingSoundNotification notification : this.notifications)
 		{
 			String playerId = notification.getPlayerId();
@@ -219,6 +206,8 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 			}
 		}
 	}
+
+	// Update notifications, according to player state or notification actions
 
 	@Override
 	public void onEvent(MediaPlayerStateChangedEvent event)
@@ -287,7 +276,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 		if (player == null)
 			player = SoundsManagerUtil.searchInListForId(correspondingNotification.getPlayerId(), soundsDataAccess.getPlaylist());
 
-		if (!player.isPlaying() && this.service.isServiceBound()) // if player stops playing and the service is still bound, we remove the notification
+		if (!player.isPlaying() && this.service.isActivityVisible()) // if player stops playing and the service is still bound, we remove the notification
 		{
 			this.removePlayListNotification();
 			return true;
@@ -376,7 +365,7 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 			if (notificationToRemove != null)
 				notifications.remove(notificationToRemove);
 
-			if (!service.isServiceBound() && notifications.size() == 0)
+			if (!service.isActivityVisible() && notifications.size() == 0)
 				service.stopSelf();
 		}
 	}

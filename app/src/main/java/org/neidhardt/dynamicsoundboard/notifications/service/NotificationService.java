@@ -18,15 +18,16 @@ import javax.inject.Inject;
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
-public class MediaPlayerService extends Service implements ActivityStateChangedEventListener
+public class NotificationService extends Service implements ActivityStateChangedEventListener
 {
-	public static final String TAG = MediaPlayerService.class.getName();
+	public static final String TAG = NotificationService.class.getName();
 
 	@Inject SoundsDataUtil soundSheetsDataUtil;
 	@Inject SoundsDataAccess soundSheetsDataAccess;
 	@Inject SoundsDataStorage soundsDataStorage;
 
 	private NotificationHandler notificationHandler;
+	private boolean isActivityVisible;
 
 	@Override
 	public IBinder onBind(Intent intent)
@@ -46,6 +47,7 @@ public class MediaPlayerService extends Service implements ActivityStateChangedE
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
 		Logger.d(TAG, "onStartCommand");
+		this.isActivityVisible = true;
 		return START_STICKY;
 	}
 
@@ -63,6 +65,7 @@ public class MediaPlayerService extends Service implements ActivityStateChangedE
 	@Override
 	public void onEvent(ActivityClosedEvent event)
 	{
+		this.isActivityVisible = true;
 		if (this.soundSheetsDataAccess.getCurrentlyPlayingSounds().size() == 0)
 			this.stopSelf();
 	}
@@ -70,7 +73,12 @@ public class MediaPlayerService extends Service implements ActivityStateChangedE
 	@Override
 	public void onEvent(ActivityResumedEvent event)
 	{
-		// TODO
+		this.isActivityVisible = false;
+		this.notificationHandler.removeNotificationsForPausedSounds();
 	}
 
+	public boolean isActivityVisible()
+	{
+		return isActivityVisible;
+	}
 }

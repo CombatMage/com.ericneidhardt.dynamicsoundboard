@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
@@ -131,8 +130,6 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	private void useFile(File file)
 	{
 		ObjectMapper mapper = new ObjectMapper();
-
-		ServiceManagerFragment soundManagerFragment = this.getServiceManagerFragment();
 
 		JsonPojo pojo = new JsonPojo();
 		try

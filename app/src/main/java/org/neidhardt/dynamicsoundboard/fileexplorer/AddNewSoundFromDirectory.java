@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromFileListTask;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
@@ -119,9 +118,7 @@ public class AddNewSoundFromDirectory
 	private void returnResultsToCallingFragment()
 	{
 		List<File> result = this.buildResult();
-		ServiceManagerFragment fragment = this.getServiceManagerFragment();
-
-		LoadSoundsFromFileListTask task = new LoadSoundsFromFileListTask(result, this.callingFragmentTag, fragment);
+		LoadSoundsFromFileListTask task = new LoadSoundsFromFileListTask(result, this.callingFragmentTag);
 		task.execute();
 	}
 }

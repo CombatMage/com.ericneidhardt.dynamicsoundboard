@@ -5,7 +5,6 @@ import android.app.Fragment;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 
 public abstract class BaseFragment extends Fragment
 {
@@ -18,18 +17,4 @@ public abstract class BaseFragment extends Fragment
 	{
 		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
 	}
-
-	public ServiceManagerFragment getServiceManagerFragment()
-	{
-		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
-	}
-
-	public SoundSheetFragment getCurrentSoundFragment()
-	{
-		Fragment currentFragment = this.getFragmentManager().findFragmentById(R.id.main_frame);
-		if (currentFragment != null && currentFragment.isVisible() && currentFragment instanceof SoundSheetFragment)
-			return (SoundSheetFragment) currentFragment;
-		return null;
-	}
-
 }

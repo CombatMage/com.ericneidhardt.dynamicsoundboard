@@ -36,6 +36,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.Soun
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
@@ -48,8 +49,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFail
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
-import org.neidhardt.dynamicsoundboard.notifications.service.MediaPlayerService;
-import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
@@ -115,7 +114,7 @@ public class SoundActivity
 		this.initActionbar();
 		this.initNavigationDrawer();
 
-		this.addNotificationHandlerFragment();
+		this.startService(new Intent(this, NotificationService.class));
 
 		this.phoneStateListener = new PauseSoundOnCallListener();
 		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -127,16 +126,13 @@ public class SoundActivity
 		if (fab == null)
 			return;
 
-		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
-		if (serviceManagerFragment != null)
+		Set<EnhancedMediaPlayer> currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
+		if (currentlyPlayingSounds.size() > 0)
 		{
-			Set<EnhancedMediaPlayer> currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
-			if (currentlyPlayingSounds.size() > 0)
-			{
-				EventBus.getDefault().postSticky(new ActivitySoundsStateChangedEvent(true));
-				return;
-			}
+			EventBus.getDefault().postSticky(new ActivitySoundsStateChangedEvent(true));
+			return;
 		}
+
 		EventBus.getDefault().postSticky(new ActivitySoundsStateChangedEvent(false));
 	}
 
@@ -260,7 +256,7 @@ public class SoundActivity
 	protected void onStart()
 	{
 		super.onStart();
-		this.startService(new Intent(this.getApplicationContext(), MediaPlayerService.class));
+		this.startService(new Intent(this.getApplicationContext(), NotificationService.class));
 
 		this.soundSheetsDataUtil.registerOnEventBus();
 		this.soundsDataUtil.registerOnEventBus();
@@ -309,7 +305,6 @@ public class SoundActivity
 		if (this.isFinishing())
 		{
 			// we remove all loaded sounds, which have no corresponding SoundSheet
-			List<SoundSheet> existingSoundsSheets = this.soundSheetsDataAccess.getSoundSheets();
 			Set<String> fragmentsWithLoadedSounds = this.soundsDataAccess.getSounds().keySet();
 			Set<String> fragmentsWithLoadedSoundsToRemove = new HashSet<>();
 
@@ -327,13 +322,6 @@ public class SoundActivity
 		}
 
 		super.onStop();
-	}
-
-	@Override
-	protected void onUserLeaveHint()
-	{
-		super.onUserLeaveHint();
-		this.getServiceManagerFragment().onUserLeaveHint();
 	}
 
 	public void setSoundSheetActionsEnable(boolean enable)
@@ -449,7 +437,6 @@ public class SoundActivity
 		Logger.d(TAG, "onEvent: " + event);
 
 		SoundSheetFragment soundSheetFragment = getCurrentSoundFragment(this.getFragmentManager());
-		ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
 		Set<EnhancedMediaPlayer> currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
 		{
@@ -563,24 +550,6 @@ public class SoundActivity
 			return;
 		if (this.navigationDrawerLayout.isDrawerOpen(Gravity.START))
 			this.navigationDrawerLayout.closeDrawer(Gravity.START);
-	}
-
-	private void addNotificationHandlerFragment()
-	{
-		FragmentManager fragmentManager = this.getFragmentManager();
-
-		Fragment fragment =  fragmentManager.findFragmentByTag(ServiceManagerFragment.TAG);
-		if (fragment == null)
-		{
-			fragment = new ServiceManagerFragment();
-			fragmentManager.beginTransaction().add(fragment, ServiceManagerFragment.TAG).commit();
-			fragmentManager.executePendingTransactions();
-		}
-	}
-
-	public ServiceManagerFragment getServiceManagerFragment()
-	{
-		return (ServiceManagerFragment)this.getFragmentManager().findFragmentByTag(ServiceManagerFragment.TAG);
 	}
 
 	public NavigationDrawerFragment getNavigationDrawerFragment()

@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
-import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 import org.robolectric.Robolectric;
 
 import static org.junit.Assert.assertNotNull;

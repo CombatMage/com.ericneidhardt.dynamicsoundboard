@@ -57,7 +57,7 @@
 				android:parentActivityName=".soundactivity.SoundActivity"/>
 
 		<service
-				android:name=".notifications.service.MediaPlayerService"
+				android:name=".notifications.service.NotificationService"
 				android:exported="false">
 		</service>
 

@@ -5,7 +5,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateC
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
 /**
- * Created by eric.neidhardt on 21.05.2015.
+ * File created by eric.neidhardt on 21.05.2015.
  */
 public class AddPauseFloatingActionButtonViewPresenter extends BaseViewPresenter<AddPauseFloatingActionButton>
 {

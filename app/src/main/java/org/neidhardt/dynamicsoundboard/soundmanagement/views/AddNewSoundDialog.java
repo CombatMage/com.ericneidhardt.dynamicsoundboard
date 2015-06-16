@@ -19,7 +19,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
-import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
@@ -191,10 +190,6 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 
 	private void returnResultsToCallingFragment()
 	{
-		ServiceManagerFragment fragment = this.getServiceManagerFragment();
-		if (fragment == null)
-			throw new NullPointerException("cannot addSoundSheetAndOpenFragment sound, SoundManagerFragment is null");
-
 		int count = this.soundsToAdd.size();
 		List<MediaPlayerData> playersData = new ArrayList<>(count);
 		List<MediaPlayerData> renamedPlayers = new ArrayList<>();

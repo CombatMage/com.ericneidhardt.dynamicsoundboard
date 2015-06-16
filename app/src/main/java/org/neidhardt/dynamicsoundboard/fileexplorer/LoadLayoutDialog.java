@@ -20,7 +20,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
-import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
@@ -106,9 +105,8 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 			this.addLoadedSoundSheets(soundSheets);
 
-			ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
 			addLoadedSounds(sounds);
-			addLoadedPlayList(playList, serviceManagerFragment);
+			addLoadedPlayList(playList);
 
 			this.dismiss();
 		}
@@ -131,7 +129,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		EventBus.getDefault().post(new SoundSheetsFromFileLoadedEvent(soundSheets, oldCurrentSoundSheet));
 	}
 
-	private void addLoadedPlayList(List<MediaPlayerData> playList, ServiceManagerFragment soundManagerFragment)
+	private void addLoadedPlayList(List<MediaPlayerData> playList)
 	{
 		this.soundsDataStorage.removeSoundsFromPlaylist(this.soundsDataAccess.getPlaylist()); // clear playlist before adding new values
 

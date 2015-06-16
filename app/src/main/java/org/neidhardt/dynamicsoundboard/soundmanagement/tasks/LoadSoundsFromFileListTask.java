@@ -7,14 +7,13 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
-import org.neidhardt.dynamicsoundboard.notifications.service.ServiceManagerFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 
 import java.io.File;
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 28.04.2015.
+ * File created by eric.neidhardt on 28.04.2015.
  */
 public class LoadSoundsFromFileListTask extends LongTermTask<List<File>>
 {
@@ -22,13 +21,11 @@ public class LoadSoundsFromFileListTask extends LongTermTask<List<File>>
 
 	private List<File> filesToLoad;
 	private String fragmentTag;
-	private ServiceManagerFragment serviceManagerFragment;
 
-	public LoadSoundsFromFileListTask(List<File> filesToLoad, String fragmentTag, ServiceManagerFragment serviceManagerFragment)
+	public LoadSoundsFromFileListTask(List<File> filesToLoad, String fragmentTag)
 	{
 		this.filesToLoad = filesToLoad;
 		this.fragmentTag = fragmentTag;
-		this.serviceManagerFragment = serviceManagerFragment;
 	}
 
 	@Override
