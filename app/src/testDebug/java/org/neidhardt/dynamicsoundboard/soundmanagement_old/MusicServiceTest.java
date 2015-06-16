@@ -4,8 +4,8 @@ import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.AbstractBaseActivityTest;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.AddNewSoundEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.PlaylistLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -33,7 +33,7 @@ public class MusicServiceTest extends AbstractBaseActivityTest
 	@Test(expected = NullPointerException.class)
 	public void testOnSoundsLoadedEventMainThread() throws Exception
 	{
-		this.service.onEvent(new AddNewSoundEvent(null, true));
+		this.service.onEvent(new SoundLoadedEvent(null, true));
 	}
 
 	@Test(expected = NullPointerException.class)

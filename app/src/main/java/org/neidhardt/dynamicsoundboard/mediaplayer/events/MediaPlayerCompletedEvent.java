@@ -1,28 +1,22 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer.events;
 
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 /**
- * Created by eric.neidhardt on 11.02.2015.
+ * File created by eric.neidhardt on 11.02.2015.
  */
 public class MediaPlayerCompletedEvent
 {
-	private MediaPlayerData data;
+	private EnhancedMediaPlayer player;
 
-	public MediaPlayerCompletedEvent(MediaPlayerData data)
+	public MediaPlayerCompletedEvent(EnhancedMediaPlayer player)
 	{
-		this.data = data;
+		this.player = player;
 	}
 
-	public MediaPlayerData getData()
+	public EnhancedMediaPlayer getPlayer()
 	{
-		return data;
-	}
-
-	@Override
-	public String toString() {
-		return "MediaPlayerCompletedEvent{" +
-				"data=" + data +
-				'}';
+		return player;
 	}
 }

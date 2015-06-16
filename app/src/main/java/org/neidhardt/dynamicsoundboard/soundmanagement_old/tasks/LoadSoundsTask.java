@@ -4,7 +4,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.AddNewSoundEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class LoadSoundsTask extends LongTermTask<List<MediaPlayerData>>
 		final EventBus bus = EventBus.getDefault();
 		for (final MediaPlayerData mediaPlayerData : mediaPlayersData)
 		{
-			bus.post(new AddNewSoundEvent(mediaPlayerData, true));
+			bus.post(new SoundLoadedEvent(mediaPlayerData, true));
 		}
 		return mediaPlayersData;
 	}

@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.AddNewSoundEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
 
@@ -158,7 +158,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 			else
 				mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, uri, soundLabel);
 
-			EventBus.getDefault().post(new AddNewSoundEvent(mediaPlayerData, false));
+			EventBus.getDefault().post(new SoundLoadedEvent(mediaPlayerData, false));
 		}
 	}
 

@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer.events;
 
 /**
- * Created by eric.neidhardt on 29.05.2015.
+ * File created by eric.neidhardt on 29.05.2015.
  */
 public interface MediaPlayerEventListener
 {

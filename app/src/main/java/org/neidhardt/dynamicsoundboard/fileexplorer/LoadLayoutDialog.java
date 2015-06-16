@@ -17,9 +17,9 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.AddNewSoundEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.PlaylistLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
@@ -139,7 +139,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		{
 			List<MediaPlayerData> soundsPerFragment = sounds.get(key);
 			for (MediaPlayerData mediaPlayerData : soundsPerFragment)
-				bus.post(new AddNewSoundEvent(mediaPlayerData, false));
+				bus.post(new SoundLoadedEvent(mediaPlayerData, false));
 		}
 	}
 

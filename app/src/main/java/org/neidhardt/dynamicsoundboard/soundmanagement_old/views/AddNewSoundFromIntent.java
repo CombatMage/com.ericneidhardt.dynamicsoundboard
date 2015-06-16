@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.AddNewSoundEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
@@ -175,7 +175,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 		Uri soundUri = this.uri;
 
 		MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(soundSheetFragmentTag, soundUri, soundLabel);
-		EventBus.getDefault().post(new AddNewSoundEvent(mediaPlayerData, false));
+		EventBus.getDefault().post(new SoundLoadedEvent(mediaPlayerData, false));
 	}
 
 	private String addNewSoundSheet(String label)

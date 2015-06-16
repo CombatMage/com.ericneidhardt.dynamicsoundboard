@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.AddNewSoundEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 
 import java.io.File;
 import java.util.List;
@@ -38,7 +38,7 @@ public class LoadSoundsFromFileListTask extends LongTermTask<List<File>>
 		for (File file : this.filesToLoad)
 		{
 			MediaPlayerData data = getMediaPlayerDataFromFile(file, this.fragmentTag);
-			bus.post(new AddNewSoundEvent(data, false));
+			bus.post(new SoundLoadedEvent(data, false));
 		}
 
 		return filesToLoad;

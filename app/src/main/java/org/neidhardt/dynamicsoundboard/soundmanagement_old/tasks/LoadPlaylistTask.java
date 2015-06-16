@@ -4,7 +4,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.PlaylistLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.PlaylistLoadedEvent;
 
 import java.util.List;
 

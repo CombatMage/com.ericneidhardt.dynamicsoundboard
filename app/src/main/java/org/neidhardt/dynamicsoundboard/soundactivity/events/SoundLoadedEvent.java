@@ -1,16 +1,16 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement_old.events;
+package org.neidhardt.dynamicsoundboard.soundactivity.events;
 
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 
 /**
  * File created by eric.neidhardt on 24.03.2015.
  */
-public class AddNewSoundEvent
+public class SoundLoadedEvent
 {
 	private MediaPlayerData newSoundData;
 	private boolean loadFromDatabase = true;
 
-	public AddNewSoundEvent(MediaPlayerData newSoundData, boolean loadFromDatabase)
+	public SoundLoadedEvent(MediaPlayerData newSoundData, boolean loadFromDatabase)
 	{
 		this.newSoundData = newSoundData;
 		this.loadFromDatabase = loadFromDatabase;

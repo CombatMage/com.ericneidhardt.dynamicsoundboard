@@ -34,7 +34,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.AddNewSoundEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.views.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
@@ -173,7 +173,7 @@ public class SoundSheetFragment
 				Uri soundUri = data.getData();
 				String soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
 				MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel);
-				EventBus.getDefault().postSticky(new AddNewSoundEvent(playerData, false));
+				EventBus.getDefault().postSticky(new SoundLoadedEvent(playerData, false));
 				return;
 			}
 		}
@@ -289,10 +289,10 @@ public class SoundSheetFragment
 
 	/**
 	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished.
-	 * @param event delivered AddNewSoundEvent
+	 * @param event delivered SoundLoadedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEventMainThread(AddNewSoundEvent event)
+	public void onEventMainThread(SoundLoadedEvent event)
 	{
 		MediaPlayerData data = event.getNewSoundData();
 		if (data != null && this.getFragmentTag().equals(data.getFragmentTag()))
@@ -301,7 +301,7 @@ public class SoundSheetFragment
 
 	/**
 	 * This is called by greenRobot EventBus in case a sound was removed from the playlist.
-	 * @param event delivered AddNewSoundEvent
+	 * @param event delivered SoundLoadedEvent
 	 */
 	@SuppressWarnings("unused")
 	public void onEventMainThread(PlaylistRemovedEvent event)

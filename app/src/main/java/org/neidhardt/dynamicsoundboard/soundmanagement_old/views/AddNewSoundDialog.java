@@ -20,8 +20,8 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement_old.ServiceManagerFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.PlaylistLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement_old.events.AddNewSoundEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.PlaylistLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 import java.util.ArrayList;
@@ -220,7 +220,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 		else
 		{
 			for (MediaPlayerData playerData : playersData)
-				bus.post(new AddNewSoundEvent(playerData, false));
+				bus.post(new SoundLoadedEvent(playerData, false));
 		}
 
 		this.showRenameDialog(renamedPlayers); // show the rename dialog for all altered players
