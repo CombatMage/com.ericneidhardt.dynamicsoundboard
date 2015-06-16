@@ -307,11 +307,7 @@ public class SoundAdapter
 					view.setSelected(!isSelected);
 					player.setIsInPlaylist(!isSelected);
 					player.getMediaPlayerData().setItemWasAltered();
-
 					soundsDataStorage.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected);
-					view.setSelected(isSelected);
-					player.setIsInPlaylist(isSelected);
-
 					break;
 				case R.id.b_play:
 					name.clearFocus();

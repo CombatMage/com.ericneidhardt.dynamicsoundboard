@@ -50,7 +50,6 @@ public class SoundsManager
 	public SoundsManager()
 	{
 		this.eventBus = EventBus.getDefault();
-
 		this.init();
 	}
 

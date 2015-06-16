@@ -57,7 +57,7 @@ public class MediaPlayerService extends Service
 	public void onCreate()
 	{
 		super.onCreate();
-		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
+		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 
 		this.binder = new Binder(this);
 		this.notificationHandler = new NotificationHandler(this, this.soundSheetsDataAccess);

@@ -58,7 +58,6 @@ public class SoundSheets
 	private void init(Context context)
 	{
 		DynamicSoundboardApplication.getApplicationComponent().inject(this);
-		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
 
 		this.presenter = new SoundSheetsPresenter(this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess);
 

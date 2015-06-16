@@ -101,8 +101,6 @@ public class SoundActivity
 	{
 		super.onCreate(savedInstanceState);
 		DynamicSoundboardApplication.getApplicationComponent().inject(this);
-		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
-
 		this.setContentView(R.layout.activity_base);
 
 		this.initActionbar();
@@ -255,6 +253,7 @@ public class SoundActivity
 		super.onStart();
 		this.startService(new Intent(this.getApplicationContext(), MediaPlayerService.class));
 		this.soundSheetsDataUtil.registerOnEventBus();
+		this.soundsDataUtil.registerOnEventBus();
 		EventBus.getDefault().registerSticky(this);
 	}
 
@@ -272,7 +271,7 @@ public class SoundActivity
 
 		EventBus.getDefault().postSticky(new ActivityResumedEvent());
 
-		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener, this.getServiceManagerFragment());
+		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener);
 	}
 
 	@Override
@@ -292,6 +291,7 @@ public class SoundActivity
 	{
 		EventBus.getDefault().unregister(this);
 		this.soundSheetsDataUtil.unregisterOnEventBus();
+		this.soundsDataUtil.unregisterOnEventBus();
 		super.onStop();
 	}
 

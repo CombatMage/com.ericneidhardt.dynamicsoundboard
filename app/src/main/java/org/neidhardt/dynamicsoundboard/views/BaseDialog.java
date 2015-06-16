@@ -20,7 +20,6 @@ import javax.inject.Inject;
  */
 public abstract class BaseDialog extends DialogFragment
 {
-
 	@Inject protected SoundSheetsDataAccess soundSheetsDataAccess;
 	@Inject protected SoundSheetsDataUtil soundSheetsDataUtil;
 	@Inject protected SoundSheetsDataStorage soundSheetsDataStorage;
@@ -33,7 +32,6 @@ public abstract class BaseDialog extends DialogFragment
 	{
 		super.onCreate(savedInstanceState);
 		DynamicSoundboardApplication.getApplicationComponent().inject(this);
-		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
 	}
 
 	public SoundActivity getSoundActivity()

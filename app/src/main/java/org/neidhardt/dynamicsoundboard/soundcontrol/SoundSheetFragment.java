@@ -86,7 +86,7 @@ public class SoundSheetFragment
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
+		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 		this.setRetainInstance(true);
 		this.setHasOptionsMenu(true);
 
