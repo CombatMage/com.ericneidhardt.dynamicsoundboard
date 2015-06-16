@@ -15,7 +15,7 @@ public interface SoundsDataUtil
 	/**
 	 * Write back all existing sounds and the playlist to database.
 	 */
-	void writeCacheBack();
+	void writeCacheBackAndRelease();
 
 	/**
 	 * Register the storage class on eventBus, should be called in onStart() of holding activity.

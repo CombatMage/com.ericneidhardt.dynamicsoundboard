@@ -99,7 +99,7 @@ public class SoundsManager
 	}
 
 	@Override
-	public void writeCacheBack()
+	public void writeCacheBackAndRelease()
 	{
 		this.storeLoadedSounds();
 		this.releaseMediaPlayers();
@@ -298,7 +298,6 @@ public class SoundsManager
 	 */
 	private EnhancedMediaPlayer createPlaylistSound(MediaPlayerData playerData)
 	{
-		// TODO put in utils
 		try
 		{
 			return EnhancedMediaPlayer.getInstanceForPlayList(playerData);
@@ -318,7 +317,6 @@ public class SoundsManager
 	 */
 	private EnhancedMediaPlayer createSound(MediaPlayerData playerData)
 	{
-		// TODO put in utils
 		int itemsInFragment = this.sounds.get(playerData.getFragmentTag()) != null ? this.sounds.get(playerData.getFragmentTag()).size() : 0;
 		if (playerData.getSortOrder() == null || playerData.getSortOrder() > itemsInFragment)
 			playerData.setSortOrder(itemsInFragment);
@@ -393,7 +391,25 @@ public class SoundsManager
 	}
 
 	@Override
-	public void onEventMainThread(PlaylistLoadedEvent event) {
-
+	public void onEventMainThread(PlaylistLoadedEvent event)
+	{
+		MediaPlayerData data = event.getLoadedSoundData();
+		if (data == null)
+			throw new NullPointerException(TAG + ": onEvent() delivered data is null");
+		EnhancedMediaPlayer player = createPlaylistSound(data);
+		if (player == null)
+		{
+			this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), data);
+			this.eventBus.post(new CreatingPlayerFailedEvent(data));
+		}
+		else
+		{
+			this.playlist.add(player);
+			if (!event.isLoadFromDatabase()) // if the player was not loaded from the database, we need to add it to the database
+			{
+				MediaPlayerDataDao playlistDap = this.getDbPlaylist().getMediaPlayerDataDao();
+				playlistDap.insert(player.getMediaPlayerData());
+			}
+		}
 	}
 }
