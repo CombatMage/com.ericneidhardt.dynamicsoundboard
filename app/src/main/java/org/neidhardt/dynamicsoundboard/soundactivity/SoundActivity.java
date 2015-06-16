@@ -302,7 +302,7 @@ public class SoundActivity
 
 		if (this.isFinishing())
 		{
-			// we remove all loaded sounds, which have no corresponding soundsheet
+			// we remove all loaded sounds, which have no corresponding SoundSheet
 			List<SoundSheet> existingSoundsSheets = this.soundSheetsDataAccess.getSoundSheets();
 			Set<String> fragmentsWithLoadedSounds = this.soundsDataAccess.getSounds().keySet();
 			Set<String> fragmentsWithLoadedSoundsToRemove = new HashSet<>();

@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundactivity.events;
 
 /**
- * Created by eric.neidhardt on 21.05.2015.
+ * File created by eric.neidhardt on 21.05.2015.
  */
 public class ActivitySoundsStateChangedEvent
 {
