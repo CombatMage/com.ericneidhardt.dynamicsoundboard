@@ -100,7 +100,7 @@ public class SoundActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
+		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
 
 		this.setContentView(R.layout.activity_base);

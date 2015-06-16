@@ -399,7 +399,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	private void postCompletedEvent()
 	{
-		EventBus.getDefault().post(new MediaPlayerCompletedEvent(this.rawData));
+		EventBus.getDefault().post(new MediaPlayerCompletedEvent(this));
 	}
 
 }

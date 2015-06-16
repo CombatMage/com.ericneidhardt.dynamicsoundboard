@@ -4,10 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
-import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.DaggerSoundsDataComponent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.SoundsDataComponent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.DaggerSoundSheetsDataComponent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.SoundSheetsDataComponent;
 
 import java.util.Random;
 
@@ -20,8 +16,7 @@ public class DynamicSoundboardApplication extends Application {
 	private static Random random;
 	private static Context applicationContext;
 
-	private static SoundSheetsDataComponent soundSheetsDataComponent;
-	private static SoundsDataComponent soundsDataComponent;
+	private static ApplicationComponent applicationComponent;
 
 	@Override
 	public void onCreate() {
@@ -31,8 +26,7 @@ public class DynamicSoundboardApplication extends Application {
 		random = new Random();
 		applicationContext = this.getApplicationContext();
 
-		soundSheetsDataComponent = DaggerSoundSheetsDataComponent.create();
-		soundsDataComponent = DaggerSoundsDataComponent.create();
+		applicationComponent = DaggerApplicationComponent.create();
 	}
 
 	public static Context getSoundboardContext() {
@@ -43,12 +37,8 @@ public class DynamicSoundboardApplication extends Application {
 		return random.nextInt(Integer.MAX_VALUE);
 	}
 
-	public static SoundSheetsDataComponent getSoundSheetsDataComponent() {
-		return soundSheetsDataComponent;
+	public static ApplicationComponent getApplicationComponent() {
+		return applicationComponent;
 	}
 
-	public static SoundsDataComponent getSoundsDataComponent()
-	{
-		return soundsDataComponent;
-	}
 }

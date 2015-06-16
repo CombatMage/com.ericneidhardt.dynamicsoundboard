@@ -138,8 +138,8 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		try
 		{
 			pojo.setSoundSheets(this.soundSheetsDataAccess.getSoundSheets());
-			pojo.addPlayList(soundManagerFragment.getPlayList());
-			pojo.addSounds(soundManagerFragment.getSounds());
+			pojo.addPlayList(this.soundsDataAccess.getPlaylist());
+			pojo.addSounds(this.soundsDataAccess.getSounds());
 
 			mapper.writeValue(file, pojo);
 

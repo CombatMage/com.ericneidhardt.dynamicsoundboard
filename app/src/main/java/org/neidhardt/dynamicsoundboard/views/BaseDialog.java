@@ -32,7 +32,7 @@ public abstract class BaseDialog extends DialogFragment
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		DynamicSoundboardApplication.getSoundSheetsDataComponent().inject(this);
+		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
 	}
 

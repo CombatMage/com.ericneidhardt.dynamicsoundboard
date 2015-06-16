@@ -1,21 +1,25 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.dagger;
+package org.neidhardt.dynamicsoundboard;
 
 import dagger.Component;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
+import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.SoundsDataModule;
 import org.neidhardt.dynamicsoundboard.soundmanagement.service.MediaPlayerService;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.SoundSheetsDataModule;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 import javax.inject.Singleton;
 
 /**
- * File created by eric.neidhardt on 12.06.2015.
+ * File created by eric.neidhardt on 16.06.2015.
  */
 @Singleton
-@Component(modules = {SoundsDataModule.class})
-public interface SoundsDataComponent
+@Component(modules = {SoundsDataModule.class, SoundSheetsDataModule.class})
+public interface ApplicationComponent
 {
 	void inject(MediaPlayerService service);
 
@@ -28,4 +32,8 @@ public interface SoundsDataComponent
 	void inject(SoundSheets soundSheets);
 
 	void inject(SoundSheetFragment fragment);
+
+	void inject(NavigationDrawerFragment fragment);
+
+	void inject(PauseSoundOnCallListener listener);
 }

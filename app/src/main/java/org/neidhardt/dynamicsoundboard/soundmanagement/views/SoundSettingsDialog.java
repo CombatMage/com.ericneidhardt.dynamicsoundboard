@@ -139,8 +139,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		}
 		else
 		{
-			ServiceManagerFragment serviceManagerFragment = this.getServiceManagerFragment();
-			serviceManagerFragment.removeSounds(Collections.singletonList(this.player));
+			this.soundsDataStorage.removeSounds(Collections.singletonList(this.player));
 			soundSheetFragment.notifyDataSetChanged();
 
 			Uri uri = Uri.parse(this.player.getMediaPlayerData().getUri());

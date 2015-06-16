@@ -12,6 +12,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
@@ -28,6 +29,7 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	private PlaylistPresenter presenter;
 
 	@Inject SoundsDataStorage soundsDataStorage;
+	@Inject SoundsDataAccess soundsDataAccess;
 
 	@SuppressWarnings("unused")
 	public Playlist(Context context)
@@ -52,9 +54,9 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 	private void init(Context context)
 	{
-		DynamicSoundboardApplication.getSoundsDataComponent().inject(this);
+		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 
-		this.presenter = new PlaylistPresenter(this.soundsDataStorage);
+		this.presenter = new PlaylistPresenter(this.soundsDataStorage, this.soundsDataAccess);
 
 		this.adapter = new PlaylistAdapter(this.presenter);
 		this.adapter.setOnItemClickListener(this);
