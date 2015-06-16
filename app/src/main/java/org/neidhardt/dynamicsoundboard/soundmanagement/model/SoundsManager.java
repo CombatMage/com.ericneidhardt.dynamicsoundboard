@@ -15,8 +15,9 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.OnSoundsLoadedEventListener;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.PlaylistLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.SoundLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
@@ -52,7 +53,6 @@ public class SoundsManager
 	public SoundsManager()
 	{
 		this.isInitDone = false;
-
 		this.eventBus = EventBus.getDefault();
 		this.init();
 	}
@@ -75,7 +75,7 @@ public class SoundsManager
 	public void init()
 	{
 		if (this.isInitDone)
-			throw new IllegalStateException(TAG + ": ini() was called, but SoundsManager was already initialized");
+			throw new IllegalStateException(TAG + ": init() was called, but SoundsManager was already initialized");
 
 		this.isInitDone = true;
 

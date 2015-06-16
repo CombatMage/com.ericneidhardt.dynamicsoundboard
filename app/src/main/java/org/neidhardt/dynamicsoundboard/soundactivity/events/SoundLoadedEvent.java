@@ -25,4 +25,13 @@ public class SoundLoadedEvent
 	{
 		return loadFromDatabase;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "SoundLoadedEvent{" +
+				"newSoundData=" + newSoundData +
+				", loadFromDatabase=" + loadFromDatabase +
+				'}';
+	}
 }

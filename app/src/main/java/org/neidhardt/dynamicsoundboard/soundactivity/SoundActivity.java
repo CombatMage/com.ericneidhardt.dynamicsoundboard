@@ -45,6 +45,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundmanagement.service.MediaPlayerService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.service.ServiceManagerFragment;
@@ -62,6 +63,7 @@ import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClic
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -95,6 +97,7 @@ public class SoundActivity
 
 	@Inject SoundsDataUtil soundsDataUtil;
 	@Inject SoundsDataAccess soundsDataAccess;
+	@Inject SoundsDataStorage soundsDataStorage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -298,7 +301,22 @@ public class SoundActivity
 		this.soundsDataUtil.unregisterOnEventBus();
 
 		if (this.isFinishing())
+		{
+			// we remove all loaded sounds, which have no corresponding soundsheet
+			List<SoundSheet> existingSoundsSheets = this.soundSheetsDataAccess.getSoundSheets();
+			Set<String> fragmentsWithLoadedSounds = this.soundsDataAccess.getSounds().keySet();
+			Set<String> fragmentsWithLoadedSoundsToRemove = new HashSet<>();
+
+			for (String fragmentTag : fragmentsWithLoadedSounds)
+			{
+				if (this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag) == null) // no sound sheet exists
+					fragmentsWithLoadedSoundsToRemove.add(fragmentTag);
+			}
+			for (String fragmentTag : fragmentsWithLoadedSoundsToRemove)
+				this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(fragmentTag));
+
 			this.soundSheetsDataUtil.writeCacheBackAndRelease();
+		}
 
 		super.onStop();
 	}

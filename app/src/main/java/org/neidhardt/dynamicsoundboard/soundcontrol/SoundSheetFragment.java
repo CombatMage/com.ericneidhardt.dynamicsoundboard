@@ -29,7 +29,9 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEven
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
@@ -52,7 +54,8 @@ public class SoundSheetFragment
 			SoundAdapter.OnItemDeleteListener,
 			DragSortRecycler.OnDragStateChangedListener,
 			DragSortRecycler.OnItemMovedListener,
-			OnOpenSoundDialogEventListener
+			OnOpenSoundDialogEventListener,
+			OnSoundsChangedEventListener
 {
 	private static final String KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 	private static final String LOG_TAG = SoundSheetFragment.class.getName();
@@ -291,16 +294,10 @@ public class SoundSheetFragment
 		SoundSettingsDialog.showInstance(this.getFragmentManager(), event.getData());
 	}
 
-	/**
-	 * This is called by greenRobot EventBus in case sound loading from MusicService has finished.
-	 * @param event delivered SoundLoadedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(SoundLoadedEvent event)
+	@Override
+	public void onEvent(SoundsChangedEvent event)
 	{
-		MediaPlayerData data = event.getNewSoundData();
-		if (data != null && this.getFragmentTag().equals(data.getFragmentTag()))
-			this.soundAdapter.notifyDataSetChanged();
+		this.soundAdapter.notifyDataSetChanged();
 	}
 
 	public void notifyDataSetChanged()
