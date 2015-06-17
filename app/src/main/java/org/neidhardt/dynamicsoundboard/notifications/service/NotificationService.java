@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.notifications.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
@@ -27,6 +28,7 @@ public class NotificationService extends Service implements ActivityStateChanged
 	@Inject SoundsDataStorage soundsDataStorage;
 
 	private NotificationHandler notificationHandler;
+	private EventBus eventBus;
 	private boolean isActivityVisible;
 
 	@Override
@@ -40,6 +42,11 @@ public class NotificationService extends Service implements ActivityStateChanged
 	{
 		super.onCreate();
 		DynamicSoundboardApplication.getApplicationComponent().inject(this);
+
+		this.eventBus = EventBus.getDefault();
+		if (!this.eventBus.isRegistered(this))
+			this.eventBus.registerSticky(this);
+
 		this.notificationHandler = new NotificationHandler(this, this.soundSheetsDataAccess);
 	}
 
@@ -56,6 +63,7 @@ public class NotificationService extends Service implements ActivityStateChanged
 	{
 		Logger.d(TAG, "onDestroy");
 
+		this.eventBus.unregister(this);
 		this.notificationHandler.onServiceDestroyed();
 		this.soundSheetsDataUtil.writeCacheBackAndRelease();
 
@@ -65,7 +73,7 @@ public class NotificationService extends Service implements ActivityStateChanged
 	@Override
 	public void onEvent(ActivityClosedEvent event)
 	{
-		this.isActivityVisible = true;
+		this.isActivityVisible = false;
 		if (this.soundSheetsDataAccess.getCurrentlyPlayingSounds().size() == 0)
 			this.stopSelf();
 	}
@@ -73,7 +81,7 @@ public class NotificationService extends Service implements ActivityStateChanged
 	@Override
 	public void onEvent(ActivityResumedEvent event)
 	{
-		this.isActivityVisible = false;
+		this.isActivityVisible = true;
 		this.notificationHandler.removeNotificationsForPausedSounds();
 	}
 

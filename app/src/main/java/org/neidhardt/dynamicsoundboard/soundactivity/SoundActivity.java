@@ -267,7 +267,10 @@ public class SoundActivity
 	protected void onResume()
 	{
 		super.onResume();
+
 		this.isActivityVisible = true;
+		EventBus.getDefault().postSticky(new ActivityResumedEvent());
+
 		this.setSoundSheetActionsEnable(false);
 		this.setFloatActionButton();
 
@@ -280,8 +283,6 @@ public class SoundActivity
 		if (currentFragment != null)
 			currentFragment.notifyDataSetChanged(); // trigger update after return from settings activity
 
-		EventBus.getDefault().postSticky(new ActivityResumedEvent());
-
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener);
 	}
 
@@ -289,7 +290,9 @@ public class SoundActivity
 	protected void onPause()
 	{
 		super.onPause();
+
 		this.isActivityVisible = false;
+		EventBus.getDefault().postSticky(new ActivityClosedEvent());
 
 		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener);
 	}
@@ -317,8 +320,6 @@ public class SoundActivity
 				this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(fragmentTag));
 
 			this.soundSheetsDataUtil.writeCacheBackAndRelease();
-
-			EventBus.getDefault().post(new ActivityClosedEvent());
 		}
 
 		super.onStop();

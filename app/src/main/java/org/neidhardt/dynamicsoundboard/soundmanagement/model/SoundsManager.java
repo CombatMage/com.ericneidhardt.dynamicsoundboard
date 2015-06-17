@@ -275,10 +275,13 @@ public class SoundsManager
 			if (data.getIsInPlaylist())
 			{
 				EnhancedMediaPlayer correspondingPlayerInPlaylist = SoundsManagerUtil.searchInListForId(data.getPlayerId(), this.playlist);
-				this.playlist.remove(correspondingPlayerInPlaylist);
+				if (correspondingPlayerInPlaylist != null)
+				{
+					this.playlist.remove(correspondingPlayerInPlaylist);
 
-				this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), correspondingPlayerInPlaylist.getMediaPlayerData());
-				correspondingPlayerInPlaylist.destroy(true);
+					this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), correspondingPlayerInPlaylist.getMediaPlayerData());
+					correspondingPlayerInPlaylist.destroy(true);
+				}
 			}
 			this.removeSoundFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerToRemove.getMediaPlayerData());
 			playerToRemove.destroy(true);
