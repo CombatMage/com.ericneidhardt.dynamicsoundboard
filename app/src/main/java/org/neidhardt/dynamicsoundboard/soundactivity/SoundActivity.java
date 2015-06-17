@@ -120,24 +120,6 @@ public class SoundActivity
 		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 	}
 
-	// TODO move this to FABPresenter
-	@Deprecated
-	private void setFloatActionButton()
-	{
-		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.findViewById(R.id.fab_add);
-		if (fab == null)
-			return;
-
-		Set<EnhancedMediaPlayer> currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
-		if (currentlyPlayingSounds.size() > 0)
-		{
-			EventBus.getDefault().postSticky(new ActivitySoundsStateChangedEvent(true));
-			return;
-		}
-
-		EventBus.getDefault().postSticky(new ActivitySoundsStateChangedEvent(false));
-	}
-
 	@Override
 	protected void onNewIntent(Intent intent)
 	{
@@ -274,7 +256,6 @@ public class SoundActivity
 		EventBus.getDefault().postSticky(new ActivityResumedEvent());
 
 		this.setSoundSheetActionsEnable(false);
-		this.setFloatActionButton();
 
 		if (!this.soundsDataUtil.isInit())
 			this.soundsDataUtil.init();
@@ -418,16 +399,6 @@ public class SoundActivity
 			if (remainingSoundSheets.size() > 0)
 				this.openSoundFragment(remainingSoundSheets.get(0));
 		}
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case a mediaplayer changed his state
-	 * @param event delivered MediaPlayerStateChangedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEvent(MediaPlayerStateChangedEvent event)
-	{
-		this.setFloatActionButton();
 	}
 
 	/**

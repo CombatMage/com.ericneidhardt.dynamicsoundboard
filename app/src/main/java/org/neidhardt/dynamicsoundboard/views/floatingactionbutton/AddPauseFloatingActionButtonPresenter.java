@@ -1,14 +1,20 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton;
 
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
+import java.util.Set;
+
 /**
  * File created by eric.neidhardt on 21.05.2015.
  */
-public class AddPauseFloatingActionButtonPresenter extends BaseViewPresenter<AddPauseFloatingActionButton>
+public class AddPauseFloatingActionButtonPresenter extends BaseViewPresenter<AddPauseFloatingActionButton> implements MediaPlayerEventListener
 {
 	private SoundsDataAccess soundsDataAccess;
 
@@ -34,22 +40,31 @@ public class AddPauseFloatingActionButtonPresenter extends BaseViewPresenter<Add
 	public void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		// TODO get current state from soundsData and update UI
+		this.updateToMediaPlayersState();
 	}
 
-	// TODO handle MediaPlayerStateChanged Events and update UI
-
-	/**
-	 * This is called by greenRobot EventBus in case the state of sounds in this activity has changed
-	 * @param event delivered ActivitySoundsStateChangedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(ActivitySoundsStateChangedEvent event)
+	@Override
+	public void onEvent(MediaPlayerStateChangedEvent event)
 	{
-		this.changeState(event.isAnySoundPlaying());
+		this.updateToMediaPlayersState();
 	}
 
-	private void changeState(boolean isStatePause)
+	@Override
+	public void onEvent(MediaPlayerCompletedEvent event)
+	{
+		this.updateToMediaPlayersState();
+	}
+
+	private void updateToMediaPlayersState()
+	{
+		Set<EnhancedMediaPlayer> currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
+		if (currentlyPlayingSounds.size() > 0)
+			this.setPauseState(true);
+		else
+			this.setPauseState(false);
+	}
+
+	private void setPauseState(boolean isStatePause)
 	{
 		if (this.isStatePause == isStatePause)
 			return;
