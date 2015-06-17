@@ -30,7 +30,6 @@ public class SoundAdapter
 		extends
 			SoundProgressAdapter<SoundAdapter.ViewHolder>
 		implements
-			ListAdapter<EnhancedMediaPlayer>,
 			MediaPlayerEventListener
 {
 	private static final String TAG = SoundAdapter.class.getName();
@@ -58,16 +57,6 @@ public class SoundAdapter
 
 	@Override
 	public void onDetachedFromWindow() {}
-
-	@Override
-	public void notifyItemChanged(EnhancedMediaPlayer data)
-	{
-		int index = this.getValues().indexOf(data);
-		if (index == -1)
-			this.notifyDataSetChanged();
-		else
-			this.notifyItemChanged(index);
-	}
 
 	@Override
 	public void onEvent(MediaPlayerStateChangedEvent event)
@@ -102,7 +91,7 @@ public class SoundAdapter
 	}
 
 	@Override
-	protected List<EnhancedMediaPlayer> getValues()
+	public List<EnhancedMediaPlayer> getValues()
 	{
 		return this.soundsDataAccess.getSoundsInFragment(this.parentFragmentTag);
 	}

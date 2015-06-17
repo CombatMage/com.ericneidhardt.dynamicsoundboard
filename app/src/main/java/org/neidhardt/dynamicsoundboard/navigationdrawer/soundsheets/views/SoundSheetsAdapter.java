@@ -11,7 +11,6 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
@@ -22,6 +21,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetR
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetRenamedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,9 +29,8 @@ import java.util.Set;
 
 public class SoundSheetsAdapter
 		extends
-			RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
+			BaseAdapter<SoundSheet, SoundSheetsAdapter.ViewHolder>
 		implements
-		ListAdapter<SoundSheet>,
 			SoundSheetFragment.OnSoundRemovedEventListener,
 			OnSoundSheetsChangedEventListener,
 			OnSoundSheetRenamedEventListener,
@@ -100,16 +99,6 @@ public class SoundSheetsAdapter
 		int soundCount = sounds != null ? sounds.size() : 0;
 
 		holder.bindData(data, soundCount);
-	}
-
-	@Override
-	public void notifyItemChanged(SoundSheet data)
-	{
-		int index = this.getValues().indexOf(data);
-		if (index == -1)
-			this.notifyDataSetChanged();
-		else
-			this.notifyItemChanged(index);
 	}
 
 	@Override

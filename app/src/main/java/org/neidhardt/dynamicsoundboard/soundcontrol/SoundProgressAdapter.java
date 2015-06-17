@@ -3,13 +3,14 @@ package org.neidhardt.dynamicsoundboard.soundcontrol;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder & SoundProgressViewHolder>
 		extends
-			RecyclerView.Adapter<T>
+			BaseAdapter<EnhancedMediaPlayer, T>
 		implements
 			Runnable
 {
@@ -67,8 +68,6 @@ public abstract class SoundProgressAdapter<T extends RecyclerView.ViewHolder & S
 		}
 		return playingSounds;
 	}
-
-	protected abstract List<EnhancedMediaPlayer> getValues();
 
 	public void setRecyclerView(RecyclerView recyclerView)
 	{

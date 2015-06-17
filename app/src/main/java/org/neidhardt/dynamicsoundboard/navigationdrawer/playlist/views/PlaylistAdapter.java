@@ -32,7 +32,6 @@ public class PlaylistAdapter
 		extends
 			SoundProgressAdapter<PlaylistAdapter.ViewHolder>
 		implements
-		ListAdapter<EnhancedMediaPlayer>,
 			OnPlaylistChangedEventListener,
 			MediaPlayerEventListener,
 			OnSoundSheetsChangedEventListener
@@ -70,7 +69,7 @@ public class PlaylistAdapter
 	}
 
 	@Override
-	protected List<EnhancedMediaPlayer> getValues()
+	public List<EnhancedMediaPlayer> getValues()
 	{
 		return this.presenter.getPlaylist();
 	}
@@ -105,16 +104,6 @@ public class PlaylistAdapter
 			nextActivePlayer.playSound();
 		}
 		this.notifyDataSetChanged();
-	}
-
-	@Override
-	public void notifyItemChanged(EnhancedMediaPlayer data)
-	{
-		int index = this.getValues().indexOf(data);
-		if (index == -1)
-			this.notifyDataSetChanged();
-		else
-			this.notifyItemChanged(index);
 	}
 
 	@Override
