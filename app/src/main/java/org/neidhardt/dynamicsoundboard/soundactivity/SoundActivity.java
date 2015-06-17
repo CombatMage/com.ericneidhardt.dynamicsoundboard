@@ -236,7 +236,6 @@ public class SoundActivity
 		super.onStart();
 
 		this.soundSheetsDataUtil.registerOnEventBus();
-		this.soundsDataUtil.registerOnEventBus();
 		EventBus.getDefault().registerSticky(this);
 	}
 
@@ -281,7 +280,6 @@ public class SoundActivity
 		EventBus.getDefault().unregister(this);
 
 		this.soundSheetsDataUtil.unregisterOnEventBus();
-		this.soundsDataUtil.unregisterOnEventBus();
 
 		if (this.isFinishing())
 		{

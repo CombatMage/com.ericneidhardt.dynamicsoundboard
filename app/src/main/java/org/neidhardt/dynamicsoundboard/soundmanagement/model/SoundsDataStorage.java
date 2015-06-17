@@ -13,9 +13,9 @@ public interface SoundsDataStorage
 	/**
 	 * Create an new {@code EnhancedMediaPlayer} from given data and adds this player to the playlist.
 	 * If creation failed, a new {@code CreatingPlayerFailedEvent} is posted.
-	 * @param data {@code MediaPlayerData} to construct new {@code EnhancedMediaPlayer}.
+	 * @param player {@code EnhancedMediaPlayer} to add
 	 */
-	void addSoundToPlayList(MediaPlayerData data);
+	void addSoundToPlayList(EnhancedMediaPlayer player);
 
 	/**
 	 * Adds sound to corresponding sound list. If the list is long enough, the players sort order is respected, otherwise it is added to the end of the list.
@@ -49,4 +49,16 @@ public interface SoundsDataStorage
 	 * @param to new position of moved sound
 	 */
 	void moveSoundInFragment(String fragmentTag, int from, int to);
+
+	/**
+	 * Removes the given {@code MediaPlayerData} from the database of regular sound items.
+	 * @param playerData {@code MediaPlayerData} to remove
+	 */
+	void removeSoundDataFromDatabase(MediaPlayerData playerData);
+
+	/**
+	 * Removes the given {@code MediaPlayerData} from the database of playlist items.
+	 * @param playerData {@code MediaPlayerData} to remove
+	 */
+	void removePlaylistDataFromDatabase(MediaPlayerData playerData);
 }

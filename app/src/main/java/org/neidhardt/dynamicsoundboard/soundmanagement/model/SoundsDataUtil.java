@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model;
 
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 /**
  * File created by eric.neidhardt on 02.06.2015.
@@ -25,13 +26,17 @@ public interface SoundsDataUtil
 	void writeCacheBackAndRelease();
 
 	/**
-	 * Register the storage class on eventBus, should be called in onStart() of holding activity.
+	 * Creates an new EnhancedMediaPlayer instance
+	 * @param playerData raw data to create new MediaPlayer
+	 * @return playerData to be stored in database, or null if creation failed
 	 */
-	void registerOnEventBus();
+	EnhancedMediaPlayer createSound(MediaPlayerData playerData);
 
 	/**
-	 * Unregister the storage class on eventBus, should be called in onStop() of holding activity.
+	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the playlist.
+	 * @param playerData raw data to create new MediaPlayer
+	 * @return playerData to be stored in database, or null if creation failed
 	 */
-	void unregisterOnEventBus();
+	EnhancedMediaPlayer createPlaylistSound(MediaPlayerData playerData);
 
 }

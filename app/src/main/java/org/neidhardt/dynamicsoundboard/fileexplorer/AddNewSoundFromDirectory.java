@@ -118,7 +118,8 @@ public class AddNewSoundFromDirectory
 	private void returnResultsToCallingFragment()
 	{
 		List<File> result = this.buildResult();
-		LoadSoundsFromFileListTask task = new LoadSoundsFromFileListTask(result, this.callingFragmentTag);
+		LoadSoundsFromFileListTask task = new LoadSoundsFromFileListTask(result,
+				this.callingFragmentTag, this.soundsDataAccess, this.soundsDataStorage, this.soundsDataUtil);
 		task.execute();
 	}
 }

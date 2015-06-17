@@ -8,6 +8,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
@@ -20,11 +21,12 @@ import javax.inject.Inject;
 public abstract class BaseDialog extends DialogFragment
 {
 	@Inject protected SoundSheetsDataAccess soundSheetsDataAccess;
-	@Inject protected SoundSheetsDataUtil soundSheetsDataUtil;
 	@Inject protected SoundSheetsDataStorage soundSheetsDataStorage;
+	@Inject protected SoundSheetsDataUtil soundSheetsDataUtil;
 
 	@Inject protected SoundsDataStorage soundsDataStorage;
 	@Inject protected SoundsDataAccess soundsDataAccess;
+	@Inject protected SoundsDataUtil soundsDataUtil;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)

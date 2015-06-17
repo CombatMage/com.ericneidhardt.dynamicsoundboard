@@ -9,7 +9,9 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
@@ -25,8 +27,7 @@ public class SoundsManager
 	implements
 		SoundsDataAccess,
 		SoundsDataStorage,
-		SoundsDataUtil,
-		OnMediaPlayersLoadedEventListener
+		SoundsDataUtil
 {
 	private static final String TAG = SoundsManager.class.getName();
 
@@ -77,10 +78,10 @@ public class SoundsManager
 		this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNamePlayList());
 		this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNameSounds());
 
-		SafeAsyncTask task = new LoadSoundsTask(this.dbSounds);
+		SafeAsyncTask task = new LoadSoundsTask(this.dbSounds, this, this, this);
 		task.execute();
 
-		task = new LoadPlaylistTask(this.dbPlaylist);
+		task = new LoadPlaylistTask(this.dbPlaylist, this, this, this);
 		task.execute();
 	}
 
@@ -88,19 +89,6 @@ public class SoundsManager
 	public boolean isInit()
 	{
 		return this.isInitDone;
-	}
-
-	@Override
-	public void registerOnEventBus()
-	{
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.registerSticky(this, 1);
-	}
-
-	@Override
-	public void unregisterOnEventBus()
-	{
-		this.eventBus.unregister(this);
 	}
 
 	@Override
@@ -188,7 +176,15 @@ public class SoundsManager
 			if (player != null)
 			{
 				player.setIsInPlaylist(true);
-				this.addSoundToPlayList(player.getMediaPlayerData());
+
+				EnhancedMediaPlayer playerForPlaylist = createPlaylistSound(player.getMediaPlayerData());
+				if (playerForPlaylist == null)
+				{
+					this.removePlaylistDataFromDatabase(player.getMediaPlayerData());
+					this.eventBus.post(new CreatingPlayerFailedEvent(player.getMediaPlayerData()));
+				}
+				else
+					this.addSoundToPlayList(playerForPlaylist);
 			}
 		}
 		else
@@ -207,21 +203,16 @@ public class SoundsManager
 	}
 
 	@Override
-	public void addSoundToPlayList(MediaPlayerData data)
+	public void addSoundToPlayList(EnhancedMediaPlayer player)
 	{
-		EnhancedMediaPlayer player = createPlaylistSound(data);
-		if (player == null)
+		this.playlist.add(player);
+		MediaPlayerData data = player.getMediaPlayerData();
+		MediaPlayerDataDao dao = this.getDbPlaylist().getMediaPlayerDataDao();
+		if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.getPlayerId())).list().size() == 0)
 		{
-			this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), data);
-			this.eventBus.post(new CreatingPlayerFailedEvent(data));
+			dao.insert(data);
 		}
-		else
-		{
-			this.playlist.add(player);
 
-			MediaPlayerDataDao playlistDap = this.getDbPlaylist().getMediaPlayerDataDao();
-			playlistDap.insert(player.getMediaPlayerData());
-		}
 		this.eventBus.post(new PlaylistChangedEvent());
 	}
 
@@ -231,11 +222,12 @@ public class SoundsManager
 		if (player == null)
 			throw new NullPointerException("cannot add new Player, player is null");
 
-		String fragmentTag = player.getMediaPlayerData().getFragmentTag();
+		MediaPlayerData data = player.getMediaPlayerData();
+		String fragmentTag = data.getFragmentTag();
 		if (this.sounds.get(fragmentTag) == null)
 			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
 
-		Integer index = player.getMediaPlayerData().getSortOrder();
+		Integer index = data.getSortOrder();
 		if (index == null)
 			index = 0;
 
@@ -245,6 +237,12 @@ public class SoundsManager
 			soundsInFragment.add(index, player);
 		else
 			soundsInFragment.add(player); // if the list is to short, just append
+
+		MediaPlayerDataDao dao = this.getDbSounds().getMediaPlayerDataDao();
+		if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.getPlayerId())).list().size() == 0)
+		{
+			dao.insert(data);
+		}
 
 		this.eventBus.post(new SoundsChangedEvent());
 	}
@@ -307,12 +305,8 @@ public class SoundsManager
 		}
 	}
 
-	/**
-	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the playlist.
-	 * @param playerData raw data to create new MediaPlayer
-	 * @return playerData to be stored in database, or null if creation failed
-	 */
-	private EnhancedMediaPlayer createPlaylistSound(MediaPlayerData playerData)
+	@Override
+	public EnhancedMediaPlayer createPlaylistSound(MediaPlayerData playerData)
 	{
 		try
 		{
@@ -321,17 +315,13 @@ public class SoundsManager
 		catch (IOException e)
 		{
 			Logger.d(TAG, playerData.toString() + " " + e.getMessage());
-			this.removeSoundFromDatabase(this.dbPlaylist.getMediaPlayerDataDao(), playerData);
+			this.removePlaylistDataFromDatabase(playerData);
 			return null;
 		}
 	}
 
-	/**
-	 * Creates an new EnhancedMediaPlayer instance
-	 * @param playerData raw data to create new MediaPlayer
-	 * @return playerData to be stored in database, or null if creation failed
-	 */
-	private EnhancedMediaPlayer createSound(MediaPlayerData playerData)
+	@Override
+	public EnhancedMediaPlayer createSound(MediaPlayerData playerData)
 	{
 		int itemsInFragment = this.sounds.get(playerData.getFragmentTag()) != null ? this.sounds.get(playerData.getFragmentTag()).size() : 0;
 		if (playerData.getSortOrder() == null || playerData.getSortOrder() > itemsInFragment)
@@ -343,9 +333,21 @@ public class SoundsManager
 		catch (IOException e)
 		{
 			Logger.d(TAG, e.getMessage());
-			this.removeSoundFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerData);
+			this.removeSoundDataFromDatabase(playerData);
 			return null;
 		}
+	}
+
+	@Override
+	public void removeSoundDataFromDatabase(MediaPlayerData playerData)
+	{
+		this.removeSoundFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerData);
+	}
+
+	@Override
+	public void removePlaylistDataFromDatabase(MediaPlayerData playerData)
+	{
+		this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), playerData);
 	}
 
 	private void removeSoundFromDatabase(MediaPlayerDataDao dao, MediaPlayerData playerData)
@@ -359,57 +361,4 @@ public class SoundsManager
 		}
 	}
 
-	@Override
-	public void onEventMainThread(SoundLoadedEvent event)
-	{
-		MediaPlayerData data = event.getNewSoundData();
-		if (data == null)
-			throw new NullPointerException(TAG + ": onEvent() delivered data is null " + event);
-
-		if (this.getSoundById(data.getFragmentTag(), data.getPlayerId()) != null)
-		{
-			Logger.d(TAG, "player: " + data + " is already loaded");
-			return;
-		}
-
-		EnhancedMediaPlayer player = createSound(data);
-		if (player == null)
-		{
-			this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), data);
-			this.eventBus.post(new CreatingPlayerFailedEvent(data));
-		}
-		else
-		{
-			addSoundToSounds(player);
-
-			if (!event.isLoadFromDatabase()) // if the player was not loaded from the database, we need to add it to the database
-			{
-				MediaPlayerDataDao soundsDao = this.getDbSounds().getMediaPlayerDataDao();
-				soundsDao.insert(player.getMediaPlayerData());
-			}
-		}
-	}
-
-	@Override
-	public void onEventMainThread(PlaylistLoadedEvent event)
-	{
-		MediaPlayerData data = event.getLoadedSoundData();
-		if (data == null)
-			throw new NullPointerException(TAG + ": onEvent() delivered data is null");
-		EnhancedMediaPlayer player = createPlaylistSound(data);
-		if (player == null)
-		{
-			this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), data);
-			this.eventBus.post(new CreatingPlayerFailedEvent(data));
-		}
-		else
-		{
-			this.playlist.add(player);
-			if (!event.isLoadFromDatabase()) // if the player was not loaded from the database, we need to add it to the database
-			{
-				MediaPlayerDataDao playlistDap = this.getDbPlaylist().getMediaPlayerDataDao();
-				playlistDap.insert(player.getMediaPlayerData());
-			}
-		}
-	}
 }
