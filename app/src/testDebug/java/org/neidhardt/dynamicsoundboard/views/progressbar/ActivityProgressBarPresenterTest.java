@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStat
 import static org.mockito.Mockito.*;
 
 /**
- * Created by eric.neidhardt on 22.05.2015.
+ * File created by eric.neidhardt on 22.05.2015.
  */
 public class ActivityProgressBarPresenterTest extends BaseTest
 {

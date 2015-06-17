@@ -13,6 +13,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 
 import java.io.IOException;
 
@@ -44,12 +45,14 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	private Handler handler = null;
 
-	MediaPlayerData rawData;
+	private SoundsDataAccess soundsDataAccess;
+	private MediaPlayerData rawData;
 
-	public EnhancedMediaPlayer(MediaPlayerData data) throws IOException
+	public EnhancedMediaPlayer(MediaPlayerData data, SoundsDataAccess soundsDataAccess) throws IOException
 	{
 		super();
 
+		this.soundsDataAccess = soundsDataAccess;
 		this.rawData = data;
 		this.setLooping(data.getIsLoop());
 
@@ -79,7 +82,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		playListData.setLabel(data.getLabel());
 		playListData.setUri(data.getUri());
 
-		return new EnhancedMediaPlayer(playListData);
+		return new EnhancedMediaPlayer(playListData, DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataAccess());
 	}
 
 	public static MediaPlayerData getMediaPlayerData(String fragmentTag, Uri uri, String label)
@@ -130,6 +133,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
+		this.soundsDataAccess.getCurrentlyPlayingSounds().remove(this);
 		if (postStateChanged)
 			this.postStateChangedEvent(false);
 	}
@@ -206,6 +210,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.start();
 			this.currentState = State.STARTED;
 
+			this.soundsDataAccess.getCurrentlyPlayingSounds().add(this);
 			this.postStateChangedEvent(true);
 			return true;
 		}
@@ -270,6 +275,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.pause();
 			this.currentState = State.PAUSED;
 
+			this.soundsDataAccess.getCurrentlyPlayingSounds().remove(this);
 			this.postStateChangedEvent(true);
 			return true;
 		}
@@ -388,6 +394,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 		// for unknown reason, this must be set to paused instead of stopped. This contradicts MediaPlayer Documentation, but calling prepare for restart throws illegal state exception
 		this.currentState = State.PAUSED;
+		this.soundsDataAccess.getCurrentlyPlayingSounds().remove(this);
 		this.postStateChangedEvent(true);
 		this.postCompletedEvent();
 	}

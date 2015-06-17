@@ -23,7 +23,6 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -40,9 +39,7 @@ import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityClosedEvent;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivitySoundsStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
@@ -58,7 +55,6 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteA
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
-import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
 import javax.inject.Inject;
@@ -113,8 +109,6 @@ public class SoundActivity
 
 		this.initActionbar();
 		this.initNavigationDrawer();
-
-		this.startService(new Intent(this, NotificationService.class));
 
 		this.phoneStateListener = new PauseSoundOnCallListener();
 		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -240,7 +234,6 @@ public class SoundActivity
 	protected void onStart()
 	{
 		super.onStart();
-		this.startService(new Intent(this.getApplicationContext(), NotificationService.class));
 
 		this.soundSheetsDataUtil.registerOnEventBus();
 		this.soundsDataUtil.registerOnEventBus();
@@ -252,8 +245,10 @@ public class SoundActivity
 	{
 		super.onResume();
 
+		this.startService(new Intent(this.getApplicationContext(), NotificationService.class));
+
 		this.isActivityVisible = true;
-		EventBus.getDefault().postSticky(new ActivityResumedEvent());
+		EventBus.getDefault().postSticky(new ActivityStateChangedEvent(true));
 
 		this.setSoundSheetActionsEnable(false);
 
@@ -275,7 +270,7 @@ public class SoundActivity
 		super.onPause();
 
 		this.isActivityVisible = false;
-		EventBus.getDefault().postSticky(new ActivityClosedEvent());
+		EventBus.getDefault().postSticky(new ActivityStateChangedEvent(false));
 
 		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener);
 	}

@@ -5,7 +5,10 @@ package org.neidhardt.dynamicsoundboard.soundactivity.events;
  */
 public interface ActivityStateChangedEventListener
 {
-	void onEvent(ActivityClosedEvent event);
-
-	void onEvent(ActivityResumedEvent event);
+	/**
+	 * This is called by greenRobot EventBus in case the activity state has changed, ie. the onResume() or onPause() callback
+	 * of the {@code SoundActivity} is called.
+	 * @param event delivered ActivityStateChangedEvent
+	 */
+	void onEvent(ActivityStateChangedEvent event);
 }

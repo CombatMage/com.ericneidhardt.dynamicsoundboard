@@ -6,6 +6,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 
 import static org.junit.Assert.*;
@@ -18,7 +20,9 @@ public class SoundSheetsPresenterTest extends BaseTest
 {
 	private SoundSheetsPresenter presenter;
 
+	@Mock private SoundSheetsDataAccess mockSoundSheetsDataAccess;
 	@Mock private SoundSheetsDataStorage mockSoundSheetsDataStorage;
+	@Mock private SoundsDataAccess mockSoundsDataAccess;
 	@Mock private SoundSheetsAdapter mockAdapter;
 
 	@Override
@@ -27,7 +31,7 @@ public class SoundSheetsPresenterTest extends BaseTest
 		super.setUp();
 		MockitoAnnotations.initMocks(this);
 
-		this.presenter = spy(new SoundSheetsPresenter());
+		this.presenter = spy(new SoundSheetsPresenter(this.mockSoundSheetsDataAccess, this.mockSoundSheetsDataStorage, this.mockSoundsDataAccess));
 		this.presenter.setAdapter(this.mockAdapter);
 		this.presenter.setSoundSheetsDataStorage(this.mockSoundSheetsDataStorage);
 	}

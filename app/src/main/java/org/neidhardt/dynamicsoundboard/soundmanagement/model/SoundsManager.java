@@ -34,7 +34,6 @@ public class SoundsManager
 		SoundsDataAccess,
 		SoundsDataStorage,
 		SoundsDataUtil,
-		MediaPlayerEventListener,
 		OnMediaPlayersLoadedEventListener
 {
 	private static final String TAG = SoundsManager.class.getName();
@@ -184,12 +183,12 @@ public class SoundsManager
 	}
 
 	@Override
-	public void toggleSoundInPlaylist(String playerId, boolean addToPlayList)
+	public void toggleSoundInPlaylist(String playerId, boolean addToPlaylist)
 	{
 		EnhancedMediaPlayer player = SoundsManagerUtil.searchInMapForId(playerId, this.sounds);
 		EnhancedMediaPlayer playerInPlaylist = SoundsManagerUtil.searchInListForId(playerId, playlist);
 
-		if (addToPlayList)
+		if (addToPlaylist)
 		{
 			if (playerInPlaylist != null)
 				return;
@@ -347,7 +346,7 @@ public class SoundsManager
 			playerData.setSortOrder(itemsInFragment);
 		try
 		{
-			return new EnhancedMediaPlayer(playerData);
+			return new EnhancedMediaPlayer(playerData, this);
 		}
 		catch (IOException e)
 		{
@@ -366,22 +365,6 @@ public class SoundsManager
 			List<MediaPlayerData> playersInDatabase = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerData.getPlayerId())).list();
 			dao.deleteInTx(playersInDatabase);
 		}
-	}
-
-	@Override
-	public void onEvent(MediaPlayerStateChangedEvent event)
-	{
-		EnhancedMediaPlayer player = event.getPlayer();
-		if (player.isPlaying())
-			this.currentlyPlayingSounds.add(player);
-		else
-			this.currentlyPlayingSounds.remove(player);
-	}
-
-	@Override
-	public void onEvent(MediaPlayerCompletedEvent event)
-	{
-		this.currentlyPlayingSounds.remove(event.getPlayer());
 	}
 
 	@Override

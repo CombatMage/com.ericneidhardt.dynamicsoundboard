@@ -7,8 +7,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityClosedEvent;
-import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityResumedEvent;
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
@@ -71,18 +70,19 @@ public class NotificationService extends Service implements ActivityStateChanged
 	}
 
 	@Override
-	public void onEvent(ActivityClosedEvent event)
+	public void onEvent(ActivityStateChangedEvent event)
 	{
-		this.isActivityVisible = false;
-		if (this.soundSheetsDataAccess.getCurrentlyPlayingSounds().size() == 0)
-			this.stopSelf();
-	}
-
-	@Override
-	public void onEvent(ActivityResumedEvent event)
-	{
-		this.isActivityVisible = true;
-		this.notificationHandler.removeNotificationsForPausedSounds();
+		if (event.isActivityClosed())
+		{
+			this.isActivityVisible = false;
+			if (this.soundSheetsDataAccess.getCurrentlyPlayingSounds().size() == 0)
+				this.stopSelf();
+		}
+		else if (event.isActivityResumed())
+		{
+			this.isActivityVisible = true;
+			this.notificationHandler.removeNotificationsForPausedSounds();
+		}
 	}
 
 	public boolean isActivityVisible()
