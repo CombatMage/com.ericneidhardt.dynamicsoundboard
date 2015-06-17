@@ -9,6 +9,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.SoundsDataModule;
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.SoundSheetsDataModule;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
@@ -21,7 +22,6 @@ import javax.inject.Singleton;
 @Component(modules = {SoundsDataModule.class, SoundSheetsDataModule.class})
 public interface ApplicationComponent
 {
-
 	void inject(NotificationService service);
 
 	void inject(BaseDialog dialog);
@@ -37,4 +37,6 @@ public interface ApplicationComponent
 	void inject(NavigationDrawerFragment fragment);
 
 	void inject(PauseSoundOnCallListener listener);
+
+	SoundsDataAccess provideSoundsDataAccess();
 }

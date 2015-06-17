@@ -9,7 +9,6 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundShee
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class SoundSheetsPresenter
 	private SoundsDataAccess soundsDataAccess;
 	private SoundSheetsAdapter adapter;
 
-	@Inject
 	public SoundSheetsPresenter(SoundSheetsDataAccess soundSheetsDataAccess, SoundSheetsDataStorage soundSheetsDataStorage, SoundsDataAccess soundsDataAccess)
 	{
 		this.soundSheetsDataAccess = soundSheetsDataAccess;

@@ -120,6 +120,8 @@ public class SoundActivity
 		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 	}
 
+	// TODO move this to FABPresenter
+	@Deprecated
 	private void setFloatActionButton()
 	{
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.findViewById(R.id.fab_add);

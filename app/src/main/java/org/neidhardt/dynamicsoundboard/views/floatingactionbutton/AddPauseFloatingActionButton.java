@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils;
 
@@ -14,7 +15,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 {
 	private static final int[] PAUSE_STATE = new int[] { R.attr.state_pause };
 
-	private AddPauseFloatingActionButtonViewPresenter presenter;
+	private AddPauseFloatingActionButtonPresenter presenter;
 
 	@SuppressWarnings("unused")
 	public AddPauseFloatingActionButton(Context context)
@@ -39,7 +40,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 
 	private void init()
 	{
-		this.presenter = new AddPauseFloatingActionButtonViewPresenter();
+		this.presenter = new AddPauseFloatingActionButtonPresenter(DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataAccess());
 	}
 
 	@Override

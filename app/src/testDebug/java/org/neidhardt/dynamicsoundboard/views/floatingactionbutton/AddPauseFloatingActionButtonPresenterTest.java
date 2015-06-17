@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
  */
 public class AddPauseFloatingActionButtonPresenterTest extends BaseTest {
 
-	private AddPauseFloatingActionButtonViewPresenter fabPresenter;
+	private AddPauseFloatingActionButtonPresenter fabPresenter;
 	private AddPauseFloatingActionButton mockView;
 
 	@Override
@@ -23,7 +23,7 @@ public class AddPauseFloatingActionButtonPresenterTest extends BaseTest {
 	public void setUp() throws Exception {
 		super.setUp();
 		this.mockView = mock(AddPauseFloatingActionButton.class);
-		this.fabPresenter = new AddPauseFloatingActionButtonViewPresenter();
+		this.fabPresenter = new AddPauseFloatingActionButtonPresenter();
 		this.fabPresenter.setView(this.mockView);
 	}
 
