@@ -14,7 +14,8 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerLi
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetRenamedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetRenamedEvent;
@@ -106,7 +107,13 @@ public class SoundSheetsAdapter
 	}
 
 	@Override
-	public void onEvent(SoundsChangedEvent event)
+	public void onEventMainThread(SoundAddedEvent event)
+	{
+		this.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onEventMainThread(SoundsRemovedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}

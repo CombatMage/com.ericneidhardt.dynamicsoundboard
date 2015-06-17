@@ -65,7 +65,7 @@ public class SoundSheetsManager
 	public void init()
 	{
 		if (this.isInitDone)
-			throw new IllegalStateException(TAG + ": ini() was called, but SoundSheetsManager was already initialized");
+			throw new IllegalStateException(TAG + ": init() was called, but SoundSheetsManager was already initialized");
 
 		this.isInitDone = true;
 

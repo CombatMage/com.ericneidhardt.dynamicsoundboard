@@ -24,14 +24,14 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
@@ -182,7 +182,8 @@ public class SoundSheetFragment
 				Uri soundUri = data.getData();
 				String soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri));
 				MediaPlayerData playerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel);
-				EventBus.getDefault().postSticky(new SoundLoadedEvent(playerData, false));
+
+				this.soundsDataStorage.createSoundAndAddToManager(playerData);
 				return;
 			}
 		}
@@ -296,7 +297,13 @@ public class SoundSheetFragment
 	}
 
 	@Override
-	public void onEvent(SoundsChangedEvent event)
+	public void onEventMainThread(SoundAddedEvent event)
+	{
+		this.soundAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onEventMainThread(SoundsRemovedEvent event)
 	{
 		this.soundAdapter.notifyDataSetChanged();
 	}

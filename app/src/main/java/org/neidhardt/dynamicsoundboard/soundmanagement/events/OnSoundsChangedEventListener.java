@@ -6,8 +6,14 @@ package org.neidhardt.dynamicsoundboard.soundmanagement.events;
 public interface OnSoundsChangedEventListener
 {
 	/**
-	 * This is called by greenRobot EventBus in case the loaded sounds have changed, either in number or data.
-	 * @param event delivered SoundsChangedEvent
+	 * This is called by greenRobot EventBus in case a new sound was add.
+	 * @param event delivered SoundAddedEvent
 	 */
-	void onEvent(SoundsChangedEvent event);
+	void onEventMainThread(SoundAddedEvent event);
+
+	/**
+	 * This is called by greenRobot EventBus in case some sounds have been removed.
+	 * @param event delivered SoundsRemovedEvent
+	 */
+	void onEventMainThread(SoundsRemovedEvent event);
 }

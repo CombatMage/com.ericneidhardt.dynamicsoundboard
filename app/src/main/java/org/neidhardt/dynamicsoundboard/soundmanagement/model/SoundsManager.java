@@ -11,7 +11,8 @@ import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
@@ -19,6 +20,8 @@ import roboguice.util.SafeAsyncTask;
 
 import java.io.IOException;
 import java.util.*;
+
+import static java.util.Arrays.asList;
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
@@ -78,10 +81,10 @@ public class SoundsManager
 		this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNamePlayList());
 		this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNameSounds());
 
-		SafeAsyncTask task = new LoadSoundsTask(this.dbSounds, this, this, this);
+		SafeAsyncTask task = new LoadSoundsTask(this.dbSounds, this);
 		task.execute();
 
-		task = new LoadPlaylistTask(this.dbPlaylist, this, this, this);
+		task = new LoadPlaylistTask(this.dbPlaylist, this);
 		task.execute();
 	}
 
@@ -160,6 +163,44 @@ public class SoundsManager
 			return SoundsManagerUtil.searchInListForId(playerId, playlist);
 		else
 			return SoundsManagerUtil.searchInListForId(playerId, this.sounds.get(fragmentTag));
+	}
+
+	@Override
+	public void createSoundAndAddToManager(MediaPlayerData data)
+	{
+		if (this.getSoundById(data.getFragmentTag(), data.getPlayerId()) != null)
+		{
+			Logger.d(TAG, "player: " + data + " is already loaded");
+			return;
+		}
+
+		EnhancedMediaPlayer player = this.createSound(data);
+		if (player == null)
+		{
+			this.removeSoundDataFromDatabase(data);
+			EventBus.getDefault().post(new CreatingPlayerFailedEvent(data));
+		}
+		else
+			this.addSoundToSounds(player);
+	}
+
+	@Override
+	public void createPlaylistSoundAndAddToManager(MediaPlayerData data)
+	{
+		if (this.getSoundById(data.getFragmentTag(), data.getPlayerId()) != null)
+		{
+			Logger.d(TAG, "player: " + data + " is already loaded");
+			return;
+		}
+
+		EnhancedMediaPlayer player = this.createPlaylistSound(data);
+		if (player == null)
+		{
+			this.removePlaylistDataFromDatabase(data);
+			this.eventBus.post(new CreatingPlayerFailedEvent(data));
+		}
+		else
+			this.addSoundToPlayList(player);
 	}
 
 	@Override
@@ -244,7 +285,7 @@ public class SoundsManager
 			dao.insert(data);
 		}
 
-		this.eventBus.post(new SoundsChangedEvent());
+		this.eventBus.post(new SoundAddedEvent(player));
 	}
 
 	@Override
@@ -276,7 +317,7 @@ public class SoundsManager
 			playerToRemove.destroy(true);
 		}
 
-		this.eventBus.post(new SoundsChangedEvent());
+		this.eventBus.post(new SoundsRemovedEvent(soundsToRemove));
 	}
 
 	@Override
@@ -285,7 +326,7 @@ public class SoundsManager
 		for (EnhancedMediaPlayer player : soundsToRemove)
 			this.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), false);
 
-		this.eventBus.post(new SoundsChangedEvent());
+		this.eventBus.post(new SoundsRemovedEvent(soundsToRemove));
 	}
 
 	@Override

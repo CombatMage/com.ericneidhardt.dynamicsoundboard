@@ -18,8 +18,6 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistLoadedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundLoadedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
@@ -105,8 +103,8 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 			this.addLoadedSoundSheets(soundSheets);
 
-			addLoadedSounds(sounds);
-			addLoadedPlayList(playList);
+			this.addLoadedSounds(sounds);
+			this.addLoadedPlayList(playList);
 
 			this.dismiss();
 		}
@@ -133,19 +131,17 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 	{
 		this.soundsDataStorage.removeSoundsFromPlaylist(this.soundsDataAccess.getPlaylist()); // clear playlist before adding new values
 
-		EventBus bus = EventBus.getDefault();
 		for (MediaPlayerData mediaPlayerData : playList)
-			bus.post(new PlaylistLoadedEvent(mediaPlayerData, false));
+			this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData);
 	}
 
-	private static void addLoadedSounds(Map<String, List<MediaPlayerData>> sounds)
+	private void addLoadedSounds(Map<String, List<MediaPlayerData>> sounds)
 	{
-		EventBus bus = EventBus.getDefault();
 		for (String key : sounds.keySet())
 		{
 			List<MediaPlayerData> soundsPerFragment = sounds.get(key);
 			for (MediaPlayerData mediaPlayerData : soundsPerFragment)
-				bus.post(new SoundLoadedEvent(mediaPlayerData, false));
+				this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData);
 		}
 	}
 
