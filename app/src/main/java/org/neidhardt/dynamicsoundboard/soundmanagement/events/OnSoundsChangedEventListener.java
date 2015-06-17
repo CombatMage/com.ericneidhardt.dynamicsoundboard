@@ -16,4 +16,6 @@ public interface OnSoundsChangedEventListener
 	 * @param event delivered SoundsRemovedEvent
 	 */
 	void onEventMainThread(SoundsRemovedEvent event);
+
+	void onEventMainThread(SoundChangedEvent event);
 }

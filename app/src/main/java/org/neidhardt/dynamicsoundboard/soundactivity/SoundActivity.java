@@ -256,10 +256,6 @@ public class SoundActivity
 		if (!this.soundSheetsDataUtil.isInit())
 			this.soundSheetsDataUtil.init();
 
-		SoundSheetFragment currentFragment = getCurrentSoundFragment(this.getFragmentManager());
-		if (currentFragment != null)
-			currentFragment.notifyDataSetChanged(); // trigger update after return from settings activity
-
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener);
 	}
 

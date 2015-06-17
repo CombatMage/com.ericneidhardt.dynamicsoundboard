@@ -17,6 +17,7 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -124,7 +125,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))
 				EventBus.getDefault().post(new PlaylistChangedEvent());
 			else
-				this.notifyFragment(player.getMediaPlayerData().getFragmentTag());
+				EventBus.getDefault().post(new SoundChangedEvent(player));
 		}
 	}
 

@@ -9,11 +9,10 @@ import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListAdapter;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class SoundLayoutsAdapter
 		extends
 			RecyclerView.Adapter<SoundLayoutsAdapter.ViewHolder>
 		implements
-			NavigationDrawerListAdapter<SoundLayout>,
+		ListAdapter<SoundLayout>,
 			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
 			AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener
 {

@@ -102,16 +102,6 @@ public class SoundSheetsPresenter
 		return selectedSoundSheets;
 	}
 
-	void setSoundSheetsDataAccess(SoundSheetsDataAccess soundSheetsDataAccess)
-	{
-		this.soundSheetsDataAccess = soundSheetsDataAccess;
-	}
-
-	public void setSoundSheetsDataStorage(SoundSheetsDataStorage soundSheetsDataStorage)
-	{
-		this.soundSheetsDataStorage = soundSheetsDataStorage;
-	}
-
 	public void setAdapter(SoundSheetsAdapter adapter)
 	{
 		this.adapter = adapter;
@@ -125,5 +115,10 @@ public class SoundSheetsPresenter
 	public List<EnhancedMediaPlayer> getSoundsInFragment(String fragmentTag)
 	{
 		return this.soundsDataAccess.getSoundsInFragment(fragmentTag);
+	}
+
+	public SoundSheetsDataAccess getSoundSheetsDataAccess()
+	{
+		return soundSheetsDataAccess;
 	}
 }

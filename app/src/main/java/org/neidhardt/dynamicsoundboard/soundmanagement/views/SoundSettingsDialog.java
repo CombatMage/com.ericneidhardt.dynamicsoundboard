@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
 
@@ -132,12 +134,11 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		if (!hasSoundSheetChanged)
 		{
 			this.player.getMediaPlayerData().setLabel(soundLabel);
-			soundSheetFragment.notifyDataSetChanged();
+			EventBus.getDefault().post(new SoundChangedEvent(this.player));
 		}
 		else
 		{
 			this.soundsDataStorage.removeSounds(Collections.singletonList(this.player));
-			soundSheetFragment.notifyDataSetChanged();
 
 			Uri uri = Uri.parse(this.player.getMediaPlayerData().getUri());
 

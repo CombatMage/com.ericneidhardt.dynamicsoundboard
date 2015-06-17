@@ -28,10 +28,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEven
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
@@ -308,9 +305,10 @@ public class SoundSheetFragment
 		this.soundAdapter.notifyDataSetChanged();
 	}
 
-	public void notifyDataSetChanged()
+	@Override
+	public void onEventMainThread(SoundChangedEvent event)
 	{
-		this.soundAdapter.notifyDataSetChanged();
+		this.soundAdapter.notifyItemChanged(event.getPlayer());
 	}
 
 	public interface OnSoundRemovedEventListener

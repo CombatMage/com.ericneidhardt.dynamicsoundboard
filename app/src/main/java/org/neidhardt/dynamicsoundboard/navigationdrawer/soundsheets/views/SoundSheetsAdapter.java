@@ -10,29 +10,35 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListAdapter;
+import org.neidhardt.dynamicsoundboard.misc.Logger;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetRenamedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetRenamedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SoundSheetsAdapter
 		extends
 			RecyclerView.Adapter<SoundSheetsAdapter.ViewHolder>
 		implements
-			NavigationDrawerListAdapter<SoundSheet>,
+		ListAdapter<SoundSheet>,
 			SoundSheetFragment.OnSoundRemovedEventListener,
 			OnSoundSheetsChangedEventListener,
 			OnSoundSheetRenamedEventListener,
 			OnSoundsChangedEventListener
 {
+	private static final String TAG = SoundSheetsAdapter.class.getName();
+
 	private SoundSheetsPresenter presenter;
 	private EventBus eventBus;
 	private OnItemClickListener onItemClickListener;
@@ -109,13 +115,31 @@ public class SoundSheetsAdapter
 	@Override
 	public void onEventMainThread(SoundAddedEvent event)
 	{
-		this.notifyDataSetChanged();
+		String fragmentTag = event.getPlayer().getMediaPlayerData().getFragmentTag();
+		SoundSheet changedSoundSheet = this.presenter.getSoundSheetsDataAccess().getSoundSheetForFragmentTag(fragmentTag);
+
+		this.notifyItemChanged(changedSoundSheet);
 	}
 
 	@Override
 	public void onEventMainThread(SoundsRemovedEvent event)
 	{
-		this.notifyDataSetChanged();
+		List<EnhancedMediaPlayer> removedPlayers = event.getPlayers();
+		Set<String> affectedFragmentTags = new HashSet<>();
+		for (EnhancedMediaPlayer player : removedPlayers)
+			affectedFragmentTags.add(player.getMediaPlayerData().getFragmentTag());
+
+		for (String fragmentTag : affectedFragmentTags)
+		{
+			SoundSheet changedSoundSheet = this.presenter.getSoundSheetsDataAccess().getSoundSheetForFragmentTag(fragmentTag);
+			this.notifyItemChanged(changedSoundSheet);
+		}
+	}
+
+	@Override
+	public void onEventMainThread(SoundChangedEvent event)
+	{
+		Logger.d(TAG, event.toString()); // nothing to be done
 	}
 
 	@Override

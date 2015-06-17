@@ -33,7 +33,6 @@ public class SoundSheetsPresenterTest extends BaseTest
 
 		this.presenter = spy(new SoundSheetsPresenter(this.mockSoundSheetsDataAccess, this.mockSoundSheetsDataStorage, this.mockSoundsDataAccess));
 		this.presenter.setAdapter(this.mockAdapter);
-		this.presenter.setSoundSheetsDataStorage(this.mockSoundSheetsDataStorage);
 	}
 
 	@Test

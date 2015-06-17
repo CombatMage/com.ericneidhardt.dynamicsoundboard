@@ -21,6 +21,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolder;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class SoundAdapter
 		extends
 			SoundProgressAdapter<SoundAdapter.ViewHolder>
 		implements
+			ListAdapter<EnhancedMediaPlayer>,
 			MediaPlayerEventListener
 {
 	private static final String TAG = SoundAdapter.class.getName();
@@ -49,6 +51,22 @@ public class SoundAdapter
 		this.heightShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_shadow);
 		this.soundsDataAccess = soundsDataAccess;
 		this.soundsDataStorage = soundsDataStorage;
+	}
+
+	@Override
+	public void onAttachedToWindow() {}
+
+	@Override
+	public void onDetachedFromWindow() {}
+
+	@Override
+	public void notifyItemChanged(EnhancedMediaPlayer data)
+	{
+		int index = this.getValues().indexOf(data);
+		if (index == -1)
+			this.notifyDataSetChanged();
+		else
+			this.notifyItemChanged(index);
 	}
 
 	@Override

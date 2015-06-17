@@ -45,16 +45,6 @@ public abstract class BaseDialog extends DialogFragment
 		return (SoundSheetFragment)this.getFragmentManager().findFragmentByTag(fragmentTag);
 	}
 
-	protected void notifyFragment(String fragmentTag)
-	{
-		NavigationDrawerFragment navigationDrawerFragment = this.getNavigationDrawerFragment();
-		SoundSheetFragment fragment = (SoundSheetFragment) this.getFragmentManager().findFragmentByTag(fragmentTag);
-		if (fragment != null)
-			fragment.notifyDataSetChanged();
-
-		navigationDrawerFragment.getSoundSheetsAdapter().notifyDataSetChanged(); // updates sound count in sound sheet list
-	}
-
 	private NavigationDrawerFragment getNavigationDrawerFragment()
 	{
 		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentByTag(NavigationDrawerFragment.TAG);
