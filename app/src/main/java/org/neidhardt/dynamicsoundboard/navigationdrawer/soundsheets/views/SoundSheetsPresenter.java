@@ -5,6 +5,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
@@ -24,13 +25,18 @@ public class SoundSheetsPresenter
 	private SoundSheetsDataAccess soundSheetsDataAccess;
 	private SoundSheetsDataStorage soundSheetsDataStorage;
 	private SoundsDataAccess soundsDataAccess;
+	private SoundsDataStorage soundsDataStorage;
 	private SoundSheetsAdapter adapter;
 
-	public SoundSheetsPresenter(SoundSheetsDataAccess soundSheetsDataAccess, SoundSheetsDataStorage soundSheetsDataStorage, SoundsDataAccess soundsDataAccess)
+	public SoundSheetsPresenter(SoundSheetsDataAccess soundSheetsDataAccess,
+								SoundSheetsDataStorage soundSheetsDataStorage,
+								SoundsDataAccess soundsDataAccess,
+								SoundsDataStorage soundsDataStorage)
 	{
 		this.soundSheetsDataAccess = soundSheetsDataAccess;
 		this.soundSheetsDataStorage = soundSheetsDataStorage;
 		this.soundsDataAccess = soundsDataAccess;
+		this.soundsDataStorage = soundsDataStorage;
 	}
 
 	@Override
@@ -45,6 +51,7 @@ public class SoundSheetsPresenter
 		List<SoundSheet> soundSheetsToRemove = this.getSoundSheetsSelectedForDeletion();
 		for (SoundSheet soundSheet: soundSheetsToRemove)
 		{
+			this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(soundSheet.getFragmentTag()));
 			this.soundSheetsDataStorage.removeSoundSheet(soundSheet);
 			if (soundSheet.getIsSelected())
 			{

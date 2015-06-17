@@ -27,6 +27,6 @@ public class ConfirmDeleteSoundsDialog extends BaseConfirmDeleteDialog
 	@Override
 	protected void delete()
 	{
-		SoundActivity.getCurrentSoundFragment(this.getFragmentManager()).deleteAllSoundsInSoundSheet();
+		SoundActivity.getCurrentSoundFragment(this.getFragmentManager()).removeAllSounds();
 	}
 }

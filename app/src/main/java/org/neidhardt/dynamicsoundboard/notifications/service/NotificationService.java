@@ -42,11 +42,11 @@ public class NotificationService extends Service implements ActivityStateChanged
 		super.onCreate();
 		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 
+		this.notificationHandler = new NotificationHandler(this, this.soundSheetsDataAccess);
+
 		this.eventBus = EventBus.getDefault();
 		if (!this.eventBus.isRegistered(this))
 			this.eventBus.registerSticky(this);
-
-		this.notificationHandler = new NotificationHandler(this, this.soundSheetsDataAccess);
 	}
 
 	@Override

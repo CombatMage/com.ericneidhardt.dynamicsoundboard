@@ -11,8 +11,6 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
-import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
@@ -31,7 +29,6 @@ public class SoundSheetsAdapter
 		extends
 			BaseAdapter<SoundSheet, SoundSheetsAdapter.ViewHolder>
 		implements
-			SoundSheetFragment.OnSoundRemovedEventListener,
 			OnSoundSheetsChangedEventListener,
 			OnSoundSheetRenamedEventListener,
 			OnSoundsChangedEventListener
@@ -129,12 +126,6 @@ public class SoundSheetsAdapter
 	public void onEventMainThread(SoundChangedEvent event)
 	{
 		Logger.d(TAG, event.toString()); // nothing to be done
-	}
-
-	@Override
-	public void onEvent(SoundRemovedEvent event)
-	{
-		this.notifyDataSetChanged();
 	}
 
 	@Override

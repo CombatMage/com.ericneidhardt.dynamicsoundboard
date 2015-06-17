@@ -317,6 +317,8 @@ public class SoundsManager
 			playerToRemove.destroy(true);
 		}
 
+		// TODO update sort order of all affected items
+
 		this.eventBus.post(new SoundsRemovedEvent(soundsToRemove));
 	}
 

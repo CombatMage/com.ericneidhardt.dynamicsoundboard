@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
@@ -31,6 +32,7 @@ public class SoundSheets
 	private SoundSheetsAdapter adapter;
 
 	@Inject SoundsDataAccess soundsDataAccess;
+	@Inject SoundsDataStorage soundsDataStorage;
 	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
 	@Inject SoundSheetsDataStorage soundSheetsDataStorage;
 
@@ -59,7 +61,7 @@ public class SoundSheets
 	{
 		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 
-		this.presenter = new SoundSheetsPresenter(this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess);
+		this.presenter = new SoundSheetsPresenter(this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess, this.soundsDataStorage);
 
 		this.adapter = new SoundSheetsAdapter();
 

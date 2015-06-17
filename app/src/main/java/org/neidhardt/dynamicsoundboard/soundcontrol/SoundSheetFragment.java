@@ -27,8 +27,10 @@ import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
-import org.neidhardt.dynamicsoundboard.soundcontrol.events.SoundRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
@@ -41,6 +43,7 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDeco
 
 import javax.inject.Inject;
 import java.util.Collections;
+import java.util.List;
 
 
 public class SoundSheetFragment
@@ -152,18 +155,9 @@ public class SoundSheetFragment
 		EventBus.getDefault().unregister(this);
 	}
 
-	public void deleteAllSoundsInSoundSheet()
-	{
-		this.removeAllSounds();
-		EventBus.getDefault().post(new SoundRemovedEvent());
-		this.soundAdapter.notifyDataSetChanged();
-	}
-
 	public void removeAllSounds()
 	{
 		this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag));
-		this.soundAdapter.notifyDataSetChanged();
-
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
 		if (fab != null)
 			fab.show();
@@ -267,14 +261,7 @@ public class SoundSheetFragment
 	@Override
 	public void onItemDelete(EnhancedMediaPlayer player, int position)
 	{
-		this.soundAdapter.notifyItemRemoved(position);
-		if (position > 0)
-			this.soundAdapter.notifyItemChanged(position - 1);
-
 		this.soundsDataStorage.removeSounds(Collections.singletonList(player));
-
-		EventBus.getDefault().post(new PlaylistChangedEvent());
-		EventBus.getDefault().post(new SoundRemovedEvent());
 
 		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
 		if (fab != null)
@@ -296,28 +283,32 @@ public class SoundSheetFragment
 	@Override
 	public void onEventMainThread(SoundAddedEvent event)
 	{
-		this.soundAdapter.notifyDataSetChanged();
+		MediaPlayerData data = event.getPlayer().getMediaPlayerData();
+		if (data.getFragmentTag().equals(this.fragmentTag))
+			this.soundAdapter.notifyItemInserted(data.getSortOrder());
 	}
 
 	@Override
 	public void onEventMainThread(SoundsRemovedEvent event)
 	{
-		this.soundAdapter.notifyDataSetChanged();
+		List<EnhancedMediaPlayer> playersToRemove = event.getPlayers();
+		if (playersToRemove.size() == 1) // if there is only 1 item removed, the adapter is only notified once, to ensure nice animation
+		{
+			MediaPlayerData data = playersToRemove.get(0).getMediaPlayerData();
+			if (data.getFragmentTag().equals(this.fragmentTag))
+			{
+				int position = data.getSortOrder();
+				this.soundAdapter.notifyItemRemoved(position);
+			}
+		}
+		else
+			this.soundAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void onEventMainThread(SoundChangedEvent event)
 	{
-		this.soundAdapter.notifyItemChanged(event.getPlayer());
+		if (event.getPlayer().getMediaPlayerData().getFragmentTag().equals(this.fragmentTag))
+			this.soundAdapter.notifyItemChanged(event.getPlayer());
 	}
-
-	public interface OnSoundRemovedEventListener
-	{
-		/**
-		 * This is called by greenRobot EventBus in case a sound was removed from current sound sheet.
-		 * @param event delivered SoundRemovedEvent
-		 */
-		void onEvent(SoundRemovedEvent event);
-	}
-
 }

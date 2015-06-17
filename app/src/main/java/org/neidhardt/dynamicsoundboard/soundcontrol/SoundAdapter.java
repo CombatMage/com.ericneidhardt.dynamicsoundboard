@@ -21,7 +21,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolder;
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter;
 
 import java.util.List;
 

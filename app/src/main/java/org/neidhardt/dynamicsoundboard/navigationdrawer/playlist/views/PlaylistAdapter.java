@@ -178,16 +178,6 @@ public class PlaylistAdapter
 		this.notifyDataSetChanged();
 	}
 
-	public Integer getCurrentItemIndex()
-	{
-		return currentItemIndex;
-	}
-
-	public void setCurrentItemIndex(Integer currentItemIndex)
-	{
-		this.currentItemIndex = currentItemIndex;
-	}
-
 	public class ViewHolder
 			extends
 				RecyclerView.ViewHolder
