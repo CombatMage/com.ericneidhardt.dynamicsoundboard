@@ -332,7 +332,7 @@ public class SoundsManager
 		int count = sounds.size();
 		for (int i = 0; i < count; i++)
 		{
-			sounds.get(i).getMediaPlayerData().setSortOrder(count);
+			sounds.get(i).getMediaPlayerData().setSortOrder(i);
 			sounds.get(i).getMediaPlayerData().setItemWasUpdated();
 		}
 	}

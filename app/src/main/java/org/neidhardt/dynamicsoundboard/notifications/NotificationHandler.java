@@ -26,7 +26,9 @@ import java.util.Set;
 /**
  * File created by eric.neidhardt on 23.03.2015.
  */
-public class NotificationHandler implements SharedPreferences.OnSharedPreferenceChangeListener, MediaPlayerEventListener
+public class NotificationHandler implements
+		SharedPreferences.OnSharedPreferenceChangeListener,
+		MediaPlayerEventListener
 {
 	private static final String TAG = NotificationHandler.class.getName();
 
@@ -228,13 +230,10 @@ public class NotificationHandler implements SharedPreferences.OnSharedPreference
 		if (fragmentTag.equals(Playlist.TAG)) // update special playlist notification
 		{
 			EnhancedMediaPlayer player = SoundsManagerUtil.searchInListForId(playerId, soundsDataAccess.getPlaylist());
-			if (player != null)
-			{
-				if (isAlive)
-					this.handlePlaylistPlayerStateChanged(player);
-				else
-					this.removePlayListNotification();
-			}
+			if (player != null && isAlive)
+				this.handlePlaylistPlayerStateChanged(player);
+			else
+				this.removePlayListNotification();
 		}
 		else // check if there is a generic notification to update
 		{

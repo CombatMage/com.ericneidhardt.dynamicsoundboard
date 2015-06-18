@@ -10,8 +10,17 @@ import java.util.List;
  */
 public interface SoundsDataStorage
 {
+	/**
+	 * Create an new {@code EnhancedMediaPlayer} from given data and adds this player to the corresponding list of sounds.
+	 * @param data {@code MediaPlayerData} to create player from
+	 */
 	void createSoundAndAddToManager(MediaPlayerData data);
 
+	/**
+	 * Create an new {@code EnhancedMediaPlayer} from given data and adds this player to the playlist.
+	 * If creation failed, a new {@code CreatingPlayerFailedEvent} is posted.
+	 * @param data {@code MediaPlayerData} to create player from
+	 */
 	void createPlaylistSoundAndAddToManager(MediaPlayerData data);
 
 	/**
