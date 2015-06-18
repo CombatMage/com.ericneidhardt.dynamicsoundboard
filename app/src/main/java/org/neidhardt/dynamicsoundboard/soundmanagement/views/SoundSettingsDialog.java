@@ -130,7 +130,6 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		boolean addNewSoundSheet = this.addNewSoundSheet.isChecked();
 		boolean hasSoundSheetChanged = addNewSoundSheet || indexOfSelectedSoundSheet != this.indexOfCurrentFragment;
 
-		SoundSheetFragment soundSheetFragment = this.getSoundSheetFragment(this.fragmentTag);
 		if (!hasSoundSheetChanged)
 		{
 			this.player.getMediaPlayerData().setLabel(soundLabel);

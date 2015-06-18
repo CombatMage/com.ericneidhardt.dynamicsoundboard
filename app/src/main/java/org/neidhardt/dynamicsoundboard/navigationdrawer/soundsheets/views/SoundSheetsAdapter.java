@@ -15,9 +15,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEve
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetRenamedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetRenamedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter;
 
@@ -30,7 +28,6 @@ public class SoundSheetsAdapter
 			BaseAdapter<SoundSheet, SoundSheetsAdapter.ViewHolder>
 		implements
 			OnSoundSheetsChangedEventListener,
-			OnSoundSheetRenamedEventListener,
 			OnSoundsChangedEventListener
 {
 	private static final String TAG = SoundSheetsAdapter.class.getName();
@@ -126,12 +123,6 @@ public class SoundSheetsAdapter
 	public void onEventMainThread(SoundChangedEvent event)
 	{
 		Logger.d(TAG, event.toString()); // nothing to be done
-	}
-
-	@Override
-	public void onEvent(SoundSheetRenamedEvent event)
-	{
-		this.notifyDataSetChanged();
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 
 import java.util.List;
 
@@ -16,10 +17,12 @@ public class LoadSoundSheetsTask extends LongTermTask<List<SoundSheet>>
 	private static final String TAG = LoadSoundSheetsTask.class.getName();
 
 	private DaoSession daoSession;
+	private SoundSheetsDataStorage soundSheetsDataStorage;
 
-	public LoadSoundSheetsTask(DaoSession daoSession)
+	public LoadSoundSheetsTask(DaoSession daoSession, SoundSheetsDataStorage soundSheetsDataStorage)
 	{
 		this.daoSession = daoSession;
+		this.soundSheetsDataStorage = soundSheetsDataStorage;
 	}
 
 	@Override
@@ -32,7 +35,7 @@ public class LoadSoundSheetsTask extends LongTermTask<List<SoundSheet>>
 	protected void onSuccess(List<SoundSheet> loadedSoundSheets) throws Exception
 	{
 		super.onSuccess(loadedSoundSheets);
-		EventBus.getDefault().postSticky(new SoundSheetsLoadedEvent(loadedSoundSheets));
+		this.soundSheetsDataStorage.addLoadedSoundSheets(loadedSoundSheets);
 	}
 
 	@Override

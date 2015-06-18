@@ -2,11 +2,15 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model;
 
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 
+import java.util.List;
+
 /**
  * File created by eric.neidhardt on 04.06.2015.
  */
 public interface SoundSheetsDataStorage
 {
+
+	void addLoadedSoundSheets(List<SoundSheet> soundSheetList);
 
 	/**
 	 * Adds a new {@code SoundSheet} to Storage. If there is an existing {@code SoundSheet} with the same fragmentTag, it's label is

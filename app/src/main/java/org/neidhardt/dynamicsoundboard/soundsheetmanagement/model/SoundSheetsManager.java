@@ -24,9 +24,7 @@ public class SoundSheetsManager
 			SoundSheetsDataAccess,
 			SoundSheetsDataStorage,
 			SoundSheetsDataUtil,
-			OnSoundSheetRenamedEventListener,
 			OnOpenSoundSheetEventListener,
-			OnSoundSheetsLoadedEventListener,
 			OnSoundSheetsFromFileLoadedEventListener
 {
 	public static final String TAG = SoundSheetsManager.class.getName();
@@ -72,7 +70,7 @@ public class SoundSheetsManager
 		this.soundSheets = new ArrayList<>();
 		this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), this.getDatabaseName());
 
-		SafeAsyncTask task = new LoadSoundSheetsTask(this.daoSession);
+		SafeAsyncTask task = new LoadSoundSheetsTask(this.daoSession, this);
 		task.execute();
 	}
 
@@ -195,19 +193,6 @@ public class SoundSheetsManager
 	}
 
 	@Override
-	public void onEvent(SoundSheetRenamedEvent event)
-	{
-		String renamedFragmentTag = event.getFragmentTag();
-		String newLabel = event.getNewLabel();
-
-		SoundSheet correspondingSoundSheetData = this.getSoundSheetForFragmentTag(renamedFragmentTag);
-		if (correspondingSoundSheetData == null)
-			throw new NullPointerException("sound sheet label was edited, but no sound sheet is selected");
-
-		correspondingSoundSheetData.setLabel(newLabel);
-	}
-
-	@Override
 	public void onEvent(OpenSoundSheetEvent event)
 	{
 		int indexOfSelectedItem = this.soundSheets.indexOf(event.getSoundSheetToOpen());
@@ -216,14 +201,12 @@ public class SoundSheetsManager
 	}
 
 	@Override
-	public void onEventMainThread(SoundSheetsLoadedEvent event)
+	public void addLoadedSoundSheets(List<SoundSheet> soundSheetList)
 	{
-		this.eventBus.removeStickyEvent(event);
-		this.soundSheets.addAll(event.getLoadedSoundSheets());
-
+		this.soundSheets.addAll(soundSheetList);
 		this.findSelectionAndDeselectOthers();
-
 		this.eventBus.post(new SoundSheetsChangedEvent());
+		this.eventBus.post(new SoundSheetsLoadedEvent(soundSheetList));
 	}
 
 	private void findSelectionAndDeselectOthers()

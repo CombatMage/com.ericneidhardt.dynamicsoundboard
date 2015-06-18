@@ -88,6 +88,8 @@ public class SoundActivity
 
 	private PauseSoundOnCallListener phoneStateListener;
 
+	EventBus eventBus;
+
 	@Inject SoundSheetsDataUtil soundSheetsDataUtil;
 	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
 
@@ -101,6 +103,8 @@ public class SoundActivity
 		super.onCreate(savedInstanceState);
 		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 		this.setContentView(R.layout.activity_base);
+
+		this.eventBus = EventBus.getDefault();
 
 		if (!this.soundsDataUtil.isInit())
 			this.soundsDataUtil.init();
@@ -481,7 +485,11 @@ public class SoundActivity
 	{
 		SoundSheetFragment currentSoundSheetFragment = SoundActivity.getCurrentSoundFragment(this.getFragmentManager());
 		if (currentSoundSheetFragment != null)
-			EventBus.getDefault().post(new SoundSheetRenamedEvent(currentSoundSheetFragment.getFragmentTag(), text));
+		{
+			SoundSheet soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.getFragmentTag());
+			soundSheet.setLabel(text);
+			this.eventBus.post(new SoundSheetsChangedEvent());
+		}
 	}
 
 	@Override
