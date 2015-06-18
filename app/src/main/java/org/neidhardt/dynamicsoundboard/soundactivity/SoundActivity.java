@@ -455,9 +455,6 @@ public class SoundActivity
 				this.startActivity(new Intent(this, AboutActivity.class));
 				this.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_nothing);
 				return true;
-			case R.id.action_delete_sheet:
-				ConfirmDeleteSoundSheetDialog.showInstance(this.getFragmentManager());
-				return true;
 			case R.id.action_clear_sound_sheets:
 				ConfirmDeleteAllSoundSheetsDialog.showInstance(this.getFragmentManager());
 				return true;

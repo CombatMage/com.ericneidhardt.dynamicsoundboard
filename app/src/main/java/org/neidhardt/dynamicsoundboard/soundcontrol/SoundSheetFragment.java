@@ -38,6 +38,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
@@ -155,14 +156,6 @@ public class SoundSheetFragment
 		EventBus.getDefault().unregister(this);
 	}
 
-	public void removeAllSounds()
-	{
-		this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag));
-		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
-		if (fab != null)
-			fab.show();
-	}
-
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
@@ -201,7 +194,10 @@ public class SoundSheetFragment
 		switch (item.getItemId())
 		{
 			case R.id.action_clear_sounds_in_sheet:
-				ConfirmDeleteSoundsDialog.showInstance(this.getFragmentManager());
+				ConfirmDeleteSoundsDialog.showInstance(this.getFragmentManager(), this.fragmentTag);
+				return true;
+			case R.id.action_delete_sheet:
+				ConfirmDeleteSoundSheetDialog.showInstance(this.getFragmentManager(), this.fragmentTag);
 				return true;
 			default:
 				return false;
@@ -299,10 +295,19 @@ public class SoundSheetFragment
 			{
 				int position = data.getSortOrder();
 				this.soundAdapter.notifyItemRemoved(position);
+				if (position > 0)
+					this.soundAdapter.notifyItemChanged(position - 1);
 			}
 		}
 		else
 			this.soundAdapter.notifyDataSetChanged();
+
+		if (this.soundAdapter.getValues().size() == 0)
+		{
+			AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
+			if (fab != null)
+				fab.show();
+		}
 	}
 
 	@Override

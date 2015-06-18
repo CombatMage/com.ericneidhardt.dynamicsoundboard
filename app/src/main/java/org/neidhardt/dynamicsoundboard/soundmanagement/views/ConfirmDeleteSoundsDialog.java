@@ -1,21 +1,40 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.app.FragmentManager;
+import android.os.Bundle;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 
 /**
- * Created by eric.neidhardt on 16.02.2015.
+ * File created by eric.neidhardt on 16.02.2015.
  */
 public class ConfirmDeleteSoundsDialog extends BaseConfirmDeleteDialog
 {
 	private static final String TAG = ConfirmDeleteSoundsDialog.class.getName();
 
-	public static void showInstance(FragmentManager manager)
+	private static final String KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog.fragmentTag";
+
+	private String fragmentTag;
+
+	public static void showInstance(FragmentManager manager, String fragmentTag)
 	{
 		ConfirmDeleteSoundsDialog dialog = new ConfirmDeleteSoundsDialog();
+
+		Bundle args = new Bundle();
+		args.putString(KEY_FRAGMENT_TAG, fragmentTag);
+		dialog.setArguments(args);
+
 		dialog.show(manager, TAG);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		Bundle args = this.getArguments();
+		if (args != null)
+			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
 	}
 
 	@Override
@@ -27,6 +46,6 @@ public class ConfirmDeleteSoundsDialog extends BaseConfirmDeleteDialog
 	@Override
 	protected void delete()
 	{
-		SoundActivity.getCurrentSoundFragment(this.getFragmentManager()).removeAllSounds();
+		this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag));
 	}
 }

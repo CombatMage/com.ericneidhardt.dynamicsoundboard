@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static java.util.Arrays.asList;
+import static java.util.Arrays.deepToString;
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
@@ -294,12 +295,15 @@ public class SoundsManager
 		if (soundsToRemove == null || soundsToRemove.size() == 0)
 			return;
 
+		Set<String> affectedSoundSheets = new HashSet<>(); // we need to cleanup the sort order of all affected sound lists.
+
 		List<EnhancedMediaPlayer> copyList = new ArrayList<>(soundsToRemove.size());
 		copyList.addAll(soundsToRemove); // this is done to prevent concurrent modification exception
 
 		for (EnhancedMediaPlayer playerToRemove : copyList)
 		{
 			MediaPlayerData data = playerToRemove.getMediaPlayerData();
+			affectedSoundSheets.add(data.getFragmentTag());
 			this.sounds.get(data.getFragmentTag()).remove(playerToRemove);
 
 			if (data.getIsInPlaylist())
@@ -317,9 +321,20 @@ public class SoundsManager
 			playerToRemove.destroy(true);
 		}
 
-		// TODO update sort order of all affected items
+		for (String fragmentTag : affectedSoundSheets)
+			this.cleanupSortOrderInList(this.getSoundsInFragment(fragmentTag));
 
 		this.eventBus.post(new SoundsRemovedEvent(soundsToRemove));
+	}
+
+	private void cleanupSortOrderInList(List<EnhancedMediaPlayer> sounds)
+	{
+		int count = sounds.size();
+		for (int i = 0; i < count; i++)
+		{
+			sounds.get(i).getMediaPlayerData().setSortOrder(count);
+			sounds.get(i).getMediaPlayerData().setItemWasUpdated();
+		}
 	}
 
 	@Override
