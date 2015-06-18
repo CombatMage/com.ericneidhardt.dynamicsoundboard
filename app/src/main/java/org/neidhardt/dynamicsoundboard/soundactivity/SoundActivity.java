@@ -52,7 +52,6 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
