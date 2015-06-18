@@ -34,10 +34,12 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 {
 	private static final String TAG = LoadLayoutDialog.class.getName();
 
+	private View confirm;
+	private RecyclerView directories;
+
 	public static void showInstance(FragmentManager manager)
 	{
 		LoadLayoutDialog dialog = new LoadLayoutDialog();
-
 		dialog.show(manager, TAG);
 	}
 
@@ -46,20 +48,30 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_load_sound_sheets, null);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		view.findViewById(R.id.b_load).setOnClickListener(this);
-
-		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
-		directories.addItemDecoration(new DividerItemDecoration());
-		directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-		directories.setItemAnimator(new DefaultItemAnimator());
+		this.confirm = view.findViewById(R.id.b_load);
+		this.confirm.setOnClickListener(this);
+		this.confirm.setEnabled(false);
 
 		this.adapter = new DirectoryAdapter();
-		directories.setAdapter(this.adapter);
+
+		this.directories = (RecyclerView)view.findViewById(R.id.rv_directories);
+		this.directories.addItemDecoration(new DividerItemDecoration());
+		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+		this.directories.setItemAnimator(new DefaultItemAnimator());
+		this.directories.setAdapter(this.adapter);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
 
 		return builder.create();
+	}
+
+	@Override
+	protected void onFileSelected()
+	{
+		this.confirm.setEnabled(true);
+		int position = this.adapter.fileList.indexOf(this.adapter.selectedFile);
+		this.directories.scrollToPosition(position);
 	}
 
 	@Override

@@ -32,6 +32,8 @@ public class AddNewSoundFromDirectory
 	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory.callingFragmentTag";
 
 	private String callingFragmentTag;
+	private View confirm;
+	private RecyclerView directories;
 
 	public static void showInstance(FragmentManager manager, String callingFragmentTag)
 	{
@@ -58,21 +60,33 @@ public class AddNewSoundFromDirectory
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_directory, null);
-		view.findViewById(R.id.b_ok).setOnClickListener(this);
+		this.confirm = view.findViewById(R.id.b_ok);
+		this.confirm.setOnClickListener(this);
+		this.confirm.setEnabled(false);
+
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 
-		RecyclerView directories = (RecyclerView)view.findViewById(R.id.rv_directories);
-		directories.addItemDecoration(new DividerItemDecoration());
-		directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-		directories.setItemAnimator(new DefaultItemAnimator());
-
 		this.adapter = new DirectoryAdapter();
-		directories.setAdapter(this.adapter);
+
+		this.directories = (RecyclerView)view.findViewById(R.id.rv_directories);
+		this.directories.addItemDecoration(new DividerItemDecoration());
+		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+		this.directories.setItemAnimator(new DefaultItemAnimator());
+		this.directories.setAdapter(this.adapter);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
 
 		return builder.create();
+	}
+
+	@Override
+	protected void onFileSelected()
+	{
+		this.confirm.setEnabled(true);
+
+		int position = this.adapter.fileList.indexOf(this.adapter.selectedFile);
+		this.directories.scrollToPosition(position);
 	}
 
 	@Override

@@ -28,11 +28,12 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	private static final String TAG = StoreLayoutDialog.class.getName();
 
 	private NoUnderscoreEditText inputFileName;
+	private View confirm;
+	private RecyclerView directories;
 
 	public static void showInstance(FragmentManager manager)
 	{
 		StoreLayoutDialog dialog = new StoreLayoutDialog();
-
 		dialog.show(manager, TAG);
 	}
 
@@ -42,22 +43,31 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_store_sound_sheets, null);
 		view.findViewById(R.id.b_add).setOnClickListener(this);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		view.findViewById(R.id.b_ok).setOnClickListener(this);
+		this.confirm = view.findViewById(R.id.b_ok);
+		this.confirm.setOnClickListener(this);
+		this.confirm.setEnabled(false);
 
 		this.inputFileName = (NoUnderscoreEditText) view.findViewById(R.id.et_name_file);
-
-		RecyclerView directories = (RecyclerView) view.findViewById(R.id.rv_directories);
-		directories.addItemDecoration(new DividerItemDecoration());
-		directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-		directories.setItemAnimator(new DefaultItemAnimator());
-
 		this.adapter = new DirectoryAdapter();
-		directories.setAdapter(this.adapter);
+
+		this.directories = (RecyclerView) view.findViewById(R.id.rv_directories);
+		this.directories.addItemDecoration(new DividerItemDecoration());
+		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+		this.directories.setItemAnimator(new DefaultItemAnimator());
+		this.directories.setAdapter(this.adapter);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
 
 		return builder.create();
+	}
+
+	@Override
+	protected void onFileSelected()
+	{
+		this.confirm.setEnabled(true);
+		int position = this.adapter.fileList.indexOf(this.adapter.selectedFile);
+		this.directories.scrollToPosition(position);
 	}
 
 	@Override
@@ -120,6 +130,8 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 			super.adapter.selectedFile = file;
 			super.adapter.refreshDirectory();
 			super.adapter.notifyDataSetChanged();
+
+			this.onFileSelected();
 		}
 		catch (IOException e)
 		{

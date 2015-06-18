@@ -27,11 +27,13 @@ public abstract class FileExplorerDialog extends BaseDialog
 
 	protected abstract boolean canSelectFile();
 
+	protected abstract void onFileSelected();
+
 	protected class DirectoryAdapter extends RecyclerView.Adapter<DirectoryEntry>
 	{
 		protected File parent;
 		protected File selectedFile;
-		private List<File> fileList;
+		protected List<File> fileList;
 		private DirectoryEntry selectedEntry = null;
 
 		public DirectoryAdapter()
@@ -187,6 +189,8 @@ public abstract class FileExplorerDialog extends BaseDialog
 			this.setSelection(true);
 			this.animateSelectorSlideIn();
 			this.animateFileLogoRotate();
+
+			onFileSelected();
 		}
 
 		private void animateFileLogoRotate()
