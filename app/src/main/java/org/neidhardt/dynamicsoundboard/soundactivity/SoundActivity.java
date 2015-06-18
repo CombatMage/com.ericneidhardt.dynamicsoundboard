@@ -320,7 +320,7 @@ public class SoundActivity
 		this.soundSheetsDataUtil.init();
 
 		this.soundsDataUtil.writeCacheBackAndRelease();
-		this.soundSheetsDataUtil.init();
+		this.soundsDataUtil.init();
 	}
 
 	@Override
