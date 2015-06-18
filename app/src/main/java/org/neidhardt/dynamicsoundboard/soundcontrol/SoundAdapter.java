@@ -301,6 +301,7 @@ public class SoundAdapter
 			{
 				case R.id.b_stop:
 					player.stopSound();
+					notifyItemChanged(this.getLayoutPosition());
 					break;
 				case R.id.b_loop:
 					view.setSelected(!isSelected);
@@ -333,7 +334,6 @@ public class SoundAdapter
 					EventBus.getDefault().post(new OpenSoundSettingsEvent(player.getMediaPlayerData()));
 					break;
 			}
-			notifyItemChanged(getLayoutPosition());
 		}
 
 		@Override

@@ -23,7 +23,6 @@ public class JsonPojo
 
 	private Map<String, List<MediaPlayerData>> sounds;
 
-
 	public List<SoundSheet> getSoundSheets()
 	{
 		return soundSheets;
