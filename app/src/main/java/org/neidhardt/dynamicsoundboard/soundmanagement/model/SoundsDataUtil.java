@@ -25,18 +25,4 @@ public interface SoundsDataUtil
 	 */
 	void writeCacheBackAndRelease();
 
-	/**
-	 * Creates an new EnhancedMediaPlayer instance
-	 * @param playerData raw data to create new MediaPlayer
-	 * @return playerData to be stored in database, or null if creation failed
-	 */
-	EnhancedMediaPlayer createSound(MediaPlayerData playerData);
-
-	/**
-	 * Creates an new EnhancedMediaPlayer instance and adds this instance to the playlist.
-	 * @param playerData raw data to create new MediaPlayer
-	 * @return playerData to be stored in database, or null if creation failed
-	 */
-	EnhancedMediaPlayer createPlaylistSound(MediaPlayerData playerData);
-
 }

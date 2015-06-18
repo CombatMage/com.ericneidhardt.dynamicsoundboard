@@ -244,8 +244,7 @@ public class SoundsManager
 		}
 	}
 
-	@Override
-	public void addSoundToPlayList(EnhancedMediaPlayer player)
+	private void addSoundToPlayList(EnhancedMediaPlayer player)
 	{
 		this.playlist.add(player);
 		MediaPlayerData data = player.getMediaPlayerData();
@@ -258,8 +257,7 @@ public class SoundsManager
 		this.eventBus.post(new PlaylistChangedEvent());
 	}
 
-	@Override
-	public void addSoundToSounds(EnhancedMediaPlayer player)
+	private void addSoundToSounds(EnhancedMediaPlayer player)
 	{
 		if (player == null)
 			throw new NullPointerException("cannot add new Player, player is null");
@@ -363,8 +361,7 @@ public class SoundsManager
 		}
 	}
 
-	@Override
-	public EnhancedMediaPlayer createPlaylistSound(MediaPlayerData playerData)
+	private EnhancedMediaPlayer createPlaylistSound(MediaPlayerData playerData)
 	{
 		try
 		{
@@ -378,8 +375,7 @@ public class SoundsManager
 		}
 	}
 
-	@Override
-	public EnhancedMediaPlayer createSound(MediaPlayerData playerData)
+	private EnhancedMediaPlayer createSound(MediaPlayerData playerData)
 	{
 		int itemsInFragment = this.sounds.get(playerData.getFragmentTag()) != null ? this.sounds.get(playerData.getFragmentTag()).size() : 0;
 		if (playerData.getSortOrder() == null || playerData.getSortOrder() > itemsInFragment)

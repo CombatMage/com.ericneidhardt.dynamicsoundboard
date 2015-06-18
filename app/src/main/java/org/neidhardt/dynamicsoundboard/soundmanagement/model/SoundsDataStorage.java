@@ -24,19 +24,6 @@ public interface SoundsDataStorage
 	void createPlaylistSoundAndAddToManager(MediaPlayerData data);
 
 	/**
-	 * Create an new {@code EnhancedMediaPlayer} from given data and adds this player to the playlist.
-	 * If creation failed, a new {@code CreatingPlayerFailedEvent} is posted.
-	 * @param player {@code EnhancedMediaPlayer} to add
-	 */
-	void addSoundToPlayList(EnhancedMediaPlayer player);
-
-	/**
-	 * Adds sound to corresponding sound list. If the list is long enough, the players sort order is respected, otherwise it is added to the end of the list.
-	 * @param player the new player to add
-	 */
-	void addSoundToSounds(EnhancedMediaPlayer player);
-
-	/**
 	 * Add or remove the sound from playlist.
 	 * @param playerId id of player to toggle
 	 * @param addToPlaylist player's state in playlist

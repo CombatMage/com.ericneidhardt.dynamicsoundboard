@@ -242,7 +242,7 @@ public class SoundSheetsManager
 	}
 
 	/**
-	 * Called by LoadSoundSheetsTask when loading of soundsheets has been finished.
+	 * Called by LoadSoundSheetsTask when loading of SoundSheets has been finished.
 	 * @param event delivered SoundSheetsLoadedEvent
 	 */
 	@SuppressWarnings("unused")
