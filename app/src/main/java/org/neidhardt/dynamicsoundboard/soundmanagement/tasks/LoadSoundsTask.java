@@ -27,6 +27,8 @@ public class LoadSoundsTask extends LongTermTask<List<MediaPlayerData>>
 	public List<MediaPlayerData> call() throws Exception
 	{
 		List<MediaPlayerData> mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list();
+
+
 		for (final MediaPlayerData mediaPlayerData : mediaPlayersData)
 			this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData);
 

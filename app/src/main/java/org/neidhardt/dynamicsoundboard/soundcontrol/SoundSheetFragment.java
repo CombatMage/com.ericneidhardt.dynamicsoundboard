@@ -281,7 +281,11 @@ public class SoundSheetFragment
 	{
 		MediaPlayerData data = event.getPlayer().getMediaPlayerData();
 		if (data.getFragmentTag().equals(this.fragmentTag))
+		{
 			this.soundAdapter.notifyItemInserted(data.getSortOrder());
+			//int lastItemIndex = this.soundAdapter.getItemCount() - 1;
+			//this.soundAdapter.notifyItemChanged(lastItemIndex);
+		}
 	}
 
 	@Override
