@@ -268,9 +268,15 @@ public class SoundActivity
 		super.onPause();
 
 		this.isActivityVisible = false;
-		EventBus.getDefault().postSticky(new ActivityStateChangedEvent(false));
 
 		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener);
+	}
+
+	@Override
+	protected void onUserLeaveHint()
+	{
+		super.onUserLeaveHint();
+		EventBus.getDefault().postSticky(new ActivityStateChangedEvent(false));
 	}
 
 	@Override

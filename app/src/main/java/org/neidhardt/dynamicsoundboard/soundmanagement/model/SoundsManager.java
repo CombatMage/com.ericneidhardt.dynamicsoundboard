@@ -124,6 +124,9 @@ public class SoundsManager
 		}
 		this.playlist.clear();
 		this.sounds.clear();
+
+		this.eventBus.post(new PlaylistChangedEvent());
+		this.eventBus.post(new SoundsRemovedEvent(null));
 	}
 
 	@Override
@@ -281,11 +284,7 @@ public class SoundsManager
 		else
 			soundsInFragment.add(player); // if the list is to short, just append
 
-		MediaPlayerDataDao dao = this.getDbSounds().getMediaPlayerDataDao();
-		if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.getPlayerId())).list().size() == 0)
-		{
-			dao.insert(data);
-		}
+		this.cleanupSortOrderInList(soundsInFragment);
 
 		this.eventBus.post(new SoundAddedEvent(player));
 	}

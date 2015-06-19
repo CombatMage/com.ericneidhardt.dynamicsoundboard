@@ -279,21 +279,16 @@ public class SoundSheetFragment
 	@Override
 	public void onEventMainThread(SoundAddedEvent event)
 	{
-		MediaPlayerData data = event.getPlayer().getMediaPlayerData();
-		if (data.getFragmentTag().equals(this.fragmentTag))
-		{
-			if (data.getSortOrder() == null)
-				this.soundAdapter.notifyDataSetChanged();
-			else
-				this.soundAdapter.notifyItemInserted(data.getSortOrder());
-		}
+		this.soundAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void onEventMainThread(SoundsRemovedEvent event)
 	{
 		List<EnhancedMediaPlayer> playersToRemove = event.getPlayers();
-		if (playersToRemove.size() == 1) // if there is only 1 item removed, the adapter is only notified once, to ensure nice animation
+		if (playersToRemove == null)
+			this.soundAdapter.notifyDataSetChanged();
+		else if (playersToRemove.size() == 1) // if there is only 1 item removed, the adapter is only notified once, to ensure nice animation
 		{
 			MediaPlayerData data = playersToRemove.get(0).getMediaPlayerData();
 			if (data.getFragmentTag().equals(this.fragmentTag))

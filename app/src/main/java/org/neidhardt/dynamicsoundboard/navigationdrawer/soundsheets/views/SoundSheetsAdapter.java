@@ -108,14 +108,18 @@ public class SoundSheetsAdapter
 	public void onEventMainThread(SoundsRemovedEvent event)
 	{
 		List<EnhancedMediaPlayer> removedPlayers = event.getPlayers();
-		Set<String> affectedFragmentTags = new HashSet<>();
-		for (EnhancedMediaPlayer player : removedPlayers)
-			affectedFragmentTags.add(player.getMediaPlayerData().getFragmentTag());
-
-		for (String fragmentTag : affectedFragmentTags)
+		if (removedPlayers == null)
+			this.notifyDataSetChanged();
+		else
 		{
-			SoundSheet changedSoundSheet = this.presenter.getSoundSheetsDataAccess().getSoundSheetForFragmentTag(fragmentTag);
-			this.notifyItemChanged(changedSoundSheet);
+			Set<String> affectedFragmentTags = new HashSet<>();
+			for (EnhancedMediaPlayer player : removedPlayers)
+				affectedFragmentTags.add(player.getMediaPlayerData().getFragmentTag());
+
+			for (String fragmentTag : affectedFragmentTags) {
+				SoundSheet changedSoundSheet = this.presenter.getSoundSheetsDataAccess().getSoundSheetForFragmentTag(fragmentTag);
+				this.notifyItemChanged(changedSoundSheet);
+			}
 		}
 	}
 
