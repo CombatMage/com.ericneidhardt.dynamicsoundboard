@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -95,7 +94,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 				break;
 			case R.id.b_ok:
 				if (super.adapter.selectedFile != null)
-					this.useFile(super.adapter.selectedFile);
+					this.saveDataAndDismiss();
 				else
 					Toast.makeText(this.getActivity(), R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show();
 				break;
@@ -139,18 +138,12 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		}
 	}
 
-	private void useFile(File file)
+	private void saveDataAndDismiss()
 	{
-		ObjectMapper mapper = new ObjectMapper();
-
-		JsonPojo pojo = new JsonPojo();
 		try
 		{
-			pojo.setSoundSheets(this.soundSheetsDataAccess.getSoundSheets());
-			pojo.addPlayList(this.soundsDataAccess.getPlaylist());
-			pojo.addSounds(this.soundsDataAccess.getSounds());
-
-			mapper.writeValue(file, pojo);
+			JsonPojo.writeToFile(super.adapter.selectedFile, this.soundSheetsDataAccess.getSoundSheets(),
+					this.soundsDataAccess.getPlaylist(), this.soundsDataAccess.getSounds());
 
 			this.dismiss();
 		}
@@ -159,6 +152,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 			Logger.d(TAG, e.getMessage());
 			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_failed_store_layout, Toast.LENGTH_SHORT).show();
 		}
+
 	}
 
 }

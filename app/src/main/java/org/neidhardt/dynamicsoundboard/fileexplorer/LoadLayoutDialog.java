@@ -10,8 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
@@ -96,18 +94,18 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 				break;
 			case R.id.b_load:
 				if (super.adapter.selectedFile != null)
-					this.useFile(super.adapter.selectedFile);
+					this.loadFromFileAndDismiss(this.adapter.selectedFile);
 				else
 					Toast.makeText(this.getActivity(), R.string.dialog_load_layout_no_file_info, Toast.LENGTH_SHORT).show();
 				break;
 		}
 	}
 
-	private void useFile(File file)
+	private void loadFromFileAndDismiss(File file)
 	{
 		try
 		{
-			JsonPojo parsedJson  = new ObjectMapper().readValues(new JsonFactory().createParser(file), JsonPojo.class).next();
+			JsonPojo parsedJson = JsonPojo.readFromFile(file);
 
 			List<SoundSheet> soundSheets = parsedJson.getSoundSheets();
 			List<MediaPlayerData> playList = parsedJson.getPlayList();

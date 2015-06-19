@@ -5,6 +5,7 @@ import android.net.Uri;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 
@@ -26,6 +27,14 @@ public class TestDataGenerator
 	public static String getRandomString()
 	{
 		return Integer.toString(random.nextInt(Integer.MAX_VALUE));
+	}
+
+	public static SoundSheet getRandomSoundSheet() throws Exception
+	{
+		SoundSheet soundSheet = new SoundSheet();
+		soundSheet.setLabel(getRandomString());
+		soundSheet.setFragmentTag(getRandomString());
+		return soundSheet;
 	}
 
 	public static MediaPlayerData getRandomPlayerData() throws Exception

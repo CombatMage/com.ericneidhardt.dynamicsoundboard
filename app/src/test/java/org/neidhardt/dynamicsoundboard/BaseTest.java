@@ -32,11 +32,13 @@ public abstract class BaseTest
 		for(File file: files)
 		{
 			if (file.exists())
-				assertTrue("could not delete file " + file, file.delete());
+			{
+				boolean success = file.delete();
+				assertTrue("could not delete file " + file, success);
+			}
 		}
 
 		ShadowEnvironment.setExternalStorageState(Environment.MEDIA_UNMOUNTED);
-		// TODO clear shared preferences
 	}
 
 	public static File createFile(String fileName) throws Exception
