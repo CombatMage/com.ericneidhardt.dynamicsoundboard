@@ -15,14 +15,11 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.UpdateSoundsTask;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.StoreSoundsTask;
 import roboguice.util.SafeAsyncTask;
 
 import java.io.IOException;
 import java.util.*;
-
-import static java.util.Arrays.asList;
-import static java.util.Arrays.deepToString;
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
@@ -106,10 +103,12 @@ public class SoundsManager
 
 	private void storeLoadedSounds()
 	{
-		SafeAsyncTask task = new UpdateSoundsTask(this.sounds, this.getDbSounds());
+		this.getDbSounds().getMediaPlayerDataDao().deleteAll();
+		SafeAsyncTask task = new StoreSoundsTask(this.sounds, this.getDbSounds());
 		task.execute();
 
-		task = new UpdateSoundsTask(this.playlist, getDbPlaylist());
+		this.getDbPlaylist().getMediaPlayerDataDao().deleteAll();
+		task = new StoreSoundsTask(this.playlist, getDbPlaylist());
 		task.execute();
 	}
 
@@ -267,14 +266,18 @@ public class SoundsManager
 		if (this.sounds.get(fragmentTag) == null)
 			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
 
-		Integer index = data.getSortOrder();
-		if (index == null)
-			index = 0;
-
+		Integer position = data.getSortOrder();
 		List<EnhancedMediaPlayer> soundsInFragment = this.sounds.get(fragmentTag);
 		int count = soundsInFragment.size();
-		if (index <= count) // add item according to sort order
-			soundsInFragment.add(index, player);
+
+		if (position == null)
+		{
+			data.setSortOrder(count);
+			position = count; // you can use 0 to append or count to prepend
+		}
+
+		if (position <= count) // add item according to sort order
+			soundsInFragment.add(position, player);
 		else
 			soundsInFragment.add(player); // if the list is to short, just append
 
@@ -377,9 +380,6 @@ public class SoundsManager
 
 	private EnhancedMediaPlayer createSound(MediaPlayerData playerData)
 	{
-		int itemsInFragment = this.sounds.get(playerData.getFragmentTag()) != null ? this.sounds.get(playerData.getFragmentTag()).size() : 0;
-		if (playerData.getSortOrder() == null || playerData.getSortOrder() > itemsInFragment)
-			playerData.setSortOrder(itemsInFragment);
 		try
 		{
 			return new EnhancedMediaPlayer(playerData, this);
