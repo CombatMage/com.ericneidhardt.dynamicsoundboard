@@ -7,18 +7,16 @@ import java.util.Comparator;
 /**
  * File created by eric.neidhardt on 19.06.2015.
  */
-public class MediaPlayerComparator implements Comparator<EnhancedMediaPlayer>
+public class MediaPlayerComparator implements Comparator<MediaPlayerData>
 {
 	@Override
-	public int compare(EnhancedMediaPlayer lhs, EnhancedMediaPlayer rhs)
+	public int compare(MediaPlayerData lhs, MediaPlayerData rhs)
 	{
-		MediaPlayerData lhsData = lhs.getMediaPlayerData();
-		if (lhsData.getSortOrder() == null)
+		if (lhs.getSortOrder() == null)
 			return -1;
-		MediaPlayerData rhsData = rhs.getMediaPlayerData();
-		if (rhsData.getSortOrder() == null)
+		if (rhs.getSortOrder() == null)
 			return 1;
 
-		return lhsData.getSortOrder().compareTo(rhs.getMediaPlayerData().getSortOrder());
+		return lhs.getSortOrder().compareTo(rhs.getSortOrder());
 	}
 }
