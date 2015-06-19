@@ -69,7 +69,7 @@ public class SoundSheetsPresenter
 	{
 		if (this.isInSelectionMode())
 		{
-			data.setIsSelectedForDeletion(!data.isSelectedForDeletion());
+			data.setIsSelectedForDeletion(!data.getIsSelectedForDeletion());
 			super.onItemSelectedForDeletion();
 		}
 		else
@@ -103,7 +103,7 @@ public class SoundSheetsPresenter
 		List<SoundSheet> existingSoundSheets = this.adapter.getValues();
 		for(SoundSheet soundSheet : existingSoundSheets)
 		{
-			if (soundSheet.isSelectedForDeletion())
+			if (soundSheet.getIsSelectedForDeletion())
 				selectedSoundSheets.add(soundSheet);
 		}
 		return selectedSoundSheets;

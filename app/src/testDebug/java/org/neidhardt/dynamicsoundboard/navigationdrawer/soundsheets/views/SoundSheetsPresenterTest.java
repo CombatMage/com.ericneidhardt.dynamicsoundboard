@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -47,7 +46,7 @@ public class SoundSheetsPresenterTest extends BaseTest
 	{
 		this.presenter.setIsInSelectionMode(true);
 		SoundSheet data = mock(SoundSheet.class);
-		when(data.isSelectedForDeletion()).thenReturn(false);
+		when(data.getIsSelectedForDeletion()).thenReturn(false);
 
 		this.presenter.onItemClick(null, data, 0);
 
@@ -59,7 +58,7 @@ public class SoundSheetsPresenterTest extends BaseTest
 	{
 		SoundSheet soundSheet = mock(SoundSheet.class);
 		when(soundSheet.getFragmentTag()).thenReturn("testTag");
-		when(soundSheet.isSelectedForDeletion()).thenReturn(true);
+		when(soundSheet.getIsSelectedForDeletion()).thenReturn(true);
 
 		when(this.mockAdapter.getValues()).thenReturn(Collections.singletonList(soundSheet));
 

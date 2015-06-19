@@ -15,7 +15,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener;
@@ -206,8 +205,8 @@ public class PlaylistAdapter
 			this.label.setText(player.getMediaPlayerData().getLabel());
 			this.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
 
-			this.label.setActivated(player.getMediaPlayerData().isSelectedForDeletion());
-			this.itemView.setSelected(player.getMediaPlayerData().isSelectedForDeletion());
+			this.label.setActivated(player.getMediaPlayerData().getIsSelectedForDeletion());
+			this.itemView.setSelected(player.getMediaPlayerData().getIsSelectedForDeletion());
 
 			this.onProgressUpdate();
 		}

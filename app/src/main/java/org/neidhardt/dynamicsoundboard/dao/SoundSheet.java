@@ -81,7 +81,7 @@ public class SoundSheet {
 
     }
 
-    public boolean isSelectedForDeletion() {
+    public boolean getIsSelectedForDeletion() {
         return isSelectedForDeletion;
     }
 
@@ -101,7 +101,7 @@ public class SoundSheet {
                 ", fragmentTag='" + fragmentTag + '\'' +
                 ", label='" + label + '\'' +
                 ", isSelected=" + isSelected +
-                ", isSelectedForDeletion=" + isSelectedForDeletion +
+                ", getIsSelectedForDeletion=" + isSelectedForDeletion +
                 '}';
     }
 

@@ -168,8 +168,8 @@ public class SoundSheetsAdapter
 			this.label.setSelected(data.getIsSelected());
 			this.selectionIndicator.setVisibility(data.getIsSelected() ? View.VISIBLE : View.INVISIBLE);
 
-			this.label.setActivated(data.isSelectedForDeletion());
-			this.itemView.setSelected(data.isSelectedForDeletion());
+			this.label.setActivated(data.getIsSelectedForDeletion());
+			this.itemView.setSelected(data.getIsSelectedForDeletion());
 
 		}
 

@@ -141,7 +141,7 @@ public class MediaPlayerData {
         this.wasAltered = false;
     }
 
-    public boolean isSelectedForDeletion() {
+    public boolean getIsSelectedForDeletion() {
         return isSelectedForDeletion;
     }
 

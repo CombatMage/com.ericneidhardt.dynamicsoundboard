@@ -36,7 +36,7 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 	{
 		if (this.isInSelectionMode())
 		{
-			player.getMediaPlayerData().setIsSelectedForDeletion(!player.getMediaPlayerData().isSelectedForDeletion());
+			player.getMediaPlayerData().setIsSelectedForDeletion(!player.getMediaPlayerData().getIsSelectedForDeletion());
 			this.adapter.notifyItemChanged(position);
 			super.onItemSelectedForDeletion();
 		}
@@ -78,7 +78,7 @@ public class PlaylistPresenter extends NavigationDrawerListPresenter<Playlist> i
 		List<EnhancedMediaPlayer> existingPlayers = this.adapter.getValues();
 		for(EnhancedMediaPlayer players : existingPlayers)
 		{
-			if (players.getMediaPlayerData().isSelectedForDeletion())
+			if (players.getMediaPlayerData().getIsSelectedForDeletion())
 				selectedPlayers.add(players);
 		}
 		return selectedPlayers;
