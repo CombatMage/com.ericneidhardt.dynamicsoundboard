@@ -141,19 +141,20 @@ public class SoundSheetFragment
 	public void onStart()
 	{
 		super.onStart();
-		EventBus bus = EventBus.getDefault();
-		if (!bus.isRegistered(this))
-			bus.register(this);
-		if (!bus.isRegistered(this.soundAdapter))
-			bus.register(this.soundAdapter);
+		EventBus eventBus = EventBus.getDefault();
+		if (!eventBus.isRegistered(this))
+			eventBus.register(this);
+		if (!eventBus.isRegistered(this.soundAdapter))
+			eventBus.register(this.soundAdapter);
 	}
 
 	@Override
 	public void onStop()
 	{
 		super.onStop();
-		EventBus.getDefault().unregister(this.soundAdapter);
-		EventBus.getDefault().unregister(this);
+		EventBus eventBus = EventBus.getDefault();
+		eventBus.unregister(this.soundAdapter);
+		eventBus.unregister(this);
 	}
 
 	@Override

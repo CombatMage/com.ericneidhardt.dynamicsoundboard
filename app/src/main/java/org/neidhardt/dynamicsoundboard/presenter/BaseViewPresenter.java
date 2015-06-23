@@ -4,7 +4,7 @@ import android.view.View;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by eric.neidhardt on 21.05.2015.
+ * File created by eric.neidhardt on 21.05.2015.
  */
 public abstract class BaseViewPresenter<T extends View> implements ViewPresenter<T>
 {
@@ -53,7 +53,7 @@ public abstract class BaseViewPresenter<T extends View> implements ViewPresenter
 	}
 
 	/**
-	 * @return true if this presenter should register on eventBus, else fals
+	 * @return true if this presenter should register on eventBus, else false
 	 */
 	protected abstract boolean isEventBusSubscriber();
 }

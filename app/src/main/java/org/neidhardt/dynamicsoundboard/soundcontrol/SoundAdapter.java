@@ -42,8 +42,11 @@ public class SoundAdapter
 	private SoundsDataAccess soundsDataAccess;
 	private SoundsDataStorage soundsDataStorage;
 
+	private EventBus eventBus;
+
 	public SoundAdapter(SoundSheetFragment parent, SoundsDataAccess soundsDataAccess, SoundsDataStorage soundsDataStorage)
 	{
+		this.eventBus = EventBus.getDefault();
 		this.parentFragmentTag = parent.getFragmentTag();
 		this.heightListItem = parent.getResources().getDimensionPixelSize(R.dimen.height_list_item_xlarge);
 		this.heightShadow = parent.getResources().getDimensionPixelSize(R.dimen.height_shadow);
@@ -283,7 +286,7 @@ public class SoundAdapter
 				player.getMediaPlayerData().setLabel(text);
 				player.getMediaPlayerData().setItemWasAltered();
 
-				EventBus.getDefault().post(new OpenSoundRenameEvent(player.getMediaPlayerData()));
+				eventBus.post(new OpenSoundRenameEvent(player.getMediaPlayerData()));
 			}
 		}
 
@@ -331,7 +334,7 @@ public class SoundAdapter
 					break;
 				case R.id.b_settings:
 					player.pauseSound();
-					EventBus.getDefault().post(new OpenSoundSettingsEvent(player.getMediaPlayerData()));
+					eventBus.post(new OpenSoundSettingsEvent(player.getMediaPlayerData()));
 					break;
 			}
 		}
