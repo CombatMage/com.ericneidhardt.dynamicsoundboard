@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 
 /**
- * Created by eric.neidhardt on 23.01.2015.
+ * File created by eric.neidhardt on 23.01.2015.
  */
 public class SoundboardPreferences
 {

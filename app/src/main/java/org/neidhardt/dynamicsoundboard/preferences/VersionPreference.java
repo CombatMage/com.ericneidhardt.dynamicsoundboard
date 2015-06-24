@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 
 /**
- * Created by eric.neidhardt on 17.02.2015.
+ * File created by eric.neidhardt on 17.02.2015.
  */
 public class VersionPreference extends Preference
 {

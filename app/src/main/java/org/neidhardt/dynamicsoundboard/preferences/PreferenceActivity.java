@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import org.neidhardt.dynamicsoundboard.R;
 
 /**
- * Created by eric.neidhardt on 21.01.2015.
+ * File created by eric.neidhardt on 21.01.2015.
  */
 public class PreferenceActivity extends AppCompatActivity
 {
