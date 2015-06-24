@@ -14,7 +14,8 @@
 			android:textStyle="bold"
 			android:textColor="@color/text_content_primary"
 			android:textSize="@dimen/text_headline"
-			android:text="@string/dialog_add_new_sound_from_directory_title"/>
+			android:text="@string/dialog_add_new_sound_from_directory_title"
+			android:visibility="gone"/>
 
 	<TextView
 			android:layout_width="match_parent"

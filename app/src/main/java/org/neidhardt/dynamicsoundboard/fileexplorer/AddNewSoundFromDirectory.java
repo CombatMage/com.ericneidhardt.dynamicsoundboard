@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -74,10 +75,16 @@ public class AddNewSoundFromDirectory
 		this.directories.setItemAnimator(new DefaultItemAnimator());
 		this.directories.setAdapter(this.adapter);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogTheme);
+		dialog.setTitle(R.string.dialog_add_new_sound_from_directory_title);
+		dialog.setContentView(view);
+
+		return dialog;
+
+		/*AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setView(view);
 
-		return builder.create();
+		return builder.create();*/
 	}
 
 	@Override
