@@ -92,7 +92,6 @@ public class SoundSheets
 	@Override
 	protected void onDetachedFromWindow()
 	{
-		EventBus.getDefault().unregister(this.adapter);
 		this.adapter.onDetachedFromWindow();
 		this.presenter.onDetachedFromWindow();
 		super.onDetachedFromWindow();
