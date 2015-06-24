@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.fileexplorer;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -75,16 +74,10 @@ public class AddNewSoundFromDirectory
 		this.directories.setItemAnimator(new DefaultItemAnimator());
 		this.directories.setAdapter(this.adapter);
 
-		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogTheme);
-		dialog.setTitle(R.string.dialog_add_new_sound_from_directory_title);
+		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle);
 		dialog.setContentView(view);
 
 		return dialog;
-
-		/*AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-		builder.setView(view);
-
-		return builder.create();*/
 	}
 
 	@Override
