@@ -29,7 +29,7 @@
 			android:layout_height="@dimen/height_button"
 			android:paddingLeft="@dimen/margin_small"
 			android:paddingRight="@dimen/margin_small"
-			android:text="@string/dialog_save"
+			android:text="@string/dialog_load"
 			android:textSize="@dimen/text_button"
 			android:textColor="@color/selector_text_accent"
 			android:background="@drawable/selector_background_accent"

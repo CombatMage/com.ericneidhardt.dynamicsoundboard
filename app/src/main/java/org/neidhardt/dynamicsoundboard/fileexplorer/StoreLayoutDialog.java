@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,10 +56,10 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		this.directories.setItemAnimator(new DefaultItemAnimator());
 		this.directories.setAdapter(this.adapter);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-		builder.setView(view);
+		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle);
+		dialog.setContentView(view);
 
-		return builder.create();
+		return dialog;
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,7 +47,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_load_sound_sheets, null);
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		this.confirm = view.findViewById(R.id.b_load);
+		this.confirm = view.findViewById(R.id.b_ok);
 		this.confirm.setOnClickListener(this);
 		this.confirm.setEnabled(false);
 
@@ -58,10 +59,10 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		this.directories.setItemAnimator(new DefaultItemAnimator());
 		this.directories.setAdapter(this.adapter);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-		builder.setView(view);
+		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle);
+		dialog.setContentView(view);
 
-		return builder.create();
+		return dialog;
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 			case R.id.b_cancel:
 				this.dismiss();
 				break;
-			case R.id.b_load:
+			case R.id.b_ok:
 				if (super.adapter.selectedFile != null)
 					this.loadFromFileAndDismiss(this.adapter.selectedFile);
 				else
