@@ -567,7 +567,7 @@ public class SoundActivity
 			return;
 
 		if (soundSheet == null)
-			throw new NullPointerException("cannot open soundSheetFragment, soundSheet is null");
+			return;
 
 		this.closeNavigationDrawer();
 
