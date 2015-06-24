@@ -13,8 +13,4 @@ public abstract class BaseFragment extends Fragment
 		return (SoundActivity)this.getActivity();
 	}
 
-	public NavigationDrawerFragment getNavigationDrawerFragment()
-	{
-		return (NavigationDrawerFragment)this.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-	}
 }
