@@ -2,28 +2,38 @@
 
 <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:animateLayoutChanges="true">
 
-	<TextView
+	<com.devspark.robototextview.widget.RobotoTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:gravity="center_vertical"
-			android:paddingLeft="@dimen/margin_default"
-			android:paddingRight="@dimen/margin_default"
-			android:textStyle="bold"
-			android:textColor="@color/text_content_primary"
-			android:textSize="@dimen/text_headline"
-			android:text="@string/dialog_sound_layout_settings_title"/>
+			android:layout_marginTop="@dimen/padding_dialog"
+			android:layout_marginBottom="@dimen/padding_dialog"
+			android:paddingLeft="@dimen/padding_dialog"
+			android:paddingRight="@dimen/padding_dialog"
+			android:textColor="@color/text_content_secondary"
+			android:textSize="@dimen/text_body"
+			android:text="@string/dialog_sound_layout_settings_message"
+			app:typeface="roboto_medium"/>
 
 	<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
 			android:id="@+id/et_name_sound_layout"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/margin_default"/>
+			android:layout_margin="@dimen/margin_default"
+			android:paddingLeft="@dimen/padding_dialog"
+			android:paddingRight="@dimen/padding_dialog"/>
 
-	<include layout="@layout/dialog_button_bar_save"/>
+	<FrameLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="end">
+
+		<include layout="@layout/dialog_button_bar_save"/>
+	</FrameLayout>
 
 </LinearLayout>

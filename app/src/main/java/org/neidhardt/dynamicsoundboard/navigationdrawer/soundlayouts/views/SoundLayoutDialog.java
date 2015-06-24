@@ -4,13 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 
 /**
- * Created by eric.neidhardt on 12.03.2015.
+ * File created by eric.neidhardt on 12.03.2015.
  */
 public abstract class SoundLayoutDialog extends BaseDialog implements View.OnClickListener
 {
@@ -26,10 +27,10 @@ public abstract class SoundLayoutDialog extends BaseDialog implements View.OnCli
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-		builder.setView(view);
+		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle);
+		dialog.setContentView(view);
 
-		return builder.create();
+		return dialog;
 	}
 
 	protected abstract int getLayoutId();

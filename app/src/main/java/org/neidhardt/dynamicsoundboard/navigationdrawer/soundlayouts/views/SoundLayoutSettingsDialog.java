@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.Soun
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 
 /**
- * Created by eric.neidhardt on 12.03.2015.
+ * File created by eric.neidhardt on 12.03.2015.
  */
 public class SoundLayoutSettingsDialog extends SoundLayoutDialog
 {
