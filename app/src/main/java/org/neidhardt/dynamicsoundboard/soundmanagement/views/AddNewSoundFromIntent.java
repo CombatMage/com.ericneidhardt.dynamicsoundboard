@@ -167,9 +167,11 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	private void deliverResult()
 	{
 		String newSoundSheetLabel = soundSheetName.getDisplayedText();
-		String soundSheetFragmentTag = this.availableSoundSheetIds.get(this.soundSheetSpinner.getSelectedItemPosition());
+		String soundSheetFragmentTag;
 		if (!this.soundSheetsAlreadyExists || this.addNewSoundSheet.isChecked())
 			soundSheetFragmentTag = this.addNewSoundSheet(newSoundSheetLabel);
+		else
+			soundSheetFragmentTag = this.availableSoundSheetIds.get(this.soundSheetSpinner.getSelectedItemPosition());
 
 		String soundLabel = this.soundName.getText().toString();
 		Uri soundUri = this.uri;
