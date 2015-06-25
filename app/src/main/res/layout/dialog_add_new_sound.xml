@@ -3,9 +3,11 @@
 <ScrollView
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:minWidth="@dimen/width_dialog">
+		android:minWidth="@dimen/width_dialog"
+		tools:background="@color/background">
 
 	<LinearLayout
 			android:layout_width="match_parent"
@@ -60,6 +62,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="end">
+
 			<include layout="@layout/dialog_button_bar_add"/>
 		</FrameLayout>
 

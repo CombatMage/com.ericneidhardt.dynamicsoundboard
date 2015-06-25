@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -93,10 +94,11 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-		builder.setView(view);
+		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogTheme);
+		dialog.setContentView(view);
+		dialog.setTitle(R.string.dialog_add_new_sound_from_intent_title);
 
-		return builder.create();
+		return dialog;
 	}
 
 	private Dialog createDialogToSelectSoundSheet()
