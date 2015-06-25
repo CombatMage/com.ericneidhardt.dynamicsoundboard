@@ -2,24 +2,15 @@
 
 <ScrollView
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="wrap_content"
-		android:layout_height="match_parent">
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:minWidth="@dimen/width_dialog">
 
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
-
-		<TextView
-				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_title"
-				android:gravity="center_vertical"
-				android:paddingLeft="@dimen/margin_default"
-				android:paddingRight="@dimen/margin_default"
-				android:textStyle="bold"
-				android:textColor="@color/text_content_primary"
-				android:textSize="@dimen/text_headline"
-				android:text="@string/dialog_add_new_sound_title"/>
 
 		<!-- this invisible input is necessary for dynamically added input fields to get focus -->
 		<EditText
@@ -38,8 +29,8 @@
 				android:id="@+id/layout_controls"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginRight="@dimen/margin_default"
-				android:layout_marginEnd="@dimen/margin_default">
+				android:paddingLeft="@dimen/padding_dialog"
+				android:paddingRight="@dimen/padding_dialog">
 
 			<ImageButton
 					android:id="@+id/b_add_another_sound"
@@ -52,21 +43,25 @@
 					android:contentDescription="@string/dialog_add_new_sound_content_description"
 					android:src="@drawable/selector_ic_add_sound_dialog"/>
 
-			<TextView
+			<com.devspark.robototextview.widget.RobotoTextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_toLeftOf="@id/b_add_another_sound"
 					android:layout_toStartOf="@id/b_add_another_sound"
 					android:layout_gravity="center_vertical"
-					android:paddingLeft="@dimen/margin_default"
-					android:paddingRight="@dimen/margin_default"
 					android:textColor="@color/text_content_secondary"
 					android:textSize="@dimen/text_body"
-					android:text="@string/dialog_add_new_sound_message"/>
+					android:text="@string/dialog_add_new_sound_message"
+					app:typeface="roboto_medium"/>
 
 		</RelativeLayout>
 
-		<include layout="@layout/dialog_button_bar_add"/>
+		<FrameLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end">
+			<include layout="@layout/dialog_button_bar_add"/>
+		</FrameLayout>
 
 	</LinearLayout>
 
