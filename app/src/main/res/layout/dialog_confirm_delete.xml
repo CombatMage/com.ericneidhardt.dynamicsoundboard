@@ -2,38 +2,30 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			  xmlns:tools="http://schemas.android.com/tools"
-			  android:orientation="vertical"
-			  android:layout_width="match_parent"
-			  android:layout_height="wrap_content">
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
+			  android:layout_width="wrap_content"
+			  android:layout_height="wrap_content"
+			  android:minWidth="@dimen/width_dialog"
+			  android:orientation="vertical">
 
-	<TextView
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_title"
-			android:gravity="center_vertical"
-			android:paddingLeft="@dimen/margin_default"
-			android:paddingRight="@dimen/margin_default"
-			android:textStyle="bold"
-			android:textColor="@color/text_content_primary"
-			android:textSize="@dimen/text_headline"
-			android:text="@string/dialog_confirm_delete_title"/>
-
-	<TextView
+	<com.devspark.robototextview.widget.RobotoTextView
 			android:id="@+id/tv_message"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="@dimen/margin_default"
-			android:paddingRight="@dimen/margin_default"
+			android:padding="@dimen/padding_dialog"
 			android:textColor="@color/text_content_secondary"
 			android:textSize="@dimen/text_body"
+			app:typeface="roboto_medium"
 			tools:text="@string/dialog_confirm_delete_all_soundsheets_message"/>
 
-		<LinearLayout
-				android:id="@+id/layout_dialog_controls"
-				android:layout_marginTop="@dimen/margin_default"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical">
-			<include layout="@layout/dialog_button_bar_delete"/>
-		</LinearLayout>
+	<FrameLayout
+			android:id="@+id/layout_dialog_controls"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/margin_default"
+			android:layout_gravity="end">
+
+		<include layout="@layout/dialog_button_bar_delete"/>
+	</FrameLayout>
 
 </LinearLayout>

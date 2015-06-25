@@ -53,7 +53,7 @@
 				android:id="@+id/et_name_new_sound_sheet"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_input_field"
-				android:layout_marginBottom="@dimen/margin_default"
+				android:layout_marginBottom="@dimen/padding_dialog"
 				android:paddingTop="@dimen/margin_default"/> <!-- padding to align view with s_sound_sheets -->
 
 	</LinearLayout>

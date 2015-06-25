@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -66,10 +67,11 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		this.soundSheetName.setText(this.soundSheetsDataUtil.getSuggestedName());
 		this.soundSheetName.setVisibility(View.GONE);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-		builder.setView(view);
+		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogTheme);
+		dialog.setContentView(view);
+		dialog.setTitle(R.string.dialog_sound_settings_title);
 
-		return builder.create();
+		return dialog;
 	}
 
 	private void setAvailableSoundSheets()

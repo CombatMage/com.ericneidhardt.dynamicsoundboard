@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
@@ -22,12 +23,11 @@ public abstract class BaseConfirmDeleteDialog extends BaseDialog implements View
 		infoText.setText(this.getInfoTextResource());
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
-		view.findViewById(R.id.b_delete).setOnClickListener(this);
+		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-		builder.setView(view);
-
-		return builder.create();
+		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle);
+		dialog.setContentView(view);
+		return dialog;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public abstract class BaseConfirmDeleteDialog extends BaseDialog implements View
 			case R.id.b_cancel:
 				this.dismiss();
 				break;
-			case R.id.b_delete:
+			case R.id.b_ok:
 				this.delete();
 				this.dismiss();
 		}

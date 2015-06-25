@@ -2,40 +2,41 @@
 
 <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:orientation="vertical"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:minWidth="@dimen/width_dialog"
 		android:animateLayoutChanges="true">
 
-	<TextView
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_title"
-			android:gravity="center_vertical"
-			android:paddingLeft="@dimen/margin_default"
-			android:paddingRight="@dimen/margin_default"
-			android:textStyle="bold"
-			android:textColor="@color/text_content_primary"
-			android:textSize="@dimen/text_headline"
-			android:text="@string/dialog_rename_sound_file_title"/>
-
-	<TextView
+	<com.devspark.robototextview.widget.RobotoTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="@dimen/margin_default"
-			android:paddingRight="@dimen/margin_default"
+			android:paddingLeft="@dimen/padding_dialog"
+			android:paddingRight="@dimen/padding_dialog"
 			android:textColor="@color/text_content_secondary"
 			android:textSize="@dimen/text_body"
-			android:text="@string/dialog_rename_sound_file_message"/>
+			android:text="@string/dialog_rename_sound_file_message"
+			app:typeface="roboto_medium"/>
 
 	<CheckBox
 			android:id="@+id/cb_rename_all_occurrences"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/margin_default"
+			android:layout_marginTop="@dimen/margin_default"
+			android:layout_marginBottom="@dimen/margin_default"
+			android:paddingLeft="@dimen/padding_dialog"
+			android:paddingRight="@dimen/padding_dialog"
 			android:textColor="@color/text_content_secondary"
 			android:textSize="@dimen/text_body"
 			android:text="@string/dialog_rename_sound_file_all_occurrences_message"/>
 
-	<include layout="@layout/dialog_button_bar_save"/>
+	<FrameLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="end">
+
+		<include layout="@layout/dialog_button_bar_save"/>
+	</FrameLayout>
 
 </LinearLayout>
