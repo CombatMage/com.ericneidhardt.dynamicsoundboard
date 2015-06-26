@@ -22,4 +22,8 @@
 		<attr name="text_ok_button" format="string" />
 	</declare-styleable>
 
+	<declare-styleable name="DialogBase">
+		<attr name="has_title" format="boolean" />
+	</declare-styleable>
+
 </resources>
