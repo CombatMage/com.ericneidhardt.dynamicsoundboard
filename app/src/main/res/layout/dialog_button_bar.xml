@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:orientation="horizontal"
+			  android:layout_width="wrap_content"
+			  android:layout_height="@dimen/height_dialog_button_bar"
+			  android:layout_gravity="end"
+			  android:padding="@dimen/margin_small">
+
+	<com.devspark.robototextview.widget.RobotoButton
+			android:id="@+id/b_cancel"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/height_dialog_button"
+			android:layout_marginEnd="@dimen/margin_small"
+			android:layout_marginRight="@dimen/margin_small"
+			android:padding="@dimen/margin_small"
+			android:minWidth="@dimen/width_min_button"
+			android:textSize="@dimen/text_button"
+			android:textColor="@color/selector_text_accent"
+			android:background="@drawable/selector_background_accent"
+			app:typeface="roboto_medium"
+			tools:text="@string/dialog_b_cancel"
+			style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+	<com.devspark.robototextview.widget.RobotoButton
+			android:id="@+id/b_ok"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/height_dialog_button"
+			android:layout_marginEnd="@dimen/margin_small"
+			android:layout_marginRight="@dimen/margin_small"
+			android:padding="@dimen/margin_small"
+			android:minWidth="@dimen/width_min_button"
+			android:textSize="@dimen/text_button"
+			android:textColor="@color/selector_text_accent"
+			android:background="@drawable/selector_background_accent"
+			app:typeface="roboto_medium"
+			tools:text="@string/dialog_add"
+			style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+</LinearLayout>
