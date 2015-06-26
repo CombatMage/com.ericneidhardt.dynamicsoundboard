@@ -17,4 +17,9 @@
 		<attr name="state_pause" format="boolean" />
 	</declare-styleable>
 
+	<declare-styleable name="DialogButtonBar">
+		<attr name="text_cancle_button" format="string" />
+		<attr name="text_ok_button" format="string" />
+	</declare-styleable>
+
 </resources>
