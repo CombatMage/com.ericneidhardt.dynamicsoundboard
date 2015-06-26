@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
@@ -38,6 +39,7 @@ public abstract class SoundSettingsBaseDialog extends BaseDialog
 		}
 	}
 
+	@NonNull
 	@Override
 	public abstract Dialog onCreateDialog(Bundle savedInstanceState);
 }

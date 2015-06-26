@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.widget.CheckBox;
@@ -45,6 +46,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		dialog.show(manager, TAG);
 	}
 
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{

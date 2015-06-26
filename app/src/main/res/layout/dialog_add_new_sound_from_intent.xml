@@ -1,49 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
-		android:orientation="vertical"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:minWidth="@dimen/width_min_dialog">
+		android:animateLayoutChanges="true"
+		app:has_title="true"
+		app:text_cancle_button="@string/dialog_cancel"
+		app:text_ok_button="@string/dialog_add">
 
-	<LinearLayout
+	<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
+			android:id="@+id/et_name_file"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="@dimen/padding_dialog"
-			android:paddingRight="@dimen/padding_dialog"
-			android:orientation="vertical">
+			android:layout_marginBottom="@dimen/margin_default"/>
 
-		<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
-				android:id="@+id/et_name_file"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_dialog"
-				android:layout_marginBottom="@dimen/margin_default"/>
-
-		<com.devspark.robototextview.widget.RobotoTextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:textColor="@color/text_content_secondary"
-				android:textSize="@dimen/text_body"
-				android:text="@string/dialog_add_new_sound_from_intent_message"
-				app:typeface="roboto_medium"/>
-
-		<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
-				android:id="@+id/et_name_new_sound_sheet"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/margin_default"
-				android:layout_marginBottom="@dimen/padding_dialog"/>
-
-	</LinearLayout>
-
-	<org.neidhardt.dynamicsoundboard.views.DialogButtonBar
-			android:layout_width="wrap_content"
+	<com.devspark.robototextview.widget.RobotoTextView
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_gravity="end"
-			app:text_cancle_button="@string/dialog_cancel"
-			app:text_ok_button="@string/dialog_add"/>
+			android:textColor="@color/text_content_secondary"
+			android:textSize="@dimen/text_body"
+			android:text="@string/dialog_add_new_sound_from_intent_message"
+			app:typeface="roboto_medium"/>
 
-</LinearLayout>
+	<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
+			android:id="@+id/et_name_new_sound_sheet"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/margin_default"/>
+
+</org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>
