@@ -9,6 +9,7 @@
 			android:id="@+id/layout_dialog_content"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:paddingTop="@dimen/margin_default"
 			android:paddingLeft="@dimen/padding_dialog"
 			android:paddingStart="@dimen/padding_dialog"
 			android:paddingRight="@dimen/padding_dialog"
