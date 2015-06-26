@@ -6,7 +6,7 @@
 		android:orientation="vertical"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:minWidth="@dimen/width_dialog">
+		android:minWidth="@dimen/width_min_dialog">
 
 	<LinearLayout
 			android:layout_width="match_parent"

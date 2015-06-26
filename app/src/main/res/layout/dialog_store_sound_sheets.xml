@@ -6,7 +6,7 @@
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent"
 			  android:animateLayoutChanges="true"
-			  android:minWidth="@dimen/width_dialog">
+			  android:minWidth="@dimen/width_min_dialog">
 
 	<com.devspark.robototextview.widget.RobotoTextView
 			android:layout_width="match_parent"

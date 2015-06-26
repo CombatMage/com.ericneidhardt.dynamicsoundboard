@@ -20,7 +20,8 @@
 	<dimen name="height_list_item_large">72dp</dimen>
 	<dimen name="height_list_item_xlarge">122dp</dimen>
 
-	<dimen name="width_dialog">280dp</dimen>
+	<dimen name="width_min_dialog">280dp</dimen>
+	<dimen name="width_min_button">64dp</dimen>
 
 	<dimen name="elevation_toolbar">4dp</dimen>
 	<dimen name="elevation_normal">4dp</dimen>

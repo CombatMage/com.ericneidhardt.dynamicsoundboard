@@ -2,7 +2,6 @@ package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
