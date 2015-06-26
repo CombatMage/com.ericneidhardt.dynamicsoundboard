@@ -30,7 +30,7 @@
 		<com.devspark.robototextview.widget.RobotoButton
 				android:id="@+id/b_add"
 				android:layout_width="wrap_content"
-				android:layout_height="@dimen/height_button"
+				android:layout_height="@dimen/height_dialog_button"
 				android:layout_alignParentEnd="true"
 				android:layout_alignParentRight="true"
 				android:padding="@dimen/margin_small"
@@ -55,16 +55,15 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-		<FrameLayout
+		<org.neidhardt.dynamicsoundboard.views.DialogButtonBar
 				android:id="@+id/layout_dialog_controls"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_alignParentEnd="true"
 				android:layout_alignParentRight="true"
-				android:layout_alignParentBottom="true">
-
-			<include layout="@layout/dialog_button_bar_save"/>
-		</FrameLayout>
+				android:layout_alignParentBottom="true"
+				app:text_cancle_button="@string/dialog_cancel"
+				app:text_ok_button="@string/dialog_save"/>
 
 		<android.support.v7.widget.RecyclerView
 				android:id="@+id/rv_directories"

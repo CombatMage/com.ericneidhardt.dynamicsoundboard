@@ -56,12 +56,11 @@
 				android:paddingTop="@dimen/margin_default"/> <!-- padding to align view with s_sound_sheets -->
 	</LinearLayout>
 
-	<FrameLayout
+	<org.neidhardt.dynamicsoundboard.views.DialogButtonBar
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_gravity="end">
-
-		<include layout="@layout/dialog_button_bar_save"/>
-	</FrameLayout>
+			android:layout_gravity="end"
+			app:text_cancle_button="@string/dialog_cancel"
+			app:text_ok_button="@string/dialog_save"/>
 
 </LinearLayout>

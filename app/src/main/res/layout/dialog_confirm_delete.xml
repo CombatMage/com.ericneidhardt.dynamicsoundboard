@@ -18,14 +18,11 @@
 			app:typeface="roboto_medium"
 			tools:text="@string/dialog_confirm_delete_all_soundsheets_message"/>
 
-	<FrameLayout
-			android:id="@+id/layout_dialog_controls"
+	<org.neidhardt.dynamicsoundboard.views.DialogButtonBar
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/margin_default"
-			android:layout_gravity="end">
-
-		<include layout="@layout/dialog_button_bar_delete"/>
-	</FrameLayout>
+			android:layout_gravity="end"
+			app:text_cancle_button="@string/dialog_cancel"
+			app:text_ok_button="@string/dialog_delete"/>
 
 </LinearLayout>
