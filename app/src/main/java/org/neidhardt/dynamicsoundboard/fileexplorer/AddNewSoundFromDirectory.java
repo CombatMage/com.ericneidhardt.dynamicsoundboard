@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,6 +57,7 @@ public class AddNewSoundFromDirectory
 			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG);
 	}
 
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
@@ -68,7 +70,7 @@ public class AddNewSoundFromDirectory
 
 		this.adapter = new DirectoryAdapter();
 
-		this.directories = (RecyclerView)view.findViewById(R.id.rv_directories);
+		this.directories = (RecyclerView)view.findViewById(R.id.rv_dialog);
 		this.directories.addItemDecoration(new DividerItemDecoration());
 		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.directories.setItemAnimator(new DefaultItemAnimator());

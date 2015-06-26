@@ -14,7 +14,11 @@ import org.neidhardt.dynamicsoundboard.R
  */
 public class DialogBaseLayout : LinearLayout
 {
+	private val TAG = javaClass.getName()
+
+	private var hasRecyclerView = false
 	private var hasTitle = true
+
 	private var labelOk: String? = null
 	private var labelCancel: String? = null
 
@@ -38,15 +42,21 @@ public class DialogBaseLayout : LinearLayout
 		array.recycle()
 
 		array = context.obtainStyledAttributes(attrs, R.styleable.DialogBase, 0, 0)
-		this.hasTitle = array.getBoolean(R.styleable.DialogBase_has_title, true)
+		this.hasTitle = array.getBoolean(R.styleable.DialogBase_has_title, this.hasTitle)
+		this.hasRecyclerView = array.getBoolean(R.styleable.DialogBase_has_recycler_view, this.hasRecyclerView)
 		array.recycle()
+
+		if (this.hasTitle && this.hasRecyclerView)
+			throw UnsupportedOperationException(TAG + ": having both title and RecyclerView is not supported");
 	}
 
 	override fun onFinishInflate()
 	{
 		super.onFinishInflate()
 
-		val view = if (this.hasTitle)
+		val view = if (this.hasRecyclerView)
+			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_recycler_view, this, false)
+		else if (this.hasTitle)
 			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_title, this, false)
 		else
 			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_no_title, this, false)
