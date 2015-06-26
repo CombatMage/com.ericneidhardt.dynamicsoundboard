@@ -9,8 +9,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 
-import kotlinx.android.synthetic.dialog_button_bar.*
-
 /**
  * File created by eric.neidhardt on 26.06.2015.
  */
