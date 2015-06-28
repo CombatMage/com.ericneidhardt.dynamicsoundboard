@@ -55,7 +55,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 		this.adapter = new DirectoryAdapter();
 
-		this.directories = (RecyclerView)view.findViewById(R.id.rv_directories);
+		this.directories = (RecyclerView)view.findViewById(R.id.rv_dialog);
 		this.directories.addItemDecoration(new DividerItemDecoration());
 		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.directories.setItemAnimator(new DefaultItemAnimator());

@@ -52,7 +52,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		this.inputFileName = (NoUnderscoreEditText) view.findViewById(R.id.et_name_file);
 		this.adapter = new DirectoryAdapter();
 
-		this.directories = (RecyclerView) view.findViewById(R.id.rv_directories);
+		this.directories = (RecyclerView) view.findViewById(R.id.rv_dialog);
 		this.directories.addItemDecoration(new DividerItemDecoration());
 		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.directories.setItemAnimator(new DefaultItemAnimator());

@@ -26,6 +26,8 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
+			android:layout_marginLeft="@dimen/margin_small"
+			android:layout_marginStart="@dimen/margin_small"
 			android:padding="@dimen/margin_small"
 			android:scaleType="centerInside"
 			android:contentDescription="@string/dialog_add_new_sound_from_directory_content_description_file_type"

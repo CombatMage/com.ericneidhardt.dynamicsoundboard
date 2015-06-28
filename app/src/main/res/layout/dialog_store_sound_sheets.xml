@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:app="http://schemas.android.com/apk/res-auto"
-			  android:orientation="vertical"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:animateLayoutChanges="true"
-			  android:minWidth="@dimen/width_min_dialog">
+<org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:animateLayoutChanges="true"
+		app:has_title="false"
+		app:has_recycler_view="true"
+		app:text_cancle_button="@string/dialog_cancel"
+		app:text_ok_button="@string/dialog_save">
 
 	<com.devspark.robototextview.widget.RobotoTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/padding_dialog"
-			android:layout_marginBottom="@dimen/padding_dialog"
-			android:paddingLeft="@dimen/padding_dialog"
-			android:paddingRight="@dimen/padding_dialog"
 			android:textColor="@color/text_content_secondary"
 			android:textSize="@dimen/text_body"
 			android:text="@string/dialog_store_layout_message"
@@ -50,41 +49,4 @@
 				android:layout_toStartOf="@id/b_add"/>
 
 	</RelativeLayout>
-
-	<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-
-		<org.neidhardt.dynamicsoundboard.views.DialogButtonBar
-				android:id="@+id/layout_dialog_controls"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentEnd="true"
-				android:layout_alignParentRight="true"
-				android:layout_alignParentBottom="true"
-				app:text_cancle_button="@string/dialog_cancel"
-				app:text_ok_button="@string/dialog_save"/>
-
-		<android.support.v7.widget.RecyclerView
-				android:id="@+id/rv_directories"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:paddingLeft="@dimen/padding_dialog"
-				android:paddingRight="@dimen/padding_dialog"
-				android:layout_above="@id/layout_dialog_controls"
-				android:overScrollMode="never"/>
-
-		<View
-				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
-				android:background="@drawable/shape_shadow_horizontal"/>
-
-		<View
-				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
-				android:layout_above="@id/layout_dialog_controls"
-				android:rotation="180"
-				android:background="@drawable/shape_shadow_horizontal"/>
-
-	</RelativeLayout>
-</LinearLayout>
+</org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>

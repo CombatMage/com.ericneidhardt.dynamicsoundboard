@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,6 +60,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG);
 	}
 
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
