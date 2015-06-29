@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers
+package org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers
 
 import android.os.Handler
 import android.support.v4.view.PagerAdapter
@@ -8,12 +8,12 @@ import android.view.View
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
-public abstract class DismissibleItemViewHolder(itemView: View)
+public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View, pagerAdapter: T)
 	: RecyclerView.ViewHolder(itemView)
 	, View.OnClickListener
 	, ViewPager.OnPageChangeListener
@@ -28,7 +28,7 @@ public abstract class DismissibleItemViewHolder(itemView: View)
 	init
 	{
 		this.viewPager.setOffscreenPageLimit(2)
-		this.viewPager.setAdapter(this.getPagerAdapter())
+		this.viewPager.setAdapter(pagerAdapter)
 		this.viewPager.addOnPageChangeListener(this)
 		this.viewPager.setCurrentItem(this.getIndexOfContentPage())
 
@@ -36,7 +36,7 @@ public abstract class DismissibleItemViewHolder(itemView: View)
 		this.deleteSoundInfoRight.setOnClickListener(this)
 	}
 
-	protected fun setToDeleteSettings(isOneSwipeDeleteEnabled: Boolean)
+	protected fun setLabelToDeletionSettings(isOneSwipeDeleteEnabled: Boolean)
 	{
 		if (isOneSwipeDeleteEnabled)
 		{
@@ -77,12 +77,10 @@ public abstract class DismissibleItemViewHolder(itemView: View)
 
 	protected abstract fun getIndexOfContentPage(): Int
 
-	protected abstract fun getPagerAdapter(): PagerAdapter
-
 	protected abstract fun delete()
 
 	private fun Handler.deleteItemDelayed()
 	{
-		this.postDelayed(Runnable { delete() }, SoundProgressAdapter.UPDATE_INTERVAL.toLong())
+		this.postDelayed(Runnable { delete() }, UPDATE_INTERVAL.toLong())
 	}
 }

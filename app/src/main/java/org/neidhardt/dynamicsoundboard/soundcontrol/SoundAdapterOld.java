@@ -22,13 +22,15 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEven
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder;
 
 import java.util.List;
 
 
 public class SoundAdapterOld
 		extends
-			SoundProgressAdapter<SoundAdapterOld.ViewHolder>
+		SoundProgressAdapter<SoundAdapterOld.ViewHolder>
 		implements
 			MediaPlayerEventListener
 {
@@ -131,7 +133,7 @@ public class SoundAdapterOld
 				View.OnClickListener,
 				CustomEditText.OnTextEditedListener,
 				SeekBar.OnSeekBarChangeListener,
-				SoundProgressViewHolder
+			SoundProgressViewHolder
 	{
 		private final View container;
 		private final CustomEditText name;
@@ -183,7 +185,7 @@ public class SoundAdapterOld
 
 		private void bindData(int positionInDataSet)
 		{
-			super.setToDeleteSettings(SoundboardPreferences.isOneSwipeToDeleteEnabled());
+			super.setLabelToDeletionSettings(SoundboardPreferences.isOneSwipeToDeleteEnabled());
 
 			EnhancedMediaPlayer player = getItem(positionInDataSet);
 			if (player == null)
@@ -203,12 +205,10 @@ public class SoundAdapterOld
 			this.timePosition.setMax(player.getDuration());
 			this.timePosition.setProgress(player.getCurrentPosition());
 
-			boolean isLastElement = positionInDataSet == getItemCount() - 1;
-			int shadowViewState = isLastElement  ? View.GONE : View.VISIBLE;
+			boolean isLastItem = positionInDataSet == getItemCount() - 1;
+			int shadowViewState = isLastItem  ? View.GONE : View.VISIBLE;
 			this.shadowBottomDeleteViewLeft.setVisibility(shadowViewState);
 			this.shadowBottomDeleteViewRight.setVisibility(shadowViewState);
-
-			boolean isLastItem = positionInDataSet == getItemCount() - 1;
 
 			if (isLastItem)
 				this.enableShadowOnLastItem();
@@ -263,7 +263,7 @@ public class SoundAdapterOld
 			if (player != null && onItemDeleteListener != null)
 				onItemDeleteListener.onItemDelete(player, position);
 
-			handler.postDelayed(new Runnable() {
+			getHandler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
 					startProgressUpdateTimer();
@@ -387,8 +387,4 @@ public class SoundAdapterOld
 		}
 	}
 
-	public interface OnItemDeleteListener
-	{
-		void onItemDelete(EnhancedMediaPlayer data, int position);
-	}
 }

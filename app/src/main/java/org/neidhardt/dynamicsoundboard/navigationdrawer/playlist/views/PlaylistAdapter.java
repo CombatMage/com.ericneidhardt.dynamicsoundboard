@@ -15,8 +15,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressViewHolder;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;

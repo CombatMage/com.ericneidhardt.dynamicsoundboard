@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import de.greenrobot.event.EventBus;
 import org.acra.ACRA;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
@@ -46,9 +47,9 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private Handler handler = null;
 
 	private SoundsDataAccess soundsDataAccess;
-	private MediaPlayerData rawData;
+	private final MediaPlayerData rawData;
 
-	public EnhancedMediaPlayer(MediaPlayerData data, SoundsDataAccess soundsDataAccess) throws IOException
+	public EnhancedMediaPlayer(@NonNull MediaPlayerData data, SoundsDataAccess soundsDataAccess) throws IOException
 	{
 		super();
 
@@ -60,7 +61,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.init(DynamicSoundboardApplication.getSoundboardContext());
 	}
 
-	public EnhancedMediaPlayer(Context context, MediaPlayerData data) throws IOException
+	public EnhancedMediaPlayer(Context context, @NonNull MediaPlayerData data) throws IOException
 	{
 		super();
 
@@ -143,6 +144,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		Logger.d(TAG, "preparing media player " + this.getMediaPlayerData().getLabel() + " with uri " + this.getMediaPlayerData().getUri());
 		super.prepare();
 	}
+
 
 	public MediaPlayerData getMediaPlayerData()
 	{

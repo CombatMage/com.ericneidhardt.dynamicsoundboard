@@ -52,7 +52,7 @@ public class SoundSheetFragment
 			BaseFragment
 		implements
 			View.OnClickListener,
-			SoundAdapterOld.OnItemDeleteListener,
+		OnItemDeleteListener,
 			DragSortRecycler.OnDragStateChangedListener,
 			DragSortRecycler.OnItemMovedListener,
 			OnOpenSoundDialogEventListener,

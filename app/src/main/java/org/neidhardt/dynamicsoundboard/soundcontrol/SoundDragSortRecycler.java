@@ -5,7 +5,7 @@ import com.emtronics.dragsortrecycler.DragSortRecycler;
 import org.neidhardt.dynamicsoundboard.R;
 
 /**
- * Created by eric.neidhardt on 23.04.2015.
+ * File created by eric.neidhardt on 23.04.2015.
  */
 class SoundDragSortRecycler extends DragSortRecycler
 {
