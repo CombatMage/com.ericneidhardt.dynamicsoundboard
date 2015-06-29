@@ -18,6 +18,10 @@
 
 -keepattributes LineNumberTable,SourceFile,*Annotation*,Signature
 
+#kotlin
+-dontwarn kotlin.** 
+-dontwarn org.w3c.dom.events.* 
+
 #jackson and pojos
 -dontwarn com.fasterxml.jackson.databind.**
 -keep class com.fasterxml.jackson.** { *; }
