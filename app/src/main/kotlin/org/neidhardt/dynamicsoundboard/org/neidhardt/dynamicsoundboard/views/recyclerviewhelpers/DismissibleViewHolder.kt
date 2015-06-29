@@ -29,11 +29,30 @@ public abstract class DismissibleItemViewHolder(itemView: View)
 	{
 		this.viewPager.setOffscreenPageLimit(2)
 		this.viewPager.setAdapter(this.getPagerAdapter())
-		this.viewPager.setOnPageChangeListener(this) // this is deprecated TODO check
+		this.viewPager.addOnPageChangeListener(this)
 		this.viewPager.setCurrentItem(this.getIndexOfContentPage())
 
 		this.deleteSoundInfoLeft.setOnClickListener(this)
 		this.deleteSoundInfoRight.setOnClickListener(this)
+	}
+
+	protected fun setToDeleteSettings(isOneSwipeDeleteEnabled: Boolean)
+	{
+		if (isOneSwipeDeleteEnabled)
+		{
+			this.deleteSoundInfoLeft.setText(R.string.sound_control_delete)
+			this.deleteSoundInfoRight.setText(R.string.sound_control_delete)
+		}
+		else
+		{
+			this.deleteSoundInfoLeft.setText(R.string.sound_control_delete_confirm)
+			this.deleteSoundInfoRight.setText(R.string.sound_control_delete_confirm)
+		}
+	}
+
+	protected fun showContentPage()
+	{
+		this.viewPager.setCurrentItem(this.getIndexOfContentPage())
 	}
 
 	override fun onClick(view: View)
@@ -49,7 +68,7 @@ public abstract class DismissibleItemViewHolder(itemView: View)
 	override fun onPageSelected(selectedPage: Int)
 	{
 		if (selectedPage != getIndexOfContentPage() && SoundboardPreferences.isOneSwipeToDeleteEnabled())
-			this.handler.deleteItemDelayed()
+			this.handler.deleteItemDelayed() // delay deletion, because page is selected before scrolling has settled
 	}
 
 	override fun onPageScrollStateChanged(state: Int) {}
@@ -62,13 +81,8 @@ public abstract class DismissibleItemViewHolder(itemView: View)
 
 	protected abstract fun delete()
 
-	fun Handler.deleteItemDelayed()
+	private fun Handler.deleteItemDelayed()
 	{
-		this.postDelayed(object : Runnable // delay deletion, because page is selected before scrolling has settled
-		{
-			override fun run() {
-				delete()
-			}
-		}, SoundProgressAdapter.UPDATE_INTERVAL.toLong())
+		this.postDelayed(Runnable { delete() }, SoundProgressAdapter.UPDATE_INTERVAL.toLong())
 	}
 }

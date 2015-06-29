@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol;
 
-import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -15,12 +15,13 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
+import org.neidhardt.dynamicsoundboard.org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolder;
+import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolderOld;
 
 import java.util.List;
 
@@ -125,7 +126,7 @@ public class SoundAdapterOld
 
 	public class ViewHolder
 			extends
-			DismissibleItemViewHolderOld
+				DismissibleItemViewHolder
 			implements
 				View.OnClickListener,
 				CustomEditText.OnTextEditedListener,
@@ -180,17 +181,16 @@ public class SoundAdapterOld
 				this.timePosition.setProgress(player.getCurrentPosition());
 		}
 
-		@Override
-		protected void bindData(int positionInDataSet)
+		private void bindData(int positionInDataSet)
 		{
-			super.bindData(positionInDataSet);
+			super.setToDeleteSettings(SoundboardPreferences.isOneSwipeToDeleteEnabled());
 
 			EnhancedMediaPlayer player = getItem(positionInDataSet);
 			if (player == null)
 				return;
 
 			MediaPlayerData data = player.getMediaPlayerData();
-			super.resetViewPager();
+			super.showContentPage();
 
 			if (!this.name.hasFocus())
 				this.name.setText(data.getLabel());
@@ -232,12 +232,8 @@ public class SoundAdapterOld
 			this.container.setLayoutParams(params);
 		}
 
-		@Override
-		protected Handler getHandler()
-		{
-			return handler;
-		}
 
+		@NonNull
 		@Override
 		protected PagerAdapter getPagerAdapter()
 		{
