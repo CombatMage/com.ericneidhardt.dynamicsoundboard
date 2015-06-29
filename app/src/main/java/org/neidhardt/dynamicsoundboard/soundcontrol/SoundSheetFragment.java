@@ -52,7 +52,7 @@ public class SoundSheetFragment
 			BaseFragment
 		implements
 			View.OnClickListener,
-			SoundAdapter.OnItemDeleteListener,
+			SoundAdapterOld.OnItemDeleteListener,
 			DragSortRecycler.OnDragStateChangedListener,
 			DragSortRecycler.OnItemMovedListener,
 			OnOpenSoundDialogEventListener,
@@ -62,7 +62,7 @@ public class SoundSheetFragment
 	private static final String LOG_TAG = SoundSheetFragment.class.getName();
 
 	private String fragmentTag;
-	private SoundAdapter soundAdapter;
+	private SoundAdapterOld soundAdapter;
 	private RecyclerView soundLayout;
 	private SoundDragSortRecycler dragSortRecycler;
 	private SoundSheetScrollListener scrollListener;
@@ -96,7 +96,7 @@ public class SoundSheetFragment
 		Bundle args = this.getArguments();
 		if (args != null)
 			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
-		this.soundAdapter = new SoundAdapter(this, this.soundsDataAccess, this.soundsDataStorage);
+		this.soundAdapter = new SoundAdapterOld(this, this.soundsDataAccess, this.soundsDataStorage);
 		this.soundAdapter.setOnItemDeleteListener(this);
 
 		this.dragSortRecycler = new SoundDragSortRecycler(this.getResources(), R.id.b_reorder);

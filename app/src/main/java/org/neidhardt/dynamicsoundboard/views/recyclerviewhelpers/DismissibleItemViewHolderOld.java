@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter;
+import org.neidhardt.dynamicsoundboard.soundcontrol.SoundProgressAdapter;
 
-public abstract class DismissibleItemViewHolder
+public abstract class DismissibleItemViewHolderOld
 		extends
 			RecyclerView.ViewHolder
 		implements
@@ -23,7 +23,7 @@ public abstract class DismissibleItemViewHolder
 
 	private ViewPager viewPager;
 
-	public DismissibleItemViewHolder(View itemView)
+	public DismissibleItemViewHolderOld(View itemView)
 	{
 		super(itemView);
 
@@ -80,7 +80,7 @@ public abstract class DismissibleItemViewHolder
 						delete();
 				}
 			}
-		}, SoundAdapter.UPDATE_INTERVAL);
+		}, SoundProgressAdapter.UPDATE_INTERVAL);
 	}
 
 	@Override

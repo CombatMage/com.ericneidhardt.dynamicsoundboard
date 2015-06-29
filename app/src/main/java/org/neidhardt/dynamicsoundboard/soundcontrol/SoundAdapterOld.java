@@ -20,18 +20,18 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEven
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolder;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolderOld;
 
 import java.util.List;
 
 
-public class SoundAdapter
+public class SoundAdapterOld
 		extends
-			SoundProgressAdapter<SoundAdapter.ViewHolder>
+			SoundProgressAdapter<SoundAdapterOld.ViewHolder>
 		implements
 			MediaPlayerEventListener
 {
-	private static final String TAG = SoundAdapter.class.getName();
+	private static final String TAG = SoundAdapterOld.class.getName();
 	private static final int VIEWPAGER_INDEX_SOUND_CONTROLS = 1;
 
 	private final String parentFragmentTag;
@@ -44,7 +44,7 @@ public class SoundAdapter
 
 	private EventBus eventBus;
 
-	public SoundAdapter(SoundSheetFragment parent, SoundsDataAccess soundsDataAccess, SoundsDataStorage soundsDataStorage)
+	public SoundAdapterOld(SoundSheetFragment parent, SoundsDataAccess soundsDataAccess, SoundsDataStorage soundsDataStorage)
 	{
 		this.eventBus = EventBus.getDefault();
 		this.parentFragmentTag = parent.getFragmentTag();
@@ -125,7 +125,7 @@ public class SoundAdapter
 
 	public class ViewHolder
 			extends
-				DismissibleItemViewHolder
+			DismissibleItemViewHolderOld
 			implements
 				View.OnClickListener,
 				CustomEditText.OnTextEditedListener,
