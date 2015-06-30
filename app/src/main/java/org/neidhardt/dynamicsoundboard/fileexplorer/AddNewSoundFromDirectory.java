@@ -104,7 +104,7 @@ public class AddNewSoundFromDirectory
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		if (v.getId() == R.id.b_cancel)
 			this.dismiss();

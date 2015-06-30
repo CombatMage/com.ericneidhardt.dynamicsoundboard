@@ -22,8 +22,6 @@
 	<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginRight="@dimen/margin_default"
-			android:layout_marginEnd="@dimen/margin_default"
 			android:layout_marginBottom="@dimen/margin_small">
 
 		<com.devspark.robototextview.widget.RobotoButton
@@ -44,7 +42,8 @@
 				android:id="@+id/et_name_file"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_margin="@dimen/margin_default"
+				android:layout_marginTop="@dimen/margin_default"
+				android:layout_marginRight="@dimen/margin_default"
 				android:layout_toLeftOf="@id/b_add"
 				android:layout_toStartOf="@id/b_add"/>
 

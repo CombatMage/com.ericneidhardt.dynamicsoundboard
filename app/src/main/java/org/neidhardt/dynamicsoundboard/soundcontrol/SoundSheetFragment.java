@@ -28,6 +28,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.addnewsounddialog.AddnewsounddialogPackage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
@@ -35,7 +36,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog;
@@ -182,7 +182,7 @@ public class SoundSheetFragment
 		switch (view.getId())
 		{
 			case R.id.action_add_sound:
-				AddNewSoundDialog.showInstance(this.getFragmentManager(), this.fragmentTag);
+				AddnewsounddialogPackage.showInstance(this.getFragmentManager(), this.getFragmentTag());
 				break;
 			case R.id.action_add_sound_dir:
 				AddNewSoundFromDirectory.showInstance(this.getFragmentManager(), this.fragmentTag);
