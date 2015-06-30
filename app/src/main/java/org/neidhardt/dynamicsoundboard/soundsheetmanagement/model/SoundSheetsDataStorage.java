@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model;
 
+import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 
 import java.util.List;
@@ -30,4 +31,11 @@ public interface SoundSheetsDataStorage
 	 * Remove all currently stored SoundSheets from the data set.
 	 */
 	void removeAllSoundSheets();
+
+	/**
+	 * Get DaoSession used for storing {@code SoundSheet}
+	 * @return corresponding {@code DaoSession}
+	 */
+	DaoSession getDbSoundSheets();
+
 }

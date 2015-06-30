@@ -1,10 +1,7 @@
 package org.neidhardt.dynamicsoundboard.dao.daohelper
 
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.DaoSession
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist
+import org.neidhardt.dynamicsoundboard.dao.*
 import roboguice.util.SafeAsyncTask
 
 /**
@@ -23,10 +20,34 @@ public fun updateDatabaseAsync(data: MediaPlayerData)
 			else
 				soundsDataStorage.getDbSounds()
 
-	UpdateAsyncTask(data, daoSession.getMediaPlayerDataDao(), daoSession).execute()
+	UpdatePlayerAsyncTask(data, daoSession.getMediaPlayerDataDao(), daoSession).execute()
 }
 
-private class UpdateAsyncTask(data: MediaPlayerData, dao: MediaPlayerDataDao, daoSession: DaoSession) : SafeAsyncTask<Void>()
+public fun updateDatabaseAsync(data: SoundSheet)
+{
+	val soundSheetsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundSheetsDataStorage();
+	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
+
+	UpdateSoundSheetsAsyncTask(data, daoSession.getSoundSheetDao(), daoSession).execute()
+}
+
+private class UpdateSoundSheetsAsyncTask(data: SoundSheet, dao: SoundSheetDao, daoSession: DaoSession) : SafeAsyncTask<Void>()
+{
+	private val data = data
+	private val dao = dao
+	private val daoSession = daoSession
+
+	override fun call(): Void?
+	{
+		this.daoSession.runInTx {
+			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.getFragmentTag())).list().size() != 0)
+				dao.update(data) // do not update if item was not added before
+		}
+		return null
+	}
+}
+
+private class UpdatePlayerAsyncTask(data: MediaPlayerData, dao: MediaPlayerDataDao, daoSession: DaoSession) : SafeAsyncTask<Void>()
 {
 	private val data = data
 	private val dao = dao

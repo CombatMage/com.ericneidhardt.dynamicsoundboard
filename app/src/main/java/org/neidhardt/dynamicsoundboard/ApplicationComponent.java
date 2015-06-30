@@ -13,6 +13,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.SoundSheetsDataModule;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 import javax.inject.Singleton;
@@ -45,4 +46,6 @@ public interface ApplicationComponent
 	SoundsDataStorage provideSoundsDataStorage();
 
 	SoundsDataUtil provideSoundsDataUtil();
+
+	SoundSheetsDataStorage provideSoundSheetsDataStorage();
 }

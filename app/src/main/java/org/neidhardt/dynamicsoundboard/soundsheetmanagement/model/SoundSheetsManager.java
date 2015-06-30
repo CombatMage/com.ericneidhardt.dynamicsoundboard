@@ -89,6 +89,12 @@ public class SoundSheetsManager
 	}
 
 	@Override
+	public DaoSession getDbSoundSheets()
+	{
+		return this.daoSession;
+	}
+
+	@Override
 	public List<SoundSheet> getSoundSheets()
 	{
 		if (this.soundSheets == null)

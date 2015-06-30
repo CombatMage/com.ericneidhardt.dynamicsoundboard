@@ -37,7 +37,8 @@ public class DynamicSoundboardApplication extends Application {
 		return random.nextInt(Integer.MAX_VALUE);
 	}
 
-	public static ApplicationComponent getApplicationComponent() {
+	public static ApplicationComponent getApplicationComponent()
+	{
 		return applicationComponent;
 	}
 
