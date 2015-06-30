@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +44,6 @@ import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloati
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 import javax.inject.Inject;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -52,7 +52,6 @@ public class SoundSheetFragment
 			BaseFragment
 		implements
 			View.OnClickListener,
-		OnItemDeleteListener,
 			DragSortRecycler.OnDragStateChangedListener,
 			DragSortRecycler.OnItemMovedListener,
 			OnOpenSoundDialogEventListener,
@@ -61,8 +60,10 @@ public class SoundSheetFragment
 	private static final String KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag";
 	private static final String LOG_TAG = SoundSheetFragment.class.getName();
 
+	private EventBus eventBus;
+
 	private String fragmentTag;
-	private SoundAdapterOld soundAdapter;
+	private SoundAdapter soundAdapter;
 	private RecyclerView soundLayout;
 	private SoundDragSortRecycler dragSortRecycler;
 	private SoundSheetScrollListener scrollListener;
@@ -90,14 +91,15 @@ public class SoundSheetFragment
 	{
 		super.onCreate(savedInstanceState);
 		DynamicSoundboardApplication.getApplicationComponent().inject(this);
+		this.eventBus = EventBus.getDefault();
+
 		this.setRetainInstance(true);
 		this.setHasOptionsMenu(true);
 
 		Bundle args = this.getArguments();
 		if (args != null)
 			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG);
-		this.soundAdapter = new SoundAdapterOld(this, this.soundsDataAccess, this.soundsDataStorage);
-		this.soundAdapter.setOnItemDeleteListener(this);
+		this.soundAdapter = new SoundAdapter(this.fragmentTag, this.soundsDataAccess, this.soundsDataStorage, this.eventBus);
 
 		this.dragSortRecycler = new SoundDragSortRecycler(this.getResources(), R.id.b_reorder);
 		this.dragSortRecycler.setOnItemMovedListener(this);
@@ -141,20 +143,19 @@ public class SoundSheetFragment
 	public void onStart()
 	{
 		super.onStart();
-		EventBus eventBus = EventBus.getDefault();
-		if (!eventBus.isRegistered(this))
-			eventBus.register(this);
-		if (!eventBus.isRegistered(this.soundAdapter))
-			eventBus.register(this.soundAdapter);
+
+		this.soundAdapter.onAttachedToWindow();
+
+		if (!this.eventBus.isRegistered(this))
+			this.eventBus.register(this);
 	}
 
 	@Override
 	public void onStop()
 	{
 		super.onStop();
-		EventBus eventBus = EventBus.getDefault();
-		eventBus.unregister(this.soundAdapter);
-		eventBus.unregister(this);
+		this.soundAdapter.onDetachedFromWindow();
+		this.eventBus.unregister(this);
 	}
 
 	@Override
@@ -176,7 +177,7 @@ public class SoundSheetFragment
 	}
 
 	@Override
-	public void onClick(View view)
+	public void onClick(@NonNull View view)
 	{
 		switch (view.getId())
 		{
@@ -206,7 +207,7 @@ public class SoundSheetFragment
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		if (container == null)
 			return null;
@@ -253,16 +254,6 @@ public class SoundSheetFragment
 	{
 		this.soundsDataStorage.moveSoundInFragment(fragmentTag, from, to);
 		this.soundAdapter.notifyDataSetChanged();
-	}
-
-	@Override
-	public void onItemDelete(EnhancedMediaPlayer player, int position)
-	{
-		this.soundsDataStorage.removeSounds(Collections.singletonList(player));
-
-		AddPauseFloatingActionButton fab = (AddPauseFloatingActionButton) this.getActivity().findViewById(R.id.fab_add);
-		if (fab != null)
-			fab.show(true);
 	}
 
 	@Override

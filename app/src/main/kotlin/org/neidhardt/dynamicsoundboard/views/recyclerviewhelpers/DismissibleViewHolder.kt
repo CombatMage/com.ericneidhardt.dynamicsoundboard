@@ -21,7 +21,7 @@ public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View
 	private val viewPager = itemView as ViewPager
 
 	private val deleteSoundInfoLeft = itemView.findViewById(R.id.tv_delete_sound_left) as TextView
-	private val deleteSoundInfoRight = itemView.findViewById(R.id.tv_delete_sound_left) as TextView
+	private val deleteSoundInfoRight = itemView.findViewById(R.id.tv_delete_sound_right) as TextView
 
 	private val handler = Handler()
 
@@ -36,7 +36,7 @@ public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View
 		this.deleteSoundInfoRight.setOnClickListener(this)
 	}
 
-	protected fun setLabelToDeletionSettings(isOneSwipeDeleteEnabled: Boolean)
+	public fun setLabelToDeletionSettings(isOneSwipeDeleteEnabled: Boolean)
 	{
 		if (isOneSwipeDeleteEnabled)
 		{

@@ -53,6 +53,7 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder>
 			val viewHolderToUpdate = this.recyclerView?.findViewHolderForAdapterPosition(index) as SoundProgressViewHolder
 			viewHolderToUpdate.onProgressUpdate()
 		}
+		this.hasTimerStarted.set(false)
 		this.startProgressUpdateTimer()
 	}
 
