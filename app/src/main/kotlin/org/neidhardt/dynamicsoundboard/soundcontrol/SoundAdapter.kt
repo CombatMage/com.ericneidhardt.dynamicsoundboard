@@ -80,10 +80,10 @@ public class SoundAdapter
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder
 	{
 		val view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false)
-		return SoundViewHolder(view, this.eventBus, this.soundsDataStorage, {player, position -> delete(player, position)}, this)
+		return SoundViewHolder(view, this.eventBus, this.soundsDataStorage, {player, position -> delete(player)}, this)
 	}
 
-	private fun delete(player: EnhancedMediaPlayer, position: Int)
+	private fun delete(player: EnhancedMediaPlayer)
 	{
 		this.soundsDataStorage.removeSounds(listOf(player))
 	}
