@@ -325,7 +325,7 @@ public class SoundActivity
 		this.soundSheetsDataUtil.writeCacheBackAndRelease();
 		this.soundSheetsDataUtil.init();
 
-		this.soundsDataUtil.writeCacheBackAndRelease();
+		this.soundsDataUtil.release();
 		this.soundsDataUtil.init();
 	}
 

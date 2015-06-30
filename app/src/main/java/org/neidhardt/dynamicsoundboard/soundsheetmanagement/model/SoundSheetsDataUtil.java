@@ -9,7 +9,7 @@ public interface SoundSheetsDataUtil
 {
 	/**
 	 * Starts async task to retrieve sound sheets from database. If {@code SoundSheetsDataUtil} was initialized before,
-	 * you must call {@code SoundSheetsDataUtil.writeCacheBackAndRelease()} prior.
+	 * you must call {@code SoundSheetsDataUtil.release()} prior.
 	 */
 	void init();
 

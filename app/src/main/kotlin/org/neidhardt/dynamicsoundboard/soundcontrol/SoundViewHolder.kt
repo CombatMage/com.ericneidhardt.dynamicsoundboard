@@ -144,7 +144,7 @@ public class SoundViewHolder
 		if (newLabel?.equals(currentLabel) ?: false)
 		{
 			playerData?.setLabel(newLabel)
-			playerData?.setItemWasAltered()
+			playerData?.updateItemInDatabaseAsync()
 
 			this.eventBus.post(OpenSoundRenameEvent(playerData))
 		}
@@ -173,7 +173,7 @@ public class SoundViewHolder
 			{
 				view.setSelected(!isSelected)
 				player.setIsInPlaylist(!isSelected)
-				player.getMediaPlayerData().setItemWasAltered()
+				player.getMediaPlayerData().updateItemInDatabaseAsync()
 				soundsDataStorage.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected)
 			}
 			R.id.b_play -> {

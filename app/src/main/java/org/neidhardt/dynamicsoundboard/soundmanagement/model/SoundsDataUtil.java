@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model;
 
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 /**
  * File created by eric.neidhardt on 02.06.2015.
@@ -10,7 +9,7 @@ public interface SoundsDataUtil
 {
 	/**
 	 * Starts async task to retrieve sounds from database. If {@code SoundsDataUtil} was initialized before,
-	 * you must call {@code SoundsDataUtil.writeCacheBackAndRelease()} prior.
+	 * you must call {@code SoundsDataUtil.release()} prior.
 	 */
 	void init();
 
@@ -23,6 +22,12 @@ public interface SoundsDataUtil
 	/**
 	 * Write back all existing sounds and the playlist to database.
 	 */
-	void writeCacheBackAndRelease();
+	void release();
 
+	/**
+	 * Check if the given sound is part of the playlist or part of the regular sounds
+	 * @param playerData data of sound to check
+	 * @return true if player data corresponds to playlist player else false
+	 */
+	boolean isPlaylistPlayer(MediaPlayerData playerData);
 }

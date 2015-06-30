@@ -64,7 +64,7 @@ public class NotificationService extends Service implements ActivityStateChanged
 
 		this.eventBus.unregister(this);
 		this.notificationHandler.onServiceDestroyed();
-		this.soundSheetsDataUtil.writeCacheBackAndRelease();
+		this.soundSheetsDataUtil.release();
 
 		super.onDestroy();
 	}

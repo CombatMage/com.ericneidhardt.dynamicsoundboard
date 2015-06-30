@@ -15,7 +15,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.StoreSoundsTask;
 import roboguice.util.SafeAsyncTask;
 
 import java.io.IOException;
@@ -50,17 +49,18 @@ public class SoundsManager
 		this.init();
 	}
 
-	private DaoSession getDbSounds()
+	public DaoSession getDbSounds()
 	{
 		if (this.dbSounds == null)
 			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNameSounds());
 		return this.dbSounds;
 	}
 
-	private DaoSession getDbPlaylist()
+
+	public DaoSession getDbPlaylist()
 	{
 		if (this.dbPlaylist == null)
-			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNameSounds());
+			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNamePlayList());
 		return this.dbPlaylist;
 	}
 
@@ -93,23 +93,11 @@ public class SoundsManager
 	}
 
 	@Override
-	public void writeCacheBackAndRelease()
+	public void release()
 	{
 		this.isInitDone = false;
 
-		this.storeLoadedSounds();
 		this.releaseMediaPlayers();
-	}
-
-	private void storeLoadedSounds()
-	{
-		this.getDbSounds().getMediaPlayerDataDao().deleteAll();
-		SafeAsyncTask task = new StoreSoundsTask(this.sounds, this.getDbSounds());
-		task.execute();
-
-		this.getDbPlaylist().getMediaPlayerDataDao().deleteAll();
-		task = new StoreSoundsTask(this.playlist, getDbPlaylist());
-		task.execute();
 	}
 
 	private void releaseMediaPlayers()
@@ -127,6 +115,12 @@ public class SoundsManager
 
 		this.eventBus.post(new PlaylistChangedEvent());
 		this.eventBus.post(new SoundsRemovedEvent(null));
+	}
+
+	@Override
+	public boolean isPlaylistPlayer(MediaPlayerData playerData)
+	{
+		return Playlist.TAG.equals(playerData.getFragmentTag());
 	}
 
 	@Override
@@ -286,6 +280,12 @@ public class SoundsManager
 
 		this.cleanupSortOrderInList(soundsInFragment);
 
+		MediaPlayerDataDao dao = this.getDbSounds().getMediaPlayerDataDao();
+		if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.getPlayerId())).list().size() == 0)
+		{
+			dao.insert(data);
+		}
+
 		this.eventBus.post(new SoundAddedEvent(player));
 	}
 
@@ -332,8 +332,12 @@ public class SoundsManager
 		int count = sounds.size();
 		for (int i = 0; i < count; i++)
 		{
-			sounds.get(i).getMediaPlayerData().setSortOrder(i);
-			sounds.get(i).getMediaPlayerData().setItemWasUpdated();
+			MediaPlayerData data = sounds.get(i).getMediaPlayerData();
+			if (data.getSortOrder() != i)
+			{
+				sounds.get(i).getMediaPlayerData().setSortOrder(i);
+				sounds.get(i).getMediaPlayerData().updateItemInDatabaseAsync();
+			}
 		}
 	}
 
@@ -359,7 +363,7 @@ public class SoundsManager
 		for (int i = indexOfSoundsToUpdate; i < count; i++)
 		{
 			soundsInFragment.get(i).getMediaPlayerData().setSortOrder(i);
-			soundsInFragment.get(i).getMediaPlayerData().setItemWasAltered();
+			soundsInFragment.get(i).getMediaPlayerData().updateItemInDatabaseAsync();
 		}
 	}
 

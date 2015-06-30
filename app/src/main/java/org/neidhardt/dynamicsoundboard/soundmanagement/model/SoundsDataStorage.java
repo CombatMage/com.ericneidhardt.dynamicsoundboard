@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model;
 
+import org.neidhardt.dynamicsoundboard.dao.DaoSession;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
@@ -61,4 +62,16 @@ public interface SoundsDataStorage
 	 * @param playerData {@code MediaPlayerData} to remove
 	 */
 	void removePlaylistDataFromDatabase(MediaPlayerData playerData);
+
+	/**
+	 * Get DaoSession used for storing {@code MediaPlayerData} of regular sounds
+	 * @return corresponding {@code DaoSession}
+	 */
+	DaoSession getDbSounds();
+
+	/**
+	 * Get DaoSession used for storing {@code MediaPlayerData} of sounds in playlist
+	 * @return corresponding {@code DaoSession}
+	 */
+	DaoSession getDbPlaylist();
 }

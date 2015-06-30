@@ -4,6 +4,9 @@ package org.neidhardt.dynamicsoundboard.dao;
 
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
+
+import org.neidhardt.dynamicsoundboard.dao.daohelper.DaohelperPackage;
+
 /**
  * Entity mapped to table MEDIA_PLAYER_DATA.
  */
@@ -24,8 +27,6 @@ public class MediaPlayerData {
     private Integer sortOrder;
 
     // KEEP FIELDS - put your custom fields here
-    private boolean wasAltered = false;
-
     private boolean isSelectedForDeletion = false;
     // KEEP FIELDS END
 
@@ -129,16 +130,8 @@ public class MediaPlayerData {
     }
 
     // KEEP METHODS - put your custom methods here
-    public boolean wasAlteredAfterLoading() {
-        return this.wasAltered;
-    }
-
-    public void setItemWasAltered() {
-        this.wasAltered = true;
-    }
-
-    public void setItemWasUpdated() {
-        this.wasAltered = false;
+    public void updateItemInDatabaseAsync() {
+		DaohelperPackage.updateDatabaseAsync(this);
     }
 
     public boolean getIsSelectedForDeletion() {
@@ -161,7 +154,6 @@ public class MediaPlayerData {
                 ", isInPlaylist=" + isInPlaylist +
                 ", timePosition=" + timePosition +
                 ", sortOrder=" + sortOrder +
-                ", wasAltered=" + wasAltered +
                 '}';
     }
 

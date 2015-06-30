@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.net.Uri;
@@ -123,7 +122,7 @@ public class RenameSoundFileDialog extends SoundSettingsBaseDialog implements Vi
 
 			if (renameAllOccurrences) {
 				player.getMediaPlayerData().setLabel(newFileLabel);
-				player.getMediaPlayerData().setItemWasAltered();
+				player.getMediaPlayerData().updateItemInDatabaseAsync();
 			}
 
 			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG))

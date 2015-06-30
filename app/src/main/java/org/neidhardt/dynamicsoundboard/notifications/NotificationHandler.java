@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -13,10 +14,11 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListen
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
+import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManagerUtil;
-import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ public class NotificationHandler implements
 	private static final String TAG = NotificationHandler.class.getName();
 
 	@Inject SoundsDataAccess soundsDataAccess;
+	@Inject SoundsDataUtil soundsDataUtil;
 
 	private NotificationService service;
 
@@ -82,7 +85,7 @@ public class NotificationHandler implements
 		Set<EnhancedMediaPlayer> pendingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
 		for (EnhancedMediaPlayer player : pendingSounds)
 		{
-			if (player.getMediaPlayerData().getFragmentTag().equals(Playlist.TAG)) // playlist sound is added as the last notification
+			if (this.soundsDataUtil.isPlaylistPlayer(player.getMediaPlayerData())) // playlist sound is added as the last notification
 				pendingPlaylistPlayer = player;
 			else
 				this.addNotification(this.getNotificationForSound(player));
@@ -212,7 +215,7 @@ public class NotificationHandler implements
 	// Update notifications, according to player state or notification actions
 
 	@Override
-	public void onEvent(MediaPlayerStateChangedEvent event)
+	public void onEvent(@NonNull MediaPlayerStateChangedEvent event)
 	{
 		Logger.d(TAG, event.toString());
 
@@ -245,7 +248,7 @@ public class NotificationHandler implements
 	}
 
 	@Override
-	public void onEvent(MediaPlayerCompletedEvent event)
+	public void onEvent(@NonNull MediaPlayerCompletedEvent event)
 	{
 		// nothing to be done
 	}
@@ -311,7 +314,7 @@ public class NotificationHandler implements
 	private class NotificationActionReceiver extends BroadcastReceiver
 	{
 		@Override
-		public void onReceive(Context context, Intent intent)
+		public void onReceive(@NonNull Context context, @NonNull Intent intent)
 		{
 			Logger.d(TAG, "NotificationActionReceiver.onReceive " + intent);
 

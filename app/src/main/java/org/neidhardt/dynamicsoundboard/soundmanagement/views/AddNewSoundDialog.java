@@ -109,7 +109,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		switch (v.getId()) {
 			case R.id.b_ok:
@@ -131,7 +131,7 @@ public class AddNewSoundDialog extends BaseDialog implements View.OnClickListene
 	}
 
 	@Override
-	public boolean onTouch(View v, MotionEvent event)
+	public boolean onTouch(View v, @NonNull MotionEvent event)
 	{
 		if (v == this.addSoundsButton && !v.isClickable())
 			this.showInfoToast();

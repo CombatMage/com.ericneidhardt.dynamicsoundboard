@@ -104,7 +104,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public void setSoundUri(String uri) throws IOException
 	{
 		this.rawData.setUri(uri);
-		this.rawData.setItemWasUpdated();
+		this.rawData.updateItemInDatabaseAsync();
 		this.reset();
 
 		this.init(DynamicSoundboardApplication.getSoundboardContext());
@@ -184,14 +184,18 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public void setLooping(boolean looping)
 	{
 		super.setLooping(looping);
-		this.rawData.setIsLoop(looping);
-		this.rawData.setItemWasAltered();
+
+		if (this.rawData.getIsLoop() != looping)
+		{
+			this.rawData.setIsLoop(looping);
+			this.rawData.updateItemInDatabaseAsync();
+		}
 	}
 
 	public void setIsInPlaylist(boolean inPlaylist)
 	{
 		this.rawData.setIsInPlaylist(inPlaylist);
-		this.rawData.setItemWasAltered();
+		this.rawData.updateItemInDatabaseAsync();
 	}
 
 	public boolean playSound()

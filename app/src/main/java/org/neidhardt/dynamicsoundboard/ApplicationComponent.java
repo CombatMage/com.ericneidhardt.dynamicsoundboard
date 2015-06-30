@@ -4,12 +4,14 @@ import dagger.Component;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
+import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.SoundsDataModule;
-import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.dagger.SoundSheetsDataModule;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
@@ -39,4 +41,8 @@ public interface ApplicationComponent
 	void inject(PauseSoundOnCallListener listener);
 
 	SoundsDataAccess provideSoundsDataAccess();
+
+	SoundsDataStorage provideSoundsDataStorage();
+
+	SoundsDataUtil provideSoundsDataUtil();
 }
