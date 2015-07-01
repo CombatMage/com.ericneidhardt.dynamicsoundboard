@@ -106,7 +106,6 @@ public class SoundSheet {
 				", getIsSelectedForDeletion=" + isSelectedForDeletion +
 				'}';
 	}
-
     // KEEP METHODS END
 
 }

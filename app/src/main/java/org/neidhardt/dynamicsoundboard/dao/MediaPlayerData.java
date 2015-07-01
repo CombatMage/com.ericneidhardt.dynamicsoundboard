@@ -130,7 +130,8 @@ public class MediaPlayerData {
     }
 
     // KEEP METHODS - put your custom methods here
-    public void updateItemInDatabaseAsync() {
+    public void updateItemInDatabaseAsync()
+	{
 		DaohelperPackage.updateDatabaseAsync(this);
     }
 
@@ -156,7 +157,6 @@ public class MediaPlayerData {
                 ", sortOrder=" + sortOrder +
                 '}';
     }
-
     // KEEP METHODS END
 
 }

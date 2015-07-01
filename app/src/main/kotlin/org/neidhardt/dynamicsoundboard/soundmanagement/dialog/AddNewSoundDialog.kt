@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.dialog.addnewsounddialog
+package org.neidhardt.dynamicsoundboard.soundmanagement.dialog
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -28,6 +28,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
+import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 import java.util.ArrayList
@@ -36,30 +37,36 @@ import java.util.ArrayList
  * File created by eric.neidhardt on 30.06.2015.
  */
 
-private val TAG = javaClass<AddNewSoundDialog>().getName()
+private val TAG = javaClass<DialogView>().getName()
 
 private val KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.callingFragmentTag"
 private val KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.soundsToAdd"
 private val KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.soundsToAddLabels"
 
-public fun showInstance(manager: FragmentManager, callingFragmentTag: String)
+public class AddNewSoundDialog(manager: FragmentManager, callingFragmentTag: String)
 {
-	val dialog = AddNewSoundDialog()
+	init
+	{
+		val dialog = DialogView()
 
-	val args = Bundle()
-	args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
-	dialog.setArguments(args)
+		val args = Bundle()
+		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+		dialog.setArguments(args)
 
-	dialog.show(manager, TAG)
+		dialog.show(manager, TAG)
+	}
 }
 
-public class AddNewSoundDialog : BaseDialog()
+private class DialogView : BaseDialog()
 {
 	internal var callingFragmentTag = ""
 
 	private var presenter: AddNewSoundDialogPresenter? = null
 
-	override fun onCreate(savedInstanceState: Bundle?) {
+	private var mainView: View? = null
+
+	override fun onCreate(savedInstanceState: Bundle?)
+	{
 		super<BaseDialog>.onCreate(savedInstanceState)
 
 		val args = this.getArguments()
@@ -82,7 +89,21 @@ public class AddNewSoundDialog : BaseDialog()
 				view.findViewById(R.id.b_add_another_sound),
 				view.findViewById(R.id.rv_dialog) as RecyclerView)
 
+
+
+		val heightOfControls = this.getMeasureHeight(view) + this.getResources().getDimensionPixelSize(R.dimen.margin_default)
+
+		view.getLayoutParams().height = heightOfControls
+		this.mainView = view
+
 		return dialog
+	}
+
+	private fun getMeasureHeight(view: View) : Int
+	{
+		view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+				View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+		return view.getMeasuredHeight()
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?)
@@ -108,6 +129,7 @@ public class AddNewSoundDialog : BaseDialog()
 			}
 		}
 	}
+
 	override fun onSaveInstanceState(SuppressWarnings("NullableProblems") outState: Bundle)
 	{
 		super.onSaveInstanceState(outState)
@@ -139,16 +161,29 @@ public class AddNewSoundDialog : BaseDialog()
 			{
 				val soundUri = data!!.getData()
 				val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri))
-
 				presenter.addNewSound(NewSoundData(soundUri, label))
+				this.updateHeightToContent()
 				return
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data)
 	}
+
+	private fun updateHeightToContent()
+	{
+		this.mainView?.getLayoutParams()?.height = ViewGroup.LayoutParams.WRAP_CONTENT
+	}
 }
 
-private class AddNewSoundDialogPresenter(dialog: AddNewSoundDialog, soundsDataStorage: SoundsDataStorage, add: Button, cancel: View, addAnotherSound: View, addedSoundsLayout: RecyclerView)
+private class AddNewSoundDialogPresenter
+(
+		dialog: DialogView,
+		soundsDataStorage: SoundsDataStorage,
+		add: Button,
+		cancel: View,
+		addAnotherSound: View,
+		addedSoundsLayout: RecyclerView
+)
 {
 	private val soundsDataStorage = soundsDataStorage
 

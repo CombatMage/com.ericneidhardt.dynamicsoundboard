@@ -35,5 +35,4 @@ public abstract class BaseDialog extends DialogFragment
 	{
 		return (SoundActivity) this.getActivity();
 	}
-
 }

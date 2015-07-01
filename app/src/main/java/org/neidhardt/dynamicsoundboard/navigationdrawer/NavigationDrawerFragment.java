@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer;
 import android.animation.Animator;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -24,10 +25,9 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.Sound
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.addnewsounddialog.AddnewsounddialogPackage;
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
@@ -84,7 +84,7 @@ public class NavigationDrawerFragment
 
 	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View fragmentView = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
@@ -159,7 +159,7 @@ public class NavigationDrawerFragment
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		int id = v.getId();
 		if (id == R.id.b_delete)
@@ -185,7 +185,7 @@ public class NavigationDrawerFragment
 			if (this.soundLayoutList.isActive())
 				AddNewSoundLayoutDialog.showInstance(this.getFragmentManager(), SoundLayoutsManager.getInstance().getSuggestedSoundLayoutName());
 			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
-				AddnewsounddialogPackage.showInstance(this.getFragmentManager(), Playlist.TAG);
+				new AddNewSoundDialog(this.getFragmentManager(), Playlist.TAG);
 			else
 			{
 				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.soundSheetsDataUtil.getSuggestedName());
@@ -289,11 +289,6 @@ public class NavigationDrawerFragment
 			this.minHeightOfListContent = this.contextualActionContainer.getTop() - listContainer.getTop();
 
 		this.listContainer.getLayoutParams().height = Math.max(largestList, minHeightOfListContent);
-	}
-
-	public SoundSheetsAdapter getSoundSheetsAdapter()
-	{
-		return this.soundSheets.getAdapter();
 	}
 
 	public Playlist getPlaylist()

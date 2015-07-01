@@ -3,8 +3,8 @@ package org.neidhardt.dynamicsoundboard.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.LinearLayout
 import org.neidhardt.dynamicsoundboard.R
@@ -14,8 +14,6 @@ import org.neidhardt.dynamicsoundboard.R
  */
 public class DialogBaseLayout : LinearLayout
 {
-	private val TAG = javaClass.getName()
-
 	private var hasRecyclerView = false
 	private var hasTitle = true
 
@@ -45,17 +43,17 @@ public class DialogBaseLayout : LinearLayout
 		this.hasTitle = array.getBoolean(R.styleable.DialogBase_has_title, this.hasTitle)
 		this.hasRecyclerView = array.getBoolean(R.styleable.DialogBase_has_recycler_view, this.hasRecyclerView)
 		array.recycle()
-
-		if (this.hasTitle && this.hasRecyclerView)
-			throw UnsupportedOperationException(TAG + ": having both title and RecyclerView is not supported");
 	}
 
 	override fun onFinishInflate()
 	{
-		super.onFinishInflate()
+		super<LinearLayout>.onFinishInflate()
 
-		val view = if (this.hasRecyclerView)
-			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_recycler_view, this, false)
+
+		val view = if (this.hasRecyclerView && this.hasTitle)
+			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_recycler_view_title, this, false)
+		else if (this.hasRecyclerView)
+			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_recycler_view_no_title, this, false)
 		else if (this.hasTitle)
 			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_title, this, false)
 		else
@@ -75,4 +73,5 @@ public class DialogBaseLayout : LinearLayout
 		}
 		this.addView(view);
 	}
+
 }

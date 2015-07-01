@@ -86,7 +86,6 @@ public class SoundLayout {
     public void setIsSelectedForDeletion(boolean isSelectedForDeletion) {
         this.isSelectedForDeletion = isSelectedForDeletion;
     }
-
     // KEEP METHODS END
 
 }
