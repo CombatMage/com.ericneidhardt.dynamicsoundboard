@@ -69,7 +69,7 @@ public class SoundSheetFragment :
 
 	private var eventBus: EventBus = EventBus.getDefault()
 
-
+	private var soundPresenter: SoundPresenter? = null
 	private var soundAdapter: SoundAdapter? = null
 	private var soundLayout: RecyclerView? = null
 	private var dragSortRecycler: SoundDragSortRecycler? = null
@@ -92,12 +92,21 @@ public class SoundSheetFragment :
 
 		this.fragmentTag = fragmentTag as String
 
-		this.soundAdapter = SoundAdapter(this.fragmentTag, this.soundsDataAccess, this.soundsDataStorage, this.eventBus)
+		this.soundPresenter = SoundPresenter(this.fragmentTag, this.eventBus, this.soundsDataAccess)
+		this.soundAdapter = SoundAdapter(this.soundPresenter as SoundPresenter, this.soundsDataStorage, this.eventBus)
+		this.soundPresenter!!.adapter = this.soundAdapter
 
 		this.dragSortRecycler = SoundDragSortRecycler(this.getResources(), R.id.b_reorder)
 		this.dragSortRecycler!!.setOnItemMovedListener(this)
 		this.dragSortRecycler!!.setOnDragStateChangedListener(this)
 		this.scrollListener = SoundSheetScrollListener(this.dragSortRecycler)
+	}
+
+	override fun onStart()
+	{
+		super<BaseFragment>.onStart()
+		if (!this.eventBus.isRegistered(this))
+			this.eventBus.register(this)
 	}
 
 	override fun onResume()
@@ -111,9 +120,25 @@ public class SoundSheetFragment :
 		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener({ view
 			-> AddNewSoundFromDirectory.showInstance(this.getFragmentManager(), this.fragmentTag) })
 
+		this.soundAdapter!!.onAttachedToWindow()
+		this.soundPresenter!!.onAttachedToWindow()
 		this.attachScrollViewToFab()
-		this.soundAdapter!!.notifyDataSetChanged()
+
 		this.soundAdapter!!.startProgressUpdateTimer()
+	}
+
+	override fun onPause()
+	{
+		super<BaseFragment>.onPause()
+		this.soundPresenter!!.onDetachedFromWindow()
+		this.soundAdapter!!.onDetachedFromWindow()
+		this.soundAdapter!!.stopProgressUpdateTimer()
+	}
+
+	override fun onStop()
+	{
+		super<BaseFragment>.onStop()
+		this.eventBus.unregister(this)
 	}
 
 	private fun attachScrollViewToFab()
@@ -124,29 +149,6 @@ public class SoundSheetFragment :
 
 		fab.attachToRecyclerView(this.soundLayout)
 		fab.show(false)
-	}
-
-	override fun onPause()
-	{
-		super<BaseFragment>.onPause()
-		this.soundAdapter!!.stopProgressUpdateTimer()
-	}
-
-	override fun onStart()
-	{
-		super<BaseFragment>.onStart()
-
-		this.soundAdapter!!.onAttachedToWindow()
-
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.register(this)
-	}
-
-	override fun onStop()
-	{
-		super<BaseFragment>.onStop()
-		this.soundAdapter!!.onDetachedFromWindow()
-		this.eventBus.unregister(this)
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)

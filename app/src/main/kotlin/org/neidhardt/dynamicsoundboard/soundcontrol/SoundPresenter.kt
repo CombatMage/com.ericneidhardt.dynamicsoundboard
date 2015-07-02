@@ -19,18 +19,17 @@ public class SoundPresenter
 		fragmentTag: String,
 		eventBus: EventBus,
 		soundsDataAccess: SoundsDataAccess
-) : ViewPresenter<RecyclerView>, OnSoundsChangedEventListener
+) : OnSoundsChangedEventListener
 {
 	private val eventBus = eventBus
 	private val fragmentTag = fragmentTag
 	private val soundsDataAccess = soundsDataAccess
 
-	private val values = ArrayList<EnhancedMediaPlayer>()
-
 	public var adapter: SoundAdapter? = null
 
+	public val values: MutableList<EnhancedMediaPlayer> = ArrayList<EnhancedMediaPlayer>()
 
-	override fun onAttachedToWindow()
+	fun onAttachedToWindow()
 	{
 		this.values.clear()
 		this.values.addAll(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag))
@@ -40,7 +39,7 @@ public class SoundPresenter
 			this.eventBus.register(this)
 	}
 
-	override fun onDetachedFromWindow()
+	fun onDetachedFromWindow()
 	{
 		this.eventBus.unregister(this)
 	}
@@ -85,7 +84,7 @@ public class SoundPresenter
 		if (index != -1)
 		{
 			this.values.remove(player)
-			this.adapter.notifyItemRemoved(index)
+			this.adapter?.notifyItemRemoved(index)
 		}
 	}
 
@@ -97,14 +96,4 @@ public class SoundPresenter
 			this.adapter?.notifyItemChanged(index)
 	}
 
-	// currently unused
-	override fun getView(): RecyclerView?
-	{
-		throw UnsupportedOperationException()
-	}
-
-	override fun setView(view: RecyclerView?)
-	{
-		throw UnsupportedOperationException()
-	}
 }

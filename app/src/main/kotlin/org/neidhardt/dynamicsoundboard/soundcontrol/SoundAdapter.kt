@@ -24,20 +24,17 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAd
  */
 public class SoundAdapter
 (
-		fragmentTag: String,
-		soundsDataAccess: SoundsDataAccess,
+		presenter: SoundPresenter,
 		soundsDataStorage: SoundsDataStorage,
 		eventBus: EventBus
 
 ) :
 		SoundProgressAdapter<SoundViewHolder>(),
-		MediaPlayerEventListener,
-		OnSoundsChangedEventListener
+		MediaPlayerEventListener
 {
     private var TAG = javaClass.getName();
 
-	private val fragmentTag = fragmentTag
-	private val soundsDataAccess = soundsDataAccess
+	private val presenter = presenter
 	private val soundsDataStorage = soundsDataStorage
 	private val eventBus = eventBus
 
@@ -66,41 +63,9 @@ public class SoundAdapter
 		Logger.d(TAG, "onEvent :" + event)
 	}
 
-	override fun onEventMainThread(event: SoundAddedEvent)
-	{
-		this.notifyDataSetChanged()
-	}
-
-	override fun onEventMainThread(event: SoundsRemovedEvent)
-	{
-		val playersToRemove = event.getPlayers()
-		if (playersToRemove == null)
-			this.notifyDataSetChanged()
-		else if (playersToRemove.size() == 1)
-		// if there is only 1 item removed, the adapter is only notified once, to ensure nice animation
-		{
-			val data = playersToRemove.get(0).getMediaPlayerData()
-			if (data.getFragmentTag() == this.fragmentTag)
-			{
-				val position = data.getSortOrder()!!
-				this.notifyItemRemoved(position)
-				if (position > 0)
-					this.notifyItemChanged(position - 1)
-			}
-		}
-		else
-			this.notifyDataSetChanged()
-	}
-
-	override fun onEventMainThread(event: SoundChangedEvent)
-	{
-		if (event.getPlayer().getMediaPlayerData().getFragmentTag() == this.fragmentTag)
-			this.notifyItemChanged(event.getPlayer())
-	}
-
 	override fun getValues(): List<EnhancedMediaPlayer>
 	{
-		return this.soundsDataAccess.getSoundsInFragment(this.fragmentTag)
+		return this.presenter.values
 	}
 
 	override fun getItemCount(): Int
