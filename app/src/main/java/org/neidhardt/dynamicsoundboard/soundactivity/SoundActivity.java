@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -239,7 +240,7 @@ public class SoundActivity
 		super.onStart();
 
 		this.soundSheetsDataUtil.registerOnEventBus();
-		EventBus.getDefault().registerSticky(this);
+		this.eventBus.registerSticky(this);
 	}
 
 	@Override
@@ -250,7 +251,7 @@ public class SoundActivity
 		this.startService(new Intent(this.getApplicationContext(), NotificationService.class));
 
 		this.isActivityVisible = true;
-		EventBus.getDefault().postSticky(new ActivityStateChangedEvent(true));
+		this.eventBus.postSticky(new ActivityStateChangedEvent(true));
 
 		this.setSoundSheetActionsEnable(false);
 
@@ -276,13 +277,13 @@ public class SoundActivity
 	protected void onUserLeaveHint()
 	{
 		super.onUserLeaveHint();
-		EventBus.getDefault().postSticky(new ActivityStateChangedEvent(false));
+		this.eventBus.postSticky(new ActivityStateChangedEvent(false));
 	}
 
 	@Override
 	protected void onStop()
 	{
-		EventBus.getDefault().unregister(this);
+		this.eventBus.unregister(this);
 
 		this.soundSheetsDataUtil.unregisterOnEventBus();
 
@@ -473,7 +474,7 @@ public class SoundActivity
 	}
 
 	@Override
-	public void onClick(View view)
+	public void onClick(@NonNull View view)
 	{
 		switch (view.getId())
 		{
@@ -578,7 +579,7 @@ public class SoundActivity
 		if (fragment != null)
 			transaction.replace(R.id.main_frame, fragment, soundSheet.getFragmentTag());
 		else
-			transaction.replace(R.id.main_frame, SoundSheetFragment.getNewInstance(soundSheet), soundSheet.getFragmentTag());
+			transaction.replace(R.id.main_frame, SoundSheetFragment.Companion.getNewInstance(soundSheet), soundSheet.getFragmentTag());
 
 		transaction.commit();
 		fragmentManager.executePendingTransactions();

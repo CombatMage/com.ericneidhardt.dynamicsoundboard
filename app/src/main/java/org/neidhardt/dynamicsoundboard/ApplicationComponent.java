@@ -7,7 +7,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundS
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.dagger.SoundsDataModule;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
@@ -36,8 +35,6 @@ public interface ApplicationComponent
 	void inject(Playlist playlist);
 
 	void inject(SoundSheets soundSheets);
-
-	void inject(SoundSheetFragment fragment);
 
 	void inject(NavigationDrawerFragment fragment);
 

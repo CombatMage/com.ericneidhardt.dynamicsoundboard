@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
@@ -11,10 +10,14 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListen
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
+import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressTimer
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
@@ -26,9 +29,10 @@ public class SoundAdapter
 		soundsDataStorage: SoundsDataStorage,
 		eventBus: EventBus
 
-)
-	: SoundProgressAdapter<SoundViewHolder>()
-	, MediaPlayerEventListener
+) :
+		SoundProgressAdapter<SoundViewHolder>(),
+		MediaPlayerEventListener,
+		OnSoundsChangedEventListener
 {
     private var TAG = javaClass.getName();
 
@@ -60,6 +64,38 @@ public class SoundAdapter
 	override fun onEvent(event: MediaPlayerCompletedEvent)
 	{
 		Logger.d(TAG, "onEvent :" + event)
+	}
+
+	override fun onEventMainThread(event: SoundAddedEvent)
+	{
+		this.notifyDataSetChanged()
+	}
+
+	override fun onEventMainThread(event: SoundsRemovedEvent)
+	{
+		val playersToRemove = event.getPlayers()
+		if (playersToRemove == null)
+			this.notifyDataSetChanged()
+		else if (playersToRemove.size() == 1)
+		// if there is only 1 item removed, the adapter is only notified once, to ensure nice animation
+		{
+			val data = playersToRemove.get(0).getMediaPlayerData()
+			if (data.getFragmentTag() == this.fragmentTag)
+			{
+				val position = data.getSortOrder()!!
+				this.notifyItemRemoved(position)
+				if (position > 0)
+					this.notifyItemChanged(position - 1)
+			}
+		}
+		else
+			this.notifyDataSetChanged()
+	}
+
+	override fun onEventMainThread(event: SoundChangedEvent)
+	{
+		if (event.getPlayer().getMediaPlayerData().getFragmentTag() == this.fragmentTag)
+			this.notifyItemChanged(event.getPlayer())
 	}
 
 	override fun getValues(): List<EnhancedMediaPlayer>

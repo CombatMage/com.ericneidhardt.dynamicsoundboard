@@ -82,14 +82,13 @@ private class DialogView : BaseDialog()
 		dialog.setContentView(view)
 		dialog.setTitle(R.string.dialog_add_new_sound_title)
 
-		this.presenter = AddNewSoundDialogPresenter(this,
-				DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataStorage(),
-				view.findViewById(R.id.b_ok) as Button,
-				view.findViewById(R.id.b_cancel),
-				view.findViewById(R.id.b_add_another_sound),
-				view.findViewById(R.id.rv_dialog) as RecyclerView)
-
-
+		this.presenter = AddNewSoundDialogPresenter(
+				dialog = this,
+				soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataStorage(),
+				add = view.findViewById(R.id.b_ok) as Button,
+				cancel = view.findViewById(R.id.b_cancel),
+				addAnotherSound = view.findViewById(R.id.b_add_another_sound),
+				addedSoundsLayout = view.findViewById(R.id.rv_dialog) as RecyclerView)
 
 		val heightOfControls = this.getMeasureHeight(view) + this.getResources().getDimensionPixelSize(R.dimen.margin_default)
 

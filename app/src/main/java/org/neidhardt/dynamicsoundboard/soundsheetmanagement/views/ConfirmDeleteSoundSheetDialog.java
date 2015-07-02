@@ -4,8 +4,6 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity;
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog;
 
 /**

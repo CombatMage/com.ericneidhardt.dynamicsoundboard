@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.net.Uri;
@@ -16,7 +15,6 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
