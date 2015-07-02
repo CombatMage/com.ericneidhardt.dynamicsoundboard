@@ -25,10 +25,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEven
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog
@@ -37,7 +34,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
-import javax.inject.Inject
 
 /**
  * File created by eric.neidhardt on 02.07.2015.
@@ -230,7 +226,6 @@ public class SoundSheetFragment :
 	override fun onItemMoved(from: Int, to: Int)
 	{
 		this.soundsDataStorage.moveSoundInFragment(fragmentTag, from, to)
-		this.soundAdapter!!.notifyDataSetChanged()
 	}
 
 	override fun onEvent(event: OpenSoundRenameEvent)
@@ -250,6 +245,8 @@ public class SoundSheetFragment :
 			fab?.show()
 		}
 	}
+
+	override fun onEventMainThread(event: SoundMovedEvent?) {}
 
 	override fun onEventMainThread(event: SoundAddedEvent) {}
 

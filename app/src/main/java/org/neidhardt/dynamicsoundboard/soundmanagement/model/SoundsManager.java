@@ -9,10 +9,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
 import roboguice.util.SafeAsyncTask;
@@ -263,28 +260,12 @@ public class SoundsManager
 		if (this.sounds.get(fragmentTag) == null)
 			this.sounds.put(fragmentTag, new ArrayList<EnhancedMediaPlayer>());
 
-		Integer position = data.getSortOrder();
 		List<EnhancedMediaPlayer> soundsInFragment = this.sounds.get(fragmentTag);
-		int count = soundsInFragment.size();
-
-		if (position == null)
-		{
-			data.setSortOrder(count);
-			position = count; // you can use 0 to append or count to prepend
-		}
-
-		if (position <= count) // add item according to sort order
-			soundsInFragment.add(position, player);
-		else
-			soundsInFragment.add(player); // if the list is to short, just append
-
-		this.cleanupSortOrderInList(soundsInFragment);
+		soundsInFragment.add(player);
 
 		MediaPlayerDataDao dao = this.getDbSounds().getMediaPlayerDataDao();
 		if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.getPlayerId())).list().size() == 0)
-		{
 			dao.insert(data);
-		}
 
 		this.eventBus.post(new SoundAddedEvent(player));
 	}
@@ -295,15 +276,12 @@ public class SoundsManager
 		if (soundsToRemove == null || soundsToRemove.size() == 0)
 			return;
 
-		Set<String> affectedSoundSheets = new HashSet<>(); // we need to cleanup the sort order of all affected sound lists.
-
 		List<EnhancedMediaPlayer> copyList = new ArrayList<>(soundsToRemove.size());
 		copyList.addAll(soundsToRemove); // this is done to prevent concurrent modification exception
 
 		for (EnhancedMediaPlayer playerToRemove : copyList)
 		{
 			MediaPlayerData data = playerToRemove.getMediaPlayerData();
-			affectedSoundSheets.add(data.getFragmentTag());
 			this.sounds.get(data.getFragmentTag()).remove(playerToRemove);
 
 			if (data.getIsInPlaylist())
@@ -321,24 +299,7 @@ public class SoundsManager
 			playerToRemove.destroy(true);
 		}
 
-		for (String fragmentTag : affectedSoundSheets)
-			this.cleanupSortOrderInList(this.getSoundsInFragment(fragmentTag));
-
 		this.eventBus.post(new SoundsRemovedEvent(soundsToRemove));
-	}
-
-	private void cleanupSortOrderInList(List<EnhancedMediaPlayer> sounds)
-	{
-		int count = sounds.size();
-		for (int i = 0; i < count; i++)
-		{
-			MediaPlayerData data = sounds.get(i).getMediaPlayerData();
-			if (data.getSortOrder() != i)
-			{
-				sounds.get(i).getMediaPlayerData().setSortOrder(i);
-				sounds.get(i).getMediaPlayerData().updateItemInDatabaseAsync();
-			}
-		}
 	}
 
 	@Override
@@ -358,13 +319,7 @@ public class SoundsManager
 		EnhancedMediaPlayer playerToMove = soundsInFragment.remove(from);
 		soundsInFragment.add(to, playerToMove);
 
-		int count = soundsInFragment.size();
-		int indexOfSoundsToUpdate = Math.min(from, to); // we need to update all sound after the moved one
-		for (int i = indexOfSoundsToUpdate; i < count; i++)
-		{
-			soundsInFragment.get(i).getMediaPlayerData().setSortOrder(i);
-			soundsInFragment.get(i).getMediaPlayerData().updateItemInDatabaseAsync();
-		}
+		this.eventBus.post(new SoundMovedEvent(playerToMove, from, to));
 	}
 
 	private EnhancedMediaPlayer createPlaylistSound(MediaPlayerData playerData)

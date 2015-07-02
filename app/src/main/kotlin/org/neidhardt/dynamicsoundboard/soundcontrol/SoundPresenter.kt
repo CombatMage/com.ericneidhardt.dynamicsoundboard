@@ -1,13 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol
 
-import android.support.v7.widget.RecyclerView
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
-import org.neidhardt.dynamicsoundboard.presenter.ViewPresenter
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import java.util.ArrayList
 
@@ -49,20 +44,70 @@ public class SoundPresenter
 		val newPlayer = event.getPlayer()
 		if (newPlayer.getMediaPlayerData().getFragmentTag().equals(this.fragmentTag))
 		{
-			val positionToInsert = newPlayer.getMediaPlayerData().getSortOrder()
 			val count = this.values.size()
-			for (i in 0..count - 1)
+			val positionToInsert = newPlayer.getMediaPlayerData().getSortOrder()
+			if (positionToInsert == null)
 			{
-				val existingPlayer = this.values.get(i)
-				if (positionToInsert < existingPlayer.getMediaPlayerData().getSortOrder())
-				{
-					this.values.add(i, newPlayer)
-					this.adapter?.notifyItemInserted(i)
-					return
-				}
+				newPlayer.getMediaPlayerData().setSortOrder(count)
+				this.insertPlayerAndUpdateSortOrder(count, newPlayer) // append to end of list
 			}
-			this.values.add(newPlayer)
-			this.adapter?.notifyItemInserted(count)
+			else
+			{
+				for (i in 0..count - 1)
+				{
+					val existingPlayer = this.values.get(i)
+					if (positionToInsert < existingPlayer.getMediaPlayerData().getSortOrder())
+					{
+						this.insertPlayerAndUpdateSortOrder(i, newPlayer)
+						return
+					}
+				}
+				this.insertPlayerAndUpdateSortOrder(count, newPlayer) // append to end of list
+			}
+		}
+	}
+
+	private fun insertPlayerAndUpdateSortOrder(position: Int, player: EnhancedMediaPlayer)
+	{
+		this.values.add(position, player)
+		this.adapter?.notifyItemInserted(position)
+		if (position == this.values.size() - 1)
+			this.adapter?.notifyItemChanged(position - 1)
+
+		this.updateSortOrdersAfter(position, true)
+	}
+
+	override fun onEventMainThread(event: SoundMovedEvent)
+	{
+		val movedPlayer = event.getPlayer()
+		if (movedPlayer.getMediaPlayerData().getFragmentTag().equals(this.fragmentTag))
+		{
+			this.values.remove(event.getFrom())
+			this.values.add(event.getTo(), movedPlayer)
+
+			val start = Math.min(event.getFrom(), event.getTo()); // we need to update all sound after the moved one
+			val end = Math.max(event.getFrom(), event.getTo());
+
+			for (i in start..end)
+			{
+				val playerData = this.values.get(i).getMediaPlayerData()
+				playerData.setSortOrder(i);
+				playerData.updateItemInDatabaseAsync();
+			}
+
+			this.adapter?.notifyDataSetChanged()
+		}
+	}
+
+	private fun updateSortOrdersAfter(index: Int, itemInserted: Boolean)
+	{
+		val count = this.values.size();
+		for (i in index..count - 1)
+		{
+			val playerData = this.values.get(i).getMediaPlayerData()
+			val sortOrder = playerData.getSortOrder()
+			playerData.setSortOrder(if (itemInserted) sortOrder + 1 else sortOrder - 1);
+			playerData.updateItemInDatabaseAsync();
 		}
 	}
 
@@ -74,17 +119,19 @@ public class SoundPresenter
 		else
 		{
 			for (player in players)
-				this.removePlayerAndNotifyAdapter(player)
+				this.removePlayerAndUpdateSortOrder(player)
 		}
 	}
 
-	private fun removePlayerAndNotifyAdapter(player: EnhancedMediaPlayer)
+	private fun removePlayerAndUpdateSortOrder(player: EnhancedMediaPlayer)
 	{
 		val index = this.values.indexOf(player)
 		if (index != -1)
 		{
 			this.values.remove(player)
 			this.adapter?.notifyItemRemoved(index)
+
+			this.updateSortOrdersAfter(index, false)
 		}
 	}
 

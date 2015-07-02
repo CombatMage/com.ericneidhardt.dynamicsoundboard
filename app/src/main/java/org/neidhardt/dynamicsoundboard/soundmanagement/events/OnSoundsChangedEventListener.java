@@ -25,4 +25,11 @@ public interface OnSoundsChangedEventListener
 	 */
 	@SuppressWarnings("unused")
 	void onEventMainThread(SoundChangedEvent event);
+
+	/**
+	 * This is called by greenRobot EventBus in case a certain sound was moved in den SoundSheet. (for example via drag and drop)
+	 * @param event delivered SoundMovedEvent
+	 */
+	@SuppressWarnings("unused")
+	void onEventMainThread(SoundMovedEvent event);
 }

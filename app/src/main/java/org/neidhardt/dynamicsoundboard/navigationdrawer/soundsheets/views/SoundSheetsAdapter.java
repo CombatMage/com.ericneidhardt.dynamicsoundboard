@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter;
@@ -60,6 +57,7 @@ public class SoundSheetsAdapter
 		this.onItemClickListener = onItemClickListener;
 	}
 
+	@NonNull
 	public List<SoundSheet> getValues()
 	{
 		return this.presenter.getSoundSheets();
@@ -124,10 +122,10 @@ public class SoundSheetsAdapter
 	}
 
 	@Override
-	public void onEventMainThread(SoundChangedEvent event)
-	{
-		Logger.d(TAG, event.toString()); // nothing to be done
-	}
+	public void onEventMainThread(SoundChangedEvent event) {}
+
+	@Override
+	public void onEventMainThread(SoundMovedEvent event) {}
 
 	@Override
 	public void onEvent(SoundSheetsChangedEvent event)
