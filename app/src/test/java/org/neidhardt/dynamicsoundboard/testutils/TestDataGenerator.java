@@ -1,7 +1,5 @@
 package org.neidhardt.dynamicsoundboard.testutils;
 
-import android.content.Context;
-import android.net.Uri;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
@@ -12,8 +10,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import java.io.File;
 import java.util.Random;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -48,6 +44,13 @@ public class TestDataGenerator
 		data.setIsLoop(false);
 		data.setIsInPlaylist(false);
 		return data;
+	}
+
+	public static EnhancedMediaPlayer getRandomPlayer(String fragmentTag) throws Exception
+	{
+		EnhancedMediaPlayer player = TestDataGenerator.getMockEnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData());
+		player.getMediaPlayerData().setFragmentTag(fragmentTag);
+		return player;
 	}
 
 	public static MediaPlayerData getRandomPlayerDataForPlayList() throws Exception

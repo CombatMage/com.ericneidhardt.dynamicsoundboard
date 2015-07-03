@@ -2,7 +2,6 @@ package com.ericneidhardt.daogenerator;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
-import de.greenrobot.daogenerator.Property;
 import de.greenrobot.daogenerator.Schema;
 
 public class DynamicSoundboardDaoGenerator
@@ -31,7 +30,7 @@ public class DynamicSoundboardDaoGenerator
 		sound.addBooleanProperty("isLoop").notNull();
 		sound.addBooleanProperty("isInPlaylist").notNull();
 		sound.addLongProperty("timePosition");
-		sound.addIntProperty("sortOrder").getProperty();
+		sound.addIntProperty("sortOrder");
 	}
 
 	private static void addSoundSheetEntity(Schema schema)

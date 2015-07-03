@@ -74,7 +74,7 @@ public class SoundPresenter
 		if (position == this.values.size() - 1)
 			this.adapter?.notifyItemChanged(position - 1)
 
-		this.updateSortOrdersAfter(position, true)
+		// this.updateSortOrdersAfter(position, true)
 	}
 
 	override fun onEventMainThread(event: SoundMovedEvent)
@@ -99,18 +99,6 @@ public class SoundPresenter
 		}
 	}
 
-	private fun updateSortOrdersAfter(index: Int, itemInserted: Boolean)
-	{
-		val count = this.values.size();
-		for (i in index..count - 1)
-		{
-			val playerData = this.values.get(i).getMediaPlayerData()
-			val sortOrder = playerData.getSortOrder()
-			playerData.setSortOrder(if (itemInserted) sortOrder + 1 else sortOrder - 1);
-			playerData.updateItemInDatabaseAsync();
-		}
-	}
-
 	override fun onEventMainThread(event: SoundsRemovedEvent)
 	{
 		val players = event.getPlayers()
@@ -131,7 +119,19 @@ public class SoundPresenter
 			this.values.remove(player)
 			this.adapter?.notifyItemRemoved(index)
 
-			this.updateSortOrdersAfter(index, false)
+			this.updateSortOrdersAfter(index - 1, false) // -1 to ensure item at index (which was index + 1 before) is also updated
+		}
+	}
+
+	private fun updateSortOrdersAfter(index: Int, itemInserted: Boolean)
+	{
+		val count = this.values.size();
+		for (i in index + 1 .. count - 1)
+		{
+			val playerData = this.values.get(i).getMediaPlayerData()
+			val sortOrder = playerData.getSortOrder()
+			playerData.setSortOrder(if (itemInserted) sortOrder + 1 else sortOrder - 1);
+			playerData.updateItemInDatabaseAsync();
 		}
 	}
 
