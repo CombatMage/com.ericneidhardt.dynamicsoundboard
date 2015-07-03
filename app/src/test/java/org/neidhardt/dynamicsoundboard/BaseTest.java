@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard;
 
 import android.os.Environment;
+import org.apache.maven.artifact.ant.shaded.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -28,15 +29,7 @@ public abstract class BaseTest
 	@After
 	public void tearDown() throws Exception
 	{
-		File[] files = ShadowEnvironment.getExternalStorageDirectory().listFiles();
-		for(File file: files)
-		{
-			if (file.exists())
-			{
-				boolean success = file.delete();
-				assertTrue("could not delete file " + file, success);
-			}
-		}
+		FileUtils.cleanDirectory(Environment.getExternalStorageDirectory());
 
 		ShadowEnvironment.setExternalStorageState(Environment.MEDIA_UNMOUNTED);
 	}
@@ -49,8 +42,4 @@ public abstract class BaseTest
 		return newFile;
 	}
 
-	protected File getFileFromExternalStorage(String fileName)
-	{
-		return new File(ShadowEnvironment.getExternalStorageDirectory(), fileName);
-	}
 }
