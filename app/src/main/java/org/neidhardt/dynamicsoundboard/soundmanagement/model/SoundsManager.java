@@ -10,8 +10,8 @@ import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistTask;
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsTask;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask;
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask;
 import roboguice.util.SafeAsyncTask;
 
 import java.io.IOException;
@@ -76,10 +76,10 @@ public class SoundsManager
 		this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNamePlayList());
 		this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNameSounds());
 
-		SafeAsyncTask task = new LoadSoundsTask(this.dbSounds, this);
+		SafeAsyncTask task = new LoadSoundsFromDatabaseTask(this.dbSounds, this);
 		task.execute();
 
-		task = new LoadPlaylistTask(this.dbPlaylist, this);
+		task = new LoadPlaylistFromDatabaseTask(this.dbPlaylist, this);
 		task.execute();
 	}
 

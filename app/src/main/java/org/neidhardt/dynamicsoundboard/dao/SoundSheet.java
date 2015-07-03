@@ -4,6 +4,9 @@ package org.neidhardt.dynamicsoundboard.dao;
 
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
+
+import org.neidhardt.dynamicsoundboard.dao.daohelper.DaohelperPackage;
+
 /**
  * Entity mapped to table SOUND_SHEET.
  */
@@ -71,6 +74,11 @@ public class SoundSheet {
     }
 
     // KEEP METHODS - put your custom methods here
+
+	public void updateItemInDatabaseAsync()
+	{
+		DaohelperPackage.updateDatabaseAsync(this);
+	}
 
 	public boolean getIsSelectedForDeletion() {
 		return isSelectedForDeletion;
