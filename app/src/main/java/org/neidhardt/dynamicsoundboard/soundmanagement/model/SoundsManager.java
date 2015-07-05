@@ -299,7 +299,7 @@ public class SoundsManager
 			playerToRemove.destroy(true);
 		}
 
-		this.eventBus.post(new SoundsRemovedEvent(soundsToRemove));
+		this.eventBus.post(new SoundsRemovedEvent(copyList));
 	}
 
 	@Override
