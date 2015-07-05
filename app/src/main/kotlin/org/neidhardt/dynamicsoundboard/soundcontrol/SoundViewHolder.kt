@@ -46,6 +46,7 @@ public class SoundViewHolder
 	private val progressTimer = progressTimer
 
 	private val container = itemView
+
 	private val name = itemView.findViewById(R.id.et_name) as CustomEditText
 	private val play = itemView.findViewById(R.id.b_play)
 	private val loop = itemView.findViewById(R.id.b_loop)

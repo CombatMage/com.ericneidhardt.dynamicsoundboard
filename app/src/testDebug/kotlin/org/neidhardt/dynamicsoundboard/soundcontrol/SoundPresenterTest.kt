@@ -79,22 +79,22 @@ public class SoundPresenterTest : BaseTest()
 	fun onSoundAddedWithReverseSortOrderGivenEvent()
 	{
 		val event0 = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		event0.getPlayer().getMediaPlayerData().setSortOrder(2)
+		event0.player.getMediaPlayerData().setSortOrder(2)
 		this.soundPresenter!!.onEventMainThread(event0)
 
 		val event1 = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		event1.getPlayer().getMediaPlayerData().setSortOrder(1)
+		event1.player.getMediaPlayerData().setSortOrder(1)
 		this.soundPresenter!!.onEventMainThread(event1)
 
 		val event2 = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		event2.getPlayer().getMediaPlayerData().setSortOrder(0)
+		event2.player.getMediaPlayerData().setSortOrder(0)
 		this.soundPresenter!!.onEventMainThread(event2)
 
 		assertThat(this.soundPresenter!!.values.size(), equalTo(3))
 
-		assertEquals(this.soundPresenter!!.values.get(0), event2.getPlayer())
-		assertEquals(this.soundPresenter!!.values.get(1), event1.getPlayer())
-		assertEquals(this.soundPresenter!!.values.get(2), event0.getPlayer())
+		assertEquals(this.soundPresenter!!.values.get(0), event2.player)
+		assertEquals(this.soundPresenter!!.values.get(1), event1.player)
+		assertEquals(this.soundPresenter!!.values.get(2), event0.player)
 
 		this.verifySortOrder()
 	}

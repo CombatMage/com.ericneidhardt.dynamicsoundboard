@@ -24,19 +24,15 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAd
  */
 public class SoundAdapter
 (
-		presenter: SoundPresenter,
-		soundsDataStorage: SoundsDataStorage,
-		eventBus: EventBus
+		private val presenter: SoundPresenter,
+		private val soundsDataStorage: SoundsDataStorage,
+		private val eventBus: EventBus
 
 ) :
 		SoundProgressAdapter<SoundViewHolder>(),
 		MediaPlayerEventListener
 {
     private var TAG = javaClass.getName();
-
-	private val presenter = presenter
-	private val soundsDataStorage = soundsDataStorage
-	private val eventBus = eventBus
 
 	override fun onAttachedToWindow()
 	{

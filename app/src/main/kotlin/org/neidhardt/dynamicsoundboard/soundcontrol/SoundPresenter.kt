@@ -11,15 +11,11 @@ import java.util.ArrayList
  */
 public class SoundPresenter
 (
-		fragmentTag: String,
-		eventBus: EventBus,
-		soundsDataAccess: SoundsDataAccess
+		private val fragmentTag: String,
+		private val eventBus: EventBus,
+		private val soundsDataAccess: SoundsDataAccess
 ) : OnSoundsChangedEventListener
 {
-	private val eventBus = eventBus
-	private val fragmentTag = fragmentTag
-	private val soundsDataAccess = soundsDataAccess
-
 	public var adapter: SoundAdapter? = null
 
 	public val values: MutableList<EnhancedMediaPlayer> = ArrayList<EnhancedMediaPlayer>()
@@ -41,7 +37,7 @@ public class SoundPresenter
 
 	override fun onEventMainThread(event: SoundAddedEvent)
 	{
-		val newPlayer = event.getPlayer()
+		val newPlayer = event.player
 		if (newPlayer.getMediaPlayerData().getFragmentTag().equals(this.fragmentTag))
 		{
 			val count = this.values.size()
@@ -79,14 +75,14 @@ public class SoundPresenter
 
 	override fun onEventMainThread(event: SoundMovedEvent)
 	{
-		val movedPlayer = event.getPlayer()
+		val movedPlayer = event.player
 		if (movedPlayer.getMediaPlayerData().getFragmentTag().equals(this.fragmentTag))
 		{
-			this.values.remove(event.getFrom())
-			this.values.add(event.getTo(), movedPlayer)
+			this.values.remove(event.from)
+			this.values.add(event.to, movedPlayer)
 
-			val start = Math.min(event.getFrom(), event.getTo()); // we need to update all sound after the moved one
-			val end = Math.max(event.getFrom(), event.getTo());
+			val start = Math.min(event.from, event.to); // we need to update all sound after the moved one
+			val end = Math.max(event.from, event.to);
 
 			for (i in start..end)
 			{
@@ -101,11 +97,11 @@ public class SoundPresenter
 
 	override fun onEventMainThread(event: SoundsRemovedEvent)
 	{
-		val players = event.getPlayers()
-		if (players == null)
+		if (event.removeAll())
 			this.adapter?.notifyDataSetChanged()
 		else
 		{
+			val players = event.getPlayers()
 			for (player in players)
 				this.removePlayerAndUpdateSortOrder(player)
 		}
@@ -137,7 +133,7 @@ public class SoundPresenter
 
 	override fun onEventMainThread(event: SoundChangedEvent)
 	{
-		val player = event.getPlayer()
+		val player = event.player
 		val index = this.values.indexOf(player)
 		if (index != -1)
 			this.adapter?.notifyItemChanged(index)

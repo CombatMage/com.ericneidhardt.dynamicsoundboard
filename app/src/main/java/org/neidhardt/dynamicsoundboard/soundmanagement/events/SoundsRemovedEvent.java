@@ -16,8 +16,18 @@ public class SoundsRemovedEvent
 		this.players = players;
 	}
 
+	public SoundsRemovedEvent()
+	{
+		this.players = null;
+	}
+
 	public List<EnhancedMediaPlayer> getPlayers()
 	{
 		return players;
+	}
+
+	public boolean removeAll()
+	{
+		return this.players == null;
 	}
 }
