@@ -25,11 +25,11 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEven
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
@@ -230,7 +230,7 @@ public class SoundSheetFragment :
 
 	override fun onEvent(event: OpenSoundRenameEvent)
 	{
-		RenameSoundFileDialog.showInstance(this.getFragmentManager(), event.getData())
+		RenameSoundFileDialog(this.getFragmentManager(), event.getData())
 	}
 
 	override fun onEvent(event: OpenSoundSettingsEvent)

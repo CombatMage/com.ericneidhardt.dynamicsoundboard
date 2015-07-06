@@ -17,7 +17,7 @@ public abstract class SoundSettingsBaseDialog extends BaseDialog
 	protected String fragmentTag;
 	protected EnhancedMediaPlayer player;
 
-	protected static void addArguments(BaseDialog dialog, String playerId, String fragmentTag)
+	public static void addArguments(SoundSettingsBaseDialog dialog, String playerId, String fragmentTag)
 	{
 		Bundle args = new Bundle();
 		args.putString(KEY_PLAYER_ID, playerId);

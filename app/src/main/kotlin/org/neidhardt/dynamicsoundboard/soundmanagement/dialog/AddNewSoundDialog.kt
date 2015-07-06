@@ -26,7 +26,6 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
@@ -37,17 +36,17 @@ import java.util.ArrayList
  * File created by eric.neidhardt on 30.06.2015.
  */
 
-private val TAG = javaClass<DialogView>().getName()
-
 private val KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.callingFragmentTag"
 private val KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.soundsToAdd"
 private val KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.soundsToAddLabels"
 
 public class AddNewSoundDialog(manager: FragmentManager, callingFragmentTag: String)
 {
+	private val TAG = javaClass.getName()
+
 	init
 	{
-		val dialog = DialogView()
+		val dialog = AddNewSoundDialogView()
 
 		val args = Bundle()
 		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
@@ -57,7 +56,7 @@ public class AddNewSoundDialog(manager: FragmentManager, callingFragmentTag: Str
 	}
 }
 
-private class DialogView : BaseDialog()
+private class AddNewSoundDialogView : BaseDialog()
 {
 	internal var callingFragmentTag = ""
 
@@ -175,7 +174,7 @@ private class DialogView : BaseDialog()
 
 private class AddNewSoundDialogPresenter
 (
-		private val dialog: DialogView,
+		private val dialog: AddNewSoundDialogView,
 		private val add: Button,
 		private val cancel: View,
 		private val addAnotherSound: View,
@@ -246,7 +245,7 @@ private class AddNewSoundDialogPresenter
 	private fun showRenameDialog(renamedMediaPlayers: List<MediaPlayerData>)
 	{
 		for (data in renamedMediaPlayers)
-			RenameSoundFileDialog.showInstance(this.dialog.getFragmentManager(), data)
+			RenameSoundFileDialog(this.dialog.getFragmentManager(), data)
 	}
 
 	private fun addAnotherSound()
