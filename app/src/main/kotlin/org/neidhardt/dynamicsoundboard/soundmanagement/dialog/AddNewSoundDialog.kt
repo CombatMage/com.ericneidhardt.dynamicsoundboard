@@ -35,32 +35,28 @@ import java.util.ArrayList
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
-
-private val KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.callingFragmentTag"
-private val KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.soundsToAdd"
-private val KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundDialog.soundsToAddLabels"
-
-public class AddNewSoundDialog(manager: FragmentManager, callingFragmentTag: String)
+public class AddNewSoundDialog : BaseDialog
 {
 	private val TAG = javaClass.getName()
+	private val KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.callingFragmentTag"
+	private val KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAdd"
+	private val KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAddLabels"
 
-	init
-	{
-		val dialog = AddNewSoundDialogView()
-
-		val args = Bundle()
-		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
-		dialog.setArguments(args)
-
-		dialog.show(manager, TAG)
-	}
-}
-
-private class AddNewSoundDialogView : BaseDialog()
-{
-	internal var callingFragmentTag = ""
 
 	private var presenter: AddNewSoundDialogPresenter? = null
+
+	internal var callingFragmentTag = ""
+
+	public constructor() : super() {}
+
+	public constructor(manager: FragmentManager, callingFragmentTag: String) : super()
+	{
+		val args = Bundle()
+		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+		this.setArguments(args)
+
+		this.show(manager, TAG)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -174,7 +170,7 @@ private class AddNewSoundDialogView : BaseDialog()
 
 private class AddNewSoundDialogPresenter
 (
-		private val dialog: AddNewSoundDialogView,
+		private val dialog: AddNewSoundDialog,
 		private val add: Button,
 		private val cancel: View,
 		private val addAnotherSound: View,

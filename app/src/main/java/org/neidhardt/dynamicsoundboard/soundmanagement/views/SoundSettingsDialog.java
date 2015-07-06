@@ -15,6 +15,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
@@ -107,7 +108,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		switch (v.getId())
 		{
@@ -119,7 +120,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 				this.deliverResult();
 				this.dismiss();
 				if (hasLabelChanged)
-					RenameSoundFileDialog.showInstance(this.getFragmentManager(), this.player.getMediaPlayerData());
+					new RenameSoundFileDialog(this.getFragmentManager(), this.player.getMediaPlayerData());
 				break;
 		}
 	}

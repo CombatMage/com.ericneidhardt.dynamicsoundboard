@@ -26,26 +26,21 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 06.07.2015.
  */
-
-public class RenameSoundFileDialog(manager: FragmentManager, playerData: MediaPlayerData)
-{
-	private val TAG: String = javaClass.getName()
-
-	init
-	{
-		val dialog = RenameSoundFileDialogView()
-		SoundSettingsBaseDialog.addArguments(dialog, playerData.getPlayerId(), playerData.getFragmentTag())
-		dialog.show(manager, TAG)
-	}
-}
-
-private class RenameSoundFileDialogView() : SoundSettingsBaseDialog(), View.OnClickListener {
+public class RenameSoundFileDialog : SoundSettingsBaseDialog, View.OnClickListener {
 
 	private val TAG = javaClass.getName()
 
 	private var renameAllOccurrences: CheckBox? = null
 	private var playerData: MediaPlayerData? = null
 	private var playersWithMatchingUri: List<EnhancedMediaPlayer>? = null
+
+	public constructor() : super() {}
+
+	public constructor(manager: FragmentManager, playerData: MediaPlayerData) : super()
+	{
+		SoundSettingsBaseDialog.addArguments(this, playerData.getPlayerId(), playerData.getFragmentTag())
+		this.show(manager, TAG)
+	}
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		@SuppressLint("InflateParams")
@@ -132,7 +127,7 @@ private class RenameSoundFileDialogView() : SoundSettingsBaseDialog(), View.OnCl
 		if (newNameFilePath == null || oldFilePath == null)
 			throw NullPointerException(TAG + ": cannot create new file name, either old name or new name is null")
 
-		val segments = oldFilePath.split("\\.")
+		val segments = oldFilePath.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 		if (segments.size() > 1) {
 			val fileType = segments[segments.size() - 1]
 			return newNameFilePath + "." + fileType
