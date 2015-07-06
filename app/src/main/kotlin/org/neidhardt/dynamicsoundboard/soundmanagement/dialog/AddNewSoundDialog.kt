@@ -117,6 +117,7 @@ public class AddNewSoundDialog : BaseDialog
 					val uri = Uri.parse(uris.get(i))
 					val label = labels.get(i)
 
+					this.updateHeightToContent()
 					presenter.addNewSound(NewSoundData(uri, label))
 				}
 			}
