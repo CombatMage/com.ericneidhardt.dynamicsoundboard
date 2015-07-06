@@ -223,5 +223,6 @@ public class SoundSheetsManager :
 
 		this.soundSheets.addAll(event.getNewSoundSheetList())
 		this.eventBus.post(SoundSheetsChangedEvent())
+		this.eventBus.post(OpenSoundSheetEvent(this.getSelectedItem()))
 	}
 }
