@@ -317,8 +317,11 @@ private class NewSoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
 	override fun afterTextChanged(newLabel: Editable)
 	{
-		this.data?.label = newLabel.toString()
-		this.data?.wasSoundRenamed = true
+		if (!newLabel.toString().equals(this.data?.label))
+		{
+			this.data?.label = newLabel.toString()
+			this.data?.wasSoundRenamed = true
+		}
 	}
 
 	override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
