@@ -38,11 +38,13 @@
 				android:overScrollMode="never"/>
 
 		<View
+				android:id="@+id/v_divider_top"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_shadow"
 				android:background="@drawable/shape_shadow_horizontal"/>
 
 		<View
+				android:id="@+id/v_divider_bottom"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_shadow"
 				android:layout_above="@id/layout_button_bar"

@@ -3,8 +3,8 @@ package org.neidhardt.dynamicsoundboard.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.LinearLayout
 import org.neidhardt.dynamicsoundboard.R
@@ -74,4 +74,13 @@ public class DialogBaseLayout : LinearLayout
 		this.addView(view);
 	}
 
+	public fun enableRecyclerViewDividers(enable: Boolean)
+	{
+		if (this.hasRecyclerView)
+		{
+			val visibility = if (enable) View.VISIBLE else View.GONE
+			this.findViewById(R.id.v_divider_top).setVisibility(visibility)
+			this.findViewById(R.id.v_divider_bottom).setVisibility(visibility)
+		}
+	}
 }

@@ -24,6 +24,18 @@ public abstract class BaseDialog extends DialogFragment
 	@Inject protected SoundsDataStorage soundsDataStorage;
 	@Inject protected SoundsDataAccess soundsDataAccess;
 
+	private DialogBaseLayout mainView;
+
+	public DialogBaseLayout getMainView()
+	{
+		return mainView;
+	}
+
+	public void setMainView(DialogBaseLayout mainView)
+	{
+		this.mainView = mainView;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
