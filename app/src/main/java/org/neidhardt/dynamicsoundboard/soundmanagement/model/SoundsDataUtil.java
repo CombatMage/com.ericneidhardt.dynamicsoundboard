@@ -20,7 +20,7 @@ public interface SoundsDataUtil
 	boolean isInit();
 
 	/**
-	 * Write back all existing sounds and the playlist to database.
+	 * Release all existing {@code EnhancedMediaPlayer} loaded in sounds and playlist.
 	 */
 	void release();
 

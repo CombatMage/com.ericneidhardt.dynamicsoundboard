@@ -300,8 +300,6 @@ public class SoundActivity
 			}
 			for (String fragmentTag : fragmentsWithLoadedSoundsToRemove)
 				this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(fragmentTag));
-
-			this.soundSheetsDataUtil.writeCacheBackAndRelease();
 		}
 
 		super.onStop();
@@ -323,7 +321,6 @@ public class SoundActivity
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets());
 		this.setSoundSheetActionsEnable(false);
-		this.soundSheetsDataUtil.writeCacheBackAndRelease();
 		this.soundSheetsDataUtil.init();
 
 		this.soundsDataUtil.release();
@@ -494,6 +491,7 @@ public class SoundActivity
 		{
 			SoundSheet soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.getFragmentTag());
 			soundSheet.setLabel(text);
+			soundSheet.updateItemInDatabaseAsync();
 			this.eventBus.post(new SoundSheetsChangedEvent());
 		}
 	}

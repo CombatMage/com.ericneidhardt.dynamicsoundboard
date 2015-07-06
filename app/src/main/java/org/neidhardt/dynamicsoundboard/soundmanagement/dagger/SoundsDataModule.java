@@ -6,10 +6,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManager;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager;
 
 import javax.inject.Singleton;
 

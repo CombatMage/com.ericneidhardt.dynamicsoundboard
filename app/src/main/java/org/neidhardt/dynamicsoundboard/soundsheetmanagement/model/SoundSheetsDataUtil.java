@@ -20,11 +20,6 @@ public interface SoundSheetsDataUtil
 	boolean isInit();
 
 	/**
-	 * Write back all existing SoundSheets to database.
-	 */
-	void writeCacheBackAndRelease();
-
-	/**
 	 * Register the storage class on eventBus, should be called in onStart() of holding activity.
 	 */
 	void registerOnEventBus();

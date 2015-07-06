@@ -107,6 +107,7 @@ public class SoundsManager
 			for (EnhancedMediaPlayer player : players)
 				player.destroy(false);
 		}
+
 		this.playlist.clear();
 		this.sounds.clear();
 
@@ -232,7 +233,7 @@ public class SoundsManager
 
 			this.playlist.remove(playerInPlaylist);
 
-			this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), playerInPlaylist.getMediaPlayerData());
+			this.removePlayerDataFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), playerInPlaylist.getMediaPlayerData());
 			playerInPlaylist.destroy(true);
 		}
 	}
@@ -291,11 +292,11 @@ public class SoundsManager
 				{
 					this.playlist.remove(correspondingPlayerInPlaylist);
 
-					this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), correspondingPlayerInPlaylist.getMediaPlayerData());
+					this.removePlayerDataFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), correspondingPlayerInPlaylist.getMediaPlayerData());
 					correspondingPlayerInPlaylist.destroy(true);
 				}
 			}
-			this.removeSoundFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerToRemove.getMediaPlayerData());
+			this.removePlayerDataFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerToRemove.getMediaPlayerData());
 			playerToRemove.destroy(true);
 		}
 
@@ -353,16 +354,16 @@ public class SoundsManager
 	@Override
 	public void removeSoundDataFromDatabase(MediaPlayerData playerData)
 	{
-		this.removeSoundFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerData);
+		this.removePlayerDataFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerData);
 	}
 
 	@Override
 	public void removePlaylistDataFromDatabase(MediaPlayerData playerData)
 	{
-		this.removeSoundFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), playerData);
+		this.removePlayerDataFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), playerData);
 	}
 
-	private void removeSoundFromDatabase(MediaPlayerDataDao dao, MediaPlayerData playerData)
+	private void removePlayerDataFromDatabase(MediaPlayerDataDao dao, MediaPlayerData playerData)
 	{
 		if (playerData.getId() != null)
 			dao.delete(playerData);

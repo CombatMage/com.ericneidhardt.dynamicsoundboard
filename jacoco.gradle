@@ -6,6 +6,7 @@ jacoco {
 
 def coverageSourceDirs = [
 		"$projectDir/src/main/java",
+		"$projectDir/src/main/kotlin"
 ]
 
 task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
