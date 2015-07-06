@@ -167,12 +167,12 @@ public class SoundSheetsManager :
 		val soundSheetDao = this.daoSession!!.getSoundSheetDao()
 		if (soundSheet.getId() != null)
 			soundSheetDao.delete(soundSheet)
-		else {
+		else
+		{
 			val playersInDatabase = soundSheetDao.queryBuilder()
 					.where(SoundSheetDao.Properties.FragmentTag.eq(soundSheet.getFragmentTag())).list()
 			soundSheetDao.deleteInTx(playersInDatabase)
 		}
-
 
 		this.eventBus.post(SoundSheetsRemovedEvent(soundSheet))
 	}
@@ -214,16 +214,8 @@ public class SoundSheetsManager :
 		}
 	}
 
-	/**
-	 * Called by LoadSoundSheetsTask when loading of SoundSheets has been finished.
-	 * @param event delivered SoundSheetsLoadedEvent
-	 */
-	//SuppressWarnings("unused")
-	public fun onEventMainThread(event: SoundSheetsRemovedEvent) {
-		this.soundSheets.remove(event.getRemovedSoundSheet())
-	}
-
-	public override fun onEvent(event: SoundSheetsFromFileLoadedEvent) {
+	public override fun onEvent(event: SoundSheetsFromFileLoadedEvent)
+	{
 		// clear SoundSheets before adding new values
 		// this removes all sounds in SoundSheets, but no in playlist
 		this.soundSheets.clear()
