@@ -23,8 +23,6 @@ public class SoundSheetsManager :
 		OnOpenSoundSheetEventListener,
 		OnSoundSheetsFromFileLoadedEventListener {
 
-	private val TAG: String = javaClass.getName()
-
 	private val DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets"
 	private val DB_SOUND_SHEETS = "db_sound_sheets"
 
@@ -42,7 +40,10 @@ public class SoundSheetsManager :
 	override fun init()
 	{
 		if (this.isInitDone)
-			throw IllegalStateException(TAG + ": init() was called, but SoundSheetsManager was already initialized")
+		{
+			this.eventBus.post(SoundSheetsChangedEvent())
+			this.eventBus.post(SoundSheetsLoadedEvent(this.soundSheets))
+		}
 
 		this.isInitDone = true
 

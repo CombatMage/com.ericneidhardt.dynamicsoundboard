@@ -27,8 +27,6 @@ public class SoundSheetsAdapter
 			OnSoundSheetsChangedEventListener,
 			OnSoundsChangedEventListener
 {
-	private static final String TAG = SoundSheetsAdapter.class.getName();
-
 	private SoundSheetsPresenter presenter;
 	private EventBus eventBus;
 	private OnItemClickListener onItemClickListener;
@@ -172,7 +170,7 @@ public class SoundSheetsAdapter
 		}
 
 		@Override
-		public void onClick(View view)
+		public void onClick(@NonNull View view)
 		{
 			int position = this.getLayoutPosition();
 			if (onItemClickListener != null)

@@ -57,7 +57,6 @@ public class LoadPlaylistFromDatabaseTask
 	{
 		var mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list()
 		Collections.sort(mediaPlayersData, MediaPlayerComparator())
-		mediaPlayersData = mediaPlayersData.reverse()
 
 		for (mediaPlayerData in mediaPlayersData)
 			this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData)

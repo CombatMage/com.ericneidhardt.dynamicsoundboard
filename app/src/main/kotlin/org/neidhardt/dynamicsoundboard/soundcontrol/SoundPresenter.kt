@@ -45,7 +45,8 @@ public class SoundPresenter
 			if (positionToInsert == null)
 			{
 				newPlayer.getMediaPlayerData().setSortOrder(count)
-				this.insertPlayerAndUpdateSortOrder(count, newPlayer) // append to end of list
+				newPlayer.getMediaPlayerData().updateItemInDatabaseAsync()
+				this.insertPlayer(count, newPlayer) // append to end of list
 			}
 			else
 			{
@@ -54,16 +55,16 @@ public class SoundPresenter
 					val existingPlayer = this.values.get(i)
 					if (positionToInsert < existingPlayer.getMediaPlayerData().getSortOrder())
 					{
-						this.insertPlayerAndUpdateSortOrder(i, newPlayer)
+						this.insertPlayer(i, newPlayer)
 						return
 					}
 				}
-				this.insertPlayerAndUpdateSortOrder(count, newPlayer) // append to end of list
+				this.insertPlayer(count, newPlayer) // append to end of list
 			}
 		}
 	}
 
-	private fun insertPlayerAndUpdateSortOrder(position: Int, player: EnhancedMediaPlayer)
+	private fun insertPlayer(position: Int, player: EnhancedMediaPlayer)
 	{
 		this.values.add(position, player)
 		this.adapter?.notifyItemInserted(position)

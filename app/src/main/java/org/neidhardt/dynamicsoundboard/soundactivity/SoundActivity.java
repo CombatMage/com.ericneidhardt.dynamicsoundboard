@@ -109,8 +109,7 @@ public class SoundActivity
 
 		if (!this.soundsDataUtil.isInit())
 			this.soundsDataUtil.init();
-		if (!this.soundSheetsDataUtil.isInit())
-			this.soundSheetsDataUtil.init();
+		this.soundSheetsDataUtil.init();
 
 		this.initActionbar();
 		this.initNavigationDrawer();
@@ -355,6 +354,13 @@ public class SoundActivity
 	}
 
 	@Override
+	public void onEvent(SoundSheetsChangedEvent event)
+	{
+		if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
+			this.setSoundSheetActionsEnable(false);
+	}
+
+	@Override
 	public void onEvent(ActionModeChangeRequestedEvent event)
 	{
 		ActionModeChangeRequestedEvent.REQUEST requestedAction = event.getRequestedAction();
@@ -396,13 +402,6 @@ public class SoundActivity
 			if (remainingSoundSheets.size() > 0)
 				this.openSoundFragment(remainingSoundSheets.get(0));
 		}
-	}
-
-	@Override
-	public void onEvent(SoundSheetsChangedEvent event)
-	{
-		if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
-			this.setSoundSheetActionsEnable(false);
 	}
 
 	/**
