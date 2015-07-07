@@ -17,8 +17,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
 		targetSdkVersion 22
-		versionCode 21303
-		versionName "2.13.03"
+		versionCode 21304
+		versionName "2.13.04"
 	}
 
 	packagingOptions {
@@ -105,5 +105,18 @@ dependencies {
 	provided 'org.glassfish:javax.annotation:10.0-b28'
 
 	compile "org.jetbrains.kotlin:kotlin-stdlib:0.12.613"
+	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+buildscript {
+	ext.kotlin_version = '0.12.613'
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+	}
+}
+repositories {
+	mavenCentral()
 }
 
