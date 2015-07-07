@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatDialog
 import android.view.View
 import android.widget.CheckBox
+import android.widget.TextView
 import android.widget.Toast
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
@@ -51,16 +52,19 @@ public class RenameSoundFileDialog : SoundSettingsBaseDialog {
 		dialog.setContentView(view)
 		dialog.setTitle(R.string.dialog_rename_sound_file_title)
 
-		this.presenter = RenameSoundFileDialogPresenter(
+		val presenter = RenameSoundFileDialogPresenter(
 				playerData = this.player.getMediaPlayerData(),
 				soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataAccess(),
 				soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataStorage(),
 				dialog = this,
-				renameAllOccurrences = view.findViewById(R.id.cb_rename_all_occurrences) as CheckBox,
-				rename = view.findViewById(R.id.b_ok),
-				cancel = view.findViewById(R.id.b_cancel)
-
+				currentName = view.findViewById(R.id.tv_current_name),
+				newName = view.findViewById(R.id.tv_new_name),
+				renameAllOccurrences = view.findViewById(R.id.cb_rename_all_occurrences) as CheckBox
 		)
+		view.findViewById(R.id.b_ok).setOnClickListener({ view -> presenter.rename() })
+		view.findViewById(R.id.b_cancel).setOnClickListener({ view -> this.dismiss() })
+
+		this.presenter = presenter
 		return dialog
 	}
 }
@@ -70,9 +74,9 @@ private class RenameSoundFileDialogPresenter
 		private val soundsDataAccess: SoundsDataAccess,
 		private val soundsDataStorage: SoundsDataStorage,
 		private val dialog: RenameSoundFileDialog,
-		private val renameAllOccurrences: CheckBox,
-		private val rename: View,
-		private val cancel: View
+		private val currentName : TextView,
+		private val newName : TextView,
+		private val renameAllOccurrences: CheckBox
 )
 {
 	private val TAG = javaClass.getName()
@@ -91,9 +95,7 @@ private class RenameSoundFileDialogPresenter
 		else
 			this.renameAllOccurrences.setVisibility(View.GONE)
 
-
-		this.rename.setOnClickListener({ view -> this.rename() })
-		this.cancel.setOnClickListener({ view -> this.dialog.dismiss() })
+		this.newName.setText(this.playerData.getLabel())
 	}
 
 	private fun getPlayersWithMatchingUri(uri: String): List<EnhancedMediaPlayer>
@@ -121,7 +123,7 @@ private class RenameSoundFileDialogPresenter
 		return players
 	}
 
-	private fun rename()
+	internal fun rename()
 	{
 		val uri = Uri.parse(this.playerData.getUri())
 		val label = this.playerData.getLabel()
