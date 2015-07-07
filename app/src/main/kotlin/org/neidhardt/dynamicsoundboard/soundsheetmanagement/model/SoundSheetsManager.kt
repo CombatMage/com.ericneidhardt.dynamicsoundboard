@@ -22,16 +22,17 @@ public class SoundSheetsManager :
 		SoundSheetsDataUtil,
 		OnOpenSoundSheetEventListener,
 		OnSoundSheetsFromFileLoadedEventListener {
+
 	private val TAG: String = javaClass.getName()
 
 	private val DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets"
 	private val DB_SOUND_SHEETS = "db_sound_sheets"
 
-	private val soundSheets: MutableList<SoundSheet> = ArrayList()
-	private val eventBus: EventBus = EventBus.getDefault()
-
 	private var daoSession: DaoSession? = null
 	private var isInitDone: Boolean = false
+
+	private val soundSheets: MutableList<SoundSheet> = ArrayList()
+	private val eventBus: EventBus = EventBus.getDefault()
 
 	init
 	{

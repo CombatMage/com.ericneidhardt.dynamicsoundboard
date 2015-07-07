@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.fileexplorer;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -53,13 +52,11 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		this.confirm.setOnClickListener(this);
 		this.confirm.setEnabled(false);
 
-		this.adapter = new DirectoryAdapter();
-
 		this.directories = (RecyclerView)view.findViewById(R.id.rv_dialog);
 		this.directories.addItemDecoration(new DividerItemDecoration());
 		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.directories.setItemAnimator(new DefaultItemAnimator());
-		this.directories.setAdapter(this.adapter);
+		this.directories.setAdapter(super.getAdapter());
 
 		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle);
 		dialog.setContentView(view);
@@ -71,7 +68,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 	protected void onFileSelected()
 	{
 		this.confirm.setEnabled(true);
-		int position = this.adapter.fileList.indexOf(this.adapter.selectedFile);
+		int position = super.getAdapter().getFileList().indexOf(super.getAdapter().getSelectedFile());
 		this.directories.scrollToPosition(position);
 	}
 
@@ -88,7 +85,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		switch (v.getId())
 		{
@@ -96,8 +93,8 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 				this.dismiss();
 				break;
 			case R.id.b_ok:
-				if (super.adapter.selectedFile != null)
-					this.loadFromFileAndDismiss(this.adapter.selectedFile);
+				if (super.getAdapter().getSelectedFile() != null)
+					this.loadFromFileAndDismiss(super.getAdapter().getSelectedFile());
 				else
 					Toast.makeText(this.getActivity(), R.string.dialog_load_layout_no_file_info, Toast.LENGTH_SHORT).show();
 				break;

@@ -28,12 +28,12 @@ public class SoundViewHolder
 		soundsDataStorage: SoundsDataStorage,
 		onItemDelete: (EnhancedMediaPlayer, Int) -> Unit,
 		progressTimer: SoundProgressTimer
-)
-	: DismissibleItemViewHolder<SoundItemPagerAdapter>(itemView, SoundItemPagerAdapter())
-	, SoundProgressViewHolder
-	, View.OnClickListener
-	, CustomEditText.OnTextEditedListener
-	, SeekBar.OnSeekBarChangeListener
+) :
+		DismissibleItemViewHolder<SoundItemPagerAdapter>(itemView, SoundItemPagerAdapter()),
+		SoundProgressViewHolder,
+		View.OnClickListener,
+		CustomEditText.OnTextEditedListener,
+		SeekBar.OnSeekBarChangeListener
 {
     private val TAG = javaClass.getName()
 

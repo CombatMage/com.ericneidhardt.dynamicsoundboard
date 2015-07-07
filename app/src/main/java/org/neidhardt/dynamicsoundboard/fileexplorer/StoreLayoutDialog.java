@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.fileexplorer;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -50,13 +49,12 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		this.confirm.setEnabled(false);
 
 		this.inputFileName = (NoUnderscoreEditText) view.findViewById(R.id.et_name_file);
-		this.adapter = new DirectoryAdapter();
 
 		this.directories = (RecyclerView) view.findViewById(R.id.rv_dialog);
 		this.directories.addItemDecoration(new DividerItemDecoration());
 		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.directories.setItemAnimator(new DefaultItemAnimator());
-		this.directories.setAdapter(this.adapter);
+		this.directories.setAdapter(super.getAdapter());
 
 		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle);
 		dialog.setContentView(view);
@@ -68,7 +66,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	protected void onFileSelected()
 	{
 		this.confirm.setEnabled(true);
-		int position = this.adapter.fileList.indexOf(this.adapter.selectedFile);
+		int position = super.getAdapter().getFileList().indexOf(super.getAdapter().getSelectedFile());
 		this.directories.scrollToPosition(position);
 	}
 
@@ -85,7 +83,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		switch (v.getId())
 		{
@@ -96,7 +94,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 				this.dismiss();
 				break;
 			case R.id.b_ok:
-				if (super.adapter.selectedFile != null)
+				if (super.getAdapter().getSelectedFile() != null)
 					this.saveDataAndDismiss();
 				else
 					Toast.makeText(this.getActivity(), R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show();
@@ -113,7 +111,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 			return;
 		}
 
-		File file = new File(super.adapter.parent, fileName);
+		File file = new File(super.getAdapter().getParentFile(), fileName);
 		if (file.exists())
 		{
 			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_file_exists, Toast.LENGTH_SHORT).show();
@@ -129,9 +127,9 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 				return;
 			}
 
-			super.adapter.selectedFile = file;
-			super.adapter.refreshDirectory();
-			super.adapter.notifyDataSetChanged();
+			super.getAdapter().setSelectedFile(file);
+			super.getAdapter().refreshDirectory();
+			super.getAdapter().notifyDataSetChanged();
 
 			this.onFileSelected();
 		}
@@ -145,7 +143,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	{
 		try
 		{
-			JsonPojo.writeToFile(super.adapter.selectedFile, this.soundSheetsDataAccess.getSoundSheets(),
+			JsonPojo.writeToFile(super.getAdapter().getSelectedFile(), this.soundSheetsDataAccess.getSoundSheets(),
 					this.soundsDataAccess.getPlaylist(), this.soundsDataAccess.getSounds());
 
 			this.dismiss();

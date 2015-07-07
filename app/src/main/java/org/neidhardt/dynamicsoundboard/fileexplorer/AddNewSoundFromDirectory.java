@@ -68,13 +68,11 @@ public class AddNewSoundFromDirectory
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 
-		this.adapter = new DirectoryAdapter();
-
 		this.directories = (RecyclerView)view.findViewById(R.id.rv_dialog);
 		this.directories.addItemDecoration(new DividerItemDecoration());
 		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.directories.setItemAnimator(new DefaultItemAnimator());
-		this.directories.setAdapter(this.adapter);
+		this.directories.setAdapter(super.getAdapter());
 
 		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle);
 		dialog.setContentView(view);
@@ -87,7 +85,7 @@ public class AddNewSoundFromDirectory
 	{
 		this.confirm.setEnabled(true);
 
-		int position = this.adapter.fileList.indexOf(this.adapter.selectedFile);
+		int position = super.getAdapter().getFileList().indexOf(super.getAdapter().getSelectedFile());
 		this.directories.scrollToPosition(position);
 	}
 
@@ -118,13 +116,15 @@ public class AddNewSoundFromDirectory
 	private List<File> buildResult()
 	{
 		List<File> files = new ArrayList<>();
-		if (super.adapter.selectedFile == null)
+		DirectoryAdapter adapter = super.getAdapter();
+
+		if (adapter.getSelectedFile() == null)
 			return files;
-		else if (!super.adapter.selectedFile.isDirectory())
-			files.add(super.adapter.selectedFile);
+		else if (!adapter.getSelectedFile().isDirectory())
+			files.add(adapter.getSelectedFile());
 		else
 		{
-			File[] filesInSelectedDir = super.adapter.selectedFile.listFiles();
+			File[] filesInSelectedDir = adapter.getSelectedFile().listFiles();
 			if (filesInSelectedDir != null)
 				Collections.addAll(files, filesInSelectedDir);
 		}
