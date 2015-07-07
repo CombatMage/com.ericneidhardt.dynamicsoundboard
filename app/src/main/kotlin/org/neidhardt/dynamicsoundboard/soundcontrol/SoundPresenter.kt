@@ -69,8 +69,6 @@ public class SoundPresenter
 		this.adapter?.notifyItemInserted(position)
 		if (position == this.values.size() - 1)
 			this.adapter?.notifyItemChanged(position - 1)
-
-		// this.updateSortOrdersAfter(position, true)
 	}
 
 	override fun onEventMainThread(event: SoundMovedEvent)

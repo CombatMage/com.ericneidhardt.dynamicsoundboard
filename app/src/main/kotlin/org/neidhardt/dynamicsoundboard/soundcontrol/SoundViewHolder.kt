@@ -138,16 +138,18 @@ public class SoundViewHolder
 		Logger.d(TAG, "onTextEdited: " + newLabel)
 
 		this.name.clearFocus()
-
-		val playerData = this.player?.getMediaPlayerData()
-		val currentLabel = playerData?.getLabel()
-
-		if (newLabel?.equals(currentLabel) ?: false)
+		if (this.player != null)
 		{
-			playerData?.setLabel(newLabel)
-			playerData?.updateItemInDatabaseAsync()
+			val playerData = this.player!!.getMediaPlayerData()
+			val currentLabel = playerData.getLabel()
 
-			this.eventBus.post(OpenSoundRenameEvent(playerData))
+			if (!currentLabel.equals(newLabel))
+			{
+				playerData.setLabel(newLabel)
+				playerData.updateItemInDatabaseAsync()
+
+				this.eventBus.post(OpenSoundRenameEvent(playerData))
+			}
 		}
 	}
 
