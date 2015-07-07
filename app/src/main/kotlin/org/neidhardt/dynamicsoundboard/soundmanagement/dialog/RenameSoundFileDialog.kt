@@ -95,10 +95,12 @@ private class RenameSoundFileDialogPresenter
 		else
 			this.renameAllOccurrences.setVisibility(View.GONE)
 
-		val oldFileName = FileUtils.getFileForUri(Uri.parse(this.playerData.getUri())).getName()
 
-		this.currentName.setText(oldFileName)
-		this.newName.setText(this.playerData.getLabel())
+		val currentFile = FileUtils.getFileForUri(Uri.parse(this.playerData.getUri()))
+		val currentFileName = currentFile.getName()
+
+		this.currentName.setText(currentFileName)
+		this.newName.setText(this.appendFileTypeToNewPath(this.playerData.getLabel(), currentFileName))
 	}
 
 	private fun getPlayersWithMatchingUri(uri: String): List<EnhancedMediaPlayer>
