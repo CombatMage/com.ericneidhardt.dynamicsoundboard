@@ -57,8 +57,8 @@ public class RenameSoundFileDialog : SoundSettingsBaseDialog {
 				soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataAccess(),
 				soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataStorage(),
 				dialog = this,
-				currentName = view.findViewById(R.id.tv_current_name),
-				newName = view.findViewById(R.id.tv_new_name),
+				currentName = view.findViewById(R.id.tv_current_name) as TextView,
+				newName = view.findViewById(R.id.tv_new_name) as TextView,
 				renameAllOccurrences = view.findViewById(R.id.cb_rename_all_occurrences) as CheckBox
 		)
 		view.findViewById(R.id.b_ok).setOnClickListener({ view -> presenter.rename() })
@@ -95,6 +95,9 @@ private class RenameSoundFileDialogPresenter
 		else
 			this.renameAllOccurrences.setVisibility(View.GONE)
 
+		val oldFileName = FileUtils.getFileForUri(Uri.parse(this.playerData.getUri())).getName()
+
+		this.currentName.setText(oldFileName)
 		this.newName.setText(this.playerData.getLabel())
 	}
 
@@ -134,7 +137,8 @@ private class RenameSoundFileDialogPresenter
 		this.dialog.dismiss()
 	}
 
-	private fun deliverResult(fileUriToRename: Uri, newFileLabel: String, renameAllOccurrences: Boolean) {
+	private fun deliverResult(fileUriToRename: Uri, newFileLabel: String, renameAllOccurrences: Boolean)
+	{
 		val fileToRename = FileUtils.getFileForUri(fileUriToRename)
 		if (fileToRename == null)
 		{
