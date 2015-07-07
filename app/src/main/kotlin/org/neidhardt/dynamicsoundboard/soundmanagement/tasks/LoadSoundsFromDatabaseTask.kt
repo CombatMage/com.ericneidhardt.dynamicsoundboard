@@ -55,8 +55,10 @@ public class LoadPlaylistFromDatabaseTask
 	throws(Exception::class)
 	override fun call(): List<MediaPlayerData>
 	{
-		val mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list()
+		var mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list()
 		Collections.sort(mediaPlayersData, MediaPlayerComparator())
+		mediaPlayersData = mediaPlayersData.reverse()
+
 		for (mediaPlayerData in mediaPlayersData)
 			this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData)
 		return mediaPlayersData
@@ -101,14 +103,12 @@ public class LoadSoundsFromFileListTask
 		return TAG
 	}
 
-	companion object
+	private fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): MediaPlayerData
 	{
-		private fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): MediaPlayerData
-		{
-			val soundUri = Uri.parse(file.getAbsolutePath())
-			val soundLabel = FileUtils.stripFileTypeFromName(
-					FileUtils.getFileNameFromUri(DynamicSoundboardApplication.getSoundboardContext(), soundUri))
-			return EnhancedMediaPlayer.getMediaPlayerData(fragmentTag, soundUri, soundLabel)
-		}
+		val soundUri = Uri.parse(file.getAbsolutePath())
+		val soundLabel = FileUtils.stripFileTypeFromName(
+				FileUtils.getFileNameFromUri(DynamicSoundboardApplication.getSoundboardContext(), soundUri))
+		return EnhancedMediaPlayer.getMediaPlayerData(fragmentTag, soundUri, soundLabel)
 	}
+
 }

@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatDialog
 import android.view.View
+import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsBaseDialog
+import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 import java.io.File
 import java.io.IOException
 import java.util.ArrayList
@@ -47,10 +49,10 @@ public class RenameSoundFileDialog : SoundSettingsBaseDialog {
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		@SuppressLint("InflateParams")
 		val view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_rename_sound_file_layout, null)
+		this.setMainView(view as DialogBaseLayout)
 
-		val dialog = AppCompatDialog(this.getActivity(), R.style.DialogTheme)
+		val dialog = AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle)
 		dialog.setContentView(view)
-		dialog.setTitle(R.string.dialog_rename_sound_file_title)
 
 		val presenter = RenameSoundFileDialogPresenter(
 				playerData = this.player.getMediaPlayerData(),

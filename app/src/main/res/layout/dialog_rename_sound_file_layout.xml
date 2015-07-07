@@ -4,10 +4,9 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:animateLayoutChanges="true"
-		app:has_title="true"
+		app:has_title="false"
 		app:text_cancle_button="@string/dialog_cancel"
 		app:text_ok_button="@string/dialog_rename"
 		tools:background="@color/background">
@@ -29,23 +28,24 @@
 		<com.devspark.robototextview.widget.RobotoTextView
 				android:layout_width="0dp"
 				android:layout_height="match_parent"
-				android:layout_weight="1"
+				android:layout_weight="2"
 				android:gravity="center_vertical"
 				android:textColor="@color/text_content_secondary"
-				android:textSize="@dimen/text_body"
+				android:textSize="@dimen/text_sub_text"
 				android:text="@string/dialog_rename_sound_file_current_name"
-				app:typeface="roboto_medium"/>
+				app:typeface="roboto_light"/>
 
 		<com.devspark.robototextview.widget.RobotoTextView
 				android:id="@+id/tv_current_name"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:textColor="@color/text_content_secondary"
-				android:textSize="@dimen/text_body"
+				android:layout_weight="3"
 				android:gravity="end"
+				android:textColor="@color/text_content_secondary"
+				android:textSize="@dimen/text_sub_text"
+				android:maxLines="2"
 				tools:text="My Music.mp3"
-				app:typeface="roboto_medium"/>
+				app:typeface="roboto_light"/>
 	</LinearLayout>
 
 	<LinearLayout
@@ -57,31 +57,31 @@
 		<com.devspark.robototextview.widget.RobotoTextView
 				android:layout_width="0dp"
 				android:layout_height="match_parent"
-				android:layout_weight="1"
+				android:layout_weight="2"
 				android:gravity="center_vertical"
 				android:textColor="@color/text_content_secondary"
-				android:textSize="@dimen/text_body"
+				android:textSize="@dimen/text_sub_text"
 				android:text="@string/dialog_rename_sound_file_new_name"
-				app:typeface="roboto_medium"/>
+				app:typeface="roboto_light"/>
 
 		<com.devspark.robototextview.widget.RobotoTextView
 				android:id="@+id/tv_new_name"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:textColor="@color/text_content_secondary"
-				android:textSize="@dimen/text_body"
+				android:layout_weight="3"
 				android:gravity="end"
+				android:textColor="@color/text_content_secondary"
+				android:textSize="@dimen/text_sub_text"
+				android:maxLines="2"
 				tools:text="My renamed Music.mp3"
-				app:typeface="roboto_medium"/>
+				app:typeface="roboto_light"/>
 	</LinearLayout>
 
 	<CheckBox
 			android:id="@+id/cb_rename_all_occurrences"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/margin_default"
-			android:layout_marginBottom="@dimen/margin_default"
+			android:layout_marginTop="@dimen/margin_small"
 			android:textColor="@color/text_content_secondary"
 			android:textSize="@dimen/text_body"
 			android:text="@string/dialog_rename_sound_file_all_occurrences_message"/>

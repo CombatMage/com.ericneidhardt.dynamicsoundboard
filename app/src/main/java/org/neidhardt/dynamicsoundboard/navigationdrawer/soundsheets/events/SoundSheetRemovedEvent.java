@@ -5,11 +5,11 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 /**
  * File created by eric.neidhardt on 23.05.2015.
  */
-public class SoundSheetsRemovedEvent
+public class SoundSheetRemovedEvent
 {
 	private final SoundSheet removedSoundSheet;
 
-	public SoundSheetsRemovedEvent(SoundSheet removedSoundSheet)
+	public SoundSheetRemovedEvent(SoundSheet removedSoundSheet)
 	{
 		this.removedSoundSheet = removedSoundSheet;
 	}

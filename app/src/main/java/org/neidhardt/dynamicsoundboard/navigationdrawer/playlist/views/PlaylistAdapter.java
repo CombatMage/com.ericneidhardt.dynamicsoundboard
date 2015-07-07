@@ -14,7 +14,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetsRemovedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetRemovedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener;
@@ -163,10 +163,10 @@ public class PlaylistAdapter
 	/**
 	 * This is called by greenRobot EventBus in case a sound sheet was removed. Retrieve new data, because this soundsheet might contains
 	 * playlist entries.
-	 * @param event delivered SoundSheetsRemovedEvent
+	 * @param event delivered SoundSheetRemovedEvent
 	 */
 	@SuppressWarnings("unused")
-	public void onEvent(SoundSheetsRemovedEvent event)
+	public void onEvent(SoundSheetRemovedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}

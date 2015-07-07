@@ -49,7 +49,6 @@ public class DialogBaseLayout : LinearLayout
 	{
 		super<LinearLayout>.onFinishInflate()
 
-
 		val view = if (this.hasRecyclerView && this.hasTitle)
 			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_recycler_view_title, this, false)
 		else if (this.hasRecyclerView)

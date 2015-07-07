@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer;
 
+import android.support.annotation.NonNull;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 
 import java.util.Comparator;
@@ -10,7 +11,7 @@ import java.util.Comparator;
 public class MediaPlayerComparator implements Comparator<MediaPlayerData>
 {
 	@Override
-	public int compare(MediaPlayerData lhs, MediaPlayerData rhs)
+	public int compare(@NonNull MediaPlayerData lhs, @NonNull MediaPlayerData rhs)
 	{
 		if (lhs.getSortOrder() == null)
 			return -1;
