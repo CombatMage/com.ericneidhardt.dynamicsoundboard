@@ -5,13 +5,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by eric.neidhardt on 09.04.2015.
+ * File created by eric.neidhardt on 09.04.2015.
  */
 public class FileUtils
 {
@@ -22,7 +23,6 @@ public class FileUtils
 	private static final String AUDIO = "audio";
 	private static final String[] MIME_AUDIO_TYPES = {"audio/*", "application/ogg", "application/x-ogg"};
 	private static final String SCHEME_CONTENT_URI = "content";
-	private static final String SCHEME_FILE_URI = "file";
 
 	public static List<File> getFilesInDirectory(File directory)
 	{
@@ -46,9 +46,9 @@ public class FileUtils
 		return files;
 	}
 
-	public static File getFileForUri(Context context, Uri uri)
+	public static File getFileForUri(Uri uri)
 	{
-		Uri pathUri = getPathUriFromGenericUri(context.getApplicationContext(), uri);
+		Uri pathUri = getPathUriFromGenericUri(DynamicSoundboardApplication.getSoundboardContext(), uri);
 		if (pathUri == null)
 			return null;
 
