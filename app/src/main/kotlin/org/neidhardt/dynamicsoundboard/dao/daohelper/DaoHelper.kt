@@ -23,6 +23,23 @@ public fun updateDatabaseAsync(data: MediaPlayerData)
 	UpdatePlayerAsyncTask(data, daoSession.getMediaPlayerDataDao(), daoSession).execute()
 }
 
+private class UpdatePlayerAsyncTask(data: MediaPlayerData, dao: MediaPlayerDataDao, daoSession: DaoSession) : SafeAsyncTask<Void>()
+{
+	private val data = data
+	private val dao = dao
+	private val daoSession = daoSession
+
+	override fun call(): Void?
+	{
+		this.daoSession.runInTx {
+			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.getPlayerId())).list().size() != 0)
+				dao.update(data) // do not update if item was not added before
+		}
+		return null
+	}
+}
+
+
 public fun updateDatabaseAsync(data: SoundSheet)
 {
 	val soundSheetsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundSheetsDataStorage();
@@ -41,22 +58,6 @@ private class UpdateSoundSheetsAsyncTask(data: SoundSheet, dao: SoundSheetDao, d
 	{
 		this.daoSession.runInTx {
 			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.getFragmentTag())).list().size() != 0)
-				dao.update(data) // do not update if item was not added before
-		}
-		return null
-	}
-}
-
-private class UpdatePlayerAsyncTask(data: MediaPlayerData, dao: MediaPlayerDataDao, daoSession: DaoSession) : SafeAsyncTask<Void>()
-{
-	private val data = data
-	private val dao = dao
-	private val daoSession = daoSession
-
-	override fun call(): Void?
-	{
-		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.getPlayerId())).list().size() != 0)
 				dao.update(data) // do not update if item was not added before
 		}
 		return null

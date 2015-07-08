@@ -100,7 +100,7 @@ public class SoundPresenter
 			this.adapter?.notifyDataSetChanged()
 		else
 		{
-			val players = event.getPlayers()
+			val players = event.players
 			for (player in players)
 				this.removePlayerAndUpdateSortOrder(player)
 		}

@@ -64,23 +64,23 @@ public class SoundsManager
 	@Override
 	public void init()
 	{
-		if (this.isInitDone)
-			throw new IllegalStateException(TAG + ": init() was called, but SoundsManager was already initialized");
+		if (!this.isInitDone)
+		{
+			this.isInitDone = true;
 
-		this.isInitDone = true;
+			this.sounds = new HashMap<>();
+			this.playlist = new ArrayList<>();
+			this.currentlyPlayingSounds = new HashSet<>();
 
-		this.sounds = new HashMap<>();
-		this.playlist = new ArrayList<>();
-		this.currentlyPlayingSounds = new HashSet<>();
+			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNamePlayList());
+			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNameSounds());
 
-		this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNamePlayList());
-		this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNameSounds());
+			SafeAsyncTask task = new LoadSoundsFromDatabaseTask(this.dbSounds, this);
+			task.execute();
 
-		SafeAsyncTask task = new LoadSoundsFromDatabaseTask(this.dbSounds, this);
-		task.execute();
-
-		task = new LoadPlaylistFromDatabaseTask(this.dbPlaylist, this);
-		task.execute();
+			task = new LoadPlaylistFromDatabaseTask(this.dbPlaylist, this);
+			task.execute();
+		}
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class SoundsManager
 		this.sounds.clear();
 
 		this.eventBus.post(new PlaylistChangedEvent());
-		this.eventBus.post(new SoundsRemovedEvent(null));
+		this.eventBus.post(new SoundsRemovedEvent());
 	}
 
 	@Override

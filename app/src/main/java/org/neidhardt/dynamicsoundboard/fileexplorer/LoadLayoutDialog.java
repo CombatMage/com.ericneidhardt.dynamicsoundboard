@@ -134,6 +134,9 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 		this.soundsDataStorage.removeSounds(playersToRemove);
 
+		this.soundSheetsDataStorage.removeAllSoundSheets();
+		this.soundSheetsDataStorage.addLoadedSoundSheets(soundSheets);
+
 		EventBus.getDefault().post(new SoundSheetsFromFileLoadedEvent(soundSheets, oldCurrentSoundSheet));
 	}
 

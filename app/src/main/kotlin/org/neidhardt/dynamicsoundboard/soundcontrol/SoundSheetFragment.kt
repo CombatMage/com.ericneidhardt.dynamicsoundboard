@@ -246,7 +246,7 @@ public class SoundSheetFragment :
 		}
 	}
 
-	override fun onEventMainThread(event: SoundMovedEvent?) {}
+	override fun onEventMainThread(event: SoundMovedEvent) {}
 
 	override fun onEventMainThread(event: SoundAddedEvent) {}
 

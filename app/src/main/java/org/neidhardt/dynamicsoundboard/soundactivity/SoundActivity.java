@@ -107,8 +107,7 @@ public class SoundActivity
 
 		this.eventBus = EventBus.getDefault();
 
-		if (!this.soundsDataUtil.isInit())
-			this.soundsDataUtil.init();
+		this.soundsDataUtil.init();
 		this.soundSheetsDataUtil.init();
 
 		this.initActionbar();
@@ -255,10 +254,8 @@ public class SoundActivity
 
 		this.setSoundSheetActionsEnable(false);
 
-		if (!this.soundsDataUtil.isInit())
-			this.soundsDataUtil.init();
-		if (!this.soundSheetsDataUtil.isInit())
-			this.soundSheetsDataUtil.init();
+		this.soundsDataUtil.init();
+		this.soundSheetsDataUtil.init();
 
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener);
 	}

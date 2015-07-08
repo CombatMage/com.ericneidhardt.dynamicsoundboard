@@ -9,7 +9,7 @@ public interface SoundsDataUtil
 {
 	/**
 	 * Starts async task to retrieve sounds from database. If {@code SoundsDataUtil} was initialized before,
-	 * you must call {@code SoundsDataUtil.release()} prior.
+	 * nothing is done.
 	 */
 	void init();
 

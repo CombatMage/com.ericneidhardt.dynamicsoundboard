@@ -6,7 +6,7 @@ import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStat
 import roboguice.util.SafeAsyncTask;
 
 /**
- * Created by eric.neidhardt on 24.03.2015.
+ * File created by eric.neidhardt on 24.03.2015.
  */
 
 public abstract class LongTermTask<T> extends SafeAsyncTask<T>

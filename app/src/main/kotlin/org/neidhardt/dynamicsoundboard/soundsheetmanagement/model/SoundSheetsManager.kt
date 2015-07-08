@@ -20,8 +20,8 @@ public class SoundSheetsManager :
 		SoundSheetsDataAccess,
 		SoundSheetsDataStorage,
 		SoundSheetsDataUtil,
-		OnOpenSoundSheetEventListener,
-		OnSoundSheetsFromFileLoadedEventListener {
+		OnOpenSoundSheetEventListener
+{
 
 	private val DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets"
 	private val DB_SOUND_SHEETS = "db_sound_sheets"
@@ -44,14 +44,16 @@ public class SoundSheetsManager :
 			this.eventBus.post(SoundSheetsChangedEvent())
 			this.eventBus.post(SoundSheetsLoadedEvent(this.soundSheets))
 		}
+		else
+		{
+			this.isInitDone = true
 
-		this.isInitDone = true
+			this.soundSheets.clear()
+			this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), this.getDatabaseName())
 
-		this.soundSheets.clear()
-		this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), this.getDatabaseName())
-
-		val task = LoadSoundSheetsTask(this.daoSession, this)
-		task.execute()
+			val task = LoadSoundSheetsTask(this.getDbSoundSheets(), this)
+			task.execute()
+		}
 	}
 
 
@@ -216,15 +218,4 @@ public class SoundSheetsManager :
 		}
 	}
 
-	public override fun onEvent(event: SoundSheetsFromFileLoadedEvent)
-	{
-		// clear SoundSheets before adding new values
-		// this removes all sounds in SoundSheets, but no in playlist
-		this.soundSheets.clear()
-		this.daoSession!!.getSoundSheetDao().deleteAll()
-
-		this.soundSheets.addAll(event.getNewSoundSheetList())
-		this.eventBus.post(SoundSheetsChangedEvent())
-		this.eventBus.post(OpenSoundSheetEvent(this.getSelectedItem()))
-	}
 }
