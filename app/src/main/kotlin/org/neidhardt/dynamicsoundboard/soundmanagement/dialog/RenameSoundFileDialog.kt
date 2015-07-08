@@ -49,6 +49,7 @@ public class RenameSoundFileDialog : SoundSettingsBaseDialog {
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		@SuppressLint("InflateParams")
 		val view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_rename_sound_file_layout, null)
+
 		this.setMainView(view as DialogBaseLayout)
 
 		val dialog = AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle)
@@ -59,7 +60,6 @@ public class RenameSoundFileDialog : SoundSettingsBaseDialog {
 				soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataAccess(),
 				soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataStorage(),
 				dialog = this,
-				currentName = view.findViewById(R.id.tv_current_name) as TextView,
 				newName = view.findViewById(R.id.tv_new_name) as TextView,
 				renameAllOccurrences = view.findViewById(R.id.cb_rename_all_occurrences) as CheckBox
 		)
@@ -70,13 +70,13 @@ public class RenameSoundFileDialog : SoundSettingsBaseDialog {
 		return dialog
 	}
 }
+
 private class RenameSoundFileDialogPresenter
 (
 		private val playerData: MediaPlayerData,
 		private val soundsDataAccess: SoundsDataAccess,
 		private val soundsDataStorage: SoundsDataStorage,
 		private val dialog: RenameSoundFileDialog,
-		private val currentName : TextView,
 		private val newName : TextView,
 		private val renameAllOccurrences: CheckBox
 )
@@ -101,7 +101,6 @@ private class RenameSoundFileDialogPresenter
 		val currentFile = FileUtils.getFileForUri(Uri.parse(this.playerData.getUri()))
 		val currentFileName = currentFile.getName()
 
-		this.currentName.setText(currentFileName)
 		this.newName.setText(this.appendFileTypeToNewPath(this.playerData.getLabel(), currentFileName))
 	}
 
