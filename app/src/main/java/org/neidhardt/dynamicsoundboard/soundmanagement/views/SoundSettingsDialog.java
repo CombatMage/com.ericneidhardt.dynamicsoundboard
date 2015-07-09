@@ -65,7 +65,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 
 		this.setAvailableSoundSheets();
 
-		this.soundSheetName.setText(this.soundSheetsDataUtil.getSuggestedName());
+		this.soundSheetName.setText(this.getSoundSheetsDataUtil().getSuggestedName());
 		this.soundSheetName.setVisibility(View.GONE);
 
 		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogTheme);
@@ -77,7 +77,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 
 	private void setAvailableSoundSheets()
 	{
-		List<SoundSheet> soundSheets = this.soundSheetsDataAccess.getSoundSheets();
+		List<SoundSheet> soundSheets = this.getSoundSheetsDataAccess().getSoundSheets();
 		ArrayList<String> labels = new ArrayList<>();
 		for (int i = 0; i < soundSheets.size(); i++)
 		{
@@ -140,7 +140,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		}
 		else
 		{
-			this.soundsDataStorage.removeSounds(Collections.singletonList(this.player));
+			this.getSoundsDataStorage().removeSounds(Collections.singletonList(this.player));
 
 			Uri uri = Uri.parse(this.player.getMediaPlayerData().getUri());
 
@@ -149,15 +149,15 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 			if (addNewSoundSheet)
 			{
 				String soundSheetName = this.soundSheetName.getDisplayedText();
-				SoundSheet soundSheet = this.soundSheetsDataUtil.getNewSoundSheet(soundSheetName);
-				String fragmentTag = this.soundSheetsDataStorage.addOrUpdateSoundSheet(soundSheet);
+				SoundSheet soundSheet = this.getSoundSheetsDataUtil().getNewSoundSheet(soundSheetName);
+				String fragmentTag = this.getSoundSheetsDataStorage().addOrUpdateSoundSheet(soundSheet);
 
 				mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(fragmentTag, uri, soundLabel);
 			}
 			else
 				mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, uri, soundLabel);
 
-			this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData);
+			this.getSoundsDataStorage().createSoundAndAddToManager(mediaPlayerData);
 		}
 	}
 

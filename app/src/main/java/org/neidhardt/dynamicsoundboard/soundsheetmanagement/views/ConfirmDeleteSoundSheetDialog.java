@@ -46,10 +46,10 @@ public class ConfirmDeleteSoundSheetDialog extends BaseConfirmDeleteDialog
 	@Override
 	protected void delete()
 	{
-		this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag));
+		this.getSoundsDataStorage().removeSounds(this.getSoundsDataAccess().getSoundsInFragment(this.fragmentTag));
 
-		SoundSheet soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(this.fragmentTag);
-		this.soundSheetsDataStorage.removeSoundSheet(soundSheet);
+		SoundSheet soundSheet = this.getSoundSheetsDataAccess().getSoundSheetForFragmentTag(this.fragmentTag);
+		this.getSoundSheetsDataStorage().removeSoundSheet(soundSheet);
 
 		this.getSoundActivity().removeSoundFragment(soundSheet);
 	}

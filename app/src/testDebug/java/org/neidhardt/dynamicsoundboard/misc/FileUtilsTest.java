@@ -1,11 +1,8 @@
 package org.neidhardt.dynamicsoundboard.misc;
 
-import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.BaseTest;
-import org.robolectric.Robolectric;
 
 import java.io.File;
 
@@ -18,13 +15,10 @@ import static org.junit.Assert.*;
 public class FileUtilsTest extends BaseTest
 {
 
-	private Context context;
-
 	@Override
 	public void setUp() throws Exception
 	{
 		super.setUp();
-		this.context = Robolectric.setupActivity(Activity.class);
 	}
 
 	@Test
@@ -32,14 +26,14 @@ public class FileUtilsTest extends BaseTest
 	{
 		File file = new File("test.mp3");
 		assertFalse(file.exists());
-		File testFile = FileUtils.getFileForUri(this.context, Uri.fromFile(file));
+		File testFile = FileUtils.getFileForUri(Uri.fromFile(file));
 		assertNull(testFile);
 
 		file = createFile("test.mp3");
 		assertNotNull(file);
 		assertTrue(file.exists());
 
-		testFile = FileUtils.getFileForUri(this.context, Uri.fromFile(file));
+		testFile = FileUtils.getFileForUri(Uri.fromFile(file));
 		assertNotNull(testFile);
 		assertEquals(file.getAbsolutePath(), testFile.getAbsolutePath());
 		assertEquals(Uri.fromFile(file), Uri.fromFile(testFile));

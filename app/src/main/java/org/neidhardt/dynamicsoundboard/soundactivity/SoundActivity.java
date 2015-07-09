@@ -57,7 +57,6 @@ import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -89,23 +88,20 @@ public class SoundActivity
 
 	private PauseSoundOnCallListener phoneStateListener;
 
-	EventBus eventBus;
+	private EventBus eventBus = EventBus.getDefault();
 
-	@Inject SoundSheetsDataUtil soundSheetsDataUtil;
-	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
+	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataAccess();
+	private SoundsDataStorage soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataStorage();
+	private SoundsDataUtil soundsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataUtil();
 
-	@Inject SoundsDataUtil soundsDataUtil;
-	@Inject SoundsDataAccess soundsDataAccess;
-	@Inject SoundsDataStorage soundsDataStorage;
+	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataAccess();
+	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataUtil();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 		this.setContentView(R.layout.activity_base);
-
-		this.eventBus = EventBus.getDefault();
 
 		this.soundsDataUtil.init();
 		this.soundSheetsDataUtil.init();

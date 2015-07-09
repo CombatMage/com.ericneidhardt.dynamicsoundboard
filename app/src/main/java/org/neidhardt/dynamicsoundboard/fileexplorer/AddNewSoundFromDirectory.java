@@ -134,7 +134,7 @@ public class AddNewSoundFromDirectory
 	private void returnResultsToCallingFragment()
 	{
 		List<File> result = this.buildResult();
-		LoadSoundsFromFileListTask task = new LoadSoundsFromFileListTask(result, this.callingFragmentTag, this.soundsDataStorage);
+		LoadSoundsFromFileListTask task = new LoadSoundsFromFileListTask(result, this.callingFragmentTag, this.getSoundsDataStorage());
 		task.execute();
 	}
 }

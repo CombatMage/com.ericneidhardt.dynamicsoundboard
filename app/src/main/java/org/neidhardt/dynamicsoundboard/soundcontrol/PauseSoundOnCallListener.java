@@ -15,11 +15,10 @@ import java.util.Set;
 public class PauseSoundOnCallListener extends PhoneStateListener
 {
 	private List<EnhancedMediaPlayer> pauseSounds;
-	private SoundsDataAccess soundsDataAccess;
+	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataAccess();
 
 	public PauseSoundOnCallListener()
 	{
-		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 		this.pauseSounds = new ArrayList<>();
 	}
 

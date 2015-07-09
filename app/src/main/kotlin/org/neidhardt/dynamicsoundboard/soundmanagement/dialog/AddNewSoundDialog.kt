@@ -78,11 +78,11 @@ public class AddNewSoundDialog : BaseDialog
 		val heightOfControls = this.getMeasureHeight(view) + this.getResources().getDimensionPixelSize(R.dimen.margin_default)
 
 		view.getLayoutParams().height = heightOfControls
-		this.setMainView(view as DialogBaseLayout)
+		this.mainView = view as DialogBaseLayout
 
 		this.presenter = AddNewSoundDialogPresenter(
 				dialog = this,
-				soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataStorage(),
+				soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundsDataStorage,
 				add = view.findViewById(R.id.b_ok) as Button,
 				cancel = view.findViewById(R.id.b_cancel),
 				addAnotherSound = view.findViewById(R.id.b_add_another_sound),
@@ -165,7 +165,7 @@ public class AddNewSoundDialog : BaseDialog
 
 	private fun updateHeightToContent()
 	{
-		this.getMainView().getLayoutParams()?.height = ViewGroup.LayoutParams.WRAP_CONTENT
+		this.mainView!!.getLayoutParams()?.height = ViewGroup.LayoutParams.WRAP_CONTENT
 	}
 }
 
@@ -197,7 +197,7 @@ private class AddNewSoundDialogPresenter
 		this.addedSoundsLayout.setItemAnimator(DefaultItemAnimator())
 		this.addedSoundsLayout.setAdapter(adapter)
 
-		this.dialog.getMainView().enableRecyclerViewDividers(false)
+		this.dialog.mainView!!.enableRecyclerViewDividers(false)
 	}
 
 	private fun addSoundsToSoundSheet()
@@ -256,7 +256,7 @@ private class AddNewSoundDialogPresenter
 	{
 		this.add.setEnabled(true)
 		this.soundsToAdd.add(data)
-		this.dialog.getMainView().enableRecyclerViewDividers(true)
+		this.dialog.mainView!!.enableRecyclerViewDividers(true)
 		this.adapter.notifyItemInserted(this.soundsToAdd.size() - 1)
 	}
 

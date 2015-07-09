@@ -20,7 +20,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManagerUtil;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -34,8 +33,8 @@ public class NotificationHandler implements
 {
 	private static final String TAG = NotificationHandler.class.getName();
 
-	@Inject SoundsDataAccess soundsDataAccess;
-	@Inject SoundsDataUtil soundsDataUtil;
+	private SoundsDataAccess soundsDataAccess;
+	private SoundsDataUtil soundsDataUtil;
 
 	private NotificationService service;
 
@@ -44,10 +43,12 @@ public class NotificationHandler implements
 	private NotificationManager notificationManager;
 	private List<PendingSoundNotification> notifications;
 
-	public NotificationHandler(NotificationService service, SoundsDataAccess soundsDataAccess)
+	public NotificationHandler(NotificationService service, SoundsDataAccess soundsDataAccess, SoundsDataUtil soundsDataUtil)
 	{
 		this.service = service;
 		this.soundsDataAccess = soundsDataAccess;
+		this.soundsDataUtil = soundsDataUtil;
+
 
 		this.notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
 		this.notifications = new ArrayList<>();
@@ -372,9 +373,4 @@ public class NotificationHandler implements
 		}
 	}
 
-	// for testing
-	public void setNotifications(List<PendingSoundNotification> notifications)
-	{
-		this.notifications = notifications;
-	}
 }

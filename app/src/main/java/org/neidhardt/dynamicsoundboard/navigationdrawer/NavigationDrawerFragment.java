@@ -32,8 +32,6 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog;
 
-import javax.inject.Inject;
-
 public class NavigationDrawerFragment
 		extends
 			BaseFragment
@@ -48,8 +46,8 @@ public class NavigationDrawerFragment
 	private static final int INDEX_SOUND_SHEETS = 0;
 	private static final int INDEX_PLAYLIST = 1;
 
-	@Inject SoundSheetsDataUtil soundSheetsDataUtil;
-	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
+	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataUtil();
+	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataAccess();
 
 	private EventBus bus;
 
@@ -73,7 +71,6 @@ public class NavigationDrawerFragment
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		DynamicSoundboardApplication.getApplicationComponent().inject(this);
 		this.setRetainInstance(true);
 
 		this.listObserver = new ViewPagerContentObserver();

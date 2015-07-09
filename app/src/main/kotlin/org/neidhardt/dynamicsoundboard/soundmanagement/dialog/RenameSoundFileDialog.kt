@@ -50,15 +50,15 @@ public class RenameSoundFileDialog : SoundSettingsBaseDialog {
 		@SuppressLint("InflateParams")
 		val view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_rename_sound_file_layout, null)
 
-		this.setMainView(view as DialogBaseLayout)
+		this.mainView = view as DialogBaseLayout
 
 		val dialog = AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle)
 		dialog.setContentView(view)
 
 		val presenter = RenameSoundFileDialogPresenter(
 				playerData = this.player.getMediaPlayerData(),
-				soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataAccess(),
-				soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataStorage(),
+				soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().soundsDataAccess,
+				soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundsDataStorage,
 				dialog = this,
 				newName = view.findViewById(R.id.tv_new_name) as TextView,
 				renameAllOccurrences = view.findViewById(R.id.cb_rename_all_occurrences) as CheckBox

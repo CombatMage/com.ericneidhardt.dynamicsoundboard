@@ -71,8 +71,8 @@ public class SoundSheetFragment :
 	private var dragSortRecycler: SoundDragSortRecycler? = null
 	private var scrollListener: SoundSheetScrollListener? = null
 
-	var soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataStorage()
-	var soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataAccess()
+	var soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundsDataStorage
+	var soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().soundsDataAccess
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{

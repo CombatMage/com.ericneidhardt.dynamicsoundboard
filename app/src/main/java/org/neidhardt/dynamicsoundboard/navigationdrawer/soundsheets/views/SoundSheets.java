@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -19,8 +18,6 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
-import javax.inject.Inject;
-
 
 public class SoundSheets
 		extends
@@ -31,10 +28,11 @@ public class SoundSheets
 	private SoundSheetsPresenter presenter;
 	private SoundSheetsAdapter adapter;
 
-	@Inject SoundsDataAccess soundsDataAccess;
-	@Inject SoundsDataStorage soundsDataStorage;
-	@Inject SoundSheetsDataAccess soundSheetsDataAccess;
-	@Inject SoundSheetsDataStorage soundSheetsDataStorage;
+	private  SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataAccess();
+	private  SoundsDataStorage soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataStorage();
+
+	private  SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataAccess();
+	private  SoundSheetsDataStorage soundSheetsDataStorage = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataStorage();
 
 	@SuppressWarnings("unused")
 	public SoundSheets(Context context)
@@ -59,8 +57,6 @@ public class SoundSheets
 
 	private void init(Context context)
 	{
-		DynamicSoundboardApplication.getApplicationComponent().inject(this);
-
 		this.presenter = new SoundSheetsPresenter(this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess, this.soundsDataStorage);
 
 		this.adapter = new SoundSheetsAdapter();

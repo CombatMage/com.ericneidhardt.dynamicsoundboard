@@ -25,8 +25,7 @@ public class DynamicSoundboardApplication extends Application {
 
 		random = new Random();
 		applicationContext = this.getApplicationContext();
-
-		applicationComponent = DaggerApplicationComponent.create();
+		applicationComponent = new ApplicationComponent();
 	}
 
 	public static Context getSoundboardContext() {

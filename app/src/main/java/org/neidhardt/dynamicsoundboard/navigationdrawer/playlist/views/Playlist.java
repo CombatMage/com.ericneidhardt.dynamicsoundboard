@@ -16,8 +16,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
-import javax.inject.Inject;
-
 /**
  * Project created by eric.neidhardt on 27.08.2014.
  */
@@ -28,8 +26,8 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 	private PlaylistAdapter adapter;
 	private PlaylistPresenter presenter;
 
-	@Inject SoundsDataStorage soundsDataStorage;
-	@Inject SoundsDataAccess soundsDataAccess;
+	private SoundsDataStorage soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataStorage();
+	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataAccess();
 
 	@SuppressWarnings("unused")
 	public Playlist(Context context)
@@ -54,8 +52,6 @@ public class Playlist extends NavigationDrawerList implements PlaylistAdapter.On
 
 	private void init(Context context)
 	{
-		DynamicSoundboardApplication.getApplicationComponent().inject(this);
-
 		this.presenter = new PlaylistPresenter(this.soundsDataStorage, this.soundsDataAccess);
 
 		this.adapter = new PlaylistAdapter(this.presenter);

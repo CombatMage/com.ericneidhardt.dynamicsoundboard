@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.views.floatingactionbutton;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
@@ -40,7 +41,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 
 	private void init()
 	{
-		this.presenter = new AddPauseFloatingActionButtonPresenter(DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataAccess());
+		this.presenter = new AddPauseFloatingActionButtonPresenter(DynamicSoundboardApplication.getApplicationComponent().getSoundsDataAccess());
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		this.presenter.onFabClicked();
 	}

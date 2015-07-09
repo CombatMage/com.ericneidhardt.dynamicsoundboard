@@ -126,26 +126,26 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 
 	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
 	{
-		List<SoundSheet> oldCurrentSoundSheet = this.soundSheetsDataAccess.getSoundSheets();
+		List<SoundSheet> oldCurrentSoundSheet = this.getSoundSheetsDataAccess().getSoundSheets();
 
 		List<EnhancedMediaPlayer> playersToRemove = new ArrayList<>();
 		for (SoundSheet soundSheet : oldCurrentSoundSheet)
-			playersToRemove.addAll(this.soundsDataAccess.getSoundsInFragment(soundSheet.getFragmentTag()));
+			playersToRemove.addAll(this.getSoundsDataAccess().getSoundsInFragment(soundSheet.getFragmentTag()));
 
-		this.soundsDataStorage.removeSounds(playersToRemove);
+		this.getSoundsDataStorage().removeSounds(playersToRemove);
 
-		this.soundSheetsDataStorage.removeAllSoundSheets();
-		this.soundSheetsDataStorage.addLoadedSoundSheets(soundSheets);
+		this.getSoundSheetsDataStorage().removeAllSoundSheets();
+		this.getSoundSheetsDataStorage().addLoadedSoundSheets(soundSheets);
 
 		EventBus.getDefault().post(new SoundSheetsFromFileLoadedEvent(soundSheets, oldCurrentSoundSheet));
 	}
 
 	private void addLoadedPlayList(List<MediaPlayerData> playList)
 	{
-		this.soundsDataStorage.removeSoundsFromPlaylist(this.soundsDataAccess.getPlaylist()); // clear playlist before adding new values
+		this.getSoundsDataStorage().removeSoundsFromPlaylist(this.getSoundsDataAccess().getPlaylist()); // clear playlist before adding new values
 
 		for (MediaPlayerData mediaPlayerData : playList)
-			this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData);
+			this.getSoundsDataStorage().createPlaylistSoundAndAddToManager(mediaPlayerData);
 	}
 
 	private void addLoadedSounds(Map<String, List<MediaPlayerData>> sounds)
@@ -154,7 +154,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		{
 			List<MediaPlayerData> soundsPerFragment = sounds.get(key);
 			for (MediaPlayerData mediaPlayerData : soundsPerFragment)
-				this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData);
+				this.getSoundsDataStorage().createSoundAndAddToManager(mediaPlayerData);
 		}
 	}
 

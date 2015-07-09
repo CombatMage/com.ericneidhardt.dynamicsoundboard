@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.notifications.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
@@ -10,10 +11,7 @@ import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil;
-
-import javax.inject.Inject;
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
@@ -22,16 +20,16 @@ public class NotificationService extends Service implements ActivityStateChanged
 {
 	public static final String TAG = NotificationService.class.getName();
 
-	@Inject SoundsDataUtil soundSheetsDataUtil;
-	@Inject SoundsDataAccess soundSheetsDataAccess;
-	@Inject SoundsDataStorage soundsDataStorage;
+	private SoundsDataUtil soundsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataUtil();
+	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataAccess();
+
+	private EventBus eventBus = EventBus.getDefault();
 
 	private NotificationHandler notificationHandler;
-	private EventBus eventBus;
 	private boolean isActivityVisible;
 
 	@Override
-	public IBinder onBind(Intent intent)
+	public IBinder onBind(@NonNull Intent intent)
 	{
 		return null;
 	}
@@ -40,17 +38,14 @@ public class NotificationService extends Service implements ActivityStateChanged
 	public void onCreate()
 	{
 		super.onCreate();
-		DynamicSoundboardApplication.getApplicationComponent().inject(this);
+		this.notificationHandler = new NotificationHandler(this, this.soundsDataAccess, this.soundsDataUtil);
 
-		this.notificationHandler = new NotificationHandler(this, this.soundSheetsDataAccess);
-
-		this.eventBus = EventBus.getDefault();
 		if (!this.eventBus.isRegistered(this))
 			this.eventBus.registerSticky(this);
 	}
 
 	@Override
-	public int onStartCommand(Intent intent, int flags, int startId)
+	public int onStartCommand(@NonNull Intent intent, int flags, int startId)
 	{
 		Logger.d(TAG, "onStartCommand");
 		this.isActivityVisible = true;
@@ -64,7 +59,7 @@ public class NotificationService extends Service implements ActivityStateChanged
 
 		this.eventBus.unregister(this);
 		this.notificationHandler.onServiceDestroyed();
-		this.soundSheetsDataUtil.release();
+		this.soundsDataUtil.release();
 
 		super.onDestroy();
 	}
@@ -75,7 +70,7 @@ public class NotificationService extends Service implements ActivityStateChanged
 		if (event.isActivityClosed())
 		{
 			this.isActivityVisible = false;
-			if (this.soundSheetsDataAccess.getCurrentlyPlayingSounds().size() == 0)
+			if (this.soundsDataAccess.getCurrentlyPlayingSounds().size() == 0)
 				this.stopSelf();
 		}
 		else if (event.isActivityResumed())

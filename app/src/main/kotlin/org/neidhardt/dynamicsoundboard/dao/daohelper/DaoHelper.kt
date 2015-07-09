@@ -9,8 +9,8 @@ import roboguice.util.SafeAsyncTask
  */
 public fun updateDatabaseAsync(data: MediaPlayerData)
 {
-	val soundsDataUtil = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataUtil()
-	val soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundsDataStorage()
+	val soundsDataUtil = DynamicSoundboardApplication.getApplicationComponent().soundsDataUtil
+	val soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundsDataStorage
 
 	val daoSession =
 			if (soundsDataUtil.isPlaylistPlayer(data))
@@ -42,7 +42,7 @@ private class UpdatePlayerAsyncTask(data: MediaPlayerData, dao: MediaPlayerDataD
 
 public fun updateDatabaseAsync(data: SoundSheet)
 {
-	val soundSheetsDataStorage = DynamicSoundboardApplication.getApplicationComponent().provideSoundSheetsDataStorage();
+	val soundSheetsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundSheetsDataStorage;
 	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
 
 	UpdateSoundSheetsAsyncTask(data, daoSession.getSoundSheetDao(), daoSession).execute()

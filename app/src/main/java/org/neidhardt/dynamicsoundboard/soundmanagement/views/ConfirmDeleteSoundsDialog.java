@@ -46,6 +46,6 @@ public class ConfirmDeleteSoundsDialog extends BaseConfirmDeleteDialog
 	@Override
 	protected void delete()
 	{
-		this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag));
+		this.getSoundsDataStorage().removeSounds(this.getSoundsDataAccess().getSoundsInFragment(this.fragmentTag));
 	}
 }

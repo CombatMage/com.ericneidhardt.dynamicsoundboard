@@ -143,8 +143,8 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 	{
 		try
 		{
-			JsonPojo.writeToFile(super.getAdapter().getSelectedFile(), this.soundSheetsDataAccess.getSoundSheets(),
-					this.soundsDataAccess.getPlaylist(), this.soundsDataAccess.getSounds());
+			JsonPojo.writeToFile(super.getAdapter().getSelectedFile(), this.getSoundSheetsDataAccess().getSoundSheets(),
+					this.getSoundsDataAccess().getPlaylist(), this.getSoundsDataAccess().getSounds());
 
 			this.dismiss();
 		}

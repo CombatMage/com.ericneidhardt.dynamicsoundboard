@@ -178,13 +178,13 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 		Uri soundUri = this.uri;
 
 		MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(soundSheetFragmentTag, soundUri, soundLabel);
-		this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData);
+		this.getSoundsDataStorage().createSoundAndAddToManager(mediaPlayerData);
 	}
 
 	private String addNewSoundSheet(String label)
 	{
-		SoundSheet newSoundSheet = this.soundSheetsDataUtil.getNewSoundSheet(label);
-		return this.soundSheetsDataStorage.addOrUpdateSoundSheet(newSoundSheet);
+		SoundSheet newSoundSheet = this.getSoundSheetsDataUtil().getNewSoundSheet(label);
+		return this.getSoundSheetsDataStorage().addOrUpdateSoundSheet(newSoundSheet);
 	}
 
 	private static ArrayList<String> getLabelsFromSoundSheets(List<SoundSheet> soundSheets)
