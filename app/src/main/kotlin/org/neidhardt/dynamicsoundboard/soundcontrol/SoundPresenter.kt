@@ -101,7 +101,7 @@ public class SoundPresenter
 		else
 		{
 			val players = event.players
-			for (player in players)
+			for (player in players.orEmpty())
 				this.removePlayerAndUpdateSortOrder(player)
 		}
 	}
