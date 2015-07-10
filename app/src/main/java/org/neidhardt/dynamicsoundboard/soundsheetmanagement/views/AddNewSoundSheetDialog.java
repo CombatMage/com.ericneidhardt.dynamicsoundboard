@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -80,7 +79,7 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 		String label = this.soundSheetName.getDisplayedText();
 		SoundSheet soundSheet = this.getSoundSheetsDataUtil().getNewSoundSheet(label);
 
-		this.getSoundSheetsDataStorage().addOrUpdateSoundSheet(soundSheet);
+		this.getSoundSheetsDataStorage().addSoundSheetToManager(soundSheet);
 	}
 
 }

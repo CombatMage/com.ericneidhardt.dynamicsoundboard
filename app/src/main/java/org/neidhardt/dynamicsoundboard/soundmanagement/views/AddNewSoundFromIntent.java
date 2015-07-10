@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.net.Uri;
@@ -184,7 +183,8 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	private String addNewSoundSheet(String label)
 	{
 		SoundSheet newSoundSheet = this.getSoundSheetsDataUtil().getNewSoundSheet(label);
-		return this.getSoundSheetsDataStorage().addOrUpdateSoundSheet(newSoundSheet);
+		this.getSoundSheetsDataStorage().addSoundSheetToManager(newSoundSheet);
+		return newSoundSheet.getFragmentTag();
 	}
 
 	private static ArrayList<String> getLabelsFromSoundSheets(List<SoundSheet> soundSheets)

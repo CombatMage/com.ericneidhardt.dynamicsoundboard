@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +15,10 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetRemovedEvent;
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter;
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter;
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder;
 
 import java.util.List;
 
@@ -32,8 +30,7 @@ public class PlaylistAdapter
 			SoundProgressAdapter<PlaylistAdapter.ViewHolder>
 		implements
 			OnPlaylistChangedEventListener,
-			MediaPlayerEventListener,
-			OnSoundSheetsChangedEventListener
+			MediaPlayerEventListener
 {
 	private PlaylistPresenter presenter;
 	private Integer currentItemIndex;
@@ -67,6 +64,7 @@ public class PlaylistAdapter
 		this.onItemClickListener = onItemClickListener;
 	}
 
+	@NonNull
 	@Override
 	public List<EnhancedMediaPlayer> getValues()
 	{
@@ -126,18 +124,17 @@ public class PlaylistAdapter
 	@Override
 	public int getItemCount()
 	{
-		List<EnhancedMediaPlayer> players = this.getValues();
-		return players != null ? this.getValues().size() : 0;
+		return this.getValues().size();
 	}
 
 	@Override
-	public void onEvent(MediaPlayerStateChangedEvent event)
+	public void onEvent(@NonNull MediaPlayerStateChangedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}
 
 	@Override
-	public void onEvent(MediaPlayerCompletedEvent event)
+	public void onEvent(@NonNull MediaPlayerCompletedEvent event)
 	{
 		MediaPlayerData finishedPlayerData = event.getPlayer().getMediaPlayerData();
 		if (this.currentItemIndex == null)
@@ -155,24 +152,7 @@ public class PlaylistAdapter
 	}
 
 	@Override
-	public void onEvent(SoundSheetsChangedEvent event)
-	{
-		this.notifyDataSetChanged();
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case a sound sheet was removed. Retrieve new data, because this soundsheet might contains
-	 * playlist entries.
-	 * @param event delivered SoundSheetRemovedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEvent(SoundSheetRemovedEvent event)
-	{
-		this.notifyDataSetChanged();
-	}
-
-	@Override
-	public void onEventMainThread(PlaylistChangedEvent event)
+	public void onEventMainThread(@NonNull PlaylistChangedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}
@@ -215,7 +195,7 @@ public class PlaylistAdapter
 		public void onProgressUpdate()
 		{
 			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
-			if (player != null && player.isPlaying())
+			if (player.isPlaying())
 			{
 				timePosition.setProgress(player.getCurrentPosition());
 				timePosition.setVisibility(View.VISIBLE);
@@ -225,7 +205,7 @@ public class PlaylistAdapter
 		}
 
 		@Override
-		public void onClick(View view)
+		public void onClick(@NonNull View view)
 		{
 			int position = this.getLayoutPosition();
 			if (onItemClickListener != null)

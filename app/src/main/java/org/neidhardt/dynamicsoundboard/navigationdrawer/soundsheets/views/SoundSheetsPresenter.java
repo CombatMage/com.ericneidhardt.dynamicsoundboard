@@ -52,16 +52,11 @@ public class SoundSheetsPresenter
 		List<SoundSheet> soundSheetsToRemove = this.getSoundSheetsSelectedForDeletion();
 		for (SoundSheet soundSheet: soundSheetsToRemove)
 		{
-			this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(soundSheet.getFragmentTag()));
-			this.soundSheetsDataStorage.removeSoundSheet(soundSheet);
-			if (soundSheet.getIsSelected())
-			{
-				List<SoundSheet> remainingSoundSheets = this.adapter.getValues();
-				if (remainingSoundSheets.size() > 0)
-					this.soundSheetsDataAccess.setSelectedItem(0);
-			}
+			List<EnhancedMediaPlayer> soundsInFragment = this.soundsDataAccess.getSoundsInFragment(soundSheet.getFragmentTag());
+			this.soundsDataStorage.removeSounds(soundsInFragment);
 		}
-		this.adapter.notifyDataSetChanged();
+		this.soundSheetsDataStorage.removeSoundSheets(soundSheetsToRemove);
+
 		super.onSelectedItemsDeleted();
 	}
 

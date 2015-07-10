@@ -38,7 +38,6 @@ public class ConfirmDeleteAllSoundSheetsDialog extends BaseConfirmDeleteDialog
 			List<EnhancedMediaPlayer> soundsInSoundSheet = this.getSoundsDataAccess().getSoundsInFragment(soundSheet.getFragmentTag());
 			this.getSoundsDataStorage().removeSounds(soundsInSoundSheet);
 		}
-
-		this.getSoundSheetsDataStorage().removeAllSoundSheets();
+		this.getSoundSheetsDataStorage().removeSoundSheets(soundSheets);
 	}
 }

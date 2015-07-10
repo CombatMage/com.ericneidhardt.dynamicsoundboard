@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.greenrobot.event.EventBus;
+import org.jetbrains.annotations.NotNull;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter;
 
 import java.util.HashSet;
@@ -92,7 +95,7 @@ public class SoundSheetsAdapter
 	}
 
 	@Override
-	public void onEventMainThread(SoundAddedEvent event)
+	public void onEventMainThread(@NonNull SoundAddedEvent event)
 	{
 		String fragmentTag = event.getPlayer().getMediaPlayerData().getFragmentTag();
 		SoundSheet changedSoundSheet = this.presenter.getSoundSheetsDataAccess().getSoundSheetForFragmentTag(fragmentTag);
@@ -101,7 +104,7 @@ public class SoundSheetsAdapter
 	}
 
 	@Override
-	public void onEventMainThread(SoundsRemovedEvent event)
+	public void onEventMainThread(@NonNull SoundsRemovedEvent event)
 	{
 		List<EnhancedMediaPlayer> removedPlayers = event.getPlayers();
 		if (removedPlayers == null)
@@ -120,13 +123,25 @@ public class SoundSheetsAdapter
 	}
 
 	@Override
-	public void onEventMainThread(SoundChangedEvent event) {}
+	public void onEventMainThread(@NonNull SoundChangedEvent event) {}
 
 	@Override
-	public void onEventMainThread(SoundMovedEvent event) {}
+	public void onEventMainThread(@NonNull SoundMovedEvent event) {}
 
 	@Override
-	public void onEvent(SoundSheetsChangedEvent event)
+	public void onEventMainThread(@NotNull SoundSheetAddedEvent event)
+	{
+		this.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onEventMainThread(@NotNull SoundSheetChangedEvent event)
+	{
+		this.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onEventMainThread(@NotNull SoundSheetsRemovedEvent event)
 	{
 		this.notifyDataSetChanged();
 	}
