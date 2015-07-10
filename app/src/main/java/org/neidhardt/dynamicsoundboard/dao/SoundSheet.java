@@ -75,6 +75,11 @@ public class SoundSheet {
 
     // KEEP METHODS - put your custom methods here
 
+	public void insertItemInDatabaseAsync()
+	{
+		DaohelperPackage.insertIntoDatabaseAsync(this);
+	}
+
 	public void updateItemInDatabaseAsync()
 	{
 		DaohelperPackage.updateDatabaseAsync(this);

@@ -241,12 +241,9 @@ public class SoundsManager
 	private void addSoundToPlayList(EnhancedMediaPlayer player)
 	{
 		this.playlist.add(player);
+
 		MediaPlayerData data = player.getMediaPlayerData();
-		MediaPlayerDataDao dao = this.getDbPlaylist().getMediaPlayerDataDao();
-		if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.getPlayerId())).list().size() == 0)
-		{
-			dao.insert(data);
-		}
+		data.insertItemInDatabaseAsync();
 
 		this.eventBus.post(new PlaylistChangedEvent());
 	}
@@ -264,9 +261,7 @@ public class SoundsManager
 		List<EnhancedMediaPlayer> soundsInFragment = this.sounds.get(fragmentTag);
 		soundsInFragment.add(player);
 
-		MediaPlayerDataDao dao = this.getDbSounds().getMediaPlayerDataDao();
-		if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.getPlayerId())).list().size() == 0)
-			dao.insert(data);
+		data.insertItemInDatabaseAsync();
 
 		this.eventBus.post(new SoundAddedEvent(player));
 	}

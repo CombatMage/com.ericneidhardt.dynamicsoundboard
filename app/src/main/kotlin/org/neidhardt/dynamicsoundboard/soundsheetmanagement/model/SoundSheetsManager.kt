@@ -83,9 +83,7 @@ public class SoundSheetsManager :
 		if (isSelected)
 			this.setSoundSheetSelected(newSoundSheet)
 
-		val dao = this.getDbSoundSheets().getSoundSheetDao()
-		if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(newSoundSheet.getFragmentTag())).list().size() == 0)
-			dao.insert(newSoundSheet)
+		newSoundSheet.insertItemInDatabaseAsync()
 
 		this.eventBus.post(SoundSheetAddedEvent(newSoundSheet))
 	}
