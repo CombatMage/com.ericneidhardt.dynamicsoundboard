@@ -18,9 +18,9 @@ public interface SoundSheetsDataAccess
 
 	/**
 	 * Set the item with this position selected and all other items deselected
-	 * @param position index of item to be selected
+	 * @param soundSheetToSelect soundSheetToSelect to be selected
 	 */
-	void setSelectedItem(int position);
+	void setSoundSheetSelected(SoundSheet soundSheetToSelect);
 
 	/**
 	 * Get the currently selected SoundSheet item.

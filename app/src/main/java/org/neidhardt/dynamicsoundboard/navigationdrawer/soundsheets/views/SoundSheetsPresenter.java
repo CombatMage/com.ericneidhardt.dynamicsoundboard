@@ -70,7 +70,7 @@ public class SoundSheetsPresenter
 		}
 		else
 		{
-			this.soundSheetsDataAccess.setSelectedItem(position);
+			this.soundSheetsDataAccess.setSoundSheetSelected(data);
 			this.getEventBus().post(new OpenSoundSheetEvent(data));
 		}
 		this.adapter.notifyItemChanged(position);

@@ -18,8 +18,6 @@ public interface SoundSheetsDataStorage
 	 */
 	void removeSoundSheets(List<SoundSheet> soundSheets);
 
-	// TODO remove unused
-
 	/**
 	 * Get DaoSession used for storing {@code SoundSheet}
 	 * @return corresponding {@code DaoSession}

@@ -120,13 +120,7 @@ public class SoundSheetsManager :
 		return if (results.size() > 0) results.get(0) else null
 	}
 
-	override fun setSelectedItem(position: Int)
-	{
-		val soundSheet = this.soundSheets.get(position)
-		this.setSoundSheetSelected(soundSheet)
-	}
-
-	private fun setSoundSheetSelected(soundSheetToSelect: SoundSheet)
+	override fun setSoundSheetSelected(soundSheetToSelect: SoundSheet)
 	{
 		if (!this.soundSheets.contains(soundSheetToSelect))
 			throw UnsupportedOperationException(TAG + ": can not select SoundSheet " + soundSheetToSelect + " because it is not loaded")

@@ -78,7 +78,7 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 	{
 		String label = this.soundSheetName.getDisplayedText();
 		SoundSheet soundSheet = this.getSoundSheetsDataUtil().getNewSoundSheet(label);
-
+		soundSheet.setIsSelected(true);
 		this.getSoundSheetsDataStorage().addSoundSheetToManager(soundSheet);
 	}
 
