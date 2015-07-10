@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets;
 
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;

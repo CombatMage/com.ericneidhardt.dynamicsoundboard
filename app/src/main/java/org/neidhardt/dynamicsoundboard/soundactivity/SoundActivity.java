@@ -36,7 +36,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.Open
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetRemovedEvent;
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
@@ -367,27 +366,6 @@ public class SoundActivity
 			{
 				this.actionMode.invalidate();
 			}
-		}
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case a sound sheet was removed.
-	 * playlist entries.
-	 * @param event delivered SoundSheetRemovedEvent
-	 */
-	@SuppressWarnings("unused")
-	public void onEventMainThread(SoundSheetRemovedEvent event)
-	{
-		SoundSheet soundSheet = event.getRemovedSoundSheet();
-		if (soundSheet == null)
-			throw new NullPointerException(TAG + ": onEvent() delivered Data is null " + event);
-
-		this.removeSoundFragment(soundSheet);
-		if (soundSheet.getIsSelected())
-		{
-			List<SoundSheet> remainingSoundSheets = this.soundSheetsDataAccess.getSoundSheets();
-			if (remainingSoundSheets.size() > 0)
-				this.openSoundFragment(remainingSoundSheets.get(0));
 		}
 	}
 

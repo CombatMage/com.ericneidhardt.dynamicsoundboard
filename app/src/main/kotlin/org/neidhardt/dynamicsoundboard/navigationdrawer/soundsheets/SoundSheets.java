@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views;
+package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
