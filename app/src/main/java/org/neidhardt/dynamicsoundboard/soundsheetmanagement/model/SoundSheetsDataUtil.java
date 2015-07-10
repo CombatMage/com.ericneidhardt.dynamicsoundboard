@@ -20,16 +20,6 @@ public interface SoundSheetsDataUtil
 	boolean isInit();
 
 	/**
-	 * Register the storage class on eventBus, should be called in onStart() of holding activity.
-	 */
-	void registerOnEventBus();
-
-	/**
-	 * Unregister the storage class on eventBus, should be called in onStop() of holding activity.
-	 */
-	void unregisterOnEventBus();
-
-	/**
 	 * Generate a new SoundSheet instance with unique fragmentTag, derived from the given label.
 	 * @param label label of the new {@code SoundSheet}
 	 * @return new {@code SoundSheet} instance

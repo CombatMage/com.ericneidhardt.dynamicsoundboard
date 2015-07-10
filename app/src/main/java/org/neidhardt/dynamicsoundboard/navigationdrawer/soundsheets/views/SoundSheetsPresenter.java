@@ -26,6 +26,7 @@ public class SoundSheetsPresenter
 	private SoundSheetsDataStorage soundSheetsDataStorage;
 	private SoundsDataAccess soundsDataAccess;
 	private SoundsDataStorage soundsDataStorage;
+
 	private SoundSheetsAdapter adapter;
 
 	public SoundSheetsPresenter(SoundSheetsDataAccess soundSheetsDataAccess,

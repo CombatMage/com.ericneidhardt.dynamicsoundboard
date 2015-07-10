@@ -233,8 +233,6 @@ public class SoundActivity
 	protected void onStart()
 	{
 		super.onStart();
-
-		this.soundSheetsDataUtil.registerOnEventBus();
 		this.eventBus.registerSticky(this);
 	}
 
@@ -277,8 +275,6 @@ public class SoundActivity
 	protected void onStop()
 	{
 		this.eventBus.unregister(this);
-
-		this.soundSheetsDataUtil.unregisterOnEventBus();
 
 		if (this.isFinishing())
 		{

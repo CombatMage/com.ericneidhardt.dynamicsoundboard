@@ -19,8 +19,7 @@ import java.util.ArrayList
 public class SoundSheetsManager :
 		SoundSheetsDataAccess,
 		SoundSheetsDataStorage,
-		SoundSheetsDataUtil,
-		OnOpenSoundSheetEventListener
+		SoundSheetsDataUtil
 {
 
 	private val DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets"
@@ -54,18 +53,6 @@ public class SoundSheetsManager :
 			val task = LoadSoundSheetsTask(this.getDbSoundSheets(), this)
 			task.execute()
 		}
-	}
-
-
-	override fun registerOnEventBus()
-	{
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.registerSticky(this, 1)
-	}
-
-	override fun unregisterOnEventBus()
-	{
-		this.eventBus.unregister(this)
 	}
 
 	override fun isInit(): Boolean
@@ -185,13 +172,6 @@ public class SoundSheetsManager :
 	{
 		this.soundSheets.clear()
 		this.daoSession!!.getSoundSheetDao().deleteAll()
-		this.eventBus.post(SoundSheetsChangedEvent())
-	}
-
-	override fun onEvent(event: OpenSoundSheetEvent)
-	{
-		val indexOfSelectedItem = this.soundSheets.indexOf(event.getSoundSheetToOpen())
-		this.setSelectedItem(indexOfSelectedItem)
 		this.eventBus.post(SoundSheetsChangedEvent())
 	}
 
