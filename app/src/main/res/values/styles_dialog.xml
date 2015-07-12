@@ -6,6 +6,8 @@
 		<item name="colorPrimaryDark">@color/primary_700</item>
 		<item name="colorAccent">@color/accent_200</item>
 		<item name="windowNoTitle">true</item>
+		<item name="android:windowMinWidthMinor">0dip</item>
+		<item name="android:windowMinWidthMajor">0dip</item>
 	</style>
 
 	<style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
@@ -13,6 +15,8 @@
 		<item name="colorPrimaryDark">@color/primary_700</item>
 		<item name="colorAccent">@color/accent_200</item>
 		<item name="windowNoTitle">false</item>
+		<item name="android:windowMinWidthMinor">0dip</item>
+		<item name="android:windowMinWidthMajor">0dip</item>
 	</style>
 
 </resources>

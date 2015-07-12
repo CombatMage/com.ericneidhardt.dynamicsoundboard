@@ -8,8 +8,10 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
 import org.neidhardt.dynamicsoundboard.misc.Util
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetRemovedEvent
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask
 import java.util.ArrayList
 
