@@ -17,6 +17,11 @@ public class LoadSoundSheetsTask
 {
 	private val TAG = javaClass.getName()
 
+	override fun getTag(): String
+	{
+		return TAG
+	}
+
 	throws(Exception::class)
 	override fun call(): List<SoundSheet>
 	{
@@ -27,11 +32,9 @@ public class LoadSoundSheetsTask
 	override fun onSuccess(loadedSoundSheets: List<SoundSheet>)
 	{
 		super.onSuccess(loadedSoundSheets)
-		this.soundSheetsDataStorage.addLoadedSoundSheets(loadedSoundSheets)
+		for (soundSheet in loadedSoundSheets)
+			this.soundSheetsDataStorage.addSoundSheetToManager(soundSheet)
 	}
 
-	override fun getTag(): String
-	{
-		return TAG
-	}
+
 }

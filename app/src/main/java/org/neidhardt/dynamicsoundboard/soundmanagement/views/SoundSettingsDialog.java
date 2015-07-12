@@ -136,6 +136,7 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 		if (!hasSoundSheetChanged)
 		{
 			this.player.getMediaPlayerData().setLabel(soundLabel);
+			this.player.getMediaPlayerData().updateItemInDatabaseAsync();
 			EventBus.getDefault().post(new SoundChangedEvent(this.player));
 		}
 		else
@@ -150,8 +151,10 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 			{
 				String soundSheetName = this.soundSheetName.getDisplayedText();
 				SoundSheet soundSheet = this.getSoundSheetsDataUtil().getNewSoundSheet(soundSheetName);
-				String fragmentTag = this.getSoundSheetsDataStorage().addOrUpdateSoundSheet(soundSheet);
 
+				this.getSoundSheetsDataStorage().addSoundSheetToManager(soundSheet);
+
+				String fragmentTag = soundSheet.getFragmentTag();
 				mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(fragmentTag, uri, soundLabel);
 			}
 			else

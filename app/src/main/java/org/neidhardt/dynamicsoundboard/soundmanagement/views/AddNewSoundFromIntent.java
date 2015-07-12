@@ -1,11 +1,11 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.widget.CheckBox;
@@ -76,6 +76,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 		this.soundSheetsAlreadyExists = this.availableSoundSheetLabels != null;
 	}
 
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
@@ -151,7 +152,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		switch (v.getId())
 		{
@@ -184,7 +185,9 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	private String addNewSoundSheet(String label)
 	{
 		SoundSheet newSoundSheet = this.getSoundSheetsDataUtil().getNewSoundSheet(label);
-		return this.getSoundSheetsDataStorage().addOrUpdateSoundSheet(newSoundSheet);
+		newSoundSheet.setIsSelected(true);
+		this.getSoundSheetsDataStorage().addSoundSheetToManager(newSoundSheet);
+		return newSoundSheet.getFragmentTag();
 	}
 
 	private static ArrayList<String> getLabelsFromSoundSheets(List<SoundSheet> soundSheets)

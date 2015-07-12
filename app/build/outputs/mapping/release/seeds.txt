@@ -17276,6 +17276,10 @@ org.neidhardt.dynamicsoundboard.dao.SoundboardDaoOpenHelper
 org.neidhardt.dynamicsoundboard.dao.daohelper.DaohelperPackage
 org.neidhardt.dynamicsoundboard.dao.daohelper.DaohelperPackage: kotlin.reflect.KPackage $kotlinPackage
 org.neidhardt.dynamicsoundboard.dao.daohelper.DaohelperPackage$DaoHelper$d367e40b
+org.neidhardt.dynamicsoundboard.dao.daohelper.InsertPlayerAsyncTask
+org.neidhardt.dynamicsoundboard.dao.daohelper.InsertPlayerAsyncTask: kotlin.reflect.KClass $kotlinClass
+org.neidhardt.dynamicsoundboard.dao.daohelper.InsertSoundSheetAsyncTask
+org.neidhardt.dynamicsoundboard.dao.daohelper.InsertSoundSheetAsyncTask: kotlin.reflect.KClass $kotlinClass
 org.neidhardt.dynamicsoundboard.dao.daohelper.UpdatePlayerAsyncTask
 org.neidhardt.dynamicsoundboard.dao.daohelper.UpdatePlayerAsyncTask: kotlin.reflect.KClass $kotlinClass
 org.neidhardt.dynamicsoundboard.dao.daohelper.UpdateSoundSheetsAsyncTask
@@ -17324,8 +17328,6 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist: org.ne
 org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist: org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistAdapter getAdapter()
 org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistAdapter: void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent)
 org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistAdapter: void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent)
-org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistAdapter: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent)
-org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistAdapter: void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetRemovedEvent)
 org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistAdapter: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent)
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog$OnSoundLayoutAddedEventListener: void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent)
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog$OnSoundLayoutRenamedEventListener: void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent)
@@ -17354,7 +17356,9 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAd
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent)
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent)
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent)
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent)
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent)
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent)
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent)
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList: NavigationDrawerList(android.content.Context)
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList: NavigationDrawerList(android.content.Context,android.util.AttributeSet)
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList: NavigationDrawerList(android.content.Context,android.util.AttributeSet,int)
@@ -17387,13 +17391,13 @@ org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment: BaseFragment()
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: SoundActivity()
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent)
-org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent)
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent)
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent)
-org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent)
-org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent)
+org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent)
+org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent)
+org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent)
+org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent)
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent)
-org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEventMainThread(org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetRemovedEvent)
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEvent(org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent)
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent)
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity: void onClick(android.view.View)
@@ -17421,11 +17425,11 @@ org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListe
 org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent)
 org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent)
 org.neidhardt.dynamicsoundboard.soundmanagement.events.OnSoundsChangedEventListener: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent)
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnOpenSoundSheetEventListener: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent)
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsChangedEvent)
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsFromFileLoadedEventListener: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent)
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsLoadedEventListener: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent)
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent)
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetOpenEventListener: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent)
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent)
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent)
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener: void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent)
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsInitEventLisenter: void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent)
 org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 org.neidhardt.dynamicsoundboard.views.DialogBaseLayout: DialogBaseLayout(android.content.Context)
 org.neidhardt.dynamicsoundboard.views.DialogBaseLayout: DialogBaseLayout(android.content.Context,android.util.AttributeSet)

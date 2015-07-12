@@ -6,6 +6,8 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog;
 
+import java.util.Collections;
+
 /**
  * File created by eric.neidhardt on 16.02.2015.
  */
@@ -49,8 +51,7 @@ public class ConfirmDeleteSoundSheetDialog extends BaseConfirmDeleteDialog
 		this.getSoundsDataStorage().removeSounds(this.getSoundsDataAccess().getSoundsInFragment(this.fragmentTag));
 
 		SoundSheet soundSheet = this.getSoundSheetsDataAccess().getSoundSheetForFragmentTag(this.fragmentTag);
-		this.getSoundSheetsDataStorage().removeSoundSheet(soundSheet);
-
+		this.getSoundSheetsDataStorage().removeSoundSheets(Collections.singletonList(soundSheet));
 		this.getSoundActivity().removeSoundFragment(soundSheet);
 	}
 }

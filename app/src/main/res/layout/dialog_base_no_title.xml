@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			  xmlns:tools="http://schemas.android.com/tools"
-			  xmlns:app="http://schemas.android.com/apk/res-auto"
 			  android:orientation="vertical"
 			  android:layout_width="wrap_content"
 			  android:layout_height="wrap_content"
@@ -10,7 +9,7 @@
 
 	<LinearLayout
 			android:id="@+id/layout_dialog_content"
-			android:layout_width="match_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:padding="@dimen/padding_dialog"
 			android:orientation="vertical">
@@ -19,8 +18,6 @@
 	<org.neidhardt.dynamicsoundboard.views.DialogButtonBar
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_gravity="end"
-			app:text_cancle_button="@string/dialog_cancel"
-			app:text_ok_button="@string/dialog_ok"/>
+			android:layout_gravity="end"/>
 
 </LinearLayout>

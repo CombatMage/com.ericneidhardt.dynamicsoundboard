@@ -10,27 +10,13 @@ import java.util.List;
  */
 public interface SoundSheetsDataStorage
 {
-
-	void addLoadedSoundSheets(List<SoundSheet> soundSheetList);
-
-	/**
-	 * Adds a new {@code SoundSheet} to Storage. If there is an existing {@code SoundSheet} with the same fragmentTag, it's label is
-	 * updated.
-	 * @param soundSheet new SoundSheet to store. Existing SoundSheets with the same fragmentTags are updated
-	 * @return the fragmentTag of the added or update SoundSheet
-	 */
-	String addOrUpdateSoundSheet(SoundSheet soundSheet);
+	void addSoundSheetToManager(SoundSheet soundSheet);
 
 	/**
-	 * Remove the given {@code SoundSheet} from the currently stored data set.
-	 * @param soundSheet {@code SoundSheet} to be removed
+	 * Remove the given {@code SoundSheet}s from the currently stored data set.
+	 * @param soundSheets List of {@code SoundSheet}s to be removed
 	 */
-	void removeSoundSheet(SoundSheet soundSheet);
-
-	/**
-	 * Remove all currently stored SoundSheets from the data set.
-	 */
-	void removeAllSoundSheets();
+	void removeSoundSheets(List<SoundSheet> soundSheets);
 
 	/**
 	 * Get DaoSession used for storing {@code SoundSheet}

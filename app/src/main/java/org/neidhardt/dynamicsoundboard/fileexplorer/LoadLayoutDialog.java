@@ -11,13 +11,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
-import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration;
 
 import java.io.File;
@@ -124,7 +122,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		}
 	}
 
-	private void addLoadedSoundSheets(List<SoundSheet> soundSheets)
+	private void addLoadedSoundSheets(List<SoundSheet> newSoundSheets)
 	{
 		List<SoundSheet> oldCurrentSoundSheet = this.getSoundSheetsDataAccess().getSoundSheets();
 
@@ -133,11 +131,11 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 			playersToRemove.addAll(this.getSoundsDataAccess().getSoundsInFragment(soundSheet.getFragmentTag()));
 
 		this.getSoundsDataStorage().removeSounds(playersToRemove);
+		this.getSoundSheetsDataStorage().removeSoundSheets(oldCurrentSoundSheet);
 
-		this.getSoundSheetsDataStorage().removeAllSoundSheets();
-		this.getSoundSheetsDataStorage().addLoadedSoundSheets(soundSheets);
 
-		EventBus.getDefault().post(new SoundSheetsFromFileLoadedEvent(soundSheets, oldCurrentSoundSheet));
+		for (SoundSheet soundSheet : newSoundSheets)
+			this.getSoundSheetsDataStorage().addSoundSheetToManager(soundSheet);
 	}
 
 	private void addLoadedPlayList(List<MediaPlayerData> playList)

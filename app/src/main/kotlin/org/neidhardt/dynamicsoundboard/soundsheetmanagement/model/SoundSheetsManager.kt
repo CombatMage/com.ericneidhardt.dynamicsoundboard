@@ -8,8 +8,10 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
 import org.neidhardt.dynamicsoundboard.misc.Util
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.events.SoundSheetRemovedEvent
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask
 import java.util.ArrayList
 
@@ -19,9 +21,9 @@ import java.util.ArrayList
 public class SoundSheetsManager :
 		SoundSheetsDataAccess,
 		SoundSheetsDataStorage,
-		SoundSheetsDataUtil,
-		OnOpenSoundSheetEventListener
+		SoundSheetsDataUtil
 {
+	private val TAG = javaClass.getName()
 
 	private val DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets"
 	private val DB_SOUND_SHEETS = "db_sound_sheets"
@@ -39,12 +41,7 @@ public class SoundSheetsManager :
 
 	override fun init()
 	{
-		if (this.isInitDone)
-		{
-			this.eventBus.post(SoundSheetsChangedEvent())
-			this.eventBus.post(SoundSheetsLoadedEvent(this.soundSheets))
-		}
-		else
+		if (!this.isInitDone)
 		{
 			this.isInitDone = true
 
@@ -54,18 +51,6 @@ public class SoundSheetsManager :
 			val task = LoadSoundSheetsTask(this.getDbSoundSheets(), this)
 			task.execute()
 		}
-	}
-
-
-	override fun registerOnEventBus()
-	{
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.registerSticky(this, 1)
-	}
-
-	override fun unregisterOnEventBus()
-	{
-		this.eventBus.unregister(this)
 	}
 
 	override fun isInit(): Boolean
@@ -91,66 +76,73 @@ public class SoundSheetsManager :
 		return this.soundSheets
 	}
 
-	override fun addOrUpdateSoundSheet(soundSheet: SoundSheet): String
+	override fun addSoundSheetToManager(newSoundSheet: SoundSheet)
 	{
-		var existingSoundSheet: SoundSheet? = null
-		val index = this.soundSheets.indexOf(soundSheet)
-		if (index == -1)
-			return this.addNewSoundSheet(soundSheet)
-		else
-			return this.updateExistingSoundSheet(existingSoundSheet as SoundSheet, soundSheet)
+		this.soundSheets.add(newSoundSheet)
+
+		val isSelected = newSoundSheet.getIsSelected()
+
+		if (isSelected)
+			this.setSoundSheetSelected(newSoundSheet)
+
+		newSoundSheet.insertItemInDatabaseAsync()
+
+		this.eventBus.post(SoundSheetAddedEvent(newSoundSheet))
 	}
 
-	private fun addNewSoundSheet(soundSheet: SoundSheet) : String
+	override fun removeSoundSheets(soundSheets: MutableList<SoundSheet>)
 	{
-		this.soundSheets.add(soundSheet)
-		this.daoSession!!.getSoundSheetDao().insert(soundSheet)
+		val copyList = ArrayList<SoundSheet>(soundSheets.size());
+		copyList.addAll(soundSheets); // this is done to prevent concurrent modification exception
 
-		this.eventBus.post(SoundSheetsChangedEvent())
-		this.eventBus.post(OpenSoundSheetEvent(soundSheet))
+		val dao = this.getDbSoundSheets().getSoundSheetDao()
+		for (soundSheetToRemove in copyList)
+		{
+			this.soundSheets.remove(soundSheetToRemove)
+			if (soundSheetToRemove.getIsSelected())
+				this.setSoundSheetSelected(this.soundSheets.get(0))
 
-		return soundSheet.getFragmentTag()
-	}
+			if (soundSheetToRemove.getId() != null)
+				dao.delete(soundSheetToRemove)
+			else
+			{
+				val list = dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(soundSheetToRemove.getFragmentTag())).list()
+				dao.deleteInTx(list)
+			}
+		}
 
-	private fun updateExistingSoundSheet(existingSoundSheet: SoundSheet, updateSoundSheet: SoundSheet) : String
-	{
-		existingSoundSheet.setFragmentTag(updateSoundSheet.getFragmentTag())
-		existingSoundSheet.setLabel(updateSoundSheet.getLabel())
-		existingSoundSheet.updateItemInDatabaseAsync()
-
-		this.eventBus.post(SoundSheetsChangedEvent())
-		this.eventBus.post(OpenSoundSheetEvent(existingSoundSheet))
-
-		return existingSoundSheet.getFragmentTag()
+		this.eventBus.post(SoundSheetsRemovedEvent(copyList))
 	}
 
 	override fun getSoundSheetForFragmentTag(fragmentTag: String): SoundSheet?
 	{
-		for (soundSheet in this.soundSheets) {
-			if (soundSheet.getFragmentTag() == fragmentTag)
-				return soundSheet
-		}
-		return null
+		val results = this.soundSheets.filter { soundSheet -> soundSheet.getFragmentTag().equals(fragmentTag) }
+		return if (results.size() > 0) results.get(0) else null
 	}
 
-	override fun setSelectedItem(position: Int)
+	override fun setSoundSheetSelected(soundSheetToSelect: SoundSheet)
 	{
-		val size = this.soundSheets.size()
-		for (i in 0..size - 1) {
-			val isSelected = i == position
-			this.soundSheets.get(i).setIsSelected(isSelected)
-			this.soundSheets.get(i).updateItemInDatabaseAsync()
+		if (!this.soundSheets.contains(soundSheetToSelect))
+			throw UnsupportedOperationException(TAG + ": can not select SoundSheet " + soundSheetToSelect + " because it is not loaded")
+
+		for (soundSheet in this.soundSheets)
+		{
+			if (soundSheet != soundSheetToSelect && soundSheet.getIsSelected()) // make sure only one item is selected
+			{
+				soundSheet.setIsSelected(false)
+				soundSheet.updateItemInDatabaseAsync()
+				this.eventBus.post(SoundSheetChangedEvent(soundSheet))
+			}
 		}
+		soundSheetToSelect.setIsSelected(true)
+		this.eventBus.post(SoundSheetChangedEvent(soundSheetToSelect))
+		this.eventBus.post(OpenSoundSheetEvent(soundSheetToSelect))
 	}
 
 	override fun getSelectedItem(): SoundSheet?
 	{
-		for (soundSheet in this.soundSheets)
-		{
-			if (soundSheet.getIsSelected())
-				return soundSheet
-		}
-		return null
+		val results = this.soundSheets.filter { soundSheet -> soundSheet.getIsSelected() }
+		return if (results.size() > 0) results.get(0) else null
 	}
 
 	override fun getSuggestedName(): String
@@ -163,59 +155,6 @@ public class SoundSheetsManager :
 	{
 		val tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode())
 		return SoundSheet(null, tag, label, false)
-	}
-
-	override fun removeSoundSheet(soundSheet: SoundSheet)
-	{
-		this.soundSheets.remove(soundSheet)
-		val soundSheetDao = this.daoSession!!.getSoundSheetDao()
-		if (soundSheet.getId() != null)
-			soundSheetDao.delete(soundSheet)
-		else
-		{
-			val playersInDatabase = soundSheetDao.queryBuilder()
-					.where(SoundSheetDao.Properties.FragmentTag.eq(soundSheet.getFragmentTag())).list()
-			soundSheetDao.deleteInTx(playersInDatabase)
-		}
-
-		this.eventBus.post(SoundSheetRemovedEvent(soundSheet))
-	}
-
-	override fun removeAllSoundSheets()
-	{
-		this.soundSheets.clear()
-		this.daoSession!!.getSoundSheetDao().deleteAll()
-		this.eventBus.post(SoundSheetsChangedEvent())
-	}
-
-	override fun onEvent(event: OpenSoundSheetEvent)
-	{
-		val indexOfSelectedItem = this.soundSheets.indexOf(event.getSoundSheetToOpen())
-		this.setSelectedItem(indexOfSelectedItem)
-		this.eventBus.post(SoundSheetsChangedEvent())
-	}
-
-	override fun addLoadedSoundSheets(soundSheetList: List<SoundSheet>)
-	{
-		this.soundSheets.addAll(soundSheetList)
-		this.findSelectionAndDeselectOthers()
-		this.eventBus.post(SoundSheetsChangedEvent())
-		this.eventBus.post(SoundSheetsLoadedEvent(soundSheetList))
-	}
-
-	private fun findSelectionAndDeselectOthers()
-	{
-		var selected: SoundSheet? = null
-		for (soundSheet in this.soundSheets)
-		{
-			if (soundSheet.getIsSelected() && selected == null)
-				selected = soundSheet
-			else
-			{
-				soundSheet.setIsSelected(false)
-				soundSheet.updateItemInDatabaseAsync()
-			}
-		}
 	}
 
 }

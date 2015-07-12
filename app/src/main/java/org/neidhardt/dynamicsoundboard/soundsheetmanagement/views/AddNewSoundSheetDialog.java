@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
+import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 
 public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickListener
@@ -48,6 +48,9 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_sheet, null);
+
+		this.setMainView((DialogBaseLayout) view);
+
 		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
 		this.soundSheetName.setHint(this.suggestedName);
 
@@ -55,6 +58,7 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
 		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogTheme);
+
 		dialog.setContentView(view);
 		dialog.setTitle(R.string.dialog_add_new_sound_sheet_title);
 
@@ -79,8 +83,8 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 	{
 		String label = this.soundSheetName.getDisplayedText();
 		SoundSheet soundSheet = this.getSoundSheetsDataUtil().getNewSoundSheet(label);
-
-		this.getSoundSheetsDataStorage().addOrUpdateSoundSheet(soundSheet);
+		soundSheet.setIsSelected(true);
+		this.getSoundSheetsDataStorage().addSoundSheetToManager(soundSheet);
 	}
 
 }

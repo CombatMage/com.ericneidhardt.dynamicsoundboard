@@ -4642,6 +4642,7 @@ de.greenrobot.event.EventBus:
     87:87:public static de.greenrobot.event.EventBusBuilder builder()
     92:94:public static void clearCaches()
     143:144:public void register(java.lang.Object,int)
+    159:160:public void registerSticky(java.lang.Object,int)
     280:293:public void cancelEventDelivery(java.lang.Object)
     314:316:public java.lang.Object getStickyEvent(java.lang.Class)
     325:327:public java.lang.Object removeStickyEvent(java.lang.Class)
@@ -9111,6 +9112,7 @@ org.neidhardt.dynamicsoundboard.dao.SoundLayoutDao:
     17:17:public bridge synthetic void readEntity(android.database.Cursor,java.lang.Object,int)
 org.neidhardt.dynamicsoundboard.dao.SoundSheet:
     23:31:public SoundSheet(java.lang.Long)
+    55:56:public void setFragmentTag(java.lang.String)
 org.neidhardt.dynamicsoundboard.dao.SoundSheetDao:
     34:35:public SoundSheetDao(de.greenrobot.dao.internal.DaoConfig)
     92:96:public void readEntity(android.database.Cursor,org.neidhardt.dynamicsoundboard.dao.SoundSheet,int)
@@ -9269,18 +9271,34 @@ org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsBaseDialog:
     private static final java.lang.String KEY_PLAYER_ID
     private static final java.lang.String KEY_FRAGMENT_TAG
     public abstract android.app.Dialog onCreateDialog(android.os.Bundle)
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnOpenSoundSheetEventListener
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetOpenEventListener
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetOpenEventListener$$TImpl
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsFromFileLoadedEventListener
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsLoadedEventListener
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsFromFileLoadedEvent:
-    23:23:public java.util.List getNewSoundSheetList()
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsLoadedEvent:
-    21:21:public java.util.List getLoadedSoundSheets()
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener$$TImpl
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsInitEventLisenter
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsInitEventLisenter$$TImpl
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent:
+    11:11:public final org.neidhardt.dynamicsoundboard.dao.SoundSheet getSoundSheet()
+    public final org.neidhardt.dynamicsoundboard.dao.SoundSheet component1()
+    public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent copy(org.neidhardt.dynamicsoundboard.dao.SoundSheet)
+    public static synthetic org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent copy$default(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent,org.neidhardt.dynamicsoundboard.dao.SoundSheet,int)
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent:
+    14:14:public final org.neidhardt.dynamicsoundboard.dao.SoundSheet getSoundSheet()
+    public final org.neidhardt.dynamicsoundboard.dao.SoundSheet component1()
+    public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent copy(org.neidhardt.dynamicsoundboard.dao.SoundSheet)
+    public static synthetic org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent copy$default(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent,org.neidhardt.dynamicsoundboard.dao.SoundSheet,int)
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent:
+    public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent copy()
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent:
+    17:17:public final java.util.List getSoundSheets()
+    17:17:public final void setSoundSheets(java.util.List)
+    public final java.util.List component1()
+    public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent copy(java.util.List)
+    public static synthetic org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent copy$default(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent,java.util.List,int)
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil:
     public abstract boolean isInit()
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager:
-    73:73:public boolean isInit()
+    58:58:public boolean isInit()
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog:
     private static final java.lang.String KEY_SUGGESTED_NAME
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog:
