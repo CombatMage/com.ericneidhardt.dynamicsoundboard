@@ -159,7 +159,7 @@ public class SoundActivity
 		soundSheetLabel.setVisibility(View.GONE);
 		soundSheetLabel.setOnTextEditedListener(this);
 
-		SoundSheetFragment currentSoundSheetFragment = getCurrentSoundFragment(this.getFragmentManager());
+		SoundSheetFragment currentSoundSheetFragment = this.getCurrentSoundFragment();
 		if (currentSoundSheetFragment != null)
 		{
 			SoundSheet currentActiveSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.getFragmentTag());
@@ -251,6 +251,15 @@ public class SoundActivity
 		this.soundSheetsDataUtil.init();
 
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener);
+
+		SoundSheet selectedSoundSheet = this.soundSheetsDataAccess.getSelectedItem();
+		if (selectedSoundSheet != null)
+		{
+			SoundSheetFragment currentFragment = this.getCurrentSoundFragment();
+
+			if (currentFragment == null || !currentFragment.getFragmentTag().equals(selectedSoundSheet.getFragmentTag()))
+				this.openSoundFragment(selectedSoundSheet);
+		}
 	}
 
 	@Override
@@ -378,7 +387,7 @@ public class SoundActivity
 	{
 		Logger.d(TAG, "onEvent: " + event);
 
-		SoundSheetFragment soundSheetFragment = getCurrentSoundFragment(this.getFragmentManager());
+		SoundSheetFragment soundSheetFragment = this.getCurrentSoundFragment();
 		Set<EnhancedMediaPlayer> currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
 		if (currentlyPlayingSounds.size() > 0)
 		{
@@ -458,7 +467,7 @@ public class SoundActivity
 	@Override
 	public void onTextEdited(String text)
 	{
-		SoundSheetFragment currentSoundSheetFragment = SoundActivity.getCurrentSoundFragment(this.getFragmentManager());
+		SoundSheetFragment currentSoundSheetFragment = this.getCurrentSoundFragment();
 		if (currentSoundSheetFragment != null)
 		{
 			SoundSheet soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.getFragmentTag());
@@ -557,9 +566,9 @@ public class SoundActivity
 		((ActionbarEditText) this.findViewById(R.id.et_set_label)).setText(soundSheet.getLabel());
 	}
 
-	public static SoundSheetFragment getCurrentSoundFragment(FragmentManager manager)
+	private SoundSheetFragment getCurrentSoundFragment()
 	{
-		Fragment currentFragment = manager.findFragmentById(R.id.main_frame);
+		Fragment currentFragment = this.getFragmentManager().findFragmentById(R.id.main_frame);
 		if (currentFragment != null && currentFragment.isVisible() && currentFragment instanceof SoundSheetFragment)
 			return (SoundSheetFragment) currentFragment;
 		return null;
