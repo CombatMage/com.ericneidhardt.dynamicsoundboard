@@ -20,6 +20,7 @@ android {
 		versionName "2.14.0"
 	}
 
+
 	packagingOptions {
 		exclude 'META-INF/LICENSE'
 		exclude 'META-INF/NOTICE'
