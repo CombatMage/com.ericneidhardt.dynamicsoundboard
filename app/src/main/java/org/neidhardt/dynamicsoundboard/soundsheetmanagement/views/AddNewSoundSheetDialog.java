@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
-import android.view.ViewGroup;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
@@ -59,10 +58,9 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 		view.findViewById(R.id.b_ok).setOnClickListener(this);
 
 		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogTheme);
+
 		dialog.setContentView(view);
 		dialog.setTitle(R.string.dialog_add_new_sound_sheet_title);
-
-		view.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
 		return dialog;
 	}
