@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 public class SoundSheetViewHolder
 (
 		itemView: View,
-		private val onItemClickListener: OnItemClickListener
+		private val onItemClickListener: SoundSheetViewHolder.OnItemClickListener
 ) : RecyclerView.ViewHolder(itemView)
 {
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
@@ -25,7 +25,8 @@ public class SoundSheetViewHolder
 	private var data: SoundSheet? = null
 
 	init {
-		itemView.setOnClickListener({ view -> this.onItemClickListener.onItemClick(this.data) })
+		itemView.setOnClickListener({ view
+			-> this.onItemClickListener.onItemClick(this.data as SoundSheet) })
 	}
 
 	public fun bindData(data: SoundSheet, soundCount: Int)
@@ -54,4 +55,11 @@ public class SoundSheetViewHolder
 			this.soundCount.setText(Integer.toString(soundCount))
 		}
 	}
+
+	public interface OnItemClickListener
+	{
+		fun onItemClick(data: SoundSheet)
+	}
+
 }
+

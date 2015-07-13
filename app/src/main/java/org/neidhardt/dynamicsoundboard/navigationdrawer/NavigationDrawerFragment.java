@@ -49,7 +49,7 @@ public class NavigationDrawerFragment
 	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataUtil();
 	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataAccess();
 
-	private EventBus bus;
+	private EventBus eventBus = EventBus.getDefault();
 
 	private SlidingTabLayout tabBar;
 	private ViewPager tabContent;
@@ -75,8 +75,6 @@ public class NavigationDrawerFragment
 
 		this.listObserver = new ViewPagerContentObserver();
 		this.tabContentAdapter = new TabContentAdapter();
-
-		this.bus = EventBus.getDefault();
 	}
 
 	@Nullable
@@ -135,15 +133,15 @@ public class NavigationDrawerFragment
 	public void onStart()
 	{
 		super.onStart();
-		if (!this.bus.isRegistered(this))
-			this.bus.register(this);
+		if (!this.eventBus.isRegistered(this))
+			this.eventBus.register(this);
 	}
 
 	@Override
 	public void onStop()
 	{
 		super.onStop();
-		this.bus.unregister(this);
+		this.eventBus.unregister(this);
 	}
 
 	@Override

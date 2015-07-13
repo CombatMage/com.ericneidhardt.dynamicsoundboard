@@ -35,7 +35,7 @@ public class SoundSheetsPresenter
 		return true
 	}
 
-	override fun deleteSelectedItems() // TODO check this out
+	override fun deleteSelectedItems()
 	{
 		val soundSheetsToRemove = this.getSoundSheetsSelectedForDeletion()
 		for (soundSheet in soundSheetsToRemove)
@@ -131,15 +131,24 @@ public class SoundSheetsPresenter
 		this.adapter?.notifyItemInserted(this.values.size())
 	}
 
-	override fun onEventMainThread(event: SoundSheetsRemovedEvent)
-	{
-		// TODO do it
-
-		this.notifyDataSetChanged()
-	}
-
-	override fun onEventMainThread(event: SoundSheetChangedEvent) {
+	override fun onEventMainThread(event: SoundSheetChangedEvent){
 		this.adapter?.notifyItemChanged(event.soundSheet)
 	}
 
+	override fun onEventMainThread(event: SoundSheetsRemovedEvent)
+	{
+		val soundSheetsToRemove = event.soundSheets
+		for (soundSheet in soundSheetsToRemove)
+			this.removeSoundSheet(soundSheet)
+	}
+
+	private fun removeSoundSheet(soundSheet: SoundSheet)
+	{
+		val index = this.values.indexOf(soundSheet)
+		if (index != -1) // should no happen
+		{
+			this.values.remove(index)
+			this.adapter?.notifyItemRemoved(index)
+		}
+	}
 }

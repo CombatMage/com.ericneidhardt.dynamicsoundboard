@@ -16,20 +16,17 @@ import java.util.HashSet
 
 public class SoundSheetsAdapter
 (
-		private val presenter: SoundSheetsPresenter,
- 		private val eventBus: EventBus
+		private val presenter: SoundSheetsPresenter
 ) :
 		BaseAdapter<SoundSheet, SoundSheetViewHolder>(),
-		OnItemClickListener
+		SoundSheetViewHolder.OnItemClickListener
 {
 	override fun onAttachedToWindow()
 	{
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.register(this)
 		this.notifyDataSetChanged()
 	}
 
-	override fun onDetachedFromWindow() { this.eventBus.unregister(this) }
+	override fun onDetachedFromWindow() {}
 
 	override fun getValues(): List<SoundSheet>
 	{
@@ -41,11 +38,12 @@ public class SoundSheetsAdapter
 		return R.layout.view_sound_sheet_item
 	}
 
-	override fun getItemCount(): Int {
+	override fun getItemCount(): Int
+	{
 		return this.getValues().size()
 	}
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundSheetViewHolder
 	{
 		val view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false)
 		return SoundSheetViewHolder(view, this)
@@ -63,11 +61,6 @@ public class SoundSheetsAdapter
 
 	override fun onItemClick(data: SoundSheet)
 	{
-		this.presenter.onItemClick()
+		this.presenter.onItemClick(data)
 	}
-}
-
-public interface OnItemClickListener
-{
-	public fun onItemClick(data: SoundSheet)
 }
