@@ -52,6 +52,7 @@ public class SoundSheetsPresenter
 	{
 		if (this.isInSelectionMode()) {
 			data.setIsSelectedForDeletion(!data.getIsSelectedForDeletion())
+			this.adapter!!.notifyItemChanged(data)
 			super<NavigationDrawerListPresenter>.onItemSelectedForDeletion()
 		}
 		else
@@ -59,7 +60,6 @@ public class SoundSheetsPresenter
 			this.soundSheetsDataAccess.setSoundSheetSelected(data)
 			this.getEventBus().post(OpenSoundSheetEvent(data))
 		}
-		this.adapter!!.notifyItemChanged(this.values.indexOf(data))
 	}
 
 	override fun getNumberOfItemsSelectedForDeletion(): Int

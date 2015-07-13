@@ -252,14 +252,16 @@ public class SoundActivity
 
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener);
 
-		SoundSheet selectedSoundSheet = this.soundSheetsDataAccess.getSelectedItem();
-		if (selectedSoundSheet != null)
+		/*if (this.soundSheetsDataUtil.isInit())
 		{
-			SoundSheetFragment currentFragment = this.getCurrentSoundFragment();
+			SoundSheet selectedSoundSheet = this.soundSheetsDataAccess.getSelectedItem();
+			if (selectedSoundSheet != null) {
+				SoundSheetFragment currentFragment = this.getCurrentSoundFragment();
 
-			if (currentFragment == null || !currentFragment.getFragmentTag().equals(selectedSoundSheet.getFragmentTag()))
-				this.openSoundFragment(selectedSoundSheet);
-		}
+				if (currentFragment == null || !currentFragment.getFragmentTag().equals(selectedSoundSheet.getFragmentTag()))
+					this.openSoundFragment(selectedSoundSheet);
+			}
+		}*/
 	}
 
 	@Override
