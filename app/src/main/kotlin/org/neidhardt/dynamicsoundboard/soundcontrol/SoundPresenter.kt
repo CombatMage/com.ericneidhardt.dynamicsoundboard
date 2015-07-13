@@ -2,6 +2,10 @@ package org.neidhardt.dynamicsoundboard.soundcontrol
 
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import java.util.ArrayList
@@ -14,8 +18,12 @@ public class SoundPresenter
 		private val fragmentTag: String,
 		private val eventBus: EventBus,
 		private val soundsDataAccess: SoundsDataAccess
-) : OnSoundsChangedEventListener
+) :
+		OnSoundsChangedEventListener,
+		MediaPlayerEventListener
 {
+	private val TAG = javaClass.getName()
+
 	public var adapter: SoundAdapter? = null
 
 	public val values: MutableList<EnhancedMediaPlayer> = ArrayList<EnhancedMediaPlayer>()
@@ -33,6 +41,23 @@ public class SoundPresenter
 	fun onDetachedFromWindow()
 	{
 		this.eventBus.unregister(this)
+	}
+
+	override fun onEvent(event: MediaPlayerStateChangedEvent)
+	{
+		val playerId = event.getPlayerId()
+		val players = this.values
+		val count = players.size()
+		for (i in 0..count - 1)
+		{
+			if (players.get(i).getMediaPlayerData().getPlayerId() == playerId)
+				this.adapter?.notifyItemChanged(i)
+		}
+	}
+
+	override fun onEvent(event: MediaPlayerCompletedEvent)
+	{
+		Logger.d(TAG, "onEvent :" + event)
 	}
 
 	override fun onEventMainThread(event: SoundAddedEvent)

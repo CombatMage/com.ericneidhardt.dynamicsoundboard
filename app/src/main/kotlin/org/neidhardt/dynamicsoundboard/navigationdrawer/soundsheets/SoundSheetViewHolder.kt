@@ -10,28 +10,28 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 /**
  * File created by eric.neidhardt on 10.07.2015.
  */
-public class ViewHolder
+public class SoundSheetViewHolder
 (
 		itemView: View,
-		onItemClickListener: OnItemClickListener
-) : RecyclerView.ViewHolder(itemView), View.OnClickListener
+		private val onItemClickListener: OnItemClickListener
+) : RecyclerView.ViewHolder(itemView)
 {
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
 	private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
 	private val soundCount = itemView.findViewById(R.id.tv_sound_count) as TextView
 	private val soundCountLabel = itemView.findViewById(R.id.tv_sound_count_label)
 
+
+	private var data: SoundSheet? = null
+
 	init {
-		itemView.setOnClickListener(this)
+		itemView.setOnClickListener({ view -> this.onItemClickListener.onItemClick(this.data) })
 	}
 
-	override fun onClick(view: View) {
-		val position = this.getLayoutPosition()
-		if (onItemClickListener != null)
-			onItemClickListener.onItemClick(view, getValues().get(position), position)
-	}
+	public fun bindData(data: SoundSheet, soundCount: Int)
+	{
+		this.data = data
 
-	public fun bindData(data: SoundSheet, soundCount: Int) {
 		this.label.setText(data.getLabel())
 		this.setSoundCount(soundCount)
 
@@ -43,9 +43,8 @@ public class ViewHolder
 
 	}
 
-
-
-	private fun setSoundCount(soundCount: Int) {
+	private fun setSoundCount(soundCount: Int)
+	{
 		if (soundCount == 0) {
 			this.soundCount.setVisibility(View.INVISIBLE)
 			this.soundCountLabel.setVisibility(View.INVISIBLE)

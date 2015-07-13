@@ -29,11 +29,8 @@ public class SoundAdapter
 		private val eventBus: EventBus
 
 ) :
-		SoundProgressAdapter<SoundViewHolder>(),
-		MediaPlayerEventListener
+		SoundProgressAdapter<SoundViewHolder>()
 {
-    private var TAG = javaClass.getName();
-
 	override fun onAttachedToWindow()
 	{
 		if (!this.eventBus.isRegistered(this))
@@ -41,23 +38,6 @@ public class SoundAdapter
 	}
 
 	override fun onDetachedFromWindow() { this.eventBus.unregister(this) }
-
-	override fun onEvent(event: MediaPlayerStateChangedEvent)
-	{
-		val playerId = event.getPlayerId()
-		val players = this.getValues()
-		val count = players.size()
-		for (i in 0..count - 1)
-		{
-			if (players.get(i).getMediaPlayerData().getPlayerId() == playerId)
-				this.notifyItemChanged(i)
-		}
-	}
-
-	override fun onEvent(event: MediaPlayerCompletedEvent)
-	{
-		Logger.d(TAG, "onEvent :" + event)
-	}
 
 	override fun getValues(): List<EnhancedMediaPlayer>
 	{
