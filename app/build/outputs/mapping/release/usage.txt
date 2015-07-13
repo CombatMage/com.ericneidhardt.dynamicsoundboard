@@ -9290,7 +9290,6 @@ org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEve
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent:
     public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent copy()
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent:
-    17:17:public final java.util.List getSoundSheets()
     17:17:public final void setSoundSheets(java.util.List)
     public final java.util.List component1()
     public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent copy(java.util.List)
