@@ -345,6 +345,9 @@ public class SoundActivity
 	@Override
 	public void onEventMainThread(@NotNull SoundSheetsRemovedEvent event)
 	{
+		List<SoundSheet> removedSoundSheets = event.getSoundSheets();
+		this.removeSoundFragments(removedSoundSheets);
+
 		if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
 			this.setSoundSheetActionsEnable(false);
 	}

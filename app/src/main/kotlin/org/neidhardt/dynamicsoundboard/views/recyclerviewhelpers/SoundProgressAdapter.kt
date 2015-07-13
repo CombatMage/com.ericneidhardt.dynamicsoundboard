@@ -50,7 +50,8 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder>
 			if (this.recyclerView == null)
 				throw NullPointerException(TAG + ": update sound progress failed, RecyclerView is null")
 
-			val viewHolderToUpdate = this.recyclerView?.findViewHolderForAdapterPosition(index) as SoundProgressViewHolder?
+			val tmp = this.recyclerView?.findViewHolderForAdapterPosition(index)
+			val viewHolderToUpdate = tmp as SoundProgressViewHolder?
 			viewHolderToUpdate?.onProgressUpdate()
 		}
 		this.hasTimerStarted.set(false)

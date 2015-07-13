@@ -100,8 +100,11 @@ public class SoundSheetsManager :
 		{
 			this.soundSheets.remove(soundSheetToRemove)
 			if (soundSheetToRemove.getIsSelected())
-				this.setSoundSheetSelected(this.soundSheets.get(0))
+			{
+				if (this.soundSheets.size() > 0)
+					this.setSoundSheetSelected(this.soundSheets.get(0))
 
+			}
 			if (soundSheetToRemove.getId() != null)
 				dao.delete(soundSheetToRemove)
 			else
