@@ -6,6 +6,4 @@
 	<string translatable="false" name="preferences_enable_immerse_mode_key">preferences_enable_immerse_mode_key</string>
 	<string translatable="false" name="preferences_enable_one_swipe_delete_key">preferences_enable_one_swipe_delete_key</string>
 
-	<string translatable="false" name="preferences_set_base_dir_key">preferences_set_base_dir_key</string>
-
 </resources>
