@@ -47,4 +47,19 @@ public class SoundboardPreferences
 		return preferences.getBoolean(context.getString(R.string.preferences_enable_one_swipe_delete_key), false);
 	}
 
+	public static void storePathToSharedPreferences(String path)
+	{
+		Context context = DynamicSoundboardApplication.getSoundboardContext();
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString(context.getString(R.string.preferences_enable_one_swipe_delete_key), path);
+		editor.apply();
+	}
+
+	public static String getPathFromSharedPreferences(String path)
+	{
+		Context context = DynamicSoundboardApplication.getSoundboardContext();
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		return preferences.getString(context.getString(R.string.preferences_enable_one_swipe_delete_key), null);
+	}
 }
