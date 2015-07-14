@@ -103,7 +103,7 @@ public class SoundActivity
 		this.setContentView(R.layout.activity_base);
 
 		this.soundsDataUtil.init();
-		this.soundSheetsDataUtil.init();
+		this.soundSheetsDataUtil.initIfRequired();
 
 		this.initActionbar();
 		this.initNavigationDrawer();
@@ -240,6 +240,8 @@ public class SoundActivity
 	{
 		super.onResume();
 
+		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener);
+
 		this.startService(new Intent(this.getApplicationContext(), NotificationService.class));
 
 		this.isActivityVisible = true;
@@ -248,20 +250,14 @@ public class SoundActivity
 		this.setSoundSheetActionsEnable(false);
 
 		this.soundsDataUtil.init();
-		this.soundSheetsDataUtil.init();
+		if (this.soundSheetsDataUtil.initIfRequired())
+			this.onSoundSheetsInit();
+	}
 
-		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener);
-
-		/*if (this.soundSheetsDataUtil.isInit())
-		{
-			SoundSheet selectedSoundSheet = this.soundSheetsDataAccess.getSelectedItem();
-			if (selectedSoundSheet != null) {
-				SoundSheetFragment currentFragment = this.getCurrentSoundFragment();
-
-				if (currentFragment == null || !currentFragment.getFragmentTag().equals(selectedSoundSheet.getFragmentTag()))
-					this.openSoundFragment(selectedSoundSheet);
-			}
-		}*/
+	private void onSoundSheetsInit()
+	{
+		this.handleIntent(this.getIntent()); // sound sheets have been loaded, check if there is pending intent to handle
+		this.openSoundFragment(this.soundSheetsDataAccess.getSelectedItem());
 	}
 
 	@Override
@@ -320,7 +316,7 @@ public class SoundActivity
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets());
 		this.setSoundSheetActionsEnable(false);
-		this.soundSheetsDataUtil.init();
+		this.soundSheetsDataUtil.initIfRequired();
 
 		this.soundsDataUtil.release();
 		this.soundsDataUtil.init();
@@ -340,13 +336,15 @@ public class SoundActivity
 	@Override
 	public void onEvent(@NonNull SoundSheetsInitEvent event)
 	{
-		this.handleIntent(this.getIntent()); // sound sheets have been loaded, check if there is pending intent to handle
-		this.openSoundFragment(this.soundSheetsDataAccess.getSelectedItem());
+		this.onSoundSheetsInit();
 	}
 
 	@Override
 	public void onEventMainThread(@NotNull SoundSheetsRemovedEvent event)
 	{
+		List<SoundSheet> removedSoundSheets = event.getSoundSheets();
+		this.removeSoundFragments(removedSoundSheets);
+
 		if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
 			this.setSoundSheetActionsEnable(false);
 	}

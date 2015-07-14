@@ -48,7 +48,7 @@ public class SoundSheetFragment :
 
 	companion object
 	{
-		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.SoundSheetFragment.fragmentTag"
+		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
 		private val LOG_TAG = javaClass<SoundSheetFragment>().getName()
 
 		public fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
@@ -240,7 +240,8 @@ public class SoundSheetFragment :
 
 	override fun onEventMainThread(event: SoundsRemovedEvent)
 	{
-		if (this.soundAdapter!!.getValues().size() == 0) {
+		if (this.soundAdapter!!.getValues().size() == 0)
+		{
 			val fab = this.getActivity().findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
 			fab?.show()
 		}

@@ -31,13 +31,9 @@ public class SoundAdapter
 ) :
 		SoundProgressAdapter<SoundViewHolder>()
 {
-	override fun onAttachedToWindow()
-	{
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.register(this)
-	}
+	override fun onAttachedToWindow() {}
 
-	override fun onDetachedFromWindow() { this.eventBus.unregister(this) }
+	override fun onDetachedFromWindow() {}
 
 	override fun getValues(): List<EnhancedMediaPlayer>
 	{

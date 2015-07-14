@@ -36,10 +36,10 @@ public class SoundSheetsManager :
 
 	init
 	{
-		this.init()
+		this.initIfRequired()
 	}
 
-	override fun init()
+	override fun initIfRequired(): Boolean
 	{
 		if (!this.isInitDone)
 		{
@@ -50,7 +50,11 @@ public class SoundSheetsManager :
 
 			val task = LoadSoundSheetsTask(this.getDbSoundSheets(), this)
 			task.execute()
+
+			return true
 		}
+		else
+			return false
 	}
 
 	override fun isInit(): Boolean
@@ -100,8 +104,11 @@ public class SoundSheetsManager :
 		{
 			this.soundSheets.remove(soundSheetToRemove)
 			if (soundSheetToRemove.getIsSelected())
-				this.setSoundSheetSelected(this.soundSheets.get(0))
+			{
+				if (this.soundSheets.size() > 0)
+					this.setSoundSheetSelected(this.soundSheets.get(0))
 
+			}
 			if (soundSheetToRemove.getId() != null)
 				dao.delete(soundSheetToRemove)
 			else

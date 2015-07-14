@@ -17,6 +17,7 @@
 #}
 
 -keepattributes LineNumberTable,SourceFile,*Annotation*,Signature
+-dontobfuscate
 
 #kotlin
 -dontwarn kotlin.** 
