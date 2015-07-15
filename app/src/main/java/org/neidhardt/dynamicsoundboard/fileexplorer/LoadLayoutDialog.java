@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * File created by eric.neidhardt on 14.11.2014.
  */
-public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClickListener
+public class LoadLayoutDialog extends FileExplorerDialog implements LayoutStorageDialog, View.OnClickListener
 {
 	private static final String TAG = LoadLayoutDialog.class.getName();
 
@@ -56,7 +56,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 		this.directories.setItemAnimator(new DefaultItemAnimator());
 		this.directories.setAdapter(super.getAdapter());
 
-		String previousPath = this.getPathFromSharedPreferences(TAG);
+		String previousPath = this.getPathFromSharedPreferences(KEY_PATH_STORAGE);
 		if (previousPath != null)
 			super.getAdapter().setParent(new File(previousPath));
 
@@ -97,7 +97,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements View.OnClick
 			case R.id.b_ok:
 				File currentDirectory = super.getAdapter().getParentFile();
 				if (currentDirectory != null)
-					this.storePathToSharedPreferences(TAG, currentDirectory.getPath());
+					this.storePathToSharedPreferences(KEY_PATH_STORAGE, currentDirectory.getPath());
 
 				if (super.getAdapter().getSelectedFile() != null)
 					this.loadFromFileAndDismiss(super.getAdapter().getSelectedFile());
