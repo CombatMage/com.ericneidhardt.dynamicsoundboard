@@ -10,12 +10,13 @@ public interface SoundSheetsDataUtil
 	/**
 	 * Starts async task to retrieve sound sheets from database. If {@code SoundSheetsDataUtil} was initialized before,
 	 * the corresponding events are fired, but no database transaction is performed.
+	 * @return true if init was required and async handling has started, else false.
 	 */
-	void init();
+	boolean initIfRequired();
 
 	/**
-	 * Check if {@code SoundSheetsDataUtil.init()} was called.
-	 * @return true if {@code SoundSheetsDataUtil} is init, else false.
+	 * Check if {@code SoundSheetsDataUtil.initIfRequired()} was called.
+	 * @return true if {@code SoundSheetsDataUtil} is initIfRequired, else false.
 	 */
 	boolean isInit();
 

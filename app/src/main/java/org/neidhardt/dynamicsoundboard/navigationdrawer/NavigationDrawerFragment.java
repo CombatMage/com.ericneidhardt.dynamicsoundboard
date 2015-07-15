@@ -24,7 +24,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog;
@@ -49,7 +49,7 @@ public class NavigationDrawerFragment
 	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataUtil();
 	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataAccess();
 
-	private EventBus bus;
+	private EventBus eventBus = EventBus.getDefault();
 
 	private SlidingTabLayout tabBar;
 	private ViewPager tabContent;
@@ -75,8 +75,6 @@ public class NavigationDrawerFragment
 
 		this.listObserver = new ViewPagerContentObserver();
 		this.tabContentAdapter = new TabContentAdapter();
-
-		this.bus = EventBus.getDefault();
 	}
 
 	@Nullable
@@ -135,15 +133,15 @@ public class NavigationDrawerFragment
 	public void onStart()
 	{
 		super.onStart();
-		if (!this.bus.isRegistered(this))
-			this.bus.register(this);
+		if (!this.eventBus.isRegistered(this))
+			this.eventBus.register(this);
 	}
 
 	@Override
 	public void onStop()
 	{
 		super.onStop();
-		this.bus.unregister(this);
+		this.eventBus.unregister(this);
 	}
 
 	@Override

@@ -14,8 +14,8 @@ public interface SoundsDataUtil
 	void init();
 
 	/**
-	 * Check if {@code SoundsDataUtil.init()} was called.
-	 * @return true if {@code SoundsDataUtil} is init, else false.
+	 * Check if {@code SoundsDataUtil.initIfRequired()} was called.
+	 * @return true if {@code SoundsDataUtil} is initIfRequired, else false.
 	 */
 	boolean isInit();
 

@@ -9120,8 +9120,9 @@ org.neidhardt.dynamicsoundboard.dao.SoundSheetDao:
 org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory:
     private static final java.lang.String KEY_CALLING_FRAGMENT_TAG
 org.neidhardt.dynamicsoundboard.fileexplorer.FileExplorerDialog$DirectoryAdapter:
-    53:53:public final void setParentFile(java.io.File)
-    57:57:public final void setFileList(java.util.List)
+    71:71:public final void setParentFile(java.io.File)
+    75:75:public final void setFileList(java.util.List)
+org.neidhardt.dynamicsoundboard.fileexplorer.LayoutStorageDialog
 org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer:
     private static final int FADE_OUT_DURATION
     private static final int INT_VOLUME_MAX
@@ -9147,7 +9148,7 @@ org.neidhardt.dynamicsoundboard.misc.Util:
 org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment:
     private static final int INDEX_SOUND_SHEETS
     private static final int INDEX_PLAYLIST
-    293:293:public org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist getPlaylist()
+    291:291:public org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist getPlaylist()
 org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener
 org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter$OnOpenSoundLayoutsEvent
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager:
@@ -9163,6 +9164,12 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter$OnOpenSoundLayoutSettingsEvent
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter$OnSoundLayoutRemovedEventListener
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter$OnSoundLayoutSelectedEventListener
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder:
+    13:13:public static final synthetic void access$setData$0(org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder,org.neidhardt.dynamicsoundboard.dao.SoundSheet)
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder$OnItemClickListener$$TImpl
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter:
+    29:29:public final org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter getAdapter()
+    20:20:public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess getSoundSheetsDataAccess()
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter:
     92:93:public void setIsInSelectionMode(boolean)
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout:
@@ -9203,7 +9210,7 @@ org.neidhardt.dynamicsoundboard.soundcontrol.SoundDragSortRecycler:
     private static final float AUTO_SCROLL_SPEED
     private static final float AUTO_SCROLL_WINDOW
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundPresenter:
-    19:19:public final org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter getAdapter()
+    27:27:public final org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter getAdapter()
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment:
     64:64:public final void setFragmentTag(java.lang.String)
     74:74:public final org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage getSoundsDataStorage()
@@ -9278,19 +9285,16 @@ org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChanged
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsInitEventLisenter
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsInitEventLisenter$$TImpl
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent:
-    11:11:public final org.neidhardt.dynamicsoundboard.dao.SoundSheet getSoundSheet()
     public final org.neidhardt.dynamicsoundboard.dao.SoundSheet component1()
     public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent copy(org.neidhardt.dynamicsoundboard.dao.SoundSheet)
     public static synthetic org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent copy$default(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent,org.neidhardt.dynamicsoundboard.dao.SoundSheet,int)
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent:
-    14:14:public final org.neidhardt.dynamicsoundboard.dao.SoundSheet getSoundSheet()
     public final org.neidhardt.dynamicsoundboard.dao.SoundSheet component1()
     public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent copy(org.neidhardt.dynamicsoundboard.dao.SoundSheet)
     public static synthetic org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent copy$default(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent,org.neidhardt.dynamicsoundboard.dao.SoundSheet,int)
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent:
     public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent copy()
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent:
-    17:17:public final java.util.List getSoundSheets()
     17:17:public final void setSoundSheets(java.util.List)
     public final java.util.List component1()
     public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent copy(java.util.List)
@@ -9298,7 +9302,7 @@ org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEv
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil:
     public abstract boolean isInit()
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager:
-    58:58:public boolean isInit()
+    62:62:public boolean isInit()
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog:
     private static final java.lang.String KEY_SUGGESTED_NAME
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog:

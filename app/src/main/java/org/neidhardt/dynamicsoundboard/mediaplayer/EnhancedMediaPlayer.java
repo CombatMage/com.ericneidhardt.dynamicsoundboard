@@ -114,7 +114,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private void init(Context context) throws IOException
 	{
 		if (this.rawData.getUri() == null)
-			throw new NullPointerException("cannot init media player, sound uri is null");
+			throw new NullPointerException("cannot initIfRequired media player, sound uri is null");
 
 		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		Uri soundUri = Uri.parse(this.rawData.getUri());

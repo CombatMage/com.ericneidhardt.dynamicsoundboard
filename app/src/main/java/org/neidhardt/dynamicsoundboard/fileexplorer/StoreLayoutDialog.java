@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * File created by eric.neidhardt on 12.11.2014.
  */
-public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClickListener
+public class StoreLayoutDialog extends FileExplorerDialog implements LayoutStorageDialog,View.OnClickListener
 {
 	private static final String TAG = StoreLayoutDialog.class.getName();
 
@@ -55,6 +55,10 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 		this.directories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 		this.directories.setItemAnimator(new DefaultItemAnimator());
 		this.directories.setAdapter(super.getAdapter());
+
+		String previousPath = this.getPathFromSharedPreferences(KEY_PATH_STORAGE);
+		if (previousPath != null)
+			super.getAdapter().setParent(new File(previousPath));
 
 		AppCompatDialog dialog = new AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle);
 		dialog.setContentView(view);
@@ -94,6 +98,10 @@ public class StoreLayoutDialog extends FileExplorerDialog implements View.OnClic
 				this.dismiss();
 				break;
 			case R.id.b_ok:
+				File currentDirectory = super.getAdapter().getParentFile();
+				if (currentDirectory != null)
+					this.storePathToSharedPreferences(KEY_PATH_STORAGE, currentDirectory.getPath());
+
 				if (super.getAdapter().getSelectedFile() != null)
 					this.saveDataAndDismiss();
 				else

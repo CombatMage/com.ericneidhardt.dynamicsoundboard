@@ -21758,10 +21758,13 @@ org.neidhardt.dynamicsoundboard.dao.SoundSheet -> org.neidhardt.dynamicsoundboar
     boolean isSelectedForDeletion -> e
     41:41:java.lang.Long getId() -> a
     50:50:java.lang.String getFragmentTag() -> b
-    69:69:boolean getIsSelected() -> c
+    60:60:java.lang.String getLabel() -> c
+    69:69:boolean getIsSelected() -> d
     73:74:void setIsSelected(boolean) -> a
-    80:81:void insertItemInDatabaseAsync() -> d
-    85:86:void updateItemInDatabaseAsync() -> e
+    80:81:void insertItemInDatabaseAsync() -> e
+    85:86:void updateItemInDatabaseAsync() -> f
+    89:89:boolean getIsSelectedForDeletion() -> g
+    93:94:void setIsSelectedForDeletion(boolean) -> b
     98:103:boolean equals(java.lang.Object) -> equals
     109:109:int hashCode() -> hashCode
     114:114:java.lang.String toString() -> toString
@@ -21848,11 +21851,11 @@ org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory -> org.nei
     android.support.v7.widget.RecyclerView directories -> m
     41:48:void showInstance(android.app.FragmentManager,java.lang.String) -> a
     53:58:void onCreate(android.os.Bundle) -> onCreate
-    64:80:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
-    86:90:void onFileSelected() -> a
-    95:95:boolean canSelectDirectory() -> b
-    101:101:boolean canSelectFile() -> c
-    107:114:void onClick(android.view.View) -> onClick
+    64:84:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
+    90:94:void onFileSelected() -> a
+    99:99:boolean canSelectDirectory() -> b
+    105:105:boolean canSelectFile() -> c
+    111:122:void onClick(android.view.View) -> onClick
 org.neidhardt.dynamicsoundboard.fileexplorer.FileExplorerDialog -> org.neidhardt.dynamicsoundboard.a.b:
     kotlin.reflect.KClass $kotlinClass -> a
     java.lang.String KEY_PARENT_FILE -> c
@@ -21860,8 +21863,10 @@ org.neidhardt.dynamicsoundboard.fileexplorer.FileExplorerDialog -> org.neidhardt
     boolean canSelectDirectory() -> b
     boolean canSelectFile() -> c
     void onFileSelected() -> a
-    36:43:void onActivityCreated(android.os.Bundle) -> onActivityCreated
-    47:49:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    38:43:void storePathToSharedPreferences(java.lang.String,java.lang.String) -> a
+    47:49:java.lang.String getPathFromSharedPreferences(java.lang.String) -> a
+    54:61:void onActivityCreated(android.os.Bundle) -> onActivityCreated
+    65:67:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
 org.neidhardt.dynamicsoundboard.fileexplorer.FileExplorerDialog$DirectoryAdapter -> org.neidhardt.dynamicsoundboard.a.c:
     kotlin.reflect.KClass $kotlinClass -> c
     java.io.File parentFile -> d
@@ -21869,46 +21874,46 @@ org.neidhardt.dynamicsoundboard.fileexplorer.FileExplorerDialog$DirectoryAdapter
     java.io.File selectedFile -> f
     java.util.List fileList -> g
     org.neidhardt.dynamicsoundboard.fileexplorer.FileExplorerDialog this$0 -> h
-    67:71:void setParent(java.io.File) -> a
-    51:51:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
-    51:51:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
-    94:94:int getItemCount() -> b
+    85:89:void setParent(java.io.File) -> a
+    69:69:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
+    69:69:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
+    112:112:int getItemCount() -> b
 org.neidhardt.dynamicsoundboard.fileexplorer.FileExplorerDialog$DirectoryEntry -> org.neidhardt.dynamicsoundboard.a.d:
     kotlin.reflect.KClass $kotlinClass -> l
     android.widget.ImageView fileType -> m
     android.widget.ImageView selectionIndicator -> n
     android.widget.TextView fileName -> o
     org.neidhardt.dynamicsoundboard.fileexplorer.FileExplorerDialog this$0 -> p
-    135:138:void setSelection(boolean) -> b
-    165:170:void onClick(android.view.View) -> onClick
-    174:186:boolean onLongClick(android.view.View) -> onLongClick
-    214:214:void onAnimationStart(android.animation.Animator) -> onAnimationStart
-    216:216:void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
-    218:218:void onAnimationCancel(android.animation.Animator) -> onAnimationCancel
-    220:220:void onAnimationRepeat(android.animation.Animator) -> onAnimationRepeat
+    153:156:void setSelection(boolean) -> b
+    183:188:void onClick(android.view.View) -> onClick
+    192:204:boolean onLongClick(android.view.View) -> onLongClick
+    232:232:void onAnimationStart(android.animation.Animator) -> onAnimationStart
+    234:234:void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
+    236:236:void onAnimationCancel(android.animation.Animator) -> onAnimationCancel
+    238:238:void onAnimationRepeat(android.animation.Animator) -> onAnimationRepeat
 org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog -> org.neidhardt.dynamicsoundboard.a.e:
     java.lang.String TAG -> c
     android.view.View confirm -> k
     android.support.v7.widget.RecyclerView directories -> l
     39:41:void showInstance(android.app.FragmentManager) -> a
-    47:62:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
-    68:71:void onFileSelected() -> a
-    76:76:boolean canSelectDirectory() -> b
-    82:82:boolean canSelectFile() -> c
-    88:100:void onClick(android.view.View) -> onClick
-    143:147:void addLoadedPlayList(java.util.List) -> a
-    151:157:void addLoadedSounds(java.util.Map) -> a
+    47:66:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
+    72:75:void onFileSelected() -> a
+    80:80:boolean canSelectDirectory() -> b
+    86:86:boolean canSelectFile() -> c
+    92:108:void onClick(android.view.View) -> onClick
+    151:155:void addLoadedPlayList(java.util.List) -> a
+    159:165:void addLoadedSounds(java.util.Map) -> a
 org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog -> org.neidhardt.dynamicsoundboard.a.f:
     java.lang.String TAG -> c
     org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText inputFileName -> k
     android.view.View confirm -> l
     android.support.v7.widget.RecyclerView directories -> m
     36:38:void showInstance(android.app.FragmentManager) -> a
-    44:62:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
-    68:71:void onFileSelected() -> a
-    76:76:boolean canSelectDirectory() -> b
-    82:82:boolean canSelectFile() -> c
-    88:103:void onClick(android.view.View) -> onClick
+    44:66:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
+    72:75:void onFileSelected() -> a
+    80:80:boolean canSelectDirectory() -> b
+    86:86:boolean canSelectFile() -> c
+    92:111:void onClick(android.view.View) -> onClick
 org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer -> org.neidhardt.dynamicsoundboard.b.a:
     java.lang.String TAG -> b
     int currentState$4661e411 -> c
@@ -22015,49 +22020,49 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment -> org
     java.lang.String TAG -> a
     org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil soundSheetsDataUtil -> b
     org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess soundSheetsDataAccess -> c
-    de.greenrobot.event.EventBus bus -> d
+    de.greenrobot.event.EventBus eventBus -> d
     org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout tabBar -> e
     android.support.v4.view.ViewPager tabContent -> f
     org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment$TabContentAdapter tabContentAdapter -> g
     android.view.ViewGroup listContainer -> h
     org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts soundLayoutList -> i
     org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist playlist -> j
-    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets soundSheets -> k
+    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets soundSheets -> k
     android.view.View contextualActionContainer -> l
     android.view.View deleteSelected -> m
     org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment$ViewPagerContentObserver listObserver -> n
     int minHeightOfListContent -> o
-    73:80:void onCreate(android.os.Bundle) -> onCreate
-    86:110:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    116:123:void onResume() -> onResume
-    131:132:void calculateMinHeightOfListContent() -> a
-    137:140:void onStart() -> onStart
-    145:147:void onStop() -> onStop
-    152:156:void onPause() -> onPause
-    161:191:void onClick(android.view.View) -> onClick
-    207:211:void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent) -> onEvent
-    216:225:void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent) -> onEvent
-    246:246:void onPageScrolled(int,float,int) -> a
-    251:257:void onPageSelected(int) -> a
-    260:260:void onPageScrollStateChanged(int) -> b
-    268:289:void adjustViewPagerToContent() -> b
-    35:35:org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets access$300(org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment) -> a
+    73:78:void onCreate(android.os.Bundle) -> onCreate
+    84:108:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    114:121:void onResume() -> onResume
+    129:130:void calculateMinHeightOfListContent() -> a
+    135:138:void onStart() -> onStart
+    143:145:void onStop() -> onStop
+    150:154:void onPause() -> onPause
+    159:189:void onClick(android.view.View) -> onClick
+    205:209:void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent) -> onEvent
+    214:223:void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent) -> onEvent
+    244:244:void onPageScrolled(int,float,int) -> a
+    249:255:void onPageSelected(int) -> a
+    258:258:void onPageScrollStateChanged(int) -> b
+    266:287:void adjustViewPagerToContent() -> b
+    35:35:org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets access$300(org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment) -> a
     35:35:org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist access$400(org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment) -> b
 org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment$1 -> org.neidhardt.dynamicsoundboard.navigationdrawer.a:
     int[] $SwitchMap$org$neidhardt$dynamicsoundboard$navigationdrawer$events$ActionModeChangeRequestedEvent$REQUEST -> a
 org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment$NavigationDrawerTabColorizer -> org.neidhardt.dynamicsoundboard.navigationdrawer.b:
     org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment this$0 -> a
-    349:349:int getIndicatorColor(int) -> a
-    355:355:int getDividerColor(int) -> b
+    347:347:int getIndicatorColor(int) -> a
+    353:353:int getDividerColor(int) -> b
 org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment$TabContentAdapter -> org.neidhardt.dynamicsoundboard.navigationdrawer.c:
     org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment this$0 -> b
-    301:304:java.lang.CharSequence getPageTitle(int) -> a
-    310:310:int getCount() -> a
-    316:316:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    322:329:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
+    299:302:java.lang.CharSequence getPageTitle(int) -> a
+    308:308:int getCount() -> a
+    314:314:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
+    320:327:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
 org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment$ViewPagerContentObserver -> org.neidhardt.dynamicsoundboard.navigationdrawer.d:
     org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment this$0 -> a
-    339:341:void onChanged() -> a
+    337:339:void onChanged() -> a
 org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent -> org.neidhardt.dynamicsoundboard.navigationdrawer.a.a:
     android.support.v7.view.ActionMode$Callback actionModeCallback -> a
     int requestedAction$6836eca7 -> b
@@ -22104,7 +22109,7 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist -> org.
     118:118:org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter getPresenter() -> getPresenter
     123:123:org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistAdapter getAdapter() -> getAdapter
 org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistAdapter -> org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.a:
-    org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistPresenter presenter -> e
+    org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistPresenter presenter -> h
     java.lang.Integer currentItemIndex -> c
     org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistAdapter$OnItemClickListener onItemClickListener -> d
     71:71:java.util.List getValues() -> d
@@ -22137,7 +22142,7 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.PlaylistPresente
     50:56:void deleteSelectedItems() -> c
     61:61:int getNumberOfItemsSelectedForDeletion() -> d
     67:73:void deselectAllItemsSelectedForDeletion() -> e
-    77:84:java.util.List getPlayersSelectedForDeletion() -> j
+    77:84:java.util.List getPlayersSelectedForDeletion() -> l
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.a.a:
     org.neidhardt.dynamicsoundboard.dao.SoundLayout soundLayout -> a
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.a.b:
@@ -22229,70 +22234,77 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts
     54:67:void onItemClick(android.view.View,org.neidhardt.dynamicsoundboard.dao.SoundLayout,int) -> a
     72:72:int getNumberOfItemsSelectedForDeletion() -> d
     78:84:void deselectAllItemsSelectedForDeletion() -> e
-    88:95:java.util.List getSoundLayoutsSelectedForDeletion() -> j
+    88:95:java.util.List getSoundLayoutsSelectedForDeletion() -> l
     101:102:void onItemSettingsClicked(org.neidhardt.dynamicsoundboard.dao.SoundLayout) -> a
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets:
-    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsPresenter presenter -> a
-    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter adapter -> b
-    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess soundsDataAccess -> c
-    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage soundsDataStorage -> d
-    org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess soundSheetsDataAccess -> e
-    org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage soundSheetsDataStorage -> f
-    60:78:void init(android.content.Context) -> a
-    83:86:void onAttachedToWindow() -> onAttachedToWindow
-    91:94:void onDetachedFromWindow() -> onDetachedFromWindow
-    99:101:void onFinishInflate() -> onFinishInflate
-    105:105:org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter getAdapter() -> getAdapter
-    111:111:int getActionModeTitle() -> getActionModeTitle
-    117:117:int getItemCount() -> getItemCount
-    123:124:void onItemClick(android.view.View,org.neidhardt.dynamicsoundboard.dao.SoundSheet,int) -> a
-    129:129:org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter getPresenter() -> getPresenter
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.a:
-    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsPresenter presenter -> c
-    de.greenrobot.event.EventBus eventBus -> d
-    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter$OnItemClickListener onItemClickListener -> e
-    64:64:java.util.List getValues() -> d
-    70:70:int getItemViewType$134621() -> a
-    76:76:int getItemCount() -> b
-    100:104:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent) -> onEventMainThread
-    109:123:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent) -> onEventMainThread
-    126:126:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent) -> onEventMainThread
-    129:129:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent) -> onEventMainThread
-    134:135:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent) -> onEventMainThread
-    140:141:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent) -> onEventMainThread
-    146:147:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent) -> onEventMainThread
-    26:26:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
-    26:26:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
-    26:26:org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter$OnItemClickListener access$000(org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter) -> a
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter$OnItemClickListener -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.b:
-    void onItemClick(android.view.View,org.neidhardt.dynamicsoundboard.dao.SoundSheet,int) -> a
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter$ViewHolder -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.c:
-    android.view.View itemView -> l
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.a:
+    kotlin.reflect.KClass $kotlinClass -> l
     android.widget.TextView label -> m
     android.widget.ImageView selectionIndicator -> n
     android.widget.TextView soundCount -> o
     android.view.View soundCountLabel -> p
-    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter this$0 -> q
-    190:193:void onClick(android.view.View) -> onClick
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsPresenter -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.d:
-    org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess soundSheetsDataAccess -> a
-    org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage soundSheetsDataStorage -> g
-    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess soundsDataAccess -> b
-    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage soundsDataStorage -> h
-    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheetsAdapter adapter -> c
-    46:46:boolean isEventBusSubscriber() -> a
-    52:61:void deleteSelectedItems() -> c
-    66:77:void onItemClick(android.view.View,org.neidhardt.dynamicsoundboard.dao.SoundSheet,int) -> a
-    82:82:int getNumberOfItemsSelectedForDeletion() -> d
-    88:94:void deselectAllItemsSelectedForDeletion() -> e
-    98:105:java.util.List getSoundSheetsSelectedForDeletion() -> j
+    org.neidhardt.dynamicsoundboard.dao.SoundSheet data -> q
+    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder$OnItemClickListener onItemClickListener -> r
+    13:13:org.neidhardt.dynamicsoundboard.dao.SoundSheet access$getData$0(org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder) -> a
+    13:13:org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder$OnItemClickListener access$getOnItemClickListener$1(org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder) -> b
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder$1 -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.b:
+    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder this$0 -> a
+    29:29:void onClick(android.view.View) -> onClick
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder$OnItemClickListener -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.c:
+    kotlin.reflect.KClass $kotlinClass -> a
+    void onItemClick(org.neidhardt.dynamicsoundboard.dao.SoundSheet) -> a
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets:
+    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter presenter -> a
+    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter adapter -> b
+    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess soundsDataAccess -> c
+    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage soundsDataStorage -> d
+    org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess soundSheetsDataAccess -> e
+    org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage soundSheetsDataStorage -> f
+    56:71:void init(android.content.Context) -> a
+    76:79:void onAttachedToWindow() -> onAttachedToWindow
+    84:87:void onDetachedFromWindow() -> onDetachedFromWindow
+    92:94:void onFinishInflate() -> onFinishInflate
+    98:98:org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter getAdapter() -> getAdapter
+    104:104:int getActionModeTitle() -> getActionModeTitle
+    110:110:int getItemCount() -> getItemCount
+    116:116:org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter getPresenter() -> getPresenter
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.d:
+    kotlin.reflect.KClass $kotlinClass -> c
+    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter presenter -> d
+    29:29:void onDetachedFromWindow() -> e
+    33:33:java.util.List getValues() -> d
+    38:38:int getItemViewType$134621() -> a
+    43:43:int getItemCount() -> b
+    17:17:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
+    17:17:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
+    64:65:void onItemClick(org.neidhardt.dynamicsoundboard.dao.SoundSheet) -> a
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter -> org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.e:
+    kotlin.reflect.KClass $kotlinClass -> a
+    org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter adapter -> b
+    java.util.List values -> c
+    org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess soundSheetsDataAccess -> h
+    org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage soundSheetsDataStorage -> i
+    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess soundsDataAccess -> d
+    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage soundsDataStorage -> j
+    35:35:boolean isEventBusSubscriber() -> a
+    40:49:void deleteSelectedItems() -> c
+    53:62:void onItemClick(org.neidhardt.dynamicsoundboard.dao.SoundSheet) -> a
+    67:67:int getNumberOfItemsSelectedForDeletion() -> d
+    72:78:void deselectAllItemsSelectedForDeletion() -> e
+    82:88:java.util.List getSoundSheetsSelectedForDeletion() -> l
+    98:102:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent) -> onEventMainThread
+    106:121:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent) -> onEventMainThread
+    124:124:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent) -> onEventMainThread
+    126:126:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent) -> onEventMainThread
+    130:132:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent) -> onEventMainThread
+    135:136:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent) -> onEventMainThread
+    140:143:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent) -> onEventMainThread
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList -> org.neidhardt.dynamicsoundboard.navigationdrawer.views.a:
     int getItemCount() -> getItemCount
     int getActionModeTitle() -> getActionModeTitle
     org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter getPresenter() -> getPresenter
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter -> org.neidhardt.dynamicsoundboard.navigationdrawer.views.b:
     java.lang.String TAG -> a
-    boolean isInSelectionMode -> d
+    boolean isInSelectionMode -> e
     23:24:void onItemSelectedForDeletion() -> f
     28:29:void prepareItemDeletion() -> g
     33:34:void onSelectedItemsDeleted() -> h
@@ -22303,6 +22315,7 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPrese
     void deleteSelectedItems() -> c
     int getNumberOfItemsSelectedForDeletion() -> d
     void deselectAllItemsSelectedForDeletion() -> e
+    87:87:boolean isInSelectionMode() -> i
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout -> org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout:
     int mTitleOffset -> a
     int mTabViewLayoutId -> b
@@ -22423,17 +22436,18 @@ org.neidhardt.dynamicsoundboard.preferences.VersionPreference -> org.neidhardt.d
     java.lang.String TAG -> a
     41:53:void init(android.content.Context) -> a
 org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter -> org.neidhardt.dynamicsoundboard.c.a:
-    android.view.View view -> e
-    de.greenrobot.event.EventBus eventBus -> f
+    android.view.View view -> f
+    de.greenrobot.event.EventBus eventBus -> g
+    21:21:de.greenrobot.event.EventBus getEventBus() -> j
     38:39:void setView(android.view.View) -> a
     44:46:void onAttachedToWindow() -> b
-    51:53:void onDetachedFromWindow() -> i
+    51:53:void onDetachedFromWindow() -> k
     boolean isEventBusSubscriber() -> a
     9:9:void setView(java.lang.Object) -> a
 org.neidhardt.dynamicsoundboard.presenter.ViewPresenter -> org.neidhardt.dynamicsoundboard.c.b:
     void setView(java.lang.Object) -> a
     void onAttachedToWindow() -> b
-    void onDetachedFromWindow() -> i
+    void onDetachedFromWindow() -> k
 org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment -> org.neidhardt.dynamicsoundboard.soundactivity.a:
     10:10:org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity getBaseActivity() -> c
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity -> org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity:
@@ -22457,16 +22471,17 @@ org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity -> org.neidhardt.dyn
     198:201:void onPostCreate(android.os.Bundle) -> onPostCreate
     206:215:void onWindowFocusChanged(boolean) -> onWindowFocusChanged
     234:236:void onStart() -> onStart
-    241:263:void onResume() -> onResume
-    268:273:void onPause() -> onPause
-    278:280:void onUserLeaveHint() -> onUserLeaveHint
-    285:303:void onStop() -> onStop
-    307:314:void setSoundSheetActionsEnable(boolean) -> b
-    319:325:void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent) -> onEvent
-    329:330:void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent) -> onEvent
-    335:336:void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent) -> onEvent
-    341:343:void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent) -> onEvent
-    348:350:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent) -> onEventMainThread
+    241:255:void onResume() -> onResume
+    259:261:void onSoundSheetsInit() -> e
+    266:271:void onPause() -> onPause
+    276:278:void onUserLeaveHint() -> onUserLeaveHint
+    283:301:void onStop() -> onStop
+    305:312:void setSoundSheetActionsEnable(boolean) -> b
+    317:323:void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent) -> onEvent
+    327:328:void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent) -> onEvent
+    333:334:void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent) -> onEvent
+    339:340:void onEvent(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsInitEvent) -> onEvent
+    345:350:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent) -> onEventMainThread
     353:353:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent) -> onEventMainThread
     356:356:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent) -> onEventMainThread
     361:379:void onEvent(org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent) -> onEvent
@@ -22477,10 +22492,10 @@ org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity -> org.neidhardt.dyn
     470:478:void onTextEdited(java.lang.String) -> c
     483:485:void onSupportActionModeStarted(android.support.v7.view.ActionMode) -> a
     490:492:void onSupportActionModeFinished(android.support.v7.view.ActionMode) -> b
-    510:510:org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment getNavigationDrawerFragment() -> e
+    510:510:org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment getNavigationDrawerFragment() -> f
     515:529:void removeSoundFragments(java.util.List) -> a
     546:567:void openSoundFragment(org.neidhardt.dynamicsoundboard.dao.SoundSheet) -> a
-    571:574:org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment getCurrentSoundFragment() -> f
+    571:574:org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment getCurrentSoundFragment() -> g
 org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity$1 -> org.neidhardt.dynamicsoundboard.soundactivity.b:
     org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity this$0 -> g
     186:187:void onDrawerSlide(android.view.View,float) -> a
@@ -22500,15 +22515,14 @@ org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener -> org.nei
     67:71:void unregisterListener(android.content.Context,org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener) -> b
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter -> org.neidhardt.dynamicsoundboard.d.b:
     kotlin.reflect.KClass $kotlinClass -> c
-    java.lang.String TAG -> i
     org.neidhardt.dynamicsoundboard.soundcontrol.SoundPresenter presenter -> d
-    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage soundsDataStorage -> j
-    de.greenrobot.event.EventBus eventBus -> e
-    47:55:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent) -> onEvent
-    59:60:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent) -> onEvent
-    64:64:java.util.List getValues() -> d
-    69:69:int getItemCount() -> b
-    74:74:int getItemViewType$134621() -> a
+    org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage soundsDataStorage -> h
+    de.greenrobot.event.EventBus eventBus -> i
+    34:34:void onAttachedToWindow() -> e
+    36:36:void onDetachedFromWindow() -> f
+    40:40:java.util.List getValues() -> d
+    45:45:int getItemCount() -> b
+    50:50:int getItemViewType$134621() -> a
     25:25:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
     25:25:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
     25:25:void access$delete$0(org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer) -> a
@@ -22524,16 +22538,19 @@ org.neidhardt.dynamicsoundboard.soundcontrol.SoundItemPagerAdapter -> org.neidha
     237:242:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundPresenter -> org.neidhardt.dynamicsoundboard.d.f:
     kotlin.reflect.KClass $kotlinClass -> a
+    java.lang.String TAG -> g
     org.neidhardt.dynamicsoundboard.soundcontrol.SoundAdapter adapter -> b
     java.util.List values -> c
     java.lang.String fragmentTag -> d
     de.greenrobot.event.EventBus eventBus -> e
     org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess soundsDataAccess -> f
-    40:63:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent) -> onEventMainThread
-    69:73:void insertPlayer(int,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer) -> a
-    77:95:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent) -> onEventMainThread
-    99:106:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent) -> onEventMainThread
-    135:139:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent) -> onEventMainThread
+    48:56:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent) -> onEvent
+    60:61:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent) -> onEvent
+    65:88:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent) -> onEventMainThread
+    94:98:void insertPlayer(int,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer) -> a
+    102:120:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent) -> onEventMainThread
+    124:131:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent) -> onEventMainThread
+    160:164:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent) -> onEventMainThread
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment -> org.neidhardt.dynamicsoundboard.d.g:
     kotlin.reflect.KClass $kotlinClass -> a
     java.lang.String KEY_FRAGMENT_TAG -> e
@@ -22562,10 +22579,10 @@ org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment -> org.neidhardt
     228:229:void onItemMoved(int,int) -> a
     233:234:void onEvent(org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent) -> onEvent
     238:239:void onEvent(org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent) -> onEvent
-    243:247:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent) -> onEventMainThread
-    249:249:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent) -> onEventMainThread
-    251:251:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent) -> onEventMainThread
-    253:253:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent) -> onEventMainThread
+    243:248:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent) -> onEventMainThread
+    250:250:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent) -> onEventMainThread
+    252:252:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent) -> onEventMainThread
+    254:254:void onEventMainThread(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent) -> onEventMainThread
     41:41:java.lang.String access$getKEY_FRAGMENT_TAG$0() -> d
     41:41:java.lang.String access$getLOG_TAG$1() -> e
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment$Companion -> org.neidhardt.dynamicsoundboard.d.h:
@@ -22739,6 +22756,7 @@ org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent -> org.ne
 org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent -> org.neidhardt.dynamicsoundboard.e.b.f:
     kotlin.reflect.KClass $kotlinClass -> a
     java.util.List players -> b
+    33:33:boolean removeAll() -> a
     java.lang.String toString() -> toString
     int hashCode() -> hashCode
     boolean equals(java.lang.Object) -> equals
@@ -22894,7 +22912,7 @@ org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorag
     void removeSoundSheets(java.util.List) -> a
     org.neidhardt.dynamicsoundboard.dao.DaoSession getDbSoundSheets() -> c
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil -> org.neidhardt.dynamicsoundboard.f.b.c:
-    void init() -> d
+    boolean initIfRequired() -> d
     org.neidhardt.dynamicsoundboard.dao.SoundSheet getNewSoundSheet(java.lang.String) -> b
     java.lang.String getSuggestedName() -> e
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager -> org.neidhardt.dynamicsoundboard.f.b.d:
@@ -22906,16 +22924,16 @@ org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager ->
     boolean isInitDone -> f
     java.util.List soundSheets -> g
     de.greenrobot.event.EventBus eventBus -> h
-    44:54:void init() -> d
-    71:71:org.neidhardt.dynamicsoundboard.dao.DaoSession getDbSoundSheets() -> c
-    76:76:java.util.List getSoundSheets() -> a
-    81:91:void addSoundSheetToManager(org.neidhardt.dynamicsoundboard.dao.SoundSheet) -> b
-    95:115:void removeSoundSheets(java.util.List) -> a
-    119:163:org.neidhardt.dynamicsoundboard.dao.SoundSheet getSoundSheetForFragmentTag(java.lang.String) -> a
-    125:140:void setSoundSheetSelected(org.neidhardt.dynamicsoundboard.dao.SoundSheet) -> a
-    144:163:org.neidhardt.dynamicsoundboard.dao.SoundSheet getSelectedItem() -> b
-    150:151:java.lang.String getSuggestedName() -> e
-    156:157:org.neidhardt.dynamicsoundboard.dao.SoundSheet getNewSoundSheet(java.lang.String) -> b
+    44:57:boolean initIfRequired() -> d
+    75:75:org.neidhardt.dynamicsoundboard.dao.DaoSession getDbSoundSheets() -> c
+    80:80:java.util.List getSoundSheets() -> a
+    85:95:void addSoundSheetToManager(org.neidhardt.dynamicsoundboard.dao.SoundSheet) -> b
+    99:122:void removeSoundSheets(java.util.List) -> a
+    126:170:org.neidhardt.dynamicsoundboard.dao.SoundSheet getSoundSheetForFragmentTag(java.lang.String) -> a
+    132:147:void setSoundSheetSelected(org.neidhardt.dynamicsoundboard.dao.SoundSheet) -> a
+    151:170:org.neidhardt.dynamicsoundboard.dao.SoundSheet getSelectedItem() -> b
+    157:158:java.lang.String getSuggestedName() -> e
+    163:164:org.neidhardt.dynamicsoundboard.dao.SoundSheet getNewSoundSheet(java.lang.String) -> b
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask -> org.neidhardt.dynamicsoundboard.f.c.a:
     kotlin.reflect.KClass $kotlinClass -> a
     java.lang.String TAG -> g
@@ -23055,9 +23073,9 @@ org.neidhardt.dynamicsoundboard.views.progressbar.ActivityProgressBarPresenter -
     11:11:void setView(android.view.View) -> a
     11:11:void setView(java.lang.Object) -> a
 org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter -> org.neidhardt.dynamicsoundboard.views.a.a:
-    kotlin.reflect.KClass $kotlinClass -> f
+    kotlin.reflect.KClass $kotlinClass -> e
     java.util.List getValues() -> d
-    14:19:void notifyItemChanged(java.lang.Object) -> a
+    16:21:void notifyItemChanged(java.lang.Object) -> a
 org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolder -> org.neidhardt.dynamicsoundboard.views.a.b:
     kotlin.reflect.KClass $kotlinClass -> t
     android.support.v4.view.ViewPager viewPager -> u
@@ -23083,18 +23101,18 @@ org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.RecyclerviewhelpersPac
     int UPDATE_INTERVAL -> a
     10:10:int getUPDATE_INTERVAL() -> a
 org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter -> org.neidhardt.dynamicsoundboard.views.a.f:
-    kotlin.reflect.KClass $kotlinClass -> g
+    kotlin.reflect.KClass $kotlinClass -> f
     java.lang.String TAG -> c
     android.os.Handler handler -> d
-    java.util.concurrent.atomic.AtomicBoolean hasTimerStarted -> e
-    android.support.v7.widget.RecyclerView recyclerView -> h
-    30:32:void startProgressUpdateTimer() -> e
-    36:38:void stopProgressUpdateTimer() -> f
+    java.util.concurrent.atomic.AtomicBoolean hasTimerStarted -> h
+    android.support.v7.widget.RecyclerView recyclerView -> g
+    30:32:void startProgressUpdateTimer() -> g
+    36:38:void stopProgressUpdateTimer() -> h
     42:58:void run() -> run
 org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressTimer -> org.neidhardt.dynamicsoundboard.views.a.g:
     kotlin.reflect.KClass $kotlinClass -> a
-    void startProgressUpdateTimer() -> e
-    void stopProgressUpdateTimer() -> f
+    void startProgressUpdateTimer() -> g
+    void stopProgressUpdateTimer() -> h
 org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder -> org.neidhardt.dynamicsoundboard.views.a.h:
     kotlin.reflect.KClass $kotlinClass -> a
     void onProgressUpdate() -> q

@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.fileexplorer
 import android.animation.Animator
 import android.os.Bundle
 import android.os.Environment
+import android.preference.PreferenceManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
@@ -30,6 +32,22 @@ public abstract class FileExplorerDialog : BaseDialog()
 	protected abstract fun canSelectFile(): Boolean
 
 	protected abstract fun onFileSelected()
+
+	public fun storePathToSharedPreferences(key: String, path: String)
+	{
+		val context = DynamicSoundboardApplication.getSoundboardContext()
+		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+		val editor = preferences.edit()
+		editor.putString(key, path)
+		editor.apply()
+	}
+
+	public fun getPathFromSharedPreferences(key: String): String?
+	{
+		val context = DynamicSoundboardApplication.getSoundboardContext()
+		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+		return preferences.getString(key, null)
+	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?)
 	{

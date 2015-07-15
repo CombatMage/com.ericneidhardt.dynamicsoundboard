@@ -17,7 +17,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"> <!-- the required height is set programmatic by NavigationDrawerFragment -->
 
-		<org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views.SoundSheets
+		<org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets
 				android:id="@+id/sound_sheets"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"/>
