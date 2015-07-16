@@ -21,13 +21,6 @@ public class SoundSheetsAdapter
 		BaseAdapter<SoundSheet, SoundSheetViewHolder>(),
 		SoundSheetViewHolder.OnItemClickListener
 {
-	override fun onAttachedToWindow()
-	{
-		this.notifyDataSetChanged()
-	}
-
-	override fun onDetachedFromWindow() {}
-
 	override fun getValues(): List<SoundSheet>
 	{
 		return this.presenter.values
