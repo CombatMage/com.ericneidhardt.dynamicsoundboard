@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -23,6 +24,7 @@ public class SoundSheetsPresenter
 		private val soundsDataStorage: SoundsDataStorage
 ) :
 		NavigationDrawerListPresenter<SoundSheets>(),
+		NavigationDrawerItemClickListener<SoundSheet>,
 		OnSoundSheetsChangedEventListener,
 		OnSoundsChangedEventListener
 {
@@ -56,7 +58,7 @@ public class SoundSheetsPresenter
 		super<NavigationDrawerListPresenter>.onSelectedItemsDeleted()
 	}
 
-	public fun onItemClick(data: SoundSheet)
+	public override fun onItemClick(data: SoundSheet)
 	{
 		if (this.isInSelectionMode()) {
 			data.setIsSelectedForDeletion(!data.getIsSelectedForDeletion())
@@ -88,7 +90,7 @@ public class SoundSheetsPresenter
 	private fun getSoundSheetsSelectedForDeletion(): List<SoundSheet>
 	{
 		val selectedSoundSheets = ArrayList<SoundSheet>()
-		val existingSoundSheets = this.adapter!!.getValues()
+		val existingSoundSheets = this.values
 		for (soundSheet in existingSoundSheets) {
 			if (soundSheet.getIsSelectedForDeletion())
 				selectedSoundSheets.add(soundSheet)
