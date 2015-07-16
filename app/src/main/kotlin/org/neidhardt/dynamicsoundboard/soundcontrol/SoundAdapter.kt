@@ -31,10 +31,6 @@ public class SoundAdapter
 ) :
 		SoundProgressAdapter<SoundViewHolder>()
 {
-	override fun onAttachedToWindow() {}
-
-	override fun onDetachedFromWindow() {}
-
 	override fun getValues(): List<EnhancedMediaPlayer>
 	{
 		return this.presenter.values

@@ -37,6 +37,14 @@ public class SoundSheetsPresenter
 		return true
 	}
 
+	override fun onAttachedToWindow()
+	{
+		super<NavigationDrawerListPresenter>.onAttachedToWindow()
+		this.values.clear()
+		this.values.addAll(this.soundSheetsDataAccess.getSoundSheets())
+		this.adapter?.notifyDataSetChanged()
+	}
+
 	override fun deleteSelectedItems()
 	{
 		val soundSheetsToRemove = this.getSoundSheetsSelectedForDeletion()
