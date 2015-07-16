@@ -157,61 +157,7 @@ public class PlaylistAdapter
 		this.notifyDataSetChanged();
 	}
 
-	public class ViewHolder
-			extends
-				RecyclerView.ViewHolder
-			implements
-				View.OnClickListener,
-				SoundProgressViewHolder
-	{
-		private View itemView;
-		private TextView label;
-		private ImageView selectionIndicator;
-		private SeekBar timePosition;
 
-		public ViewHolder(View itemView)
-		{
-			super(itemView);
-			this.itemView = itemView;
-			this.label = (TextView)itemView.findViewById(R.id.tv_label);
-			this.selectionIndicator = (ImageView)itemView.findViewById(R.id.iv_selected);
-			this.timePosition = (SeekBar)itemView.findViewById(R.id.sb_progress);
-			itemView.setOnClickListener(this);
-		}
-
-		protected void bindData(EnhancedMediaPlayer player)
-		{
-			this.timePosition.setMax(player.getDuration());
-			this.label.setText(player.getMediaPlayerData().getLabel());
-			this.selectionIndicator.setVisibility(player.isPlaying() ? View.VISIBLE : View.INVISIBLE);
-
-			this.label.setActivated(player.getMediaPlayerData().getIsSelectedForDeletion());
-			this.itemView.setSelected(player.getMediaPlayerData().getIsSelectedForDeletion());
-
-			this.onProgressUpdate();
-		}
-
-		@Override
-		public void onProgressUpdate()
-		{
-			EnhancedMediaPlayer player = getItem(this.getLayoutPosition());
-			if (player.isPlaying())
-			{
-				timePosition.setProgress(player.getCurrentPosition());
-				timePosition.setVisibility(View.VISIBLE);
-			}
-			else
-				timePosition.setVisibility(View.INVISIBLE);
-		}
-
-		@Override
-		public void onClick(@NonNull View view)
-		{
-			int position = this.getLayoutPosition();
-			if (onItemClickListener != null)
-				onItemClickListener.onItemClick(view, getItem(position), position);
-		}
-	}
 
 	public interface OnItemClickListener
 	{
