@@ -140,7 +140,15 @@ public class PlaylistPresenter
 
 	override fun onEvent(event: MediaPlayerStateChangedEvent)
 	{
-		this.adapter?.notifyDataSetChanged()
+		val player = event.getPlayer()
+		if (this.values.contains(player) && !event.isAlive())
+		{
+			val index = this.values.indexOf(player)
+			this.values.remove(player)
+			this.adapter?.notifyItemRemoved(index)
+		}
+		else
+			this.adapter?.notifyDataSetChanged()
 	}
 
 	override fun onEvent(event: MediaPlayerCompletedEvent)

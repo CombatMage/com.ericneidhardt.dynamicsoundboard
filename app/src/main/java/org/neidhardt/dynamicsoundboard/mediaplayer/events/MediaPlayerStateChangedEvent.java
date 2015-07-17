@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.mediaplayer.events;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 /**
- * Created by eric.neidhardt on 11.02.2015.
+ * File created by eric.neidhardt on 11.02.2015.
  */
 public class MediaPlayerStateChangedEvent
 {

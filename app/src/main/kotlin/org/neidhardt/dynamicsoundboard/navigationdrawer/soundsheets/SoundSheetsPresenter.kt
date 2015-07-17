@@ -126,7 +126,11 @@ public class SoundSheetsPresenter
 			{
 				val changedSoundSheet = this.soundSheetsDataAccess
 						.getSoundSheetForFragmentTag(fragmentTag)
-				this.adapter?.notifyItemChanged(changedSoundSheet)
+
+				if (changedSoundSheet == null)
+					this.adapter?.notifyDataSetChanged()
+				else
+					this.adapter?.notifyItemChanged(changedSoundSheet)
 			}
 		}
 	}
