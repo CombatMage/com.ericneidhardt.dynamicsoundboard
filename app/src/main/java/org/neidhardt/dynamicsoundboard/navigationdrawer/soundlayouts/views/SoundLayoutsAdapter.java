@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,6 @@ public class SoundLayoutsAdapter
 		this.bus = EventBus.getDefault();
 	}
 
-	@Override
 	public void onAttachedToWindow()
 	{
 		if (!this.bus.isRegistered(this))
@@ -43,7 +43,6 @@ public class SoundLayoutsAdapter
 		this.notifyDataSetChanged();
 	}
 
-	@Override
 	public void onDetachedFromWindow()
 	{
 		this.bus.unregister(this);
@@ -136,7 +135,7 @@ public class SoundLayoutsAdapter
 		}
 
 		@Override
-		public void onClick(View view)
+		public void onClick(@NonNull View view)
 		{
 			if (onItemClickListener == null)
 				return;

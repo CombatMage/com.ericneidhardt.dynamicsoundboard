@@ -22,7 +22,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"/>
 
-		<org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist
+		<org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 				android:id="@+id/playlist"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"/>

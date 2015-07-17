@@ -9131,8 +9131,6 @@ org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer:
     private static final float FLOAT_VOLUME_MIN
     47:73:public EnhancedMediaPlayer(android.content.Context,org.neidhardt.dynamicsoundboard.dao.MediaPlayerData)
 org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
-org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent:
-    36:36:public org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer getPlayer()
 org.neidhardt.dynamicsoundboard.misc.FileUtils:
     private static final java.lang.String AUDIO
     private static final java.lang.String SCHEME_CONTENT_URI
@@ -9148,9 +9146,14 @@ org.neidhardt.dynamicsoundboard.misc.Util:
 org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment:
     private static final int INDEX_SOUND_SHEETS
     private static final int INDEX_PLAYLIST
-    291:291:public org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist getPlaylist()
+    291:291:public org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist getPlaylist()
+org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener$$TImpl
 org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener
 org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter$OnOpenSoundLayoutsEvent
+org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter:
+    30:30:public final org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter getAdapter()
+org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistViewHolder:
+    17:17:public static final synthetic void access$setPlayer$0(org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistViewHolder,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer)
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager:
     private static final java.lang.String DB_SOUND_LAYOUTS
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog:
@@ -9160,16 +9163,15 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutS
     private static final java.lang.String KEY_DATABASE_ID
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog$OnSoundLayoutRenamedEventListener
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsAdapter:
-    22:22:public bridge synthetic void notifyItemChanged(java.lang.Object)
+    23:23:public bridge synthetic void notifyItemChanged(java.lang.Object)
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter$OnOpenSoundLayoutSettingsEvent
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter$OnSoundLayoutRemovedEventListener
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter$OnSoundLayoutSelectedEventListener
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder:
-    13:13:public static final synthetic void access$setData$0(org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder,org.neidhardt.dynamicsoundboard.dao.SoundSheet)
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder$OnItemClickListener$$TImpl
+    14:14:public static final synthetic void access$setData$0(org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder,org.neidhardt.dynamicsoundboard.dao.SoundSheet)
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter:
-    29:29:public final org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter getAdapter()
-    20:20:public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess getSoundSheetsDataAccess()
+    31:31:public final org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter getAdapter()
+    21:21:public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess getSoundSheetsDataAccess()
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter:
     92:93:public void setIsInSelectionMode(boolean)
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout:

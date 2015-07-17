@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 
 /**
  * File created by eric.neidhardt on 10.07.2015.
@@ -13,7 +14,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 public class SoundSheetViewHolder
 (
 		itemView: View,
-		private val onItemClickListener: SoundSheetViewHolder.OnItemClickListener
+		private val onItemClickListener: NavigationDrawerItemClickListener<SoundSheet>
 ) : RecyclerView.ViewHolder(itemView)
 {
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
@@ -54,11 +55,6 @@ public class SoundSheetViewHolder
 			this.soundCount.setVisibility(View.VISIBLE)
 			this.soundCount.setText(Integer.toString(soundCount))
 		}
-	}
-
-	public interface OnItemClickListener
-	{
-		fun onItemClick(data: SoundSheet)
 	}
 
 }

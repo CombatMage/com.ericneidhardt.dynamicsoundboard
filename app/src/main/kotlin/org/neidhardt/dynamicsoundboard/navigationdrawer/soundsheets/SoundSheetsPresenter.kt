@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -23,6 +24,7 @@ public class SoundSheetsPresenter
 		private val soundsDataStorage: SoundsDataStorage
 ) :
 		NavigationDrawerListPresenter<SoundSheets>(),
+		NavigationDrawerItemClickListener<SoundSheet>,
 		OnSoundSheetsChangedEventListener,
 		OnSoundsChangedEventListener
 {
@@ -33,6 +35,14 @@ public class SoundSheetsPresenter
 	override fun isEventBusSubscriber(): Boolean
 	{
 		return true
+	}
+
+	override fun onAttachedToWindow()
+	{
+		super<NavigationDrawerListPresenter>.onAttachedToWindow()
+		this.values.clear()
+		this.values.addAll(this.soundSheetsDataAccess.getSoundSheets())
+		this.adapter?.notifyDataSetChanged()
 	}
 
 	override fun deleteSelectedItems()
@@ -48,7 +58,7 @@ public class SoundSheetsPresenter
 		super<NavigationDrawerListPresenter>.onSelectedItemsDeleted()
 	}
 
-	public fun onItemClick(data: SoundSheet)
+	public override fun onItemClick(data: SoundSheet)
 	{
 		if (this.isInSelectionMode()) {
 			data.setIsSelectedForDeletion(!data.getIsSelectedForDeletion())
@@ -80,7 +90,7 @@ public class SoundSheetsPresenter
 	private fun getSoundSheetsSelectedForDeletion(): List<SoundSheet>
 	{
 		val selectedSoundSheets = ArrayList<SoundSheet>()
-		val existingSoundSheets = this.adapter!!.getValues()
+		val existingSoundSheets = this.values
 		for (soundSheet in existingSoundSheets) {
 			if (soundSheet.getIsSelectedForDeletion())
 				selectedSoundSheets.add(soundSheet)
@@ -116,7 +126,11 @@ public class SoundSheetsPresenter
 			{
 				val changedSoundSheet = this.soundSheetsDataAccess
 						.getSoundSheetForFragmentTag(fragmentTag)
-				this.adapter?.notifyItemChanged(changedSoundSheet)
+
+				if (changedSoundSheet == null)
+					this.adapter?.notifyDataSetChanged()
+				else
+					this.adapter?.notifyItemChanged(changedSoundSheet)
 			}
 		}
 	}

@@ -5,9 +5,5 @@ package org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers;
  */
 public interface ListAdapter<T>
 {
-	void onAttachedToWindow();
-
-	void onDetachedFromWindow();
-
 	void notifyItemChanged(T data);
 }
