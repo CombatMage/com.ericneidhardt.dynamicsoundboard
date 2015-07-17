@@ -1,5 +1,8 @@
 package org.neidhardt.dynamicsoundboard
 
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil
@@ -16,6 +19,7 @@ public class ApplicationComponent()
 {
 	private val soundsManager = SoundsManager()
 	private val soundSheetsManager = SoundSheetsManager()
+	private val soundLayoutsManager = SoundLayoutsManager()
 
 	public val soundsDataAccess: SoundsDataAccess = this.soundsManager
 	public val soundsDataStorage: SoundsDataStorage = this.soundsManager
@@ -24,4 +28,7 @@ public class ApplicationComponent()
 	public val soundSheetsDataAccess: SoundSheetsDataAccess = this.soundSheetsManager
 	public val soundSheetsDataStorage: SoundSheetsDataStorage = this.soundSheetsManager
 	public val soundSheetsDataUtil: SoundSheetsDataUtil = this.soundSheetsManager
+
+	public val soundLayoutsAccess: SoundLayoutsAccess = this.soundLayoutsManager
+	public val soundLayoutsStorage: SoundLayoutsStorage = this.soundLayoutsManager
 }

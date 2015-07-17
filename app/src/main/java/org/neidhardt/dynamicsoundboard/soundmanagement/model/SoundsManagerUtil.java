@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model;
 
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 
 import java.util.List;
 import java.util.Map;
@@ -20,17 +20,17 @@ public class SoundsManagerUtil
 
 	static String getDatabaseNameSounds()
 	{
-		if (SoundLayoutsManager.getInstance().getActiveSoundLayout().isDefaultLayout())
+		if (SoundLayoutsManager.Companion.getInstance().getActiveSoundLayout().isDefaultLayout())
 			return DB_SOUNDS_DEFAULT;
-		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
+		String baseName = SoundLayoutsManager.Companion.getInstance().getActiveSoundLayout().getDatabaseId();
 		return baseName + DB_SOUNDS;
 	}
 
 	static String getDatabaseNamePlayList()
 	{
-		if (SoundLayoutsManager.getInstance().getActiveSoundLayout().isDefaultLayout())
+		if (SoundLayoutsManager.Companion.getInstance().getActiveSoundLayout().isDefaultLayout())
 			return DB_SOUNDS_PLAYLIST_DEFAULT;
-		String baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId();
+		String baseName = SoundLayoutsManager.Companion.getInstance().getActiveSoundLayout().getDatabaseId();
 		return baseName + DB_SOUNDS_PLAYLIST;
 	}
 

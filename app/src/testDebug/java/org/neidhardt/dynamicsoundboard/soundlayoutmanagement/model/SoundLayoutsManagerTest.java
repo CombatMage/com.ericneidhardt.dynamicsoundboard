@@ -1,9 +1,8 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model;
+package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
@@ -31,7 +30,7 @@ public class SoundLayoutsManagerTest extends BaseTest
 		MockitoAnnotations.initMocks(this);
 
 		this.soundLayoutsManager = new SoundLayoutsManager();
-		this.soundLayoutsManager.daoSession = this.mockSession;
+		this.soundLayoutsManager.setDaoSession(this.mockSession);
 	}
 
 	@Test
@@ -47,7 +46,7 @@ public class SoundLayoutsManagerTest extends BaseTest
 		for (int i = 0; i < 3; i++)
 			soundLayoutList.add(new SoundLayout());
 		soundLayoutList.get(0).setIsSelected(true);
-		this.soundLayoutsManager.soundLayouts = soundLayoutList;
+		this.soundLayoutsManager.setSoundLayouts(soundLayoutList);
 
 		this.soundLayoutsManager.setSelected(1);
 

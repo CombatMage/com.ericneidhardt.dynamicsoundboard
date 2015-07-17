@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
 import org.neidhardt.dynamicsoundboard.misc.Util
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent

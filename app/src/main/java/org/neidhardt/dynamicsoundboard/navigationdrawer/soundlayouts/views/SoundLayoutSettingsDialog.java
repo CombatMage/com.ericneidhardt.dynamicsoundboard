@@ -6,7 +6,7 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 
 /**
  * File created by eric.neidhardt on 12.03.2015.
@@ -49,15 +49,15 @@ public class SoundLayoutSettingsDialog extends SoundLayoutDialog
 	@Override
 	protected String getHintForName()
 	{
-		return SoundLayoutsManager.getInstance().getSoundLayoutById(this.databaseId).getLabel();
+		return SoundLayoutsManager.Companion.getInstance().getSoundLayoutById(this.databaseId).getLabel();
 	}
 
 	@Override
 	protected void deliverResult()
 	{
 		String name = super.soundLayoutName.getDisplayedText();
-		SoundLayoutsManager.getInstance().updateSoundLayoutById(this.databaseId, name);
-		SoundLayout renamedLayout = SoundLayoutsManager.getInstance().getSoundLayoutById(this.databaseId);
+		SoundLayoutsManager.Companion.getInstance().updateSoundLayoutById(this.databaseId, name);
+		SoundLayout renamedLayout = SoundLayoutsManager.Companion.getInstance().getSoundLayoutById(this.databaseId);
 
 		EventBus.getDefault().post(new SoundLayoutRenamedEvent(renamedLayout));
 	}

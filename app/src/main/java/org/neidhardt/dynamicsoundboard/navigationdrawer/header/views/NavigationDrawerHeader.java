@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 
 /**
  * Created by eric.neidhardt on 27.05.2015.
@@ -55,7 +55,7 @@ public class NavigationDrawerHeader extends FrameLayout implements View.OnClickL
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		this.presenter.setSoundLayoutModel(SoundLayoutsManager.getInstance());
+		this.presenter.setSoundLayoutModel(SoundLayoutsManager.Companion.getInstance());
 		this.presenter.onAttachedToWindow();
 	}
 

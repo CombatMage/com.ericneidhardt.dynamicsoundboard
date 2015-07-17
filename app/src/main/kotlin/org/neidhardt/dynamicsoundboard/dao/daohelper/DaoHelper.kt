@@ -117,3 +117,27 @@ private class UpdateSoundSheetsAsyncTask
 		return null
 	}
 }
+
+public fun updateDatabaseAsync(data: SoundLayout)
+{
+	val soundLayoutsStorage = DynamicSoundboardApplication.getApplicationComponent().soundLayoutsStorage;
+	val daoSession = soundLayoutsStorage.getDbSoundLayouts()
+
+	UpdateSoundLayoutAsyncTask(data, daoSession.getSoundLayoutDao(), daoSession).execute()
+}
+
+private class UpdateSoundLayoutAsyncTask
+(
+		private val data: SoundLayout,
+		private val dao: SoundLayoutDao,
+		private val daoSession: DaoSession
+) : SafeAsyncTask<Void>()
+{
+	override fun call(): Void?
+	{
+		this.daoSession.runInTx {
+			dao.update(data) // do not update if item was not added before
+		}
+		return null
+	}
+}

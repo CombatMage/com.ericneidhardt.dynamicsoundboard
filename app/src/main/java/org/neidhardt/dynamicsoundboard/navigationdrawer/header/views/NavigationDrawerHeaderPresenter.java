@@ -4,7 +4,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundL
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutModel;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
 import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
@@ -22,9 +22,9 @@ public class NavigationDrawerHeaderPresenter
 {
 	private static final String TAG = NavigationDrawerHeaderPresenter.class.getName();
 
-	private SoundLayoutModel soundLayoutModel;
+	private SoundLayoutsAccess soundLayoutModel;
 
-	public void setSoundLayoutModel(SoundLayoutModel soundLayoutModel)
+	public void setSoundLayoutModel(SoundLayoutsAccess soundLayoutModel)
 	{
 		this.soundLayoutModel = soundLayoutModel;
 	}

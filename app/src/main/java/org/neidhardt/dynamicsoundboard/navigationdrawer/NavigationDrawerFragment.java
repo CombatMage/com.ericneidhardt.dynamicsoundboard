@@ -21,7 +21,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChang
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets;
@@ -178,7 +178,7 @@ public class NavigationDrawerFragment
 		else if (id  == R.id.b_ok)
 		{
 			if (this.soundLayoutList.isActive())
-				AddNewSoundLayoutDialog.showInstance(this.getFragmentManager(), SoundLayoutsManager.getInstance().getSuggestedSoundLayoutName());
+				AddNewSoundLayoutDialog.showInstance(this.getFragmentManager(), SoundLayoutsManager.Companion.getInstance().getSuggestedSoundLayoutName());
 			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				new AddNewSoundDialog(this.getFragmentManager(), Playlist.TAG);
 			else

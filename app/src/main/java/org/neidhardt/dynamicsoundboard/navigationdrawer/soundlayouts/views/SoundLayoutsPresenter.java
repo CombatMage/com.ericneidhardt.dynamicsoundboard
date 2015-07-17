@@ -6,7 +6,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class SoundLayoutsPresenter extends NavigationDrawerListPresenter<SoundLa
 	{
 		List<SoundLayout> soundLayoutsToRemove = this.getSoundLayoutsSelectedForDeletion();
 
-		SoundLayoutsManager manager = SoundLayoutsManager.getInstance();
+		SoundLayoutsManager manager = SoundLayoutsManager.Companion.getInstance();
 		manager.delete(soundLayoutsToRemove);
 		this.adapter.notifyDataSetChanged();
 		this.eventBus.post(new SoundLayoutRemovedEvent());

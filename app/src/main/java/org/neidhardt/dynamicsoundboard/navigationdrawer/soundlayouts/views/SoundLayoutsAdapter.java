@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class SoundLayoutsAdapter
 
 	public List<SoundLayout> getValues()
 	{
-		return SoundLayoutsManager.getInstance().getSoundLayouts();
+		return SoundLayoutsManager.Companion.getInstance().getSoundLayouts();
 	}
 
 	@Override
