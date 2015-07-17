@@ -1,9 +1,9 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.R;
@@ -17,6 +17,7 @@ public abstract class SoundLayoutDialog extends BaseDialog implements View.OnCli
 {
 	protected CustomEditText soundLayoutName;
 
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
@@ -38,7 +39,7 @@ public abstract class SoundLayoutDialog extends BaseDialog implements View.OnCli
 	protected abstract String getHintForName();
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		int id = v.getId();
 		if (id == R.id.b_cancel)

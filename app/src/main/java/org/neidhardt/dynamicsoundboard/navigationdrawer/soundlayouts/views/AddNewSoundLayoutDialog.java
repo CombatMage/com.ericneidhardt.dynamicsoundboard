@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import de.greenrobot.event.EventBus;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent;
@@ -61,7 +62,7 @@ public class AddNewSoundLayoutDialog extends SoundLayoutDialog
 		layout.setDatabaseId(SoundLayoutsManager.Companion.getNewDatabaseIdForLabel(name));
 		layout.setLabel(name);
 
-		SoundLayoutsManager.Companion.getInstance().addSoundLayout(layout);
+		DynamicSoundboardApplication.getApplicationComponent().getSoundLayoutsStorage().addSoundLayout(layout);
 
 		EventBus.getDefault().post(new SoundLayoutAddedEvent());
 	}

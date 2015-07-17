@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
 import android.view.View;
 import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsAdapter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
