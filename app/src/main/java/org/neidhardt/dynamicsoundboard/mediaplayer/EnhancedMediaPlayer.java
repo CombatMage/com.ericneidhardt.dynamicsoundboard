@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 
 import java.io.IOException;

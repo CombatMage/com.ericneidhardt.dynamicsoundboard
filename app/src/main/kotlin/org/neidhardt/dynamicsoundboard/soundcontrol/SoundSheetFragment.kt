@@ -116,7 +116,6 @@ public class SoundSheetFragment :
 		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener({ view
 			-> AddNewSoundFromDirectory.showInstance(this.getFragmentManager(), this.fragmentTag) })
 
-		this.soundAdapter!!.onAttachedToWindow()
 		this.soundPresenter!!.onAttachedToWindow()
 		this.attachScrollViewToFab()
 
@@ -127,7 +126,6 @@ public class SoundSheetFragment :
 	{
 		super<BaseFragment>.onPause()
 		this.soundPresenter!!.onDetachedFromWindow()
-		this.soundAdapter!!.onDetachedFromWindow()
 		this.soundAdapter!!.stopProgressUpdateTimer()
 	}
 

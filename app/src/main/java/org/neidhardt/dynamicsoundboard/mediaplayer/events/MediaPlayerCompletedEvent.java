@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer.events;
 
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import android.support.annotation.NonNull;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 
 /**
@@ -8,13 +8,14 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
  */
 public class MediaPlayerCompletedEvent
 {
-	private EnhancedMediaPlayer player;
+	private final EnhancedMediaPlayer player;
 
-	public MediaPlayerCompletedEvent(EnhancedMediaPlayer player)
+	public MediaPlayerCompletedEvent(@NonNull EnhancedMediaPlayer player)
 	{
 		this.player = player;
 	}
 
+	@NonNull
 	public EnhancedMediaPlayer getPlayer()
 	{
 		return player;

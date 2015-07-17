@@ -19,16 +19,6 @@ public class PlaylistAdapter
 		SoundProgressAdapter<PlaylistViewHolder>(),
 		NavigationDrawerItemClickListener<EnhancedMediaPlayer>
 {
-	override fun onAttachedToWindow()
-	{
-		this.notifyDataSetChanged()
-		this.startProgressUpdateTimer()
-	}
-
-	override fun onDetachedFromWindow()
-	{
-		this.stopProgressUpdateTimer()
-	}
 
 	override fun getValues(): List<EnhancedMediaPlayer>
 	{

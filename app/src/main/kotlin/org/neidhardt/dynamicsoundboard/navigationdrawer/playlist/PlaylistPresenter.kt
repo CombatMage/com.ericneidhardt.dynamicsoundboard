@@ -5,10 +5,11 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import java.util.ArrayList
 
@@ -17,7 +18,9 @@ import java.util.ArrayList
  */
 public class PlaylistPresenter
 (
-		private val soundsDataStorage: SoundsDataStorage
+		private val soundsDataStorage: SoundsDataStorage,
+		private val soundsDataAccess: SoundsDataAccess
+
 ) :
 		NavigationDrawerListPresenter<Playlist>(),
 		NavigationDrawerItemClickListener<EnhancedMediaPlayer>,
@@ -28,18 +31,40 @@ public class PlaylistPresenter
 
 	public val values: MutableList<EnhancedMediaPlayer> = ArrayList()
 
+	private var currentItemIndex: Int? = null
+
 	override fun isEventBusSubscriber(): Boolean
 	{
 		return true
 	}
 
+	override fun onAttachedToWindow()
+	{
+		super<NavigationDrawerListPresenter>.onAttachedToWindow()
+		this.values.clear()
+		this.values.addAll(this.soundsDataAccess.getPlaylist())
+		this.adapter?.notifyDataSetChanged()
+		this.adapter?.startProgressUpdateTimer()
+	}
+
+	override fun onDetachedFromWindow()
+	{
+		this.adapter?.stopProgressUpdateTimer()
+	}
+
+
 	override fun deleteSelectedItems()
 	{
 		val playersToRemove = this.getPlayersSelectedForDeletion()
 
-		// TODO
-		//this.soundsDataStorage.removeSoundsFromPlaylist(playersToRemove)
-		//this.adapter.notifyDataSetChanged()
+		for (player in playersToRemove)
+		{
+			val index = this.values.indexOf(player)
+			this.values.remove(player)
+			this.adapter?.notifyItemRemoved(index)
+
+		}
+		this.soundsDataStorage.removeSoundsFromPlaylist(playersToRemove)
 
 		super<NavigationDrawerListPresenter>.onSelectedItemsDeleted()
 	}
@@ -83,43 +108,56 @@ public class PlaylistPresenter
 
 	public fun startOrStopPlayList(nextActivePlayer: EnhancedMediaPlayer)
 	{
-		// TODO
-
-		/*
-		val sounds = this.getValues()
-		if (!this.getValues().contains(nextActivePlayer))
+		if (!this.values.contains(nextActivePlayer))
 			throw IllegalStateException("next active player " + nextActivePlayer + " is not in playlist")
 
-		this.currentItemIndex = sounds.indexOf(nextActivePlayer)
-		for (player in sounds) {
-			if (player == nextActivePlayer)
-				continue
-			player.stopSound()
+		this.currentItemIndex = this.values.indexOf(nextActivePlayer)
+		for (player in this.values)
+		{
+			if (player != nextActivePlayer)
+				player.stopSound()
 		}
 
-		if (nextActivePlayer.isPlaying()) {
-			this.stopProgressUpdateTimer()
+		if (nextActivePlayer.isPlaying())
+		{
+			this.adapter?.stopProgressUpdateTimer()
 			nextActivePlayer.pauseSound()
-		} else {
-			this.startProgressUpdateTimer()
+		} else
+		{
+			this.adapter?.startProgressUpdateTimer()
 			nextActivePlayer.playSound()
 		}
-		this.notifyDataSetChanged()*/
+		this.adapter?.notifyDataSetChanged()
 	}
-
 
 	override fun onEventMainThread(event: PlaylistChangedEvent)
 	{
-		throw UnsupportedOperationException()
+		this.values.clear()
+		this.values.addAll(this.soundsDataAccess.getPlaylist())
+		this.adapter?.notifyDataSetChanged()
+		this.adapter?.startProgressUpdateTimer()
 	}
 
-	override fun onEvent(event: MediaPlayerStateChangedEvent?)
+	override fun onEvent(event: MediaPlayerStateChangedEvent)
 	{
-		throw UnsupportedOperationException()
+		this.adapter?.notifyDataSetChanged()
 	}
 
-	override fun onEvent(event: MediaPlayerCompletedEvent?)
+	override fun onEvent(event: MediaPlayerCompletedEvent)
 	{
-		throw UnsupportedOperationException()
+		val finishedPlayerData = event.getPlayer().getMediaPlayerData()
+		if (this.currentItemIndex != null)
+		{
+			val currentPlayer = this.values.get(this.currentItemIndex!!).getMediaPlayerData()
+			if (currentPlayer !== finishedPlayerData)
+				return
+
+			this.currentItemIndex = (this.currentItemIndex as Int) + 1
+			if ((this.currentItemIndex as Int) >= this.values.size())
+				this.currentItemIndex = 0
+
+			this.values.get(this.currentItemIndex!!).playSound()
+			this.adapter?.notifyDataSetChanged()
+		}
 	}
 }

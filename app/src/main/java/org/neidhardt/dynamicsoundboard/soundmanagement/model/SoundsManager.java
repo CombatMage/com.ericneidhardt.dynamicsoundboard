@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask;

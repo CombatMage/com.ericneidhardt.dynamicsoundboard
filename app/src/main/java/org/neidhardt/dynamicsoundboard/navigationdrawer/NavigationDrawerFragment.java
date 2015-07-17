@@ -20,7 +20,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeR
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts;
