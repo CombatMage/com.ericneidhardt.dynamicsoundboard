@@ -23,7 +23,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationD
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayouts;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;

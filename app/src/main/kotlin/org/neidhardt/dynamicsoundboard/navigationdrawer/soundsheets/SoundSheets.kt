@@ -88,7 +88,7 @@ public class SoundSheets : NavigationDrawerList
 
 	override fun getItemCount(): Int
 	{
-		return this.adapter.getItemCount()
+		return presenter.values.size()
 	}
 
 	override fun getPresenter(): NavigationDrawerListPresenter<*>?

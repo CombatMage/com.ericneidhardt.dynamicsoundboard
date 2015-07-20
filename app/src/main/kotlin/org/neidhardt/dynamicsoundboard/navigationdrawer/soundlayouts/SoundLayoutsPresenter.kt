@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.Soun
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayouts
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
