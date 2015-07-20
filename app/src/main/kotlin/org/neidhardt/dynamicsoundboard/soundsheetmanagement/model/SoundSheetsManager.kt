@@ -7,6 +7,7 @@ import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
 import org.neidhardt.dynamicsoundboard.misc.Util
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent
@@ -33,6 +34,8 @@ public class SoundSheetsManager :
 
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
 	private val eventBus: EventBus = EventBus.getDefault()
+
+	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getApplicationComponent().soundLayoutsAccess
 
 	init
 	{
@@ -64,7 +67,7 @@ public class SoundSheetsManager :
 
 	private fun getDatabaseName(): String
 	{
-		val baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId()
+		val baseName = this.soundLayoutsAccess.getActiveSoundLayout().getDatabaseId()
 		if (baseName == SoundLayoutsManager.DB_DEFAULT)
 			return DB_SOUND_SHEETS_DEFAULT
 		return baseName + DB_SOUND_SHEETS
@@ -80,21 +83,21 @@ public class SoundSheetsManager :
 		return this.soundSheets
 	}
 
-	override fun addSoundSheetToManager(newSoundSheet: SoundSheet)
+	override fun addSoundSheetToManager(soundSheet: SoundSheet)
 	{
-		this.soundSheets.add(newSoundSheet)
+		this.soundSheets.add(soundSheet)
 
-		val isSelected = newSoundSheet.getIsSelected()
+		val isSelected = soundSheet.getIsSelected()
 
 		if (isSelected)
-			this.setSoundSheetSelected(newSoundSheet)
+			this.setSoundSheetSelected(soundSheet)
 
-		newSoundSheet.insertItemInDatabaseAsync()
+		soundSheet.insertItemInDatabaseAsync()
 
-		this.eventBus.post(SoundSheetAddedEvent(newSoundSheet))
+		this.eventBus.post(SoundSheetAddedEvent(soundSheet))
 	}
 
-	override fun removeSoundSheets(soundSheets: MutableList<SoundSheet>)
+	override fun removeSoundSheets(soundSheets: List<SoundSheet>)
 	{
 		val copyList = ArrayList<SoundSheet>(soundSheets.size());
 		copyList.addAll(soundSheets); // this is done to prevent concurrent modification exception

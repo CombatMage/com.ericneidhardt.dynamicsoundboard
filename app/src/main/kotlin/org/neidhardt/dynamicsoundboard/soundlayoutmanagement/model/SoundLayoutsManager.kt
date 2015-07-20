@@ -48,6 +48,11 @@ public class SoundLayoutsManager :
 		return this.daoSession
 	}
 
+	override fun getSoundLayouts(): List<SoundLayout>
+	{
+		return this.soundLayouts
+	}
+
 	override fun getActiveSoundLayout(): SoundLayout
 	{
 		for (soundLayout in this.soundLayouts)

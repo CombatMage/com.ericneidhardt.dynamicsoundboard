@@ -23,11 +23,11 @@ public interface SoundSheetsDataAccess
 	/**
 	 * Get the currently selected SoundSheet item.
 	 */
-	public fun getSelectedItem(): SoundSheet
+	public fun getSelectedItem(): SoundSheet?
 
 	/**
 	 * Get the SoundSheet item which corresponds to the given fragmentTag or null if no such items exists.
 	 * @return SoundSheet or null
 	 */
-	public fun getSoundSheetForFragmentTag(fragmentTag: String): SoundSheet
+	public fun getSoundSheetForFragmentTag(fragmentTag: String): SoundSheet?
 }

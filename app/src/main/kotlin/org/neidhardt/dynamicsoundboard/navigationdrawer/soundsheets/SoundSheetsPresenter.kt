@@ -60,7 +60,8 @@ public class SoundSheetsPresenter
 
 	public override fun onItemClick(data: SoundSheet)
 	{
-		if (this.isInSelectionMode()) {
+		if (this.isInSelectionMode())
+		{
 			data.setIsSelectedForDeletion(!data.getIsSelectedForDeletion())
 			this.adapter!!.notifyItemChanged(data)
 			super<NavigationDrawerListPresenter>.onItemSelectedForDeletion()
