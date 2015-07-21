@@ -1,7 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model;
 
+import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess;
 
 import java.util.List;
 import java.util.Map;
@@ -18,19 +19,21 @@ public class SoundsManagerUtil
 	private static final String DB_SOUNDS = "db_sounds";
 	private static final String DB_SOUNDS_PLAYLIST = "db_sounds_playlist";
 
-	static String getDatabaseNameSounds()
+	static String getDatabaseNameSounds(SoundLayoutsAccess soundLayoutsAccess)
 	{
-		if (SoundLayoutsManager.Companion.getInstance().getActiveSoundLayout().isDefaultLayout())
+		SoundLayout activeLayout = soundLayoutsAccess.getActiveSoundLayout();
+		if (activeLayout.isDefaultLayout())
 			return DB_SOUNDS_DEFAULT;
-		String baseName = SoundLayoutsManager.Companion.getInstance().getActiveSoundLayout().getDatabaseId();
+		String baseName = activeLayout.getDatabaseId();
 		return baseName + DB_SOUNDS;
 	}
 
-	static String getDatabaseNamePlayList()
+	static String getDatabaseNamePlayList(SoundLayoutsAccess soundLayoutsAccess)
 	{
-		if (SoundLayoutsManager.Companion.getInstance().getActiveSoundLayout().isDefaultLayout())
+		SoundLayout activeLayout = soundLayoutsAccess.getActiveSoundLayout();
+		if (activeLayout.isDefaultLayout())
 			return DB_SOUNDS_PLAYLIST_DEFAULT;
-		String baseName = SoundLayoutsManager.Companion.getInstance().getActiveSoundLayout().getDatabaseId();
+		String baseName = activeLayout.getDatabaseId();
 		return baseName + DB_SOUNDS_PLAYLIST;
 	}
 

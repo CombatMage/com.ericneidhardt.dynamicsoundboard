@@ -10,7 +10,7 @@ import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 
 /**
- * Created by eric.neidhardt on 27.05.2015.
+ * File created by eric.neidhardt on 27.05.2015.
  */
 public class NavigationDrawerHeader extends FrameLayout implements View.OnClickListener
 {

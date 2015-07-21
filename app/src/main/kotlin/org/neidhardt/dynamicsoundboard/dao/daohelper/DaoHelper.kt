@@ -9,8 +9,8 @@ import roboguice.util.SafeAsyncTask
  */
 public fun insertIntoDatabaseAsync(data: MediaPlayerData)
 {
-	val soundsDataUtil = DynamicSoundboardApplication.getApplicationComponent().soundsDataUtil
-	val soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundsDataStorage
+	val soundsDataUtil = DynamicSoundboardApplication.getStorage().soundsDataUtil
+	val soundsDataStorage = DynamicSoundboardApplication.getStorage().soundsDataStorage
 	val daoSession =
 			if (soundsDataUtil.isPlaylistPlayer(data))
 				soundsDataStorage.getDbPlaylist()
@@ -39,8 +39,8 @@ private class InsertPlayerAsyncTask
 
 public fun updateDatabaseAsync(data: MediaPlayerData)
 {
-	val soundsDataUtil = DynamicSoundboardApplication.getApplicationComponent().soundsDataUtil
-	val soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundsDataStorage
+	val soundsDataUtil = DynamicSoundboardApplication.getStorage().soundsDataUtil
+	val soundsDataStorage = DynamicSoundboardApplication.getStorage().soundsDataStorage
 
 	val daoSession =
 			if (soundsDataUtil.isPlaylistPlayer(data))
@@ -70,7 +70,7 @@ private class UpdatePlayerAsyncTask
 
 public fun insertIntoDatabaseAsync(data: SoundSheet)
 {
-	val soundSheetsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundSheetsDataStorage;
+	val soundSheetsDataStorage = DynamicSoundboardApplication.getStorage().soundSheetsDataStorage;
 	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
 
 	InsertSoundSheetAsyncTask(data, daoSession.getSoundSheetDao(), daoSession).execute()
@@ -95,7 +95,7 @@ private class InsertSoundSheetAsyncTask
 
 public fun updateDatabaseAsync(data: SoundSheet)
 {
-	val soundSheetsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundSheetsDataStorage;
+	val soundSheetsDataStorage = DynamicSoundboardApplication.getStorage().soundSheetsDataStorage;
 	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
 
 	UpdateSoundSheetsAsyncTask(data, daoSession.getSoundSheetDao(), daoSession).execute()
@@ -120,7 +120,7 @@ private class UpdateSoundSheetsAsyncTask
 
 public fun updateDatabaseAsync(data: SoundLayout)
 {
-	val soundLayoutsStorage = DynamicSoundboardApplication.getApplicationComponent().soundLayoutsStorage;
+	val soundLayoutsStorage = DynamicSoundboardApplication.getStorage().soundLayoutsStorage;
 	val daoSession = soundLayoutsStorage.getDbSoundLayouts()
 
 	UpdateSoundLayoutAsyncTask(data, daoSession.getSoundLayoutDao(), daoSession).execute()

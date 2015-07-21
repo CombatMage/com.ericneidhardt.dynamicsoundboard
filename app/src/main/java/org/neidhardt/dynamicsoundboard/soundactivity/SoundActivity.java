@@ -32,10 +32,11 @@ import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnSoundLayoutSelectedEventListener;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
@@ -70,8 +71,8 @@ public class SoundActivity
 			View.OnClickListener,
 			CustomEditText.OnTextEditedListener,
 			OnActionModeChangeRequestedEventListener,
-			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener,
-			SoundLayoutsPresenter.OnOpenSoundLayoutSettingsEvent,
+			OnSoundLayoutSelectedEventListener,
+			OnOpenSoundLayoutSettingsEvent,
 			OnSoundSheetOpenEventListener,
 			OnSoundSheetsInitEventLisenter,
 			OnSoundSheetsChangedEventListener
@@ -89,12 +90,12 @@ public class SoundActivity
 
 	private EventBus eventBus = EventBus.getDefault();
 
-	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataAccess();
-	private SoundsDataStorage soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataStorage();
-	private SoundsDataUtil soundsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataUtil();
+	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getStorage().getSoundsDataAccess();
+	private SoundsDataStorage soundsDataStorage = DynamicSoundboardApplication.getStorage().getSoundsDataStorage();
+	private SoundsDataUtil soundsDataUtil = DynamicSoundboardApplication.getStorage().getSoundsDataUtil();
 
-	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataAccess();
-	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataUtil();
+	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getStorage().getSoundSheetsDataAccess();
+	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getStorage().getSoundSheetsDataUtil();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -312,7 +313,7 @@ public class SoundActivity
 	}
 
 	@Override
-	public void onEvent(SoundLayoutSelectedEvent event)
+	public void onEvent(@NonNull SoundLayoutSelectedEvent event)
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets());
 		this.setSoundSheetActionsEnable(false);
@@ -322,9 +323,9 @@ public class SoundActivity
 		this.soundsDataUtil.init();
 	}
 	@Override
-	public void onEvent(OpenSoundLayoutSettingsEvent event)
+	public void onEvent(@NonNull OpenSoundLayoutSettingsEvent event)
 	{
-		SoundLayoutSettingsDialog.showInstance(this.getFragmentManager(), event.getSoundLayout().getDatabaseId());
+		SoundLayoutSettingsDialog.Companion.showInstance(this.getFragmentManager(), event.getSoundLayout().getDatabaseId());
 	}
 
 	@Override
@@ -471,9 +472,12 @@ public class SoundActivity
 		if (currentSoundSheetFragment != null)
 		{
 			SoundSheet soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.getFragmentTag());
-			soundSheet.setLabel(text);
-			soundSheet.updateItemInDatabaseAsync();
-			this.eventBus.post(new SoundSheetChangedEvent(soundSheet));
+			if (soundSheet != null)
+			{
+				soundSheet.setLabel(text);
+				soundSheet.updateItemInDatabaseAsync();
+				this.eventBus.post(new SoundSheetChangedEvent(soundSheet));
+			}
 		}
 	}
 

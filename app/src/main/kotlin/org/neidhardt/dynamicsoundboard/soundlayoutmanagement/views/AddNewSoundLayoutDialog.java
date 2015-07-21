@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views;
+package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -56,15 +56,15 @@ public class AddNewSoundLayoutDialog extends SoundLayoutDialog
 	@Override
 	protected void deliverResult()
 	{
-		String name = super.soundLayoutName.getDisplayedText();
+		String name = super.getSoundLayoutName().getDisplayedText();
 		SoundLayout layout = new SoundLayout();
 		layout.setIsSelected(false);
 		layout.setDatabaseId(SoundLayoutsManager.Companion.getNewDatabaseIdForLabel(name));
 		layout.setLabel(name);
 
-		DynamicSoundboardApplication.getApplicationComponent().getSoundLayoutsStorage().addSoundLayout(layout);
+		DynamicSoundboardApplication.getStorage().getSoundLayoutsStorage().addSoundLayout(layout);
 
-		EventBus.getDefault().post(new SoundLayoutAddedEvent());
+		EventBus.getDefault().post(new SoundLayoutAddedEvent(layout));
 	}
 
 	public interface OnSoundLayoutAddedEventListener

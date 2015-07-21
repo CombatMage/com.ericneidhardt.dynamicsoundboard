@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter
 public class SoundLayoutsAdapter
 (
 		private val presenter: SoundLayoutsPresenter,
-		private val eventBus: EventBu
+		private val eventBus: EventBus
 ) :
 		RecyclerView.Adapter<SoundLayoutViewHolder>(),
 		ListAdapter<SoundLayout>,
@@ -24,7 +24,7 @@ public class SoundLayoutsAdapter
 {
 	public fun getValues(): List<SoundLayout>
 	{
-		return this.presenter.getValues()
+		return this.presenter.values
 	}
 
 	override fun getItemCount(): Int
@@ -66,6 +66,6 @@ public class SoundLayoutsAdapter
 
 	override fun onItemClick(data: SoundLayout)
 	{
-		this.presenter.onItemClick
+		this.presenter.onItemClick(data)
 	}
 }

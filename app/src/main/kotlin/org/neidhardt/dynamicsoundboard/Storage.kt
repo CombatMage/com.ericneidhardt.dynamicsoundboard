@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsMan
 /**
  * File created by eric.neidhardt on 09.07.2015.
  */
-public class ApplicationComponent()
+public class Storage()
 {
 	private val soundsManager = SoundsManager()
 	private val soundSheetsManager = SoundSheetsManager()

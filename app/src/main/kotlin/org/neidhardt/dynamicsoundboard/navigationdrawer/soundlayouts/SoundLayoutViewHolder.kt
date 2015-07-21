@@ -31,7 +31,7 @@ public class SoundLayoutViewHolder
 	{
 		itemView.findViewById(R.id.b_settings).setOnClickListener({ view -> this.onSettingsClickedListener.onItemClick(this.data as SoundLayout)})
 		itemView.setOnClickListener({ view -> this.onItemClickedListener.onItemClick(this.data as SoundLayout)})
-		this.openSettings.setOnClickListener({ view-> this.onSettingsClickedListener.onItemClick(this.data as SoundLayout })
+		this.openSettings.setOnClickListener({ view-> this.onSettingsClickedListener.onItemClick(this.data as SoundLayout )})
 	}
 
 	public fun bindData(data: SoundLayout)

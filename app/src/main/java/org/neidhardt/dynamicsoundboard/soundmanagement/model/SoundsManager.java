@@ -9,6 +9,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 import org.neidhardt.dynamicsoundboard.misc.Util;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask;
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask;
@@ -30,6 +31,8 @@ public class SoundsManager
 
 	EventBus eventBus;
 
+	private SoundLayoutsAccess soundLayoutsAccess = DynamicSoundboardApplication.getStorage().getSoundLayoutsAccess();
+
 	private DaoSession dbPlaylist;
 	private DaoSession dbSounds;
 
@@ -49,7 +52,8 @@ public class SoundsManager
 	public DaoSession getDbSounds()
 	{
 		if (this.dbSounds == null)
-			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNameSounds());
+			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(),
+					SoundsManagerUtil.getDatabaseNameSounds(this.soundLayoutsAccess));
 		return this.dbSounds;
 	}
 
@@ -57,7 +61,8 @@ public class SoundsManager
 	public DaoSession getDbPlaylist()
 	{
 		if (this.dbPlaylist == null)
-			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNamePlayList());
+			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(),
+					SoundsManagerUtil.getDatabaseNamePlayList(this.soundLayoutsAccess));
 		return this.dbPlaylist;
 	}
 
@@ -72,8 +77,11 @@ public class SoundsManager
 			this.playlist = new ArrayList<>();
 			this.currentlyPlayingSounds = new HashSet<>();
 
-			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNamePlayList());
-			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), SoundsManagerUtil.getDatabaseNameSounds());
+			this.dbPlaylist = null;
+			this.dbPlaylist = this.getDbPlaylist();
+
+			this.dbSounds = null;
+			this.dbSounds = this.getDbSounds();
 
 			SafeAsyncTask task = new LoadSoundsFromDatabaseTask(this.dbSounds, this);
 			task.execute();

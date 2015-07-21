@@ -35,7 +35,7 @@ public class SoundSheetsManager :
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
 	private val eventBus: EventBus = EventBus.getDefault()
 
-	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getApplicationComponent().soundLayoutsAccess
+	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getStorage().soundLayoutsAccess
 
 	init
 	{

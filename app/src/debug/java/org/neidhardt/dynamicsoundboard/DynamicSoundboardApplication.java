@@ -16,7 +16,7 @@ public class DynamicSoundboardApplication extends Application {
 	private static Random random;
 	private static Context applicationContext;
 
-	private static ApplicationComponent applicationComponent;
+	private static Storage storage;
 
 	@Override
 	public void onCreate() {
@@ -25,7 +25,7 @@ public class DynamicSoundboardApplication extends Application {
 
 		random = new Random();
 		applicationContext = this.getApplicationContext();
-		applicationComponent = new ApplicationComponent();
+		storage = new Storage();
 	}
 
 	public static Context getSoundboardContext() {
@@ -36,9 +36,9 @@ public class DynamicSoundboardApplication extends Application {
 		return random.nextInt(Integer.MAX_VALUE);
 	}
 
-	public static ApplicationComponent getApplicationComponent()
+	public static Storage getStorage()
 	{
-		return applicationComponent;
+		return storage;
 	}
 
 }

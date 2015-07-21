@@ -84,7 +84,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		playListData.setUri(data.getUri());
 
 		return new EnhancedMediaPlayer(playListData,
-				DynamicSoundboardApplication.getApplicationComponent().getSoundsDataAccess());
+				DynamicSoundboardApplication.getStorage().getSoundsDataAccess());
 	}
 
 	public static MediaPlayerData getMediaPlayerData(String fragmentTag, Uri uri, String label)

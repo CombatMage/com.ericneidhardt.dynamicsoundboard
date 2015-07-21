@@ -20,11 +20,11 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDeco
 public class SoundSheets : NavigationDrawerList
 {
 
-	private val soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().soundsDataAccess
-	private val soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundsDataStorage
+	private val soundsDataAccess = DynamicSoundboardApplication.getStorage().soundsDataAccess
+	private val soundsDataStorage = DynamicSoundboardApplication.getStorage().soundsDataStorage
 
-	private val soundSheetsDataAccess = DynamicSoundboardApplication.getApplicationComponent().soundSheetsDataAccess
-	private val soundSheetsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundSheetsDataStorage
+	private val soundSheetsDataAccess = DynamicSoundboardApplication.getStorage().soundSheetsDataAccess
+	private val soundSheetsDataStorage = DynamicSoundboardApplication.getStorage().soundSheetsDataStorage
 
 	public var presenter: SoundSheetsPresenter = SoundSheetsPresenter(this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess, this.soundsDataStorage)
 	public var adapter: SoundSheetsAdapter  = SoundSheetsAdapter(this.presenter)

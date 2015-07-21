@@ -57,8 +57,8 @@ public class RenameSoundFileDialog : SoundSettingsBaseDialog {
 
 		val presenter = RenameSoundFileDialogPresenter(
 				playerData = this.player.getMediaPlayerData(),
-				soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().soundsDataAccess,
-				soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundsDataStorage,
+				soundsDataAccess = DynamicSoundboardApplication.getStorage().soundsDataAccess,
+				soundsDataStorage = DynamicSoundboardApplication.getStorage().soundsDataStorage,
 				dialog = this,
 				newName = view.findViewById(R.id.tv_new_name) as TextView,
 				renameAllOccurrences = view.findViewById(R.id.cb_rename_all_occurrences) as CheckBox

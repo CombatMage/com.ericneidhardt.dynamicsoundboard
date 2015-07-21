@@ -22,7 +22,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundL
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayouts;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout;
@@ -46,8 +46,8 @@ public class NavigationDrawerFragment
 	private static final int INDEX_SOUND_SHEETS = 0;
 	private static final int INDEX_PLAYLIST = 1;
 
-	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataUtil();
-	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataAccess();
+	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getStorage().getSoundSheetsDataUtil();
+	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getStorage().getSoundSheetsDataAccess();
 
 	private EventBus eventBus = EventBus.getDefault();
 

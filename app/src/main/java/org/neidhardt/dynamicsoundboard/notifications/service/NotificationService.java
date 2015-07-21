@@ -20,8 +20,8 @@ public class NotificationService extends Service implements ActivityStateChanged
 {
 	public static final String TAG = NotificationService.class.getName();
 
-	private SoundsDataUtil soundsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataUtil();
-	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundsDataAccess();
+	private SoundsDataUtil soundsDataUtil = DynamicSoundboardApplication.getStorage().getSoundsDataUtil();
+	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getStorage().getSoundsDataAccess();
 
 	private EventBus eventBus = EventBus.getDefault();
 

@@ -108,8 +108,8 @@ public class SoundSheetsPresenter
 	{
 		val fragmentTag = event.player.getMediaPlayerData().getFragmentTag()
 		val changedSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag)
-
-		this.adapter?.notifyItemChanged(changedSoundSheet)
+		if (changedSoundSheet != null)
+			this.adapter?.notifyItemChanged(changedSoundSheet)
 	}
 
 	override fun onEventMainThread(event: SoundsRemovedEvent)
