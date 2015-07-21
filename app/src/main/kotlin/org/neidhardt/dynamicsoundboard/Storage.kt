@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsUtil
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil
@@ -31,4 +32,5 @@ public class Storage()
 
 	public val soundLayoutsAccess: SoundLayoutsAccess = this.soundLayoutsManager
 	public val soundLayoutsStorage: SoundLayoutsStorage = this.soundLayoutsManager
+	public val soundLayoutsUtil: SoundLayoutsUtil = this.soundLayoutsManager
 }

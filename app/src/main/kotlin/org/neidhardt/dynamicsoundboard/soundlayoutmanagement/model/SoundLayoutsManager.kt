@@ -14,7 +14,8 @@ import java.util.*
 
 public class SoundLayoutsManager :
 		SoundLayoutsAccess,
-		SoundLayoutsStorage
+		SoundLayoutsStorage,
+		SoundLayoutsUtil
 {
 	companion object
 	{
@@ -73,7 +74,7 @@ public class SoundLayoutsManager :
 		this.daoSession.getSoundLayoutDao().insert(soundLayout)
 	}
 
-	public fun getSuggestedSoundLayoutName(): String
+	override fun getSuggestedName(): String
 	{
 		return DynamicSoundboardApplication.getSoundboardContext().getResources().getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size()
 	}
@@ -88,7 +89,7 @@ public class SoundLayoutsManager :
 		return layout
 	}
 
-	override public fun removeSoundLayouts(soundLayoutsToRemove: List<SoundLayout>)
+	override fun removeSoundLayouts(soundLayoutsToRemove: List<SoundLayout>)
 	{
 		this.soundLayouts.removeAll(soundLayoutsToRemove)
 

@@ -22,7 +22,7 @@ public class NavigationDrawerHeaderPresenter
 
 	private SoundLayoutsAccess soundLayoutModel;
 
-	public void setSoundLayoutModel(SoundLayoutsAccess soundLayoutModel)
+	public NavigationDrawerHeaderPresenter(SoundLayoutsAccess soundLayoutModel)
 	{
 		this.soundLayoutModel = soundLayoutModel;
 	}
@@ -48,7 +48,7 @@ public class NavigationDrawerHeaderPresenter
 
 	@Override
 	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutRenamedEvent event)
+	public void onEvent(@NonNull SoundLayoutRenamedEvent event)
 	{
 		if (this.getView() == null || this.soundLayoutModel == null)
 			return;

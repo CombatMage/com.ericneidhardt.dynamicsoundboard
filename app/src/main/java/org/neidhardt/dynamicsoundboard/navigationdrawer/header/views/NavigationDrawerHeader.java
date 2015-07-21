@@ -1,20 +1,22 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.header.views;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 
 /**
  * File created by eric.neidhardt on 27.05.2015.
  */
 public class NavigationDrawerHeader extends FrameLayout implements View.OnClickListener
 {
-	private NavigationDrawerHeaderPresenter presenter;
+
+	private NavigationDrawerHeaderPresenter presenter = new NavigationDrawerHeaderPresenter(DynamicSoundboardApplication.getStorage().getSoundLayoutsAccess());
 
 	private TextView currentLayoutName;
 	private View indicator;
@@ -42,8 +44,6 @@ public class NavigationDrawerHeader extends FrameLayout implements View.OnClickL
 
 	private void init(Context context)
 	{
-		this.presenter = new NavigationDrawerHeaderPresenter();
-
 		LayoutInflater.from(context).inflate(R.layout.navigation_drawer_header, this, true);
 		this.currentLayoutName = (TextView) this.findViewById(R.id.tv_current_sound_layout_name);
 		this.indicator = this.findViewById(R.id.iv_change_sound_layout_indicator);
@@ -55,7 +55,6 @@ public class NavigationDrawerHeader extends FrameLayout implements View.OnClickL
 	protected void onAttachedToWindow()
 	{
 		super.onAttachedToWindow();
-		this.presenter.setSoundLayoutModel(SoundLayoutsManager.Companion.getInstance());
 		this.presenter.onAttachedToWindow();
 	}
 
@@ -74,7 +73,7 @@ public class NavigationDrawerHeader extends FrameLayout implements View.OnClickL
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		this.presenter.onChangeLayoutClicked();
 	}

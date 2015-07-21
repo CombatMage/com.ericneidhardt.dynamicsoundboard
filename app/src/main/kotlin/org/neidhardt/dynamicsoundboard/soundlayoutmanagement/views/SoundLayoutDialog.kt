@@ -33,7 +33,7 @@ public abstract class SoundLayoutDialog : BaseDialog(), View.OnClickListener
 
 	protected abstract fun getLayoutId(): Int
 
-	protected abstract fun getHintForName(): String
+	protected abstract fun getHintForName(): String?
 
 	override fun onClick(v: View)
 	{

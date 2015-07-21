@@ -32,15 +32,20 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 
 	override fun getHintForName(): String
 	{
-		return this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!).getLabel()
+		return this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)?.getLabel() ?: ""
 	}
 
-	override fun deliverResult() {
-		val name = super.soundLayoutName!!.getDisplayedText()
-		SoundLayoutsManager.getInstance().updateSoundLayoutById(this.databaseId, name)
-		val renamedLayout = SoundLayoutsManager.getInstance().getSoundLayoutById(this.databaseId)
+	override fun deliverResult()
+	{
+		if (this.databaseId != null)
+		{
+			val name = super.soundLayoutName!!.getDisplayedText()
+			val layout = this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)
+			layout?.setLabel(name)
+			layout?.updateItemInDatabaseAsync()
 
-		EventBus.getDefault().post(SoundLayoutRenamedEvent(renamedLayout))
+			EventBus.getDefault().post(SoundLayoutRenamedEvent(layout))
+		}
 	}
 
 	public interface OnSoundLayoutRenamedEventListener {
