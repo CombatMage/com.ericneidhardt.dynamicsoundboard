@@ -58,7 +58,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.setLooping(data.getIsLoop());
 
 		this.currentState = State.IDLE;
-		this.init(DynamicSoundboardApplication.getSoundboardContext());
+		this.init(DynamicSoundboardApplication.Companion.getContext());
 	}
 
 	public EnhancedMediaPlayer(Context context, @NonNull MediaPlayerData data) throws IOException
@@ -84,14 +84,14 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		playListData.setUri(data.getUri());
 
 		return new EnhancedMediaPlayer(playListData,
-				DynamicSoundboardApplication.getStorage().getSoundsDataAccess());
+				DynamicSoundboardApplication.Companion.getSoundsDataAccess());
 	}
 
 	public static MediaPlayerData getMediaPlayerData(String fragmentTag, Uri uri, String label)
 	{
 		MediaPlayerData data = new MediaPlayerData();
 
-		String playerId = Integer.toString((uri.toString() + DynamicSoundboardApplication.getRandomNumber()).hashCode());
+		String playerId = Integer.toString((uri.toString() + DynamicSoundboardApplication.Companion.getRandomNumber()).hashCode());
 		data.setPlayerId(playerId);
 		data.setFragmentTag(fragmentTag);
 		data.setLabel(label);
@@ -108,7 +108,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.rawData.updateItemInDatabaseAsync();
 		this.reset();
 
-		this.init(DynamicSoundboardApplication.getSoundboardContext());
+		this.init(DynamicSoundboardApplication.Companion.getContext());
 	}
 
 	private void init(Context context) throws IOException
@@ -206,7 +206,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		try
 		{
 			if (this.currentState == State.IDLE || this.currentState == State.DESTROYED)
-				this.init(DynamicSoundboardApplication.getSoundboardContext());
+				this.init(DynamicSoundboardApplication.Companion.getContext());
 
 			if (this.currentState == State.INIT || this.currentState == State.STOPPED)
 				this.prepare();
@@ -254,11 +254,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			switch (this.currentState)
 			{
 				case IDLE:
-					this.init(DynamicSoundboardApplication.getSoundboardContext());
+					this.init(DynamicSoundboardApplication.Companion.getContext());
 					this.start();
 					break;
 				case DESTROYED:
-					this.init(DynamicSoundboardApplication.getSoundboardContext());
+					this.init(DynamicSoundboardApplication.Companion.getContext());
 					this.start();
 					break;
 				case INIT:

@@ -46,10 +46,10 @@ public class NavigationDrawerFragment
 	private static final int INDEX_SOUND_SHEETS = 0;
 	private static final int INDEX_PLAYLIST = 1;
 
-	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getStorage().getSoundSheetsDataUtil();
-	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getStorage().getSoundSheetsDataAccess();
+	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.Companion.getSoundSheetsDataUtil();
+	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.Companion.getSoundSheetsDataAccess();
 
-	private SoundLayoutsUtil soundLayoutsUtil = DynamicSoundboardApplication.getStorage().getSoundLayoutsUtil();
+	private SoundLayoutsUtil soundLayoutsUtil = DynamicSoundboardApplication.Companion.getSoundLayoutsUtil();
 
 	private EventBus eventBus = EventBus.getDefault();
 
@@ -265,7 +265,7 @@ public class NavigationDrawerFragment
 	 */
 	public void adjustViewPagerToContent()
 	{
-		Resources resources = DynamicSoundboardApplication.getSoundboardContext().getResources();
+		Resources resources = DynamicSoundboardApplication.Companion.getContext().getResources();
 		int childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item);
 		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
 		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);

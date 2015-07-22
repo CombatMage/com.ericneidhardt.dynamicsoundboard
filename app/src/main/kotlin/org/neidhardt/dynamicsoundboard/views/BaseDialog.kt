@@ -15,14 +15,14 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
  */
 public abstract class BaseDialog : DialogFragment()
 {
-	protected var soundSheetsDataAccess: SoundSheetsDataAccess = DynamicSoundboardApplication.getStorage().soundSheetsDataAccess
-	protected var soundSheetsDataStorage: SoundSheetsDataStorage = DynamicSoundboardApplication.getStorage().soundSheetsDataStorage
-	protected var soundSheetsDataUtil: SoundSheetsDataUtil = DynamicSoundboardApplication.getStorage().soundSheetsDataUtil
+	protected var soundSheetsDataAccess: SoundSheetsDataAccess = DynamicSoundboardApplication.soundSheetsDataAccess
+	protected var soundSheetsDataStorage: SoundSheetsDataStorage = DynamicSoundboardApplication.soundSheetsDataStorage
+	protected var soundSheetsDataUtil: SoundSheetsDataUtil = DynamicSoundboardApplication.soundSheetsDataUtil
 
-	protected var soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getStorage().soundsDataStorage
-	protected var soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getStorage().soundsDataAccess
+	protected var soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.soundsDataStorage
+	protected var soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.soundsDataAccess
 
-	public var soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getStorage().soundLayoutsAccess
+	public var soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.soundLayoutsAccess
 
 	public var mainView: DialogBaseLayout? = null
 

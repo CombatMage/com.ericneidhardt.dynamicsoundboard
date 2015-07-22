@@ -90,12 +90,12 @@ public class SoundActivity
 
 	private EventBus eventBus = EventBus.getDefault();
 
-	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.getStorage().getSoundsDataAccess();
-	private SoundsDataStorage soundsDataStorage = DynamicSoundboardApplication.getStorage().getSoundsDataStorage();
-	private SoundsDataUtil soundsDataUtil = DynamicSoundboardApplication.getStorage().getSoundsDataUtil();
+	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.Companion.getSoundsDataAccess();
+	private SoundsDataStorage soundsDataStorage = DynamicSoundboardApplication.Companion.getSoundsDataStorage();
+	private SoundsDataUtil soundsDataUtil = DynamicSoundboardApplication.Companion.getSoundsDataUtil();
 
-	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getStorage().getSoundSheetsDataAccess();
-	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getStorage().getSoundSheetsDataUtil();
+	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.Companion.getSoundSheetsDataAccess();
+	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.Companion.getSoundSheetsDataUtil();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)

@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.R;
 public class NavigationDrawerHeader extends FrameLayout implements View.OnClickListener
 {
 
-	private NavigationDrawerHeaderPresenter presenter = new NavigationDrawerHeaderPresenter(DynamicSoundboardApplication.getStorage().getSoundLayoutsAccess());
+	private NavigationDrawerHeaderPresenter presenter = new NavigationDrawerHeaderPresenter(DynamicSoundboardApplication.Companion.getSoundLayoutsAccess());
 
 	private TextView currentLayoutName;
 	private View indicator;

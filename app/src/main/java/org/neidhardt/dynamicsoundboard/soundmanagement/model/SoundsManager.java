@@ -31,7 +31,7 @@ public class SoundsManager
 
 	EventBus eventBus;
 
-	private SoundLayoutsAccess soundLayoutsAccess = DynamicSoundboardApplication.getStorage().getSoundLayoutsAccess();
+	private SoundLayoutsAccess soundLayoutsAccess = DynamicSoundboardApplication.Companion.getSoundLayoutsAccess();
 
 	private DaoSession dbPlaylist;
 	private DaoSession dbSounds;
@@ -52,7 +52,7 @@ public class SoundsManager
 	public DaoSession getDbSounds()
 	{
 		if (this.dbSounds == null)
-			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(),
+			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.Companion.getContext(),
 					SoundsManagerUtil.getDatabaseNameSounds(this.soundLayoutsAccess));
 		return this.dbSounds;
 	}
@@ -61,7 +61,7 @@ public class SoundsManager
 	public DaoSession getDbPlaylist()
 	{
 		if (this.dbPlaylist == null)
-			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(),
+			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.Companion.getContext(),
 					SoundsManagerUtil.getDatabaseNamePlayList(this.soundLayoutsAccess));
 		return this.dbPlaylist;
 	}

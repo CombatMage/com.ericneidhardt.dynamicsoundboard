@@ -106,7 +106,7 @@ public class LoadSoundsFromFileListTask
 	{
 		val soundUri = Uri.parse(file.getAbsolutePath())
 		val soundLabel = FileUtils.stripFileTypeFromName(
-				FileUtils.getFileNameFromUri(DynamicSoundboardApplication.getSoundboardContext(), soundUri))
+				FileUtils.getFileNameFromUri(DynamicSoundboardApplication.getContext(), soundUri))
 		return EnhancedMediaPlayer.getMediaPlayerData(fragmentTag, soundUri, soundLabel)
 	}
 

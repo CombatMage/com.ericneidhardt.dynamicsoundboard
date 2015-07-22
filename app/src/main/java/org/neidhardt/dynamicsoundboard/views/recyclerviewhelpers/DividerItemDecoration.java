@@ -16,9 +16,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 
 	public DividerItemDecoration()
 	{
-		this.colorBackground = DynamicSoundboardApplication.getSoundboardContext().getResources().getColor(R.color.background);
-		this.colorDivider = DynamicSoundboardApplication.getSoundboardContext().getResources().getColor(R.color.divider);
-		this.heightDivider = DynamicSoundboardApplication.getSoundboardContext().getResources().getDimensionPixelSize(R.dimen.stroke);
+		this.colorBackground = DynamicSoundboardApplication.Companion.getContext().getResources().getColor(R.color.background);
+		this.colorDivider = DynamicSoundboardApplication.Companion.getContext().getResources().getColor(R.color.divider);
+		this.heightDivider = DynamicSoundboardApplication.Companion.getContext().getResources().getDimensionPixelSize(R.dimen.stroke);
 	}
 
 	@Override

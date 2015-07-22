@@ -13,19 +13,19 @@ import org.neidhardt.dynamicsoundboard.misc.Util;
 public class SoundboardPreferences
 {
 	public static void registerSharedPreferenceChangedListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
-		Context context = DynamicSoundboardApplication.getSoundboardContext();
+		Context context = DynamicSoundboardApplication.Companion.getContext();
 		PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(listener);
 	}
 
 	public static void unregisterSharedPreferenceChangedListener(SharedPreferences.OnSharedPreferenceChangeListener listener)
 	{
-		Context context = DynamicSoundboardApplication.getSoundboardContext();
+		Context context = DynamicSoundboardApplication.Companion.getContext();
 		PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(listener);
 	}
 
 	public static boolean areNotificationsEnabled()
 	{
-		Context context = DynamicSoundboardApplication.getSoundboardContext();
+		Context context = DynamicSoundboardApplication.Companion.getContext();
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		return preferences.getBoolean(context.getString(R.string.preferences_enable_notifications_key), true);
 	}
@@ -35,14 +35,14 @@ public class SoundboardPreferences
 		if (!Util.IS_KITKAT_AVAILABLE)
 			return false;
 
-		Context context = DynamicSoundboardApplication.getSoundboardContext();
+		Context context = DynamicSoundboardApplication.Companion.getContext();
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		return preferences.getBoolean(context.getString(R.string.preferences_enable_immerse_mode_key), false);
 	}
 
 	public static boolean isOneSwipeToDeleteEnabled()
 	{
-		Context context = DynamicSoundboardApplication.getSoundboardContext();
+		Context context = DynamicSoundboardApplication.Companion.getContext();
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		return preferences.getBoolean(context.getString(R.string.preferences_enable_one_swipe_delete_key), false);
 	}
