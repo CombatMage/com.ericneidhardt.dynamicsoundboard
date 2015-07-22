@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.fileexplorer;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
@@ -10,6 +11,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo;
@@ -93,6 +95,7 @@ public class StoreLayoutDialog extends FileExplorerDialog implements LayoutStora
 		{
 			case R.id.b_add:
 				this.createFileAndSelect();
+				this.hideKeyboard();
 				break;
 			case R.id.b_cancel:
 				this.dismiss();
@@ -107,6 +110,14 @@ public class StoreLayoutDialog extends FileExplorerDialog implements LayoutStora
 				else
 					Toast.makeText(this.getActivity(), R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show();
 				break;
+		}
+	}
+
+	private void hideKeyboard()
+	{
+		if (this.inputFileName.hasFocus() && this.getActivity() != null) {
+			InputMethodManager inputManager = (InputMethodManager) this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputManager.hideSoftInputFromWindow(this.inputFileName.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
 

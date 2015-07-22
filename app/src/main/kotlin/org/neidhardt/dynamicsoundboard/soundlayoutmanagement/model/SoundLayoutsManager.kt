@@ -133,7 +133,7 @@ public class SoundLayoutsManager :
 			}
 			else if (i == position)
 			{
-				layout.setIsSelected(false)
+				layout.setIsSelected(true)
 				layout.updateItemInDatabaseAsync()
 			}
 		}
