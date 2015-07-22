@@ -30,7 +30,7 @@ public class SoundLayoutsManager :
 	}
 
 	private val soundLayouts: MutableList<SoundLayout> = ArrayList()
-	private val daoSession: DaoSession = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), DB_SOUND_LAYOUTS)
+	private val daoSession: DaoSession = Util.setupDatabase(DynamicSoundboardApplication.getContext(), DB_SOUND_LAYOUTS)
 
 	init
 	{
@@ -76,13 +76,13 @@ public class SoundLayoutsManager :
 
 	override fun getSuggestedName(): String
 	{
-		return DynamicSoundboardApplication.getSoundboardContext().getResources().getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size()
+		return DynamicSoundboardApplication.getContext().getResources().getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size()
 	}
 
 	private fun getDefaultSoundLayout(): SoundLayout
 	{
 		val layout = SoundLayout()
-		val label = DynamicSoundboardApplication.getSoundboardContext().getString(R.string.sound_layout_default)
+		val label = DynamicSoundboardApplication.getContext().getString(R.string.sound_layout_default)
 		layout.setDatabaseId(DB_DEFAULT)
 		layout.setLabel(label)
 		layout.setIsSelected(true)
@@ -133,7 +133,7 @@ public class SoundLayoutsManager :
 			}
 			else if (i == position)
 			{
-				layout.setIsSelected(false)
+				layout.setIsSelected(true)
 				layout.updateItemInDatabaseAsync()
 			}
 		}

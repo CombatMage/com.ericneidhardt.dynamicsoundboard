@@ -25,8 +25,8 @@ public class SoundLayouts : NavigationDrawerList
 {
 	private val eventBus: EventBus = EventBus.getDefault()
 
-	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getStorage().soundLayoutsAccess
-	private val soundLayoutsStorage: SoundLayoutsStorage = DynamicSoundboardApplication.getStorage().soundLayoutsStorage
+	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
+	private val soundLayoutsStorage: SoundLayoutsStorage = DynamicSoundboardApplication.getSoundLayoutsStorage()
 
 	public var presenter: SoundLayoutsPresenter = SoundLayoutsPresenter(this.soundLayoutsAccess, this.soundLayoutsStorage)
 	public var adapter: SoundLayoutsAdapter = SoundLayoutsAdapter(this.presenter, this.eventBus)

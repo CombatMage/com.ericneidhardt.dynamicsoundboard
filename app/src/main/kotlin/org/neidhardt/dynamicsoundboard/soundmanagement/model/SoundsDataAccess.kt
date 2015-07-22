@@ -41,5 +41,5 @@ public interface SoundsDataAccess
 	 * *
 	 * @return EnhancedMediaPlayer if the player was found, else null
 	 */
-	public fun getSoundById(fragmentTag: String, playerId: String): EnhancedMediaPlayer
+	public fun getSoundById(fragmentTag: String, playerId: String): EnhancedMediaPlayer?
 }

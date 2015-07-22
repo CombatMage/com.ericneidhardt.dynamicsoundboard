@@ -82,7 +82,7 @@ public class AddNewSoundDialog : BaseDialog
 
 		this.presenter = AddNewSoundDialogPresenter(
 				dialog = this,
-				soundsDataStorage = DynamicSoundboardApplication.getStorage().soundsDataStorage,
+				soundsDataStorage = this.soundsDataStorage,
 				add = view.findViewById(R.id.b_ok) as Button,
 				cancel = view.findViewById(R.id.b_cancel),
 				addAnotherSound = view.findViewById(R.id.b_add_another_sound),

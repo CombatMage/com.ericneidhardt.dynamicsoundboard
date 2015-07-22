@@ -14,12 +14,6 @@ public interface SoundsDataUtil
 	public fun initIfRequired()
 
 	/**
-	 * Check if `SoundsDataUtil.initIfRequired()` was called.
-	 * @return true if `SoundsDataUtil` is initIfRequired, else false.
-	 */
-	public fun isInit(): Boolean
-
-	/**
 	 * Release all existing `EnhancedMediaPlayer` loaded in sounds and playlist.
 	 */
 	public fun release()

@@ -41,7 +41,7 @@ public class AddPauseFloatingActionButton extends com.melnykov.fab.FloatingActio
 
 	private void init()
 	{
-		this.presenter = new AddPauseFloatingActionButtonPresenter(DynamicSoundboardApplication.getStorage().getSoundsDataAccess());
+		this.presenter = new AddPauseFloatingActionButtonPresenter(DynamicSoundboardApplication.Companion.getSoundsDataAccess());
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model
 
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 
 /**
@@ -15,12 +16,6 @@ public interface SoundSheetsDataUtil
 	public fun initIfRequired(): Boolean
 
 	/**
-	 * Check if `SoundSheetsDataUtil.initIfRequired()` was called.
-	 * @return true if `SoundSheetsDataUtil` is initIfRequired, else false.
-	 */
-	public fun isInit(): Boolean
-
-	/**
 	 * Generate a new SoundSheet instance with unique fragmentTag, derived from the given label.
 	 * @param label label of the new `SoundSheet`
 	 * *
@@ -32,4 +27,6 @@ public interface SoundSheetsDataUtil
 	 * Get suggested SoundSheet name to create a new SoundSheets
 	 */
 	public fun getSuggestedName(): String
+
+	public fun isPlaylistSoundSheet(fragmentTag: String): Boolean
 }
