@@ -55,7 +55,7 @@ public class NavigationDrawerFragment
 
 	private SlidingTabLayout tabBar;
 	private ViewPager tabContent;
-	private TabContentAdapter tabContentAdapter;
+	private TabContentAdapter tabContentAdapter = new TabContentAdapter();
 
 	private ViewGroup listContainer;
 	private SoundLayouts soundLayoutList;
@@ -76,7 +76,6 @@ public class NavigationDrawerFragment
 		this.setRetainInstance(true);
 
 		this.listObserver = new ViewPagerContentObserver();
-		this.tabContentAdapter = new TabContentAdapter();
 	}
 
 	@Nullable

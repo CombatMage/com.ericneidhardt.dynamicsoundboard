@@ -103,7 +103,7 @@ public class SoundActivity
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_base);
 
-		this.soundsDataUtil.init();
+		this.soundsDataUtil.initIfRequired();
 		this.soundSheetsDataUtil.initIfRequired();
 
 		this.initActionbar();
@@ -250,7 +250,7 @@ public class SoundActivity
 
 		this.setSoundSheetActionsEnable(false);
 
-		this.soundsDataUtil.init();
+		this.soundsDataUtil.initIfRequired();
 		if (this.soundSheetsDataUtil.initIfRequired())
 			this.onSoundSheetsInit();
 	}
@@ -320,7 +320,7 @@ public class SoundActivity
 		this.soundSheetsDataUtil.initIfRequired();
 
 		this.soundsDataUtil.release();
-		this.soundsDataUtil.init();
+		this.soundsDataUtil.initIfRequired();
 	}
 	@Override
 	public void onEvent(@NonNull OpenSoundLayoutSettingsEvent event)

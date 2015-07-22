@@ -146,7 +146,7 @@ public class NotificationHandler implements
 			return false;
 
 		int notificationId = correspondingNotification.getNotificationId();
-		EnhancedMediaPlayer player = SoundsManagerUtil.searchInMapForId(playerId, soundsDataAccess.getSounds());
+		EnhancedMediaPlayer player = SoundsManagerUtil.INSTANCE$.searchInMapForId(playerId, soundsDataAccess.getSounds());
 
 		if (player == null || !player.isPlaying() && this.service.isActivityVisible()) // if player stops playing and the service is still bound, we remove the notification
 		{
@@ -200,13 +200,13 @@ public class NotificationHandler implements
 
 			if (isInPlaylist)
 			{
-				EnhancedMediaPlayer player = SoundsManagerUtil.searchInListForId(playerId, soundsDataAccess.getPlaylist());
+				EnhancedMediaPlayer player = SoundsManagerUtil.INSTANCE$.searchInListForId(playerId, soundsDataAccess.getPlaylist());
 				if (!player.isPlaying())
 					this.removePlayListNotification();
 			}
 			else
 			{
-				EnhancedMediaPlayer player = SoundsManagerUtil.searchInMapForId(playerId, soundsDataAccess.getSounds());
+				EnhancedMediaPlayer player = SoundsManagerUtil.INSTANCE$.searchInMapForId(playerId, soundsDataAccess.getSounds());
 				if (player == null || !player.isPlaying())
 					this.removeNotificationForPlayer(playerId);
 			}
@@ -233,7 +233,7 @@ public class NotificationHandler implements
 
 		if (fragmentTag.equals(Playlist.TAG)) // update special playlist notification
 		{
-			EnhancedMediaPlayer player = SoundsManagerUtil.searchInListForId(playerId, soundsDataAccess.getPlaylist());
+			EnhancedMediaPlayer player = SoundsManagerUtil.INSTANCE$.searchInListForId(playerId, soundsDataAccess.getPlaylist());
 			if (player != null && isAlive)
 				this.handlePlaylistPlayerStateChanged(player);
 			else
@@ -277,7 +277,7 @@ public class NotificationHandler implements
 		int notificationId = correspondingNotification.getNotificationId();
 		EnhancedMediaPlayer player = this.getPlayingSoundFromPlaylist();
 		if (player == null)
-			player = SoundsManagerUtil.searchInListForId(correspondingNotification.getPlayerId(), soundsDataAccess.getPlaylist());
+			player = SoundsManagerUtil.INSTANCE$.searchInListForId(correspondingNotification.getPlayerId(), soundsDataAccess.getPlaylist());
 
 		if (!player.isPlaying() && this.service.isActivityVisible()) // if player stops playing and the service is still bound, we remove the notification
 		{
@@ -298,7 +298,7 @@ public class NotificationHandler implements
 	{
 		boolean isPendingNotification = this.updateOrRemovePendingNotification(playerId);
 		if (!isPendingNotification)
-			addNotification(getNotificationForSound(SoundsManagerUtil.searchInMapForId(playerId, soundsDataAccess.getSounds())));
+			addNotification(getNotificationForSound(SoundsManagerUtil.INSTANCE$.searchInMapForId(playerId, soundsDataAccess.getSounds())));
 	}
 
 	private EnhancedMediaPlayer getPlayingSoundFromPlaylist()
@@ -334,9 +334,9 @@ public class NotificationHandler implements
 			{
 				EnhancedMediaPlayer player;
 				if (notificationId == NotificationIds.NOTIFICATION_ID_PLAYLIST)
-					player = SoundsManagerUtil.searchInListForId(playerId, soundsDataAccess.getPlaylist());
+					player = SoundsManagerUtil.INSTANCE$.searchInListForId(playerId, soundsDataAccess.getPlaylist());
 				else
-					player = SoundsManagerUtil.searchInMapForId(playerId, soundsDataAccess.getSounds());
+					player = SoundsManagerUtil.INSTANCE$.searchInMapForId(playerId, soundsDataAccess.getSounds());
 				if (player == null)
 					return;
 				switch (action)
