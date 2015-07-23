@@ -6,13 +6,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.DaoSession;
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * File created by eric.neidhardt on 09.06.2015.
@@ -20,6 +15,7 @@ import static org.junit.Assert.*;
 public class SoundLayoutsManagerTest extends BaseTest
 {
 	private SoundLayoutsManager soundLayoutsManager;
+
 	@Mock private DaoSession mockSession;
 
 	@Override
@@ -30,30 +26,11 @@ public class SoundLayoutsManagerTest extends BaseTest
 		MockitoAnnotations.initMocks(this);
 
 		this.soundLayoutsManager = new SoundLayoutsManager();
-		this.soundLayoutsManager.setDaoSession(this.mockSession);
 	}
 
 	@Test
 	public void testGetSoundLayouts() throws Exception
 	{
 		assertNotNull(this.soundLayoutsManager.getSoundLayouts());
-	}
-
-	@Test
-	public void testSetSelected() throws Exception
-	{
-		List<SoundLayout> soundLayoutList = new ArrayList<>();
-		for (int i = 0; i < 3; i++)
-			soundLayoutList.add(new SoundLayout());
-		soundLayoutList.get(0).setIsSelected(true);
-		this.soundLayoutsManager.setSoundLayouts(soundLayoutList);
-
-		this.soundLayoutsManager.setSelected(1);
-
-		assertThat(soundLayoutList.get(0).getIsSelected(), equalTo(false));
-		assertThat(soundLayoutList.get(1).getIsSelected(), equalTo(true));
-		assertThat(soundLayoutList.get(2).getIsSelected(), equalTo(false));
-
-		assertSame(this.soundLayoutsManager.getActiveSoundLayout(), soundLayoutList.get(1));
 	}
 }

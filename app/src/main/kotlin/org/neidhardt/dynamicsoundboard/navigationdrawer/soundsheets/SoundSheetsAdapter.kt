@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter
 
-public class SoundSheetsAdapter
+public open class SoundSheetsAdapter
 (
 		private val presenter: SoundSheetsPresenter
 ) :

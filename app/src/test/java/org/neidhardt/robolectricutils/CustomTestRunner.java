@@ -17,8 +17,8 @@ public class CustomTestRunner extends RobolectricTestRunner
 {
 	private static final int MAX_SDK_LEVEL = 21;
 
-	public CustomTestRunner(Class<?> klass) throws InitializationError {
-		super(klass);
+	public CustomTestRunner(Class<?> aClass) throws InitializationError {
+		super(aClass);
 	}
 
 	@Override
@@ -44,22 +44,25 @@ public class CustomTestRunner extends RobolectricTestRunner
 	@Override
 	public Config getConfig(Method method) {
 		Config config = super.getConfig(method);
-		/*
-		Fixing up the Config:
-		* SDK can not be higher than 21
-		* constants must point to a real BuildConfig class
-		 */
-		config = new Config.Implementation(ensureSdkLevel(
-				config.emulateSdk()),
-				config.manifest(),
-				config.qualifiers(),
-				config.resourceDir(),
-				config.assetDir(),
-				ensureSdkLevel(config.reportSdk()),
-				config.shadows(),
-				config.application(),
-				config.libraries(),
-				ensureBuildConfig(config.constants()));
+		//
+		// Fixing up the Config:
+		// SDK can not be higher than 21
+		// constants must point to a real BuildConfig class
+		//
+		int[] sdks = {16};
+		config = new Config.Implementation
+				(
+						sdks,
+						config.manifest(),
+						config.qualifiers(),
+						config.packageName(),
+						config.resourceDir(),
+						config.assetDir(),
+						config.shadows(),
+						config.application(),
+						config.libraries(),
+						ensureBuildConfig(config.constants())
+				);
 
 		return config;
 	}

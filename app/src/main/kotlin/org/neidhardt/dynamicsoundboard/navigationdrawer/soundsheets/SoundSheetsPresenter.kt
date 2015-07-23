@@ -16,7 +16,7 @@ import java.util.HashSet
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
-public class SoundSheetsPresenter
+public open class SoundSheetsPresenter
 (
 		public val soundSheetsDataAccess: SoundSheetsDataAccess,
 		private val soundSheetsDataStorage: SoundSheetsDataStorage,

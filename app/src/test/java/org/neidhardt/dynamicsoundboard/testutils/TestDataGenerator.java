@@ -2,10 +2,8 @@ package org.neidhardt.dynamicsoundboard.testutils;
 
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.views.Playlist;
 
 import java.io.File;
 import java.util.Random;
@@ -53,40 +51,10 @@ public class TestDataGenerator
 		return player;
 	}
 
-	public static MediaPlayerData getRandomPlayerDataForPlayList() throws Exception
-	{
-		MediaPlayerData data = new MediaPlayerData();
-		data.setLabel("test");
-		data.setUri(createRandomFile());
-		data.setPlayerId(getRandomString());
-		data.setFragmentTag(Playlist.TAG);
-		data.setIsLoop(false);
-		data.setIsInPlaylist(false);
-		return data;
-	}
-
 	private static String createRandomFile() throws Exception
 	{
 		File file = BaseTest.createFile(getRandomString());
 		return file.getPath();
-	}
-
-	public static MediaPlayerData getMediaPlayerData(String label, String uri)
-	{
-		MediaPlayerData data = new MediaPlayerData();
-		data.setLabel(label);
-		data.setUri(uri);
-		data.setFragmentTag(Playlist.TAG);
-		return data;
-	}
-
-	public static SoundLayout getRandomSoundLayout()
-	{
-		SoundLayout testLayout = new SoundLayout();
-		testLayout.setLabel("test");
-		testLayout.setDatabaseId(getRandomString());
-		testLayout.setIsSelected(false);
-		return testLayout;
 	}
 
 	public static EnhancedMediaPlayer getMockEnhancedMediaPlayer(MediaPlayerData data)
