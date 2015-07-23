@@ -98,6 +98,29 @@ public class SoundSheetFragment :
 		this.scrollListener = SoundSheetScrollListener(this.dragSortRecycler)
 	}
 
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+	{
+		if (container == null)
+			return null
+
+		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
+
+		this.soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
+		this.soundLayout!!.setAdapter(this.soundAdapter)
+		this.soundLayout!!.setLayoutManager(LinearLayoutManager(this.getActivity()))
+		this.soundLayout!!.setItemAnimator(DefaultItemAnimator())
+		this.soundLayout!!.addItemDecoration(DividerItemDecoration())
+
+		this.soundLayout!!.addItemDecoration(this.dragSortRecycler)
+		this.soundLayout!!.addOnItemTouchListener(this.dragSortRecycler)
+		this.soundLayout!!.addOnScrollListener(this.scrollListener)
+		this.soundLayout!!.addOnScrollListener(this.dragSortRecycler!!.getScrollListener())
+
+		this.soundAdapter!!.recyclerView = this.soundLayout
+
+		return fragmentView
+	}
+
 	override fun onStart()
 	{
 		super<BaseFragment>.onStart()
@@ -179,30 +202,6 @@ public class SoundSheetFragment :
 			}
 			else -> return false
 		}
-	}
-
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-	{
-		if (container == null)
-			return null
-
-		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
-
-		this.soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
-		this.soundLayout!!.setAdapter(this.soundAdapter)
-		this.soundLayout!!.setLayoutManager(LinearLayoutManager(this.getActivity()))
-		this.soundLayout!!.setItemAnimator(DefaultItemAnimator())
-		this.soundLayout!!.addItemDecoration(DividerItemDecoration())
-
-		this.soundLayout!!.addItemDecoration(this.dragSortRecycler)
-		this.soundLayout!!.addOnItemTouchListener(this.dragSortRecycler)
-		this.soundLayout!!.addOnScrollListener(this.scrollListener)
-		this.soundLayout!!.addOnScrollListener(this.dragSortRecycler!!.getScrollListener())
-
-		this.soundAdapter!!.recyclerView = this.soundLayout
-		this.soundAdapter!!.notifyDataSetChanged()
-
-		return fragmentView
 	}
 
 	override fun onDragStart()
