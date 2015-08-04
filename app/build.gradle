@@ -16,8 +16,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
 		targetSdkVersion 22
-		versionCode 21501
-		versionName "2.15.1"
+		versionCode 21502
+		versionName "2.15.2"
 	}
 
 
