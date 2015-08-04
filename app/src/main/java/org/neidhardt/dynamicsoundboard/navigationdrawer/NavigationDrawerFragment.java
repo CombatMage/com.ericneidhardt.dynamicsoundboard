@@ -21,12 +21,12 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChang
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayouts;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayouts;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout;
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsUtil;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil;
@@ -46,14 +46,16 @@ public class NavigationDrawerFragment
 	private static final int INDEX_SOUND_SHEETS = 0;
 	private static final int INDEX_PLAYLIST = 1;
 
-	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataUtil();
-	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.getApplicationComponent().getSoundSheetsDataAccess();
+	private SoundSheetsDataUtil soundSheetsDataUtil = DynamicSoundboardApplication.Companion.getSoundSheetsDataUtil();
+	private SoundSheetsDataAccess soundSheetsDataAccess = DynamicSoundboardApplication.Companion.getSoundSheetsDataAccess();
+
+	private SoundLayoutsUtil soundLayoutsUtil = DynamicSoundboardApplication.Companion.getSoundLayoutsUtil();
 
 	private EventBus eventBus = EventBus.getDefault();
 
 	private SlidingTabLayout tabBar;
 	private ViewPager tabContent;
-	private TabContentAdapter tabContentAdapter;
+	private TabContentAdapter tabContentAdapter = new TabContentAdapter();
 
 	private ViewGroup listContainer;
 	private SoundLayouts soundLayoutList;
@@ -74,7 +76,6 @@ public class NavigationDrawerFragment
 		this.setRetainInstance(true);
 
 		this.listObserver = new ViewPagerContentObserver();
-		this.tabContentAdapter = new TabContentAdapter();
 	}
 
 	@Nullable
@@ -178,7 +179,7 @@ public class NavigationDrawerFragment
 		else if (id  == R.id.b_ok)
 		{
 			if (this.soundLayoutList.isActive())
-				AddNewSoundLayoutDialog.showInstance(this.getFragmentManager(), SoundLayoutsManager.getInstance().getSuggestedSoundLayoutName());
+				AddNewSoundLayoutDialog.Companion.showInstance(this.getFragmentManager(), this.soundLayoutsUtil.getSuggestedName());
 			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
 				new AddNewSoundDialog(this.getFragmentManager(), Playlist.TAG);
 			else
@@ -263,7 +264,7 @@ public class NavigationDrawerFragment
 	 */
 	public void adjustViewPagerToContent()
 	{
-		Resources resources = DynamicSoundboardApplication.getSoundboardContext().getResources();
+		Resources resources = DynamicSoundboardApplication.Companion.getContext().getResources();
 		int childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item);
 		int dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke);
 		int padding = resources.getDimensionPixelSize(R.dimen.margin_small);

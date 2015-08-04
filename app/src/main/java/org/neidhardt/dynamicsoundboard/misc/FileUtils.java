@@ -48,7 +48,7 @@ public class FileUtils
 
 	public static File getFileForUri(Uri uri)
 	{
-		Uri pathUri = getPathUriFromGenericUri(DynamicSoundboardApplication.getSoundboardContext(), uri);
+		Uri pathUri = getPathUriFromGenericUri(DynamicSoundboardApplication.Companion.getContext(), uri);
 		if (pathUri == null)
 			return null;
 

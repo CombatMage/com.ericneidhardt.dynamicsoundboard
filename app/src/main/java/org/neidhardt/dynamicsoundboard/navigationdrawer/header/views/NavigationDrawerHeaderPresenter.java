@@ -1,30 +1,28 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.header.views;
 
+import android.support.annotation.NonNull;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutModel;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.*;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess;
 
 /**
- * Created by eric.neidhardt on 27.05.2015.
+ * File created by eric.neidhardt on 27.05.2015.
  */
 public class NavigationDrawerHeaderPresenter
 		extends
 			BaseViewPresenter<NavigationDrawerHeader>
 		implements
 			SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
-			SoundLayoutsPresenter.OnSoundLayoutRemovedEventListener,
-			SoundLayoutsPresenter.OnSoundLayoutSelectedEventListener
+			OnSoundLayoutRemovedEventListener,
+			OnSoundLayoutSelectedEventListener
 {
 	private static final String TAG = NavigationDrawerHeaderPresenter.class.getName();
 
-	private SoundLayoutModel soundLayoutModel;
+	private SoundLayoutsAccess soundLayoutModel;
 
-	public void setSoundLayoutModel(SoundLayoutModel soundLayoutModel)
+	public NavigationDrawerHeaderPresenter(SoundLayoutsAccess soundLayoutModel)
 	{
 		this.soundLayoutModel = soundLayoutModel;
 	}
@@ -50,7 +48,7 @@ public class NavigationDrawerHeaderPresenter
 
 	@Override
 	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutRenamedEvent event)
+	public void onEvent(@NonNull SoundLayoutRenamedEvent event)
 	{
 		if (this.getView() == null || this.soundLayoutModel == null)
 			return;
@@ -60,7 +58,7 @@ public class NavigationDrawerHeaderPresenter
 
 	@Override
 	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutRemovedEvent event)
+	public void onEvent(@NonNull SoundLayoutRemovedEvent event)
 	{
 		if (this.getView() == null || this.soundLayoutModel == null)
 			return;
@@ -70,7 +68,7 @@ public class NavigationDrawerHeaderPresenter
 
 	@Override
 	@SuppressWarnings("unused")
-	public void onEvent(SoundLayoutSelectedEvent event)
+	public void onEvent(@NonNull SoundLayoutSelectedEvent event)
 	{
 		if (this.getView() == null || this.soundLayoutModel == null)
 			return;

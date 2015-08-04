@@ -6,17 +6,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -50,27 +45,9 @@ public class SoundSheetsPresenterTest extends BaseTest
 		SoundSheet data = mock(SoundSheet.class);
 		when(data.getIsSelectedForDeletion()).thenReturn(false);
 
-		this.presenter.onItemClick(null, data, 0);
+		this.presenter.onItemClick(data);
 
 		verify(data, times(1)).setIsSelectedForDeletion(true);
 	}
 
-	@Test
-	public void testDeleteSelectedItems() throws Exception
-	{
-		SoundSheet soundSheet = mock(SoundSheet.class);
-		when(soundSheet.getFragmentTag()).thenReturn("testTag");
-		when(soundSheet.getIsSelectedForDeletion()).thenReturn(true);
-
-		when(this.mockAdapter.getValues()).thenReturn(Collections.singletonList(soundSheet));
-
-		List<EnhancedMediaPlayer> soundsInSoundSheet = new ArrayList<>();
-		when(this.mockSoundsDataAccess.getSoundsInFragment("testTag")).thenReturn(soundsInSoundSheet);
-
-		this.presenter.deleteSelectedItems();
-
-		verify(this.mockSoundSheetsDataStorage, times(1)).removeSoundSheet(soundSheet);
-		verify(this.mockAdapter, times(1)).notifyDataSetChanged();
-		verify(this.mockSoundsDataStorage, times(1)).removeSounds(soundsInSoundSheet);
-	}
 }

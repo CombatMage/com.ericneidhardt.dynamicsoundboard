@@ -5,7 +5,8 @@ package org.neidhardt.dynamicsoundboard.dao;
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
 
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.dao.daohelper.DaohelperPackage;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 
 /**
  * Entity mapped to table SOUND_LAYOUT.
@@ -86,6 +87,12 @@ public class SoundLayout {
     public void setIsSelectedForDeletion(boolean isSelectedForDeletion) {
         this.isSelectedForDeletion = isSelectedForDeletion;
     }
+
+	public void updateItemInDatabaseAsync()
+	{
+		DaohelperPackage.updateDatabaseAsync(this);
+	}
+
     // KEEP METHODS END
 
 }

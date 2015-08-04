@@ -16,7 +16,7 @@ import java.util.HashSet
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
-public class SoundSheetsPresenter
+public open class SoundSheetsPresenter
 (
 		public val soundSheetsDataAccess: SoundSheetsDataAccess,
 		private val soundSheetsDataStorage: SoundSheetsDataStorage,
@@ -60,7 +60,8 @@ public class SoundSheetsPresenter
 
 	public override fun onItemClick(data: SoundSheet)
 	{
-		if (this.isInSelectionMode()) {
+		if (this.isInSelectionMode())
+		{
 			data.setIsSelectedForDeletion(!data.getIsSelectedForDeletion())
 			this.adapter!!.notifyItemChanged(data)
 			super<NavigationDrawerListPresenter>.onItemSelectedForDeletion()
@@ -107,8 +108,8 @@ public class SoundSheetsPresenter
 	{
 		val fragmentTag = event.player.getMediaPlayerData().getFragmentTag()
 		val changedSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag)
-
-		this.adapter?.notifyItemChanged(changedSoundSheet)
+		if (changedSoundSheet != null)
+			this.adapter?.notifyItemChanged(changedSoundSheet)
 	}
 
 	override fun onEventMainThread(event: SoundsRemovedEvent)

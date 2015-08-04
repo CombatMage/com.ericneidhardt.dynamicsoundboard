@@ -794,32 +794,32 @@ android.support.v4.media.session.MediaSessionCompat:
     private final java.util.ArrayList mActiveListeners
     public static final int FLAG_HANDLES_MEDIA_BUTTONS
     public static final int FLAG_HANDLES_TRANSPORT_CONTROLS
-    78:122:public MediaSessionCompat(android.content.Context,java.lang.String,android.content.ComponentName,android.app.PendingIntent)
-    78:127:private MediaSessionCompat(android.content.Context,android.support.v4.media.session.MediaSessionCompat$MediaSessionImpl)
-    137:138:public void setCallback(android.support.v4.media.session.MediaSessionCompat$Callback)
-    149:150:public void setCallback(android.support.v4.media.session.MediaSessionCompat$Callback,android.os.Handler)
-    161:162:public void setSessionActivity(android.app.PendingIntent)
-    178:179:public void setMediaButtonReceiver(android.app.PendingIntent)
-    187:188:public void setFlags(int)
-    201:202:public void setPlaybackToLocal(int)
-    220:224:public void setPlaybackToRemote(android.support.v4.media.VolumeProviderCompat)
-    240:244:public void setActive(boolean)
-    252:252:public boolean isActive()
-    264:268:public void sendSessionEvent(java.lang.String,android.os.Bundle)
-    276:277:public void release()
-    294:294:public android.support.v4.media.session.MediaSessionCompat$Token getSessionToken()
-    304:304:public android.support.v4.media.session.MediaControllerCompat getController()
-    313:314:public void setPlaybackState(android.support.v4.media.session.PlaybackStateCompat)
-    323:324:public void setMetadata(android.support.v4.media.MediaMetadataCompat)
-    338:339:public void setQueue(java.util.List)
-    349:350:public void setQueueTitle(java.lang.CharSequence)
-    366:367:public void setRatingType(int)
-    378:379:public void setExtras(android.os.Bundle)
-    392:392:public java.lang.Object getMediaSession()
-    406:406:public java.lang.Object getRemoteControlClient()
-    417:421:public void addOnActiveChangeListener(android.support.v4.media.session.MediaSessionCompat$OnActiveChangeListener)
-    430:434:public void removeOnActiveChangeListener(android.support.v4.media.session.MediaSessionCompat$OnActiveChangeListener)
-    444:444:public static android.support.v4.media.session.MediaSessionCompat obtain(android.content.Context,java.lang.Object)
+    78:130:public MediaSessionCompat(android.content.Context,java.lang.String,android.content.ComponentName,android.app.PendingIntent)
+    78:135:private MediaSessionCompat(android.content.Context,android.support.v4.media.session.MediaSessionCompat$MediaSessionImpl)
+    145:146:public void setCallback(android.support.v4.media.session.MediaSessionCompat$Callback)
+    157:158:public void setCallback(android.support.v4.media.session.MediaSessionCompat$Callback,android.os.Handler)
+    169:170:public void setSessionActivity(android.app.PendingIntent)
+    186:187:public void setMediaButtonReceiver(android.app.PendingIntent)
+    195:196:public void setFlags(int)
+    209:210:public void setPlaybackToLocal(int)
+    228:232:public void setPlaybackToRemote(android.support.v4.media.VolumeProviderCompat)
+    248:252:public void setActive(boolean)
+    260:260:public boolean isActive()
+    272:276:public void sendSessionEvent(java.lang.String,android.os.Bundle)
+    284:285:public void release()
+    302:302:public android.support.v4.media.session.MediaSessionCompat$Token getSessionToken()
+    312:312:public android.support.v4.media.session.MediaControllerCompat getController()
+    321:322:public void setPlaybackState(android.support.v4.media.session.PlaybackStateCompat)
+    331:332:public void setMetadata(android.support.v4.media.MediaMetadataCompat)
+    346:347:public void setQueue(java.util.List)
+    357:358:public void setQueueTitle(java.lang.CharSequence)
+    374:375:public void setRatingType(int)
+    386:387:public void setExtras(android.os.Bundle)
+    400:400:public java.lang.Object getMediaSession()
+    414:414:public java.lang.Object getRemoteControlClient()
+    425:429:public void addOnActiveChangeListener(android.support.v4.media.session.MediaSessionCompat$OnActiveChangeListener)
+    438:442:public void removeOnActiveChangeListener(android.support.v4.media.session.MediaSessionCompat$OnActiveChangeListener)
+    452:452:public static android.support.v4.media.session.MediaSessionCompat obtain(android.content.Context,java.lang.Object)
 android.support.v4.media.session.MediaSessionCompat$Callback
 android.support.v4.media.session.MediaSessionCompat$Callback$StubApi21
 android.support.v4.media.session.MediaSessionCompat$MediaSessionImpl
@@ -834,18 +834,18 @@ android.support.v4.media.session.MediaSessionCompat$OnActiveChangeListener
 android.support.v4.media.session.MediaSessionCompat$QueueItem:
     public static final int UNKNOWN_ID
     private java.lang.Object mItem
-    756:757:public MediaSessionCompat$QueueItem(android.support.v4.media.MediaDescriptionCompat,long)
-    759:769:private MediaSessionCompat$QueueItem(java.lang.Object,android.support.v4.media.MediaDescriptionCompat,long)
-    780:780:public android.support.v4.media.MediaDescriptionCompat getDescription()
-    787:787:public long getQueueId()
-    812:817:public java.lang.Object getQueueItem()
-    828:832:public static android.support.v4.media.session.MediaSessionCompat$QueueItem obtain(java.lang.Object)
+    764:765:public MediaSessionCompat$QueueItem(android.support.v4.media.MediaDescriptionCompat,long)
+    767:777:private MediaSessionCompat$QueueItem(java.lang.Object,android.support.v4.media.MediaDescriptionCompat,long)
+    788:788:public android.support.v4.media.MediaDescriptionCompat getDescription()
+    795:795:public long getQueueId()
+    820:825:public java.lang.Object getQueueItem()
+    836:840:public static android.support.v4.media.session.MediaSessionCompat$QueueItem obtain(java.lang.Object)
 android.support.v4.media.session.MediaSessionCompat$ResultReceiverWrapper:
-    865:867:public MediaSessionCompat$ResultReceiverWrapper(android.os.ResultReceiver)
-    862:862:static synthetic android.os.ResultReceiver access$600(android.support.v4.media.session.MediaSessionCompat$ResultReceiverWrapper)
+    873:875:public MediaSessionCompat$ResultReceiverWrapper(android.os.ResultReceiver)
+    870:870:static synthetic android.os.ResultReceiver access$600(android.support.v4.media.session.MediaSessionCompat$ResultReceiverWrapper)
 android.support.v4.media.session.MediaSessionCompat$Token:
-    680:683:public static android.support.v4.media.session.MediaSessionCompat$Token fromToken(java.lang.Object)
-    710:710:public java.lang.Object getToken()
+    688:691:public static android.support.v4.media.session.MediaSessionCompat$Token fromToken(java.lang.Object)
+    718:718:public java.lang.Object getToken()
 android.support.v4.media.session.MediaSessionCompatApi14
 android.support.v4.media.session.MediaSessionCompatApi14$Callback
 android.support.v4.media.session.MediaSessionCompatApi18
@@ -2906,22 +2906,22 @@ android.support.v7.app.AppCompatDelegate:
     public abstract void setHandleNativeActionModesEnabled(boolean)
     public abstract boolean isHandleNativeActionModesEnabled()
 android.support.v7.app.AppCompatDelegateImplBase:
-    218:218:public void setHandleNativeActionModesEnabled(boolean)
-    223:223:public boolean isHandleNativeActionModesEnabled()
+    220:220:public void setHandleNativeActionModesEnabled(boolean)
+    225:225:public boolean isHandleNativeActionModesEnabled()
 android.support.v7.app.AppCompatDelegateImplV14:
     41:42:public void setHandleNativeActionModesEnabled(boolean)
     46:46:public boolean isHandleNativeActionModesEnabled()
 android.support.v7.app.AppCompatDelegateImplV7:
-    1485:1485:android.view.ViewGroup getSubDecor()
+    1488:1488:android.view.ViewGroup getSubDecor()
 android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState:
     boolean wasLastOpen
     android.os.Bundle frozenMenuState
-    1659:1663:public void clearMenuPresenters()
-    1725:1734:android.os.Parcelable onSaveInstanceState()
-    1738:1745:void onRestoreInstanceState(android.os.Parcelable)
-    1748:1752:void applyFrozenState()
+    1662:1666:public void clearMenuPresenters()
+    1728:1737:android.os.Parcelable onSaveInstanceState()
+    1741:1748:void onRestoreInstanceState(android.os.Parcelable)
+    1751:1755:void applyFrozenState()
 android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState$SavedState:
-    1754:1754:synthetic AppCompatDelegateImplV7$PanelFeatureState$SavedState(android.support.v7.app.AppCompatDelegateImplV7$1)
+    1757:1757:synthetic AppCompatDelegateImplV7$PanelFeatureState$SavedState(android.support.v7.app.AppCompatDelegateImplV7$1)
 android.support.v7.app.AppCompatDialog:
     38:39:public AppCompatDialog(android.content.Context)
     53:54:protected AppCompatDialog(android.content.Context,boolean,android.content.DialogInterface$OnCancelListener)
@@ -2971,58 +2971,58 @@ android.support.v7.internal.app.NavItemSelectedListener
 android.support.v7.internal.app.NotificationCompatImpl21
 android.support.v7.internal.app.NotificationCompatImplBase
 android.support.v7.internal.app.ToolbarActionBar:
-    94:95:public void setCustomView(android.view.View)
-    99:101:public void setCustomView(android.view.View,android.support.v7.app.ActionBar$LayoutParams)
-    105:107:public void setCustomView(int)
-    111:112:public void setIcon(int)
-    116:117:public void setIcon(android.graphics.drawable.Drawable)
-    121:122:public void setLogo(int)
-    126:127:public void setLogo(android.graphics.drawable.Drawable)
-    132:132:public void setStackedBackgroundDrawable(android.graphics.drawable.Drawable)
-    137:137:public void setSplitBackgroundDrawable(android.graphics.drawable.Drawable)
-    151:151:public float getElevation()
-    161:161:public boolean isTitleTruncated()
-    171:172:public void setHomeAsUpIndicator(int)
-    176:177:public void setHomeActionContentDescription(java.lang.CharSequence)
-    201:202:public void setListNavigationCallbacks(android.widget.SpinnerAdapter,android.support.v7.app.ActionBar$OnNavigationListener)
-    206:214:public void setSelectedNavigationItem(int)
-    218:218:public int getSelectedNavigationIndex()
-    223:223:public int getNavigationItemCount()
-    228:229:public void setTitle(java.lang.CharSequence)
-    233:234:public void setTitle(int)
-    243:244:public void setSubtitle(java.lang.CharSequence)
-    248:249:public void setSubtitle(int)
-    253:254:public void setDisplayOptions(int)
-    264:265:public void setDisplayUseLogoEnabled(boolean)
-    269:270:public void setDisplayShowHomeEnabled(boolean)
-    279:280:public void setDisplayShowTitleEnabled(boolean)
-    284:285:public void setDisplayShowCustomEnabled(boolean)
-    289:290:public void setBackgroundDrawable(android.graphics.drawable.Drawable)
-    294:294:public android.view.View getCustomView()
-    299:299:public java.lang.CharSequence getTitle()
-    304:304:public java.lang.CharSequence getSubtitle()
-    309:309:public int getNavigationMode()
-    314:318:public void setNavigationMode(int)
-    327:327:public android.support.v7.app.ActionBar$Tab newTab()
-    333:333:public void addTab(android.support.v7.app.ActionBar$Tab)
-    339:339:public void addTab(android.support.v7.app.ActionBar$Tab,boolean)
-    345:345:public void addTab(android.support.v7.app.ActionBar$Tab,int)
-    351:351:public void addTab(android.support.v7.app.ActionBar$Tab,int,boolean)
-    357:357:public void removeTab(android.support.v7.app.ActionBar$Tab)
-    363:363:public void removeTabAt(int)
-    369:369:public void removeAllTabs()
-    375:375:public void selectTab(android.support.v7.app.ActionBar$Tab)
-    381:381:public android.support.v7.app.ActionBar$Tab getSelectedTab()
-    387:387:public android.support.v7.app.ActionBar$Tab getTabAt(int)
-    393:393:public int getTabCount()
-    398:398:public int getHeight()
-    405:406:public void show()
-    412:413:public void hide()
-    417:417:public boolean isShowing()
-    422:422:public boolean openOptionsMenu()
-    462:465:public boolean onMenuKeyEvent(android.view.KeyEvent)
-    475:476:public void addOnMenuVisibilityListener(android.support.v7.app.ActionBar$OnMenuVisibilityListener)
-    479:480:public void removeOnMenuVisibilityListener(android.support.v7.app.ActionBar$OnMenuVisibilityListener)
+    90:91:public void setCustomView(android.view.View)
+    95:97:public void setCustomView(android.view.View,android.support.v7.app.ActionBar$LayoutParams)
+    101:103:public void setCustomView(int)
+    107:108:public void setIcon(int)
+    112:113:public void setIcon(android.graphics.drawable.Drawable)
+    117:118:public void setLogo(int)
+    122:123:public void setLogo(android.graphics.drawable.Drawable)
+    128:128:public void setStackedBackgroundDrawable(android.graphics.drawable.Drawable)
+    133:133:public void setSplitBackgroundDrawable(android.graphics.drawable.Drawable)
+    147:147:public float getElevation()
+    157:157:public boolean isTitleTruncated()
+    167:168:public void setHomeAsUpIndicator(int)
+    172:173:public void setHomeActionContentDescription(java.lang.CharSequence)
+    197:198:public void setListNavigationCallbacks(android.widget.SpinnerAdapter,android.support.v7.app.ActionBar$OnNavigationListener)
+    202:210:public void setSelectedNavigationItem(int)
+    214:214:public int getSelectedNavigationIndex()
+    219:219:public int getNavigationItemCount()
+    224:225:public void setTitle(java.lang.CharSequence)
+    229:230:public void setTitle(int)
+    239:240:public void setSubtitle(java.lang.CharSequence)
+    244:245:public void setSubtitle(int)
+    249:250:public void setDisplayOptions(int)
+    260:261:public void setDisplayUseLogoEnabled(boolean)
+    265:266:public void setDisplayShowHomeEnabled(boolean)
+    275:276:public void setDisplayShowTitleEnabled(boolean)
+    280:281:public void setDisplayShowCustomEnabled(boolean)
+    285:286:public void setBackgroundDrawable(android.graphics.drawable.Drawable)
+    290:290:public android.view.View getCustomView()
+    295:295:public java.lang.CharSequence getTitle()
+    300:300:public java.lang.CharSequence getSubtitle()
+    305:305:public int getNavigationMode()
+    310:314:public void setNavigationMode(int)
+    323:323:public android.support.v7.app.ActionBar$Tab newTab()
+    329:329:public void addTab(android.support.v7.app.ActionBar$Tab)
+    335:335:public void addTab(android.support.v7.app.ActionBar$Tab,boolean)
+    341:341:public void addTab(android.support.v7.app.ActionBar$Tab,int)
+    347:347:public void addTab(android.support.v7.app.ActionBar$Tab,int,boolean)
+    353:353:public void removeTab(android.support.v7.app.ActionBar$Tab)
+    359:359:public void removeTabAt(int)
+    365:365:public void removeAllTabs()
+    371:371:public void selectTab(android.support.v7.app.ActionBar$Tab)
+    377:377:public android.support.v7.app.ActionBar$Tab getSelectedTab()
+    383:383:public android.support.v7.app.ActionBar$Tab getTabAt(int)
+    389:389:public int getTabCount()
+    394:394:public int getHeight()
+    401:402:public void show()
+    408:409:public void hide()
+    413:413:public boolean isShowing()
+    418:418:public boolean openOptionsMenu()
+    458:461:public boolean onMenuKeyEvent(android.view.KeyEvent)
+    471:472:public void addOnMenuVisibilityListener(android.support.v7.app.ActionBar$OnMenuVisibilityListener)
+    475:476:public void removeOnMenuVisibilityListener(android.support.v7.app.ActionBar$OnMenuVisibilityListener)
 android.support.v7.internal.app.WindowDecorActionBar:
     private static final java.lang.String TAG
     private android.support.v7.internal.app.WindowDecorActionBar$TabImpl mSelectedTab
@@ -3982,11 +3982,11 @@ android.support.v7.widget.Toolbar:
     947:948:public void setContentInsetsAbsolute(int,int)
     1721:1721:private static boolean isCustomView(android.view.View)
 android.support.v7.widget.Toolbar$ExpandedActionViewMenuPresenter:
-    1897:1897:public android.support.v7.internal.view.menu.MenuView getMenuView(android.view.ViewGroup)
-    1926:1926:public void setCallback(android.support.v7.internal.view.menu.MenuPresenter$Callback)
-    1991:1991:public int getId()
-    1996:1996:public android.os.Parcelable onSaveInstanceState()
-    2001:2001:public void onRestoreInstanceState(android.os.Parcelable)
+    1896:1896:public android.support.v7.internal.view.menu.MenuView getMenuView(android.view.ViewGroup)
+    1925:1925:public void setCallback(android.support.v7.internal.view.menu.MenuPresenter$Callback)
+    1990:1990:public int getId()
+    1995:1995:public android.os.Parcelable onSaveInstanceState()
+    2000:2000:public void onRestoreInstanceState(android.os.Parcelable)
 android.support.v7.widget.Toolbar$LayoutParams:
     static final int CUSTOM
     static final int SYSTEM
@@ -4463,16 +4463,20 @@ de.greenrobot.dao.AbstractDao:
     157:163:protected java.lang.Object loadUnique(android.database.Cursor)
     168:169:public java.util.List loadAll()
     174:178:public boolean detach(java.lang.Object)
+    197:198:public void insertInTx(java.lang.Iterable)
     207:208:public varargs void insertInTx(java.lang.Object[])
+    220:222:public void insertInTx(java.lang.Iterable,boolean)
     234:236:public void insertOrReplaceInTx(java.lang.Iterable,boolean)
     245:246:public void insertOrReplaceInTx(java.lang.Iterable)
     255:256:public varargs void insertOrReplaceInTx(java.lang.Object[])
+    259:285:private void executeInsertInTx(android.database.sqlite.SQLiteStatement,java.lang.Iterable,boolean)
     303:323:public long insertWithoutSettingPk(java.lang.Object)
     332:332:public long insertOrReplace(java.lang.Object)
     457:457:protected final java.lang.Object loadCurrentOther(de.greenrobot.dao.AbstractDao,android.database.Cursor,int)
     462:463:public varargs java.util.List queryRaw(java.lang.String,java.lang.String[])
     471:472:public varargs de.greenrobot.dao.query.Query queryRawCreate(java.lang.String,java.lang.Object[])
     480:480:public de.greenrobot.dao.query.Query queryRawCreateListArgs(java.lang.String,java.util.Collection)
+    487:491:public void deleteAll()
     597:598:public varargs void deleteInTx(java.lang.Object[])
     607:608:public void deleteByKeyInTx(java.lang.Iterable)
     617:618:public varargs void deleteByKeyInTx(java.lang.Object[])
@@ -4481,6 +4485,7 @@ de.greenrobot.dao.AbstractDao:
     749:750:public varargs void updateInTx(java.lang.Object[])
     759:759:public long count()
     protected abstract void readEntity(android.database.Cursor,java.lang.Object,int)
+    protected abstract boolean isEntityUpdateable()
 de.greenrobot.dao.AbstractDaoMaster:
     49:49:public int getSchemaVersion()
     54:54:public android.database.sqlite.SQLiteDatabase getDatabase()
@@ -4490,12 +4495,14 @@ de.greenrobot.dao.AbstractDaoSession:
     62:63:public long insert(java.lang.Object)
     69:70:public long insertOrReplace(java.lang.Object)
     76:78:public void refresh(java.lang.Object)
+    83:85:public void update(java.lang.Object)
     90:92:public void delete(java.lang.Object)
     97:99:public void deleteAll(java.lang.Class)
     104:105:public java.lang.Object load(java.lang.Class,java.lang.Object)
     111:112:public java.util.List loadAll(java.lang.Class)
     118:119:public varargs java.util.List queryRaw(java.lang.Class,java.lang.String,java.lang.String[])
     125:126:public de.greenrobot.dao.query.QueryBuilder queryBuilder(java.lang.Class)
+    130:134:public de.greenrobot.dao.AbstractDao getDao(java.lang.Class)
     155:161:public java.lang.Object callInTx(java.util.concurrent.Callable)
     170:181:public java.lang.Object callInTxNoException(java.util.concurrent.Callable)
     187:187:public android.database.sqlite.SQLiteDatabase getDatabase()
@@ -4552,15 +4559,19 @@ de.greenrobot.dao.async.AsyncOperationListener
 de.greenrobot.dao.async.AsyncSession
 de.greenrobot.dao.identityscope.IdentityScope:
     public abstract boolean detach(java.lang.Object,java.lang.Object)
+    public abstract void clear()
 de.greenrobot.dao.identityscope.IdentityScopeLong:
     99:108:public boolean detach(java.lang.Long,java.lang.Object)
+    136:142:public void clear()
     31:31:public bridge synthetic boolean detach(java.lang.Object,java.lang.Object)
 de.greenrobot.dao.identityscope.IdentityScopeObject:
     82:91:public boolean detach(java.lang.Object,java.lang.Object)
+    119:125:public void clear()
 de.greenrobot.dao.internal.DaoConfig:
     149:150:public void setIdentityScope(de.greenrobot.dao.identityscope.IdentityScope)
 de.greenrobot.dao.internal.LongHashMap:
     60:67:public boolean containsKey(long)
+    120:122:public void clear()
     125:125:public int size()
     155:164:public void logStats()
 de.greenrobot.dao.internal.SqlUtils:
@@ -5268,7 +5279,6 @@ kotlin.KotlinPackage:
     1:1:public static final long coerceIn(long,kotlin.LongRange)
     1:1:public static final short coerceIn(short,java.lang.Short,java.lang.Short)
     1:1:public static final short coerceIn(short,kotlin.ShortRange)
-    1:1:public static final int collectionSizeOrDefault(java.lang.Iterable,int)
     1:1:public static final java.lang.Integer collectionSizeOrNull(java.lang.Iterable)
     1:1:public static final java.lang.String commonPrefixWith(java.lang.CharSequence,java.lang.CharSequence,boolean)
     1:1:public static synthetic java.lang.String commonPrefixWith$default(java.lang.CharSequence,java.lang.CharSequence,boolean,int)
@@ -6528,7 +6538,6 @@ kotlin.KotlinPackage:
     1:1:public static final kotlin.Sequence sequence(kotlin.Sequence)
     1:1:public static final kotlin.Sequence sequence(short[])
     1:1:public static final kotlin.Sequence sequence(java.lang.String)
-    1:1:public static final java.lang.Object set(java.util.Map,java.lang.Object,java.lang.Object)
     1:1:public static final java.lang.Object single(java.lang.Object[])
     1:1:public static final java.lang.Object single(java.lang.Object[],kotlin.jvm.functions.Function1)
     1:1:public static final boolean single(boolean[])
@@ -7179,7 +7188,11 @@ kotlin.KotlinPackage$Maps$5d2f4dd1:
     371:373:public static final java.util.Map plus(java.util.Map,java.util.Map)
     247:380:public static final java.util.Map minus(java.util.Map,java.lang.Object)
     387:392:public static final java.util.Map minus(java.util.Map,java.lang.Iterable)
-kotlin.KotlinPackage$MapsJVM$325f57fc
+kotlin.KotlinPackage$MapsJVM$325f57fc:
+    20:20:public static final java.util.SortedMap toSortedMap(java.util.Map)
+    29:31:public static final java.util.SortedMap toSortedMap(java.util.Map,java.util.Comparator)
+    41:49:public static final varargs java.util.SortedMap sortedMapOf(kotlin.Pair[])
+    59:63:public static final java.util.Properties toProperties(java.util.Map)
 kotlin.KotlinPackage$MutableCollections$ce276519
 kotlin.KotlinPackage$Numbers$26df15a5
 kotlin.KotlinPackage$Operations$925eb79c
@@ -9065,28 +9078,33 @@ org.jetbrains.annotations.NotNull
 org.jetbrains.annotations.Nullable
 org.jetbrains.annotations.ReadOnly
 org.neidhardt.dynamicsoundboard.BuildConfig
+org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion:
+    24:24:public static final synthetic android.content.Context access$getApplicationContext$0(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
+    24:24:public static final synthetic org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager access$getSoundLayoutsManager$1(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
+    24:24:public static final synthetic org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManager access$getSoundsManager$2(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
+    24:24:public static final synthetic org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager access$getSoundSheetsManager$3(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
 org.neidhardt.dynamicsoundboard.R:
-    10:2849:public R()
+    10:2847:public R()
 org.neidhardt.dynamicsoundboard.R$anim
 org.neidhardt.dynamicsoundboard.R$attr
 org.neidhardt.dynamicsoundboard.R$bool
 org.neidhardt.dynamicsoundboard.R$color
 org.neidhardt.dynamicsoundboard.R$dimen:
-    1790:1790:public R$dimen()
+    1789:1789:public R$dimen()
 org.neidhardt.dynamicsoundboard.R$drawable:
-    1907:1907:public R$drawable()
+    1906:1906:public R$drawable()
 org.neidhardt.dynamicsoundboard.R$id:
-    2069:2069:public R$id()
+    2067:2067:public R$id()
 org.neidhardt.dynamicsoundboard.R$integer
 org.neidhardt.dynamicsoundboard.R$layout:
-    2296:2296:public R$layout()
+    2294:2294:public R$layout()
 org.neidhardt.dynamicsoundboard.R$menu
 org.neidhardt.dynamicsoundboard.R$string:
-    2389:2389:public R$string()
+    2387:2387:public R$string()
 org.neidhardt.dynamicsoundboard.R$style:
-    2535:2535:public R$style()
+    2533:2533:public R$style()
 org.neidhardt.dynamicsoundboard.R$styleable:
-    2849:2849:public R$styleable()
+    2847:2847:public R$styleable()
 org.neidhardt.dynamicsoundboard.R$xml
 org.neidhardt.dynamicsoundboard.SoundboardConfiguration
 org.neidhardt.dynamicsoundboard.dao.DaoMaster:
@@ -9103,12 +9121,14 @@ org.neidhardt.dynamicsoundboard.dao.MediaPlayerData:
 org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao:
     39:40:public MediaPlayerDataDao(de.greenrobot.dao.internal.DaoConfig)
     120:129:public void readEntity(android.database.Cursor,org.neidhardt.dynamicsoundboard.dao.MediaPlayerData,int)
+    151:151:protected boolean isEntityUpdateable()
     17:17:public bridge synthetic void readEntity(android.database.Cursor,java.lang.Object,int)
 org.neidhardt.dynamicsoundboard.dao.SoundLayout:
-    23:31:public SoundLayout(java.lang.Long)
+    24:32:public SoundLayout(java.lang.Long)
 org.neidhardt.dynamicsoundboard.dao.SoundLayoutDao:
     34:35:public SoundLayoutDao(de.greenrobot.dao.internal.DaoConfig)
     92:96:public void readEntity(android.database.Cursor,org.neidhardt.dynamicsoundboard.dao.SoundLayout,int)
+    118:118:protected boolean isEntityUpdateable()
     17:17:public bridge synthetic void readEntity(android.database.Cursor,java.lang.Object,int)
 org.neidhardt.dynamicsoundboard.dao.SoundSheet:
     23:31:public SoundSheet(java.lang.Long)
@@ -9116,13 +9136,13 @@ org.neidhardt.dynamicsoundboard.dao.SoundSheet:
 org.neidhardt.dynamicsoundboard.dao.SoundSheetDao:
     34:35:public SoundSheetDao(de.greenrobot.dao.internal.DaoConfig)
     92:96:public void readEntity(android.database.Cursor,org.neidhardt.dynamicsoundboard.dao.SoundSheet,int)
+    118:118:protected boolean isEntityUpdateable()
     17:17:public bridge synthetic void readEntity(android.database.Cursor,java.lang.Object,int)
 org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory:
     private static final java.lang.String KEY_CALLING_FRAGMENT_TAG
 org.neidhardt.dynamicsoundboard.fileexplorer.FileExplorerDialog$DirectoryAdapter:
     71:71:public final void setParentFile(java.io.File)
     75:75:public final void setFileList(java.util.List)
-org.neidhardt.dynamicsoundboard.fileexplorer.LayoutStorageDialog
 org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer:
     private static final int FADE_OUT_DURATION
     private static final int INT_VOLUME_MAX
@@ -9135,18 +9155,17 @@ org.neidhardt.dynamicsoundboard.misc.FileUtils:
     private static final java.lang.String AUDIO
     private static final java.lang.String SCHEME_CONTENT_URI
 org.neidhardt.dynamicsoundboard.misc.IntentRequest:
-    public static final int NOTIFICATION_OPEN_ACTIVITY
     6:6:public IntentRequest()
 org.neidhardt.dynamicsoundboard.misc.Logger:
     9:9:public Logger()
 org.neidhardt.dynamicsoundboard.misc.Util:
     public static final int SYSTEM_UI_FULL_IMMERSE
     public static final int SYSTEM_UI_NON_IMMERSE
-    24:24:public Util()
+    17:17:public Util()
 org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment:
     private static final int INDEX_SOUND_SHEETS
     private static final int INDEX_PLAYLIST
-    291:291:public org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist getPlaylist()
+    292:292:public org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist getPlaylist()
 org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener$$TImpl
 org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener
 org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter$OnOpenSoundLayoutsEvent
@@ -9154,25 +9173,26 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter:
     30:30:public final org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter getAdapter()
 org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistViewHolder:
     17:17:public static final synthetic void access$setPlayer$0(org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistViewHolder,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer)
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager:
-    private static final java.lang.String DB_SOUND_LAYOUTS
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog:
-    private static final java.lang.String KEY_SUGGESTED_NAME
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.AddNewSoundLayoutDialog$OnSoundLayoutAddedEventListener
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog:
-    private static final java.lang.String KEY_DATABASE_ID
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutSettingsDialog$OnSoundLayoutRenamedEventListener
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsAdapter:
-    23:23:public bridge synthetic void notifyItemChanged(java.lang.Object)
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter$OnOpenSoundLayoutSettingsEvent
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter$OnSoundLayoutRemovedEventListener
-org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.views.SoundLayoutsPresenter$OnSoundLayoutSelectedEventListener
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutViewHolder:
+    15:15:public static final synthetic void access$setData$0(org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutViewHolder,org.neidhardt.dynamicsoundboard.dao.SoundLayout)
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsAdapter:
+    16:16:public bridge synthetic void notifyItemChanged(java.lang.Object)
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter:
+    31:31:public final org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsAdapter getAdapter()
+    33:33:public final void setValues(java.util.List)
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEvent
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEvent$$TImpl
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnSoundLayoutRemovedEventListener
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnSoundLayoutRemovedEventListener$$TImpl
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnSoundLayoutSelectedEventListener
+org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnSoundLayoutSelectedEventListener$$TImpl
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder:
     14:14:public static final synthetic void access$setData$0(org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetViewHolder,org.neidhardt.dynamicsoundboard.dao.SoundSheet)
 org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter:
     31:31:public final org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter getAdapter()
     21:21:public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess getSoundSheetsDataAccess()
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter:
+    public abstract void deleteSelectedItems()
     92:93:public void setIsInSelectionMode(boolean)
 org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout:
     private static final int TITLE_OFFSET_DIPS
@@ -9186,17 +9206,17 @@ org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabStrip:
     private static final int DEFAULT_DIVIDER_THICKNESS_DIPS
     private static final byte DEFAULT_DIVIDER_COLOR_ALPHA
     private static final float DEFAULT_DIVIDER_HEIGHT
-org.neidhardt.dynamicsoundboard.notifications.BitmapUtil:
-    12:12:BitmapUtil()
-org.neidhardt.dynamicsoundboard.notifications.NotificationIds:
-    public static final java.lang.String KEY_PLAYER_ID
-    public static final java.lang.String KEY_NOTIFICATION_ID
-    public static final java.lang.String ACTION_DISMISS
-    public static final java.lang.String ACTION_PLAY
-    public static final java.lang.String ACTION_PAUSE
-    public static final java.lang.String ACTION_STOP
-    public static final java.lang.String ACTION_FADE_OUT
-    6:6:public NotificationIds()
+org.neidhardt.dynamicsoundboard.notifications.NotificationsPackage
+org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification:
+    public final int component1()
+    public final java.lang.String component2()
+    public final android.app.Notification component3()
+    public final org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification copy(int,java.lang.String,android.app.Notification)
+    public static synthetic org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification copy$default(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification,int,java.lang.String,android.app.Notification,int)
+org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder:
+    public PendingSoundNotificationBuilder(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String)
+    public PendingSoundNotificationBuilder(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int)
+    public PendingSoundNotificationBuilder(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer)
 org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences:
     13:13:public SoundboardPreferences()
 org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter:
@@ -9205,7 +9225,6 @@ org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter:
 org.neidhardt.dynamicsoundboard.presenter.ViewPresenter:
     public abstract java.lang.Object getView()
 org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
-org.neidhardt.dynamicsoundboard.soundcontrol.OnItemDeleteListener
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundDragSortRecycler:
     private static final float FLOATING_ITEM_ALPHA
     private static final int FLOATING_ITEM_BG_COLOR_ID
@@ -9221,6 +9240,15 @@ org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment:
     75:75:public final void setSoundsDataAccess(org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess)
 org.neidhardt.dynamicsoundboard.soundcontrol.SoundcontrolPackage
 org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener
+org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess$$TImpl
+org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage$$TImpl
+org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsUtil$$TImpl
+org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog$OnSoundLayoutAddedEventListener
+org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog$OnSoundLayoutAddedEventListener$$TImpl
+org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutDialog:
+    17:17:protected final void setSoundLayoutName(org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText)
+org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog$OnSoundLayoutRenamedEventListener
+org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog$OnSoundLayoutRenamedEventListener$$TImpl
 org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog:
     48:48:public final void setCallingFragmentTag(java.lang.String)
 org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialogPresenter:
@@ -9256,19 +9284,18 @@ org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent:
     public final java.util.List component1()
     public final org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent copy(java.util.List)
     public static synthetic org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent copy$default(org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent,java.util.List,int)
+org.neidhardt.dynamicsoundboard.soundmanagement.model.ModelPackage
+org.neidhardt.dynamicsoundboard.soundmanagement.model.ModelPackage$SoundsManagerUtil$e79b96d7:
+    10:10:public static final java.lang.String getDB_SOUNDS_DEFAULT()
+    11:11:public static final java.lang.String getDB_SOUNDS_PLAYLIST_DEFAULT()
+    13:13:public static final java.lang.String getDB_SOUNDS()
+    14:14:public static final java.lang.String getDB_SOUNDS_PLAYLIST()
+org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess$$TImpl
 org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage:
     public abstract void removeSoundDataFromDatabase(org.neidhardt.dynamicsoundboard.dao.MediaPlayerData)
     public abstract void removePlaylistDataFromDatabase(org.neidhardt.dynamicsoundboard.dao.MediaPlayerData)
-org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil:
-    public abstract boolean isInit()
-org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManager:
-    89:89:public boolean isInit()
-org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManagerUtil:
-    static final java.lang.String DB_SOUNDS_DEFAULT
-    static final java.lang.String DB_SOUNDS_PLAYLIST_DEFAULT
-    private static final java.lang.String DB_SOUNDS
-    private static final java.lang.String DB_SOUNDS_PLAYLIST
-    13:13:public SoundsManagerUtil()
+org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage$$TImpl
+org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil$$TImpl
 org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent:
     private static final java.lang.String KEY_SOUND_URI
     private static final java.lang.String KEY_SUGGESTED_NAME
@@ -9301,10 +9328,9 @@ org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEv
     public final java.util.List component1()
     public final org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent copy(java.util.List)
     public static synthetic org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent copy$default(org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent,java.util.List,int)
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil:
-    public abstract boolean isInit()
-org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager:
-    62:62:public boolean isInit()
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess$$TImpl
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage$$TImpl
+org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil$$TImpl
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog:
     private static final java.lang.String KEY_SUGGESTED_NAME
 org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog:
@@ -9315,6 +9341,7 @@ org.neidhardt.dynamicsoundboard.views.BaseDialog:
     20:20:protected final void setSoundSheetsDataUtil(org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil)
     22:22:protected final void setSoundsDataStorage(org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage)
     23:23:protected final void setSoundsDataAccess(org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess)
+    25:25:public final void setSoundLayoutsAccess(org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess)
 org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter
 org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.RecyclerviewhelpersPackage
 org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter:

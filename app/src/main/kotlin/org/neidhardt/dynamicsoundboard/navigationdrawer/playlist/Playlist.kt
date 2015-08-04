@@ -26,8 +26,8 @@ public class Playlist : NavigationDrawerList
 		public val TAG: String = javaClass<Playlist>().getName()
 	}
 
-	private val soundsDataStorage = DynamicSoundboardApplication.getApplicationComponent().soundsDataStorage
-	private val soundsDataAccess = DynamicSoundboardApplication.getApplicationComponent().soundsDataAccess
+	private val soundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
+	private val soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
 
 	public val presenter: PlaylistPresenter = PlaylistPresenter(this.soundsDataStorage, this.soundsDataAccess)
 	public val adapter:PlaylistAdapter = PlaylistAdapter(this.presenter)

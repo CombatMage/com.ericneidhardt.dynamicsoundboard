@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundL
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutModel;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -22,7 +22,7 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	private NavigationDrawerHeaderPresenter presenter;
 
 	private NavigationDrawerHeader view;
-	private SoundLayoutModel soundLayoutModel;
+	private SoundLayoutsAccess soundLayoutModel;
 	private EventBus bus;
 
 	@Override
@@ -37,11 +37,10 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 		SoundLayout activeSoundLayout = mock(SoundLayout.class);
 		when(activeSoundLayout.getLabel()).thenReturn("testLabel");
 
-		this.soundLayoutModel = mock(SoundLayoutModel.class);
+		this.soundLayoutModel = mock(SoundLayoutsAccess.class);
 		when(this.soundLayoutModel.getActiveSoundLayout()).thenReturn(activeSoundLayout);
 
-		this.presenter = new NavigationDrawerHeaderPresenter();
-		this.presenter.setSoundLayoutModel(this.soundLayoutModel);
+		this.presenter = new NavigationDrawerHeaderPresenter(this.soundLayoutModel);
 		this.presenter.setView(this.view);
 		this.presenter.setEventBus(this.bus);
 	}
@@ -63,13 +62,6 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	public void testOnAttachedToWindow_2() throws Exception
 	{
 		this.presenter.setView(null);
-		this.presenter.onAttachedToWindow();
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void testOnAttachedToWindow_3() throws Exception
-	{
-		this.presenter.setSoundLayoutModel(null);
 		this.presenter.onAttachedToWindow();
 	}
 

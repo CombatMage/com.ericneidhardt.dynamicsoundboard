@@ -7,7 +7,9 @@ import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
 import org.neidhardt.dynamicsoundboard.misc.Util
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.model.SoundLayoutsManager
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent
@@ -34,6 +36,8 @@ public class SoundSheetsManager :
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
 	private val eventBus: EventBus = EventBus.getDefault()
 
+	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
+
 	init
 	{
 		this.initIfRequired()
@@ -46,7 +50,7 @@ public class SoundSheetsManager :
 			this.isInitDone = true
 
 			this.soundSheets.clear()
-			this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getSoundboardContext(), this.getDatabaseName())
+			this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getContext(), this.getDatabaseName())
 
 			val task = LoadSoundSheetsTask(this.getDbSoundSheets(), this)
 			task.execute()
@@ -57,44 +61,35 @@ public class SoundSheetsManager :
 			return false
 	}
 
-	override fun isInit(): Boolean
-	{
-		return this.isInitDone
-	}
-
 	private fun getDatabaseName(): String
 	{
-		val baseName = SoundLayoutsManager.getInstance().getActiveSoundLayout().getDatabaseId()
+		val baseName = this.soundLayoutsAccess.getActiveSoundLayout().getDatabaseId()
 		if (baseName == SoundLayoutsManager.DB_DEFAULT)
 			return DB_SOUND_SHEETS_DEFAULT
 		return baseName + DB_SOUND_SHEETS
 	}
 
-	override fun getDbSoundSheets(): DaoSession
-	{
-		return this.daoSession as DaoSession
-	}
+	override fun isPlaylistSoundSheet(fragmentTag: String): Boolean = fragmentTag.equals(Playlist.TAG)
 
-	override fun getSoundSheets(): List<SoundSheet>
-	{
-		return this.soundSheets
-	}
+	override fun getDbSoundSheets(): DaoSession = this.daoSession as DaoSession
 
-	override fun addSoundSheetToManager(newSoundSheet: SoundSheet)
-	{
-		this.soundSheets.add(newSoundSheet)
+	override fun getSoundSheets(): List<SoundSheet> = this.soundSheets
 
-		val isSelected = newSoundSheet.getIsSelected()
+	override fun addSoundSheetToManager(soundSheet: SoundSheet)
+	{
+		this.soundSheets.add(soundSheet)
+
+		val isSelected = soundSheet.getIsSelected()
 
 		if (isSelected)
-			this.setSoundSheetSelected(newSoundSheet)
+			this.setSoundSheetSelected(soundSheet)
 
-		newSoundSheet.insertItemInDatabaseAsync()
+		soundSheet.insertItemInDatabaseAsync()
 
-		this.eventBus.post(SoundSheetAddedEvent(newSoundSheet))
+		this.eventBus.post(SoundSheetAddedEvent(soundSheet))
 	}
 
-	override fun removeSoundSheets(soundSheets: MutableList<SoundSheet>)
+	override fun removeSoundSheets(soundSheets: List<SoundSheet>)
 	{
 		val copyList = ArrayList<SoundSheet>(soundSheets.size());
 		copyList.addAll(soundSheets); // this is done to prevent concurrent modification exception
@@ -154,7 +149,7 @@ public class SoundSheetsManager :
 
 	override fun getSuggestedName(): String
 	{
-		return DynamicSoundboardApplication.getSoundboardContext()
+		return DynamicSoundboardApplication.getContext()
 				.getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size()
 	}
 
