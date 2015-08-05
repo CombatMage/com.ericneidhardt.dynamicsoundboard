@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -106,7 +107,7 @@ class SlidingTabStrip extends LinearLayout {
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas) {
+	protected void onDraw(@NonNull Canvas canvas) {
 		final int height = getHeight();
 		final int childCount = getChildCount();
 		final int dividerHeightPx = (int) (Math.min(Math.max(0f, mDividerHeight), 1f) * height);
