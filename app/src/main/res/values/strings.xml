@@ -102,7 +102,8 @@
 		com.github.johnkil.android-robototextview:robototextview 2.3.0,
 		com.emtronics.dragsortrecycler:DragSortRecycler,
 		com.github.castorflex.smoothprogressbar:library,
-		com.google.dagger:dagger
+		com.google.dagger:dagger,
+		jp.wasabeef:recyclerview-animators:1.2.1
 	</string>
 	<string name="about_used_third_party_assets_title">Verwendete Ressourcen</string>
 	<string name="about_used_third_party_assets_summary">
