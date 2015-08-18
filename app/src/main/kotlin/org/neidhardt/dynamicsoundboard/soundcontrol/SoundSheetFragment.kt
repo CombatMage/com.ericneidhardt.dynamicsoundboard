@@ -3,7 +3,6 @@ package org.neidhardt.dynamicsoundboard.soundcontrol
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.emtronics.dragsortrecycler.DragSortRecycler
 import de.greenrobot.event.EventBus
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
@@ -65,11 +65,12 @@ public class SoundSheetFragment :
 
 	private var eventBus: EventBus = EventBus.getDefault()
 
+	private var dragSortRecycler: SoundDragSortRecycler? = null
+	private var scrollListener: SoundSheetScrollListener? = null
 	private var soundPresenter: SoundPresenter? = null
 	private var soundAdapter: SoundAdapter? = null
 	private var soundLayout: RecyclerView? = null
-	private var dragSortRecycler: SoundDragSortRecycler? = null
-	private var scrollListener: SoundSheetScrollListener? = null
+	private val soundLayoutAnimator = SlideInLeftAnimator()
 
 	var soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
 	var soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
@@ -84,7 +85,7 @@ public class SoundSheetFragment :
 		val args = this.getArguments()
 
 		var fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
-				?: throw NullPointerException(LOG_TAG + ": cannot create fragment, given fragmentTAg is null")
+				?: throw NullPointerException(LOG_TAG + ": cannot create fragment, given fragmentTag is null")
 
 		this.fragmentTag = fragmentTag as String
 
@@ -108,7 +109,7 @@ public class SoundSheetFragment :
 		this.soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
 		this.soundLayout!!.setAdapter(this.soundAdapter)
 		this.soundLayout!!.setLayoutManager(LinearLayoutManager(this.getActivity()))
-		this.soundLayout!!.setItemAnimator(DefaultItemAnimator())
+		this.soundLayout!!.setItemAnimator(this.soundLayoutAnimator)
 		this.soundLayout!!.addItemDecoration(DividerItemDecoration())
 
 		this.soundLayout!!.addItemDecoration(this.dragSortRecycler)
@@ -216,7 +217,7 @@ public class SoundSheetFragment :
 		Logger.d(LOG_TAG, "onDragStop")
 		this.soundLayout!!.invalidateItemDecorations()
 		this.soundAdapter!!.notifyDataSetChanged()
-		this.soundLayout!!.setItemAnimator(DefaultItemAnimator()) // add animator for delete animation
+		this.soundLayout!!.setItemAnimator(this.soundLayoutAnimator) // add animator for delete animation
 		this.soundAdapter!!.startProgressUpdateTimer()
 	}
 
