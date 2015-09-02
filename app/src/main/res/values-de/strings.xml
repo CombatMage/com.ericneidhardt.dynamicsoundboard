@@ -88,6 +88,9 @@
 	<string name="preferences_enable_immerse_mode_summary">Mit aktivieren Fullscreen Modus werden die Statusleiste und die
 		Navigationsleiste ausgeblendet. Mit einem Swipe vom unteren oder oberen Bildschrimrand können sie wieder eingeblendet
 		werden.</string>
+	<string name="preferences_use_system_file_browser_title">Eigenen Dateibrowser verwenden</string>
+	<string name="preferences_use_system_file_browser_summary">Wenn diese Option angeschaltet ist, wird der auf dem Telefon normalerweise installierte Dateibrowser verwendet um einzelne Dateien auszuwählen. 
+		Ansonsten wird der Browser der App verwendet (empfohlen).</string>
 
 	<string name="about">Über</string>
 	<string name="about_author_title">Autor</string>
