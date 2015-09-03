@@ -22,15 +22,15 @@ import java.util.List;
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
  */
-public class AddNewSoundFromDirectory
+public class AddNewSoundFromDirectoryDialog
 		extends
 			FileExplorerDialog
 		implements
 			View.OnClickListener
 {
-	private static final String TAG = AddNewSoundFromDirectory.class.getName();
+	private static final String TAG = AddNewSoundFromDirectoryDialog.class.getName();
 
-	private static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory.callingFragmentTag";
+	protected static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog.callingFragmentTag";
 
 	private String callingFragmentTag;
 	private View confirm;
@@ -38,7 +38,7 @@ public class AddNewSoundFromDirectory
 
 	public static void showInstance(FragmentManager manager, String callingFragmentTag)
 	{
-		AddNewSoundFromDirectory dialog = new AddNewSoundFromDirectory();
+		AddNewSoundFromDirectoryDialog dialog = new AddNewSoundFromDirectoryDialog();
 
 		Bundle args = new Bundle();
 		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag);

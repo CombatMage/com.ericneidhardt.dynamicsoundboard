@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
+import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromFileDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -36,7 +37,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOp
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnSoundLayoutSelectedEventListener;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService;
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity;
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity;
@@ -44,6 +44,7 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences;
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener;
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage;
@@ -403,9 +404,18 @@ public class SoundActivity
 		}
 		else
 		{
-			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-			intent.setType(FileUtils.MIME_AUDIO);
-			soundSheetFragment.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
+			if (SoundboardPreferences.useSystemBrowserForFiles())
+			{
+				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+				intent.setType(FileUtils.MIME_AUDIO);
+				soundSheetFragment.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE);
+			}
+			else
+			{
+				SoundSheetFragment currentSoundSheet = this.getCurrentSoundFragment();
+				if (currentSoundSheet != null)
+					AddNewSoundFromFileDialog.showInstance(this.getFragmentManager(), currentSoundSheet.getFragmentTag());
+			}
 		}
 	}
 

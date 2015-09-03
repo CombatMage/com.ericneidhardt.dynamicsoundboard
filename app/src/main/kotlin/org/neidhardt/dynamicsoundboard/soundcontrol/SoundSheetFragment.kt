@@ -15,7 +15,7 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
-import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectory
+import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
@@ -138,7 +138,7 @@ public class SoundSheetFragment :
 		activity.findViewById(R.id.action_add_sound).setOnClickListener({ view
 			-> AddNewSoundDialog(this.getFragmentManager(), this.fragmentTag) })
 		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener({ view
-			-> AddNewSoundFromDirectory.showInstance(this.getFragmentManager(), this.fragmentTag) })
+			-> AddNewSoundFromDirectoryDialog.showInstance(this.getFragmentManager(), this.fragmentTag) })
 
 		this.soundPresenter!!.onAttachedToWindow()
 		this.attachScrollViewToFab()
