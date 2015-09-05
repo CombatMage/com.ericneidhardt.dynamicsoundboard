@@ -18,26 +18,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.fileexplorer.FileResultHandler
+import org.neidhardt.dynamicsoundboard.fileexplorer.GetNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
+import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
+import java.io.File
 import java.util.ArrayList
 
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
-public class AddNewSoundDialog : BaseDialog
+public class AddNewSoundDialog : BaseDialog, FileResultHandler
 {
-	private val TAG = javaClass.getName()
+	public val TAG: String = javaClass.getName()
 	private val KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.callingFragmentTag"
 	private val KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAdd"
 	private val KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAddLabels"
@@ -101,7 +104,7 @@ public class AddNewSoundDialog : BaseDialog
 
 	override fun onActivityCreated(savedInstanceState: Bundle?)
 	{
-		super.onActivityCreated(savedInstanceState)
+		super<BaseDialog>.onActivityCreated(savedInstanceState)
 
 		val presenter = this.presenter as AddNewSoundDialogPresenter
 
@@ -126,7 +129,7 @@ public class AddNewSoundDialog : BaseDialog
 
 	override fun onSaveInstanceState(SuppressWarnings("NullableProblems") outState: Bundle)
 	{
-		super.onSaveInstanceState(outState)
+		super<BaseDialog>.onSaveInstanceState(outState)
 
 		val presenter = this.presenter as AddNewSoundDialogPresenter
 
@@ -147,20 +150,32 @@ public class AddNewSoundDialog : BaseDialog
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 	{
-		val presenter = this.presenter as AddNewSoundDialogPresenter
-
 		if (resultCode == Activity.RESULT_OK)
 		{
 			if (requestCode == IntentRequest.GET_AUDIO_FILE)
 			{
 				val soundUri = data!!.getData()
 				val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri))
-				presenter.addNewSound(NewSoundData(soundUri, label))
+				presenter?.addNewSound(NewSoundData(soundUri, label))
 				this.updateHeightToContent()
 				return
 			}
 		}
-		super.onActivityResult(requestCode, resultCode, data)
+		super<BaseDialog>.onActivityResult(requestCode, resultCode, data)
+	}
+
+	// if no intent mechanism, but another file dialog is used, this method may be called to deliver results
+	override fun onFileResultsAvailable(files: List<File>)
+	{
+		for (file in files)
+		{
+			val soundUri = Uri.parse(file.getAbsolutePath())
+
+			val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri))
+			presenter?.addNewSound(NewSoundData(soundUri, label))
+			this.updateHeightToContent()
+		}
+		this.updateHeightToContent()
 	}
 
 	private fun updateHeightToContent()
@@ -247,9 +262,16 @@ private class AddNewSoundDialogPresenter
 
 	private fun addAnotherSound()
 	{
-		val intent = Intent(Intent.ACTION_GET_CONTENT)
-		intent.setType(FileUtils.MIME_AUDIO)
-		this.dialog.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
+		if (SoundboardPreferences.useSystemBrowserForFiles())
+		{
+			val intent = Intent(Intent.ACTION_GET_CONTENT)
+			intent.setType(FileUtils.MIME_AUDIO)
+			this.dialog.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
+		}
+		else
+		{
+			GetNewSoundFromDirectoryDialog(this.dialog.getFragmentManager(), this.dialog.TAG);
+		}
 	}
 
 	internal fun addNewSound(data: NewSoundData)

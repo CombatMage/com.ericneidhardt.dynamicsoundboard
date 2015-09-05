@@ -137,8 +137,10 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 
 	}
 
-	private fun saveDataAndDismiss() {
-		try {
+	private fun saveDataAndDismiss()
+	{
+		try
+		{
 			JsonPojo.writeToFile(
 					super<FileExplorerDialog>.adapter.selectedFile,
 					this.soundSheetsDataAccess.getSoundSheets(),
@@ -146,7 +148,9 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 					this.soundsDataAccess.getSounds())
 
 			this.dismiss()
-		} catch (e: IOException) {
+		}
+		catch (e: IOException)
+		{
 			Logger.d(TAG, e.getMessage())
 			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_failed_store_layout, Toast.LENGTH_SHORT).show()
 		}
@@ -154,10 +158,12 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 
 	}
 
-	companion object {
+	companion object
+	{
 		private val TAG = javaClass<StoreLayoutDialog>().getName()
 
-		public fun showInstance(manager: FragmentManager) {
+		public fun showInstance(manager: FragmentManager)
+		{
 			val dialog = StoreLayoutDialog()
 			dialog.show(manager, TAG)
 		}

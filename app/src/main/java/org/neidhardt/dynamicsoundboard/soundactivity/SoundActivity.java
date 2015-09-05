@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromFileDialog;
+import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog;
 import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
@@ -414,7 +414,7 @@ public class SoundActivity
 			{
 				SoundSheetFragment currentSoundSheet = this.getCurrentSoundFragment();
 				if (currentSoundSheet != null)
-					AddNewSoundFromFileDialog.showInstance(this.getFragmentManager(), currentSoundSheet.getFragmentTag());
+					AddNewSoundFromDirectoryDialog.showInstance(this.getFragmentManager(), currentSoundSheet.getFragmentTag());
 			}
 		}
 	}

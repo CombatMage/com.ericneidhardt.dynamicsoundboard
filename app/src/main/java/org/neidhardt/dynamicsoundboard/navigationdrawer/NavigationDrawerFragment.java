@@ -180,8 +180,9 @@ public class NavigationDrawerFragment
 		{
 			if (this.soundLayoutList.isActive())
 				AddNewSoundLayoutDialog.Companion.showInstance(this.getFragmentManager(), this.soundLayoutsUtil.getSuggestedName());
-			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST)
+			else if (this.tabContent.getCurrentItem() == INDEX_PLAYLIST) {
 				new AddNewSoundDialog(this.getFragmentManager(), Playlist.TAG);
+			}
 			else
 			{
 				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.soundSheetsDataUtil.getSuggestedName());

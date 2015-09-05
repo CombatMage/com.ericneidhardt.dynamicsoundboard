@@ -32,7 +32,7 @@ public class AddNewSoundFromDirectoryDialog
 
 	protected static final String KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog.callingFragmentTag";
 
-	private String callingFragmentTag;
+	protected String callingFragmentTag;
 	private View confirm;
 	private RecyclerView directories;
 
@@ -116,12 +116,13 @@ public class AddNewSoundFromDirectoryDialog
 			if (currentDirectory != null)
 				this.storePathToSharedPreferences(TAG, currentDirectory.getPath());
 
-			this.returnResultsToCallingFragment();
+			this.returnResults();
 			this.dismiss();
 		}
 	}
 
-	private List<File> buildResult()
+	@NonNull
+	protected List<File> getFileListResult()
 	{
 		List<File> files = new ArrayList<>();
 		DirectoryAdapter adapter = super.getAdapter();
@@ -139,9 +140,9 @@ public class AddNewSoundFromDirectoryDialog
 		return files;
 	}
 
-	private void returnResultsToCallingFragment()
+	protected void returnResults()
 	{
-		List<File> result = this.buildResult();
+		List<File> result = this.getFileListResult();
 		LoadSoundsFromFileListTask task = new LoadSoundsFromFileListTask(result, this.callingFragmentTag, this.getSoundsDataStorage());
 		task.execute();
 	}
