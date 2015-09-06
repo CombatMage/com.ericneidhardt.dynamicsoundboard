@@ -6,9 +6,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.res.Resources
 import android.graphics.Bitmap
-import android.graphics.Point
+import android.graphics.drawable.Icon
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
@@ -115,30 +114,48 @@ jvmOverloads constructor
 		this.setCategory(Notification.CATEGORY_TRANSPORT)
 	}
 
-	private fun setActionStop(context: Context, isLollipopStyleAvailable: Boolean) {
-		this.addAction(R.drawable.ic_notification_stop,
+	private fun setActionStop(context: Context, isLollipopStyleAvailable: Boolean)
+	{
+		val icon = Icon.createWithResource(context, R.drawable.ic_notification_stop)
+		this.addAction(this.buildAction(icon,
 				if (isLollipopStyleAvailable)
 					context.getString(R.string.notification_stop_sound)
-				else ""
+				else
+					""
 				, this.getPendingIntent(context, ACTION_STOP))
+		)
 	}
 
 	private fun setActionPlay(context: Context, isLollipopStyleAvailable: Boolean)
 	{
-		this.addAction(R.drawable.ic_notification_play,
+		val icon = Icon.createWithResource(context, R.drawable.ic_notification_play)
+		this.addAction(this.buildAction(icon,
 				if (isLollipopStyleAvailable)
 					context.getString(R.string.notification_play_sound)
-				else ""
+				else
+					""
 				, this.getPendingIntent(context, ACTION_PLAY))
+		)
 	}
 
 	private fun setActionFadeOut(context: Context, isLollipopStyleAvailable: Boolean)
 	{
-		this.addAction(R.drawable.ic_notification_pause,
+		val icon = Icon.createWithResource(context, R.drawable.ic_notification_pause)
+		this.addAction(this.buildAction(icon,
 				if (isLollipopStyleAvailable)
 					context.getString(R.string.notification_pause_sound)
-				else ""
+				else
+					""
 				, this.getPendingIntent(context, ACTION_FADE_OUT))
+		)
+	}
+
+	private fun buildAction(icon: Icon, label: String, intent: PendingIntent) : Notification.Action
+	{
+
+		val builder = Notification.Action.Builder(icon, label, intent);
+		val action = builder.build();
+		return action
 	}
 
 	private fun getPendingIntent(context: Context, action: String): PendingIntent
