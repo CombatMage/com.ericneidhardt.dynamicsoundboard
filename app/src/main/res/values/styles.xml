@@ -33,7 +33,6 @@
 	<style name="ActionBarPopupThemeOverlay" parent="Theme.AppTheme">
 		<item name="android:textColorPrimary">@color/text_content_primary</item>
 		<item name="android:textColorSecondary">@color/text_content_primary</item>
-		<item name="android:background">@color/background</item>
 	</style>
 
 	<style name="ActionBarItemMargin">
