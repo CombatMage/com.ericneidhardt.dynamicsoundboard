@@ -20,11 +20,11 @@
 				android:textColor="@color/text_content_secondary"
 				android:textSize="@dimen/text_sub_text"
 				android:text="@string/navigation_drawer_select_sound_layout"
-				app:typeface="roboto_medium"/>
+				app:typeface="roboto_light"/>
 
 		<View
 				android:layout_width="match_parent"
-				android:layout_height="4dp"
+				android:layout_height="2dp"
 				android:layout_alignBottom="@id/tv_sound_layout_header"
 				android:background="@color/accent_200"/>
 

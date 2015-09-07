@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
-apply from: '../jacoco.gradle'
+//apply from: '../jacoco.gradle'
 
 android {
 	compileSdkVersion 23
@@ -30,10 +30,10 @@ android {
 
 	signingConfigs {
 		release {
-			storeFile file(RELEASE_STORE_FILE)
-			storePassword RELEASE_STORE_PASSWORD
-			keyAlias RELEASE_KEY_ALIAS
-			keyPassword RELEASE_KEY_PASSWORD
+			storeFile file("RELEASE_STORE_FILE")
+			storePassword "RELEASE_STORE_PASSWORD"
+			keyAlias "RELEASE_KEY_ALIAS"
+			keyPassword "RELEASE_KEY_PASSWORD"
 		}
 	}
 
@@ -82,11 +82,11 @@ dependencies {
 	compile project(':safe_async_task')
 	compile project(':drag_drop_recycler_view')
 
-	compile 'com.android.support:support-v4:22.2.1'
-	compile 'com.android.support:support-v13:21.0.3'
-	compile 'com.android.support:recyclerview-v7:21.0.3'
-	compile 'com.android.support:appcompat-v7:22.2.1'
-	compile 'com.android.support:design:22.2.1'
+	compile 'com.android.support:support-v4:23.0.1'
+	compile 'com.android.support:support-v13:23.0.1'
+	compile 'com.android.support:appcompat-v7:23.0.1'
+	compile 'com.android.support:recyclerview-v7:23.0.1'
+	compile 'com.android.support:design:23.0.1'
 
 	compile 'de.greenrobot:eventbus:2.4.0'
 	compile 'de.greenrobot:greendao:2.0.0'

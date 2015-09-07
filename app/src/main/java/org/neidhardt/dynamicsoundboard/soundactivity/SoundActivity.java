@@ -510,7 +510,7 @@ public class SoundActivity
 		return isActionModeActive;
 	}
 
-	@SuppressWarnings("ResourceType") // for unknown reason, inspection demand using Gravity.START, but this would leed to warnings
+	@SuppressWarnings("ResourceType") // for unknown reason, inspection demand using Gravity.START, but this would lead to warnings
 	void closeNavigationDrawer()
 	{
 		if (this.navigationDrawerLayout == null)
