@@ -21,7 +21,6 @@ import java.util.Random;
 
 
 ReportsCrashes(
-	formKey = "", // This is required for backward compatibility but not used
 	mailTo = "eric@neidhardt-erkner.de"
 )
 public class DynamicSoundboardApplication : Application()
