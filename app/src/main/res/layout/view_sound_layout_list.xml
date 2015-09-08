@@ -23,7 +23,7 @@
 				android:textSize="@dimen/text_sub_text"
 				android:text="@string/navigation_drawer_select_sound_layout"
 				android:textAllCaps="true"
-				app:typeface="roboto_condensed_regular"/>
+				app:typeface="roboto_regular"/>
 
 		<View
 				android:layout_width="match_parent"

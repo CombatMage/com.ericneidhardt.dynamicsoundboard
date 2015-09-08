@@ -10,7 +10,6 @@
 	<declare-styleable name="CustomEditText">
 		<attr name="text_size" format="dimension" />
 		<attr name="text_color" format="color" />
-		<attr name="show_underscore" format="boolean" />
 	</declare-styleable>
 
 	<declare-styleable name="FabStates">

@@ -43,8 +43,6 @@ public abstract class CustomEditText
 		this.input.setOnEditTextImeBackListener(this);
 		this.input.setOnFocusChangeListener(this);
 
-		View divider = this.findViewById(R.id.v_divider);
-
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0);
 		float size = array.getDimension(R.styleable.CustomEditText_text_size, 0);
 		if (array.hasValue(R.styleable.CustomEditText_text_size))
@@ -53,10 +51,6 @@ public abstract class CustomEditText
 		int color = array.getColor(R.styleable.CustomEditText_text_color, 0);
 		if (array.hasValue(R.styleable.CustomEditText_text_color))
 			this.input.setTextColor(color);
-
-		boolean showUnderScore = array.getBoolean(R.styleable.CustomEditText_show_underscore, true);
-		if (!showUnderScore)
-			divider.setVisibility(GONE);
 
 		array.recycle();
 	}
@@ -158,6 +152,7 @@ public abstract class CustomEditText
 		return null;
 	}
 
+	@NonNull
 	@Override
 	protected Parcelable onSaveInstanceState()
 	{
@@ -212,8 +207,7 @@ public abstract class CustomEditText
 		private SavedCustomEditTextState(Parcel superState)
 		{
 			super(superState);
-			if (superState != null)
-				this.value = superState.readString();
+			this.value = superState.readString();
 		}
 
 		@Override
@@ -226,11 +220,12 @@ public abstract class CustomEditText
 		public static final Parcelable.Creator<SavedCustomEditTextState> CREATOR = new
 				Parcelable.Creator<SavedCustomEditTextState>()
 				{
-					public SavedCustomEditTextState createFromParcel(Parcel in)
+					public SavedCustomEditTextState createFromParcel(@NonNull Parcel in)
 					{
 						return new SavedCustomEditTextState(in);
 					}
 
+					@NonNull
 					public SavedCustomEditTextState[] newArray(int size)
 					{
 						return new SavedCustomEditTextState[size];

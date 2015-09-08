@@ -39,7 +39,10 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 	{
 		if (this.databaseId != null)
 		{
-			val name = super.soundLayoutName!!.getDisplayedText()
+			var name = super.soundLayoutName?.getText().toString()
+			if (name.length() == 0)
+				name = this.getHintForName()
+
 			val layout = this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)
 			layout?.setLabel(name)
 			layout?.updateItemInDatabaseAsync()

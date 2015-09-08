@@ -3,24 +3,27 @@ package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatDialog
 import android.view.View
+import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
-import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 
 /**
  * File created by eric.neidhardt on 12.03.2015.
  */
 public abstract class SoundLayoutDialog : BaseDialog(), View.OnClickListener
 {
-	protected var soundLayoutName: CustomEditText? = null
+	protected var soundLayoutName: EditText? = null
+	protected var soundLayoutInput: TextInputLayout? = null
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
 		@SuppressLint("InflateParams") val view = this.getActivity().getLayoutInflater().inflate(this.getLayoutId(), null)
-		this.soundLayoutName = view.findViewById(R.id.et_name_sound_layout) as CustomEditText
-		this.soundLayoutName!!.setHint(this.getHintForName())
+		this.soundLayoutName = view.findViewById(R.id.et_name_sound_layout) as EditText
+		this.soundLayoutInput = view.findViewById(R.id.ti_name_sound_layout) as TextInputLayout
+		this.soundLayoutInput!!.setHint(this.getHintForName())
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this)
 		view.findViewById(R.id.b_ok).setOnClickListener(this)
