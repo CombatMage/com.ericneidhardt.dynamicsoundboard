@@ -4,12 +4,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.widget.EditText;
+import com.devspark.robototextview.widget.RobotoEditText;
 
 /**
  * Project created by eric.neidhardt on 08.09.2014.
  */
-public class EditTextBackEvent extends EditText
+public class EditTextBackEvent extends RobotoEditText
 {
 	private EditTextImeBackListener onImeBackListener;
 

@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.views.edittext;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.method.KeyListener;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -44,7 +45,7 @@ public class ActionbarEditText
 	}
 
 	@Override
-	public void onClick(View v)
+	public void onClick(@NonNull View v)
 	{
 		this.enableEditText();
 		this.initialText = super.input.getText().toString();

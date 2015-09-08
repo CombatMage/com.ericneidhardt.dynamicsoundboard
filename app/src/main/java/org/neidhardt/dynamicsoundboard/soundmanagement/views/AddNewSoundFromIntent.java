@@ -10,13 +10,13 @@ import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
-import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
 
 import java.util.ArrayList;
@@ -31,8 +31,8 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	private static final String KEY_AVAILABLE_SOUND_SHEET_LABELS = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.availableSoundSheetLabels";
 	private static final String KEY_AVAILABLE_SOUND_SHEET_IDS = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.availableSoundSheetIds";
 
-	private CustomEditText soundName;
-	private CustomEditText soundSheetName;
+	private EditText soundName;
+	private EditText soundSheetName;
 	private CustomSpinner soundSheetSpinner;
 	private CheckBox addNewSoundSheet;
 
@@ -89,8 +89,8 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	private Dialog createDialogIfNoSheetsExists()
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_intent, null);
-		this.soundName = (CustomEditText)view.findViewById(R.id.et_name_file);
-		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
+		this.soundName = (EditText)view.findViewById(R.id.et_name_file);
+		this.soundSheetName = (EditText)view.findViewById(R.id.et_name_new_sound_sheet);
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_ok).setOnClickListener(this);
@@ -106,8 +106,8 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	{
 		@SuppressLint("InflateParams") View view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null);
 
-		this.soundName = (CustomEditText)view.findViewById(R.id.et_name_file);
-		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
+		this.soundName = (EditText)view.findViewById(R.id.et_name_file);
+		this.soundSheetName = (EditText)view.findViewById(R.id.et_name_new_sound_sheet);
 		this.soundSheetSpinner = (CustomSpinner)view.findViewById(R.id.s_sound_sheets);
 		this.addNewSoundSheet = (CheckBox)view.findViewById(R.id.cb_add_new_sound_sheet);
 
@@ -128,7 +128,6 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 	{
 		super.onActivityCreated(savedInstanceState);
 		this.soundName.setText(FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), this.uri)));
-		this.soundSheetName.setHint(this.suggestedName);
 		if (this.soundSheetsAlreadyExists)
 		{
 			this.soundSheetSpinner.setItems(this.availableSoundSheetLabels);
@@ -168,7 +167,10 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 
 	private void deliverResult()
 	{
-		String newSoundSheetLabel = soundSheetName.getDisplayedText();
+		String newSoundSheetLabel = soundSheetName.getText().toString();
+		if (newSoundSheetLabel.length() == 0)
+			newSoundSheetLabel = this.suggestedName;
+
 		String soundSheetFragmentTag;
 		if (!this.soundSheetsAlreadyExists || this.addNewSoundSheet.isChecked())
 			soundSheetFragmentTag = this.addNewSoundSheet(newSoundSheetLabel);
