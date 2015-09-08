@@ -86,7 +86,7 @@ private class InsertSoundSheetAsyncTask
 	override fun call(): Void?
 	{
 		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.FragmentTag.eq(data.getFragmentTag())).list().size() == 0)
+			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.getFragmentTag())).list().size() == 0)
 				dao.insert(data)
 		}
 		return null
