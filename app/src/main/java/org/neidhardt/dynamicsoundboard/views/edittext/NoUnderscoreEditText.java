@@ -15,6 +15,6 @@ public class NoUnderscoreEditText extends CustomEditText
 	@Override
 	protected int getLayoutId()
 	{
-		return R.layout.view_dialog_edittext;
+		return R.layout.view_no_underscore_edittext;
 	}
 }

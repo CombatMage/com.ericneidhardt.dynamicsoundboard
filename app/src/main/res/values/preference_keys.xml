@@ -5,5 +5,6 @@
 	<string translatable="false" name="preferences_enable_notifications_key">preferences_enable_notifications_key</string>
 	<string translatable="false" name="preferences_enable_immerse_mode_key">preferences_enable_immerse_mode_key</string>
 	<string translatable="false" name="preferences_enable_one_swipe_delete_key">preferences_enable_one_swipe_delete_key</string>
+	<string translatable="false" name="preferences_use_system_file_browser_key">preferences_use_system_file_browser_key_key</string>
 
 </resources>

@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import de.greenrobot.event.EventBus;
-import org.acra.ACRA;
+//import org.acra.ACRA;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
@@ -224,13 +224,13 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		catch (IOException e)
 		{
 			Logger.e(TAG, e.toString());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 		catch (IllegalStateException e)
 		{
 			Logger.e(TAG, e.toString());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 	}
@@ -289,13 +289,13 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		catch (IOException e)
 		{
 			Logger.e(TAG, e.getMessage());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 		catch (IllegalStateException e)
 		{
 			Logger.e(TAG, e.getMessage());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 	}
@@ -381,15 +381,20 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		catch (IOException e)
 		{
 			Logger.e(TAG, e.getMessage());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 		catch (IllegalStateException e)
 		{
 			Logger.e(TAG, e.getMessage());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
+	}
+
+	private void reportExceptions(Exception e)
+	{
+		//ACRA.getErrorReporter().handleException(e);
 	}
 
 	@Override

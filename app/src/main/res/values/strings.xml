@@ -3,13 +3,13 @@
 
 	<!-- com.emtronics.dragsortrecycler -->
 	<string name="app_name">Dynamic Soundboard</string>
-	<string name="suggested_sound_sheet_name">Kategorie</string>
-	<string name="suggested_sound_layout_name">Zusammenstellung</string>
+	<string name="suggested_sound_sheet_name">neue Kategorie</string>
+	<string name="suggested_sound_layout_name">neues Abenteuer</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
 
 	<!-- soundmanagement -->
 	<string name="music_service_loading_sound_failed">Eine Sound konnte nicht geladen werden:</string>
-	
+
 	<!-- navigation drawer -->
 	<string name="navigation_drawer_content_description_select_sound_layout">Hier klicken um zu einem anderen Sound Layout zu wechseln</string>
 	<string name="navigation_drawer_select_sound_layout">Sound layout wechseln</string>
@@ -76,7 +76,7 @@
 	<string name="introduction_action_add_new_sound_summary">Hiermit kannst du einen oder mehrere Sounds auswählen um diese der aktuellen Kategorie
 		hinzuzufügen. Für jeden geladenen Sound kannst du einen den angezeigten Namen einstellen.</string>
 
-	<!-- preferences -->
+	<!-- preferences & about -->
 	<string name="preferences">Einstellungen</string>
 	<string name="preferences_enable_notifications_title">Benachrichtigungen aktivieren</string>
 	<string name="preferences_enable_notifications_summary">Mit aktivierten Benachrichtigungen können aktive Sounds auch nach dem
@@ -88,9 +88,12 @@
 	<string name="preferences_enable_immerse_mode_summary">Mit aktivieren Fullscreen Modus werden die Statusleiste und die
 		Navigationsleiste ausgeblendet. Mit einem Swipe vom unteren oder oberen Bildschrimrand können sie wieder eingeblendet
 		werden.</string>
+	<string name="preferences_use_system_file_browser_title">Eigenen Dateibrowser verwenden</string>
+	<string name="preferences_use_system_file_browser_summary">Wenn diese Option angeschaltet ist, wird der auf dem Telefon normalerweise installierte Dateibrowser verwendet um einzelne Dateien auszuwählen. 
+		Ansonsten wird der Browser der App verwendet (empfohlen).</string>
 
 	<string name="about">Über</string>
-	<string name="about_author_title">Author</string>
+	<string name="about_author_title">Autor</string>
 	<string name="about_author_summary">Eric Neidhardt</string>
 	<string name="about_version_title">Version</string>
 	<string name="about_used_third_party_software_title">Verwendete Komponenten</string>
@@ -102,7 +105,8 @@
 		com.github.johnkil.android-robototextview:robototextview 2.3.0,
 		com.emtronics.dragsortrecycler:DragSortRecycler,
 		com.github.castorflex.smoothprogressbar:library,
-		com.google.dagger:dagger
+		com.google.dagger:dagger 2,
+		jp.wasabeef:recyclerview-animators:1.2.1
 	</string>
 	<string name="about_used_third_party_assets_title">Verwendete Ressourcen</string>
 	<string name="about_used_third_party_assets_summary">
@@ -138,11 +142,11 @@
 	<string name="dialog_add_new_sound_from_intent_message">Es wurden noch keine Kategorien für Sounds angelegt. Soll eine neue Kategorie angelegt werden?</string>
 
 	<string name="dialog_sound_settings_title">Sound editieren</string>
-	<string name="dialog_sound_settings_message">Sound umbennen oder in eine andere Kategorie verschieben?</string>
+	<string name="dialog_sound_settings_message">Sound umbenennen oder in eine andere Kategorie verschieben?</string>
 
-	<string name="dialog_sound_layout_settings_message">Soundzusammenstellung umbenennen</string>
+	<string name="dialog_sound_layout_settings_message">Abenteuer umbenennen</string>
 
-	<string name="dialog_add_new_sound_layout_message">Eine weitere Soundzusammenstellung anlegen</string>
+	<string name="dialog_add_new_sound_layout_message">Ein weitere Abenteuer anlegen</string>
 
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_message">Welcher Kategorie soll der Sound hinzugefügt werden, oder soll eine neue Kategorie angelegt werden?</string>
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_checkbox">Eine neue Katagorie anlegen</string>
@@ -169,5 +173,4 @@
 	<string name="dialog_rename_sound_file_all_occurrences_message">Sollen alle geladenen Sounds die diese Datei benutzen auch umbenannt werden? ({%s0} Sounds)</string>
 	<string name="dialog_rename_sound_toast_file_not_found">Die Sounddatei konnte leider nicht umbenannt werden</string>
 	<string name="dialog_rename_sound_toast_player_not_updated">Die Änderung konnte nicht für alle Sounds übernommen werden. Ein paar Sounds mussten leider entfernt werden.</string>
-
 </resources>

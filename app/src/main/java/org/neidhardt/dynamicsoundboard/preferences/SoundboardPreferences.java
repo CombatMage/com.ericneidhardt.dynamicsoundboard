@@ -47,4 +47,11 @@ public class SoundboardPreferences
 		return preferences.getBoolean(context.getString(R.string.preferences_enable_one_swipe_delete_key), false);
 	}
 
+	public static boolean useSystemBrowserForFiles()
+	{
+		Context context = DynamicSoundboardApplication.Companion.getContext();
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		return preferences.getBoolean(context.getString(R.string.preferences_use_system_file_browser_key), false);
+	}
+
 }

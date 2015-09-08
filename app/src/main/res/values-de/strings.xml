@@ -3,8 +3,8 @@
 
 	<!-- com.emtronics.dragsortrecycler -->
 	<string name="app_name">Dynamic Soundboard</string>
-	<string name="suggested_sound_sheet_name">Kategorie</string>
-	<string name="suggested_sound_layout_name">Zusammenstellung</string>
+	<string name="suggested_sound_sheet_name">neue Kategorie</string>
+	<string name="suggested_sound_layout_name">neues Abenteuer</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
 
 	<!-- soundmanagement -->
@@ -88,6 +88,9 @@
 	<string name="preferences_enable_immerse_mode_summary">Mit aktivieren Fullscreen Modus werden die Statusleiste und die
 		Navigationsleiste ausgeblendet. Mit einem Swipe vom unteren oder oberen Bildschrimrand können sie wieder eingeblendet
 		werden.</string>
+	<string name="preferences_use_system_file_browser_title">Eigenen Dateibrowser verwenden</string>
+	<string name="preferences_use_system_file_browser_summary">Wenn diese Option angeschaltet ist, wird der auf dem Telefon normalerweise installierte Dateibrowser verwendet um einzelne Dateien auszuwählen. 
+		Ansonsten wird der Browser der App verwendet (empfohlen).</string>
 
 	<string name="about">Über</string>
 	<string name="about_author_title">Autor</string>
@@ -102,7 +105,8 @@
 		com.github.johnkil.android-robototextview:robototextview 2.3.0,
 		com.emtronics.dragsortrecycler:DragSortRecycler,
 		com.github.castorflex.smoothprogressbar:library,
-		com.google.dagger:dagger 2
+		com.google.dagger:dagger 2,
+		jp.wasabeef:recyclerview-animators:1.2.1
 	</string>
 	<string name="about_used_third_party_assets_title">Verwendete Ressourcen</string>
 	<string name="about_used_third_party_assets_summary">
@@ -140,9 +144,9 @@
 	<string name="dialog_sound_settings_title">Sound editieren</string>
 	<string name="dialog_sound_settings_message">Sound umbenennen oder in eine andere Kategorie verschieben?</string>
 
-	<string name="dialog_sound_layout_settings_message">Soundzusammenstellung umbenennen</string>
+	<string name="dialog_sound_layout_settings_message">Abenteuer umbenennen</string>
 
-	<string name="dialog_add_new_sound_layout_message">Eine weitere Soundzusammenstellung anlegen</string>
+	<string name="dialog_add_new_sound_layout_message">Ein weitere Abenteuer anlegen</string>
 
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_message">Welcher Kategorie soll der Sound hinzugefügt werden, oder soll eine neue Kategorie angelegt werden?</string>
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_checkbox">Eine neue Katagorie anlegen</string>

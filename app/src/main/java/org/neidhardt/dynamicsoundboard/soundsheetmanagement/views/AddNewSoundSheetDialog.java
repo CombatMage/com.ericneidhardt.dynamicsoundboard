@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
+import android.widget.EditText;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout;
-import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
 
 public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickListener
 {
@@ -19,7 +19,7 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 
 	private static final String KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog.suggestedName";
 
-	private CustomEditText soundSheetName;
+	private EditText soundSheetName;
 	private String suggestedName;
 
 	public static void showInstance(FragmentManager manager, String suggestedName)
@@ -51,8 +51,7 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 
 		this.setMainView((DialogBaseLayout) view);
 
-		this.soundSheetName = (CustomEditText)view.findViewById(R.id.et_name_new_sound_sheet);
-		this.soundSheetName.setHint(this.suggestedName);
+		this.soundSheetName = (EditText)view.findViewById(R.id.et_name_new_sound_sheet);
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this);
 		view.findViewById(R.id.b_ok).setOnClickListener(this);
@@ -81,7 +80,11 @@ public class AddNewSoundSheetDialog extends BaseDialog implements View.OnClickLi
 
 	private void deliverResult()
 	{
-		String label = this.soundSheetName.getDisplayedText();
+
+		String label = this.soundSheetName.getText().toString();
+		if (label.length() == 0)
+			label = this.suggestedName;
+
 		SoundSheet soundSheet = this.getSoundSheetsDataUtil().getNewSoundSheet(label);
 		soundSheet.setIsSelected(true);
 		this.getSoundSheetsDataStorage().addSoundSheetToManager(soundSheet);

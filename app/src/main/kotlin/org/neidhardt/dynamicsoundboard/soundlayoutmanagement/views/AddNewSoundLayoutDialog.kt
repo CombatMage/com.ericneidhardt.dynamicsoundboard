@@ -14,7 +14,6 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsM
  */
 public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 {
-
 	private var suggestedName: String? = null
 
 	override fun onCreate(savedInstanceState: Bundle?)
@@ -31,14 +30,17 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 		return R.layout.dialog_add_new_sound_layout
 	}
 
-	override fun getHintForName(): String?
+	override fun getHintForName(): String
 	{
-		return this.suggestedName
+		return this.suggestedName ?: ""
 	}
 
 	override fun deliverResult()
 	{
-		val name = super.soundLayoutName!!.getDisplayedText()
+		var name = super.soundLayoutName?.getText().toString()
+		if (name.length() == 0)
+			name = this.getHintForName()
+
 		val layout = SoundLayout()
 		layout.setIsSelected(false)
 		layout.setDatabaseId(SoundLayoutsManager.getNewDatabaseIdForLabel(name))

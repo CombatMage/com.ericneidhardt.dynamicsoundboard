@@ -2,8 +2,6 @@ package org.neidhardt.dynamicsoundboard;
 
 import android.app.Application;
 import android.content.Context;
-import org.acra.ACRA;
-import org.acra.annotation.ReportsCrashes;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
@@ -20,10 +18,9 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsMan
 import java.util.Random;
 
 
-ReportsCrashes(
-	formKey = "", // This is required for backward compatibility but not used
-	mailTo = "eric@neidhardt-erkner.de"
-)
+//ReportsCrashes(
+//	mailTo = "eric@neidhardt-erkner.de"
+//)
 public class DynamicSoundboardApplication : Application()
 {
 
@@ -57,7 +54,7 @@ public class DynamicSoundboardApplication : Application()
 	override fun onCreate()
 	{
 		super.onCreate()
-		ACRA.init(this);
+		//ACRA.init(this);
 
 		applicationContext = this.getApplicationContext();
 		soundLayoutsManager = SoundLayoutsManager()

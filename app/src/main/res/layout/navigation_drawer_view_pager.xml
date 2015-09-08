@@ -6,10 +6,10 @@
 		android:orientation="vertical"
 		android:animateLayoutChanges="true">
 
-	<org.neidhardt.dynamicsoundboard.navigationdrawer.views.SlidingTabLayout
-			android:id="@+id/layout_tab"
+	<android.support.design.widget.TabLayout
+			android:id="@+id/tl_tab_bar"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="@dimen/height_list_item"
 			android:background="@color/primary_200"/>
 
 	<android.support.v4.view.ViewPager

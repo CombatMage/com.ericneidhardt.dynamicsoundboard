@@ -20,6 +20,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.views;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -114,7 +115,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 	/**
 	 * Set the custom {@link TabColorizer} to be used.
 	 *
-	 * If you only require simple custmisation then you can use
+	 * If you only require simple customisations then you can use
 	 * {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)} to achieve
 	 * similar effects.
 	 */
@@ -126,6 +127,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 	 * Sets the colors to be used for indicating the selected tab. These colors are treated as a
 	 * circular array. Providing one color will mean that all tabs are indicated with the same color.
 	 */
+	@SuppressWarnings("unused")
 	public void setSelectedIndicatorColors(int... colors) {
 		mTabStrip.setSelectedIndicatorColors(colors);
 	}
@@ -134,6 +136,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 	 * Sets the colors to be used for tab dividers. These colors are treated as a circular array.
 	 * Providing one color will mean that all tabs are indicated with the same color.
 	 */
+	@SuppressWarnings("unused")
 	public void setDividerColors(int... colors) {
 		mTabStrip.setDividerColors(colors);
 	}
@@ -171,7 +174,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
 		mViewPager = viewPager;
 		if (viewPager != null) {
-			viewPager.setOnPageChangeListener(new InternalViewPagerListener());
+			viewPager.addOnPageChangeListener(new InternalViewPagerListener());
 			populateTabStrip();
 		}
 	}
@@ -321,7 +324,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
 	private class TabClickListener implements View.OnClickListener {
 		@Override
-		public void onClick(View v) {
+		public void onClick(@NonNull View v) {
 			for (int i = 0; i < mTabStrip.getChildCount(); i++) {
 				if (v == mTabStrip.getChildAt(i)) {
 					mViewPager.setCurrentItem(i);

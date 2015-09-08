@@ -10,11 +10,13 @@
 		app:text_cancle_button="@string/dialog_cancel"
 		app:text_ok_button="@string/dialog_add">
 
-	<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
+	<com.devspark.robototextview.widget.RobotoEditText
 			android:id="@+id/et_name_file"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginBottom="@dimen/margin_default"/>
+			android:layout_marginBottom="@dimen/margin_default"
+			android:textSize="@dimen/text_body"
+			app:typeface="roboto_medium"/>
 
 	<com.devspark.robototextview.widget.RobotoTextView
 			android:layout_width="match_parent"
@@ -24,10 +26,19 @@
 			android:text="@string/dialog_add_new_sound_from_intent_message"
 			app:typeface="roboto_medium"/>
 
-	<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
-			android:id="@+id/et_name_new_sound_sheet"
+	<android.support.design.widget.TextInputLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/margin_default"/>
+			android:layout_marginTop="@dimen/margin_default">
+
+		<com.devspark.robototextview.widget.RobotoEditText
+				android:id="@+id/et_name_new_sound_sheet"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="@dimen/text_body"
+				android:hint="@string/suggested_sound_sheet_name"
+				app:typeface="roboto_medium"/>
+
+	</android.support.design.widget.TextInputLayout>
 
 </org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>
