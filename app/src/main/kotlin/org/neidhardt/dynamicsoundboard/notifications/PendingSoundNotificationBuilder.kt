@@ -116,8 +116,7 @@ jvmOverloads constructor
 
 	private fun setActionStop(context: Context, isLollipopStyleAvailable: Boolean)
 	{
-		val icon = Icon.createWithResource(context, R.drawable.ic_notification_stop)
-		this.addAction(this.buildAction(icon,
+		this.addAction(this.buildAction(context, R.drawable.ic_notification_stop,
 				if (isLollipopStyleAvailable)
 					context.getString(R.string.notification_stop_sound)
 				else
@@ -128,8 +127,7 @@ jvmOverloads constructor
 
 	private fun setActionPlay(context: Context, isLollipopStyleAvailable: Boolean)
 	{
-		val icon = Icon.createWithResource(context, R.drawable.ic_notification_play)
-		this.addAction(this.buildAction(icon,
+		this.addAction(this.buildAction(context, R.drawable.ic_notification_play,
 				if (isLollipopStyleAvailable)
 					context.getString(R.string.notification_play_sound)
 				else
@@ -140,8 +138,7 @@ jvmOverloads constructor
 
 	private fun setActionFadeOut(context: Context, isLollipopStyleAvailable: Boolean)
 	{
-		val icon = Icon.createWithResource(context, R.drawable.ic_notification_pause)
-		this.addAction(this.buildAction(icon,
+		this.addAction(this.buildAction(context, R.drawable.ic_notification_pause,
 				if (isLollipopStyleAvailable)
 					context.getString(R.string.notification_pause_sound)
 				else
@@ -150,10 +147,15 @@ jvmOverloads constructor
 		)
 	}
 
-	private fun buildAction(icon: Icon, label: String, intent: PendingIntent) : Notification.Action
+	SuppressWarnings("deprecation")
+	private fun buildAction(context: Context, iconId: Int, label: String, intent: PendingIntent) : Notification.Action
 	{
-
-		val builder = Notification.Action.Builder(icon, label, intent);
+		val builder =
+				if (Util.IS_MARSHMALLOW_AVAILABLE)
+					Notification.Action.Builder(Icon.createWithResource(context, iconId), label, intent)
+				else {
+					Notification.Action.Builder(iconId, label, intent)
+				}
 		val action = builder.build();
 		return action
 	}
