@@ -42,7 +42,7 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 			this.eventBus.registerSticky(this)
 	}
 
-	override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int
+	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int
 	{
 		Logger.d(TAG, "onStartCommand")
 		this.isActivityVisible = true

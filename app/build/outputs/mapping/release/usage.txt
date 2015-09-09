@@ -4555,17 +4555,10 @@ com.emtronics.dragsortrecycler.DragSortRecycler:
     private static final int TIMEOUT_DRAG
     100:101:public void setLeftDragArea(int)
 com.emtronics.dragsortrecycler.R
-com.emtronics.dragsortrecycler.R$anim
 com.emtronics.dragsortrecycler.R$attr
-com.emtronics.dragsortrecycler.R$bool
-com.emtronics.dragsortrecycler.R$color
 com.emtronics.dragsortrecycler.R$dimen
 com.emtronics.dragsortrecycler.R$drawable
 com.emtronics.dragsortrecycler.R$id
-com.emtronics.dragsortrecycler.R$integer
-com.emtronics.dragsortrecycler.R$layout
-com.emtronics.dragsortrecycler.R$string
-com.emtronics.dragsortrecycler.R$style
 com.emtronics.dragsortrecycler.R$styleable
 com.melnykov.fab.AbsListViewScrollDetector
 com.melnykov.fab.BuildConfig
@@ -9455,12 +9448,12 @@ org.jetbrains.annotations.Nullable
 org.jetbrains.annotations.ReadOnly
 org.neidhardt.dynamicsoundboard.BuildConfig
 org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion:
-    22:22:public static final synthetic android.content.Context access$getApplicationContext$0(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
-    22:22:public static final synthetic org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager access$getSoundLayoutsManager$1(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
-    22:22:public static final synthetic org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManager access$getSoundsManager$2(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
-    22:22:public static final synthetic org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager access$getSoundSheetsManager$3(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
+    23:23:public static final synthetic android.content.Context access$getApplicationContext$0(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
+    23:23:public static final synthetic org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager access$getSoundLayoutsManager$1(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
+    23:23:public static final synthetic org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManager access$getSoundsManager$2(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
+    23:23:public static final synthetic org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager access$getSoundSheetsManager$3(org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication$Companion)
 org.neidhardt.dynamicsoundboard.R:
-    10:3485:public R()
+    10:3482:public R()
 org.neidhardt.dynamicsoundboard.R$anim
 org.neidhardt.dynamicsoundboard.R$attr
 org.neidhardt.dynamicsoundboard.R$bool
@@ -9480,7 +9473,7 @@ org.neidhardt.dynamicsoundboard.R$string:
 org.neidhardt.dynamicsoundboard.R$style:
     3145:3145:public R$style()
 org.neidhardt.dynamicsoundboard.R$styleable:
-    3485:3485:public R$styleable()
+    3482:3482:public R$styleable()
 org.neidhardt.dynamicsoundboard.R$xml
 org.neidhardt.dynamicsoundboard.SoundboardConfiguration
 org.neidhardt.dynamicsoundboard.dao.DaoMaster:
@@ -9524,7 +9517,7 @@ org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer:
     private static final int INT_VOLUME_MIN
     private static final float FLOAT_VOLUME_MAX
     private static final float FLOAT_VOLUME_MIN
-    47:73:public EnhancedMediaPlayer(android.content.Context,org.neidhardt.dynamicsoundboard.dao.MediaPlayerData)
+    46:72:public EnhancedMediaPlayer(android.content.Context,org.neidhardt.dynamicsoundboard.dao.MediaPlayerData)
 org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 org.neidhardt.dynamicsoundboard.misc.FileUtils:
     private static final java.lang.String AUDIO
