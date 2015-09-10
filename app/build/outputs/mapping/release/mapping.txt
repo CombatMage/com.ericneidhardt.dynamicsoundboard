@@ -4100,12 +4100,249 @@ android.support.v4.app.NoSaveStateFrameLayout -> android.support.v4.app.av:
     45:46:void <init>(android.content.Context) -> <init>
     53:54:void dispatchSaveInstanceState(android.util.SparseArray) -> dispatchSaveInstanceState
     61:62:void dispatchRestoreInstanceState(android.util.SparseArray) -> dispatchRestoreInstanceState
-android.support.v4.app.SharedElementCallback -> android.support.v4.app.aw:
+android.support.v4.app.NotificationBuilderWithActions -> android.support.v4.app.aw:
+    void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
+android.support.v4.app.NotificationBuilderWithBuilderAccessor -> android.support.v4.app.ax:
+    android.app.Notification$Builder getBuilder() -> a
+    android.app.Notification build() -> b
+android.support.v4.app.NotificationCompat -> android.support.v4.app.ay:
+    android.support.v4.app.NotificationCompat$NotificationCompatImpl IMPL -> a
+    42:42:void access$000(android.support.v4.app.NotificationBuilderWithActions,java.util.ArrayList) -> a
+    1794:1797:void addActionsToBuilder(android.support.v4.app.NotificationBuilderWithActions,java.util.ArrayList):794:797 -> a
+    1794:1797:void access$000(android.support.v4.app.NotificationBuilderWithActions,java.util.ArrayList):42 -> a
+    42:42:void access$100(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style) -> a
+    1801:1827:void addStyleToBuilderJellybean(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style):801:827 -> a
+    1801:1827:void access$100(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style):42 -> a
+    42:42:android.support.v4.app.NotificationCompat$NotificationCompatImpl access$200() -> a
+    830:847:void <clinit>() -> <clinit>
+android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.az:
+    android.os.Bundle mExtras -> e
+    android.support.v4.app.RemoteInput[] mRemoteInputs -> f
+    int icon -> a
+    java.lang.CharSequence title -> b
+    android.app.PendingIntent actionIntent -> c
+    android.support.v4.app.NotificationCompatBase$Action$Factory FACTORY -> d
+    1831:1837:void <init>(int,java.lang.CharSequence,android.app.PendingIntent,android.os.Bundle,android.support.v4.app.RemoteInput[]) -> <init>
+    1841:1841:int getIcon() -> a
+    1846:1846:java.lang.CharSequence getTitle() -> b
+    1851:1851:android.app.PendingIntent getActionIntent() -> c
+    1859:1859:android.os.Bundle getExtras() -> d
+    1808:1808:android.support.v4.app.RemoteInputCompatBase$RemoteInput[] getRemoteInputs() -> e
+    2868:2868:android.support.v4.app.RemoteInput[] getRemoteInputs():1868:1868 -> e
+    2868:2868:android.support.v4.app.RemoteInputCompatBase$RemoteInput[] getRemoteInputs():1808 -> e
+    1808:1808:void <init>(int,java.lang.CharSequence,android.app.PendingIntent,android.os.Bundle,android.support.v4.app.RemoteInput[],byte) -> <init>
+    2171:2171:void <clinit>() -> <clinit>
+android.support.v4.app.NotificationCompat$Action$1 -> android.support.v4.app.ba:
+    2171:2171:void <init>() -> <init>
+android.support.v4.app.NotificationCompat$Action$Builder -> android.support.v4.app.bb:
+    int mIcon -> a
+    java.lang.CharSequence mTitle -> b
+    android.app.PendingIntent mIntent -> c
+    android.os.Bundle mExtras -> d
+    java.util.ArrayList mRemoteInputs -> e
+    1888:1889:void <init>(int,java.lang.CharSequence,android.app.PendingIntent) -> <init>
+    1900:1905:void <init>(int,java.lang.CharSequence,android.app.PendingIntent,android.os.Bundle) -> <init>
+    1960:1962:android.support.v4.app.NotificationCompat$Action build() -> a
+android.support.v4.app.NotificationCompat$BigPictureStyle -> android.support.v4.app.bc:
+    android.graphics.Bitmap mPicture -> a
+    android.graphics.Bitmap mBigLargeIcon -> b
+    boolean mBigLargeIconSet -> c
+    1636:1637:void <init>() -> <init>
+android.support.v4.app.NotificationCompat$BigTextStyle -> android.support.v4.app.bd:
+    java.lang.CharSequence mBigText -> a
+    1703:1704:void <init>() -> <init>
+android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.be:
+    android.content.Context mContext -> a
+    java.lang.CharSequence mContentTitle -> b
+    java.lang.CharSequence mContentText -> c
+    android.app.PendingIntent mContentIntent -> d
+    android.app.PendingIntent mFullScreenIntent -> e
+    android.widget.RemoteViews mTickerView -> f
+    android.graphics.Bitmap mLargeIcon -> g
+    java.lang.CharSequence mContentInfo -> h
+    int mNumber -> i
+    int mPriority -> j
+    boolean mShowWhen -> k
+    boolean mUseChronometer -> l
+    android.support.v4.app.NotificationCompat$Style mStyle -> m
+    java.lang.CharSequence mSubText -> n
+    int mProgressMax -> o
+    int mProgress -> p
+    boolean mProgressIndeterminate -> q
+    java.lang.String mGroupKey -> r
+    boolean mGroupSummary -> s
+    java.lang.String mSortKey -> t
+    java.util.ArrayList mActions -> u
+    boolean mLocalOnly -> v
+    java.lang.String mCategory -> w
+    android.os.Bundle mExtras -> x
+    int mColor -> y
+    int mVisibility -> z
+    android.app.Notification mPublicVersion -> A
+    android.app.Notification mNotification -> B
+    java.util.ArrayList mPeople -> C
+    898:943:void <init>(android.content.Context) -> <init>
+    987:988:android.support.v4.app.NotificationCompat$Builder setSmallIcon(int) -> a
+    1011:1012:android.support.v4.app.NotificationCompat$Builder setContentTitle(java.lang.CharSequence) -> a
+    1019:1020:android.support.v4.app.NotificationCompat$Builder setContentText(java.lang.CharSequence) -> b
+    1083:1084:android.support.v4.app.NotificationCompat$Builder setContentIntent(android.app.PendingIntent) -> a
+    1095:1096:android.support.v4.app.NotificationCompat$Builder setDeleteIntent(android.app.PendingIntent) -> b
+    1147:1148:android.support.v4.app.NotificationCompat$Builder setLargeIcon(android.graphics.Bitmap) -> a
+    1225:1226:android.support.v4.app.NotificationCompat$Builder setOngoing(boolean) -> a
+    2291:2296:void setFlag(int,boolean):1291:1296 -> a
+    2291:2296:android.support.v4.app.NotificationCompat$Builder setOngoing(boolean):1225 -> a
+    1480:1481:android.support.v4.app.NotificationCompat$Builder addAction(android.support.v4.app.NotificationCompat$Action) -> a
+    1493:1499:android.support.v4.app.NotificationCompat$Builder setStyle(android.support.v4.app.NotificationCompat$Style) -> a
+    2594:2600:void android.support.v4.app.NotificationCompat$Style.setBuilder(android.support.v4.app.NotificationCompat$Builder):1594:1600 -> a
+    2594:2600:android.support.v4.app.NotificationCompat$Builder setStyle(android.support.v4.app.NotificationCompat$Style):1496 -> a
+    1561:1561:android.app.Notification build() -> a
+    1568:1568:android.support.v4.app.NotificationCompat$BuilderExtender getExtender() -> b
+    1572:1576:java.lang.CharSequence limitCharSequenceLength(java.lang.CharSequence) -> c
+android.support.v4.app.NotificationCompat$BuilderExtender -> android.support.v4.app.bf:
+    469:469:void <init>() -> <init>
+    471:471:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationBuilderWithBuilderAccessor) -> a
+android.support.v4.app.NotificationCompat$InboxStyle -> android.support.v4.app.bg:
+    java.util.ArrayList mTexts -> a
+    1763:1766:void <init>() -> <init>
+android.support.v4.app.NotificationCompat$NotificationCompatImpl -> android.support.v4.app.bh:
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi20 -> android.support.v4.app.bi:
+    704:704:void <init>() -> <init>
+    707:715:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi21 -> android.support.v4.app.bj:
+    758:758:void <init>() -> <init>
+    761:770:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplBase -> android.support.v4.app.bk:
+    475:475:void <init>() -> <init>
+    478:485:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplGingerbread -> android.support.v4.app.bl:
+    552:552:void <init>() -> <init>
+    555:564:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
+    1027:1029:android.app.Notification android.support.v4.app.NotificationCompatGingerbread.add(android.app.Notification,android.content.Context,java.lang.CharSequence,java.lang.CharSequence,android.app.PendingIntent,android.app.PendingIntent):27:29 -> a
+    1027:1029:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender):558 -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplHoneycomb -> android.support.v4.app.bm:
+    568:568:void <init>() -> <init>
+    571:571:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
+    1030:1052:android.app.Notification android.support.v4.app.NotificationCompatHoneycomb.add(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap):30:52 -> a
+    1030:1052:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender):571 -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplIceCreamSandwich -> android.support.v4.app.bn:
+    577:577:void <init>() -> <init>
+    580:585:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplJellybean -> android.support.v4.app.bo:
+    589:589:void <init>() -> <init>
+    592:600:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplKitKat -> android.support.v4.app.bp:
+    653:653:void <init>() -> <init>
+    656:664:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
+android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.bq:
+    android.support.v4.app.NotificationCompat$Builder mBuilder -> d
+    java.lang.CharSequence mBigContentTitle -> e
+    java.lang.CharSequence mSummaryText -> f
+    boolean mSummaryTextSet -> g
+    1587:1591:void <init>() -> <init>
+android.support.v4.app.NotificationCompatApi20 -> android.support.v4.app.br:
+    102:114:void addAction(android.app.Notification$Builder,android.support.v4.app.NotificationCompatBase$Action) -> a
+android.support.v4.app.NotificationCompatApi20$Builder -> android.support.v4.app.bs:
+    android.app.Notification$Builder b -> a
+    android.os.Bundle mExtras -> b
+    43:82:void <init>(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean,boolean,boolean,int,java.lang.CharSequence,boolean,java.util.ArrayList,android.os.Bundle,java.lang.String,boolean,java.lang.String) -> <init>
+    86:87:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
+    91:91:android.app.Notification$Builder getBuilder() -> a
+    96:97:android.app.Notification build() -> b
+android.support.v4.app.NotificationCompatApi21 -> android.support.v4.app.bt:
+android.support.v4.app.NotificationCompatApi21$Builder -> android.support.v4.app.bu:
+    android.app.Notification$Builder b -> a
+    67:106:void <init>(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean,boolean,boolean,int,java.lang.CharSequence,boolean,java.lang.String,java.util.ArrayList,android.os.Bundle,int,int,android.app.Notification,java.lang.String,boolean,java.lang.String) -> <init>
+    110:111:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
+    115:115:android.app.Notification$Builder getBuilder() -> a
+    120:120:android.app.Notification build() -> b
+android.support.v4.app.NotificationCompatBase -> android.support.v4.app.bv:
+android.support.v4.app.NotificationCompatBase$Action -> android.support.v4.app.bw:
+    27:34:void <init>() -> <init>
+    int getIcon() -> a
+    java.lang.CharSequence getTitle() -> b
+    android.app.PendingIntent getActionIntent() -> c
+    android.os.Bundle getExtras() -> d
+    android.support.v4.app.RemoteInputCompatBase$RemoteInput[] getRemoteInputs() -> e
+android.support.v4.app.NotificationCompatBase$Action$Factory -> android.support.v4.app.bx:
+android.support.v4.app.NotificationCompatIceCreamSandwich -> android.support.v4.app.by:
+android.support.v4.app.NotificationCompatIceCreamSandwich$Builder -> android.support.v4.app.bz:
+    android.app.Notification$Builder b -> a
+    34:57:void <init>(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean) -> <init>
+    61:61:android.app.Notification$Builder getBuilder() -> a
+    66:66:android.app.Notification build() -> b
+android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.ca:
+    java.lang.Object sExtrasLock -> a
+    java.lang.reflect.Field sExtrasField -> b
+    boolean sExtrasFieldAccessFailed -> c
+    java.lang.Object sActionsLock -> d
+    156:162:void addBigTextStyle(android.support.v4.app.NotificationBuilderWithBuilderAccessor,java.lang.CharSequence,boolean,java.lang.CharSequence,java.lang.CharSequence) -> a
+    168:177:void addBigPictureStyle(android.support.v4.app.NotificationBuilderWithBuilderAccessor,java.lang.CharSequence,boolean,java.lang.CharSequence,android.graphics.Bitmap,android.graphics.Bitmap,boolean) -> a
+    182:190:void addInboxStyle(android.support.v4.app.NotificationBuilderWithBuilderAccessor,java.lang.CharSequence,boolean,java.lang.CharSequence,java.util.ArrayList) -> a
+    194:204:android.util.SparseArray buildActionExtrasMap(java.util.List) -> a
+    212:240:android.os.Bundle getExtras(android.app.Notification) -> a
+    258:264:android.os.Bundle writeActionAndGetExtras(android.app.Notification$Builder,android.support.v4.app.NotificationCompatBase$Action) -> a
+    52:56:void <clinit>() -> <clinit>
+android.support.v4.app.NotificationCompatJellybean$Builder -> android.support.v4.app.cb:
+    android.app.Notification$Builder b -> a
+    android.os.Bundle mExtras -> b
+    java.util.List mActionExtrasList -> c
+    68:120:void <init>(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean,boolean,int,java.lang.CharSequence,boolean,android.os.Bundle,java.lang.String,boolean,java.lang.String) -> <init>
+    124:125:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
+    129:129:android.app.Notification$Builder getBuilder() -> a
+    133:149:android.app.Notification build() -> b
+android.support.v4.app.NotificationCompatKitKat -> android.support.v4.app.cc:
+android.support.v4.app.NotificationCompatKitKat$Builder -> android.support.v4.app.cd:
+    android.app.Notification$Builder b -> a
+    android.os.Bundle mExtras -> b
+    java.util.List mActionExtrasList -> c
+    35:93:void <init>(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean,boolean,boolean,int,java.lang.CharSequence,boolean,java.util.ArrayList,android.os.Bundle,java.lang.String,boolean,java.lang.String) -> <init>
+    97:98:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
+    102:102:android.app.Notification$Builder getBuilder() -> a
+    107:115:android.app.Notification build() -> b
+android.support.v4.app.RemoteInput -> android.support.v4.app.ce:
+    java.lang.String mResultKey -> b
+    java.lang.CharSequence mLabel -> c
+    java.lang.CharSequence[] mChoices -> d
+    boolean mAllowFreeFormInput -> e
+    android.os.Bundle mExtras -> f
+    android.support.v4.app.RemoteInput$Impl IMPL -> g
+    android.support.v4.app.RemoteInputCompatBase$RemoteInput$Factory FACTORY -> a
+    57:57:java.lang.String getResultKey() -> a
+    64:64:java.lang.CharSequence getLabel() -> b
+    71:71:java.lang.CharSequence[] getChoices() -> c
+    81:81:boolean getAllowFreeFormInput() -> d
+    88:88:android.os.Bundle getExtras() -> e
+    253:263:void <clinit>() -> <clinit>
+android.support.v4.app.RemoteInput$1 -> android.support.v4.app.cf:
+    263:263:void <init>() -> <init>
+android.support.v4.app.RemoteInput$Impl -> android.support.v4.app.cg:
+android.support.v4.app.RemoteInput$ImplApi20 -> android.support.v4.app.ch:
+    240:240:void <init>() -> <init>
+android.support.v4.app.RemoteInput$ImplBase -> android.support.v4.app.ci:
+    215:215:void <init>() -> <init>
+android.support.v4.app.RemoteInput$ImplJellybean -> android.support.v4.app.cj:
+    228:228:void <init>() -> <init>
+android.support.v4.app.RemoteInputCompatApi20 -> android.support.v4.app.ck:
+    39:52:android.app.RemoteInput[] fromCompat(android.support.v4.app.RemoteInputCompatBase$RemoteInput[]) -> a
+android.support.v4.app.RemoteInputCompatBase -> android.support.v4.app.cl:
+android.support.v4.app.RemoteInputCompatBase$RemoteInput -> android.support.v4.app.cm:
+    java.lang.String getResultKey() -> a
+    java.lang.CharSequence getLabel() -> b
+    java.lang.CharSequence[] getChoices() -> c
+    boolean getAllowFreeFormInput() -> d
+    android.os.Bundle getExtras() -> e
+android.support.v4.app.RemoteInputCompatBase$RemoteInput$Factory -> android.support.v4.app.cn:
+android.support.v4.app.RemoteInputCompatJellybean -> android.support.v4.app.co:
+    69:76:android.os.Bundle[] toBundleArray(android.support.v4.app.RemoteInputCompatBase$RemoteInput[]) -> a
+    1047:1053:android.os.Bundle toBundle(android.support.v4.app.RemoteInputCompatBase$RemoteInput):47:53 -> a
+    1047:1053:android.os.Bundle[] toBundleArray(android.support.v4.app.RemoteInputCompatBase$RemoteInput[]):74 -> a
+android.support.v4.app.SharedElementCallback -> android.support.v4.app.cp:
     int MAX_IMAGE_SIZE -> a
     45:45:void <clinit>() -> <clinit>
-android.support.v4.app.SuperNotCalledException -> android.support.v4.app.ax:
+android.support.v4.app.SuperNotCalledException -> android.support.v4.app.cq:
     23:24:void <init>(java.lang.String) -> <init>
-android.support.v4.app.TaskStackBuilder -> android.support.v4.app.ay:
+android.support.v4.app.TaskStackBuilder -> android.support.v4.app.cr:
     android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl IMPL -> c
     java.util.ArrayList mIntents -> a
     android.content.Context mSourceContext -> b
@@ -4114,12 +4351,12 @@ android.support.v4.app.TaskStackBuilder -> android.support.v4.app.ay:
     238:249:android.support.v4.app.TaskStackBuilder addParentStack(android.content.ComponentName) -> a
     289:289:java.util.Iterator iterator() -> iterator
     115:120:void <clinit>() -> <clinit>
-android.support.v4.app.TaskStackBuilder$SupportParentable -> android.support.v4.app.az:
+android.support.v4.app.TaskStackBuilder$SupportParentable -> android.support.v4.app.cs:
     android.content.Intent getSupportParentActivityIntent() -> a
-android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl -> android.support.v4.app.ba:
-android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplBase -> android.support.v4.app.bb:
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl -> android.support.v4.app.ct:
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplBase -> android.support.v4.app.cu:
     81:81:void <init>() -> <init>
-android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplHoneycomb -> android.support.v4.app.bc:
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplHoneycomb -> android.support.v4.app.cv:
     90:90:void <init>() -> <init>
 android.support.v4.content.ContextCompat -> android.support.v4.b.a:
     319:323:android.graphics.drawable.Drawable getDrawable(android.content.Context,int) -> a
@@ -8853,6 +9090,63 @@ android.support.v7.app.AppCompatDialog -> android.support.v7.app.ax:
     2126:2126:android.support.v7.app.AppCompatDelegate getDelegate():142 -> a
     159:159:void onSupportActionModeStarted(android.support.v7.view.ActionMode) -> a
     163:163:void onSupportActionModeFinished(android.support.v7.view.ActionMode) -> b
+android.support.v7.app.NotificationCompat -> android.support.v7.app.ay:
+    33:33:void access$300(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Builder) -> a
+    1047:1056:void addMediaStyleToBuilderIcs(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Builder):47:56 -> a
+    1047:1056:void access$300(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Builder):33 -> a
+    2052:2059:void android.support.v7.internal.app.NotificationCompatImplBase.overrideContentView(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,android.graphics.Bitmap,java.lang.CharSequence,boolean,long,java.util.List,int[],boolean,android.app.PendingIntent):52:59 -> a
+    2052:2059:void addMediaStyleToBuilderIcs(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Builder):49 -> a
+    2052:2059:void access$300(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Builder):33 -> a
+    2066:2098:android.widget.RemoteViews android.support.v7.internal.app.NotificationCompatImplBase.generateContentView(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,android.graphics.Bitmap,java.lang.CharSequence,boolean,long,java.util.List,int[],boolean,android.app.PendingIntent):66:98 -> a
+    2066:2098:void android.support.v7.internal.app.NotificationCompatImplBase.overrideContentView(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,android.graphics.Bitmap,java.lang.CharSequence,boolean,long,java.util.List,int[],boolean,android.app.PendingIntent):52 -> a
+    2066:2098:void addMediaStyleToBuilderIcs(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Builder):49 -> a
+    2066:2098:void access$300(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Builder):33 -> a
+    33:33:void access$400(android.app.Notification,android.support.v4.app.NotificationCompat$Builder) -> a
+    3060:3068:void addBigMediaStyleToBuilderJellybean(android.app.Notification,android.support.v4.app.NotificationCompat$Builder):60:68 -> a
+    3060:3068:void access$400(android.app.Notification,android.support.v4.app.NotificationCompat$Builder):33 -> a
+    3106:3112:void android.support.v7.internal.app.NotificationCompatImplBase.overrideBigContentView(android.app.Notification,android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,android.graphics.Bitmap,java.lang.CharSequence,boolean,long,java.util.List,boolean,android.app.PendingIntent):106:112 -> a
+    3106:3112:void addBigMediaStyleToBuilderJellybean(android.app.Notification,android.support.v4.app.NotificationCompat$Builder):62 -> a
+    3106:3112:void access$400(android.app.Notification,android.support.v4.app.NotificationCompat$Builder):33 -> a
+    3119:3139:android.widget.RemoteViews android.support.v7.internal.app.NotificationCompatImplBase.generateBigContentView(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,android.graphics.Bitmap,java.lang.CharSequence,boolean,long,java.util.List,boolean,android.app.PendingIntent):119:139 -> a
+    3119:3139:void android.support.v7.internal.app.NotificationCompatImplBase.overrideBigContentView(android.app.Notification,android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,android.graphics.Bitmap,java.lang.CharSequence,boolean,long,java.util.List,boolean,android.app.PendingIntent):106 -> a
+    3119:3139:void addBigMediaStyleToBuilderJellybean(android.app.Notification,android.support.v4.app.NotificationCompat$Builder):62 -> a
+    3119:3139:void access$400(android.app.Notification,android.support.v4.app.NotificationCompat$Builder):33 -> a
+    3158:3161:int android.support.v7.internal.app.NotificationCompatImplBase.getBigLayoutResource(int):158:161 -> a
+    3158:3161:android.widget.RemoteViews android.support.v7.internal.app.NotificationCompatImplBase.generateBigContentView(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,android.graphics.Bitmap,java.lang.CharSequence,boolean,long,java.util.List,boolean,android.app.PendingIntent):120 -> a
+    3158:3161:void android.support.v7.internal.app.NotificationCompatImplBase.overrideBigContentView(android.app.Notification,android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,android.graphics.Bitmap,java.lang.CharSequence,boolean,long,java.util.List,boolean,android.app.PendingIntent):106 -> a
+    3158:3161:void addBigMediaStyleToBuilderJellybean(android.app.Notification,android.support.v4.app.NotificationCompat$Builder):62 -> a
+    3158:3161:void access$400(android.app.Notification,android.support.v4.app.NotificationCompat$Builder):33 -> a
+    33:33:void access$500(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style) -> b
+    4037:4043:void addMediaStyleToBuilderLollipop(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style):37:43 -> b
+    4037:4043:void access$500(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style):33 -> b
+    4745:4745:java.lang.Object android.support.v4.media.session.MediaSessionCompat$Token.getToken():745:745 -> b
+    4745:4745:void addMediaStyleToBuilderLollipop(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style):39 -> b
+    4745:4745:void access$500(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style):33 -> b
+    5031:5038:void android.support.v7.internal.app.NotificationCompatImpl21.addMediaStyle(android.support.v4.app.NotificationBuilderWithBuilderAccessor,int[],java.lang.Object):31:38 -> b
+    5031:5038:void addMediaStyleToBuilderLollipop(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style):39 -> b
+    5031:5038:void access$500(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style):33 -> b
+android.support.v7.app.NotificationCompat$Builder -> android.support.v7.app.az:
+    80:81:void <init>(android.content.Context) -> <init>
+    85:92:android.support.v4.app.NotificationCompat$BuilderExtender getExtender() -> b
+android.support.v7.app.NotificationCompat$IceCreamSandwichExtender -> android.support.v7.app.ba:
+    97:97:void <init>() -> <init>
+    102:103:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationBuilderWithBuilderAccessor) -> a
+    97:97:void <init>(byte) -> <init>
+android.support.v7.app.NotificationCompat$JellybeanExtender -> android.support.v7.app.bb:
+    107:107:void <init>() -> <init>
+    112:115:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationBuilderWithBuilderAccessor) -> a
+    107:107:void <init>(byte) -> <init>
+android.support.v7.app.NotificationCompat$LollipopExtender -> android.support.v7.app.bc:
+    119:119:void <init>() -> <init>
+    124:125:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationBuilderWithBuilderAccessor) -> a
+    119:119:void <init>(byte) -> <init>
+android.support.v7.app.NotificationCompat$MediaStyle -> android.support.v7.app.bd:
+    int[] mActionsToShowInCompact -> a
+    android.support.v4.media.session.MediaSessionCompat$Token mToken -> b
+    boolean mShowCancelButton -> c
+    android.app.PendingIntent mCancelButtonIntent -> h
+    170:176:void <init>() -> <init>
+    189:190:android.support.v7.app.NotificationCompat$MediaStyle setShowActionsInCompactView(int[]) -> a
 android.support.v7.appcompat.R -> android.support.v7.a.a:
 android.support.v7.appcompat.R$attr -> android.support.v7.a.b:
     int actionBarDivider -> actionBarDivider
@@ -10137,7 +10431,10 @@ android.support.v7.internal.app.AppCompatViewInflater -> android.support.v7.inte
     1056:1056:int android.support.v7.internal.view.ContextThemeWrapper.getThemeResId():56:56 -> a
     1056:1056:android.content.Context themifyContext$52f2f7f3(android.content.Context,android.util.AttributeSet,boolean):185 -> a
     57:62:void <clinit>() -> <clinit>
-android.support.v7.internal.app.ToolbarActionBar -> android.support.v7.internal.a.b:
+android.support.v7.internal.app.NotificationCompatImplBase -> android.support.v7.internal.a.b:
+    144:154:android.widget.RemoteViews generateMediaActionButton(android.content.Context,android.support.v4.app.NotificationCompatBase$Action) -> a
+    169:244:android.widget.RemoteViews applyStandardTemplate(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,android.graphics.Bitmap,java.lang.CharSequence,boolean,long,int,boolean) -> a
+android.support.v7.internal.app.ToolbarActionBar -> android.support.v7.internal.a.c:
     android.support.v7.internal.widget.DecorToolbar mDecorToolbar -> a
     boolean mToolbarMenuPrepared -> b
     android.view.Window$Callback mWindowCallback -> c
@@ -10164,19 +10461,19 @@ android.support.v7.internal.app.ToolbarActionBar -> android.support.v7.internal.
     469:479:boolean onKeyShortcut(int,android.view.KeyEvent) -> a
     491:500:void dispatchMenuVisibilityChanged(boolean) -> d
     578:583:android.view.Menu getMenu() -> e
-android.support.v7.internal.app.ToolbarActionBar$1 -> android.support.v7.internal.a.c:
+android.support.v7.internal.app.ToolbarActionBar$1 -> android.support.v7.internal.a.d:
     android.support.v7.internal.app.ToolbarActionBar this$0 -> a
     62:62:void <init>(android.support.v7.internal.app.ToolbarActionBar) -> <init>
     65:66:void run() -> run
     1441:1457:void android.support.v7.internal.app.ToolbarActionBar.populateOptionsMenu():441:457 -> run
     1441:1457:void run():65 -> run
-android.support.v7.internal.app.ToolbarActionBar$2 -> android.support.v7.internal.a.d:
+android.support.v7.internal.app.ToolbarActionBar$2 -> android.support.v7.internal.a.e:
     android.support.v7.internal.app.ToolbarActionBar this$0 -> a
     70:70:void <init>(android.support.v7.internal.app.ToolbarActionBar) -> <init>
     73:73:boolean onMenuItemClick(android.view.MenuItem) -> a
     1051:1051:android.view.Window$Callback android.support.v7.internal.app.ToolbarActionBar.access$000(android.support.v7.internal.app.ToolbarActionBar):51:51 -> a
     1051:1051:boolean onMenuItemClick(android.view.MenuItem):73 -> a
-android.support.v7.internal.app.ToolbarActionBar$ActionMenuPresenterCallback -> android.support.v7.internal.a.e:
+android.support.v7.internal.app.ToolbarActionBar$ActionMenuPresenterCallback -> android.support.v7.internal.a.f:
     boolean mClosingActionMenu -> b
     android.support.v7.internal.app.ToolbarActionBar this$0 -> a
     586:586:void <init>(android.support.v7.internal.app.ToolbarActionBar) -> <init>
@@ -10193,7 +10490,7 @@ android.support.v7.internal.app.ToolbarActionBar$ActionMenuPresenterCallback -> 
     5051:5051:android.view.Window$Callback android.support.v7.internal.app.ToolbarActionBar.access$000(android.support.v7.internal.app.ToolbarActionBar):51:51 -> a
     5051:5051:void onCloseMenu(android.support.v7.internal.view.menu.MenuBuilder,boolean):607 -> a
     586:586:void <init>(android.support.v7.internal.app.ToolbarActionBar,byte) -> <init>
-android.support.v7.internal.app.ToolbarActionBar$MenuBuilderCallback -> android.support.v7.internal.a.f:
+android.support.v7.internal.app.ToolbarActionBar$MenuBuilderCallback -> android.support.v7.internal.a.g:
     android.support.v7.internal.app.ToolbarActionBar this$0 -> a
     630:630:void <init>(android.support.v7.internal.app.ToolbarActionBar) -> <init>
     634:634:boolean onMenuItemSelected(android.support.v7.internal.view.menu.MenuBuilder,android.view.MenuItem) -> a
@@ -10209,7 +10506,7 @@ android.support.v7.internal.app.ToolbarActionBar$MenuBuilderCallback -> android.
     5051:5051:android.view.Window$Callback android.support.v7.internal.app.ToolbarActionBar.access$000(android.support.v7.internal.app.ToolbarActionBar):51:51 -> a
     5051:5051:void onMenuModeChange(android.support.v7.internal.view.menu.MenuBuilder):644 -> a
     630:630:void <init>(android.support.v7.internal.app.ToolbarActionBar,byte) -> <init>
-android.support.v7.internal.app.ToolbarActionBar$PanelMenuPresenterCallback -> android.support.v7.internal.a.g:
+android.support.v7.internal.app.ToolbarActionBar$PanelMenuPresenterCallback -> android.support.v7.internal.a.h:
     android.support.v7.internal.app.ToolbarActionBar this$0 -> a
     613:613:void <init>(android.support.v7.internal.app.ToolbarActionBar) -> <init>
     616:619:void onCloseMenu(android.support.v7.internal.view.menu.MenuBuilder,boolean) -> a
@@ -10223,7 +10520,7 @@ android.support.v7.internal.app.ToolbarActionBar$PanelMenuPresenterCallback -> a
     4051:4051:android.view.Window$Callback android.support.v7.internal.app.ToolbarActionBar.access$000(android.support.v7.internal.app.ToolbarActionBar):51:51 -> a
     4051:4051:boolean onOpenSubMenu(android.support.v7.internal.view.menu.MenuBuilder):624 -> a
     613:613:void <init>(android.support.v7.internal.app.ToolbarActionBar,byte) -> <init>
-android.support.v7.internal.app.ToolbarActionBar$ToolbarCallbackWrapper -> android.support.v7.internal.a.h:
+android.support.v7.internal.app.ToolbarActionBar$ToolbarCallbackWrapper -> android.support.v7.internal.a.i:
     android.support.v7.internal.app.ToolbarActionBar this$0 -> a
     549:551:void <init>(android.support.v7.internal.app.ToolbarActionBar,android.view.Window$Callback) -> <init>
     555:560:boolean onPreparePanel(int,android.view.View,android.view.Menu) -> onPreparePanel
@@ -10250,7 +10547,7 @@ android.support.v7.internal.app.ToolbarActionBar$ToolbarCallbackWrapper -> andro
     6134:6135:android.view.View android.support.v7.internal.app.ToolbarActionBar.getListMenuView(android.view.Menu):503 -> onCreatePanelView
     6134:6135:android.view.View android.support.v7.internal.app.ToolbarActionBar.access$400(android.support.v7.internal.app.ToolbarActionBar,android.view.Menu):51 -> onCreatePanelView
     6134:6135:android.view.View onCreatePanelView(int):569 -> onCreatePanelView
-android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.internal.a.i:
+android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.internal.a.j:
     android.view.animation.Interpolator sHideInterpolator -> i
     android.view.animation.Interpolator sShowInterpolator -> j
     boolean ALLOW_SHOW_HIDE_ANIMATIONS -> k
@@ -10350,21 +10647,21 @@ android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.inter
     75:75:android.support.v7.internal.widget.DecorToolbar access$900(android.support.v7.internal.app.WindowDecorActionBar) -> i
     75:75:android.content.Context access$1000(android.support.v7.internal.app.WindowDecorActionBar) -> j
     75:85:void <clinit>() -> <clinit>
-android.support.v7.internal.app.WindowDecorActionBar$1 -> android.support.v7.internal.a.j:
+android.support.v7.internal.app.WindowDecorActionBar$1 -> android.support.v7.internal.a.k:
     android.support.v7.internal.app.WindowDecorActionBar this$0 -> a
     137:137:void <init>(android.support.v7.internal.app.WindowDecorActionBar) -> <init>
     140:151:void onAnimationEnd(android.view.View) -> b
     1312:1317:void android.support.v7.internal.app.WindowDecorActionBar.completeDeferredDestroyActionMode():312:317 -> b
     1312:1317:void onAnimationEnd(android.view.View):147 -> b
-android.support.v7.internal.app.WindowDecorActionBar$2 -> android.support.v7.internal.a.k:
+android.support.v7.internal.app.WindowDecorActionBar$2 -> android.support.v7.internal.a.l:
     android.support.v7.internal.app.WindowDecorActionBar this$0 -> a
     154:154:void <init>(android.support.v7.internal.app.WindowDecorActionBar) -> <init>
     157:159:void onAnimationEnd(android.view.View) -> b
-android.support.v7.internal.app.WindowDecorActionBar$3 -> android.support.v7.internal.a.l:
+android.support.v7.internal.app.WindowDecorActionBar$3 -> android.support.v7.internal.a.m:
     android.support.v7.internal.app.WindowDecorActionBar this$0 -> a
     163:163:void <init>(android.support.v7.internal.app.WindowDecorActionBar) -> <init>
     166:168:void onAnimationUpdate$3c7ec8c3() -> a
-android.support.v7.internal.app.WindowDecorActionBar$ActionModeImpl -> android.support.v7.internal.a.m:
+android.support.v7.internal.app.WindowDecorActionBar$ActionModeImpl -> android.support.v7.internal.a.n:
     android.content.Context mActionModeContext -> d
     android.support.v7.internal.view.menu.MenuBuilder mMenu -> e
     android.support.v7.view.ActionMode$Callback mCallback -> f
@@ -33059,14 +33356,17 @@ org.neidhardt.dynamicsoundboard.misc.JsonPojo -> org.neidhardt.dynamicsoundboard
 org.neidhardt.dynamicsoundboard.misc.Util -> org.neidhardt.dynamicsoundboard.misc.e:
     boolean IS_LOLLIPOP_AVAILABLE -> a
     boolean IS_KITKAT_AVAILABLE -> b
-    34:37:org.neidhardt.dynamicsoundboard.dao.DaoSession setupDatabase(android.content.Context,java.lang.String) -> a
+    boolean IS_MARSHMALLOW_AVAILABLE -> c
+    35:38:org.neidhardt.dynamicsoundboard.dao.DaoSession setupDatabase(android.content.Context,java.lang.String) -> a
     1071:1071:org.neidhardt.dynamicsoundboard.dao.DaoSession org.neidhardt.dynamicsoundboard.dao.DaoMaster.newSession():71:71 -> a
-    1071:1071:org.neidhardt.dynamicsoundboard.dao.DaoSession setupDatabase(android.content.Context,java.lang.String):37 -> a
-    19:20:void <clinit>() -> <clinit>
-    2042:2043:boolean isLollipopAvailable():42:43 -> <clinit>
-    2042:2043:void <clinit>():19 -> <clinit>
-    2048:2049:boolean isKitKatAvailable():48:49 -> <clinit>
-    2048:2049:void <clinit>():20 -> <clinit>
+    1071:1071:org.neidhardt.dynamicsoundboard.dao.DaoSession setupDatabase(android.content.Context,java.lang.String):38 -> a
+    19:21:void <clinit>() -> <clinit>
+    2043:2044:boolean isLollipopAvailable():43:44 -> <clinit>
+    2043:2044:void <clinit>():19 -> <clinit>
+    2049:2050:boolean isKitKatAvailable():49:50 -> <clinit>
+    2049:2050:void <clinit>():20 -> <clinit>
+    2055:2056:boolean isMarshmallowAvailable():55:56 -> <clinit>
+    2055:2056:void <clinit>():21 -> <clinit>
 org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask -> org.neidhardt.dynamicsoundboard.misc.a.a:
     int taskCounter -> a
     12:12:void <init>() -> <init>
@@ -33645,108 +33945,108 @@ org.neidhardt.dynamicsoundboard.notifications.NotificationHandler -> org.neidhar
     org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil soundsDataUtil -> i
     org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil soundSheetsDataUtil -> j
     void <clinit>() -> <clinit>
-    62:313:void dismissAllNotifications() -> b
-    1028:1028:android.app.NotificationManager access$getNotificationManager$4(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler):28:28 -> b
-    1028:1028:void dismissAllNotifications():62 -> b
-    1034:1034:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():34:34 -> b
-    1034:1034:void dismissAllNotifications():62 -> b
-    67:83:void showAllNotifications() -> c
-    86:86:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder getNotificationForSound(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer) -> a
-    90:90:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder getNotificationForPlaylist(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer) -> b
-    96:103:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder) -> a
-    1044:1044:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder.getNotificationId():44:44 -> a
-    1044:1044:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder):96 -> a
-    1049:1049:java.lang.String org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder.getPlayerId():49:49 -> a
-    1049:1049:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder):97 -> a
-    2034:2034:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():34:34 -> a
-    2034:2034:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder):102 -> a
-    3034:3034:android.app.Notification org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotification():34:34 -> a
-    3034:3034:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder):102 -> a
-    107:117:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-    143:146:void removeNotificationForPlayer(java.lang.String) -> a
-    4034:4034:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():34:34 -> a
-    4034:4034:void removeNotificationForPlayer(java.lang.String):145 -> a
-    149:315:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification findNotificationForPendingPlayer(java.lang.String) -> b
-    5034:5034:java.lang.String org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getPlayerId():34:34 -> b
-    5034:5034:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification findNotificationForPendingPlayer(java.lang.String):149 -> b
-    152:315:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification findPlaylistNotification() -> d
-    179:208:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent) -> onEvent
-    5214:5217:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):214:217 -> onEvent
-    5214:5217:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):197 -> onEvent
-    5228:5248:boolean updateOrRemovePendingPlaylistNotification():228:248 -> onEvent
-    5228:5248:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):214 -> onEvent
-    5228:5248:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):197 -> onEvent
-    6034:6034:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():34:34 -> onEvent
-    6034:6034:boolean updateOrRemovePendingPlaylistNotification():230 -> onEvent
-    6034:6034:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):214 -> onEvent
-    6034:6034:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):197 -> onEvent
-    6262:6315:org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer getPlayingSoundFromPlaylist():262:315 -> onEvent
-    6262:6315:boolean updateOrRemovePendingPlaylistNotification():231 -> onEvent
-    6262:6315:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):214 -> onEvent
-    6262:6315:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):197 -> onEvent
-    7034:7034:java.lang.String org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getPlayerId():34:34 -> onEvent
-    7034:7034:boolean updateOrRemovePendingPlaylistNotification():231 -> onEvent
-    7034:7034:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):214 -> onEvent
-    7034:7034:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):197 -> onEvent
+    61:312:void dismissAllNotifications() -> b
+    1027:1027:android.app.NotificationManager access$getNotificationManager$4(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler):27:27 -> b
+    1027:1027:void dismissAllNotifications():61 -> b
+    1035:1035:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():35:35 -> b
+    1035:1035:void dismissAllNotifications():61 -> b
+    66:82:void showAllNotifications() -> c
+    85:85:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder getNotificationForSound(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer) -> a
+    89:89:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder getNotificationForPlaylist(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer) -> b
+    95:102:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder) -> a
+    1045:1045:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder.getNotificationId():45:45 -> a
+    1045:1045:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder):95 -> a
+    1050:1050:java.lang.String org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder.getPlayerId():50:50 -> a
+    1050:1050:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder):96 -> a
+    2035:2035:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():35:35 -> a
+    2035:2035:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder):101 -> a
+    3035:3035:android.app.Notification org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotification():35:35 -> a
+    3035:3035:void addNotification(org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder):101 -> a
+    106:116:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
+    142:145:void removeNotificationForPlayer(java.lang.String) -> a
+    4035:4035:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():35:35 -> a
+    4035:4035:void removeNotificationForPlayer(java.lang.String):144 -> a
+    148:314:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification findNotificationForPendingPlayer(java.lang.String) -> b
+    5035:5035:java.lang.String org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getPlayerId():35:35 -> b
+    5035:5035:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification findNotificationForPendingPlayer(java.lang.String):148 -> b
+    151:314:org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification findPlaylistNotification() -> d
+    178:207:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent) -> onEvent
+    5213:5216:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):213:216 -> onEvent
+    5213:5216:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):196 -> onEvent
+    5227:5247:boolean updateOrRemovePendingPlaylistNotification():227:247 -> onEvent
+    5227:5247:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):213 -> onEvent
+    5227:5247:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):196 -> onEvent
+    6035:6035:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():35:35 -> onEvent
+    6035:6035:boolean updateOrRemovePendingPlaylistNotification():229 -> onEvent
+    6035:6035:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):213 -> onEvent
+    6035:6035:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):196 -> onEvent
+    6261:6314:org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer getPlayingSoundFromPlaylist():261:314 -> onEvent
+    6261:6314:boolean updateOrRemovePendingPlaylistNotification():230 -> onEvent
+    6261:6314:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):213 -> onEvent
+    6261:6314:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):196 -> onEvent
+    7035:7035:java.lang.String org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getPlayerId():35:35 -> onEvent
+    7035:7035:boolean updateOrRemovePendingPlaylistNotification():230 -> onEvent
+    7035:7035:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):213 -> onEvent
+    7035:7035:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):196 -> onEvent
     7080:7080:boolean org.neidhardt.dynamicsoundboard.notifications.service.NotificationService.isActivityVisible():80:80 -> onEvent
-    7080:7080:boolean updateOrRemovePendingPlaylistNotification():236 -> onEvent
-    7080:7080:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):214 -> onEvent
-    7080:7080:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):197 -> onEvent
-    8034:8034:void org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.setPlayerId(java.lang.String):34:34 -> onEvent
-    8034:8034:boolean updateOrRemovePendingPlaylistNotification():244 -> onEvent
-    8034:8034:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):214 -> onEvent
-    8034:8034:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):197 -> onEvent
-    9034:9034:android.app.Notification org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotification():34:34 -> onEvent
-    9034:9034:boolean updateOrRemovePendingPlaylistNotification():246 -> onEvent
-    9034:9034:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):214 -> onEvent
-    9034:9034:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):197 -> onEvent
-    9253:9260:void handlePlayerStateChanged(java.lang.String):253:260 -> onEvent
-    9253:9260:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):204 -> onEvent
-    10121:10138:boolean updateOrRemovePendingNotification(java.lang.String):121:138 -> onEvent
-    10121:10138:void handlePlayerStateChanged(java.lang.String):253 -> onEvent
-    10121:10138:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):204 -> onEvent
-    11034:11034:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():34:34 -> onEvent
-    11034:11034:boolean updateOrRemovePendingNotification(java.lang.String):123 -> onEvent
-    11034:11034:void handlePlayerStateChanged(java.lang.String):253 -> onEvent
-    11034:11034:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):204 -> onEvent
+    7080:7080:boolean updateOrRemovePendingPlaylistNotification():235 -> onEvent
+    7080:7080:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):213 -> onEvent
+    7080:7080:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):196 -> onEvent
+    8035:8035:void org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.setPlayerId(java.lang.String):35:35 -> onEvent
+    8035:8035:boolean updateOrRemovePendingPlaylistNotification():243 -> onEvent
+    8035:8035:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):213 -> onEvent
+    8035:8035:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):196 -> onEvent
+    9035:9035:android.app.Notification org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotification():35:35 -> onEvent
+    9035:9035:boolean updateOrRemovePendingPlaylistNotification():245 -> onEvent
+    9035:9035:void handlePlaylistPlayerStateChanged(org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer):213 -> onEvent
+    9035:9035:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):196 -> onEvent
+    9252:9259:void handlePlayerStateChanged(java.lang.String):252:259 -> onEvent
+    9252:9259:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):203 -> onEvent
+    10120:10137:boolean updateOrRemovePendingNotification(java.lang.String):120:137 -> onEvent
+    10120:10137:void handlePlayerStateChanged(java.lang.String):252 -> onEvent
+    10120:10137:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):203 -> onEvent
+    11035:11035:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():35:35 -> onEvent
+    11035:11035:boolean updateOrRemovePendingNotification(java.lang.String):122 -> onEvent
+    11035:11035:void handlePlayerStateChanged(java.lang.String):252 -> onEvent
+    11035:11035:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):203 -> onEvent
     11080:11080:boolean org.neidhardt.dynamicsoundboard.notifications.service.NotificationService.isActivityVisible():80:80 -> onEvent
-    11080:11080:boolean updateOrRemovePendingNotification(java.lang.String):126 -> onEvent
-    11080:11080:void handlePlayerStateChanged(java.lang.String):253 -> onEvent
-    11080:11080:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):204 -> onEvent
-    12034:12034:android.app.Notification org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotification():34:34 -> onEvent
-    12034:12034:boolean updateOrRemovePendingNotification(java.lang.String):136 -> onEvent
-    12034:12034:void handlePlayerStateChanged(java.lang.String):253 -> onEvent
-    12034:12034:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):204 -> onEvent
-    210:210:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent) -> onEvent
-    221:224:void removePlayListNotification() -> a
-    13034:13034:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():34:34 -> a
-    13034:13034:void removePlayListNotification():223 -> a
-    38:50:void <init>(org.neidhardt.dynamicsoundboard.notifications.service.NotificationService,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil,org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil) -> <init>
+    11080:11080:boolean updateOrRemovePendingNotification(java.lang.String):125 -> onEvent
+    11080:11080:void handlePlayerStateChanged(java.lang.String):252 -> onEvent
+    11080:11080:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):203 -> onEvent
+    12035:12035:android.app.Notification org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotification():35:35 -> onEvent
+    12035:12035:boolean updateOrRemovePendingNotification(java.lang.String):135 -> onEvent
+    12035:12035:void handlePlayerStateChanged(java.lang.String):252 -> onEvent
+    12035:12035:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent):203 -> onEvent
+    209:209:void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent) -> onEvent
+    220:223:void removePlayListNotification() -> a
+    13035:13035:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():35:35 -> a
+    13035:13035:void removePlayListNotification():222 -> a
+    37:49:void <init>(org.neidhardt.dynamicsoundboard.notifications.service.NotificationService,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil,org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil) -> <init>
     13151:13152:void de.greenrobot.event.EventBus.registerSticky(java.lang.Object):151:152 -> <init>
-    13151:13152:void <init>(org.neidhardt.dynamicsoundboard.notifications.service.NotificationService,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil,org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil):48 -> <init>
-    14025:14030:android.content.IntentFilter org.neidhardt.dynamicsoundboard.notifications.NotificationsPackage$PendingSoundNotificationBuilder$6ea4bc61.getNotificationIntentFilter():25:30 -> <init>
-    14025:14030:void <init>(org.neidhardt.dynamicsoundboard.notifications.service.NotificationService,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil,org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil):50 -> <init>
-    28:28:java.lang.String access$getTAG$0(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> a
-    28:28:org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess access$getSoundsDataAccess$1(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> b
-    28:28:java.util.List access$getNotifications$2(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> c
-    28:28:org.neidhardt.dynamicsoundboard.notifications.service.NotificationService access$getService$3(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> d
+    13151:13152:void <init>(org.neidhardt.dynamicsoundboard.notifications.service.NotificationService,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil,org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil):47 -> <init>
+    14026:14031:android.content.IntentFilter org.neidhardt.dynamicsoundboard.notifications.NotificationsPackage$PendingSoundNotificationBuilder$6ea4bc61.getNotificationIntentFilter():26:31 -> <init>
+    14026:14031:void <init>(org.neidhardt.dynamicsoundboard.notifications.service.NotificationService,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess,org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil,org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil):49 -> <init>
+    27:27:java.lang.String access$getTAG$0(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> a
+    27:27:org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess access$getSoundsDataAccess$1(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> b
+    27:27:java.util.List access$getNotifications$2(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> c
+    27:27:org.neidhardt.dynamicsoundboard.notifications.service.NotificationService access$getService$3(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> d
 org.neidhardt.dynamicsoundboard.notifications.NotificationHandler$NotificationActionReceiver -> org.neidhardt.dynamicsoundboard.notifications.b:
     kotlin.reflect.KClass $kotlinClass -> a
     org.neidhardt.dynamicsoundboard.notifications.NotificationHandler this$0 -> b
     void <clinit>() -> <clinit>
-    268:297:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-    301:315:void dismissPendingMediaPlayer(int) -> a
+    267:296:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    300:314:void dismissPendingMediaPlayer(int) -> a
     1106:1106:java.lang.Integer kotlin.IntProgression.getStart():106:106 -> a
-    1106:1106:void dismissPendingMediaPlayer(int):310 -> a
+    1106:1106:void dismissPendingMediaPlayer(int):309 -> a
     1107:1107:java.lang.Integer kotlin.IntProgression.getEnd():107:107 -> a
-    1107:1107:void dismissPendingMediaPlayer(int):310 -> a
+    1107:1107:void dismissPendingMediaPlayer(int):309 -> a
     1108:1108:java.lang.Integer kotlin.IntProgression.getIncrement():108:108 -> a
-    1108:1108:void dismissPendingMediaPlayer(int):310 -> a
-    2034:2034:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():34:34 -> a
-    2034:2034:void dismissPendingMediaPlayer(int):301 -> a
+    1108:1108:void dismissPendingMediaPlayer(int):309 -> a
+    2035:2035:int org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getNotificationId():35:35 -> a
+    2035:2035:void dismissPendingMediaPlayer(int):300 -> a
     2080:2080:boolean org.neidhardt.dynamicsoundboard.notifications.service.NotificationService.isActivityVisible():80:80 -> a
-    2080:2080:void dismissPendingMediaPlayer(int):303 -> a
-    264:264:void <init>(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> <init>
+    2080:2080:void dismissPendingMediaPlayer(int):302 -> a
+    263:263:void <init>(org.neidhardt.dynamicsoundboard.notifications.NotificationHandler) -> <init>
 org.neidhardt.dynamicsoundboard.notifications.NotificationsPackage$BitmapUtil$4f347cc4 -> org.neidhardt.dynamicsoundboard.notifications.c:
     31:41:int getSampleFactor(int,int,int,int) -> a
 org.neidhardt.dynamicsoundboard.notifications.NotificationsPackage$NotificationIds$6c1ffdcc -> org.neidhardt.dynamicsoundboard.notifications.d:
@@ -33773,49 +34073,49 @@ org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification -> org.ne
     java.lang.String playerId -> c
     android.app.Notification notification -> d
     void <clinit>() -> <clinit>
-    36:36:boolean isPlaylistNotification() -> a
-    34:34:void setNotification(android.app.Notification) -> a
+    37:37:boolean isPlaylistNotification() -> a
+    35:35:void setNotification(android.app.Notification) -> a
     void <init>(int,java.lang.String,android.app.Notification) -> <init>
     java.lang.String toString() -> toString
     int hashCode() -> hashCode
     boolean equals(java.lang.Object) -> equals
 org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder -> org.neidhardt.dynamicsoundboard.notifications.f:
-    kotlin.reflect.KClass $kotlinClass -> a
-    java.lang.String playerId -> b
-    int notificationId -> c
+    kotlin.reflect.KClass $kotlinClass -> D
+    java.lang.String playerId -> E
+    int notificationId -> F
     void <clinit>() -> <clinit>
-    156:158:android.app.Notification$Action buildAction(android.graphics.drawable.Icon,java.lang.String,android.app.PendingIntent) -> a
-    163:166:android.app.PendingIntent getPendingIntent(android.content.Context,java.lang.String) -> a
-    1177:1179:int getRequestCode():177:179 -> a
-    1177:1179:android.app.PendingIntent getPendingIntent(android.content.Context,java.lang.String):166 -> a
-    47:75:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String) -> <init>
-    2119:2127:void setActionStop(android.content.Context,boolean):119:127 -> <init>
-    2119:2127:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):54 -> <init>
-    2143:2151:void setActionFadeOut(android.content.Context,boolean):143:151 -> <init>
-    2143:2151:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):58 -> <init>
-    3131:3139:void setActionPlay(android.content.Context,boolean):131:139 -> <init>
-    3131:3139:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):63 -> <init>
-    3171:3172:android.app.PendingIntent getOpenActivityIntent(android.content.Context):171:172 -> <init>
-    3171:3172:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):68 -> <init>
+    150:150:android.support.v4.app.NotificationCompat$Action buildAction(int,java.lang.String,android.app.PendingIntent) -> a
+    155:158:android.app.PendingIntent getPendingIntent(android.content.Context,java.lang.String) -> a
+    1169:1171:int getRequestCode():169:171 -> a
+    1169:1171:android.app.PendingIntent getPendingIntent(android.content.Context,java.lang.String):158 -> a
+    48:75:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String) -> <init>
+    2117:2124:void setActionStop(android.content.Context,boolean):117:124 -> <init>
+    2117:2124:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):55 -> <init>
+    2139:2146:void setActionFadeOut(android.content.Context,boolean):139:146 -> <init>
+    2139:2146:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):59 -> <init>
+    3128:3135:void setActionPlay(android.content.Context,boolean):128:135 -> <init>
+    3128:3135:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):64 -> <init>
+    3163:3164:android.app.PendingIntent getOpenActivityIntent(android.content.Context):163:164 -> <init>
+    3163:3164:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):69 -> <init>
     4080:4097:android.graphics.Bitmap getLargeIcon(android.content.Context,java.lang.String):80:97 -> <init>
-    4080:4097:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):72 -> <init>
+    4080:4097:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):73 -> <init>
     5013:5018:android.graphics.Point org.neidhardt.dynamicsoundboard.notifications.NotificationsPackage$BitmapUtil$4f347cc4.getBitmapSize(byte[]):13:18 -> <init>
     5013:5018:android.graphics.Bitmap getLargeIcon(android.content.Context,java.lang.String):90 -> <init>
-    5013:5018:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):72 -> <init>
+    5013:5018:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):73 -> <init>
     5046:5049:android.graphics.Bitmap org.neidhardt.dynamicsoundboard.notifications.NotificationsPackage$BitmapUtil$4f347cc4.getBitmap(byte[],int):46:49 -> <init>
     5046:5049:android.graphics.Bitmap getLargeIcon(android.content.Context,java.lang.String):92 -> <init>
-    5046:5049:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):72 -> <init>
+    5046:5049:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):73 -> <init>
     6022:6027:android.graphics.Point org.neidhardt.dynamicsoundboard.notifications.NotificationsPackage$BitmapUtil$4f347cc4.getBitmapSize(android.content.res.Resources,int):22:27 -> <init>
     6022:6027:android.graphics.Bitmap getLargeIcon(android.content.Context,java.lang.String):95 -> <init>
-    6022:6027:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):72 -> <init>
+    6022:6027:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):73 -> <init>
     6054:6057:android.graphics.Bitmap org.neidhardt.dynamicsoundboard.notifications.NotificationsPackage$BitmapUtil$4f347cc4.getBitmap(android.content.Context,int,int):54:57 -> <init>
     6054:6057:android.graphics.Bitmap getLargeIcon(android.content.Context,java.lang.String):97 -> <init>
-    6054:6057:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):72 -> <init>
+    6054:6057:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):73 -> <init>
     6103:6106:void setScaledLargeIcon(android.graphics.Bitmap):103:106 -> <init>
-    6103:6106:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):72 -> <init>
-    6111:6115:void addStyleLollipop():111:115 -> <init>
-    6111:6115:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):75 -> <init>
-    44:46:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,int) -> <init>
+    6103:6106:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):73 -> <init>
+    6110:6113:void addMediaStyle():110:113 -> <init>
+    6110:6113:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,java.lang.String):75 -> <init>
+    45:47:void <init>(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer,int,java.lang.String,int) -> <init>
 org.neidhardt.dynamicsoundboard.notifications.service.NotificationService -> org.neidhardt.dynamicsoundboard.notifications.service.NotificationService:
     kotlin.reflect.KClass $kotlinClass -> a
     java.lang.String TAG -> c
@@ -33832,14 +34132,14 @@ org.neidhardt.dynamicsoundboard.notifications.service.NotificationService -> org
     1151:1152:void onCreate():42 -> onCreate
     47:49:int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     54:61:void onDestroy() -> onDestroy
-    2055:2058:void org.neidhardt.dynamicsoundboard.notifications.NotificationHandler.onServiceDestroyed():55:58 -> onDestroy
-    2055:2058:void onDestroy():57 -> onDestroy
+    2054:2057:void org.neidhardt.dynamicsoundboard.notifications.NotificationHandler.onServiceDestroyed():54:57 -> onDestroy
+    2054:2057:void onDestroy():57 -> onDestroy
     65:76:void onEvent(org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent) -> onEvent
-    2156:2174:void org.neidhardt.dynamicsoundboard.notifications.NotificationHandler.removeNotificationsForPausedSounds():156:174 -> onEvent
-    2156:2174:void onEvent(org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent):74 -> onEvent
-    3034:3034:java.lang.String org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getPlayerId():34:34 -> onEvent
-    3034:3034:void org.neidhardt.dynamicsoundboard.notifications.NotificationHandler.removeNotificationsForPausedSounds():158 -> onEvent
-    3034:3034:void onEvent(org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent):74 -> onEvent
+    2155:2173:void org.neidhardt.dynamicsoundboard.notifications.NotificationHandler.removeNotificationsForPausedSounds():155:173 -> onEvent
+    2155:2173:void onEvent(org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent):74 -> onEvent
+    3035:3035:java.lang.String org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification.getPlayerId():35:35 -> onEvent
+    3035:3035:void org.neidhardt.dynamicsoundboard.notifications.NotificationHandler.removeNotificationsForPausedSounds():157 -> onEvent
+    3035:3035:void onEvent(org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent):74 -> onEvent
     18:26:void <init>() -> <init>
 org.neidhardt.dynamicsoundboard.preferences.AboutActivity -> org.neidhardt.dynamicsoundboard.preferences.AboutActivity:
     11:34:void <init>() -> <init>
