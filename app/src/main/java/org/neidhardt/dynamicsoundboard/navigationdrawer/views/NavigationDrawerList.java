@@ -2,8 +2,6 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.SparseArray;
-import android.view.View;
 import android.widget.FrameLayout;
 
 

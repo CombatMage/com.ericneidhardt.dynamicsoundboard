@@ -60,6 +60,7 @@ public abstract class CustomEditText
 		this.onTextEditedListener = listener;
 	}
 
+	@SuppressWarnings("unused")
 	public void addTextChangedListener(TextWatcher listener)
 	{
 		this.input.addTextChangedListener(listener);
@@ -139,6 +140,7 @@ public abstract class CustomEditText
 		return this.getHint().toString();
 	}
 
+	@SuppressWarnings("unused")
 	public void setHint(String hint)
 	{
 		if (this.input != null)

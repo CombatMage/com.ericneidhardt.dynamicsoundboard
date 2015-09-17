@@ -49,7 +49,7 @@ public class SoundSheetFragment :
 	companion object
 	{
 		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
-		private val LOG_TAG = javaClass<SoundSheetFragment>().getName()
+		private val LOG_TAG = javaClass<SoundSheetFragment>().name
 
 		public fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
 		{
@@ -93,7 +93,7 @@ public class SoundSheetFragment :
 		this.soundAdapter = SoundAdapter(this.soundPresenter as SoundPresenter, this.soundsDataStorage, this.eventBus)
 		this.soundPresenter!!.adapter = this.soundAdapter
 
-		this.dragSortRecycler = SoundDragSortRecycler(this.getResources(), R.id.b_reorder)
+		this.dragSortRecycler = SoundDragSortRecycler(this.getContext(), R.id.b_reorder)
 		this.dragSortRecycler!!.setOnItemMovedListener(this)
 		this.dragSortRecycler!!.setOnDragStateChangedListener(this)
 		this.scrollListener = SoundSheetScrollListener(this.dragSortRecycler)

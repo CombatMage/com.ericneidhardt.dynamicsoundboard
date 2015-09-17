@@ -18,7 +18,6 @@ public class Util
 {
 	public static final boolean IS_LOLLIPOP_AVAILABLE = isLollipopAvailable();
 	public static final boolean IS_KITKAT_AVAILABLE = isKitKatAvailable();
-	public static final boolean IS_MARSHMALLOW_AVAILABLE = isMarshmallowAvailable();
 
 	public static final int SYSTEM_UI_FULL_IMMERSE = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 			| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION

@@ -3,7 +3,6 @@ package org.neidhardt.dynamicsoundboard;
 import android.app.Application;
 import android.content.Context;
 //import org.acra.ACRA
-import org.acra.annotation.ReportsCrashes
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
