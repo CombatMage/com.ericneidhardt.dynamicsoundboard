@@ -8,15 +8,14 @@ import android.view.View
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
-public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View, pagerAdapter: T)
-	: RecyclerView.ViewHolder(itemView)
-	, View.OnClickListener
-	, ViewPager.OnPageChangeListener
+public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View, pagerAdapter: T) :
+		RecyclerView.ViewHolder(itemView),
+		View.OnClickListener,
+		ViewPager.OnPageChangeListener
 {
 	private val viewPager = itemView as ViewPager
 
@@ -27,10 +26,10 @@ public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View
 
 	init
 	{
-		this.viewPager.setOffscreenPageLimit(2)
-		this.viewPager.setAdapter(pagerAdapter)
+		this.viewPager.offscreenPageLimit = 2
+		this.viewPager.adapter = pagerAdapter
 		this.viewPager.addOnPageChangeListener(this)
-		this.viewPager.setCurrentItem(this.getIndexOfContentPage())
+		this.viewPager.currentItem = this.getIndexOfContentPage()
 
 		this.deleteSoundInfoLeft.setOnClickListener(this)
 		this.deleteSoundInfoRight.setOnClickListener(this)
@@ -52,7 +51,7 @@ public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View
 
 	protected fun showContentPage()
 	{
-		this.viewPager.setCurrentItem(this.getIndexOfContentPage())
+		this.viewPager.currentItem = this.getIndexOfContentPage()
 	}
 
 	override fun onClick(view: View)
@@ -60,8 +59,8 @@ public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View
 		if (SoundboardPreferences.isOneSwipeToDeleteEnabled())
 			return
 
-		val id = view.getId()
-		if (id == this.deleteSoundInfoLeft.getId() || id == this.deleteSoundInfoRight.getId())
+		val id = view.id
+		if (id == this.deleteSoundInfoLeft.id || id == this.deleteSoundInfoRight.id)
 			this.delete()
 	}
 
@@ -81,6 +80,6 @@ public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View
 
 	private fun Handler.deleteItemDelayed()
 	{
-		this.postDelayed(Runnable { delete() }, UPDATE_INTERVAL.toLong())
+		this.postDelayed({ delete() }, UPDATE_INTERVAL.toLong())
 	}
 }

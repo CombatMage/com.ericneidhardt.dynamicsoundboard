@@ -47,25 +47,25 @@ public class DialogBaseLayout : LinearLayout
 
 	override fun onFinishInflate()
 	{
-		super<LinearLayout>.onFinishInflate()
+		super.onFinishInflate()
 
 		val view = if (this.hasRecyclerView && this.hasTitle)
-			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_recycler_view_title, this, false)
+			LayoutInflater.from(this.context).inflate(R.layout.dialog_base_recycler_view_title, this, false)
 		else if (this.hasRecyclerView)
-			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_recycler_view_no_title, this, false)
+			LayoutInflater.from(this.context).inflate(R.layout.dialog_base_recycler_view_no_title, this, false)
 		else if (this.hasTitle)
-			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_title, this, false)
+			LayoutInflater.from(this.context).inflate(R.layout.dialog_base_title, this, false)
 		else
-			LayoutInflater.from(this.getContext()).inflate(R.layout.dialog_base_no_title, this, false)
+			LayoutInflater.from(this.context).inflate(R.layout.dialog_base_no_title, this, false)
 
-		(view.findViewById(R.id.b_cancel) as Button).setText(this.labelCancel)
-		(view.findViewById(R.id.b_ok) as Button).setText(this.labelOk)
+		(view.findViewById(R.id.b_cancel) as Button).text = this.labelCancel
+		(view.findViewById(R.id.b_ok) as Button).text = this.labelOk
 
 		val container = view.findViewById(R.id.layout_dialog_content) as ViewGroup
-		while (0 < getChildCount())
+		while (0 < childCount)
 		{
 			val child = this.getChildAt(0)
-			val params = child.getLayoutParams()
+			val params = child.layoutParams
 
 			removeViewAt(0);
 			container.addView(child, params);
@@ -78,8 +78,8 @@ public class DialogBaseLayout : LinearLayout
 		if (this.hasRecyclerView)
 		{
 			val visibility = if (enable) View.VISIBLE else View.GONE
-			this.findViewById(R.id.v_divider_top).setVisibility(visibility)
-			this.findViewById(R.id.v_divider_bottom).setVisibility(visibility)
+			this.findViewById(R.id.v_divider_top).visibility = visibility
+			this.findViewById(R.id.v_divider_bottom).visibility = visibility
 		}
 	}
 }

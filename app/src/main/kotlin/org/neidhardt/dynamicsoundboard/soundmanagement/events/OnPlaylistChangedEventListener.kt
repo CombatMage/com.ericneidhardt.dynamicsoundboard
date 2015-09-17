@@ -9,6 +9,6 @@ public interface OnPlaylistChangedEventListener
 	 * This is called by greenRobot EventBus in case the playlist has changed.*
 	 * @param event delivered PlaylistChangedEvent
 	 */
-	SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public fun onEventMainThread(event: PlaylistChangedEvent)
 }

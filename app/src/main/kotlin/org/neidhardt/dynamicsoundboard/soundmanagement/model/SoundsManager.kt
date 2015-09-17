@@ -8,13 +8,9 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.Util
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
-import roboguice.util.SafeAsyncTask
-
 import java.io.IOException
 import java.util.*
 
@@ -23,7 +19,7 @@ import java.util.*
  */
 public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 {
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()
 
 	private val soundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
@@ -32,9 +28,9 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	private var dbPlaylist: DaoSession? = null
 	private var dbSounds: DaoSession? = null
 
-	private val sounds: MutableMap<String, MutableList<EnhancedMediaPlayer>> = HashMap<String, MutableList<EnhancedMediaPlayer>>()
-	private val playlist: MutableList<EnhancedMediaPlayer> = ArrayList<EnhancedMediaPlayer>()
-	private val currentlyPlayingSounds: MutableSet<EnhancedMediaPlayer> = HashSet<EnhancedMediaPlayer>()
+	private val sounds: MutableMap<String, MutableList<EnhancedMediaPlayer>> = HashMap()
+	private val playlist: MutableList<EnhancedMediaPlayer> = ArrayList()
+	private val currentlyPlayingSounds: MutableSet<EnhancedMediaPlayer> = HashSet()
 
 	private var isInitDone: Boolean = false
 
@@ -101,7 +97,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		this.eventBus.post(SoundsRemovedEvent())
 	}
 
-	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean = this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.getFragmentTag())
+	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean = this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.fragmentTag)
 
 	override fun getCurrentlyPlayingSounds(): Set<EnhancedMediaPlayer> = this.currentlyPlayingSounds
 
@@ -130,9 +126,9 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun createSoundAndAddToManager(data: MediaPlayerData)
 	{
-		if (this.getSoundById(data.getFragmentTag(), data.getPlayerId()) != null)
+		if (this.getSoundById(data.fragmentTag, data.playerId) != null)
 		{
-			Logger.d(TAG, "player: " + data + " is already loaded")
+			Logger.d(TAG, "player: $data is already loaded")
 			return
 		}
 
@@ -148,9 +144,9 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun createPlaylistSoundAndAddToManager(data: MediaPlayerData)
 	{
-		if (this.getSoundById(data.getFragmentTag(), data.getPlayerId()) != null)
+		if (this.getSoundById(data.fragmentTag, data.playerId) != null)
 		{
-			Logger.d(TAG, "player: " + data + " is already loaded")
+			Logger.d(TAG, "player: $data is already loaded")
 			return
 		}
 
@@ -178,11 +174,11 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			{
 				player.setIsInPlaylist(true)
 
-				val playerForPlaylist = createPlaylistSound(player.getMediaPlayerData())
+				val playerForPlaylist = createPlaylistSound(player.mediaPlayerData)
 				if (playerForPlaylist == null)
 				{
-					this.removePlaylistDataFromDatabase(player.getMediaPlayerData())
-					this.eventBus.post(CreatingPlayerFailedEvent(player.getMediaPlayerData()))
+					this.removePlaylistDataFromDatabase(player.mediaPlayerData)
+					this.eventBus.post(CreatingPlayerFailedEvent(player.mediaPlayerData))
 				}
 				else
 					this.addSoundToPlayList(playerForPlaylist)
@@ -197,7 +193,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 			this.playlist.remove(playerInPlaylist)
 
-			this.removePlayerDataFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), playerInPlaylist.getMediaPlayerData())
+			this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao, playerInPlaylist.mediaPlayerData)
 			playerInPlaylist.destroy(true)
 		}
 	}
@@ -206,7 +202,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		this.playlist.add(player)
 
-		val data = player.getMediaPlayerData()
+		val data = player.mediaPlayerData
 		data.insertItemInDatabaseAsync()
 
 		this.eventBus.post(PlaylistChangedEvent())
@@ -214,8 +210,8 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	private fun addSoundToSounds(player: EnhancedMediaPlayer)
 	{
-		val data = player.getMediaPlayerData()
-		val fragmentTag = data.getFragmentTag()
+		val data = player.mediaPlayerData
+		val fragmentTag = data.fragmentTag
 		if (this.sounds[fragmentTag] == null)
 			this.sounds[fragmentTag] = ArrayList<EnhancedMediaPlayer>()
 
@@ -235,22 +231,22 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 			for (playerToRemove in copyList)
 			{
-				val data = playerToRemove.getMediaPlayerData()
-				this.sounds.get(data.getFragmentTag())?.remove(playerToRemove)
+				val data = playerToRemove.mediaPlayerData
+				this.sounds.get(data.fragmentTag)?.remove(playerToRemove)
 
-				if (data.getIsInPlaylist())
+				if (data.isInPlaylist)
 				{
-					val correspondingPlayerInPlaylist = searchInListForId(data.getPlayerId(), this.playlist)
+					val correspondingPlayerInPlaylist = searchInListForId(data.playerId, this.playlist)
 					if (correspondingPlayerInPlaylist != null)
 					{
 						this.playlist.remove(correspondingPlayerInPlaylist)
 
-						this.removePlayerDataFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(),
-								correspondingPlayerInPlaylist.getMediaPlayerData())
+						this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao,
+								correspondingPlayerInPlaylist.mediaPlayerData)
 						correspondingPlayerInPlaylist.destroy(true)
 					}
 				}
-				this.removePlayerDataFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerToRemove.getMediaPlayerData())
+				this.removePlayerDataFromDatabase(this.getDbSounds().mediaPlayerDataDao, playerToRemove.mediaPlayerData)
 				playerToRemove.destroy(true)
 			}
 			this.eventBus.post(SoundsRemovedEvent(copyList))
@@ -259,7 +255,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun removeSoundsFromPlaylist(soundsToRemove: List<EnhancedMediaPlayer>)
 	{
-		soundsToRemove.map { player -> this.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), false) }
+		soundsToRemove.map { player -> this.toggleSoundInPlaylist(player.mediaPlayerData.playerId, false) }
 		this.eventBus.post(SoundsRemovedEvent(soundsToRemove))
 	}
 
@@ -305,20 +301,20 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun removeSoundDataFromDatabase(playerData: MediaPlayerData)
 	{
-		this.removePlayerDataFromDatabase(this.getDbSounds().getMediaPlayerDataDao(), playerData)
+		this.removePlayerDataFromDatabase(this.getDbSounds().mediaPlayerDataDao, playerData)
 	}
 
 	override fun removePlaylistDataFromDatabase(playerData: MediaPlayerData)
 	{
-		this.removePlayerDataFromDatabase(this.getDbPlaylist().getMediaPlayerDataDao(), playerData)
+		this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao, playerData)
 	}
 
 	private fun removePlayerDataFromDatabase(dao: MediaPlayerDataDao, playerData: MediaPlayerData)
 	{
-		if (playerData.getId() != null)
+		if (playerData.id != null)
 			dao.delete(playerData)
 		else {
-			val playersInDatabase = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerData.getPlayerId())).list()
+			val playersInDatabase = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerData.playerId)).list()
 			dao.deleteInTx(playersInDatabase)
 		}
 	}

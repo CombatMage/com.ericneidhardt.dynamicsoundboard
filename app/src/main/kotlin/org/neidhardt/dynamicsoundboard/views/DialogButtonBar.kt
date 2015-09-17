@@ -1,13 +1,11 @@
 package org.neidhardt.dynamicsoundboard.views
 
-import org.neidhardt.dynamicsoundboard.R
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
+import org.neidhardt.dynamicsoundboard.R
 
 /**
  * File created by eric.neidhardt on 26.06.2015.
@@ -38,8 +36,8 @@ class DialogButtonBar : LinearLayout
 
 		val array = context.obtainStyledAttributes(attrs, R.styleable.DialogButtonBar, 0, 0)
 
-		(this.findViewById(R.id.b_cancel) as Button).setText(array.getString(R.styleable.DialogButtonBar_text_cancle_button))
-		(this.findViewById(R.id.b_ok) as Button).setText(array.getString(R.styleable.DialogButtonBar_text_ok_button))
+		(this.findViewById(R.id.b_cancel) as Button).text = array.getString(R.styleable.DialogButtonBar_text_cancle_button)
+		(this.findViewById(R.id.b_ok) as Button).text = array.getString(R.styleable.DialogButtonBar_text_ok_button)
 		array.recycle()
 	}
 }

@@ -15,20 +15,20 @@ public class LoadSoundSheetsTask
 )
 : LongTermTask<List<SoundSheet>>()
 {
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 
 	override fun getTag(): String
 	{
 		return TAG
 	}
 
-	throws(Exception::class)
+	@Throws(Exception::class)
 	override fun call(): List<SoundSheet>
 	{
-		return this.daoSession.getSoundSheetDao().queryBuilder().list()
+		return this.daoSession.soundSheetDao.queryBuilder().list()
 	}
 
-	throws(Exception::class)
+	@Throws(Exception::class)
 	override fun onSuccess(loadedSoundSheets: List<SoundSheet>)
 	{
 		super.onSuccess(loadedSoundSheets)

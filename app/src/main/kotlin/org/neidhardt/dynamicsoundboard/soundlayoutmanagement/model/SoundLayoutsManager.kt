@@ -35,13 +35,13 @@ public class SoundLayoutsManager :
 
 	init
 	{
-		this.soundLayouts.addAll(this.daoSession.getSoundLayoutDao().queryBuilder().list())
+		this.soundLayouts.addAll(this.daoSession.soundLayoutDao.queryBuilder().list())
 		if (this.soundLayouts.size() == 0)
 		{
 			val defaultLayout = this.getDefaultSoundLayout()
-			defaultLayout.setIsSelected(true)
+			defaultLayout.isSelected = true
 			this.soundLayouts.add(defaultLayout)
-			this.daoSession.getSoundLayoutDao().insert(defaultLayout)
+			this.daoSession.soundLayoutDao.insert(defaultLayout)
 		}
 	}
 
@@ -59,12 +59,12 @@ public class SoundLayoutsManager :
 	{
 		for (soundLayout in this.soundLayouts)
 		{
-			if (soundLayout.getIsSelected())
+			if (soundLayout.isSelected)
 				return soundLayout
 		}
 		// no layout is currently selected
 		val layout = this.soundLayouts.get(0)
-		layout.setIsSelected(true)
+		layout.isSelected = true
 		layout.updateItemInDatabaseAsync()
 		return layout
 	}
@@ -72,21 +72,21 @@ public class SoundLayoutsManager :
 	override public fun addSoundLayout(soundLayout: SoundLayout)
 	{
 		this.soundLayouts.add(soundLayout)
-		this.daoSession.getSoundLayoutDao().insert(soundLayout)
+		this.daoSession.soundLayoutDao.insert(soundLayout)
 	}
 
 	override fun getSuggestedName(): String
 	{
-		return DynamicSoundboardApplication.getContext().getResources().getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size()
+		return DynamicSoundboardApplication.getContext().resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size()
 	}
 
 	private fun getDefaultSoundLayout(): SoundLayout
 	{
 		val layout = SoundLayout()
 		val label = DynamicSoundboardApplication.getContext().getString(R.string.sound_layout_default)
-		layout.setDatabaseId(DB_DEFAULT)
-		layout.setLabel(label)
-		layout.setIsSelected(true)
+		layout.databaseId = DB_DEFAULT
+		layout.label = label
+		layout.isSelected = true
 		return layout
 	}
 
@@ -100,23 +100,23 @@ public class SoundLayoutsManager :
 		var newSelectionRequired = false
 		for (soundLayout in this.soundLayouts)
 		{
-			if (soundLayout.getIsSelected())
+			if (soundLayout.isSelected)
 				newSelectionRequired = true
 
-			this.daoSession.getSoundLayoutDao().delete(soundLayout)
+			this.daoSession.soundLayoutDao.delete(soundLayout)
 		}
 		if (this.soundLayouts.size() == 0)
 		{
 			val defaultLayout = this.getDefaultSoundLayout()
-			defaultLayout.setIsSelected(true)
+			defaultLayout.isSelected = true
 			this.soundLayouts.add(defaultLayout)
-			this.daoSession.getSoundLayoutDao().insert(defaultLayout)
+			this.daoSession.soundLayoutDao.insert(defaultLayout)
 			newSelectionRequired = false
 		}
 
 		if (!newSelectionRequired)
 		{
-			this.soundLayouts.get(0).setIsSelected(true)
+			this.soundLayouts.get(0).isSelected = true
 			this.soundLayouts.get(0).updateItemInDatabaseAsync()
 		}
 	}
@@ -127,14 +127,14 @@ public class SoundLayoutsManager :
 		for (i in 0..size - 1)
 		{
 			val layout = this.soundLayouts.get(i)
-			if (layout.getIsSelected() && i != position)
+			if (layout.isSelected && i != position)
 			{
-				layout.setIsSelected(false)
+				layout.isSelected = false
 				layout.updateItemInDatabaseAsync()
 			}
 			else if (i == position)
 			{
-				layout.setIsSelected(true)
+				layout.isSelected = true
 				layout.updateItemInDatabaseAsync()
 			}
 		}
@@ -143,7 +143,7 @@ public class SoundLayoutsManager :
 	override public fun getSoundLayoutById(databaseId: String): SoundLayout?
 	{
 		for (layout in this.soundLayouts) {
-			if (layout.getDatabaseId() == databaseId)
+			if (layout.databaseId == databaseId)
 				return layout
 		}
 		return null

@@ -1,16 +1,13 @@
 package org.neidhardt.dynamicsoundboard.notifications
 
-import android.annotation.TargetApi
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
-import android.graphics.drawable.Icon
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import android.os.Build
 import android.support.v7.app.NotificationCompat
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
@@ -38,22 +35,22 @@ public class PendingSoundNotification(public val notificationId: Int, public var
 }
 
 public class PendingSoundNotificationBuilder
-jvmOverloads constructor
+@JvmOverloads constructor
 (
 		context: Context,
 		player: EnhancedMediaPlayer,
-		public val notificationId: Int = player.getMediaPlayerData().getPlayerId().hashCode(),
-		title: String = player.getMediaPlayerData().getLabel(),
+		public val notificationId: Int = player.mediaPlayerData.playerId.hashCode(),
+		title: String = player.mediaPlayerData.label,
 		message: String? = null
 ) : NotificationCompat.Builder(context)
 {
-	public val playerId: String = player.getMediaPlayerData().getPlayerId()
+	public val playerId: String = player.mediaPlayerData.playerId
 
 	init
 	{
 		val isLollipopStyleAvailable = Util.IS_LOLLIPOP_AVAILABLE
 		this.setActionStop(context, isLollipopStyleAvailable)
-		if (player.isPlaying())
+		if (player.isPlaying)
 		{
 			this.setOngoing(true)
 			this.setActionFadeOut(context, isLollipopStyleAvailable)
@@ -70,7 +67,7 @@ jvmOverloads constructor
 
 		this.setContentTitle(title)
 		this.setContentText(message)
-		this.setScaledLargeIcon(this.getLargeIcon(context, player.getMediaPlayerData().getUri()))
+		this.setScaledLargeIcon(this.getLargeIcon(context, player.mediaPlayerData.uri))
 
 		this.addMediaStyle()
 	}
@@ -80,11 +77,11 @@ jvmOverloads constructor
 		val mediaDataReceiver = MediaMetadataRetriever()
 		mediaDataReceiver.setDataSource(context, Uri.parse(uri))
 
-		val resources = context.getResources()
+		val resources = context.resources
 		val requiredHeight = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
 		val requiredWidth = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_width)
 
-		val data = mediaDataReceiver.getEmbeddedPicture()
+		val data = mediaDataReceiver.embeddedPicture
 		if (data != null)
 		{
 			val size = getBitmapSize(data)
@@ -160,7 +157,7 @@ jvmOverloads constructor
 
 	private fun getOpenActivityIntent(context: Context): PendingIntent
 	{
-		val intent = Intent(context, javaClass<SoundActivity>())
+		val intent = Intent(context, SoundActivity::class.java)
 		return PendingIntent.getActivity(context, IntentRequest.NOTIFICATION_OPEN_ACTIVITY, intent, 0)
 	}
 

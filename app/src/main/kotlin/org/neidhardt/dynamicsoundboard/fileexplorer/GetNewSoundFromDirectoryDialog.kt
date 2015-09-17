@@ -2,14 +2,13 @@ package org.neidhardt.dynamicsoundboard.fileexplorer
 
 import android.app.FragmentManager
 import android.os.Bundle
-import android.view.View
 
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
  */
 public class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
 {
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 
 	public constructor(manager: FragmentManager, callingFragmentTag: String) : this()
 	{
@@ -17,7 +16,7 @@ public class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
 
 		val args = Bundle()
 		args.putString(AddNewSoundFromDirectoryDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
-		dialog.setArguments(args)
+		dialog.arguments = args
 
 		dialog.show(manager, TAG)
 	}
@@ -36,7 +35,7 @@ public class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
 	{
 		val fileList = super.getFileListResult();
 
-		val callingFragment = this.getFragmentManager().findFragmentByTag(super.callingFragmentTag)
+		val callingFragment = this.fragmentManager.findFragmentByTag(super.callingFragmentTag)
 		if (callingFragment != null && callingFragment is FileResultHandler)
 		{
 			callingFragment.onFileResultsAvailable(fileList)
