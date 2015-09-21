@@ -3,7 +3,7 @@
 <org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:animateLayoutChanges="true"
 		app:has_title="false"
@@ -23,7 +23,7 @@
 
 	<android.support.design.widget.TextInputLayout
 			android:id="@+id/ti_name_sound_layout"
-			android:layout_width="match_parent"
+			android:layout_width="@dimen/width_min_dialog"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/margin_default">
 
