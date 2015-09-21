@@ -28,6 +28,6 @@ public abstract class BaseDialog : DialogFragment()
 
 	public fun getSoundActivity(): SoundActivity
 	{
-		return this.getActivity() as SoundActivity
+		return this.activity as SoundActivity
 	}
 }

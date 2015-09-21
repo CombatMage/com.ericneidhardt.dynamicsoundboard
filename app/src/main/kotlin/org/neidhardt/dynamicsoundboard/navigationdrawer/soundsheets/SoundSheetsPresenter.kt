@@ -39,7 +39,7 @@ public open class SoundSheetsPresenter
 
 	override fun onAttachedToWindow()
 	{
-		super<NavigationDrawerListPresenter>.onAttachedToWindow()
+		super.onAttachedToWindow()
 		this.values.clear()
 		this.values.addAll(this.soundSheetsDataAccess.getSoundSheets())
 		this.adapter?.notifyDataSetChanged()
@@ -50,26 +50,26 @@ public open class SoundSheetsPresenter
 		val soundSheetsToRemove = this.getSoundSheetsSelectedForDeletion()
 		for (soundSheet in soundSheetsToRemove)
 		{
-			val soundsInFragment = this.soundsDataAccess.getSoundsInFragment(soundSheet.getFragmentTag())
+			val soundsInFragment = this.soundsDataAccess.getSoundsInFragment(soundSheet.fragmentTag)
 			this.soundsDataStorage.removeSounds(soundsInFragment)
 		}
 		this.soundSheetsDataStorage.removeSoundSheets(soundSheetsToRemove)
 
-		super<NavigationDrawerListPresenter>.onSelectedItemsDeleted()
+		super.onSelectedItemsDeleted()
 	}
 
 	public override fun onItemClick(data: SoundSheet)
 	{
-		if (this.isInSelectionMode())
+		if (this.isInSelectionMode)
 		{
-			data.setIsSelectedForDeletion(!data.getIsSelectedForDeletion())
+			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			this.adapter!!.notifyItemChanged(data)
-			super<NavigationDrawerListPresenter>.onItemSelectedForDeletion()
+			super.onItemSelectedForDeletion()
 		}
 		else
 		{
 			this.soundSheetsDataAccess.setSoundSheetSelected(data)
-			this.getEventBus().post(OpenSoundSheetEvent(data))
+			this.eventBus.post(OpenSoundSheetEvent(data))
 		}
 	}
 
@@ -83,7 +83,7 @@ public open class SoundSheetsPresenter
 		val selectedSoundSheets = this.getSoundSheetsSelectedForDeletion()
 		for (soundSheet in selectedSoundSheets)
 		{
-			soundSheet.setIsSelectedForDeletion(false)
+			soundSheet.isSelectedForDeletion = false
 			this.adapter!!.notifyItemChanged(soundSheet)
 		}
 	}
@@ -93,7 +93,7 @@ public open class SoundSheetsPresenter
 		val selectedSoundSheets = ArrayList<SoundSheet>()
 		val existingSoundSheets = this.values
 		for (soundSheet in existingSoundSheets) {
-			if (soundSheet.getIsSelectedForDeletion())
+			if (soundSheet.isSelectedForDeletion)
 				selectedSoundSheets.add(soundSheet)
 		}
 		return selectedSoundSheets
@@ -106,7 +106,7 @@ public open class SoundSheetsPresenter
 
 	override fun onEventMainThread(event: SoundAddedEvent)
 	{
-		val fragmentTag = event.player.getMediaPlayerData().getFragmentTag()
+		val fragmentTag = event.player.mediaPlayerData.fragmentTag
 		val changedSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag)
 		if (changedSoundSheet != null)
 			this.adapter?.notifyItemChanged(changedSoundSheet)
@@ -121,7 +121,7 @@ public open class SoundSheetsPresenter
 		{
 			val affectedFragmentTags = HashSet<String>()
 			for (player in removedPlayers.orEmpty())
-				affectedFragmentTags.add(player.getMediaPlayerData().getFragmentTag())
+				affectedFragmentTags.add(player.mediaPlayerData.fragmentTag)
 
 			for (fragmentTag in affectedFragmentTags)
 			{

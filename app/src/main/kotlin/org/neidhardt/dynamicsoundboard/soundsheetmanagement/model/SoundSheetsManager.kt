@@ -25,7 +25,7 @@ public class SoundSheetsManager :
 		SoundSheetsDataStorage,
 		SoundSheetsDataUtil
 {
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 
 	private val DB_SOUND_SHEETS_DEFAULT = "org.neidhardt.dynamicsoundboard.soundsheet.SoundSheetManagerFragment.db_sound_sheets"
 	private val DB_SOUND_SHEETS = "db_sound_sheets"
@@ -63,7 +63,7 @@ public class SoundSheetsManager :
 
 	private fun getDatabaseName(): String
 	{
-		val baseName = this.soundLayoutsAccess.getActiveSoundLayout().getDatabaseId()
+		val baseName = this.soundLayoutsAccess.getActiveSoundLayout().databaseId
 		if (baseName == SoundLayoutsManager.DB_DEFAULT)
 			return DB_SOUND_SHEETS_DEFAULT
 		return baseName + DB_SOUND_SHEETS
@@ -79,7 +79,7 @@ public class SoundSheetsManager :
 	{
 		this.soundSheets.add(soundSheet)
 
-		val isSelected = soundSheet.getIsSelected()
+		val isSelected = soundSheet.isSelected
 
 		if (isSelected)
 			this.setSoundSheetSelected(soundSheet)
@@ -94,21 +94,21 @@ public class SoundSheetsManager :
 		val copyList = ArrayList<SoundSheet>(soundSheets.size());
 		copyList.addAll(soundSheets); // this is done to prevent concurrent modification exception
 
-		val dao = this.getDbSoundSheets().getSoundSheetDao()
+		val dao = this.getDbSoundSheets().soundSheetDao
 		for (soundSheetToRemove in copyList)
 		{
 			this.soundSheets.remove(soundSheetToRemove)
-			if (soundSheetToRemove.getIsSelected())
+			if (soundSheetToRemove.isSelected)
 			{
 				if (this.soundSheets.size() > 0)
 					this.setSoundSheetSelected(this.soundSheets.get(0))
 
 			}
-			if (soundSheetToRemove.getId() != null)
+			if (soundSheetToRemove.id != null)
 				dao.delete(soundSheetToRemove)
 			else
 			{
-				val list = dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(soundSheetToRemove.getFragmentTag())).list()
+				val list = dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(soundSheetToRemove.fragmentTag)).list()
 				dao.deleteInTx(list)
 			}
 		}
@@ -118,39 +118,39 @@ public class SoundSheetsManager :
 
 	override fun getSoundSheetForFragmentTag(fragmentTag: String): SoundSheet?
 	{
-		val results = this.soundSheets.filter { soundSheet -> soundSheet.getFragmentTag().equals(fragmentTag) }
+		val results = this.soundSheets.filter { soundSheet -> soundSheet.fragmentTag.equals(fragmentTag) }
 		return if (results.size() > 0) results.get(0) else null
 	}
 
 	override fun setSoundSheetSelected(soundSheetToSelect: SoundSheet)
 	{
 		if (!this.soundSheets.contains(soundSheetToSelect))
-			throw UnsupportedOperationException(TAG + ": can not select SoundSheet " + soundSheetToSelect + " because it is not loaded")
+			throw UnsupportedOperationException("$TAG: can not select SoundSheet $soundSheetToSelect because it is not loaded")
 
 		for (soundSheet in this.soundSheets)
 		{
-			if (soundSheet != soundSheetToSelect && soundSheet.getIsSelected()) // make sure only one item is selected
+			if (soundSheet != soundSheetToSelect && soundSheet.isSelected) // make sure only one item is selected
 			{
-				soundSheet.setIsSelected(false)
+				soundSheet.isSelected = false
 				soundSheet.updateItemInDatabaseAsync()
 				this.eventBus.post(SoundSheetChangedEvent(soundSheet))
 			}
 		}
-		soundSheetToSelect.setIsSelected(true)
+		soundSheetToSelect.isSelected = true
 		this.eventBus.post(SoundSheetChangedEvent(soundSheetToSelect))
 		this.eventBus.post(OpenSoundSheetEvent(soundSheetToSelect))
 	}
 
 	override fun getSelectedItem(): SoundSheet?
 	{
-		val results = this.soundSheets.filter { soundSheet -> soundSheet.getIsSelected() }
+		val results = this.soundSheets.filter { soundSheet -> soundSheet.isSelected }
 		return if (results.size() > 0) results.get(0) else null
 	}
 
 	override fun getSuggestedName(): String
 	{
 		return DynamicSoundboardApplication.getContext()
-				.getResources().getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size()
+				.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size()
 	}
 
 	override fun getNewSoundSheet(label: String): SoundSheet

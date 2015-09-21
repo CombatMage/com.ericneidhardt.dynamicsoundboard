@@ -13,6 +13,7 @@ import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent
@@ -32,6 +33,7 @@ public class NavigationDrawerFragment :
 		OnActionModeChangeRequestedEventListener,
 		NavigationDrawerHeaderPresenter.OnOpenSoundLayoutsEvent
 {
+	private val TAG = javaClass.name
 
 	private val INDEX_SOUND_SHEETS = 0
 	private val INDEX_PLAYLIST = 1
@@ -61,8 +63,8 @@ public class NavigationDrawerFragment :
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
-		super<BaseFragment>.onCreate(savedInstanceState)
-		this.setRetainInstance(true)
+		super.onCreate(savedInstanceState)
+		this.retainInstance = true
 
 		this.listObserver = ViewPagerContentObserver()
 	}
@@ -81,7 +83,7 @@ public class NavigationDrawerFragment :
 		fragmentView.findViewById(R.id.b_ok).setOnClickListener(this)
 
 		this.tabContent = fragmentView.findViewById(R.id.vp_tab_content) as ViewPager
-		this.tabContent!!.setAdapter(this.tabContentAdapter)
+		this.tabContent!!.adapter = this.tabContentAdapter
 
 		this.tabBar = fragmentView.findViewById(R.id.tl_tab_bar) as TabLayout
 
@@ -97,7 +99,7 @@ public class NavigationDrawerFragment :
 
 	override fun onResume()
 	{
-		super<BaseFragment>.onResume()
+		super.onResume()
 
 		this.calculateMinHeightOfListContent()
 		this.adjustViewPagerToContent()
@@ -112,25 +114,25 @@ public class NavigationDrawerFragment :
 	 */
 	public fun calculateMinHeightOfListContent()
 	{
-		this.minHeightOfListContent = this.contextualActionContainer!!.getTop() - listContainer!!.getTop()  // this is the minimal height required to fill the screen properly
+		this.minHeightOfListContent = this.contextualActionContainer!!.top - listContainer!!.top  // this is the minimal height required to fill the screen properly
 	}
 
 	override fun onStart()
 	{
-		super<BaseFragment>.onStart()
+		super.onStart()
 		if (!this.eventBus.isRegistered(this))
 			this.eventBus.register(this)
 	}
 
 	override fun onStop()
 	{
-		super<BaseFragment>.onStop()
+		super.onStop()
 		this.eventBus.unregister(this)
 	}
 
 	override fun onPause()
 	{
-		super<BaseFragment>.onPause()
+		super.onPause()
 
 		this.playlist!!.adapter.unregisterAdapterDataObserver(this.listObserver)
 		this.soundSheets!!.adapter.unregisterAdapterDataObserver(this.listObserver)
@@ -138,12 +140,12 @@ public class NavigationDrawerFragment :
 
 	override fun onClick(v: View)
 	{
-		val id = v.getId()
+		val id = v.id
 		if (id == R.id.b_delete)
 		{
 			if (this.soundLayoutList!!.isActive())
 				this.soundLayoutList!!.presenter.prepareItemDeletion()
-			else if (this.tabContent!!.getCurrentItem() == INDEX_PLAYLIST)
+			else if (this.tabContent!!.currentItem == INDEX_PLAYLIST)
 				this.playlist!!.presenter.prepareItemDeletion()
 			else
 				this.soundSheets!!.presenter.prepareItemDeletion()
@@ -152,7 +154,7 @@ public class NavigationDrawerFragment :
 		{
 			if (this.soundLayoutList!!.isActive())
 				this.soundLayoutList!!.presenter.deleteSelectedItems()
-			else if (this.tabContent!!.getCurrentItem() == INDEX_PLAYLIST)
+			else if (this.tabContent!!.currentItem == INDEX_PLAYLIST)
 				this.playlist!!.presenter.deleteSelectedItems()
 			else
 				this.soundSheets!!.presenter.deleteSelectedItems()
@@ -160,18 +162,18 @@ public class NavigationDrawerFragment :
 		else if (id == R.id.b_ok)
 		{
 			if (this.soundLayoutList!!.isActive())
-				AddNewSoundLayoutDialog.showInstance(this.getFragmentManager(), this.soundLayoutsUtil.getSuggestedName())
-			else if (this.tabContent!!.getCurrentItem() == INDEX_PLAYLIST)
-				AddNewSoundDialog(this.getFragmentManager(), Playlist.TAG)
+				AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
+			else if (this.tabContent!!.currentItem == INDEX_PLAYLIST)
+				AddNewSoundDialog(this.fragmentManager, Playlist.TAG)
 			else
-				AddNewSoundSheetDialog.showInstance(this.getFragmentManager(), this.soundSheetsDataUtil.getSuggestedName())
+				AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
 		}
 	}
 
 	private fun animateSoundLayoutsListAppear()
 	{
-		val viewToAnimate = this.getActivity().findViewById(R.id.v_reveal_shadow)
-		val animator = AnimationUtils.createSlowCircularReveal(viewToAnimate, this.listContainer!!.getWidth(), 0, 0f, (2 * this.listContainer!!.getHeight()).toFloat())
+		val viewToAnimate = this.activity.findViewById(R.id.v_reveal_shadow)
+		val animator = AnimationUtils.createSlowCircularReveal(viewToAnimate, this.listContainer!!.width, 0, 0f, (2 * this.listContainer!!.height).toFloat())
 
 		animator?.start()
 	}
@@ -180,42 +182,40 @@ public class NavigationDrawerFragment :
 	{
 		this.soundLayoutList!!.toggleVisibility()
 		this.animateSoundLayoutsListAppear()
-		if (this.getBaseActivity().isActionModeActive() && this.soundLayoutList!!.isActive())
+		if (this.baseActivity.isActionModeActive && this.soundLayoutList!!.isActive())
 			this.soundLayoutList!!.presenter.prepareItemDeletion()
 	}
 
 	override fun onEvent(event: ActionModeChangeRequestedEvent)
 	{
-		val requestedAction = event.getRequestedAction()
+		val requestedAction = event.requestedAction
 		when (requestedAction)
 		{
-			ActionModeChangeRequestedEvent.REQUEST.START -> {
-				this.onActionModeStart()
-				return
-			}
+			ActionModeChangeRequestedEvent.REQUEST.START -> this.onActionModeStart()
 			ActionModeChangeRequestedEvent.REQUEST.STOPPED -> this.onActionModeFinished()
+			else -> Logger.d(TAG, event.toString())
 		}
 	}
 
 	private fun onActionModeStart()
 	{
-		this.deleteSelected!!.setVisibility(View.VISIBLE)
-		val distance = this.contextualActionContainer!!.getWidth()
+		this.deleteSelected!!.visibility = View.VISIBLE
+		val distance = this.contextualActionContainer!!.width
 
-		this.deleteSelected!!.setTranslationX((-distance).toFloat())
-		this.deleteSelected!!.animate().translationX(0f).setDuration(this.getResources().getInteger(android.R.integer.config_mediumAnimTime).toLong()).setInterpolator(DecelerateInterpolator()).start()
+		this.deleteSelected!!.translationX = (-distance).toFloat()
+		this.deleteSelected!!.animate().translationX(0f).setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()).setInterpolator(DecelerateInterpolator()).start()
 	}
 
 	private fun onActionModeFinished()
 	{
-		this.deleteSelected!!.setVisibility(View.GONE)
+		this.deleteSelected!!.visibility = View.GONE
 	}
 
 	override fun onTabSelected(selectedTab: TabLayout.Tab)
 	{
-		if (!this.getBaseActivity().isActionModeActive())
+		if (!this.baseActivity.isActionModeActive)
 			return
-		val position = selectedTab.getPosition()
+		val position = selectedTab.position
 		if (position == INDEX_SOUND_SHEETS)
 			this.soundSheets!!.presenter.prepareItemDeletion()
 		else if (position == INDEX_PLAYLIST)
@@ -232,28 +232,28 @@ public class NavigationDrawerFragment :
 	 */
 	public fun adjustViewPagerToContent()
 	{
-		val resources = DynamicSoundboardApplication.getContext().getResources()
+		val resources = DynamicSoundboardApplication.getContext().resources
 		val childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item)
 		val dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke)
 		val padding = resources.getDimensionPixelSize(R.dimen.margin_small)
 
 		val soundSheetCount = this.soundSheetsDataAccess.getSoundSheets().size()
-		val playListCount = this.playlist!!.adapter.getItemCount()
+		val playListCount = this.playlist!!.adapter.itemCount
 
 		val heightSoundSheetChildren = soundSheetCount * childHeight
 		val heightDividerSoundSheet = if (soundSheetCount > 1) (soundSheetCount - 1) * dividerHeight else 0
-		val heightSoundSheet = heightSoundSheetChildren + heightDividerSoundSheet + padding + this.tabBar!!.getHeight()
+		val heightSoundSheet = heightSoundSheetChildren + heightDividerSoundSheet + padding + this.tabBar!!.height
 
 		val heightPlayListChildren = playListCount * childHeight
 		val heightDividerPlayList = if (playListCount > 1) (playListCount - 1) * dividerHeight else 0
-		val heightPlayList = heightPlayListChildren + heightDividerPlayList + padding + this.tabBar!!.getHeight()
+		val heightPlayList = heightPlayListChildren + heightDividerPlayList + padding + this.tabBar!!.height
 
 		val largestList = Math.max(heightSoundSheet, heightPlayList)
 		if (this.minHeightOfListContent == 0)
 		// 0 means the current height was not measured, remeasure
-			this.minHeightOfListContent = this.contextualActionContainer!!.getTop() - listContainer!!.getTop()
+			this.minHeightOfListContent = this.contextualActionContainer!!.top - listContainer!!.top
 
-		this.listContainer!!.getLayoutParams().height = Math.max(largestList, minHeightOfListContent)
+		this.listContainer!!.layoutParams.height = Math.max(largestList, minHeightOfListContent)
 	}
 
 	private inner class TabContentAdapter : PagerAdapter()
@@ -261,9 +261,9 @@ public class NavigationDrawerFragment :
 		override fun getPageTitle(position: Int): CharSequence
 		{
 			if (position == INDEX_SOUND_SHEETS)
-				return getResources().getString(R.string.tab_sound_sheets)
+				return resources.getString(R.string.tab_sound_sheets)
 			else
-				return getResources().getString(R.string.tab_play_list)
+				return resources.getString(R.string.tab_play_list)
 		}
 
 		override fun getCount(): Int
@@ -281,7 +281,7 @@ public class NavigationDrawerFragment :
 			when (position) {
 				INDEX_SOUND_SHEETS -> return soundSheets as SoundSheets
 				INDEX_PLAYLIST -> return playlist as Playlist
-				else -> throw NullPointerException("instantiateItem: no view for position " + position + " is available")
+				else -> throw NullPointerException("instantiateItem: no view for position $position is available")
 			}
 		}
 	}

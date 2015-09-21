@@ -10,11 +10,9 @@ import android.view.View
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
@@ -31,18 +29,21 @@ public class SoundLayouts : NavigationDrawerList
 	public var presenter: SoundLayoutsPresenter = SoundLayoutsPresenter(this.soundLayoutsAccess, this.soundLayoutsStorage)
 	public var adapter: SoundLayoutsAdapter = SoundLayoutsAdapter(this.presenter, this.eventBus)
 
-	SuppressWarnings("unused")
-	public constructor(context: Context) : super(context) {
+	@SuppressWarnings("unused")
+	public constructor(context: Context) : super(context)
+	{
 		this.init(context)
 	}
 
-	SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+	@SuppressWarnings("unused")
+	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+	{
 		this.init(context)
 	}
 
-	SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
+	@SuppressWarnings("unused")
+	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
+	{
 		this.init(context)
 	}
 
@@ -53,13 +54,13 @@ public class SoundLayouts : NavigationDrawerList
 		LayoutInflater.from(context).inflate(R.layout.view_sound_layout_list, this, true)
 
 		val soundLayouts = this.findViewById(R.id.rv_sound_layouts_list) as RecyclerView
-		if (!this.isInEditMode())
+		if (!this.isInEditMode)
 		{
 			soundLayouts.addItemDecoration(DividerItemDecoration())
-			soundLayouts.setLayoutManager(LinearLayoutManager(context))
-			soundLayouts.setItemAnimator(DefaultItemAnimator())
+			soundLayouts.layoutManager = LinearLayoutManager(context)
+			soundLayouts.itemAnimator = DefaultItemAnimator()
 		}
-		soundLayouts.setAdapter(this.adapter)
+		soundLayouts.adapter = this.adapter
 	}
 
 	override fun onAttachedToWindow()
@@ -76,7 +77,7 @@ public class SoundLayouts : NavigationDrawerList
 
 	override fun onFinishInflate() {
 		super.onFinishInflate()
-		this.presenter.setView(this)
+		this.presenter.view = this
 	}
 
 	override fun getItemCount(): Int
@@ -91,12 +92,12 @@ public class SoundLayouts : NavigationDrawerList
 
 	public fun isActive(): Boolean
 	{
-		return this.getVisibility() == View.VISIBLE
+		return this.visibility == View.VISIBLE
 	}
 
 	public fun toggleVisibility()
 	{
-		if (this.getVisibility() == View.VISIBLE)
+		if (this.visibility == View.VISIBLE)
 			this.hideSelectSoundLayout()
 		else
 			this.showSelectSoundLayoutOverlay()
@@ -104,12 +105,12 @@ public class SoundLayouts : NavigationDrawerList
 
 	private fun showSelectSoundLayoutOverlay()
 	{
-		this.setVisibility(View.VISIBLE)
+		this.visibility = View.VISIBLE
 	}
 
 	private fun hideSelectSoundLayout()
 	{
-		this.setVisibility(View.INVISIBLE)
+		this.visibility = View.INVISIBLE
 	}
 
 	override fun getPresenter(): NavigationDrawerListPresenter<*>?

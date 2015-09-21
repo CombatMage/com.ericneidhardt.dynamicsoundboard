@@ -49,19 +49,19 @@ public class SoundSheetFragment :
 	companion object
 	{
 		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
-		private val LOG_TAG = javaClass<SoundSheetFragment>().name
+		private val LOG_TAG = SoundSheetFragment::class.java.name
 
 		public fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
 		{
 			val fragment = SoundSheetFragment()
 			val args = Bundle()
-			args.putString(KEY_FRAGMENT_TAG, soundSheet.getFragmentTag())
-			fragment.setArguments(args)
+			args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
+			fragment.arguments = args
 			return fragment
 		}
 	}
 
-	public var fragmentTag: String = javaClass.getName()
+	public var fragmentTag: String = javaClass.name
 
 	private var eventBus: EventBus = EventBus.getDefault()
 
@@ -77,12 +77,12 @@ public class SoundSheetFragment :
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
-		super<BaseFragment>.onCreate(savedInstanceState)
+		super.onCreate(savedInstanceState)
 
-		this.setRetainInstance(true)
+		this.retainInstance = true
 		this.setHasOptionsMenu(true)
 
-		val args = this.getArguments()
+		val args = this.arguments
 
 		var fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
 				?: throw NullPointerException(LOG_TAG + ": cannot create fragment, given fragmentTag is null")
@@ -93,7 +93,7 @@ public class SoundSheetFragment :
 		this.soundAdapter = SoundAdapter(this.soundPresenter as SoundPresenter, this.soundsDataStorage, this.eventBus)
 		this.soundPresenter!!.adapter = this.soundAdapter
 
-		this.dragSortRecycler = SoundDragSortRecycler(this.getContext(), R.id.b_reorder)
+		this.dragSortRecycler = SoundDragSortRecycler(R.id.b_reorder)
 		this.dragSortRecycler!!.setOnItemMovedListener(this)
 		this.dragSortRecycler!!.setOnDragStateChangedListener(this)
 		this.scrollListener = SoundSheetScrollListener(this.dragSortRecycler)
@@ -107,15 +107,15 @@ public class SoundSheetFragment :
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
 
 		this.soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
-		this.soundLayout!!.setAdapter(this.soundAdapter)
-		this.soundLayout!!.setLayoutManager(LinearLayoutManager(this.getActivity()))
-		this.soundLayout!!.setItemAnimator(this.soundLayoutAnimator)
+		this.soundLayout!!.adapter = this.soundAdapter
+		this.soundLayout!!.layoutManager = LinearLayoutManager(this.activity)
+		this.soundLayout!!.itemAnimator = this.soundLayoutAnimator
 		this.soundLayout!!.addItemDecoration(DividerItemDecoration())
 
 		this.soundLayout!!.addItemDecoration(this.dragSortRecycler)
 		this.soundLayout!!.addOnItemTouchListener(this.dragSortRecycler)
 		this.soundLayout!!.addOnScrollListener(this.scrollListener)
-		this.soundLayout!!.addOnScrollListener(this.dragSortRecycler!!.getScrollListener())
+		this.soundLayout!!.addOnScrollListener(this.dragSortRecycler!!.scrollListener)
 
 		this.soundAdapter!!.recyclerView = this.soundLayout
 
@@ -124,21 +124,21 @@ public class SoundSheetFragment :
 
 	override fun onStart()
 	{
-		super<BaseFragment>.onStart()
+		super.onStart()
 		if (!this.eventBus.isRegistered(this))
 			this.eventBus.register(this)
 	}
 
 	override fun onResume()
 	{
-		super<BaseFragment>.onResume()
+		super.onResume()
 
-		val activity = this.getBaseActivity()
+		val activity = this.baseActivity
 		activity.setSoundSheetActionsEnable(true)
 		activity.findViewById(R.id.action_add_sound).setOnClickListener({ view
-			-> AddNewSoundDialog(this.getFragmentManager(), this.fragmentTag) })
+			-> AddNewSoundDialog(this.fragmentManager, this.fragmentTag) })
 		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener({ view
-			-> AddNewSoundFromDirectoryDialog.showInstance(this.getFragmentManager(), this.fragmentTag) })
+			-> AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, this.fragmentTag) })
 
 		this.soundPresenter!!.onAttachedToWindow()
 		this.attachScrollViewToFab()
@@ -148,20 +148,20 @@ public class SoundSheetFragment :
 
 	override fun onPause()
 	{
-		super<BaseFragment>.onPause()
+		super.onPause()
 		this.soundPresenter!!.onDetachedFromWindow()
 		this.soundAdapter!!.stopProgressUpdateTimer()
 	}
 
 	override fun onStop()
 	{
-		super<BaseFragment>.onStop()
+		super.onStop()
 		this.eventBus.unregister(this)
 	}
 
 	private fun attachScrollViewToFab()
 	{
-		val fab = this.getActivity().findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
+		val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
 		if (fab == null || this.soundLayout == null)
 			return
 
@@ -175,30 +175,30 @@ public class SoundSheetFragment :
 		{
 			if (requestCode == IntentRequest.GET_AUDIO_FILE)
 			{
-				val soundUri = data!!.getData()
-				val soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri))
+				val soundUri = data!!.data
+				val soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
 				val playerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel)
 
 				this.soundsDataStorage.createSoundAndAddToManager(playerData)
 				return
 			}
 		}
-		super<BaseFragment>.onActivityResult(requestCode, resultCode, data)
+		super.onActivityResult(requestCode, resultCode, data)
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean
 	{
-		super<BaseFragment>.onOptionsItemSelected(item)
-		when (item.getItemId())
+		super.onOptionsItemSelected(item)
+		when (item.itemId)
 		{
 			R.id.action_clear_sounds_in_sheet ->
 			{
-				ConfirmDeleteSoundsDialog.showInstance(this.getFragmentManager(), this.fragmentTag)
+				ConfirmDeleteSoundsDialog.showInstance(this.fragmentManager, this.fragmentTag)
 				return true
 			}
 			R.id.action_delete_sheet ->
 			{
-				ConfirmDeleteSoundSheetDialog.showInstance(this.getFragmentManager(), this.fragmentTag)
+				ConfirmDeleteSoundSheetDialog.showInstance(this.fragmentManager, this.fragmentTag)
 				return true
 			}
 			else -> return false
@@ -208,7 +208,7 @@ public class SoundSheetFragment :
 	override fun onDragStart()
 	{
 		Logger.d(LOG_TAG, "onDragStart")
-		this.soundLayout!!.setItemAnimator(null) // drag does not work with default animator
+		this.soundLayout!!.itemAnimator = null // drag does not work with default animator
 		this.soundAdapter!!.stopProgressUpdateTimer()
 	}
 
@@ -217,7 +217,7 @@ public class SoundSheetFragment :
 		Logger.d(LOG_TAG, "onDragStop")
 		this.soundLayout!!.invalidateItemDecorations()
 		this.soundAdapter!!.notifyDataSetChanged()
-		this.soundLayout!!.setItemAnimator(this.soundLayoutAnimator) // add animator for delete animation
+		this.soundLayout!!.itemAnimator = this.soundLayoutAnimator // add animator for delete animation
 		this.soundAdapter!!.startProgressUpdateTimer()
 	}
 
@@ -228,19 +228,19 @@ public class SoundSheetFragment :
 
 	override fun onEvent(event: OpenSoundRenameEvent)
 	{
-		RenameSoundFileDialog(this.getFragmentManager(), event.getData())
+		RenameSoundFileDialog(this.fragmentManager, event.data)
 	}
 
 	override fun onEvent(event: OpenSoundSettingsEvent)
 	{
-		SoundSettingsDialog.showInstance(this.getFragmentManager(), event.getData())
+		SoundSettingsDialog.showInstance(this.fragmentManager, event.data)
 	}
 
 	override fun onEventMainThread(event: SoundsRemovedEvent)
 	{
 		if (this.soundAdapter!!.getValues().size() == 0)
 		{
-			val fab = this.getActivity().findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
+			val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
 			fab?.show()
 		}
 	}

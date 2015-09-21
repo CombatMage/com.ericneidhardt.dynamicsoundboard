@@ -33,26 +33,26 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
-		@SuppressLint("InflateParams") val view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_store_sound_sheets, null)
+		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_store_sound_sheets, null)
 		view.findViewById(R.id.b_add).setOnClickListener(this)
 		view.findViewById(R.id.b_cancel).setOnClickListener(this)
 		this.confirm = view.findViewById(R.id.b_ok)
 		this.confirm!!.setOnClickListener(this)
-		this.confirm!!.setEnabled(false)
+		this.confirm!!.isEnabled = false
 
 		this.inputFileName = view.findViewById(R.id.et_name_file) as NoUnderscoreEditText
 
 		this.directories = view.findViewById(R.id.rv_dialog) as RecyclerView
 		this.directories!!.addItemDecoration(DividerItemDecoration())
-		this.directories!!.setLayoutManager(LinearLayoutManager(this.getActivity()))
-		this.directories!!.setItemAnimator(DefaultItemAnimator())
-		this.directories!!.setAdapter(super<FileExplorerDialog>.adapter)
+		this.directories!!.layoutManager = LinearLayoutManager(this.activity)
+		this.directories!!.itemAnimator = DefaultItemAnimator()
+		this.directories!!.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
 		if (previousPath != null)
-			super<FileExplorerDialog>.adapter.setParent(File(previousPath))
+			super.adapter.setParent(File(previousPath))
 
-		val dialog = AppCompatDialog(this.getActivity(), R.style.DialogThemeNoTitle)
+		val dialog = AppCompatDialog(this.activity, R.style.DialogThemeNoTitle)
 		dialog.setContentView(view)
 
 		return dialog
@@ -60,8 +60,8 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 
 	override fun onFileSelected()
 	{
-		this.confirm!!.setEnabled(true)
-		val position = super<FileExplorerDialog>.adapter.fileList.indexOf(super<FileExplorerDialog>.adapter.selectedFile)
+		this.confirm!!.isEnabled = true
+		val position = super.adapter.fileList.indexOf(super.adapter.selectedFile)
 		this.directories!!.scrollToPosition(position)
 	}
 
@@ -71,7 +71,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 
 	override fun onClick(v: View)
 	{
-		when (v.getId())
+		when (v.id)
 		{
 			R.id.b_add -> {
 				this.createFileAndSelect()
@@ -79,40 +79,40 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 			}
 			R.id.b_cancel -> this.dismiss()
 			R.id.b_ok -> {
-				val currentDirectory = super<FileExplorerDialog>.adapter.parentFile
+				val currentDirectory = super.adapter.parentFile
 				if (currentDirectory != null)
-					this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.getPath())
+					this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
 
-				if (super<FileExplorerDialog>.adapter.selectedFile != null)
+				if (super.adapter.selectedFile != null)
 					this.saveDataAndDismiss()
 				else
-					Toast.makeText(this.getActivity(), R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()
+					Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()
 			}
 		}
 	}
 
 	private fun hideKeyboard()
 	{
-		if (this.inputFileName!!.hasFocus() && this.getActivity() != null)
+		if (this.inputFileName!!.hasFocus() && this.activity != null)
 		{
-			val inputManager = this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-			inputManager.hideSoftInputFromWindow(this.inputFileName!!.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS)
+			val inputManager = this.activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+			inputManager.hideSoftInputFromWindow(this.inputFileName!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 		}
 	}
 
 	private fun createFileAndSelect()
 	{
-		val fileName = this.inputFileName!!.getText().toString()
+		val fileName = this.inputFileName!!.text.toString()
 		if (fileName.isEmpty())
 		{
-			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_no_file_name, Toast.LENGTH_SHORT).show()
+			Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_name, Toast.LENGTH_SHORT).show()
 			return
 		}
 
-		val file = File(super<FileExplorerDialog>.adapter.parentFile, fileName)
+		val file = File(super.adapter.parentFile, fileName)
 		if (file.exists())
 		{
-			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_file_exists, Toast.LENGTH_SHORT).show()
+			Toast.makeText(this.activity, R.string.dialog_store_layout_file_exists, Toast.LENGTH_SHORT).show()
 			return
 		}
 
@@ -120,19 +120,19 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 		{
 			val created = file.createNewFile()
 			if (!created) {
-				Toast.makeText(this.getActivity(), R.string.dialog_store_layout_failed_create_file, Toast.LENGTH_SHORT).show()
+				Toast.makeText(this.activity, R.string.dialog_store_layout_failed_create_file, Toast.LENGTH_SHORT).show()
 				return
 			}
 
-			super<FileExplorerDialog>.adapter.selectedFile = file
-			super<FileExplorerDialog>.adapter.refreshDirectory()
-			super<FileExplorerDialog>.adapter.notifyDataSetChanged()
+			super.adapter.selectedFile = file
+			super.adapter.refreshDirectory()
+			super.adapter.notifyDataSetChanged()
 
 			this.onFileSelected()
 		}
 		catch (e: IOException)
 		{
-			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_failed_create_file, Toast.LENGTH_SHORT).show()
+			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_create_file, Toast.LENGTH_SHORT).show()
 		}
 
 	}
@@ -142,7 +142,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 		try
 		{
 			JsonPojo.writeToFile(
-					super<FileExplorerDialog>.adapter.selectedFile,
+					super.adapter.selectedFile,
 					this.soundSheetsDataAccess.getSoundSheets(),
 					this.soundsDataAccess.getPlaylist(),
 					this.soundsDataAccess.getSounds())
@@ -152,7 +152,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 		catch (e: IOException)
 		{
 			Logger.d(TAG, e.getMessage())
-			Toast.makeText(this.getActivity(), R.string.dialog_store_layout_failed_store_layout, Toast.LENGTH_SHORT).show()
+			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_store_layout, Toast.LENGTH_SHORT).show()
 		}
 
 
@@ -160,7 +160,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 
 	companion object
 	{
-		private val TAG = javaClass<StoreLayoutDialog>().getName()
+		private val TAG = StoreLayoutDialog::class.java.name
 
 		public fun showInstance(manager: FragmentManager)
 		{

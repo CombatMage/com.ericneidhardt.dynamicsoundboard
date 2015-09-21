@@ -20,7 +20,7 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 	{
 		super.onCreate(savedInstanceState)
 
-		val args = this.getArguments()
+		val args = this.arguments
 		if (args != null)
 			this.suggestedName = args.getString(KEY_SUGGESTED_NAME)
 	}
@@ -37,14 +37,14 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 
 	override fun deliverResult()
 	{
-		var name = super.soundLayoutName?.getText().toString()
+		var name = super.soundLayoutName?.text.toString()
 		if (name.length() == 0)
 			name = this.getHintForName()
 
 		val layout = SoundLayout()
-		layout.setIsSelected(false)
-		layout.setDatabaseId(SoundLayoutsManager.getNewDatabaseIdForLabel(name))
-		layout.setLabel(name)
+		layout.isSelected = false
+		layout.databaseId = SoundLayoutsManager.getNewDatabaseIdForLabel(name)
+		layout.label = name
 
 		DynamicSoundboardApplication.getSoundLayoutsStorage().addSoundLayout(layout)
 
@@ -57,13 +57,13 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 		 * This is called by greenRobot EventBus in case a new SoundLayout was renamed.
 		 * @param event delivered SoundLayoutRenamedEvent
 		 */
-		SuppressWarnings("unused")
+		@SuppressWarnings("unused")
 		public fun onEvent(event: SoundLayoutAddedEvent)
 	}
 
 	companion object
 	{
-		private val TAG = javaClass<AddNewSoundLayoutDialog>().getName()
+		private val TAG = AddNewSoundLayoutDialog::class.java.name
 
 		private val KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundLayoutDialog.suggestedName"
 
@@ -72,7 +72,7 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 
 			val args = Bundle()
 			args.putString(KEY_SUGGESTED_NAME, suggestedName)
-			dialog.setArguments(args)
+			dialog.arguments = args
 
 			dialog.show(manager, TAG)
 		}

@@ -9,13 +9,13 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 public val UPDATE_INTERVAL: Int = 500
 
-public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder>
-	: BaseAdapter<EnhancedMediaPlayer, T>()
-	, SoundProgressTimer
-	, Runnable where T : SoundProgressViewHolder
+public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
+		BaseAdapter<EnhancedMediaPlayer, T>(),
+		SoundProgressTimer,
+		Runnable where T : SoundProgressViewHolder
 {
 
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 
 	private val handler: Handler = Handler()
 	private val hasTimerStarted: AtomicBoolean = AtomicBoolean(false)
@@ -64,7 +64,7 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder>
 		val count = allSounds.size()
 		for (i in 0..count - 1)
 		{
-			if (allSounds.get(i).isPlaying())
+			if (allSounds.get(i).isPlaying)
 				playingSounds.add(i)
 		}
 		return playingSounds

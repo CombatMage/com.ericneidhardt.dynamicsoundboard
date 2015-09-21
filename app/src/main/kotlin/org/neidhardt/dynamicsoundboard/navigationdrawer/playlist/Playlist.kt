@@ -6,14 +6,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
 /**
@@ -23,7 +19,7 @@ public class Playlist : NavigationDrawerList
 {
 	companion object
 	{
-		public val TAG: String = javaClass<Playlist>().getName()
+		public val TAG: String = Playlist::class.java.name
 	}
 
 	private val soundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
@@ -32,19 +28,19 @@ public class Playlist : NavigationDrawerList
 	public val presenter: PlaylistPresenter = PlaylistPresenter(this.soundsDataStorage, this.soundsDataAccess)
 	public val adapter:PlaylistAdapter = PlaylistAdapter(this.presenter)
 
-	SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public constructor(context: Context) : super(context)
 	{
 		this.init(context)
 	}
 
-	SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 	{
 		this.init(context)
 	}
 
-	SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 	{
 		this.init(context)
@@ -57,12 +53,12 @@ public class Playlist : NavigationDrawerList
 		LayoutInflater.from(context).inflate(R.layout.view_playlist, this, true)
 
 		val playlist = this.findViewById(R.id.rv_playlist) as RecyclerView
-		if (!this.isInEditMode()) {
+		if (!this.isInEditMode) {
 			playlist.addItemDecoration(DividerItemDecoration())
-			playlist.setLayoutManager(LinearLayoutManager(context))
-			playlist.setItemAnimator(DefaultItemAnimator())
+			playlist.layoutManager = LinearLayoutManager(context)
+			playlist.itemAnimator = DefaultItemAnimator()
 		}
-		playlist.setAdapter(this.adapter)
+		playlist.adapter = this.adapter
 
 		this.adapter.recyclerView = playlist
 	}
@@ -81,7 +77,7 @@ public class Playlist : NavigationDrawerList
 
 	override fun onFinishInflate() {
 		super.onFinishInflate()
-		this.presenter.setView(this)
+		this.presenter.view = this
 	}
 
 	override fun getActionModeTitle(): Int {
@@ -90,7 +86,7 @@ public class Playlist : NavigationDrawerList
 
 	override fun getItemCount(): Int
 	{
-		return this.adapter.getItemCount()
+		return this.adapter.itemCount
 	}
 
 	override fun getPresenter(): NavigationDrawerListPresenter<*>?

@@ -31,7 +31,7 @@ public open class SoundSheetsAdapter
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundSheetViewHolder
 	{
-		val view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false)
+		val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
 		return SoundSheetViewHolder(view, this)
 	}
 
@@ -39,7 +39,7 @@ public open class SoundSheetsAdapter
 	{
 		val data = this.getValues().get(position)
 
-		val sounds = this.presenter.getSoundsInFragment(data.getFragmentTag())
+		val sounds = this.presenter.getSoundsInFragment(data.fragmentTag)
 		val soundCount = sounds.size()
 
 		holder.bindData(data, soundCount)

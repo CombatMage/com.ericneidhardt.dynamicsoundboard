@@ -35,10 +35,10 @@ public class SoundViewHolder
 		CustomEditText.OnTextEditedListener,
 		SeekBar.OnSeekBarChangeListener
 {
-    private val TAG = javaClass.getName()
+    private val TAG = javaClass.name
 
-	private val HEIGHT_LIST_ITEM = itemView.getResources().getDimensionPixelSize(R.dimen.height_list_item_xlarge)
-	private val HEIGHT_SHADOW = itemView.getResources().getDimensionPixelSize(R.dimen.height_shadow)
+	private val HEIGHT_LIST_ITEM = itemView.resources.getDimensionPixelSize(R.dimen.height_list_item_xlarge)
+	private val HEIGHT_SHADOW = itemView.resources.getDimensionPixelSize(R.dimen.height_shadow)
 
 	private val eventBus = eventBus
 	private val soundsDataStorage = soundsDataStorage
@@ -84,37 +84,37 @@ public class SoundViewHolder
 	private fun updateViewToPlayerState()
 	{
 		val player = this.player as EnhancedMediaPlayer
-		val playerData = this.player?.getMediaPlayerData() as MediaPlayerData
+		val playerData = this.player?.mediaPlayerData as MediaPlayerData
 
 		if (!this.name.hasFocus())
-			this.name.setText(playerData.getLabel())
+			this.name.setText(playerData.label)
 
-		val isPlaying = this.player?.isPlaying() as Boolean
-		this.play.setSelected(isPlaying)
-		this.loop.setSelected(playerData.getIsLoop())
-		this.inPlaylist.setSelected(playerData.getIsInPlaylist())
+		val isPlaying = this.player?.isPlaying as Boolean
+		this.play.isSelected = isPlaying
+		this.loop.isSelected = playerData.isLoop
+		this.inPlaylist.isSelected = playerData.isInPlaylist
 
-		this.timePosition.setMax(player.getDuration())
-		this.timePosition.setProgress(player.getCurrentPosition())
+		this.timePosition.max = player.duration
+		this.timePosition.progress = player.currentPosition
 	}
 
 	public fun showShadowForLastItem(isLastItem: Boolean)
 	{
 		var shadowViewState = if (isLastItem) View.GONE else View.VISIBLE
-		this.shadowBottomDeleteViewLeft.setVisibility(shadowViewState)
-		this.shadowBottomDeleteViewRight.setVisibility(shadowViewState)
+		this.shadowBottomDeleteViewLeft.visibility = shadowViewState
+		this.shadowBottomDeleteViewRight.visibility = shadowViewState
 
 		shadowViewState = if (isLastItem) View.VISIBLE else View.GONE
-		this.shadowBottom.setVisibility(shadowViewState)
+		this.shadowBottom.visibility = shadowViewState
 
-		val params = this.container.getLayoutParams()
+		val params = this.container.layoutParams
 		params.height =
 				if (isLastItem)
 					this.HEIGHT_LIST_ITEM + HEIGHT_SHADOW
 				else
 					this.HEIGHT_LIST_ITEM
 
-		this.container.setLayoutParams(params);
+		this.container.layoutParams = params;
 	}
 
 	override fun getIndexOfContentPage(): Int {return VIEWPAGER_INDEX_SOUND_CONTROLS}
@@ -122,7 +122,7 @@ public class SoundViewHolder
 	override fun delete()
 	{
 		if (this.player != null)
-			this.onItemDelete(this.player as EnhancedMediaPlayer, this.getLayoutPosition())
+			this.onItemDelete(this.player as EnhancedMediaPlayer, this.layoutPosition)
 
 		Handler().startTimerDelayed()
 	}
@@ -130,7 +130,7 @@ public class SoundViewHolder
 	override fun onProgressUpdate()
 	{
 		if (player != null)
-			this.timePosition.setProgress(player!!.getCurrentPosition())
+			this.timePosition.progress = player!!.currentPosition
 	}
 
 	override fun onTextEdited(newLabel: String?)
@@ -140,12 +140,12 @@ public class SoundViewHolder
 		this.name.clearFocus()
 		if (this.player != null)
 		{
-			val playerData = this.player!!.getMediaPlayerData()
-			val currentLabel = playerData.getLabel()
+			val playerData = this.player!!.mediaPlayerData
+			val currentLabel = playerData.label
 
 			if (!currentLabel.equals(newLabel))
 			{
-				playerData.setLabel(newLabel)
+				playerData.label = newLabel
 				playerData.updateItemInDatabaseAsync()
 
 				this.eventBus.post(OpenSoundRenameEvent(playerData))
@@ -155,12 +155,12 @@ public class SoundViewHolder
 
 	override fun onClick(view: View)
 	{
-		super<DismissibleItemViewHolder>.onClick(view)
+		super.onClick(view)
 
 		val player = this.player as EnhancedMediaPlayer
 
-		val isSelected = view.isSelected()
-		val id = view.getId()
+		val isSelected = view.isSelected
+		val id = view.id
 		when (id) {
 			R.id.b_stop ->
 			{
@@ -169,19 +169,19 @@ public class SoundViewHolder
 			}
 			R.id.b_loop ->
 			{
-				view.setSelected(!isSelected)
-				player.setLooping(!isSelected)
+				view.isSelected = !isSelected
+				player.isLooping = !isSelected
 			}
 			R.id.b_add_to_playlist ->
 			{
-				view.setSelected(!isSelected)
+				view.isSelected = !isSelected
 				player.setIsInPlaylist(!isSelected)
-				player.getMediaPlayerData().updateItemInDatabaseAsync()
-				soundsDataStorage.toggleSoundInPlaylist(player.getMediaPlayerData().getPlayerId(), !isSelected)
+				player.mediaPlayerData.updateItemInDatabaseAsync()
+				soundsDataStorage.toggleSoundInPlaylist(player.mediaPlayerData.playerId, !isSelected)
 			}
 			R.id.b_play -> {
 				name.clearFocus()
-				view.setSelected(!isSelected)
+				view.isSelected = !isSelected
 				if (!isSelected) {
 					this.progressTimer.startProgressUpdateTimer()
 					player.playSound()
@@ -191,7 +191,7 @@ public class SoundViewHolder
 			}
 			R.id.b_settings -> {
 				player.pauseSound()
-				this.eventBus.post(OpenSoundSettingsEvent(player.getMediaPlayerData()))
+				this.eventBus.post(OpenSoundSettingsEvent(player.mediaPlayerData))
 			}
 		}
 	}
@@ -215,7 +215,7 @@ public class SoundViewHolder
 
 	private fun Handler.startTimerDelayed()
 	{
-		this.postDelayed(Runnable { progressTimer.startProgressUpdateTimer() }, (2 * UPDATE_INTERVAL).toLong())
+		this.postDelayed({ progressTimer.startProgressUpdateTimer() }, (2 * UPDATE_INTERVAL).toLong())
 	}
 }
 

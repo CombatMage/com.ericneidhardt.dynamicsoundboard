@@ -34,26 +34,26 @@ public class SoundSheetViewHolder
 	{
 		this.data = data
 
-		this.label.setText(data.getLabel())
+		this.label.text = data.label
 		this.setSoundCount(soundCount)
 
-		this.label.setSelected(data.getIsSelected())
-		this.selectionIndicator.setVisibility(if (data.getIsSelected()) View.VISIBLE else View.INVISIBLE)
+		this.label.isSelected = data.isSelected
+		this.selectionIndicator.visibility = if (data.isSelected) View.VISIBLE else View.INVISIBLE
 
-		this.label.setActivated(data.getIsSelectedForDeletion())
-		this.itemView.setSelected(data.getIsSelectedForDeletion())
+		this.label.isActivated = data.isSelectedForDeletion
+		this.itemView.isSelected = data.isSelectedForDeletion
 
 	}
 
 	private fun setSoundCount(soundCount: Int)
 	{
 		if (soundCount == 0) {
-			this.soundCount.setVisibility(View.INVISIBLE)
-			this.soundCountLabel.setVisibility(View.INVISIBLE)
+			this.soundCount.visibility = View.INVISIBLE
+			this.soundCountLabel.visibility = View.INVISIBLE
 		} else {
-			this.soundCountLabel.setVisibility(View.VISIBLE)
-			this.soundCount.setVisibility(View.VISIBLE)
-			this.soundCount.setText(Integer.toString(soundCount))
+			this.soundCountLabel.visibility = View.VISIBLE
+			this.soundCount.visibility = View.VISIBLE
+			this.soundCount.text = Integer.toString(soundCount)
 		}
 	}
 

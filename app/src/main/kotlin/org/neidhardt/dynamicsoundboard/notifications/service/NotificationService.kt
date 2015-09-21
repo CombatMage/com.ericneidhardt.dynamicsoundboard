@@ -9,15 +9,13 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
 public class NotificationService : Service(), ActivityStateChangedEventListener
 {
-	private val TAG: String = javaClass.getName()
+	private val TAG: String = javaClass.name
 
 	private val soundsDataUtil = DynamicSoundboardApplication.getSoundsDataUtil()
 	private val soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
@@ -35,7 +33,7 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 
 	override fun onCreate()
 	{
-		super<Service>.onCreate()
+		super.onCreate()
 		this.notificationHandler = NotificationHandler(this, this.soundsDataAccess, this.soundsDataUtil, this.soundSheetsDataUtil)
 
 		if (!this.eventBus.isRegistered(this))
@@ -57,18 +55,18 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 		this.notificationHandler!!.onServiceDestroyed()
 		this.soundsDataUtil.release()
 
-		super<Service>.onDestroy()
+		super.onDestroy()
 	}
 
 	override fun onEvent(event: ActivityStateChangedEvent)
 	{
-		if (event.isActivityClosed())
+		if (event.isActivityClosed)
 		{
 			this.isActivityVisible = false
 			if (this.soundsDataAccess.getCurrentlyPlayingSounds().size() == 0)
 				this.stopSelf()
 		}
-		else if (event.isActivityResumed())
+		else if (event.isActivityResumed)
 		{
 			this.isActivityVisible = true
 			this.notificationHandler!!.removeNotificationsForPausedSounds()

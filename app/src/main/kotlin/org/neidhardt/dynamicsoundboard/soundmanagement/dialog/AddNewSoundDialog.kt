@@ -40,7 +40,7 @@ import java.util.ArrayList
  */
 public class AddNewSoundDialog : BaseDialog, FileResultHandler
 {
-	public val TAG: String = javaClass.getName()
+	public val TAG: String = javaClass.name
 	private val KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.callingFragmentTag"
 	private val KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAdd"
 	private val KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAddLabels"
@@ -56,31 +56,31 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 	{
 		val args = Bundle()
 		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
-		this.setArguments(args)
+		this.arguments = args
 
 		this.show(manager, TAG)
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
-		super<BaseDialog>.onCreate(savedInstanceState)
+		super.onCreate(savedInstanceState)
 
-		val args = this.getArguments()
+		val args = this.arguments
 		if (args != null)
 			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG)
 	}
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
-		@SuppressLint("InflateParams") val view = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_add_new_sound, null)
+		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound, null)
 
-		val dialog = AppCompatDialog(this.getActivity(), R.style.DialogTheme)
+		val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
 		dialog.setContentView(view)
 		dialog.setTitle(R.string.dialog_add_new_sound_title)
 
-		val heightOfControls = this.getMeasureHeight(view) + this.getResources().getDimensionPixelSize(R.dimen.margin_default)
+		val heightOfControls = this.getMeasureHeight(view) + this.resources.getDimensionPixelSize(R.dimen.margin_default)
 
-		view.getLayoutParams().height = heightOfControls
+		view.layoutParams.height = heightOfControls
 		this.mainView = view as DialogBaseLayout
 
 		this.presenter = AddNewSoundDialogPresenter(
@@ -99,12 +99,12 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 		view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
 				View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
 
-		return view.getMeasuredHeight()
+		return view.measuredHeight
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?)
 	{
-		super<BaseDialog>.onActivityCreated(savedInstanceState)
+		super.onActivityCreated(savedInstanceState)
 
 		val presenter = this.presenter as AddNewSoundDialogPresenter
 
@@ -127,9 +127,9 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 		}
 	}
 
-	override fun onSaveInstanceState(SuppressWarnings("NullableProblems") outState: Bundle)
+	override fun onSaveInstanceState(@SuppressWarnings("NullableProblems") outState: Bundle)
 	{
-		super<BaseDialog>.onSaveInstanceState(outState)
+		super.onSaveInstanceState(outState)
 
 		val presenter = this.presenter as AddNewSoundDialogPresenter
 
@@ -154,14 +154,14 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 		{
 			if (requestCode == IntentRequest.GET_AUDIO_FILE)
 			{
-				val soundUri = data!!.getData()
-				val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri))
+				val soundUri = data!!.data
+				val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
 				presenter?.addNewSound(NewSoundData(soundUri, label))
 				this.updateHeightToContent()
 				return
 			}
 		}
-		super<BaseDialog>.onActivityResult(requestCode, resultCode, data)
+		super.onActivityResult(requestCode, resultCode, data)
 	}
 
 	// if no intent mechanism, but another file dialog is used, this method may be called to deliver results
@@ -169,9 +169,9 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 	{
 		for (file in files)
 		{
-			val soundUri = Uri.parse(file.getAbsolutePath())
+			val soundUri = Uri.parse(file.absolutePath)
 
-			val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.getActivity(), soundUri))
+			val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
 			presenter?.addNewSound(NewSoundData(soundUri, label))
 			this.updateHeightToContent()
 		}
@@ -180,7 +180,7 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 
 	private fun updateHeightToContent()
 	{
-		this.mainView!!.getLayoutParams()?.height = ViewGroup.LayoutParams.WRAP_CONTENT
+		this.mainView!!.layoutParams?.height = ViewGroup.LayoutParams.WRAP_CONTENT
 	}
 }
 
@@ -201,16 +201,16 @@ private class AddNewSoundDialogPresenter
 
 	init
 	{
-		this.add.setEnabled(false)
+		this.add.isEnabled = false
 
 		this.cancel.setOnClickListener({ view -> this.dialog.dismiss() })
 		this.add.setOnClickListener({ view -> this.addSoundsToSoundSheet()})
 		this.addAnotherSound.setOnClickListener({ this.addAnotherSound() })
 
 		this.addedSoundsLayout.addItemDecoration(DividerItemDecoration())
-		this.addedSoundsLayout.setLayoutManager(LinearLayoutManager(dialog.getActivity()))
-		this.addedSoundsLayout.setItemAnimator(DefaultItemAnimator())
-		this.addedSoundsLayout.setAdapter(adapter)
+		this.addedSoundsLayout.layoutManager = LinearLayoutManager(dialog.activity)
+		this.addedSoundsLayout.itemAnimator = DefaultItemAnimator()
+		this.addedSoundsLayout.adapter = adapter
 
 		this.dialog.mainView!!.enableRecyclerViewDividers(false)
 	}
@@ -257,7 +257,7 @@ private class AddNewSoundDialogPresenter
 	private fun showRenameDialog(renamedMediaPlayers: List<MediaPlayerData>)
 	{
 		for (data in renamedMediaPlayers)
-			RenameSoundFileDialog(this.dialog.getFragmentManager(), data)
+			RenameSoundFileDialog(this.dialog.fragmentManager, data)
 	}
 
 	private fun addAnotherSound()
@@ -270,13 +270,13 @@ private class AddNewSoundDialogPresenter
 		}
 		else
 		{
-			GetNewSoundFromDirectoryDialog(this.dialog.getFragmentManager(), this.dialog.TAG);
+			GetNewSoundFromDirectoryDialog(this.dialog.fragmentManager, this.dialog.TAG);
 		}
 	}
 
 	internal fun addNewSound(data: NewSoundData)
 	{
-		this.add.setEnabled(true)
+		this.add.isEnabled = true
 		this.soundsToAdd.add(data)
 		this.dialog.mainView!!.enableRecyclerViewDividers(true)
 		this.adapter.notifyItemInserted(this.soundsToAdd.size() - 1)
@@ -292,7 +292,7 @@ private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter)
 {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewSoundViewHolder
 	{
-		val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_add_sound_list_item, parent, false)
+		val view = LayoutInflater.from(parent.context).inflate(R.layout.view_add_sound_list_item, parent, false)
 		return NewSoundViewHolder(view)
 	}
 
@@ -329,7 +329,7 @@ private class NewSoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 	internal fun bindData(data: NewSoundData)
 	{
 		this.data = data
-		this.soundPath.setText(data.uri.toString())
+		this.soundPath.text = data.uri.toString()
 		this.soundName.setText(data.label.toString())
 	}
 

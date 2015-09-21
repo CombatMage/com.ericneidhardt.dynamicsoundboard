@@ -22,11 +22,11 @@ public class SoundPresenter
 		OnSoundsChangedEventListener,
 		MediaPlayerEventListener
 {
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 
 	public var adapter: SoundAdapter? = null
 
-	public val values: MutableList<EnhancedMediaPlayer> = ArrayList<EnhancedMediaPlayer>()
+	public val values: MutableList<EnhancedMediaPlayer> = ArrayList()
 
 	fun onAttachedToWindow()
 	{
@@ -45,12 +45,12 @@ public class SoundPresenter
 
 	override fun onEvent(event: MediaPlayerStateChangedEvent)
 	{
-		val playerId = event.getPlayerId()
+		val playerId = event.playerId
 		val players = this.values
 		val count = players.size()
 		for (i in 0..count - 1)
 		{
-			if (players.get(i).getMediaPlayerData().getPlayerId() == playerId)
+			if (players.get(i).mediaPlayerData.playerId == playerId)
 				this.adapter?.notifyItemChanged(i)
 		}
 	}
@@ -63,14 +63,14 @@ public class SoundPresenter
 	override fun onEventMainThread(event: SoundAddedEvent)
 	{
 		val newPlayer = event.player
-		if (newPlayer.getMediaPlayerData().getFragmentTag().equals(this.fragmentTag))
+		if (newPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
 		{
 			val count = this.values.size()
-			val positionToInsert = newPlayer.getMediaPlayerData().getSortOrder()
+			val positionToInsert = newPlayer.mediaPlayerData.sortOrder
 			if (positionToInsert == null)
 			{
-				newPlayer.getMediaPlayerData().setSortOrder(count)
-				newPlayer.getMediaPlayerData().updateItemInDatabaseAsync()
+				newPlayer.mediaPlayerData.sortOrder = count
+				newPlayer.mediaPlayerData.updateItemInDatabaseAsync()
 				this.insertPlayer(count, newPlayer) // append to end of list
 			}
 			else
@@ -78,7 +78,7 @@ public class SoundPresenter
 				for (i in 0..count - 1)
 				{
 					val existingPlayer = this.values.get(i)
-					if (positionToInsert < existingPlayer.getMediaPlayerData().getSortOrder())
+					if (positionToInsert < existingPlayer.mediaPlayerData.sortOrder)
 					{
 						this.insertPlayer(i, newPlayer)
 						return
@@ -100,7 +100,7 @@ public class SoundPresenter
 	override fun onEventMainThread(event: SoundMovedEvent)
 	{
 		val movedPlayer = event.player
-		if (movedPlayer.getMediaPlayerData().getFragmentTag().equals(this.fragmentTag))
+		if (movedPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
 		{
 			this.values.remove(event.from)
 			this.values.add(event.to, movedPlayer)
@@ -110,8 +110,8 @@ public class SoundPresenter
 
 			for (i in start..end)
 			{
-				val playerData = this.values.get(i).getMediaPlayerData()
-				playerData.setSortOrder(i);
+				val playerData = this.values.get(i).mediaPlayerData
+				playerData.sortOrder = i;
 				playerData.updateItemInDatabaseAsync();
 			}
 
@@ -148,9 +148,9 @@ public class SoundPresenter
 		val count = this.values.size();
 		for (i in index + 1 .. count - 1)
 		{
-			val playerData = this.values.get(i).getMediaPlayerData()
-			val sortOrder = playerData.getSortOrder()
-			playerData.setSortOrder(sortOrder - 1);
+			val playerData = this.values.get(i).mediaPlayerData
+			val sortOrder = playerData.sortOrder
+			playerData.sortOrder = sortOrder - 1;
 			playerData.updateItemInDatabaseAsync();
 		}
 	}

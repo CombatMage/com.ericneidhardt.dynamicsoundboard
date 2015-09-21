@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 
@@ -16,24 +15,24 @@ private val DB_SOUNDS_PLAYLIST = "db_sounds_playlist"
 internal fun getDatabaseNameSounds(soundLayoutsAccess: SoundLayoutsAccess): String
 {
 	val activeLayout = soundLayoutsAccess.getActiveSoundLayout()
-	if (activeLayout.isDefaultLayout())
+	if (activeLayout.isDefaultLayout)
 		return DB_SOUNDS_DEFAULT
-	val baseName = activeLayout.getDatabaseId()
+	val baseName = activeLayout.databaseId
 	return baseName + DB_SOUNDS
 }
 
 internal fun getDatabaseNamePlayList(soundLayoutsAccess: SoundLayoutsAccess): String
 {
 	val activeLayout = soundLayoutsAccess.getActiveSoundLayout()
-	if (activeLayout.isDefaultLayout())
+	if (activeLayout.isDefaultLayout)
 		return DB_SOUNDS_PLAYLIST_DEFAULT
-	val baseName = activeLayout.getDatabaseId()
+	val baseName = activeLayout.databaseId
 	return baseName + DB_SOUNDS_PLAYLIST
 }
 
 internal fun searchInListForId(playerId: String, sounds: List<EnhancedMediaPlayer>): EnhancedMediaPlayer?
 {
-	return sounds.firstOrNull { player -> player.getMediaPlayerData().getPlayerId() == playerId }
+	return sounds.firstOrNull { player -> player.mediaPlayerData.playerId == playerId }
 }
 
 internal fun searchInMapForId(playerId: String, sounds: Map<String, List<EnhancedMediaPlayer>>): EnhancedMediaPlayer?

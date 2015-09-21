@@ -63,7 +63,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 	override fun onSaveInstanceState(outState: Bundle)
 	{
 		super.onSaveInstanceState(outState)
-		outState.putString(KEY_PARENT_FILE, this.adapter.parentFile!!.getPath())
+		outState.putString(KEY_PARENT_FILE, this.adapter.parentFile!!.path)
 	}
 
 	public inner class DirectoryAdapter : RecyclerView.Adapter<DirectoryEntry>()
@@ -84,20 +84,20 @@ public abstract class FileExplorerDialog : BaseDialog()
 		{
 			this.parentFile = parent
 			this.fileList = FileUtils.getFilesInDirectory(this.parentFile)
-			if (parent.getParentFile() != null)
-				this.fileList.add(0, parent.getParentFile())
+			if (parent.parentFile != null)
+				this.fileList.add(0, parent.parentFile)
 		}
 
 		public fun refreshDirectory()
 		{
 			this.fileList = FileUtils.getFilesInDirectory(this.parentFile)
-			if (this.parentFile!!.getParentFile() != null)
-				this.fileList.add(0, this.parentFile!!.getParentFile())
+			if (this.parentFile!!.parentFile != null)
+				this.fileList.add(0, this.parentFile!!.parentFile)
 		}
 
 		override fun onCreateViewHolder(parent: ViewGroup, i: Int): DirectoryEntry
 		{
-			val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_directory_item, parent, false)
+			val view = LayoutInflater.from(parent.context).inflate(R.layout.view_directory_item, parent, false)
 			return DirectoryEntry(view)
 		}
 
@@ -131,12 +131,12 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		public fun bindData(file: File)
 		{
-			if (file == adapter.parentFile!!.getParentFile())
+			if (file == adapter.parentFile!!.parentFile)
 				this.bindParentDirectory()
 			else
 			{
-				this.fileName.setText(file.getName())
-				if (file.isDirectory())
+				this.fileName.text = file.name
+				if (file.isDirectory)
 					this.bindDirectory(file)
 				else
 					this.bindFile(file)
@@ -150,9 +150,9 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		private fun setSelection(selected: Boolean)
 		{
-			this.selectionIndicator.setVisibility(if (selected) View.VISIBLE else View.INVISIBLE)
-			this.fileType.setSelected(selected)
-			this.fileName.setSelected(selected)
+			this.selectionIndicator.visibility = if (selected) View.VISIBLE else View.INVISIBLE
+			this.fileType.isSelected = selected
+			this.fileName.isSelected = selected
 		}
 
 		private fun bindFile(file: File)
@@ -173,15 +173,15 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		private fun bindParentDirectory()
 		{
-			this.fileName.setText("..")
+			this.fileName.text = ".."
 			this.fileType.setImageResource(R.drawable.selector_ic_parent_directory)
-			this.selectionIndicator.setVisibility(View.GONE)
+			this.selectionIndicator.visibility = View.GONE
 		}
 
 		override fun onClick(v: View)
 		{
-			val file = adapter.fileList.get(this.getLayoutPosition())
-			if (!file.isDirectory())
+			val file = adapter.fileList.get(this.layoutPosition)
+			if (!file.isDirectory)
 				return
 			adapter.setParent(file)
 			adapter.notifyDataSetChanged()
@@ -189,14 +189,14 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		override fun onLongClick(v: View): Boolean
 		{
-			val file = adapter.fileList.get(this.getLayoutPosition())
-			if (file == adapter.parentFile!!.getParentFile())
+			val file = adapter.fileList.get(this.layoutPosition)
+			if (file == adapter.parentFile!!.parentFile)
 				return false
 
-			if (file.isDirectory() && !canSelectDirectory())
+			if (file.isDirectory && !canSelectDirectory())
 				return false
 
-			if (!file.isDirectory() && !canSelectFile())
+			if (!file.isDirectory && !canSelectFile())
 				return false
 
 			this.selectEntry(file)
@@ -222,7 +222,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 		private fun animateFileLogoRotate()
 		{
 			this.fileType.animate().rotationYBy(360f)
-					.setDuration(getResources()
+					.setDuration(resources
 					.getInteger(android.R.integer.config_mediumAnimTime)
 					.toLong())
 					.setListener(this)
@@ -231,19 +231,23 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		override fun onAnimationStart(animation: Animator) {}
 
-		override fun onAnimationEnd(animation: Animator) { this.fileType.setRotationY(0f) }
+		override fun onAnimationEnd(animation: Animator) {
+			this.fileType.rotationY = 0f
+		}
 
-		override fun onAnimationCancel(animation: Animator) { this.fileType.setRotationY(0f) }
+		override fun onAnimationCancel(animation: Animator) {
+			this.fileType.rotationY = 0f
+		}
 
 		override fun onAnimationRepeat(animation: Animator) {}
 
 		private fun animateSelectorSlideIn()
 		{
-			val distance = this.selectionIndicator.getWidth()
-			this.selectionIndicator.setTranslationX(distance.toFloat()) // move selector to the right to be out of the screen
+			val distance = this.selectionIndicator.width
+			this.selectionIndicator.translationX = distance.toFloat() // move selector to the right to be out of the screen
 
 			this.selectionIndicator.animate().translationX(0f)
-					.setDuration(getResources()
+					.setDuration(resources
 					.getInteger(android.R.integer.config_mediumAnimTime)
 					.toLong())
 					.setInterpolator(DecelerateInterpolator())
