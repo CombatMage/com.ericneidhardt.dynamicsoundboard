@@ -1,8 +1,10 @@
 package org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
@@ -16,8 +18,10 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 
 	public DividerItemDecoration()
 	{
-		this.colorBackground = DynamicSoundboardApplication.Companion.getContext().getResources().getColor(R.color.background);
-		this.colorDivider = DynamicSoundboardApplication.Companion.getContext().getResources().getColor(R.color.divider);
+		Context context = DynamicSoundboardApplication.Companion.getContext();
+
+		this.colorBackground = ContextCompat.getColor(context, R.color.background);
+		this.colorDivider = ContextCompat.getColor(context, R.color.divider);
 		this.heightDivider = DynamicSoundboardApplication.Companion.getContext().getResources().getDimensionPixelSize(R.dimen.stroke);
 	}
 

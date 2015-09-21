@@ -1,14 +1,12 @@
 package org.neidhardt.dynamicsoundboard.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.widget.TextView;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 /**
  * File created by eric.neidhardt on 16.02.2015.

@@ -17,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
@@ -30,7 +31,6 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
-import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 import java.io.File
 import java.util.ArrayList
@@ -317,7 +317,7 @@ private class NewSoundData(uri: Uri, label: String)
 private class NewSoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), TextWatcher
 {
 	private val soundPath = itemView.findViewById(R.id.tv_path) as TextView
-	private val soundName = itemView.findViewById(R.id.et_name_file) as CustomEditText
+	private val soundName = itemView.findViewById(R.id.et_name_file) as EditText
 
 	private var data: NewSoundData? = null
 

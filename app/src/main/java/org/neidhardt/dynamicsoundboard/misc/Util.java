@@ -48,4 +48,10 @@ public class Util
 		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
 		return currentApiVersion >= Build.VERSION_CODES.KITKAT;
 	}
+
+	private static boolean isMarshmallowAvailable()
+	{
+		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+		return currentApiVersion >= Build.VERSION_CODES.M;
+	}
 }

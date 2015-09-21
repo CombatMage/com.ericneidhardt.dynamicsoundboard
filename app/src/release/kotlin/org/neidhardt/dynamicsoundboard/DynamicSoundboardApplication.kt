@@ -2,8 +2,7 @@ package org.neidhardt.dynamicsoundboard;
 
 import android.app.Application;
 import android.content.Context;
-import org.acra.ACRA;
-import org.acra.annotation.ReportsCrashes;
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
@@ -23,6 +22,8 @@ public class DynamicSoundboardApplication : Application()
 {
 	companion object
 	{
+		private val TAG = javaClass.getName()
+
 		private var applicationContext: Context? = null
 
 		private val random = Random();
@@ -46,6 +47,12 @@ public class DynamicSoundboardApplication : Application()
 		public fun getContext(): Context = applicationContext as Context
 
 		public fun getRandomNumber(): Int = random.nextInt(Integer.MAX_VALUE)
+
+		public fun reportError(error: Exception)
+		{
+			Logger.e(TAG, error.getMessage())
+			// nothing to be done in release mode
+		}
 	}
 
 	override fun onCreate()

@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton;
 
+import android.support.annotation.NonNull;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener;
@@ -43,13 +44,13 @@ public class AddPauseFloatingActionButtonPresenter extends BaseViewPresenter<Add
 	}
 
 	@Override
-	public void onEvent(MediaPlayerStateChangedEvent event)
+	public void onEvent(@NonNull MediaPlayerStateChangedEvent event)
 	{
 		this.updateToMediaPlayersState();
 	}
 
 	@Override
-	public void onEvent(MediaPlayerCompletedEvent event)
+	public void onEvent(@NonNull MediaPlayerCompletedEvent event)
 	{
 		this.updateToMediaPlayersState();
 	}
