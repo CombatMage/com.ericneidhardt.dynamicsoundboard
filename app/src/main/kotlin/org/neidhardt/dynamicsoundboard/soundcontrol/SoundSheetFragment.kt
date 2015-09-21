@@ -93,7 +93,7 @@ public class SoundSheetFragment :
 		this.soundAdapter = SoundAdapter(this.soundPresenter as SoundPresenter, this.soundsDataStorage, this.eventBus)
 		this.soundPresenter!!.adapter = this.soundAdapter
 
-		this.dragSortRecycler = SoundDragSortRecycler(this.context, R.id.b_reorder)
+		this.dragSortRecycler = SoundDragSortRecycler(R.id.b_reorder)
 		this.dragSortRecycler!!.setOnItemMovedListener(this)
 		this.dragSortRecycler!!.setOnDragStateChangedListener(this)
 		this.scrollListener = SoundSheetScrollListener(this.dragSortRecycler)
