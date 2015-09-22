@@ -9,8 +9,10 @@
 		android:minHeight="?attr/actionBarSize"
 		android:background="?attr/colorPrimary"
 		android:elevation="@dimen/elevation_toolbar"
-		android:theme="@style/ActionBarThemeOverlay"
-		app:popupTheme="@style/ActionBarPopupThemeOverlay">
+		app:theme="@style/Actionbar.Color"
+		android:theme="@style/Actionbar.Color"
+		app:popupTheme="@style/Theme.AppTheme"
+		android:popupTheme="@style/Theme.AppTheme">
 
 	<RelativeLayout
 			android:layout_width="match_parent"

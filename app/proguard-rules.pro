@@ -43,6 +43,7 @@
 }
 
 #ACRA
+-dontwarn org.acra.ErrorReporter
 -keep class org.acra.ACRA {
     *;
 }
