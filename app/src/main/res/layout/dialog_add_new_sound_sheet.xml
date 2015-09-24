@@ -10,7 +10,7 @@
 		app:text_ok_button="@string/dialog_add">
 
 	<LinearLayout
-			android:layout_width="match_parent"
+			android:layout_width="@dimen/width_min_dialog"
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
 

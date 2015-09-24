@@ -6,7 +6,6 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder
@@ -38,25 +37,25 @@ public class PlaylistViewHolder
 	{
 		this.player = player
 
-		this.timePosition.setMax(player.getDuration())
-		this.label.setText(player.getMediaPlayerData().getLabel())
-		this.selectionIndicator.setVisibility(if (player.isPlaying()) View.VISIBLE else View.INVISIBLE)
+		this.timePosition.max = player.duration
+		this.label.text = player.mediaPlayerData.label
+		this.selectionIndicator.visibility = if (player.isPlaying) View.VISIBLE else View.INVISIBLE
 
-		this.label.setActivated(player.getMediaPlayerData().getIsSelectedForDeletion())
-		this.itemView.setSelected(player.getMediaPlayerData().getIsSelectedForDeletion())
+		this.label.isActivated = player.mediaPlayerData.isSelectedForDeletion
+		this.itemView.isSelected = player.mediaPlayerData.isSelectedForDeletion
 
 		this.onProgressUpdate()
 	}
 
 	override fun onProgressUpdate()
 	{
-		if (player?.isPlaying() ?: false)
+		if (player?.isPlaying ?: false)
 		{
-			timePosition.setProgress(player!!.getCurrentPosition())
-			timePosition.setVisibility(View.VISIBLE)
+			timePosition.progress = player!!.currentPosition
+			timePosition.visibility = View.VISIBLE
 		}
 		else
-			timePosition.setVisibility(View.INVISIBLE)
+			timePosition.visibility = View.INVISIBLE
 	}
 
 }

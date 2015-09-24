@@ -6,7 +6,7 @@ import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStat
 import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter;
 
 /**
- * Created by eric.neidhardt on 22.05.2015.
+ * File created by eric.neidhardt on 22.05.2015.
  */
 public class ActivityProgressBarPresenter extends BaseViewPresenter<ActivityProgressBar>
 {

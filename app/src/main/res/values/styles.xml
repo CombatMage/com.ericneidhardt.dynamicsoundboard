@@ -1,10 +1,8 @@
 <resources>
 
-	<style name="Theme" parent="Theme.AppCompat.Light.NoActionBar" />
+	<style name="Theme.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
-
-	<style name="Theme.AppTheme" parent="Theme">
-
+		<!-- styling general -->
 		<item name="colorPrimary">@color/primary_500</item>
 		<item name="colorPrimaryDark">@color/primary_700</item>
 		<item name="colorAccent">@color/accent_200</item>
@@ -13,35 +11,58 @@
 		<item name="windowActionModeOverlay">true</item>
 		<item name="android:windowNoTitle">true</item>
 
-		<item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
-
-		<item name="actionModeBackground">@drawable/cab_background_top</item>
-		<item name="actionModeSplitBackground">@drawable/cab_background_bottom_actionbar</item>
-
-		<item name="android:actionModeCloseDrawable">@drawable/ic_action_done</item>
-		<item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Actionbar</item>
-
 		<item name="android:background">@null</item>
 		<item name="android:windowBackground">@null</item>
+
+		<!-- styling seekBar -->
+		<item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
+
+		<!-- styling actionbar -->
+		<item name="android:dropDownListViewStyle">@style/ActionBar.OverflowMenu</item>
+		<item name="dropDownListViewStyle">@style/ActionBar.OverflowMenu</item>
+
+		<item name="actionModeBackground">@drawable/cab_background_top</item>
+		<item name="android:actionModeBackground">@drawable/cab_background_top</item>
+
+		<item name="actionModeSplitBackground">@drawable/cab_background_bottom_actionbar</item>
+		<item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_actionbar</item>
+
+		<item name="actionModeCloseDrawable">@drawable/ic_action_done</item>
+		<item name="android:actionModeCloseDrawable">@drawable/ic_action_done</item>
+
+		<item name="actionModeCloseButtonStyle">@style/ContextualActionbar.CloseButton</item>
+		<item name="android:actionModeCloseButtonStyle">@style/ContextualActionbar.CloseButton</item>
 	</style>
 
-	<style name="ActionBarThemeOverlay" parent="Theme.AppTheme">
+	<!-- actionbar text color -->
+	<style name="Actionbar.Color" parent="Theme.AppTheme">
 		<item name="android:textColorPrimary">@color/text_header</item>
 		<item name="android:textColorSecondary">@color/text_header</item>
 	</style>
 
-	<style name="ActionBarPopupThemeOverlay" parent="Theme.AppTheme">
-		<item name="android:textColorPrimary">@color/text_content_primary</item>
-		<item name="android:textColorSecondary">@color/text_content_primary</item>
+	<!-- contextual actionbar text color -->
+	<style name="ContextualActionbar.Color" parent="Theme.AppTheme">
+		<item name="android:textColorPrimary">@color/text_header</item>
+		<item name="android:textColorSecondary">@color/text_header</item>
 	</style>
 
+	<!-- contextual actionbar close button -->
+	<style name="ContextualActionbar.CloseButton" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+		<item name="android:background">@drawable/btn_cab_done_actionbar</item>
+	</style>
+
+	<!-- overFlow menu style -->
+	<style name="ActionBar.OverflowMenu" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+		<item name="android:textColorPrimary">@color/text_content_primary</item>
+		<item name="android:textColorSecondary">@color/text_content_primary</item>
+		<item name="android:background">@color/background</item>
+	</style>
+
+	<!-- often used -->
 	<style name="ActionBarItemMargin">
 		<item name="android:layout_marginLeft">1dp</item>
 		<item name="android:layout_marginRight">1dp</item>
 	</style>
 
-	<style name="ActionButton.CloseMode.Actionbar" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
-		<item name="android:background">@drawable/btn_cab_done_actionbar</item>
-	</style>
 
 </resources>

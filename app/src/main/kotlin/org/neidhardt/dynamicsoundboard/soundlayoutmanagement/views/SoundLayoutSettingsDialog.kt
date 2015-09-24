@@ -4,9 +4,7 @@ import android.app.FragmentManager
 import android.os.Bundle
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 
 /**
  * File created by eric.neidhardt on 12.03.2015.
@@ -20,7 +18,7 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 	{
 		super.onCreate(savedInstanceState)
 
-		val args = this.getArguments()
+		val args = this.arguments
 		if (args != null)
 			this.databaseId = args.getString(KEY_DATABASE_ID)
 	}
@@ -32,19 +30,19 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 
 	override fun getHintForName(): String
 	{
-		return this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)?.getLabel() ?: ""
+		return this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)?.label ?: ""
 	}
 
 	override fun deliverResult()
 	{
 		if (this.databaseId != null)
 		{
-			var name = super.soundLayoutName?.getText().toString()
+			var name = super.soundLayoutName?.text.toString()
 			if (name.length() == 0)
 				name = this.getHintForName()
 
 			val layout = this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)
-			layout?.setLabel(name)
+			layout?.label = name
 			layout?.updateItemInDatabaseAsync()
 
 			EventBus.getDefault().post(SoundLayoutRenamedEvent(layout))
@@ -56,12 +54,12 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 		 * This is called by greenRobot EventBus in case the SoundLayout was renamed.
 		 * @param event delivered SoundLayoutRenamedEvent
 		 */
-		SuppressWarnings("unused")
+		@SuppressWarnings("unused")
 		public fun onEvent(event: SoundLayoutRenamedEvent)
 	}
 
 	companion object {
-		private val TAG = javaClass<SoundLayoutSettingsDialog>().getName()
+		private val TAG = SoundLayoutSettingsDialog::class.java.name
 
 		private val KEY_DATABASE_ID = "org.neidhardt.dynamicsoundboard.dialog.SoundLayoutSettingsDialog.databaseId"
 
@@ -70,7 +68,7 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 
 			val args = Bundle()
 			args.putString(KEY_DATABASE_ID, databaseId)
-			dialog.setArguments(args)
+			dialog.arguments = args
 
 			dialog.show(manager, TAG)
 		}

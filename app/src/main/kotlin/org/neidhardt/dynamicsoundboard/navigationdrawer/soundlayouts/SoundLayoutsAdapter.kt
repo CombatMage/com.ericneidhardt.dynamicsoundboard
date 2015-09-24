@@ -39,7 +39,7 @@ public class SoundLayoutsAdapter
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundLayoutViewHolder
 	{
-		val view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false)
+		val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
 		return SoundLayoutViewHolder(view, this, object: NavigationDrawerItemClickListener<SoundLayout>
 		{
 			override fun onItemClick(data: SoundLayout)

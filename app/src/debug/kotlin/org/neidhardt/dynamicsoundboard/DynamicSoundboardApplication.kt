@@ -20,7 +20,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsMan
 import java.util.Random;
 
 
-ReportsCrashes(
+@ReportsCrashes(
 	mailTo = "eric@neidhardt-erkner.de"
 )
 public class DynamicSoundboardApplication : Application()
@@ -63,7 +63,7 @@ public class DynamicSoundboardApplication : Application()
 		super.onCreate()
 		ACRA.init(this);
 
-		applicationContext = this.getApplicationContext();
+		applicationContext = this.applicationContext;
 		soundLayoutsManager = SoundLayoutsManager()
 		soundSheetsManager = SoundSheetsManager()
 		soundsManager = SoundsManager()

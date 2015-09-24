@@ -7,7 +7,6 @@ import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 
 /**
  * File created by eric.neidhardt on 17.07.2015.
@@ -38,11 +37,11 @@ public class SoundLayoutViewHolder
 	{
 		this.data = data
 
-		this.label.setText(data.getLabel())
-		this.label.setSelected(data.getIsSelected())
-		this.selectionIndicator.setVisibility(if (data.getIsSelected()) View.VISIBLE else View.INVISIBLE)
+		this.label.text = data.label
+		this.label.isSelected = data.isSelected
+		this.selectionIndicator.visibility = if (data.isSelected) View.VISIBLE else View.INVISIBLE
 
-		this.label.setActivated(data.isSelectedForDeletion())
-		this.itemView.setSelected(data.isSelectedForDeletion())
+		this.label.isActivated = data.isSelectedForDeletion
+		this.itemView.isSelected = data.isSelectedForDeletion
 	}
 }

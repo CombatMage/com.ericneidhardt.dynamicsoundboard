@@ -17,6 +17,8 @@
 #}
 
 -keepattributes LineNumberTable,SourceFile,*Annotation*,Signature
+-dontobfuscate
+-optimizations !code/allocation/variable
 
 #kotlin
 -dontwarn kotlin.** 
@@ -41,6 +43,7 @@
 }
 
 #ACRA
+-dontwarn org.acra.ErrorReporter
 -keep class org.acra.ACRA {
     *;
 }

@@ -1,7 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol;
 
-import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import com.emtronics.dragsortrecycler.DragSortRecycler;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 
 /**
@@ -16,13 +17,13 @@ class SoundDragSortRecycler extends DragSortRecycler
 
 	private final int dragViewId;
 
-	public SoundDragSortRecycler(Resources resources, int dragViewId)
+	public SoundDragSortRecycler(int dragViewId)
 	{
 		this.dragViewId = dragViewId;
 
 		this.setViewHandleId(dragViewId);
 		this.setFloatingAlpha(FLOATING_ITEM_ALPHA);
-		this.setFloatingBgColor(resources.getColor(FLOATING_ITEM_BG_COLOR_ID));
+		this.setFloatingBgColor(ContextCompat.getColor(DynamicSoundboardApplication.Companion.getContext(), FLOATING_ITEM_BG_COLOR_ID));
 		this.setAutoScrollSpeed(AUTO_SCROLL_SPEED);
 		this.setAutoScrollWindow(AUTO_SCROLL_WINDOW);
 	}

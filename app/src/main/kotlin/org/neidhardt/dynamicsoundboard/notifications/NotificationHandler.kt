@@ -12,7 +12,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -35,13 +34,13 @@ public class NotificationHandler
 		SharedPreferences.OnSharedPreferenceChangeListener,
 		MediaPlayerEventListener
 {
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 
 	private val eventBus = EventBus.getDefault()
 	private val notificationActionReceiver: BroadcastReceiver = NotificationActionReceiver()
 
 	private val notificationManager: NotificationManager = service.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-	private val notifications: MutableList<PendingSoundNotification> = ArrayList<PendingSoundNotification>()
+	private val notifications: MutableList<PendingSoundNotification> = ArrayList()
 
 	init
 	{
@@ -68,7 +67,7 @@ public class NotificationHandler
 
 		val pendingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds()
 		for (player in pendingSounds) {
-			if (this.soundsDataUtil.isPlaylistPlayer(player.getMediaPlayerData()))
+			if (this.soundsDataUtil.isPlaylistPlayer(player.mediaPlayerData))
 			// playlist sound is added as the last notification
 				pendingPlaylistPlayer = player
 			else
@@ -83,12 +82,12 @@ public class NotificationHandler
 	}
 
 	private fun getNotificationForSound(player: EnhancedMediaPlayer): PendingSoundNotificationBuilder
-			= PendingSoundNotificationBuilder(this.service.getApplicationContext(), player)
+			= PendingSoundNotificationBuilder(this.service.applicationContext, player)
 
 	private fun getNotificationForPlaylist(player: EnhancedMediaPlayer): PendingSoundNotificationBuilder
 	{
-		return PendingSoundNotificationBuilder(this.service.getApplicationContext(), player, NOTIFICATION_ID_PLAYLIST,
-				this.service.getString(R.string.notification_playlist), player.getMediaPlayerData().getLabel())
+		return PendingSoundNotificationBuilder(this.service.applicationContext, player, NOTIFICATION_ID_PLAYLIST,
+				this.service.getString(R.string.notification_playlist), player.mediaPlayerData.label)
 	}
 
 	private fun addNotification(notificationBuilder: PendingSoundNotificationBuilder)
@@ -107,7 +106,7 @@ public class NotificationHandler
 		if (key == service.getString(R.string.preferences_enable_notifications_key))
 		{
 			val areNotificationsEnabledEnabled = SoundboardPreferences.areNotificationsEnabled()
-			Logger.d(TAG, "onSharedPreferenceChanged " + key + " to " + areNotificationsEnabledEnabled)
+			Logger.d(TAG, "onSharedPreferenceChanged $key to $areNotificationsEnabledEnabled")
 
 			if (areNotificationsEnabledEnabled)
 				this.showAllNotifications()
@@ -123,14 +122,14 @@ public class NotificationHandler
 		val notificationId = correspondingNotification.notificationId
 		val player = searchInMapForId(playerId, soundsDataAccess.getSounds())
 
-		if (player == null || !player.isPlaying() && this.service.isActivityVisible())
+		if (player == null || !player.isPlaying && this.service.isActivityVisible())
 		// if player stops playing and the service is still bound, we remove the notification
 		{
 			this.removeNotificationForPlayer(playerId)
 			return true
 		}
 
-		val builder = PendingSoundNotificationBuilder(this.service.getApplicationContext(), player, notificationId)
+		val builder = PendingSoundNotificationBuilder(this.service.applicationContext, player, notificationId)
 
 		correspondingNotification.notification = builder.build()
 		notificationManager.notify(notificationId, correspondingNotification.notification)
@@ -161,13 +160,13 @@ public class NotificationHandler
 			if (isInPlaylist)
 			{
 				val player = searchInListForId(playerId, soundsDataAccess.getPlaylist())
-				if (player != null && !player.isPlaying())
+				if (player != null && !player.isPlaying)
 					this.removePlayListNotification()
 			}
 			else
 			{
 				val player = searchInMapForId(playerId, soundsDataAccess.getSounds())
-				if (player == null || !player.isPlaying())
+				if (player == null || !player.isPlaying)
 					this.removeNotificationForPlayer(playerId)
 			}
 		}
@@ -182,9 +181,9 @@ public class NotificationHandler
 		if (!areNotificationsEnabled)
 			return
 
-		val playerId = event.getPlayerId()
-		val fragmentTag = event.getFragmentTag()
-		val isAlive = event.isAlive()
+		val playerId = event.playerId
+		val fragmentTag = event.fragmentTag
+		val isAlive = event.isAlive
 
 		if (playerId == null || fragmentTag == null)
 			return
@@ -233,7 +232,7 @@ public class NotificationHandler
 		if (player != null)
 		{
 			// if player stops playing and the service is still bound, we remove the notification
-			if (!player.isPlaying() && this.service.isActivityVisible())
+			if (!player.isPlaying && this.service.isActivityVisible())
 			{
 				this.removePlayListNotification()
 				return true
@@ -241,7 +240,7 @@ public class NotificationHandler
 
 			val builder = getNotificationForPlaylist(player)
 
-			correspondingNotification.playerId = player.getMediaPlayerData().getPlayerId()
+			correspondingNotification.playerId = player.mediaPlayerData.playerId
 			correspondingNotification.notification = builder.build()
 			notificationManager.notify(notificationId, correspondingNotification.notification)
 		}
@@ -259,7 +258,7 @@ public class NotificationHandler
 		}
 	}
 
-	private fun getPlayingSoundFromPlaylist(): EnhancedMediaPlayer? = soundsDataAccess.getPlaylist().firstOrNull { player -> player.isPlaying() }
+	private fun getPlayingSoundFromPlaylist(): EnhancedMediaPlayer? = soundsDataAccess.getPlaylist().firstOrNull { player -> player.isPlaying }
 
 	private inner class NotificationActionReceiver : BroadcastReceiver()
 	{
@@ -267,7 +266,7 @@ public class NotificationHandler
 		{
 			Logger.d(TAG, "NotificationActionReceiver.onReceive " + intent)
 
-			val action = intent.getAction() ?: return
+			val action = intent.action ?: return
 			val playerId = intent.getStringExtra(KEY_PLAYER_ID) ?: return
 
 			val notificationId = intent.getIntExtra(KEY_NOTIFICATION_ID, 0)

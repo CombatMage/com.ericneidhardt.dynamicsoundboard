@@ -54,5 +54,5 @@ internal fun getBitmap(context: Context, drawableId: Int, scaleFactor: Int): Bit
 	val options = BitmapFactory.Options()
 	options.inSampleSize = scaleFactor
 	options.inJustDecodeBounds = false
-	return BitmapFactory.decodeResource(context.getResources(), drawableId, options)
+	return BitmapFactory.decodeResource(context.resources, drawableId, options)
 }

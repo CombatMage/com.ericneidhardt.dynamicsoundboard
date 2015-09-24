@@ -22,13 +22,13 @@ public class LoadSoundsFromDatabaseTask
 ) :
 		LongTermTask<List<MediaPlayerData>>()
 {
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 
 
-	throws(Exception::class)
+	@Throws(Exception::class)
 	override fun call(): List<MediaPlayerData>
 	{
-		val mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list()
+		val mediaPlayersData = this.daoSession.mediaPlayerDataDao.queryBuilder().list()
 		Collections.sort(mediaPlayersData, MediaPlayerComparator())
 
 		for (mediaPlayerData in mediaPlayersData)
@@ -50,12 +50,12 @@ public class LoadPlaylistFromDatabaseTask
 ) :
 		LongTermTask<List<MediaPlayerData>>()
 {
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 
-	throws(Exception::class)
+	@Throws(Exception::class)
 	override fun call(): List<MediaPlayerData>
 	{
-		var mediaPlayersData = this.daoSession.getMediaPlayerDataDao().queryBuilder().list()
+		var mediaPlayersData = this.daoSession.mediaPlayerDataDao.queryBuilder().list()
 		Collections.sort(mediaPlayersData, MediaPlayerComparator())
 
 		for (mediaPlayerData in mediaPlayersData)
@@ -77,9 +77,9 @@ public class LoadSoundsFromFileListTask
 ) :
 		LongTermTask<List<File>>()
 {
-	private val TAG = javaClass.getName()
+	private val TAG = javaClass.name
 
-	throws(Exception::class)
+	@Throws(Exception::class)
 	override fun call(): List<File>
 	{
 		for (file in this.filesToLoad)
@@ -91,7 +91,7 @@ public class LoadSoundsFromFileListTask
 		return filesToLoad
 	}
 
-	throws(Exception::class)
+	@Throws(Exception::class)
 	override fun onSuccess(files: List<File>)
 	{
 		super.onSuccess(files)
@@ -104,7 +104,7 @@ public class LoadSoundsFromFileListTask
 
 	private fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): MediaPlayerData
 	{
-		val soundUri = Uri.parse(file.getAbsolutePath())
+		val soundUri = Uri.parse(file.absolutePath)
 		val soundLabel = FileUtils.stripFileTypeFromName(
 				FileUtils.getFileNameFromUri(DynamicSoundboardApplication.getContext(), soundUri))
 		return EnhancedMediaPlayer.getMediaPlayerData(fragmentTag, soundUri, soundLabel)

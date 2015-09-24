@@ -1,16 +1,14 @@
 package org.neidhardt.dynamicsoundboard.notifications
 
-import android.annotation.TargetApi
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
-import android.graphics.drawable.Icon
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import android.os.Build
+import android.support.v7.app.NotificationCompat
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
@@ -37,22 +35,22 @@ public class PendingSoundNotification(public val notificationId: Int, public var
 }
 
 public class PendingSoundNotificationBuilder
-jvmOverloads constructor
+@JvmOverloads constructor
 (
 		context: Context,
 		player: EnhancedMediaPlayer,
-		public val notificationId: Int = player.getMediaPlayerData().getPlayerId().hashCode(),
-		title: String = player.getMediaPlayerData().getLabel(),
+		public val notificationId: Int = player.mediaPlayerData.playerId.hashCode(),
+		title: String = player.mediaPlayerData.label,
 		message: String? = null
-) : Notification.Builder(context)
+) : NotificationCompat.Builder(context)
 {
-	public val playerId: String = player.getMediaPlayerData().getPlayerId()
+	public val playerId: String = player.mediaPlayerData.playerId
 
 	init
 	{
 		val isLollipopStyleAvailable = Util.IS_LOLLIPOP_AVAILABLE
 		this.setActionStop(context, isLollipopStyleAvailable)
-		if (player.isPlaying())
+		if (player.isPlaying)
 		{
 			this.setOngoing(true)
 			this.setActionFadeOut(context, isLollipopStyleAvailable)
@@ -69,10 +67,9 @@ jvmOverloads constructor
 
 		this.setContentTitle(title)
 		this.setContentText(message)
-		this.setScaledLargeIcon(this.getLargeIcon(context, player.getMediaPlayerData().getUri()))
+		this.setScaledLargeIcon(this.getLargeIcon(context, player.mediaPlayerData.uri))
 
-		if (isLollipopStyleAvailable)
-			this.addStyleLollipop()
+		this.addMediaStyle()
 	}
 
 	private fun getLargeIcon(context: Context, uri: String): Bitmap
@@ -80,11 +77,11 @@ jvmOverloads constructor
 		val mediaDataReceiver = MediaMetadataRetriever()
 		mediaDataReceiver.setDataSource(context, Uri.parse(uri))
 
-		val resources = context.getResources()
+		val resources = context.resources
 		val requiredHeight = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
 		val requiredWidth = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_width)
 
-		val data = mediaDataReceiver.getEmbeddedPicture()
+		val data = mediaDataReceiver.embeddedPicture
 		if (data != null)
 		{
 			val size = getBitmapSize(data)
@@ -105,19 +102,16 @@ jvmOverloads constructor
 		this.setLargeIcon(bitmap)
 	}
 
-	TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	private fun addStyleLollipop()
+	private fun addMediaStyle()
 	{
-		val style = Notification.MediaStyle()
+		val style = NotificationCompat.MediaStyle()
 		style.setShowActionsInCompactView(1) // index of action play/pause
 		this.setStyle(style)
-		this.setCategory(Notification.CATEGORY_TRANSPORT)
 	}
 
 	private fun setActionStop(context: Context, isLollipopStyleAvailable: Boolean)
 	{
-		val icon = Icon.createWithResource(context, R.drawable.ic_notification_stop)
-		this.addAction(this.buildAction(icon,
+		this.addAction(this.buildAction(R.drawable.ic_notification_stop,
 				if (isLollipopStyleAvailable)
 					context.getString(R.string.notification_stop_sound)
 				else
@@ -128,8 +122,7 @@ jvmOverloads constructor
 
 	private fun setActionPlay(context: Context, isLollipopStyleAvailable: Boolean)
 	{
-		val icon = Icon.createWithResource(context, R.drawable.ic_notification_play)
-		this.addAction(this.buildAction(icon,
+		this.addAction(this.buildAction(R.drawable.ic_notification_play,
 				if (isLollipopStyleAvailable)
 					context.getString(R.string.notification_play_sound)
 				else
@@ -140,8 +133,7 @@ jvmOverloads constructor
 
 	private fun setActionFadeOut(context: Context, isLollipopStyleAvailable: Boolean)
 	{
-		val icon = Icon.createWithResource(context, R.drawable.ic_notification_pause)
-		this.addAction(this.buildAction(icon,
+		this.addAction(this.buildAction( R.drawable.ic_notification_pause,
 				if (isLollipopStyleAvailable)
 					context.getString(R.string.notification_pause_sound)
 				else
@@ -150,12 +142,9 @@ jvmOverloads constructor
 		)
 	}
 
-	private fun buildAction(icon: Icon, label: String, intent: PendingIntent) : Notification.Action
+	private fun buildAction(iconId: Int, label: String, intent: PendingIntent) : android.support.v4.app.NotificationCompat.Action
 	{
-
-		val builder = Notification.Action.Builder(icon, label, intent);
-		val action = builder.build();
-		return action
+		return android.support.v4.app.NotificationCompat.Action.Builder(iconId, label, intent).build()
 	}
 
 	private fun getPendingIntent(context: Context, action: String): PendingIntent
@@ -168,7 +157,7 @@ jvmOverloads constructor
 
 	private fun getOpenActivityIntent(context: Context): PendingIntent
 	{
-		val intent = Intent(context, javaClass<SoundActivity>())
+		val intent = Intent(context, SoundActivity::class.java)
 		return PendingIntent.getActivity(context, IntentRequest.NOTIFICATION_OPEN_ACTIVITY, intent, 0)
 	}
 

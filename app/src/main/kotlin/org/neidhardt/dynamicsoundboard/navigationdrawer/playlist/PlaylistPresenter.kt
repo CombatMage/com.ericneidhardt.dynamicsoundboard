@@ -5,13 +5,12 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import java.util.ArrayList
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 16.07.2015.
@@ -40,7 +39,7 @@ public class PlaylistPresenter
 
 	override fun onAttachedToWindow()
 	{
-		super<NavigationDrawerListPresenter>.onAttachedToWindow()
+		super.onAttachedToWindow()
 		this.values.clear()
 		this.values.addAll(this.soundsDataAccess.getPlaylist())
 		this.adapter?.notifyDataSetChanged()
@@ -66,7 +65,7 @@ public class PlaylistPresenter
 		}
 		this.soundsDataStorage.removeSoundsFromPlaylist(playersToRemove)
 
-		super<NavigationDrawerListPresenter>.onSelectedItemsDeleted()
+		super.onSelectedItemsDeleted()
 	}
 
 	override fun getNumberOfItemsSelectedForDeletion(): Int
@@ -79,7 +78,7 @@ public class PlaylistPresenter
 		val selectedItems = ArrayList<EnhancedMediaPlayer>()
 		val existingItems = this.values
 		for (player in existingItems) {
-			if (player.getMediaPlayerData().getIsSelectedForDeletion())
+			if (player.mediaPlayerData.isSelectedForDeletion)
 				selectedItems.add(player)
 		}
 		return selectedItems
@@ -90,18 +89,18 @@ public class PlaylistPresenter
 		val selectedPlayers = this.getPlayersSelectedForDeletion()
 		for (player in selectedPlayers)
 		{
-			player.getMediaPlayerData().setIsSelectedForDeletion(false)
+			player.mediaPlayerData.isSelectedForDeletion = false
 			this.adapter?.notifyItemChanged(player)
 		}
 	}
 
 	override fun onItemClick(data: EnhancedMediaPlayer)
 	{
-		if (this.isInSelectionMode())
+		if (this.isInSelectionMode)
 		{
-			data.getMediaPlayerData().setIsSelectedForDeletion(!data.getMediaPlayerData().getIsSelectedForDeletion())
+			data.mediaPlayerData.isSelectedForDeletion = !data.mediaPlayerData.isSelectedForDeletion
 			this.adapter?.notifyItemChanged(data)
-			super<NavigationDrawerListPresenter>.onItemSelectedForDeletion()
+			super.onItemSelectedForDeletion()
 		} else
 			this.startOrStopPlayList(data)
 	}
@@ -109,7 +108,7 @@ public class PlaylistPresenter
 	public fun startOrStopPlayList(nextActivePlayer: EnhancedMediaPlayer)
 	{
 		if (!this.values.contains(nextActivePlayer))
-			throw IllegalStateException("next active player " + nextActivePlayer + " is not in playlist")
+			throw IllegalStateException("next active player $nextActivePlayer is not in playlist")
 
 		this.currentItemIndex = this.values.indexOf(nextActivePlayer)
 		for (player in this.values)
@@ -118,7 +117,7 @@ public class PlaylistPresenter
 				player.stopSound()
 		}
 
-		if (nextActivePlayer.isPlaying())
+		if (nextActivePlayer.isPlaying)
 		{
 			this.adapter?.stopProgressUpdateTimer()
 			nextActivePlayer.pauseSound()
@@ -140,8 +139,8 @@ public class PlaylistPresenter
 
 	override fun onEvent(event: MediaPlayerStateChangedEvent)
 	{
-		val player = event.getPlayer()
-		if (this.values.contains(player) && !event.isAlive())
+		val player = event.player
+		if (this.values.contains(player) && !event.isAlive)
 		{
 			val index = this.values.indexOf(player)
 			this.values.remove(player)
@@ -153,10 +152,10 @@ public class PlaylistPresenter
 
 	override fun onEvent(event: MediaPlayerCompletedEvent)
 	{
-		val finishedPlayerData = event.getPlayer().getMediaPlayerData()
+		val finishedPlayerData = event.player.mediaPlayerData
 		if (this.currentItemIndex != null)
 		{
-			val currentPlayer = this.values.get(this.currentItemIndex!!).getMediaPlayerData()
+			val currentPlayer = this.values.get(this.currentItemIndex!!).mediaPlayerData
 			if (currentPlayer !== finishedPlayerData)
 				return
 

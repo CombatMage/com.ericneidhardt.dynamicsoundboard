@@ -22,7 +22,7 @@ public class DynamicSoundboardApplication : Application()
 {
 	companion object
 	{
-		private val TAG = javaClass.getName()
+		private val TAG = DynamicSoundboardApplication::class.java.name
 
 		private var applicationContext: Context? = null
 
@@ -59,7 +59,7 @@ public class DynamicSoundboardApplication : Application()
 	{
 		super.onCreate()
 
-		applicationContext = this.getApplicationContext();
+		applicationContext = this.applicationContext;
 
 		soundLayoutsManager = SoundLayoutsManager()
 		soundSheetsManager = SoundSheetsManager()
