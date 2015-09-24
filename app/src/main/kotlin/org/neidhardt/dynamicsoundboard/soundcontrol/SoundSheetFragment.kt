@@ -106,18 +106,18 @@ public class SoundSheetFragment :
 
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
 
-		this.soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
-		this.soundLayout!!.adapter = this.soundAdapter
-		this.soundLayout!!.layoutManager = LinearLayoutManager(this.activity)
-		this.soundLayout!!.itemAnimator = this.soundLayoutAnimator
-		this.soundLayout!!.addItemDecoration(DividerItemDecoration())
+		val soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
+		soundLayout.adapter = this.soundAdapter
+		soundLayout.layoutManager = LinearLayoutManager(this.activity)
+		soundLayout.itemAnimator = this.soundLayoutAnimator
+		soundLayout.addItemDecoration(DividerItemDecoration())
+		soundLayout.addItemDecoration(this.dragSortRecycler)
+		soundLayout.addOnItemTouchListener(this.dragSortRecycler)
+		soundLayout.addOnScrollListener(this.scrollListener)
+		soundLayout.addOnScrollListener(this.dragSortRecycler!!.scrollListener)
+		this.soundLayout = soundLayout
 
-		this.soundLayout!!.addItemDecoration(this.dragSortRecycler)
-		this.soundLayout!!.addOnItemTouchListener(this.dragSortRecycler)
-		this.soundLayout!!.addOnScrollListener(this.scrollListener)
-		this.soundLayout!!.addOnScrollListener(this.dragSortRecycler!!.scrollListener)
-
-		this.soundAdapter!!.recyclerView = this.soundLayout
+		this.soundAdapter?.recyclerView = this.soundLayout
 
 		return fragmentView
 	}
