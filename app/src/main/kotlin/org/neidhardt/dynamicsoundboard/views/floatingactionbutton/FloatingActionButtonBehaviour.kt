@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
 import android.content.Context
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
 import android.util.AttributeSet
 import android.view.View
@@ -11,19 +12,23 @@ import org.neidhardt.dynamicsoundboard.R
  */
 public class FloatingActionButtonBehaviour(context : Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<AddPauseFloatingActionButton>(context, attrs)
 {
-	override fun layoutDependsOn(parent: CoordinatorLayout?, child: AddPauseFloatingActionButton?, dependency: View?): Boolean
+	private val toolbarHeight = context.resources.getDimensionPixelSize(R.dimen.abc_action_bar_default_height_material)
+
+	public override fun layoutDependsOn(parent: CoordinatorLayout, fab: AddPauseFloatingActionButton, dependency: View) : Boolean
 	{
-		return dependency != null && dependency.id == R.id.navigation_drawer_fragment
+		return super.layoutDependsOn(parent, fab, dependency) || (dependency is AppBarLayout)
 	}
 
-	override fun onDependentViewChanged(parent: CoordinatorLayout?, child: AddPauseFloatingActionButton?, dependency: View): Boolean {
-		if (child != null)
-		{
-			child.animateUiChanges()
-
-			return true
+	public override fun onDependentViewChanged(parent: CoordinatorLayout, fab: AddPauseFloatingActionButton, dependency: View) : Boolean
+	{
+		val returnValue = super.onDependentViewChanged(parent, fab, dependency)
+		if (dependency is AppBarLayout) {
+			val params = fab.getLayoutParams() as CoordinatorLayout.LayoutParams
+			val fabBottomMargin = params.bottomMargin
+			val distanceToScroll = fab.height + fabBottomMargin
+			val ratio = dependency.y.toFloat() / toolbarHeight.toFloat()
+			fab.setTranslationY(-distanceToScroll * ratio)
 		}
-		else
-			return super.onDependentViewChanged(parent, child, dependency)
+		return returnValue
 	}
 }
