@@ -1,15 +1,19 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import de.greenrobot.event.EventBus;
-import org.acra.ACRA;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent;
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
-import org.neidhardt.dynamicsoundboard.playlist.Playlist;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 
 import java.io.IOException;
 
@@ -36,13 +40,27 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	}
 
 	private State currentState;
-	private MediaPlayerData rawData;
 	private int duration;
 	private int volume;
 
-	private Handler handler = new Handler();
+	private Handler handler = null;
 
-	public EnhancedMediaPlayer(MediaPlayerData data) throws IOException
+	private SoundsDataAccess soundsDataAccess;
+	private final MediaPlayerData rawData;
+
+	public EnhancedMediaPlayer(@NonNull MediaPlayerData data, SoundsDataAccess soundsDataAccess) throws IOException
+	{
+		super();
+
+		this.soundsDataAccess = soundsDataAccess;
+		this.rawData = data;
+		this.setLooping(data.getIsLoop());
+
+		this.currentState = State.IDLE;
+		this.init(DynamicSoundboardApplication.Companion.getContext());
+	}
+
+	public EnhancedMediaPlayer(Context context, @NonNull MediaPlayerData data) throws IOException
 	{
 		super();
 
@@ -50,7 +68,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.setLooping(data.getIsLoop());
 
 		this.currentState = State.IDLE;
-		this.init();
+		this.init(context);
 	}
 
 	public static EnhancedMediaPlayer getInstanceForPlayList(MediaPlayerData data) throws IOException
@@ -64,14 +82,15 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		playListData.setLabel(data.getLabel());
 		playListData.setUri(data.getUri());
 
-		return new EnhancedMediaPlayer(playListData);
+		return new EnhancedMediaPlayer(playListData,
+				DynamicSoundboardApplication.Companion.getSoundsDataAccess());
 	}
 
 	public static MediaPlayerData getMediaPlayerData(String fragmentTag, Uri uri, String label)
 	{
 		MediaPlayerData data = new MediaPlayerData();
 
-		String playerId = Integer.toString((uri.toString() + DynamicSoundboardApplication.getRandomNumber()).hashCode());
+		String playerId = Integer.toString((uri.toString() + DynamicSoundboardApplication.Companion.getRandomNumber()).hashCode());
 		data.setPlayerId(playerId);
 		data.setFragmentTag(fragmentTag);
 		data.setLabel(label);
@@ -82,13 +101,23 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		return data;
 	}
 
-	private void init() throws IOException
+	public void setSoundUri(String uri) throws IOException
+	{
+		this.rawData.setUri(uri);
+		this.rawData.updateItemInDatabaseAsync();
+		this.reset();
+
+		this.init(DynamicSoundboardApplication.Companion.getContext());
+	}
+
+	private void init(Context context) throws IOException
 	{
 		if (this.rawData.getUri() == null)
-			throw new NullPointerException("cannot init media player, sound uri is null");
+			throw new NullPointerException("cannot initIfRequired media player, sound uri is null");
 
 		this.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		this.setDataSource(DynamicSoundboardApplication.getSoundboardContext(), Uri.parse(this.rawData.getUri()));
+		Uri soundUri = Uri.parse(this.rawData.getUri());
+		this.setDataSource(context, soundUri);
 		this.setLooping(this.rawData.getIsLoop());
 		this.prepare();
 		this.currentState = State.PREPARED;
@@ -100,13 +129,22 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public void destroy(boolean postStateChanged)
 	{
-		this.handler.removeCallbacks(this);
+		if (this.handler != null)
+			this.handler.removeCallbacks(this);
 		this.currentState = State.DESTROYED;
 		this.reset();
 		this.release();
+		this.soundsDataAccess.getCurrentlyPlayingSounds().remove(this);
 		if (postStateChanged)
 			this.postStateChangedEvent(false);
 	}
+
+	@Override
+	public void prepare() throws IOException, IllegalStateException {
+		Logger.d(TAG, "preparing media player " + this.getMediaPlayerData().getLabel() + " with uri " + this.getMediaPlayerData().getUri());
+		super.prepare();
+	}
+
 
 	public MediaPlayerData getMediaPlayerData()
 	{
@@ -121,10 +159,17 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		return this.duration;
 	}
 
+	/**
+	 * Check if this MediaPlayer is currently playing, ie. State.STARTED.
+	 * The call is not forwarded to the native implementation (super.isPlaying), because
+	 * of ab described here:
+	 * @see <a href="https://code.google.com/p/android/issues/detail?id=9732">#9732: internal/external state mismatch corrected</a>
+	 * @return true if player ist playing, false otherwise
+	 */
 	@Override
 	public boolean isPlaying()
 	{
-		return this.currentState != State.DESTROYED && super.isPlaying();
+		return this.currentState == State.STARTED;
 	}
 
 	@Override
@@ -139,22 +184,28 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public void setLooping(boolean looping)
 	{
 		super.setLooping(looping);
-		this.rawData.setIsLoop(looping);
-		this.rawData.setItemWasAltered();
+
+		if (this.rawData.getIsLoop() != looping)
+		{
+			this.rawData.setIsLoop(looping);
+			this.rawData.updateItemInDatabaseAsync();
+		}
 	}
 
 	public void setIsInPlaylist(boolean inPlaylist)
 	{
 		this.rawData.setIsInPlaylist(inPlaylist);
-		this.rawData.setItemWasAltered();
+		this.rawData.updateItemInDatabaseAsync();
 	}
 
 	public boolean playSound()
 	{
+		if (this.isPlaying())
+			return true;
 		try
 		{
 			if (this.currentState == State.IDLE || this.currentState == State.DESTROYED)
-				this.init();
+				this.init(DynamicSoundboardApplication.Companion.getContext());
 
 			if (this.currentState == State.INIT || this.currentState == State.STOPPED)
 				this.prepare();
@@ -165,19 +216,20 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.start();
 			this.currentState = State.STARTED;
 
+			this.soundsDataAccess.getCurrentlyPlayingSounds().add(this);
 			this.postStateChangedEvent(true);
 			return true;
 		}
 		catch (IOException e)
 		{
 			Logger.e(TAG, e.toString());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 		catch (IllegalStateException e)
 		{
 			Logger.e(TAG, e.toString());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 	}
@@ -194,16 +246,18 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	public boolean pauseSound()
 	{
+		if (!this.isPlaying())
+			return true;
 		try
 		{
 			switch (this.currentState)
 			{
 				case IDLE:
-					this.init();
+					this.init(DynamicSoundboardApplication.Companion.getContext());
 					this.start();
 					break;
 				case DESTROYED:
-					this.init();
+					this.init(DynamicSoundboardApplication.Companion.getContext());
 					this.start();
 					break;
 				case INIT:
@@ -227,19 +281,20 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 			this.pause();
 			this.currentState = State.PAUSED;
 
+			this.soundsDataAccess.getCurrentlyPlayingSounds().remove(this);
 			this.postStateChangedEvent(true);
 			return true;
 		}
 		catch (IOException e)
 		{
 			Logger.e(TAG, e.getMessage());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 		catch (IllegalStateException e)
 		{
 			Logger.e(TAG, e.getMessage());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 	}
@@ -253,6 +308,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	private void scheduleNextVolumeChange()
 	{
 		int delay = FADE_OUT_DURATION / INT_VOLUME_MAX;
+		if (this.handler == null)
+			this.handler = new Handler();
 		this.handler.postDelayed(this, delay);
 	}
 
@@ -323,32 +380,44 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		catch (IOException e)
 		{
 			Logger.e(TAG, e.getMessage());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
 		catch (IllegalStateException e)
 		{
 			Logger.e(TAG, e.getMessage());
-			ACRA.getErrorReporter().handleException(e);
+			this.reportExceptions(e);
 			return false;
 		}
+	}
+
+	private void reportExceptions(Exception e)
+	{
+		DynamicSoundboardApplication.Companion.reportError(e);
 	}
 
 	@Override
 	public void onCompletion(MediaPlayer mp)
 	{
+		// for unknown reason, onCompletion is called even if the player is set to looping, therefore we needs to do an additional check
+		if (this.isLooping())
+			return;
+
+		// for unknown reason, this must be set to paused instead of stopped. This contradicts MediaPlayer Documentation, but calling prepare for restart throws illegal state exception
+		this.currentState = State.PAUSED;
+		this.soundsDataAccess.getCurrentlyPlayingSounds().remove(this);
 		this.postStateChangedEvent(true);
 		this.postCompletedEvent();
 	}
 
 	private void postStateChangedEvent(boolean isAlive)
 	{
-		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(isAlive, this.rawData.getPlayerId(), this.rawData.getFragmentTag()));
+		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(this, isAlive));
 	}
 
 	private void postCompletedEvent()
 	{
-		EventBus.getDefault().post(new MediaPlayerCompletedEvent());
+		EventBus.getDefault().post(new MediaPlayerCompletedEvent(this));
 	}
 
 }

@@ -9,23 +9,25 @@
 
 	<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="@dimen/margin_small">
+			android:layout_height="wrap_content">
 
 		<com.devspark.robototextview.widget.RobotoTextView
 				android:id="@+id/tv_sound_layout_header"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:padding="@dimen/margin_default"
+				android:layout_height="@dimen/height_list_item"
+				android:gravity="center_vertical"
+				android:paddingLeft="@dimen/margin_default"
+				android:paddingRight="@dimen/margin_default"
 				android:background="@color/primary_200"
 				android:textColor="@color/text_content_secondary"
 				android:textSize="@dimen/text_sub_text"
 				android:text="@string/navigation_drawer_select_sound_layout"
-				app:typeface="roboto_medium"/>
+				android:textAllCaps="true"
+				app:typeface="roboto_regular"/>
 
 		<View
 				android:layout_width="match_parent"
-				android:layout_height="4dp"
+				android:layout_height="2dp"
 				android:layout_alignBottom="@id/tv_sound_layout_header"
 				android:background="@color/accent_200"/>
 
@@ -35,6 +37,7 @@
 			android:id="@+id/rv_sound_layouts_list"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
+			android:paddingTop="@dimen/margin_small"
 			android:overScrollMode="never"/>
 
 	<View

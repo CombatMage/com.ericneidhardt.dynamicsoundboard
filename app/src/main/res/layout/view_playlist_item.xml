@@ -28,7 +28,7 @@
 			android:layout_marginStart="@dimen/margin_list_item_left"
 			android:maxLines="1"
 			android:textSize="@dimen/text_sub_text"
-			android:textColor="@color/text_content_primary"
+			android:textColor="@color/selector_text_content_primary"
 			android:text="@string/app_name"
 			app:typeface="roboto_medium"/>
 

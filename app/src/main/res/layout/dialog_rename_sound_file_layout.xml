@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:has_title="false"
+		app:text_cancle_button="@string/dialog_cancel"
+		app:text_ok_button="@string/dialog_rename"
+		tools:background="@color/background">
+
+	<com.devspark.robototextview.widget.RobotoTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/margin_small"
+			android:textColor="@color/text_content_secondary"
+			android:textSize="@dimen/text_body"
+			android:text="@string/dialog_rename_sound_file_message"
+			app:typeface="roboto_medium"/>
+
+	<CheckBox
+			android:id="@+id/cb_rename_all_occurrences"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/margin_small"
+			android:textColor="@color/text_content_secondary"
+			android:textSize="@dimen/text_sub_text"
+			android:text="@string/dialog_rename_sound_file_all_occurrences_message"/>
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_list_item"
+			android:layout_marginTop="@dimen/margin_small"
+			android:orientation="horizontal">
+
+		<com.devspark.robototextview.widget.RobotoTextView
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="2"
+				android:gravity="center_vertical"
+				android:textColor="@color/text_content_secondary"
+				android:textSize="@dimen/text_body"
+				android:text="@string/dialog_rename_sound_file_new_name"
+				app:typeface="roboto_medium"/>
+
+		<com.devspark.robototextview.widget.RobotoTextView
+				android:id="@+id/tv_new_name"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="3"
+				android:gravity="end|center_vertical"
+				android:textColor="@color/text_content_secondary"
+				android:textSize="@dimen/text_body"
+				android:maxLines="2"
+				android:ellipsize="end"
+				tools:text="My renamed Music.mp3"
+				app:typeface="roboto_medium"/>
+	</LinearLayout>
+
+</org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>

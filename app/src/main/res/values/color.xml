@@ -4,7 +4,6 @@
 	<color name="background_secondary">#E6E6E6</color>
 
 	<color name="primary_500">#3f51b5</color>
-	<color name="primary_100">#c5cae9</color>
 	<color name="primary_700">#303f9f</color>
 	<color name="primary_200">#9fa8da</color>
 
@@ -14,12 +13,13 @@
 
 	<color name="divider">#1f000000</color>
 
-	<color name="shadow_dark">#63000000</color>
+	<color name="shadow_dark">#76000000</color>
 	<color name="shadow_bright">#00000000</color>
 
 	<color name="text_header">#ffffff</color>
 	<color name="text_content_primary">#de000000</color>
 	<color name="text_content_secondary">#a8000000</color>
 	<color name="text_hint">#42000000</color>
-	<color name="text_accent">#ff4081</color>
+	<color name="text_accent">@color/accent_200</color>
+	<color name="text_accent_disabled">@color/accent_100</color>
 </resources>

@@ -1,0 +1,322 @@
+package org.neidhardt.dynamicsoundboard.soundmanagement.model
+
+import de.greenrobot.event.EventBus
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.neidhardt.dynamicsoundboard.dao.DaoSession
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
+import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.misc.Util
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
+import java.io.IOException
+import java.util.*
+
+/**
+ * File created by eric.neidhardt on 15.06.2015.
+ */
+public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
+{
+	private val TAG = javaClass.name
+	private val eventBus = EventBus.getDefault()
+
+	private val soundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
+	private val soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
+
+	private var dbPlaylist: DaoSession? = null
+	private var dbSounds: DaoSession? = null
+
+	private val sounds: MutableMap<String, MutableList<EnhancedMediaPlayer>> = HashMap()
+	private val playlist: MutableList<EnhancedMediaPlayer> = ArrayList()
+	private val currentlyPlayingSounds: MutableSet<EnhancedMediaPlayer> = HashSet()
+
+	private var isInitDone: Boolean = false
+
+	init
+	{
+		this.initIfRequired()
+	}
+
+	override fun getDbSounds(): DaoSession
+	{
+		if (this.dbSounds == null)
+			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getContext(), getDatabaseNameSounds(this.soundLayoutsAccess))
+		return this.dbSounds as DaoSession
+	}
+
+
+	override fun getDbPlaylist(): DaoSession
+	{
+		if (this.dbPlaylist == null)
+			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getContext(), getDatabaseNamePlayList(this.soundLayoutsAccess))
+		return this.dbPlaylist as DaoSession
+	}
+
+	override fun initIfRequired()
+	{
+		if (!this.isInitDone)
+		{
+			this.isInitDone = true
+
+			this.sounds.clear()
+			this.playlist.clear()
+			this.currentlyPlayingSounds.clear()
+
+			this.dbPlaylist = null
+			this.dbPlaylist = this.getDbPlaylist()
+
+			this.dbSounds = null
+			this.dbSounds = this.getDbSounds()
+
+			LoadSoundsFromDatabaseTask(this.dbSounds as DaoSession, this).execute()
+			LoadPlaylistFromDatabaseTask(this.dbPlaylist as DaoSession, this).execute()
+		}
+	}
+
+	override fun release()
+	{
+		this.isInitDone = false
+
+		this.releaseMediaPlayers()
+	}
+
+	private fun releaseMediaPlayers()
+	{
+		this.playlist.map { player-> player.destroy(false) }
+
+		val allPlayers = this.sounds.values()
+		for (players in allPlayers)
+			players.map { player-> player.destroy(false) }
+
+		this.playlist.clear()
+		this.sounds.clear()
+
+		this.eventBus.post(PlaylistChangedEvent())
+		this.eventBus.post(SoundsRemovedEvent())
+	}
+
+	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean = this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.fragmentTag)
+
+	override fun getCurrentlyPlayingSounds(): Set<EnhancedMediaPlayer> = this.currentlyPlayingSounds
+
+	override fun getPlaylist(): List<EnhancedMediaPlayer> = this.playlist
+
+	override fun getSounds(): Map<String, List<EnhancedMediaPlayer>> = this.sounds
+
+	override fun getSoundsInFragment(fragmentTag: String): List<EnhancedMediaPlayer>
+	{
+		var soundsInFragment: List<EnhancedMediaPlayer>? = this.sounds.get(fragmentTag)
+		if (soundsInFragment == null)
+		{
+			soundsInFragment = ArrayList<EnhancedMediaPlayer>()
+			this.sounds.put(fragmentTag, soundsInFragment)
+		}
+		return soundsInFragment
+	}
+
+	override fun getSoundById(fragmentTag: String, playerId: String): EnhancedMediaPlayer?
+	{
+		if (this.soundSheetsDataUtil.isPlaylistSoundSheet(fragmentTag))
+			return searchInListForId(playerId, playlist)
+		else
+			return searchInListForId(playerId, this.sounds.get(fragmentTag).orEmpty())
+	}
+
+	override fun createSoundAndAddToManager(data: MediaPlayerData)
+	{
+		if (this.getSoundById(data.fragmentTag, data.playerId) != null)
+		{
+			Logger.d(TAG, "player: $data is already loaded")
+			return
+		}
+
+		val player = this.createSound(data)
+		if (player == null)
+		{
+			this.removeSoundDataFromDatabase(data)
+			this.eventBus.post(CreatingPlayerFailedEvent(data))
+		}
+		else
+			this.addSoundToSounds(player)
+	}
+
+	override fun createPlaylistSoundAndAddToManager(data: MediaPlayerData)
+	{
+		if (this.getSoundById(data.fragmentTag, data.playerId) != null)
+		{
+			Logger.d(TAG, "player: $data is already loaded")
+			return
+		}
+
+		val player = this.createPlaylistSound(data)
+		if (player == null)
+		{
+			this.removePlaylistDataFromDatabase(data)
+			this.eventBus.post(CreatingPlayerFailedEvent(data))
+		}
+		else
+			this.addSoundToPlayList(player)
+	}
+
+	override fun toggleSoundInPlaylist(playerId: String, addToPlaylist: Boolean)
+	{
+		val player = searchInMapForId(playerId, this.sounds)
+		val playerInPlaylist = searchInListForId(playerId, playlist)
+
+		if (addToPlaylist)
+		{
+			if (playerInPlaylist != null)
+				return
+
+			if (player != null)
+			{
+				player.setIsInPlaylist(true)
+
+				val playerForPlaylist = createPlaylistSound(player.mediaPlayerData)
+				if (playerForPlaylist == null)
+				{
+					this.removePlaylistDataFromDatabase(player.mediaPlayerData)
+					this.eventBus.post(CreatingPlayerFailedEvent(player.mediaPlayerData))
+				}
+				else
+					this.addSoundToPlayList(playerForPlaylist)
+			}
+		}
+		else
+		{
+			if (playerInPlaylist == null)
+				return
+
+			player?.setIsInPlaylist(false)
+
+			this.playlist.remove(playerInPlaylist)
+
+			this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao, playerInPlaylist.mediaPlayerData)
+			playerInPlaylist.destroy(true)
+		}
+	}
+
+	private fun addSoundToPlayList(player: EnhancedMediaPlayer)
+	{
+		this.playlist.add(player)
+
+		val data = player.mediaPlayerData
+		data.insertItemInDatabaseAsync()
+
+		this.eventBus.post(PlaylistChangedEvent())
+	}
+
+	private fun addSoundToSounds(player: EnhancedMediaPlayer)
+	{
+		val data = player.mediaPlayerData
+		val fragmentTag = data.fragmentTag
+		if (this.sounds[fragmentTag] == null)
+			this.sounds[fragmentTag] = ArrayList<EnhancedMediaPlayer>()
+
+		this.sounds[fragmentTag]?.add(player)
+
+		data.insertItemInDatabaseAsync()
+
+		this.eventBus.post(SoundAddedEvent(player))
+	}
+
+	override fun removeSounds(soundsToRemove: List<EnhancedMediaPlayer>)
+	{
+		if (soundsToRemove.size() > 0)
+		{
+			val copyList = ArrayList<EnhancedMediaPlayer>(soundsToRemove.size())
+			copyList.addAll(soundsToRemove) // this is done to prevent concurrent modification exception
+
+			for (playerToRemove in copyList)
+			{
+				val data = playerToRemove.mediaPlayerData
+				this.sounds.get(data.fragmentTag)?.remove(playerToRemove)
+
+				if (data.isInPlaylist)
+				{
+					val correspondingPlayerInPlaylist = searchInListForId(data.playerId, this.playlist)
+					if (correspondingPlayerInPlaylist != null)
+					{
+						this.playlist.remove(correspondingPlayerInPlaylist)
+
+						this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao,
+								correspondingPlayerInPlaylist.mediaPlayerData)
+						correspondingPlayerInPlaylist.destroy(true)
+					}
+				}
+				this.removePlayerDataFromDatabase(this.getDbSounds().mediaPlayerDataDao, playerToRemove.mediaPlayerData)
+				playerToRemove.destroy(true)
+			}
+			this.eventBus.post(SoundsRemovedEvent(copyList))
+		}
+	}
+
+	override fun removeSoundsFromPlaylist(soundsToRemove: List<EnhancedMediaPlayer>)
+	{
+		soundsToRemove.map { player -> this.toggleSoundInPlaylist(player.mediaPlayerData.playerId, false) }
+		this.eventBus.post(SoundsRemovedEvent(soundsToRemove))
+	}
+
+	override fun moveSoundInFragment(fragmentTag: String, from: Int, to: Int)
+	{
+		val soundsInFragment = this.sounds.get(fragmentTag)
+		if (soundsInFragment != null)
+		{
+			val playerToMove = soundsInFragment.remove(from)
+			soundsInFragment.add(to, playerToMove)
+
+			this.eventBus.post(SoundMovedEvent(playerToMove, from, to))
+		}
+	}
+
+	private fun createPlaylistSound(playerData: MediaPlayerData): EnhancedMediaPlayer?
+	{
+		try
+		{
+			return EnhancedMediaPlayer.getInstanceForPlayList(playerData)
+		} catch (e: IOException)
+		{
+			Logger.d(TAG, playerData.toString() + " " + e.getMessage())
+			this.removePlaylistDataFromDatabase(playerData)
+			return null
+		}
+
+	}
+
+	private fun createSound(playerData: MediaPlayerData): EnhancedMediaPlayer?
+	{
+		try
+		{
+			return EnhancedMediaPlayer(playerData, this)
+		}
+		catch (e: IOException) {
+			Logger.d(TAG, e.getMessage())
+			this.removeSoundDataFromDatabase(playerData)
+			return null
+		}
+
+	}
+
+	override fun removeSoundDataFromDatabase(playerData: MediaPlayerData)
+	{
+		this.removePlayerDataFromDatabase(this.getDbSounds().mediaPlayerDataDao, playerData)
+	}
+
+	override fun removePlaylistDataFromDatabase(playerData: MediaPlayerData)
+	{
+		this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao, playerData)
+	}
+
+	private fun removePlayerDataFromDatabase(dao: MediaPlayerDataDao, playerData: MediaPlayerData)
+	{
+		if (playerData.id != null)
+			dao.delete(playerData)
+		else {
+			val playersInDatabase = dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(playerData.playerId)).list()
+			dao.deleteInTx(playersInDatabase)
+		}
+	}
+
+}

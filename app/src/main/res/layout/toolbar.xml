@@ -8,9 +8,9 @@
 		android:layout_width="match_parent"
 		android:minHeight="?attr/actionBarSize"
 		android:background="?attr/colorPrimary"
-		android:elevation="@dimen/elevation_toolbar"
-		app:theme="@style/ActionBarThemeOverlay"
-		app:popupTheme="@style/ActionBarPopupThemeOverlay">
+		app:theme="@style/Actionbar.Color"
+		android:theme="@style/Actionbar.Color"
+		app:popupTheme="@style/Theme.AppTheme">
 
 	<RelativeLayout
 			android:layout_width="match_parent"
@@ -55,7 +55,7 @@
 				android:contentDescription="@string/action_add_new_sound_from_dir"
 				android:src="@drawable/ic_action_add_sound_dir"/>
 
-		<TextView
+		<com.devspark.robototextview.widget.RobotoTextView
 				android:id="@+id/tv_app_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -67,9 +67,10 @@
 				android:gravity="center_horizontal"
 				android:text="@string/app_name"
 				android:textColor="@color/text_header"
-				android:textSize="@dimen/text_title"/>
+				android:textSize="@dimen/text_title"
+				app:typeface="roboto_medium"/>
 
-		<org.neidhardt.dynamicsoundboard.customview.edittext.ActionbarEditText
+		<org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText
 				android:id="@+id/et_set_label"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

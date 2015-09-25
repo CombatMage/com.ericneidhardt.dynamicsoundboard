@@ -14,7 +14,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content">
 
-			<org.neidhardt.dynamicsoundboard.customview.IntroductionListItem
+			<org.neidhardt.dynamicsoundboard.soundactivity.views.IntroductionListItem
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					app:action_icon="@drawable/ic_new_sound_layout"
@@ -23,7 +23,7 @@
 
 			<include layout="@layout/view_introduction_divider"/>
 
-			<org.neidhardt.dynamicsoundboard.customview.IntroductionListItem
+			<org.neidhardt.dynamicsoundboard.soundactivity.views.IntroductionListItem
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					app:action_icon="@drawable/ic_add_sound_dir"
@@ -32,7 +32,7 @@
 
 			<include layout="@layout/view_introduction_divider"/>
 
-			<org.neidhardt.dynamicsoundboard.customview.IntroductionListItem
+			<org.neidhardt.dynamicsoundboard.soundactivity.views.IntroductionListItem
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					app:action_icon="@drawable/ic_add_sound"

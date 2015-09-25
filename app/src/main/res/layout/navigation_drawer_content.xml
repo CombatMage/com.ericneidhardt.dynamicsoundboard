@@ -2,6 +2,7 @@
 
 <RelativeLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
@@ -51,10 +52,12 @@
 					android:background="@drawable/selector_background_list_item"/>
 		</LinearLayout>
 
-		<FrameLayout android:layout_width="match_parent"
-					 android:layout_height="wrap_content"
-					 android:layout_centerVertical="true"
-					 android:background="@color/background">
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:background="@color/background">
+
 			<com.devspark.robototextview.widget.RobotoTextView
 					android:id="@+id/b_delete_selected"
 					android:layout_width="match_parent"
@@ -79,24 +82,34 @@
 
 		<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:orientation="vertical"
-				android:animateLayoutChanges="true">
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
 
-			<include layout="@layout/navigation_drawer_header"/>
+			<org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeader
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/height_navigation_drawer_header"/>
 
 			<FrameLayout
 					android:id="@+id/layout_navigation_drawer_list_content"
 					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+					android:layout_height="wrap_content"
+					android:background="@color/background">
 
 				<include layout="@layout/navigation_drawer_view_pager"/>
 
-				<org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsList
+				<org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayouts
 						android:id="@+id/layout_select_sound_layout"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
+						tools:visibility="visible"
 						android:visibility="invisible"/>
+
+				<View
+						android:id="@+id/v_reveal_shadow"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:background="@color/shadow_dark"
+						android:visibility="gone"/>
 
 			</FrameLayout>
 

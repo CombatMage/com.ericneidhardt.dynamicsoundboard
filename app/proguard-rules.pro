@@ -15,3 +15,52 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keepattributes LineNumberTable,SourceFile,*Annotation*,Signature
+-dontobfuscate
+-optimizations !code/allocation/variable
+
+#kotlin
+-dontwarn kotlin.** 
+-dontwarn org.w3c.dom.events.* 
+
+#jackson and pojos
+-dontwarn com.fasterxml.jackson.databind.**
+-keep class com.fasterxml.jackson.** { *; }
+-keep class org.neidhardt.dynamicsoundboard.misc.JsonPojo { *; }
+
+#greenDAO
+-keep public class org.neidhardt.dynamicsoundboard.dao.** {
+	public static <fields>;
+}
+
+#greenrobot EventBus
+-keepclassmembers class ** {
+    public void onEvent*(**);
+}
+-keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
+#ACRA
+-dontwarn org.acra.ErrorReporter
+-keep class org.acra.ACRA {
+    *;
+}
+-keep class org.acra.ReportingInteractionMode {
+    *;
+}
+-keepnames class org.acra.sender.HttpSender$** {
+    *;
+}
+-keepnames class org.acra.ReportField {
+    *;
+}
+-keep public class org.acra.ErrorReporter {
+    public void addCustomData(java.lang.String,java.lang.String);
+    public void putCustomData(java.lang.String,java.lang.String);
+    public void removeCustomData(java.lang.String);
+}
+-keep public class org.acra.ErrorReporter {
+    public void handleSilentException(java.lang.Throwable);
+}

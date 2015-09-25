@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import org.neidhardt.dynamicsoundboard.R;
 
 /**
- * Created by eric.neidhardt on 21.01.2015.
+ * File created by eric.neidhardt on 21.01.2015.
  */
 public class AboutActivity extends PreferenceActivity
 {
@@ -27,7 +27,8 @@ public class AboutActivity extends PreferenceActivity
 		Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
 		toolbar.setTitle(R.string.about);
 		this.setSupportActionBar(toolbar);
-		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		if (this.getSupportActionBar() != null)
+			this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	public static class SoundboardAboutFragment extends PreferenceFragment

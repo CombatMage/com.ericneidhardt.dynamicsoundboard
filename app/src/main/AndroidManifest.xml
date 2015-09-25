@@ -16,8 +16,9 @@
 			android:theme="@style/Theme.AppTheme">
 
 		<activity
-				android:name=".BaseActivity"
+				android:name=".soundactivity.SoundActivity"
 				android:label="@string/app_name"
+				android:windowSoftInputMode="adjustPan"
 				android:launchMode="singleTop">
 
 			<intent-filter>
@@ -48,15 +49,15 @@
 		<activity
 				android:name=".preferences.PreferenceActivity"
 				android:label="@string/preferences"
-				android:parentActivityName=".BaseActivity"/>
+				android:parentActivityName=".soundactivity.SoundActivity"/>
 
 		<activity
 				android:name=".preferences.AboutActivity"
 				android:label="@string/about"
-				android:parentActivityName=".BaseActivity"/>
+				android:parentActivityName=".soundactivity.SoundActivity"/>
 
 		<service
-				android:name=".soundmanagement.MusicService"
+				android:name=".notifications.service.NotificationService"
 				android:exported="false">
 		</service>
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:orientation="vertical"
+			  android:layout_width="wrap_content"
+			  android:layout_height="wrap_content"
+			  android:minWidth="@dimen/width_min_dialog">
+
+	<LinearLayout
+			android:id="@+id/layout_dialog_content"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingTop="@dimen/margin_default"
+			android:paddingLeft="@dimen/padding_dialog"
+			android:paddingStart="@dimen/padding_dialog"
+			android:paddingRight="@dimen/padding_dialog"
+			android:paddingEnd="@dimen/padding_dialog"
+			android:paddingBottom="@dimen/padding_dialog"
+			android:orientation="vertical">
+
+	</LinearLayout>
+	<org.neidhardt.dynamicsoundboard.views.DialogButtonBar
+			android:id="@+id/layout_button_bar"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/height_dialog_button_bar"
+			android:layout_gravity="end"/>
+
+</LinearLayout>

@@ -34,15 +34,14 @@
 			android:layout_toStartOf="@id/b_reorder"
 			android:orientation="vertical">
 
-		<org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText
-				android:id="@id/et_name_file"
+		<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
+				android:id="@+id/et_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/margin_default"
 				android:layout_marginLeft="@dimen/margin_default"
 				android:layout_marginRight="@dimen/margin_default"
 				android:layout_marginEnd="@dimen/margin_default"
-				app:show_underscore="false"
 				app:text_size="@dimen/text_subheading"
 				app:text_color="@color/text_content_primary"/>
 
@@ -69,11 +68,6 @@
 
 		<include
 				layout="@layout/button_stop"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"/>
-
-		<include
-				layout="@layout/button_fade_out"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>
 

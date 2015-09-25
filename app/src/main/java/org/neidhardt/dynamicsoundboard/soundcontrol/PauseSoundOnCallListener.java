@@ -3,18 +3,19 @@ package org.neidhardt.dynamicsoundboard.soundcontrol;
 import android.content.Context;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import org.neidhardt.dynamicsoundboard.soundmanagement.ServiceManagerFragment;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Set;
 
 
 public class PauseSoundOnCallListener extends PhoneStateListener
 {
-	private ServiceManagerFragment soundManagerFragment;
 	private List<EnhancedMediaPlayer> pauseSounds;
+	private SoundsDataAccess soundsDataAccess = DynamicSoundboardApplication.Companion.getSoundsDataAccess();
 
 	public PauseSoundOnCallListener()
 	{
@@ -28,10 +29,13 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 
 		if (state == TelephonyManager.CALL_STATE_RINGING)
 		{
-			List<EnhancedMediaPlayer> currentlyPlayingSounds = soundManagerFragment.getSoundService().getCurrentlyPlayingSounds();
+			Set<EnhancedMediaPlayer> currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds();
 			if (currentlyPlayingSounds.size() > 0)
 			{
-				for (EnhancedMediaPlayer sound : currentlyPlayingSounds)
+				List<EnhancedMediaPlayer> copyCurrentlyPlayingSounds = new ArrayList<>(currentlyPlayingSounds.size()); // copy to prevent concurrent modification exception
+				copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds);
+
+				for (EnhancedMediaPlayer sound : copyCurrentlyPlayingSounds)
 					sound.pauseSound();
 			}
 			this.pauseSounds.addAll(currentlyPlayingSounds);
@@ -49,12 +53,10 @@ public class PauseSoundOnCallListener extends PhoneStateListener
 	private void clearReferences()
 	{
 		this.pauseSounds.clear();
-		this.soundManagerFragment = null;
 	}
 
-	public static void registerListener(Context context, PauseSoundOnCallListener listener, ServiceManagerFragment soundManagerFragment)
+	public static void registerListener(Context context, PauseSoundOnCallListener listener)
 	{
-		listener.soundManagerFragment = soundManagerFragment;
 		TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		if (manager != null)
 			manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);

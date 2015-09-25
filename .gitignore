@@ -22,6 +22,6 @@ dao_generator/build/
 drag_drop_recycler_view/build/
 gradle.properties
 storage_helper/build/
-safe_async_task/build/intermediates/
-safe_async_task/build/generated/source/buildConfig/release/roboguice/util/BuildConfig.java
-safe_async_task/build/tmp/
+app/build/outputs/logs/manifest-merger-debug-report.txt
+safe_async_task/build/
+app/build/jacoco/testDebug.exec

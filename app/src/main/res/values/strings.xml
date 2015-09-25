@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<!-- misc -->
+	<!-- com.emtronics.dragsortrecycler -->
 	<string name="app_name">Dynamic Soundboard</string>
-	<string name="suggested_sound_sheet_name">Kategorie</string>
-	<string name="suggested_sound_layout_name">Zusammenstellung</string>
+	<string name="suggested_sound_sheet_name">neue Kategorie</string>
+	<string name="suggested_sound_layout_name">neues Abenteuer</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
+
+	<!-- soundmanagement -->
+	<string name="music_service_loading_sound_failed">Eine Sound konnte nicht geladen werden:</string>
 
 	<!-- navigation drawer -->
 	<string name="navigation_drawer_content_description_select_sound_layout">Hier klicken um zu einem anderen Sound Layout zu wechseln</string>
@@ -49,7 +52,6 @@
 	<string name="sound_control_content_description_play">Startet oder Pausiert den Sound</string>
 	<string name="sound_control_content_description_loop">Sound wird in einer Schleife abgespielt</string>
 	<string name="sound_control_content_description_playlist">Sound wird in die Playliste aufgenommen</string>
-	<string name="sound_control_content_description_fade_out">Der Sound kling langsam aus</string>
 	<string name="sound_control_content_description_settings">Sound editieren, verschieben, umbenennen</string>
 	<string name="sound_control_content_description_reorder">Sound neusortieren</string>
 	<string name="sound_control_delete">Sound entfernen</string>
@@ -59,7 +61,6 @@
 	<string name="notification_pause_sound">Sound pausieren</string>
 	<string name="notification_stop_sound">Sound stoppen</string>
 	<string name="notification_play_sound">Sound abspielen</string>
-	<string name="notification_fade_out_sound">Sound abklingen lassen</string>
 	<string name="notification_playlist">Playliste</string>
 
 	<!-- introduction -->
@@ -75,7 +76,7 @@
 	<string name="introduction_action_add_new_sound_summary">Hiermit kannst du einen oder mehrere Sounds auswählen um diese der aktuellen Kategorie
 		hinzuzufügen. Für jeden geladenen Sound kannst du einen den angezeigten Namen einstellen.</string>
 
-	<!-- preferences -->
+	<!-- preferences & about -->
 	<string name="preferences">Einstellungen</string>
 	<string name="preferences_enable_notifications_title">Benachrichtigungen aktivieren</string>
 	<string name="preferences_enable_notifications_summary">Mit aktivierten Benachrichtigungen können aktive Sounds auch nach dem
@@ -87,6 +88,9 @@
 	<string name="preferences_enable_immerse_mode_summary">Mit aktivieren Fullscreen Modus werden die Statusleiste und die
 		Navigationsleiste ausgeblendet. Mit einem Swipe vom unteren oder oberen Bildschrimrand können sie wieder eingeblendet
 		werden.</string>
+	<string name="preferences_use_system_file_browser_title">Eigenen Dateibrowser verwenden</string>
+	<string name="preferences_use_system_file_browser_summary">Wenn diese Option angeschaltet ist, wird der auf dem Telefon normalerweise installierte Dateibrowser verwendet um einzelne Dateien auszuwählen. 
+		Ansonsten wird der Browser der App verwendet (empfohlen).</string>
 
 	<string name="about">Über</string>
 	<string name="about_author_title">Autor</string>
@@ -98,24 +102,33 @@
 		de.greenrobot:greendao 1.3.7,
 		com.fasterxml.jackson.core:jackson-databind 2.5.1,
 		com.melnykov:floatingactionbutton 1.2.0,
-		com.github.johnkil.android-robototextview:robototextview 2.3.0
+		com.github.johnkil.android-robototextview:robototextview 2.3.0,
+		com.emtronics.dragsortrecycler:DragSortRecycler,
+		com.github.castorflex.smoothprogressbar:library,
+		com.google.dagger:dagger 2,
+		jp.wasabeef:recyclerview-animators:1.2.1
 	</string>
 	<string name="about_used_third_party_assets_title">Verwendete Ressourcen</string>
 	<string name="about_used_third_party_assets_summary">
-		christos: http://www.oxygenna.com/author/christos
+		christos: http://www.oxygenna.com/author/christos,
+		Icons8: http://icons8.com,
+		300 FREE vector icons by Piotr Kwiatkowski: http://behance.net/piotrkwiatkowski,
+		Metrize Icons by Alessio Atzeni: http://alessioatzeni.com/metrize-icons
 	</string>
 
 	<!-- dialog -->
+	<string name="dialog_ok">OK</string>
 	<string name="dialog_delete">Löschen</string>
 	<string name="dialog_add">Hinzufügen</string>
 	<string name="dialog_save">Speichern</string>
 	<string name="dialog_cancel">Abbrechen</string>
 	<string name="dialog_load">Laden</string>
+	<string name="dialog_rename">Umbenennen</string>
 
 	<string name="dialog_confirm_delete_title">Wirklich entfernen?</string>
 	<string name="dialog_confirm_delete_soundsheet_message">Soll diese Kategorie entfernt werden?</string>
 	<string name="dialog_confirm_delete_sounds_in_soundheet_message">Sollen alle Sounds in dieser Kategorie entfernt werden?</string>
-	<string name="dialog_confirm_delete_all_soundsheets_message">Sollen alles Kategorien des Soundboards entfernt werden?</string>
+	<string name="dialog_confirm_delete_all_soundsheets_message">Sollen alle Kategorien des Soundboards entfernt werden?</string>
 
 	<string name="dialog_add_new_sound_from_directory_title">Verzeichniss auswählen</string>
 	<string name="dialog_add_new_sound_from_directory_message">Dem Soundbord werden alle Sounds in dem ausgewählten Verzeichniss hinzugefügt</string>
@@ -129,11 +142,11 @@
 	<string name="dialog_add_new_sound_from_intent_message">Es wurden noch keine Kategorien für Sounds angelegt. Soll eine neue Kategorie angelegt werden?</string>
 
 	<string name="dialog_sound_settings_title">Sound editieren</string>
-	<string name="dialog_sound_settings_message">Sound umbennen oder in eine andere Kategorie verschieben?</string>
+	<string name="dialog_sound_settings_message">Sound umbenennen oder in eine andere Kategorie verschieben?</string>
 
-	<string name="dialog_sound_layout_settings_title">Soundzusammenstellung umbenennen</string>
+	<string name="dialog_sound_layout_settings_message">Abenteuer umbenennen</string>
 
-	<string name="dialog_add_new_sound_layout_title">Eine weitere Soundzusammenstellung anlegen</string>
+	<string name="dialog_add_new_sound_layout_message">Ein weitere Abenteuer anlegen</string>
 
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_message">Welcher Kategorie soll der Sound hinzugefügt werden, oder soll eine neue Kategorie angelegt werden?</string>
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_checkbox">Eine neue Katagorie anlegen</string>
@@ -152,4 +165,12 @@
 
 	<string name="dialog_load_layout_message">Eine gespeichtere SoundKonfiguration auswählen um diese zu laden.</string>
 	<string name="dialog_load_layout_no_file_info">Keine Datei zum Laden ausgewählt.</string>
+
+	<string name="dialog_rename_sound_file_title">Datei auch umbenennen?</string>
+	<string name="dialog_rename_sound_file_message">Soll die zugehörige Musikdatei ebenfalls umbenannt werden?</string>
+	<string name="dialog_rename_sound_file_current_name">Aktueller Name:</string>
+	<string name="dialog_rename_sound_file_new_name">Neuer Name:</string>
+	<string name="dialog_rename_sound_file_all_occurrences_message">Sollen alle geladenen Sounds die diese Datei benutzen auch umbenannt werden? ({%s0} Sounds)</string>
+	<string name="dialog_rename_sound_toast_file_not_found">Die Sounddatei konnte leider nicht umbenannt werden</string>
+	<string name="dialog_rename_sound_toast_player_not_updated">Die Änderung konnte nicht für alle Sounds übernommen werden. Ein paar Sounds mussten leider entfernt werden.</string>
 </resources>

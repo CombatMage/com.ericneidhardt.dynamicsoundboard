@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="wrap_content"
-	android:layout_height="match_parent">
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:orientation="vertical"
+			  android:layout_width="wrap_content"
+			  android:layout_height="match_parent"
+			  android:padding="@dimen/padding_dialog"
+			  tools:background="@color/background">
 
-	<TextView
-		android:id="@+id/tv_path"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_small"
-		android:layout_marginLeft="@dimen/margin_default"
-		android:layout_marginRight="@dimen/margin_default"
-		android:layout_marginBottom="@dimen/margin_small"
-		android:textSize="@dimen/text_sub_text"
-		android:textColor="@color/text_content_secondary"/>
+	<com.devspark.robototextview.widget.RobotoTextView
+			android:id="@+id/tv_path"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/margin_small"
+			android:layout_marginBottom="@dimen/margin_small"
+			android:textSize="@dimen/text_sub_text"
+			android:textColor="@color/text_content_secondary"
+			app:typeface="roboto_medium"/>
 
-	<org.neidhardt.dynamicsoundboard.customview.edittext.NoUnderscoreEditText
-		android:id="@+id/et_name_file"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_small"
-		android:layout_marginLeft="@dimen/margin_default"
-		android:layout_marginRight="@dimen/margin_default"
-		android:layout_marginBottom="@dimen/margin_small"/>
+	<com.devspark.robototextview.widget.RobotoEditText
+			android:id="@+id/et_name_file"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/margin_small"
+			android:inputType="textNoSuggestions"
+			android:textSize="@dimen/text_sub_text"
+			app:typeface="roboto_medium"/>
 
 </LinearLayout>

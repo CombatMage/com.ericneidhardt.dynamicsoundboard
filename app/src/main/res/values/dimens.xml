@@ -1,8 +1,9 @@
 <resources>
 
 	<dimen name="status_bar_padding">0dp</dimen> <!-- for material style navigation drawer -->
-	<dimen name="height_navigation_drawer_header">142dp</dimen>
 
+	<dimen name="size_avatar_navigation_drawer">70dp</dimen>
+	
 	<dimen name="size_floating_button">56dp</dimen>
 	<dimen name="size_seekbar_thumb_pressed">24dp</dimen>
 	<dimen name="size_seekbar_thumb">12dp</dimen>
@@ -10,16 +11,22 @@
 
 	<dimen name="size_progressbar_thumb">8dp</dimen>
 
-	<dimen name="height_shadow">2dp</dimen>
+	<dimen name="height_navigation_drawer_header">142dp</dimen>
+	<dimen name="height_shadow">3dp</dimen>
 	<dimen name="height_title">48dp</dimen>
 	<dimen name="height_input_field">44dp</dimen>
 	<dimen name="height_list_item">56dp</dimen>
 	<dimen name="height_list_item_large">72dp</dimen>
 	<dimen name="height_list_item_xlarge">122dp</dimen>
 
+	<dimen name="height_dialog_button">36dp</dimen>
+	<dimen name="height_dialog_button_bar">52dp</dimen>
+
+	<dimen name="width_min_dialog">280dp</dimen>
+	<dimen name="width_min_button">64dp</dimen>
+
 	<dimen name="elevation_toolbar">4dp</dimen>
 	<dimen name="elevation_normal">4dp</dimen>
-	<dimen name="elevation_small">2dp</dimen>
 
 	<dimen name="margin_xlarge">24dp</dimen>
 	<dimen name="margin_large">20dp</dimen>
@@ -30,13 +37,16 @@
 	<dimen name="margin_list_item_left_large">72dp</dimen>
 
 	<dimen name="padding_button">12dp</dimen>
+	<dimen name="padding_dialog">24dp</dimen>
 
 	<dimen name="stroke">1dp</dimen>
+	<dimen name="stroke_thick">2dp</dimen>
 
 	<dimen name="text_title">20sp</dimen>
 	<dimen name="text_headline">24sp</dimen>
 	<dimen name="text_subheading">16sp</dimen>
 	<dimen name="text_body">15sp</dimen>
 	<dimen name="text_sub_text">14sp</dimen>
+	<dimen name="text_button">14sp</dimen>
 
 </resources>

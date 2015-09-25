@@ -6,10 +6,10 @@
 		android:orientation="vertical"
 		android:animateLayoutChanges="true">
 
-	<org.neidhardt.dynamicsoundboard.customview.navigationdrawer.SlidingTabLayout
-			android:id="@+id/layout_tab"
+	<android.support.design.widget.TabLayout
+			android:id="@+id/tl_tab_bar"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="@dimen/height_list_item"
 			android:background="@color/primary_200"/>
 
 	<android.support.v4.view.ViewPager
@@ -17,12 +17,12 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"> <!-- the required height is set programmatic by NavigationDrawerFragment -->
 
-		<org.neidhardt.dynamicsoundboard.soundsheet.SoundSheets
+		<org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets
 				android:id="@+id/sound_sheets"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"/>
 
-		<org.neidhardt.dynamicsoundboard.playlist.Playlist
+		<org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 				android:id="@+id/playlist"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"/>
