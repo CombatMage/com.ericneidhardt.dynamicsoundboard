@@ -264,8 +264,22 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		val soundsInFragment = this.sounds.get(fragmentTag)
 		if (soundsInFragment != null)
 		{
-			val playerToMove = soundsInFragment.remove(from)
-			soundsInFragment.add(to, playerToMove)
+			val size = soundsInFragment.size()
+			var indexFrom = from
+			var indexTo = to
+
+			if (indexFrom > size)
+				indexFrom = size - 1
+			else if (indexFrom < 0)
+				indexFrom = 0
+
+			if (indexTo > size)
+				indexTo = size - 1
+			else if (indexTo < 0)
+				indexTo = 0
+
+			val playerToMove = soundsInFragment.remove(indexFrom)
+			soundsInFragment.add(indexTo, playerToMove)
 
 			this.eventBus.post(SoundMovedEvent(playerToMove, from, to))
 		}
