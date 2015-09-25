@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo
@@ -27,7 +28,7 @@ import java.io.IOException
 public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
 {
 
-	private var inputFileName: NoUnderscoreEditText? = null
+	private var inputFileName: EditText? = null
 	private var confirm: View? = null
 	private var directories: RecyclerView? = null
 
@@ -40,7 +41,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 		this.confirm!!.setOnClickListener(this)
 		this.confirm!!.isEnabled = false
 
-		this.inputFileName = view.findViewById(R.id.et_name_file) as NoUnderscoreEditText
+		this.inputFileName = view.findViewById(R.id.et_name_file) as EditText
 
 		this.directories = view.findViewById(R.id.rv_dialog) as RecyclerView
 		this.directories!!.addItemDecoration(DividerItemDecoration())
