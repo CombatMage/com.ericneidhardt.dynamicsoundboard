@@ -22,3 +22,6 @@ dao_generator/build/
 drag_drop_recycler_view/build/
 gradle.properties
 storage_helper/build/
+safe_async_task/build/intermediates/
+safe_async_task/build/generated/source/buildConfig/release/roboguice/util/BuildConfig.java
+safe_async_task/build/tmp/
