@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import java.io.File
-import java.util.ArrayList
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 12.11.2014.
@@ -31,7 +31,9 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 	protected abstract fun canSelectFile(): Boolean
 
-	protected abstract fun onFileSelected()
+	protected abstract fun canSelectMultipleFiles(): Boolean
+
+	protected abstract fun onFileSelected(selectedFile: File)
 
 	public fun storePathToSharedPreferences(key: String, path: String)
 	{
@@ -69,8 +71,8 @@ public abstract class FileExplorerDialog : BaseDialog()
 	public inner class DirectoryAdapter : RecyclerView.Adapter<DirectoryEntry>()
 	{
 		internal var parentFile: File? = null
-		internal var selectedEntry: DirectoryEntry? = null
-		internal var selectedFile: File? = null
+		internal var selectedEntries: MutableSet<DirectoryEntry> = HashSet()
+		internal var selectedFiles: MutableSet<File> = HashSet()
 
 		internal var fileList: MutableList<File> = ArrayList()
 
@@ -119,6 +121,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 			View.OnLongClickListener,
 			Animator.AnimatorListener
 	{
+		private var file: File? = null
 		private val fileType = itemView.findViewById(R.id.iv_file_type) as ImageView
 		private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
 		private val fileName = itemView.findViewById(R.id.tv_label) as TextView
@@ -131,6 +134,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		public fun bindData(file: File)
 		{
+			this.file = file
 			if (file == adapter.parentFile!!.parentFile)
 				this.bindParentDirectory()
 			else
@@ -141,10 +145,12 @@ public abstract class FileExplorerDialog : BaseDialog()
 				else
 					this.bindFile(file)
 
-				val isEntrySelected = file == adapter.selectedFile
+				val isEntrySelected = adapter.selectedFiles.contains(file)
 				this.setSelection(isEntrySelected)
 				if (isEntrySelected)
-					adapter.selectedEntry = this
+				{
+					adapter.selectedEntries.add(this)
+				}
 			}
 		}
 
@@ -193,6 +199,14 @@ public abstract class FileExplorerDialog : BaseDialog()
 			if (file == adapter.parentFile!!.parentFile)
 				return false
 
+			if (adapter.selectedFiles.contains(file))
+			{
+				adapter.selectedFiles.remove(file)
+				adapter.selectedEntries.remove(this)
+				this.setSelection(false)
+				return false
+			}
+
 			if (file.isDirectory && !canSelectDirectory())
 				return false
 
@@ -206,17 +220,26 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		private fun selectEntry(file: File)
 		{
-			adapter.selectedFile = file
-			if (adapter.selectedEntry != null)
-				adapter.selectedEntry!!.setSelection(false)
+			if (canSelectMultipleFiles())
+			{
+				adapter.selectedFiles.add(file)
+				adapter.selectedEntries.add(this)
+			}
+			else
+			{
+				adapter.selectedFiles.clear()
+				adapter.selectedFiles.add(file)
 
-			adapter.selectedEntry = this
+				adapter.selectedEntries.map { entry -> entry.setSelection(false) }
+				adapter.selectedEntries.clear()
+				adapter.selectedEntries.add(this)
+			}
 
 			this.setSelection(true)
 			this.animateSelectorSlideIn()
 			this.animateFileLogoRotate()
 
-			onFileSelected()
+			onFileSelected(file)
 		}
 
 		private fun animateFileLogoRotate()

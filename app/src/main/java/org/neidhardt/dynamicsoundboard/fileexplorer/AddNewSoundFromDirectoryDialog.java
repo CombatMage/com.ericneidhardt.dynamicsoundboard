@@ -16,7 +16,6 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDeco
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -85,11 +84,11 @@ public class AddNewSoundFromDirectoryDialog
 	}
 
 	@Override
-	protected void onFileSelected()
+	protected void onFileSelected(@NonNull File selectedFile)
 	{
 		this.confirm.setEnabled(true);
 
-		int position = super.getAdapter().getFileList().indexOf(super.getAdapter().getSelectedFile());
+		int position = super.getAdapter().getFileList().indexOf(selectedFile);
 		this.directories.scrollToPosition(position);
 	}
 
@@ -101,6 +100,12 @@ public class AddNewSoundFromDirectoryDialog
 
 	@Override
 	protected boolean canSelectFile()
+	{
+		return true;
+	}
+
+	@Override
+	protected boolean canSelectMultipleFiles()
 	{
 		return true;
 	}
@@ -127,16 +132,24 @@ public class AddNewSoundFromDirectoryDialog
 		List<File> files = new ArrayList<>();
 		DirectoryAdapter adapter = super.getAdapter();
 
-		if (adapter.getSelectedFile() == null)
-			return files;
-		else if (!adapter.getSelectedFile().isDirectory())
-			files.add(adapter.getSelectedFile());
-		else
+		for (File file : adapter.getSelectedFiles())
 		{
-			File[] filesInSelectedDir = adapter.getSelectedFile().listFiles();
-			if (filesInSelectedDir != null)
-				Collections.addAll(files, filesInSelectedDir);
+			if (!file.isDirectory() && !files.contains(file))
+				files.add(file);
+			else
+			{
+				File[] filesInSelectedDir = file.listFiles();
+				if (filesInSelectedDir != null)
+				{
+					for (File fileInDir : filesInSelectedDir)
+					{
+						if (!files.contains(fileInDir))
+							files.add(fileInDir);
+					}
+				}
+			}
 		}
+
 		return files;
 	}
 

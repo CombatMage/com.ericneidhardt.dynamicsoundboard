@@ -31,6 +31,11 @@ public class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
 		return true
 	}
 
+	override fun canSelectMultipleFiles(): Boolean
+	{
+		return true
+	}
+
 	override fun returnResults()
 	{
 		val fileList = super.getFileListResult();

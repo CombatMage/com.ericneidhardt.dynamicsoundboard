@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
+import org.jetbrains.annotations.NotNull;
+import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
@@ -67,11 +69,15 @@ public class LoadLayoutDialog extends FileExplorerDialog implements LayoutStorag
 	}
 
 	@Override
-	protected void onFileSelected()
-	{
+	protected void onFileSelected(@NotNull File selectedFile) {
 		this.confirm.setEnabled(true);
-		int position = super.getAdapter().getFileList().indexOf(super.getAdapter().getSelectedFile());
+		int position = super.getAdapter().getFileList().indexOf(selectedFile);
 		this.directories.scrollToPosition(position);
+	}
+
+	@Override
+	protected boolean canSelectMultipleFiles() {
+		return false;
 	}
 
 	@Override
@@ -99,8 +105,8 @@ public class LoadLayoutDialog extends FileExplorerDialog implements LayoutStorag
 				if (currentDirectory != null)
 					this.storePathToSharedPreferences(KEY_PATH_STORAGE, currentDirectory.getPath());
 
-				if (super.getAdapter().getSelectedFile() != null)
-					this.loadFromFileAndDismiss(super.getAdapter().getSelectedFile());
+				if (super.getAdapter().getSelectedFiles().size() != 0)
+					this.loadFromFileAndDismiss(super.getAdapter().getSelectedFiles().iterator().next());
 				else
 					Toast.makeText(this.getActivity(), R.string.dialog_load_layout_no_file_info, Toast.LENGTH_SHORT).show();
 				break;
@@ -127,6 +133,7 @@ public class LoadLayoutDialog extends FileExplorerDialog implements LayoutStorag
 		catch (IOException e)
 		{
 			e.printStackTrace();
+			DynamicSoundboardApplication.Companion.reportError(e);
 		}
 	}
 

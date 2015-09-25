@@ -58,16 +58,18 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 		return dialog
 	}
 
-	override fun onFileSelected()
-	{
-		this.confirm!!.isEnabled = true
-		val position = super.adapter.fileList.indexOf(super.adapter.selectedFile)
-		this.directories!!.scrollToPosition(position)
-	}
-
 	override fun canSelectDirectory(): Boolean = false
 
 	override fun canSelectFile(): Boolean = true
+
+	override fun canSelectMultipleFiles(): Boolean = false
+
+	override fun onFileSelected(selectedFile: File)
+	{
+		this.confirm!!.isEnabled = true
+		val position = super.adapter.fileList.indexOf(selectedFile)
+		this.directories!!.scrollToPosition(position)
+	}
 
 	override fun onClick(v: View)
 	{
@@ -83,7 +85,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 				if (currentDirectory != null)
 					this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
 
-				if (super.adapter.selectedFile != null)
+				if (super.adapter.selectedFiles.size() != 0)
 					this.saveDataAndDismiss()
 				else
 					Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()
@@ -124,11 +126,11 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 				return
 			}
 
-			super.adapter.selectedFile = file
+			super.adapter.selectedFiles.add(file)
 			super.adapter.refreshDirectory()
 			super.adapter.notifyDataSetChanged()
 
-			this.onFileSelected()
+			this.onFileSelected(file)
 		}
 		catch (e: IOException)
 		{
@@ -142,7 +144,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 		try
 		{
 			JsonPojo.writeToFile(
-					super.adapter.selectedFile,
+					super.adapter.selectedFiles.elementAt(0),
 					this.soundSheetsDataAccess.getSoundSheets(),
 					this.soundsDataAccess.getPlaylist(),
 					this.soundsDataAccess.getSounds())
