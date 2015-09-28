@@ -7,18 +7,26 @@
 		android:layout_height="match_parent"
 		tools:ignore="InconsistentLayout">
 
-	<LinearLayout
+	<android.support.design.widget.CoordinatorLayout
+			android:id="@+id/coordinatorLayout"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:orientation="vertical">
+			android:layout_height="match_parent">
 
-		<include layout="@layout/view_status_bar_padding"/>
+		<android.support.design.widget.AppBarLayout
+				android:id="@+id/appBarLayout"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
 
-		<include layout="@layout/toolbar"/>
+			<include layout="@layout/view_status_bar_padding"/>
+
+			<include layout="@layout/toolbar"/>
+
+		</android.support.design.widget.AppBarLayout>
 
 		<FrameLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent">
+				android:layout_height="match_parent"
+				app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 			<FrameLayout
 					android:id="@+id/main_frame"
@@ -27,7 +35,6 @@
 					android:background="@color/background">
 
 				<include layout="@layout/view_introduction"/>
-
 			</FrameLayout>
 
 			<include layout="@layout/progressbar"/>
@@ -39,13 +46,13 @@
 					android:layout_margin="@dimen/margin_default"
 					android:layout_gravity="end|bottom"
 					android:src="@drawable/selector_ic_fab"
-					app:layout_behavior="org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour"
+					app:layout_behavior="org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton"
 					app:fab_colorNormal="@color/accent_200"
 					app:fab_colorPressed="@color/accent_400"
 					app:fab_shadow="true"/>
 
 		</FrameLayout>
-	</LinearLayout>
+	</android.support.design.widget.CoordinatorLayout>
 
 	<fragment
 			android:id="@+id/navigation_drawer_fragment"

@@ -165,8 +165,8 @@ public class SoundSheetFragment :
 		if (fab == null || this.soundLayout == null)
 			return
 
-		fab.attachToRecyclerView(this.soundLayout)
-		fab.show(false)
+		//fab.attachToRecyclerView(this.soundLayout)
+		//fab.show(false)
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)

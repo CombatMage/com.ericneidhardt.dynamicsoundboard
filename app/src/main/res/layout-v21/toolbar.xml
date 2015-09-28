@@ -12,7 +12,8 @@
 		app:theme="@style/Actionbar.Color"
 		android:theme="@style/Actionbar.Color"
 		app:popupTheme="@style/Theme.AppTheme"
-		android:popupTheme="@style/Theme.AppTheme">
+		android:popupTheme="@style/Theme.AppTheme"
+		app:layout_scrollFlags="scroll|enterAlways">
 
 	<RelativeLayout
 			android:layout_width="match_parent"

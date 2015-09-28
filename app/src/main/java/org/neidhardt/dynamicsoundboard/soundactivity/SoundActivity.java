@@ -219,14 +219,14 @@ public class SoundActivity
 	private void showSystemUi()
 	{
 		this.getWindow().getDecorView().setSystemUiVisibility(Util.SYSTEM_UI_NON_IMMERSE);
-		this.findViewById(R.id.v_status_bar_padding).setVisibility(View.VISIBLE);
+		//this.findViewById(R.id.v_status_bar_padding).setVisibility(View.VISIBLE);
 		this.getNavigationDrawerFragment().calculateMinHeightOfListContent();
 	}
 
 	private void hideSystemUi()
 	{
 		this.getWindow().getDecorView().setSystemUiVisibility(Util.SYSTEM_UI_FULL_IMMERSE);
-		this.findViewById(R.id.v_status_bar_padding).setVisibility(View.GONE);
+		//this.findViewById(R.id.v_status_bar_padding).setVisibility(View.GONE);
 		this.getNavigationDrawerFragment().calculateMinHeightOfListContent();
 	}
 
