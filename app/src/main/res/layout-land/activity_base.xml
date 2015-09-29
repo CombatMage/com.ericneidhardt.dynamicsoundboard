@@ -1,21 +1,30 @@
 <android.support.v4.widget.DrawerLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:id="@+id/root_layout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		tools:ignore="InconsistentLayout">
 
-	<LinearLayout
+	<android.support.design.widget.CoordinatorLayout
+			android:id="@+id/coordinatorLayout"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:orientation="vertical">
+			android:layout_height="match_parent">
 
-		<include layout="@layout/toolbar"/>
+		<android.support.design.widget.AppBarLayout
+				android:id="@+id/appBarLayout"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+			<include layout="@layout/toolbar"/>
+
+		</android.support.design.widget.AppBarLayout>
 
 		<FrameLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent">
+				android:layout_height="match_parent"
+				app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 			<FrameLayout
 					android:id="@+id/main_frame"
@@ -24,20 +33,19 @@
 					android:background="@color/background">
 
 				<include layout="@layout/view_introduction"/>
-
 			</FrameLayout>
 
 			<include layout="@layout/progressbar"/>
 
 		</FrameLayout>
-
-	</LinearLayout>
+	</android.support.design.widget.CoordinatorLayout>
 
 	<fragment
 			android:id="@+id/navigation_drawer_fragment"
 			android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
 			android:layout_width="@dimen/navigation_drawer_width"
 			android:layout_height="match_parent"
-			android:layout_gravity="start"/>
+			android:layout_gravity="start"
+			tools:layout="@layout/fragment_navigation_drawer"/>
 
 </android.support.v4.widget.DrawerLayout>
