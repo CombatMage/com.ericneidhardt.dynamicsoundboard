@@ -4,8 +4,9 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:id="@+id/toolbar"
-		android:layout_height="@dimen/abc_action_bar_default_height_material"
+		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
+		android:paddingTop="@dimen/status_bar_padding"
 		android:minHeight="?attr/actionBarSize"
 		android:background="?attr/colorPrimary"
 		app:layout_scrollFlags="scroll|enterAlways"
@@ -15,7 +16,7 @@
 
 	<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="@dimen/abc_action_bar_default_height_material">
 
 		<ImageButton
 				android:id="@+id/action_add_sound_sheet"
