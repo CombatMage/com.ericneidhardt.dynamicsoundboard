@@ -22,7 +22,8 @@ public class FloatingActionButtonBehaviour(context : Context, attrs: AttributeSe
 	public override fun onDependentViewChanged(parent: CoordinatorLayout, fab: AddPauseFloatingActionButton, dependency: View) : Boolean
 	{
 		val returnValue = super.onDependentViewChanged(parent, fab, dependency)
-		if (dependency is AppBarLayout) {
+		if (dependency is AppBarLayout)
+		{
 			val params = fab.getLayoutParams() as CoordinatorLayout.LayoutParams
 			val fabBottomMargin = params.bottomMargin
 			val distanceToScroll = fab.height + fabBottomMargin
