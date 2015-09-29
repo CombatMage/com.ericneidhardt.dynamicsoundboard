@@ -11,8 +11,6 @@
 			android:layout_height="match_parent"
 			android:orientation="vertical">
 
-		<include layout="@layout/view_status_bar_padding"/>
-
 		<include layout="@layout/toolbar"/>
 
 		<FrameLayout
