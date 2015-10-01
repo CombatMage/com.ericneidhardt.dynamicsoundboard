@@ -5,6 +5,7 @@
 		android:id="@+id/root_layout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:fitsSystemWindows="true"
 		tools:ignore="InconsistentLayout">
 
 	<android.support.design.widget.CoordinatorLayout
@@ -52,12 +53,18 @@
 		</FrameLayout>
 	</android.support.design.widget.CoordinatorLayout>
 
-	<fragment
-			android:id="@+id/navigation_drawer_fragment"
-			android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
+	<android.support.design.widget.NavigationView
 			android:layout_width="@dimen/navigation_drawer_width"
 			android:layout_height="match_parent"
-			android:layout_gravity="start"
-			tools:layout="@layout/fragment_navigation_drawer"/>
+			android:layout_gravity="start">
+
+		<fragment
+				android:id="@+id/navigation_drawer_fragment"
+				android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				tools:layout="@layout/fragment_navigation_drawer"/>
+
+	</android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

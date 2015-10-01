@@ -195,13 +195,13 @@ public class SoundActivity :
 		this.window.decorView.systemUiVisibility = Util.SYSTEM_UI_NON_IMMERSE
 
 		val paddingStatusBar = this.resources.getDimensionPixelSize(R.dimen.status_bar_padding)
-		(this.findViewById(R.id.toolbar) as Toolbar).setPadding(0, paddingStatusBar, 0, 0)
+		//(this.findViewById(R.id.toolbar) as Toolbar).setPadding(0, paddingStatusBar, 0, 0)
 		this.getNavigationDrawerFragment().calculateMinHeightOfListContent()
 	}
 
 	private fun hideSystemUi() {
 		this.window.decorView.systemUiVisibility = Util.SYSTEM_UI_FULL_IMMERSE
-		(this.findViewById(R.id.toolbar) as Toolbar).setPadding(0, 0, 0, 0)
+		//(this.findViewById(R.id.toolbar) as Toolbar).setPadding(0, 0, 0, 0)
 		this.getNavigationDrawerFragment().calculateMinHeightOfListContent()
 	}
 

@@ -1,0 +1,6 @@
+<resources>
+
+	<dimen name="status_bar_padding">24dp</dimen> <!-- for material style navigation drawer -->
+	<dimen name="height_navigation_drawer_header">166dp</dimen> <!-- normal height and status bar padding -->
+
+</resources>
