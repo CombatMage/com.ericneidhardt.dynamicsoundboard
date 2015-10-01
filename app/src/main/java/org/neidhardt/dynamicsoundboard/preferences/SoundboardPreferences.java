@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
 import org.neidhardt.dynamicsoundboard.R;
-import org.neidhardt.dynamicsoundboard.misc.Util;
 
 /**
  * File created by eric.neidhardt on 23.01.2015.
@@ -28,16 +27,6 @@ public class SoundboardPreferences
 		Context context = DynamicSoundboardApplication.Companion.getContext();
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		return preferences.getBoolean(context.getString(R.string.preferences_enable_notifications_key), true);
-	}
-
-	public static boolean isImmerseModeAvailable()
-	{
-		if (!Util.IS_KITKAT_AVAILABLE)
-			return false;
-
-		Context context = DynamicSoundboardApplication.Companion.getContext();
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-		return preferences.getBoolean(context.getString(R.string.preferences_enable_immerse_mode_key), false);
 	}
 
 	public static boolean isOneSwipeToDeleteEnabled()
