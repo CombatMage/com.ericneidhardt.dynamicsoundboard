@@ -5,6 +5,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="horizontal"
+		android:fitsSystemWindows="true"
 		tools:ignore="InconsistentLayout">
 
 	<fragment
@@ -15,7 +16,7 @@
 			android:layout_gravity="start"
 			tools:layout="@layout/fragment_navigation_drawer"/>
 
-	<FrameLayout
+	<android.support.design.widget.CoordinatorLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
@@ -54,11 +55,6 @@
 
 				<include layout="@layout/progressbar"/>
 
-				<View
-						android:layout_width="@dimen/height_shadow"
-						android:layout_height="match_parent"
-						android:background="@drawable/shape_shadow_vertical"/>
-
 			</FrameLayout>
 		</LinearLayout>
 
@@ -66,5 +62,5 @@
 				android:layout_width="@dimen/height_shadow"
 				android:layout_height="match_parent"
 				android:background="@drawable/shape_shadow_vertical"/>
-	</FrameLayout>
+	</android.support.design.widget.CoordinatorLayout>
 </LinearLayout>
