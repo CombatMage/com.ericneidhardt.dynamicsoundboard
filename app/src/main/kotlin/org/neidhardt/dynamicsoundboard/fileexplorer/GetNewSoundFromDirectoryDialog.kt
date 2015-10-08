@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.fileexplorer
 
 import android.app.FragmentManager
 import android.os.Bundle
+import org.neidhardt.dynamicsoundboard.views.BaseDialog
 
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
@@ -15,7 +16,7 @@ public class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
 		val dialog = GetNewSoundFromDirectoryDialog()
 
 		val args = Bundle()
-		args.putString(AddNewSoundFromDirectoryDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+		args.putString(BaseDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
 		dialog.arguments = args
 
 		dialog.show(manager, TAG)

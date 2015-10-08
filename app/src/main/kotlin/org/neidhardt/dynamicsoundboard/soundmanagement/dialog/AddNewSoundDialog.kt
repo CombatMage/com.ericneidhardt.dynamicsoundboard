@@ -41,7 +41,6 @@ import java.util.ArrayList
 public class AddNewSoundDialog : BaseDialog, FileResultHandler
 {
 	public val TAG: String = javaClass.name
-	private val KEY_CALLING_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.callingFragmentTag"
 	private val KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAdd"
 	private val KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAddLabels"
 
@@ -55,7 +54,7 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 	public constructor(manager: FragmentManager, callingFragmentTag: String) : super()
 	{
 		val args = Bundle()
-		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+		args.putString(BaseDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
 		this.arguments = args
 
 		this.show(manager, TAG)
@@ -67,7 +66,7 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 
 		val args = this.arguments
 		if (args != null)
-			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG)
+			this.callingFragmentTag = args.getString(BaseDialog.KEY_CALLING_FRAGMENT_TAG)
 	}
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
