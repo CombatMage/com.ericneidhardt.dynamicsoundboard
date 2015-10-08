@@ -10,7 +10,8 @@
 		android:background="?attr/colorPrimary"
 		app:theme="@style/Actionbar.Color"
 		android:theme="@style/Actionbar.Color"
-		app:popupTheme="@style/Theme.AppTheme">
+		app:popupTheme="@style/Theme.AppTheme"
+		app:layout_scrollFlags="scroll|enterAlways">
 
 	<include layout="@layout/view_toolbar_content"/>
 
