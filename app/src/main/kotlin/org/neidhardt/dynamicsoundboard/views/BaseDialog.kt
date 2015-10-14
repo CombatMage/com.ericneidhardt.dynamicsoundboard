@@ -15,10 +15,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
  */
 public abstract class BaseDialog : DialogFragment()
 {
-	companion object
-	{
-		protected val KEY_CALLING_FRAGMENT_TAG: String = "org.neidhardt.dynamicsoundboard.views.BaseDialog.callingFragmentTag"
-	}
+	protected val KEY_CALLING_FRAGMENT_TAG: String = "org.neidhardt.dynamicsoundboard.views.BaseDialog.callingFragmentTag"
 
 	protected var soundSheetsDataAccess: SoundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataAccess()
 	protected var soundSheetsDataStorage: SoundSheetsDataStorage = DynamicSoundboardApplication.getSoundSheetsDataStorage()
@@ -36,3 +33,4 @@ public abstract class BaseDialog : DialogFragment()
 		return this.activity as SoundActivity
 	}
 }
+

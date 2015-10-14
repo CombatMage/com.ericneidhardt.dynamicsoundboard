@@ -36,7 +36,7 @@ public open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.On
 			val dialog = AddNewSoundFromDirectoryDialog()
 
 			val args = Bundle()
-			args.putString(BaseDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+			args.putString(dialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
 			dialog.arguments = args
 
 			dialog.show(manager, TAG)
@@ -49,7 +49,7 @@ public open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.On
 
 		val args = this.arguments
 		if (args != null)
-			this.callingFragmentTag = args.getString(BaseDialog.KEY_CALLING_FRAGMENT_TAG)
+			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG)
 	}
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
