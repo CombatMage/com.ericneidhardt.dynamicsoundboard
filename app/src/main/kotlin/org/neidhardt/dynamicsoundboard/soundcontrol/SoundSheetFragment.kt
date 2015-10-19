@@ -165,9 +165,9 @@ public class SoundSheetFragment :
 		if (fab == null || this.soundLayout == null)
 			return
 
-		//TODO
-		//fab.attachToRecyclerView(this.soundLayout)
-		//fab.show(false)
+		//TODO remove when behaviour is implemeted
+		fab.attachToRecyclerView(this.soundLayout)
+		fab.show(false)
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
