@@ -4599,19 +4599,14 @@ com.melnykov.fab.FloatingActionButton:
     public static final int TYPE_MINI
     273:273:public boolean hasShadow()
     289:289:public boolean isVisible()
-    297:298:public void hide()
-    305:306:public void hide(boolean)
     346:347:public void attachToListView(android.widget.AbsListView)
     351:352:public void attachToListView(android.widget.AbsListView,com.melnykov.fab.ScrollDirectionListener)
-    355:356:public void attachToRecyclerView(android.support.v7.widget.RecyclerView)
     360:361:public void attachToRecyclerView(android.support.v7.widget.RecyclerView,com.melnykov.fab.ScrollDirectionListener)
     364:365:public void attachToScrollView(com.melnykov.fab.ObservableScrollView)
     369:370:public void attachToScrollView(com.melnykov.fab.ObservableScrollView,com.melnykov.fab.ScrollDirectionListener)
     375:381:public void attachToListView(android.widget.AbsListView,com.melnykov.fab.ScrollDirectionListener,android.widget.AbsListView$OnScrollListener)
-    386:391:public void attachToRecyclerView(android.support.v7.widget.RecyclerView,com.melnykov.fab.ScrollDirectionListener,android.support.v7.widget.RecyclerView$OnScrollListener)
     396:401:public void attachToScrollView(com.melnykov.fab.ObservableScrollView,com.melnykov.fab.ScrollDirectionListener,com.melnykov.fab.ObservableScrollView$OnScrollChangedListener)
 com.melnykov.fab.FloatingActionButton$AbsListViewScrollDetectorImpl
-com.melnykov.fab.FloatingActionButton$RecyclerViewScrollDetectorImpl
 com.melnykov.fab.FloatingActionButton$ScrollViewScrollDetectorImpl
 com.melnykov.fab.FloatingActionButton$TYPE
 com.melnykov.fab.ObservableScrollView
@@ -4629,8 +4624,6 @@ com.melnykov.fab.R$id
 com.melnykov.fab.R$string
 com.melnykov.fab.R$styleable:
     48:48:public R$styleable()
-com.melnykov.fab.RecyclerViewScrollDetector
-com.melnykov.fab.ScrollDirectionListener
 com.melnykov.fab.ScrollViewScrollDetector
 com.nineoldandroids.animation.Animator:
     72:72:public void end()
