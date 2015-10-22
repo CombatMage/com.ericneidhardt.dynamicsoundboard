@@ -110,7 +110,7 @@ public class SoundActivity :
 
 	private fun requestPermissionsReadPhoneState()
 	{
-		if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE))
+		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE))
 		{
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
 		}
@@ -120,7 +120,7 @@ public class SoundActivity :
 
 	private fun requestPermissionsStorage()
 	{
-		if (!shouldShowRequestPermissionRationale(Manifest.permission_group.STORAGE))
+		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission_group.STORAGE))
 		{
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission_group.STORAGE), IntentRequest.REQUEST_PERMISSION_STORAGE)
 		}
