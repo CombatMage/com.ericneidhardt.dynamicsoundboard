@@ -90,13 +90,16 @@ public class SoundActivity :
 		super.onCreate(savedInstanceState)
 		this.setContentView(R.layout.activity_base)
 
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission_group.STORAGE) != PackageManager.PERMISSION_GRANTED)
-			this.requestPermissionsStorage()
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+			this.requestPermissionsReadStorage()
 		else
 		{
 			this.soundsDataUtil.initIfRequired()
 			this.soundSheetsDataUtil.initIfRequired()
 		}
+
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+			this.requestPermissionsWriteStorage()
 
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
 			this.requestPermissionsReadPhoneState()
@@ -112,20 +115,33 @@ public class SoundActivity :
 	{
 		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE))
 		{
+			// TODO explain
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
 		}
 		else
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
 	}
 
-	private fun requestPermissionsStorage()
+	private fun requestPermissionsReadStorage()
 	{
-		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission_group.STORAGE))
+		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE))
 		{
-			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission_group.STORAGE), IntentRequest.REQUEST_PERMISSION_STORAGE)
+			// TODO explain
+			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_READ_STORAGE)
 		}
 		else
-			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission_group.STORAGE), IntentRequest.REQUEST_PERMISSION_STORAGE)
+			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_READ_STORAGE)
+	}
+
+	private fun requestPermissionsWriteStorage()
+	{
+		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+		{
+			// TODO explain
+			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE)
+		}
+		else
+			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE)
 	}
 
 	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
@@ -133,11 +149,15 @@ public class SoundActivity :
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 		when (requestCode)
 		{
-			IntentRequest.REQUEST_PERMISSION_STORAGE ->
+			IntentRequest.REQUEST_PERMISSION_READ_STORAGE ->
 			{
 				// TODO check for granted
 				 this.soundsDataUtil.initIfRequired()
 				 this.soundSheetsDataUtil.initIfRequired()
+			}
+			IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE ->
+			{
+				Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
 			}
 			IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE ->
 			{
