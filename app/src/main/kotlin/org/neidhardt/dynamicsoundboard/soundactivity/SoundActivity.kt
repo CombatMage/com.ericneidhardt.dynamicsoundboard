@@ -3,10 +3,10 @@ package org.neidhardt.dynamicsoundboard.soundactivity
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.media.AudioManager
 import android.os.Bundle
-import android.provider.Settings
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -28,7 +28,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.misc.Util
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener
@@ -52,7 +51,6 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteA
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
-import java.security.Permissions
 import java.util.*
 
 /**
@@ -92,22 +90,42 @@ public class SoundActivity :
 		super.onCreate(savedInstanceState)
 		this.setContentView(R.layout.activity_base)
 
-		val hasStorageAccessPersmission = checkSelfPermission(Manifest.permission_group.STORAGE);
-		if (hasStorageAccessPersmission != PackageManager.PERMISSION_GRANTED)
-		{
-			this.requestPermissions(arrayOf(Manifest.permission_group.STORAGE), IntentRequest.REQUEST_PERMISSION_STORAGE)
-		}
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission_group.STORAGE) != PackageManager.PERMISSION_GRANTED)
+			this.requestPermissionsStorage()
 		else
 		{
 			this.soundsDataUtil.initIfRequired()
 			this.soundSheetsDataUtil.initIfRequired()
 		}
 
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+			this.requestPermissionsReadPhoneState()
+
 		this.initActionbar()
 		this.initNavigationDrawer()
 
 		this.phoneStateListener = PauseSoundOnCallListener()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
+	}
+
+	private fun requestPermissionsReadPhoneState()
+	{
+		if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE))
+		{
+			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
+		}
+		else
+			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
+	}
+
+	private fun requestPermissionsStorage()
+	{
+		if (!shouldShowRequestPermissionRationale(Manifest.permission_group.STORAGE))
+		{
+			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission_group.STORAGE), IntentRequest.REQUEST_PERMISSION_STORAGE)
+		}
+		else
+			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission_group.STORAGE), IntentRequest.REQUEST_PERMISSION_STORAGE)
 	}
 
 	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
@@ -118,8 +136,12 @@ public class SoundActivity :
 			IntentRequest.REQUEST_PERMISSION_STORAGE ->
 			{
 				// TODO check for granted
-				// this.soundsDataUtil.initIfRequired()
-				// this.soundSheetsDataUtil.initIfRequired()
+				 this.soundsDataUtil.initIfRequired()
+				 this.soundSheetsDataUtil.initIfRequired()
+			}
+			IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE ->
+			{
+				Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
 			}
 		}
 	}
