@@ -1,8 +1,12 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.media.AudioManager
 import android.os.Bundle
+import android.provider.Settings
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -48,8 +52,8 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteA
 import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
+import java.security.Permissions
 import java.util.*
-
 
 /**
  * File created by eric.neidhardt on 29.09.2015.
@@ -88,14 +92,36 @@ public class SoundActivity :
 		super.onCreate(savedInstanceState)
 		this.setContentView(R.layout.activity_base)
 
-		this.soundsDataUtil.initIfRequired()
-		this.soundSheetsDataUtil.initIfRequired()
+		val hasStorageAccessPersmission = checkSelfPermission(Manifest.permission_group.STORAGE);
+		if (hasStorageAccessPersmission != PackageManager.PERMISSION_GRANTED)
+		{
+			this.requestPermissions(arrayOf(Manifest.permission_group.STORAGE), IntentRequest.REQUEST_PERMISSION_STORAGE)
+		}
+		else
+		{
+			this.soundsDataUtil.initIfRequired()
+			this.soundSheetsDataUtil.initIfRequired()
+		}
 
 		this.initActionbar()
 		this.initNavigationDrawer()
 
 		this.phoneStateListener = PauseSoundOnCallListener()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
+	}
+
+	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
+	{
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+		when (requestCode)
+		{
+			IntentRequest.REQUEST_PERMISSION_STORAGE ->
+			{
+				// TODO check for granted
+				// this.soundsDataUtil.initIfRequired()
+				// this.soundSheetsDataUtil.initIfRequired()
+			}
+		}
 	}
 
 	override fun onNewIntent(intent: Intent?)

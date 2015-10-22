@@ -1,9 +1,11 @@
 package org.neidhardt.dynamicsoundboard.fileexplorer
 
 import android.animation.Animator
+import android.media.audiofx.BassBoost
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
