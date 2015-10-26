@@ -1,9 +1,14 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
+import android.Manifest
 import android.app.Dialog
 import android.app.FragmentManager
 import android.os.Bundle
 import android.app.AlertDialog
+import android.content.DialogInterface
+import android.support.v4.app.ActivityCompat
+import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 
 /**
@@ -32,7 +37,6 @@ public class ExplainPermissionDialog : BaseDialog
 		this.show(fragmentManager, TAG)
 	}
 
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		val args = this.arguments
@@ -47,10 +51,25 @@ public class ExplainPermissionDialog : BaseDialog
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
 		val dialogBuilder = AlertDialog.Builder(this.activity)
+		dialogBuilder.setTitle(R.string.request_permission_title)
 		dialogBuilder.setMessage(this.messageId)
 
+		if (this.closeAppOnDenial)
+			dialogBuilder.setNegativeButton(R.string.dialog_close,
+					DialogInterface.OnClickListener { dialogInterface, which -> this.activity?.finish() })
+		else
+			dialogBuilder.setNegativeButton(R.string.dialog_denial, null)
 
+		dialogBuilder.setPositiveButton(R.string.dialog_grant, DialogInterface.OnClickListener { dialogInterface, i -> this.requestPermission() })
 
 		return dialogBuilder.create();
+	}
+
+	private fun requestPermission()
+	{
+		val activity = this.activity
+		if (activity != null)
+			ActivityCompat.requestPermissions(activity, arrayOf(this.permission), IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE)
+		this.dismiss()
 	}
 }

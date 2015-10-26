@@ -8,6 +8,7 @@
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
 
 	<!-- permissions -->
+	<string name="request_permission_title">Berechtigung erforderlich</string>
 	<string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
 	<string name="request_permission_read_storage_message">Die Berechtigung vom Dateisystem zu lesen ist erforderlich um Sounddateien zum Abspielen zu laden. Die App wird ohne diese Berechtigung beendet.</string>
 	<string name="request_permission_write_storage_message">Die Berechtigung auf das Dateisystem zu schreiben wird unter anderem benötigt um die Sound Zusammenstellung abzuspeichern. Die App wird ohne diese Berechtigung beendet.</string>

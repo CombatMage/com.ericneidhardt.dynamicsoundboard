@@ -114,10 +114,7 @@ public class SoundActivity :
 	private fun requestPermissionsReadPhoneState()
 	{
 		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE))
-		{
-			// TODO explain
-			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
-		}
+			ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_phone_state_message, Manifest.permission.READ_PHONE_STATE, false)
 		else
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
 	}
@@ -125,10 +122,7 @@ public class SoundActivity :
 	private fun requestPermissionsReadStorage()
 	{
 		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE))
-		{
-			// TODO explain
-			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_READ_STORAGE)
-		}
+			ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_storage_message, Manifest.permission.READ_EXTERNAL_STORAGE, true)
 		else
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_READ_STORAGE)
 	}
@@ -136,10 +130,7 @@ public class SoundActivity :
 	private fun requestPermissionsWriteStorage()
 	{
 		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-		{
-			// TODO explain
-			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE)
-		}
+			ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_write_storage_message, Manifest.permission.WRITE_EXTERNAL_STORAGE, true)
 		else
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE)
 	}
@@ -151,18 +142,20 @@ public class SoundActivity :
 		{
 			IntentRequest.REQUEST_PERMISSION_READ_STORAGE ->
 			{
-				// TODO check for granted
-				 this.soundsDataUtil.initIfRequired()
-				 this.soundSheetsDataUtil.initIfRequired()
+				if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+				{
+					this.soundsDataUtil.initIfRequired()
+					this.soundSheetsDataUtil.initIfRequired()
+				}
+				else
+					this.finish()
 			}
 			IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE ->
 			{
-				Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
+				if (grantResults[0] != PackageManager.PERMISSION_GRANTED)
+					this.finish()
 			}
-			IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE ->
-			{
-				Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
-			}
+			IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE -> {} // nothing to be done
 		}
 	}
 

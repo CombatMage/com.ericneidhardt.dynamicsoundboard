@@ -50,6 +50,7 @@ android.support.design.R$attr: int alertDialogButtonGroupStyle
 android.support.design.R$attr: int alertDialogCenterButtons
 android.support.design.R$attr: int alertDialogStyle
 android.support.design.R$attr: int alertDialogTheme
+android.support.design.R$attr: int allowStacking
 android.support.design.R$attr: int arrowHeadLength
 android.support.design.R$attr: int arrowShaftLength
 android.support.design.R$attr: int autoCompleteTextViewStyle
@@ -96,6 +97,10 @@ android.support.design.R$attr: int contentInsetRight
 android.support.design.R$attr: int contentInsetStart
 android.support.design.R$attr: int contentScrim
 android.support.design.R$attr: int controlBackground
+android.support.design.R$attr: int counterEnabled
+android.support.design.R$attr: int counterMaxLength
+android.support.design.R$attr: int counterOverflowTextAppearance
+android.support.design.R$attr: int counterTextAppearance
 android.support.design.R$attr: int customNavigationLayout
 android.support.design.R$attr: int defaultQueryHint
 android.support.design.R$attr: int dialogPreferredPadding
@@ -125,6 +130,7 @@ android.support.design.R$attr: int expandedTitleMarginStart
 android.support.design.R$attr: int expandedTitleMarginTop
 android.support.design.R$attr: int expandedTitleTextAppearance
 android.support.design.R$attr: int fabSize
+android.support.design.R$attr: int foregroundInsidePadding
 android.support.design.R$attr: int gapBetweenBars
 android.support.design.R$attr: int goIcon
 android.support.design.R$attr: int headerLayout
@@ -136,6 +142,7 @@ android.support.design.R$attr: int homeAsUpIndicator
 android.support.design.R$attr: int homeLayout
 android.support.design.R$attr: int icon
 android.support.design.R$attr: int iconifiedByDefault
+android.support.design.R$attr: int imageButtonStyle
 android.support.design.R$attr: int indeterminateProgressStyle
 android.support.design.R$attr: int initialActivityCount
 android.support.design.R$attr: int insetForeground
@@ -147,6 +154,7 @@ android.support.design.R$attr: int itemTextAppearance
 android.support.design.R$attr: int itemTextColor
 android.support.design.R$attr: int keylines
 android.support.design.R$attr: int layout
+android.support.design.R$attr: int layoutManager
 android.support.design.R$attr: int layout_anchor
 android.support.design.R$attr: int layout_anchorGravity
 android.support.design.R$attr: int layout_behavior
@@ -192,20 +200,24 @@ android.support.design.R$attr: int queryBackground
 android.support.design.R$attr: int queryHint
 android.support.design.R$attr: int radioButtonStyle
 android.support.design.R$attr: int ratingBarStyle
+android.support.design.R$attr: int reverseLayout
 android.support.design.R$attr: int rippleColor
 android.support.design.R$attr: int searchHintIcon
 android.support.design.R$attr: int searchIcon
 android.support.design.R$attr: int searchViewStyle
+android.support.design.R$attr: int seekBarStyle
 android.support.design.R$attr: int selectableItemBackground
 android.support.design.R$attr: int selectableItemBackgroundBorderless
 android.support.design.R$attr: int showAsAction
 android.support.design.R$attr: int showDividers
 android.support.design.R$attr: int showText
 android.support.design.R$attr: int singleChoiceItemLayout
+android.support.design.R$attr: int spanCount
 android.support.design.R$attr: int spinBars
 android.support.design.R$attr: int spinnerDropDownItemStyle
 android.support.design.R$attr: int spinnerStyle
 android.support.design.R$attr: int splitTrack
+android.support.design.R$attr: int stackFromEnd
 android.support.design.R$attr: int state_above_anchor
 android.support.design.R$attr: int statusBarBackground
 android.support.design.R$attr: int statusBarScrim
@@ -275,6 +287,7 @@ android.support.design.R$attr: int windowNoTitle
 android.support.design.R$bool: int abc_action_bar_embed_tabs
 android.support.design.R$bool: int abc_action_bar_embed_tabs_pre_jb
 android.support.design.R$bool: int abc_action_bar_expanded_action_views_exclusive
+android.support.design.R$bool: int abc_allow_stacked_button_bar
 android.support.design.R$bool: int abc_config_actionMenuItemAllCaps
 android.support.design.R$bool: int abc_config_allowActionMenuItemTextWithIcon
 android.support.design.R$bool: int abc_config_closeDialogWhenTouchOutside
@@ -382,6 +395,10 @@ android.support.design.R$dimen: int abc_config_prefDialogWidth
 android.support.design.R$dimen: int abc_control_corner_material
 android.support.design.R$dimen: int abc_control_inset_material
 android.support.design.R$dimen: int abc_control_padding_material
+android.support.design.R$dimen: int abc_dialog_fixed_height_major
+android.support.design.R$dimen: int abc_dialog_fixed_height_minor
+android.support.design.R$dimen: int abc_dialog_fixed_width_major
+android.support.design.R$dimen: int abc_dialog_fixed_width_minor
 android.support.design.R$dimen: int abc_dialog_list_padding_vertical_material
 android.support.design.R$dimen: int abc_dialog_min_width_major
 android.support.design.R$dimen: int abc_dialog_min_width_minor
@@ -400,6 +417,9 @@ android.support.design.R$dimen: int abc_list_item_padding_horizontal_material
 android.support.design.R$dimen: int abc_panel_menu_list_width
 android.support.design.R$dimen: int abc_search_view_preferred_width
 android.support.design.R$dimen: int abc_search_view_text_min_width
+android.support.design.R$dimen: int abc_seekbar_track_background_height_material
+android.support.design.R$dimen: int abc_seekbar_track_progress_height_material
+android.support.design.R$dimen: int abc_select_dialog_padding_start_material
 android.support.design.R$dimen: int abc_switch_padding
 android.support.design.R$dimen: int abc_text_size_body_1_material
 android.support.design.R$dimen: int abc_text_size_body_2_material
@@ -443,16 +463,15 @@ android.support.design.R$dimen: int design_snackbar_padding_vertical
 android.support.design.R$dimen: int design_snackbar_padding_vertical_2lines
 android.support.design.R$dimen: int design_snackbar_text_size
 android.support.design.R$dimen: int design_tab_max_width
-android.support.design.R$dimen: int design_tab_min_width
-android.support.design.R$dimen: int dialog_fixed_height_major
-android.support.design.R$dimen: int dialog_fixed_height_minor
-android.support.design.R$dimen: int dialog_fixed_width_major
-android.support.design.R$dimen: int dialog_fixed_width_minor
+android.support.design.R$dimen: int design_tab_scrollable_min_width
+android.support.design.R$dimen: int design_tab_text_size
+android.support.design.R$dimen: int design_tab_text_size_2line
 android.support.design.R$dimen: int disabled_alpha_material_dark
 android.support.design.R$dimen: int disabled_alpha_material_light
 android.support.design.R$dimen: int highlight_alpha_material_colored
 android.support.design.R$dimen: int highlight_alpha_material_dark
 android.support.design.R$dimen: int highlight_alpha_material_light
+android.support.design.R$dimen: int item_touch_helper_max_drag_scroll_per_frame
 android.support.design.R$dimen: int notification_large_icon_height
 android.support.design.R$dimen: int notification_large_icon_width
 android.support.design.R$dimen: int notification_subtext_size
@@ -506,6 +525,13 @@ android.support.design.R$drawable: int abc_list_selector_holo_light
 android.support.design.R$drawable: int abc_menu_hardkey_panel_mtrl_mult
 android.support.design.R$drawable: int abc_popup_background_mtrl_mult
 android.support.design.R$drawable: int abc_ratingbar_full_material
+android.support.design.R$drawable: int abc_scrubber_control_off_mtrl_alpha
+android.support.design.R$drawable: int abc_scrubber_control_to_pressed_mtrl_000
+android.support.design.R$drawable: int abc_scrubber_control_to_pressed_mtrl_005
+android.support.design.R$drawable: int abc_scrubber_primary_mtrl_alpha
+android.support.design.R$drawable: int abc_scrubber_track_mtrl_alpha
+android.support.design.R$drawable: int abc_seekbar_thumb_material
+android.support.design.R$drawable: int abc_seekbar_track_material
 android.support.design.R$drawable: int abc_spinner_mtrl_am_alpha
 android.support.design.R$drawable: int abc_spinner_textfield_background_material
 android.support.design.R$drawable: int abc_switch_thumb_material
@@ -556,6 +582,10 @@ android.support.design.R$id: int custom
 android.support.design.R$id: int customPanel
 android.support.design.R$id: int decor_content_parent
 android.support.design.R$id: int default_activity_button
+android.support.design.R$id: int design_menu_item_action_area
+android.support.design.R$id: int design_menu_item_action_area_stub
+android.support.design.R$id: int design_menu_item_text
+android.support.design.R$id: int design_navigation_view
 android.support.design.R$id: int disableHome
 android.support.design.R$id: int edit_query
 android.support.design.R$id: int end
@@ -575,6 +605,7 @@ android.support.design.R$id: int icon
 android.support.design.R$id: int ifRoom
 android.support.design.R$id: int image
 android.support.design.R$id: int info
+android.support.design.R$id: int item_touch_helper_previous_elevation
 android.support.design.R$id: int left
 android.support.design.R$id: int line1
 android.support.design.R$id: int line3
@@ -584,6 +615,7 @@ android.support.design.R$id: int media_actions
 android.support.design.R$id: int middle
 android.support.design.R$id: int mini
 android.support.design.R$id: int multiply
+android.support.design.R$id: int navigation_header_container
 android.support.design.R$id: int never
 android.support.design.R$id: int none
 android.support.design.R$id: int normal
@@ -596,6 +628,8 @@ android.support.design.R$id: int radio
 android.support.design.R$id: int right
 android.support.design.R$id: int screen
 android.support.design.R$id: int scroll
+android.support.design.R$id: int scrollIndicatorDown
+android.support.design.R$id: int scrollIndicatorUp
 android.support.design.R$id: int scrollView
 android.support.design.R$id: int scrollable
 android.support.design.R$id: int search_badge
@@ -615,6 +649,8 @@ android.support.design.R$id: int showHome
 android.support.design.R$id: int showTitle
 android.support.design.R$id: int snackbar_action
 android.support.design.R$id: int snackbar_text
+android.support.design.R$id: int snap
+android.support.design.R$id: int spacer
 android.support.design.R$id: int split_action_bar
 android.support.design.R$id: int src_atop
 android.support.design.R$id: int src_in
@@ -651,6 +687,7 @@ android.support.design.R$layout: int abc_action_mode_bar
 android.support.design.R$layout: int abc_action_mode_close_item_material
 android.support.design.R$layout: int abc_activity_chooser_view
 android.support.design.R$layout: int abc_activity_chooser_view_list_item
+android.support.design.R$layout: int abc_alert_dialog_button_bar_material
 android.support.design.R$layout: int abc_alert_dialog_material
 android.support.design.R$layout: int abc_dialog_title_material
 android.support.design.R$layout: int abc_expanded_menu_layout
@@ -670,11 +707,13 @@ android.support.design.R$layout: int design_layout_snackbar
 android.support.design.R$layout: int design_layout_snackbar_include
 android.support.design.R$layout: int design_layout_tab_icon
 android.support.design.R$layout: int design_layout_tab_text
+android.support.design.R$layout: int design_menu_item_action_area
 android.support.design.R$layout: int design_navigation_item
 android.support.design.R$layout: int design_navigation_item_header
 android.support.design.R$layout: int design_navigation_item_separator
 android.support.design.R$layout: int design_navigation_item_subheader
 android.support.design.R$layout: int design_navigation_menu
+android.support.design.R$layout: int design_navigation_menu_item
 android.support.design.R$layout: int notification_media_action
 android.support.design.R$layout: int notification_media_cancel_action
 android.support.design.R$layout: int notification_template_big_media
@@ -695,6 +734,8 @@ android.support.design.R$string: int abc_action_menu_overflow_description
 android.support.design.R$string: int abc_action_mode_done
 android.support.design.R$string: int abc_activity_chooser_view_see_all
 android.support.design.R$string: int abc_activitychooserview_choose_application
+android.support.design.R$string: int abc_capital_off
+android.support.design.R$string: int abc_capital_on
 android.support.design.R$string: int abc_search_hint
 android.support.design.R$string: int abc_searchview_description_clear
 android.support.design.R$string: int abc_searchview_description_query
@@ -705,6 +746,7 @@ android.support.design.R$string: int abc_shareactionprovider_share_with
 android.support.design.R$string: int abc_shareactionprovider_share_with_application
 android.support.design.R$string: int abc_toolbar_collapse_description
 android.support.design.R$string: int appbar_scrolling_view_behavior
+android.support.design.R$string: int character_counter_pattern
 android.support.design.R$string: int status_bar_notification_info_overflow
 android.support.design.R$style: int AlertDialog_AppCompat
 android.support.design.R$style: int AlertDialog_AppCompat_Light
@@ -823,6 +865,7 @@ android.support.design.R$style: int Base_Widget_AppCompat_DrawerArrowToggle
 android.support.design.R$style: int Base_Widget_AppCompat_DrawerArrowToggle_Common
 android.support.design.R$style: int Base_Widget_AppCompat_DropDownItem_Spinner
 android.support.design.R$style: int Base_Widget_AppCompat_EditText
+android.support.design.R$style: int Base_Widget_AppCompat_ImageButton
 android.support.design.R$style: int Base_Widget_AppCompat_Light_ActionBar
 android.support.design.R$style: int Base_Widget_AppCompat_Light_ActionBar_Solid
 android.support.design.R$style: int Base_Widget_AppCompat_Light_ActionBar_TabBar
@@ -843,6 +886,7 @@ android.support.design.R$style: int Base_Widget_AppCompat_ProgressBar_Horizontal
 android.support.design.R$style: int Base_Widget_AppCompat_RatingBar
 android.support.design.R$style: int Base_Widget_AppCompat_SearchView
 android.support.design.R$style: int Base_Widget_AppCompat_SearchView_ActionBar
+android.support.design.R$style: int Base_Widget_AppCompat_SeekBar
 android.support.design.R$style: int Base_Widget_AppCompat_Spinner
 android.support.design.R$style: int Base_Widget_AppCompat_Spinner_Underlined
 android.support.design.R$style: int Base_Widget_AppCompat_TextView_SpinnerItem
@@ -861,7 +905,6 @@ android.support.design.R$style: int Platform_V14_AppCompat_Light
 android.support.design.R$style: int Platform_Widget_AppCompat_Spinner
 android.support.design.R$style: int RtlOverlay_DialogWindowTitle_AppCompat
 android.support.design.R$style: int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem
-android.support.design.R$style: int RtlOverlay_Widget_AppCompat_ActionButton_Overflow
 android.support.design.R$style: int RtlOverlay_Widget_AppCompat_DialogTitle_Icon
 android.support.design.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem
 android.support.design.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup
@@ -872,6 +915,8 @@ android.support.design.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_
 android.support.design.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2
 android.support.design.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Query
 android.support.design.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Text
+android.support.design.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton
+android.support.design.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton_Overflow
 android.support.design.R$style: int TextAppearance_AppCompat
 android.support.design.R$style: int TextAppearance_AppCompat_Body1
 android.support.design.R$style: int TextAppearance_AppCompat_Body2
@@ -917,6 +962,8 @@ android.support.design.R$style: int TextAppearance_AppCompat_Widget_PopupMenu_Sm
 android.support.design.R$style: int TextAppearance_AppCompat_Widget_Switch
 android.support.design.R$style: int TextAppearance_AppCompat_Widget_TextView_SpinnerItem
 android.support.design.R$style: int TextAppearance_Design_CollapsingToolbar_Expanded
+android.support.design.R$style: int TextAppearance_Design_Counter
+android.support.design.R$style: int TextAppearance_Design_Counter_Overflow
 android.support.design.R$style: int TextAppearance_Design_Error
 android.support.design.R$style: int TextAppearance_Design_Hint
 android.support.design.R$style: int TextAppearance_Design_Snackbar_Message
@@ -973,6 +1020,7 @@ android.support.design.R$style: int Widget_AppCompat_CompoundButton_Switch
 android.support.design.R$style: int Widget_AppCompat_DrawerArrowToggle
 android.support.design.R$style: int Widget_AppCompat_DropDownItem_Spinner
 android.support.design.R$style: int Widget_AppCompat_EditText
+android.support.design.R$style: int Widget_AppCompat_ImageButton
 android.support.design.R$style: int Widget_AppCompat_Light_ActionBar
 android.support.design.R$style: int Widget_AppCompat_Light_ActionBar_Solid
 android.support.design.R$style: int Widget_AppCompat_Light_ActionBar_Solid_Inverse
@@ -1007,6 +1055,7 @@ android.support.design.R$style: int Widget_AppCompat_ProgressBar_Horizontal
 android.support.design.R$style: int Widget_AppCompat_RatingBar
 android.support.design.R$style: int Widget_AppCompat_SearchView
 android.support.design.R$style: int Widget_AppCompat_SearchView_ActionBar
+android.support.design.R$style: int Widget_AppCompat_SeekBar
 android.support.design.R$style: int Widget_AppCompat_Spinner
 android.support.design.R$style: int Widget_AppCompat_Spinner_DropDown
 android.support.design.R$style: int Widget_AppCompat_Spinner_DropDown_ActionBar
@@ -1083,6 +1132,8 @@ android.support.design.R$styleable: int AppBarLayout_expanded
 android.support.design.R$styleable: int[] AppCompatTextView
 android.support.design.R$styleable: int AppCompatTextView_android_textAppearance
 android.support.design.R$styleable: int AppCompatTextView_textAllCaps
+android.support.design.R$styleable: int[] ButtonBarLayout
+android.support.design.R$styleable: int ButtonBarLayout_allowStacking
 android.support.design.R$styleable: int[] CollapsingAppBarLayout_LayoutParams
 android.support.design.R$styleable: int CollapsingAppBarLayout_LayoutParams_layout_collapseMode
 android.support.design.R$styleable: int CollapsingAppBarLayout_LayoutParams_layout_collapseParallaxMultiplier
@@ -1132,6 +1183,10 @@ android.support.design.R$styleable: int FloatingActionButton_elevation
 android.support.design.R$styleable: int FloatingActionButton_fabSize
 android.support.design.R$styleable: int FloatingActionButton_pressedTranslationZ
 android.support.design.R$styleable: int FloatingActionButton_rippleColor
+android.support.design.R$styleable: int[] ForegroundLinearLayout
+android.support.design.R$styleable: int ForegroundLinearLayout_android_foreground
+android.support.design.R$styleable: int ForegroundLinearLayout_android_foregroundGravity
+android.support.design.R$styleable: int ForegroundLinearLayout_foregroundInsidePadding
 android.support.design.R$styleable: int[] LinearLayoutCompat
 android.support.design.R$styleable: int[] LinearLayoutCompat_Layout
 android.support.design.R$styleable: int LinearLayoutCompat_Layout_android_layout_gravity
@@ -1200,6 +1255,12 @@ android.support.design.R$styleable: int[] PopupWindowBackgroundState
 android.support.design.R$styleable: int PopupWindowBackgroundState_state_above_anchor
 android.support.design.R$styleable: int PopupWindow_android_popupBackground
 android.support.design.R$styleable: int PopupWindow_overlapAnchor
+android.support.design.R$styleable: int[] RecyclerView
+android.support.design.R$styleable: int RecyclerView_android_orientation
+android.support.design.R$styleable: int RecyclerView_layoutManager
+android.support.design.R$styleable: int RecyclerView_reverseLayout
+android.support.design.R$styleable: int RecyclerView_spanCount
+android.support.design.R$styleable: int RecyclerView_stackFromEnd
 android.support.design.R$styleable: int[] ScrimInsetsFrameLayout
 android.support.design.R$styleable: int ScrimInsetsFrameLayout_insetForeground
 android.support.design.R$styleable: int[] ScrollingViewBehavior_Params
@@ -1260,6 +1321,10 @@ android.support.design.R$styleable: int TabLayout_tabSelectedTextColor
 android.support.design.R$styleable: int TabLayout_tabTextAppearance
 android.support.design.R$styleable: int TabLayout_tabTextColor
 android.support.design.R$styleable: int[] TextAppearance
+android.support.design.R$styleable: int TextAppearance_android_shadowColor
+android.support.design.R$styleable: int TextAppearance_android_shadowDx
+android.support.design.R$styleable: int TextAppearance_android_shadowDy
+android.support.design.R$styleable: int TextAppearance_android_shadowRadius
 android.support.design.R$styleable: int TextAppearance_android_textColor
 android.support.design.R$styleable: int TextAppearance_android_textSize
 android.support.design.R$styleable: int TextAppearance_android_textStyle
@@ -1268,6 +1333,10 @@ android.support.design.R$styleable: int TextAppearance_textAllCaps
 android.support.design.R$styleable: int[] TextInputLayout
 android.support.design.R$styleable: int TextInputLayout_android_hint
 android.support.design.R$styleable: int TextInputLayout_android_textColorHint
+android.support.design.R$styleable: int TextInputLayout_counterEnabled
+android.support.design.R$styleable: int TextInputLayout_counterMaxLength
+android.support.design.R$styleable: int TextInputLayout_counterOverflowTextAppearance
+android.support.design.R$styleable: int TextInputLayout_counterTextAppearance
 android.support.design.R$styleable: int TextInputLayout_errorEnabled
 android.support.design.R$styleable: int TextInputLayout_errorTextAppearance
 android.support.design.R$styleable: int TextInputLayout_hintAnimationEnabled
@@ -1340,6 +1409,7 @@ android.support.design.R$styleable: int Theme_editTextBackground
 android.support.design.R$styleable: int Theme_editTextColor
 android.support.design.R$styleable: int Theme_editTextStyle
 android.support.design.R$styleable: int Theme_homeAsUpIndicator
+android.support.design.R$styleable: int Theme_imageButtonStyle
 android.support.design.R$styleable: int Theme_listChoiceBackgroundIndicator
 android.support.design.R$styleable: int Theme_listDividerAlertDialog
 android.support.design.R$styleable: int Theme_listPopupWindowStyle
@@ -1356,6 +1426,7 @@ android.support.design.R$styleable: int Theme_popupWindowStyle
 android.support.design.R$styleable: int Theme_radioButtonStyle
 android.support.design.R$styleable: int Theme_ratingBarStyle
 android.support.design.R$styleable: int Theme_searchViewStyle
+android.support.design.R$styleable: int Theme_seekBarStyle
 android.support.design.R$styleable: int Theme_selectableItemBackground
 android.support.design.R$styleable: int Theme_selectableItemBackgroundBorderless
 android.support.design.R$styleable: int Theme_spinnerDropDownItemStyle
@@ -1421,21 +1492,31 @@ android.support.design.R$styleable: int View_android_theme
 android.support.design.R$styleable: int View_paddingEnd
 android.support.design.R$styleable: int View_paddingStart
 android.support.design.R$styleable: int View_theme
+android.support.design.internal.ForegroundLinearLayout: ForegroundLinearLayout(android.content.Context)
+android.support.design.internal.ForegroundLinearLayout: ForegroundLinearLayout(android.content.Context,android.util.AttributeSet)
+android.support.design.internal.ForegroundLinearLayout: ForegroundLinearLayout(android.content.Context,android.util.AttributeSet,int)
+android.support.design.internal.ForegroundLinearLayout: int getForegroundGravity()
+android.support.design.internal.ForegroundLinearLayout: void setForegroundGravity(int)
+android.support.design.internal.ForegroundLinearLayout: void setForeground(android.graphics.drawable.Drawable)
+android.support.design.internal.ForegroundLinearLayout: android.graphics.drawable.Drawable getForeground()
 android.support.design.internal.NavigationMenuItemView
 android.support.design.internal.NavigationMenuItemView: NavigationMenuItemView(android.content.Context)
 android.support.design.internal.NavigationMenuItemView: NavigationMenuItemView(android.content.Context,android.util.AttributeSet)
 android.support.design.internal.NavigationMenuItemView: NavigationMenuItemView(android.content.Context,android.util.AttributeSet,int)
+android.support.design.internal.NavigationMenuItemView: void setActionView(android.view.View)
 android.support.design.internal.NavigationMenuItemView: android.support.v7.internal.view.menu.MenuItemImpl getItemData()
 android.support.design.internal.NavigationMenuItemView: void setTitle(java.lang.CharSequence)
 android.support.design.internal.NavigationMenuItemView: void setCheckable(boolean)
 android.support.design.internal.NavigationMenuItemView: void setChecked(boolean)
 android.support.design.internal.NavigationMenuItemView: void setIcon(android.graphics.drawable.Drawable)
 android.support.design.internal.NavigationMenuItemView: void setIconTintList(android.content.res.ColorStateList)
+android.support.design.internal.NavigationMenuItemView: void setTextColor(android.content.res.ColorStateList)
 android.support.design.internal.NavigationMenuView
 android.support.design.internal.NavigationMenuView: NavigationMenuView(android.content.Context)
 android.support.design.internal.NavigationMenuView: NavigationMenuView(android.content.Context,android.util.AttributeSet)
 android.support.design.internal.NavigationMenuView: NavigationMenuView(android.content.Context,android.util.AttributeSet,int)
 android.support.design.internal.NavigationMenuView: int getWindowAnimations()
+android.support.design.internal.ParcelableSparseArray: android.os.Parcelable$Creator CREATOR
 android.support.design.internal.ScrimInsetsFrameLayout: ScrimInsetsFrameLayout(android.content.Context)
 android.support.design.internal.ScrimInsetsFrameLayout: ScrimInsetsFrameLayout(android.content.Context,android.util.AttributeSet)
 android.support.design.internal.ScrimInsetsFrameLayout: ScrimInsetsFrameLayout(android.content.Context,android.util.AttributeSet,int)
@@ -1452,6 +1533,7 @@ android.support.design.widget.AppBarLayout: int getMinimumHeightForVisibleOverla
 android.support.design.widget.AppBarLayout: void setTargetElevation(float)
 android.support.design.widget.AppBarLayout: float getTargetElevation()
 android.support.design.widget.AppBarLayout: int getPendingAction()
+android.support.design.widget.AppBarLayout: int getTopInset()
 android.support.design.widget.AppBarLayout: void setWindowInsets(android.support.v4.view.WindowInsetsCompat)
 android.support.design.widget.AppBarLayout$Behavior
 android.support.design.widget.AppBarLayout$Behavior: AppBarLayout$Behavior()
@@ -1463,6 +1545,7 @@ android.support.design.widget.AppBarLayout$ScrollingViewBehavior: AppBarLayout$S
 android.support.design.widget.CollapsingToolbarLayout: void setTitle(java.lang.CharSequence)
 android.support.design.widget.CollapsingToolbarLayout: java.lang.CharSequence getTitle()
 android.support.design.widget.CollapsingToolbarLayout: void setTitleEnabled(boolean)
+android.support.design.widget.CollapsingToolbarLayout: void setScrimsShown(boolean)
 android.support.design.widget.CollapsingToolbarLayout: void setScrimAlpha(int)
 android.support.design.widget.CollapsingToolbarLayout: void setContentScrim(android.graphics.drawable.Drawable)
 android.support.design.widget.CollapsingToolbarLayout: void setContentScrimColor(int)
@@ -1480,6 +1563,10 @@ android.support.design.widget.CollapsingToolbarLayout: void setExpandedTitleText
 android.support.design.widget.CollapsingToolbarLayout: void setExpandedTitleColor(int)
 android.support.design.widget.CollapsingToolbarLayout: void setExpandedTitleGravity(int)
 android.support.design.widget.CollapsingToolbarLayout: int getExpandedTitleGravity()
+android.support.design.widget.CollapsingToolbarLayout: void setCollapsedTitleTypeface(android.graphics.Typeface)
+android.support.design.widget.CollapsingToolbarLayout: android.graphics.Typeface getCollapsedTitleTypeface()
+android.support.design.widget.CollapsingToolbarLayout: void setExpandedTitleTypeface(android.graphics.Typeface)
+android.support.design.widget.CollapsingToolbarLayout: android.graphics.Typeface getExpandedTitleTypeface()
 android.support.design.widget.CollapsingToolbarLayout: int getScrimTriggerOffset()
 android.support.design.widget.CoordinatorLayout
 android.support.design.widget.CoordinatorLayout: CoordinatorLayout(android.content.Context)
@@ -1506,6 +1593,10 @@ android.support.design.widget.FloatingActionButton: void setBackgroundDrawable(a
 android.support.design.widget.FloatingActionButton: int getSizeDimension()
 android.support.design.widget.FloatingActionButton$Behavior
 android.support.design.widget.FloatingActionButton$Behavior: FloatingActionButton$Behavior()
+android.support.design.widget.HeaderBehavior: HeaderBehavior()
+android.support.design.widget.HeaderBehavior: HeaderBehavior(android.content.Context,android.util.AttributeSet)
+android.support.design.widget.HeaderScrollingViewBehavior: HeaderScrollingViewBehavior()
+android.support.design.widget.HeaderScrollingViewBehavior: HeaderScrollingViewBehavior(android.content.Context,android.util.AttributeSet)
 android.support.design.widget.NavigationView
 android.support.design.widget.NavigationView: NavigationView(android.content.Context)
 android.support.design.widget.NavigationView: NavigationView(android.content.Context,android.util.AttributeSet)
@@ -1529,6 +1620,7 @@ android.support.design.widget.Snackbar$SnackbarLayout: Snackbar$SnackbarLayout(a
 android.support.design.widget.Snackbar$SnackbarLayout: android.widget.TextView getMessageView()
 android.support.design.widget.Snackbar$SnackbarLayout: android.widget.Button getActionView()
 android.support.design.widget.Snackbar$SnackbarLayout: void setOnLayoutChangeListener(android.support.design.widget.Snackbar$SnackbarLayout$OnLayoutChangeListener)
+android.support.design.widget.Snackbar$SnackbarLayout: void setOnAttachStateChangeListener(android.support.design.widget.Snackbar$SnackbarLayout$OnAttachStateChangeListener)
 android.support.design.widget.SwipeDismissBehavior
 android.support.design.widget.SwipeDismissBehavior: SwipeDismissBehavior()
 android.support.design.widget.TabLayout
@@ -1550,11 +1642,15 @@ android.support.design.widget.TabLayout: android.content.res.ColorStateList getT
 android.support.design.widget.TabLayout: void setupWithViewPager(android.support.v4.view.ViewPager)
 android.support.design.widget.TabLayout: void setTabsFromPagerAdapter(android.support.v4.view.PagerAdapter)
 android.support.design.widget.TabLayout: void setSelectedTabView(int)
+android.support.design.widget.TabLayout: int getDefaultHeight()
+android.support.design.widget.TabLayout: int getTabMinWidth()
+android.support.design.widget.TabLayout: int getTabMaxWidth()
 android.support.design.widget.TextInputLayout
 android.support.design.widget.TextInputLayout: TextInputLayout(android.content.Context)
 android.support.design.widget.TextInputLayout: TextInputLayout(android.content.Context,android.util.AttributeSet)
 android.support.design.widget.TextInputLayout: TextInputLayout(android.content.Context,android.util.AttributeSet,int)
 android.support.design.widget.TextInputLayout: void setTypeface(android.graphics.Typeface)
+android.support.design.widget.TextInputLayout: android.graphics.Typeface getTypeface()
 android.support.design.widget.TextInputLayout: void setEditText(android.widget.EditText)
 android.support.design.widget.TextInputLayout: android.widget.EditText getEditText()
 android.support.design.widget.TextInputLayout: void setHint(java.lang.CharSequence)
@@ -1562,6 +1658,9 @@ android.support.design.widget.TextInputLayout: java.lang.CharSequence getHint()
 android.support.design.widget.TextInputLayout: void setHintTextAppearance(int)
 android.support.design.widget.TextInputLayout: void setErrorEnabled(boolean)
 android.support.design.widget.TextInputLayout: void setError(java.lang.CharSequence)
+android.support.design.widget.TextInputLayout: void setCounterEnabled(boolean)
+android.support.design.widget.TextInputLayout: void setCounterMaxLength(int)
+android.support.design.widget.TextInputLayout: int getCounterMaxLength()
 android.support.design.widget.TextInputLayout: java.lang.CharSequence getError()
 android.support.design.widget.TextInputLayout: void setHintAnimationEnabled(boolean)
 android.support.design.widget.ViewOffsetBehavior: ViewOffsetBehavior()
@@ -1579,6 +1678,7 @@ android.support.v4.app.FragmentTabHost: void setOnTabChangedListener(android.wid
 android.support.v4.app.FragmentTabHost$SavedState: android.os.Parcelable$Creator CREATOR
 android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status[] values()
 android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status valueOf(java.lang.String)
+android.support.v4.media.MediaBrowserCompat$MediaItem: android.os.Parcelable$Creator CREATOR
 android.support.v4.media.MediaDescriptionCompat: android.os.Parcelable$Creator CREATOR
 android.support.v4.media.MediaMetadataCompat: android.os.Parcelable$Creator CREATOR
 android.support.v4.media.RatingCompat: android.os.Parcelable$Creator CREATOR
@@ -1588,6 +1688,7 @@ android.support.v4.media.session.MediaSessionCompat$Token: android.os.Parcelable
 android.support.v4.media.session.ParcelableVolumeInfo: android.os.Parcelable$Creator CREATOR
 android.support.v4.media.session.PlaybackStateCompat: android.os.Parcelable$Creator CREATOR
 android.support.v4.media.session.PlaybackStateCompat$CustomAction: android.os.Parcelable$Creator CREATOR
+android.support.v4.os.ResultReceiver: android.os.Parcelable$Creator CREATOR
 android.support.v4.view.PagerTabStrip: void setTabIndicatorColor(int)
 android.support.v4.view.PagerTabStrip: void setTabIndicatorColorResource(int)
 android.support.v4.view.PagerTabStrip: int getTabIndicatorColor()
@@ -1648,6 +1749,7 @@ android.support.v4.widget.NestedScrollView: int getNestedScrollAxes()
 android.support.v4.widget.NestedScrollView: float getTopFadingEdgeStrength()
 android.support.v4.widget.NestedScrollView: float getBottomFadingEdgeStrength()
 android.support.v4.widget.NestedScrollView: int getMaxScrollAmount()
+android.support.v4.widget.NestedScrollView: void setOnScrollChangeListener(android.support.v4.widget.NestedScrollView$OnScrollChangeListener)
 android.support.v4.widget.NestedScrollView: void setFillViewport(boolean)
 android.support.v4.widget.NestedScrollView: void setSmoothScrollingEnabled(boolean)
 android.support.v4.widget.NestedScrollView: float getVerticalScrollFactorCompat()
@@ -1737,6 +1839,7 @@ android.support.v7.appcompat.R$attr: int alertDialogButtonGroupStyle
 android.support.v7.appcompat.R$attr: int alertDialogCenterButtons
 android.support.v7.appcompat.R$attr: int alertDialogStyle
 android.support.v7.appcompat.R$attr: int alertDialogTheme
+android.support.v7.appcompat.R$attr: int allowStacking
 android.support.v7.appcompat.R$attr: int arrowHeadLength
 android.support.v7.appcompat.R$attr: int arrowShaftLength
 android.support.v7.appcompat.R$attr: int autoCompleteTextViewStyle
@@ -1804,6 +1907,7 @@ android.support.v7.appcompat.R$attr: int homeAsUpIndicator
 android.support.v7.appcompat.R$attr: int homeLayout
 android.support.v7.appcompat.R$attr: int icon
 android.support.v7.appcompat.R$attr: int iconifiedByDefault
+android.support.v7.appcompat.R$attr: int imageButtonStyle
 android.support.v7.appcompat.R$attr: int indeterminateProgressStyle
 android.support.v7.appcompat.R$attr: int initialActivityCount
 android.support.v7.appcompat.R$attr: int isLightTheme
@@ -1846,6 +1950,7 @@ android.support.v7.appcompat.R$attr: int ratingBarStyle
 android.support.v7.appcompat.R$attr: int searchHintIcon
 android.support.v7.appcompat.R$attr: int searchIcon
 android.support.v7.appcompat.R$attr: int searchViewStyle
+android.support.v7.appcompat.R$attr: int seekBarStyle
 android.support.v7.appcompat.R$attr: int selectableItemBackground
 android.support.v7.appcompat.R$attr: int selectableItemBackgroundBorderless
 android.support.v7.appcompat.R$attr: int showAsAction
@@ -1905,6 +2010,7 @@ android.support.v7.appcompat.R$attr: int windowNoTitle
 android.support.v7.appcompat.R$bool: int abc_action_bar_embed_tabs
 android.support.v7.appcompat.R$bool: int abc_action_bar_embed_tabs_pre_jb
 android.support.v7.appcompat.R$bool: int abc_action_bar_expanded_action_views_exclusive
+android.support.v7.appcompat.R$bool: int abc_allow_stacked_button_bar
 android.support.v7.appcompat.R$bool: int abc_config_actionMenuItemAllCaps
 android.support.v7.appcompat.R$bool: int abc_config_allowActionMenuItemTextWithIcon
 android.support.v7.appcompat.R$bool: int abc_config_closeDialogWhenTouchOutside
@@ -2003,6 +2109,10 @@ android.support.v7.appcompat.R$dimen: int abc_config_prefDialogWidth
 android.support.v7.appcompat.R$dimen: int abc_control_corner_material
 android.support.v7.appcompat.R$dimen: int abc_control_inset_material
 android.support.v7.appcompat.R$dimen: int abc_control_padding_material
+android.support.v7.appcompat.R$dimen: int abc_dialog_fixed_height_major
+android.support.v7.appcompat.R$dimen: int abc_dialog_fixed_height_minor
+android.support.v7.appcompat.R$dimen: int abc_dialog_fixed_width_major
+android.support.v7.appcompat.R$dimen: int abc_dialog_fixed_width_minor
 android.support.v7.appcompat.R$dimen: int abc_dialog_list_padding_vertical_material
 android.support.v7.appcompat.R$dimen: int abc_dialog_min_width_major
 android.support.v7.appcompat.R$dimen: int abc_dialog_min_width_minor
@@ -2021,6 +2131,9 @@ android.support.v7.appcompat.R$dimen: int abc_list_item_padding_horizontal_mater
 android.support.v7.appcompat.R$dimen: int abc_panel_menu_list_width
 android.support.v7.appcompat.R$dimen: int abc_search_view_preferred_width
 android.support.v7.appcompat.R$dimen: int abc_search_view_text_min_width
+android.support.v7.appcompat.R$dimen: int abc_seekbar_track_background_height_material
+android.support.v7.appcompat.R$dimen: int abc_seekbar_track_progress_height_material
+android.support.v7.appcompat.R$dimen: int abc_select_dialog_padding_start_material
 android.support.v7.appcompat.R$dimen: int abc_switch_padding
 android.support.v7.appcompat.R$dimen: int abc_text_size_body_1_material
 android.support.v7.appcompat.R$dimen: int abc_text_size_body_2_material
@@ -2039,10 +2152,6 @@ android.support.v7.appcompat.R$dimen: int abc_text_size_subhead_material
 android.support.v7.appcompat.R$dimen: int abc_text_size_subtitle_material_toolbar
 android.support.v7.appcompat.R$dimen: int abc_text_size_title_material
 android.support.v7.appcompat.R$dimen: int abc_text_size_title_material_toolbar
-android.support.v7.appcompat.R$dimen: int dialog_fixed_height_major
-android.support.v7.appcompat.R$dimen: int dialog_fixed_height_minor
-android.support.v7.appcompat.R$dimen: int dialog_fixed_width_major
-android.support.v7.appcompat.R$dimen: int dialog_fixed_width_minor
 android.support.v7.appcompat.R$dimen: int disabled_alpha_material_dark
 android.support.v7.appcompat.R$dimen: int disabled_alpha_material_light
 android.support.v7.appcompat.R$dimen: int highlight_alpha_material_colored
@@ -2101,6 +2210,13 @@ android.support.v7.appcompat.R$drawable: int abc_list_selector_holo_light
 android.support.v7.appcompat.R$drawable: int abc_menu_hardkey_panel_mtrl_mult
 android.support.v7.appcompat.R$drawable: int abc_popup_background_mtrl_mult
 android.support.v7.appcompat.R$drawable: int abc_ratingbar_full_material
+android.support.v7.appcompat.R$drawable: int abc_scrubber_control_off_mtrl_alpha
+android.support.v7.appcompat.R$drawable: int abc_scrubber_control_to_pressed_mtrl_000
+android.support.v7.appcompat.R$drawable: int abc_scrubber_control_to_pressed_mtrl_005
+android.support.v7.appcompat.R$drawable: int abc_scrubber_primary_mtrl_alpha
+android.support.v7.appcompat.R$drawable: int abc_scrubber_track_mtrl_alpha
+android.support.v7.appcompat.R$drawable: int abc_seekbar_thumb_material
+android.support.v7.appcompat.R$drawable: int abc_seekbar_track_material
 android.support.v7.appcompat.R$drawable: int abc_spinner_mtrl_am_alpha
 android.support.v7.appcompat.R$drawable: int abc_spinner_textfield_background_material
 android.support.v7.appcompat.R$drawable: int abc_switch_thumb_material
@@ -2170,6 +2286,8 @@ android.support.v7.appcompat.R$id: int progress_circular
 android.support.v7.appcompat.R$id: int progress_horizontal
 android.support.v7.appcompat.R$id: int radio
 android.support.v7.appcompat.R$id: int screen
+android.support.v7.appcompat.R$id: int scrollIndicatorDown
+android.support.v7.appcompat.R$id: int scrollIndicatorUp
 android.support.v7.appcompat.R$id: int scrollView
 android.support.v7.appcompat.R$id: int search_badge
 android.support.v7.appcompat.R$id: int search_bar
@@ -2186,6 +2304,7 @@ android.support.v7.appcompat.R$id: int shortcut
 android.support.v7.appcompat.R$id: int showCustom
 android.support.v7.appcompat.R$id: int showHome
 android.support.v7.appcompat.R$id: int showTitle
+android.support.v7.appcompat.R$id: int spacer
 android.support.v7.appcompat.R$id: int split_action_bar
 android.support.v7.appcompat.R$id: int src_atop
 android.support.v7.appcompat.R$id: int src_in
@@ -2218,6 +2337,7 @@ android.support.v7.appcompat.R$layout: int abc_action_mode_bar
 android.support.v7.appcompat.R$layout: int abc_action_mode_close_item_material
 android.support.v7.appcompat.R$layout: int abc_activity_chooser_view
 android.support.v7.appcompat.R$layout: int abc_activity_chooser_view_list_item
+android.support.v7.appcompat.R$layout: int abc_alert_dialog_button_bar_material
 android.support.v7.appcompat.R$layout: int abc_alert_dialog_material
 android.support.v7.appcompat.R$layout: int abc_dialog_title_material
 android.support.v7.appcompat.R$layout: int abc_expanded_menu_layout
@@ -2253,6 +2373,8 @@ android.support.v7.appcompat.R$string: int abc_action_menu_overflow_description
 android.support.v7.appcompat.R$string: int abc_action_mode_done
 android.support.v7.appcompat.R$string: int abc_activity_chooser_view_see_all
 android.support.v7.appcompat.R$string: int abc_activitychooserview_choose_application
+android.support.v7.appcompat.R$string: int abc_capital_off
+android.support.v7.appcompat.R$string: int abc_capital_on
 android.support.v7.appcompat.R$string: int abc_search_hint
 android.support.v7.appcompat.R$string: int abc_searchview_description_clear
 android.support.v7.appcompat.R$string: int abc_searchview_description_query
@@ -2380,6 +2502,7 @@ android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_DrawerArrowToggl
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_DrawerArrowToggle_Common
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_DropDownItem_Spinner
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_EditText
+android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_ImageButton
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_Light_ActionBar
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_Light_ActionBar_Solid
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_Light_ActionBar_TabBar
@@ -2400,6 +2523,7 @@ android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_ProgressBar_Hori
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_RatingBar
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_SearchView
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_SearchView_ActionBar
+android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_SeekBar
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_Spinner
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_Spinner_Underlined
 android.support.v7.appcompat.R$style: int Base_Widget_AppCompat_TextView_SpinnerItem
@@ -2417,7 +2541,6 @@ android.support.v7.appcompat.R$style: int Platform_V14_AppCompat_Light
 android.support.v7.appcompat.R$style: int Platform_Widget_AppCompat_Spinner
 android.support.v7.appcompat.R$style: int RtlOverlay_DialogWindowTitle_AppCompat
 android.support.v7.appcompat.R$style: int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem
-android.support.v7.appcompat.R$style: int RtlOverlay_Widget_AppCompat_ActionButton_Overflow
 android.support.v7.appcompat.R$style: int RtlOverlay_Widget_AppCompat_DialogTitle_Icon
 android.support.v7.appcompat.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem
 android.support.v7.appcompat.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup
@@ -2428,6 +2551,8 @@ android.support.v7.appcompat.R$style: int RtlOverlay_Widget_AppCompat_Search_Dro
 android.support.v7.appcompat.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2
 android.support.v7.appcompat.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Query
 android.support.v7.appcompat.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Text
+android.support.v7.appcompat.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton
+android.support.v7.appcompat.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton_Overflow
 android.support.v7.appcompat.R$style: int TextAppearance_AppCompat
 android.support.v7.appcompat.R$style: int TextAppearance_AppCompat_Body1
 android.support.v7.appcompat.R$style: int TextAppearance_AppCompat_Body2
@@ -2524,6 +2649,7 @@ android.support.v7.appcompat.R$style: int Widget_AppCompat_CompoundButton_Switch
 android.support.v7.appcompat.R$style: int Widget_AppCompat_DrawerArrowToggle
 android.support.v7.appcompat.R$style: int Widget_AppCompat_DropDownItem_Spinner
 android.support.v7.appcompat.R$style: int Widget_AppCompat_EditText
+android.support.v7.appcompat.R$style: int Widget_AppCompat_ImageButton
 android.support.v7.appcompat.R$style: int Widget_AppCompat_Light_ActionBar
 android.support.v7.appcompat.R$style: int Widget_AppCompat_Light_ActionBar_Solid
 android.support.v7.appcompat.R$style: int Widget_AppCompat_Light_ActionBar_Solid_Inverse
@@ -2558,6 +2684,7 @@ android.support.v7.appcompat.R$style: int Widget_AppCompat_ProgressBar_Horizonta
 android.support.v7.appcompat.R$style: int Widget_AppCompat_RatingBar
 android.support.v7.appcompat.R$style: int Widget_AppCompat_SearchView
 android.support.v7.appcompat.R$style: int Widget_AppCompat_SearchView_ActionBar
+android.support.v7.appcompat.R$style: int Widget_AppCompat_SeekBar
 android.support.v7.appcompat.R$style: int Widget_AppCompat_Spinner
 android.support.v7.appcompat.R$style: int Widget_AppCompat_Spinner_DropDown
 android.support.v7.appcompat.R$style: int Widget_AppCompat_Spinner_DropDown_ActionBar
@@ -2618,6 +2745,8 @@ android.support.v7.appcompat.R$styleable: int AlertDialog_singleChoiceItemLayout
 android.support.v7.appcompat.R$styleable: int[] AppCompatTextView
 android.support.v7.appcompat.R$styleable: int AppCompatTextView_android_textAppearance
 android.support.v7.appcompat.R$styleable: int AppCompatTextView_textAllCaps
+android.support.v7.appcompat.R$styleable: int[] ButtonBarLayout
+android.support.v7.appcompat.R$styleable: int ButtonBarLayout_allowStacking
 android.support.v7.appcompat.R$styleable: int[] CompoundButton
 android.support.v7.appcompat.R$styleable: int CompoundButton_android_button
 android.support.v7.appcompat.R$styleable: int CompoundButton_buttonTint
@@ -2723,6 +2852,10 @@ android.support.v7.appcompat.R$styleable: int SwitchCompat_switchTextAppearance
 android.support.v7.appcompat.R$styleable: int SwitchCompat_thumbTextPadding
 android.support.v7.appcompat.R$styleable: int SwitchCompat_track
 android.support.v7.appcompat.R$styleable: int[] TextAppearance
+android.support.v7.appcompat.R$styleable: int TextAppearance_android_shadowColor
+android.support.v7.appcompat.R$styleable: int TextAppearance_android_shadowDx
+android.support.v7.appcompat.R$styleable: int TextAppearance_android_shadowDy
+android.support.v7.appcompat.R$styleable: int TextAppearance_android_shadowRadius
 android.support.v7.appcompat.R$styleable: int TextAppearance_android_textColor
 android.support.v7.appcompat.R$styleable: int TextAppearance_android_textSize
 android.support.v7.appcompat.R$styleable: int TextAppearance_android_textStyle
@@ -2796,6 +2929,7 @@ android.support.v7.appcompat.R$styleable: int Theme_editTextBackground
 android.support.v7.appcompat.R$styleable: int Theme_editTextColor
 android.support.v7.appcompat.R$styleable: int Theme_editTextStyle
 android.support.v7.appcompat.R$styleable: int Theme_homeAsUpIndicator
+android.support.v7.appcompat.R$styleable: int Theme_imageButtonStyle
 android.support.v7.appcompat.R$styleable: int Theme_listChoiceBackgroundIndicator
 android.support.v7.appcompat.R$styleable: int Theme_listDividerAlertDialog
 android.support.v7.appcompat.R$styleable: int Theme_listPopupWindowStyle
@@ -2812,6 +2946,7 @@ android.support.v7.appcompat.R$styleable: int Theme_popupWindowStyle
 android.support.v7.appcompat.R$styleable: int Theme_radioButtonStyle
 android.support.v7.appcompat.R$styleable: int Theme_ratingBarStyle
 android.support.v7.appcompat.R$styleable: int Theme_searchViewStyle
+android.support.v7.appcompat.R$styleable: int Theme_seekBarStyle
 android.support.v7.appcompat.R$styleable: int Theme_selectableItemBackground
 android.support.v7.appcompat.R$styleable: int Theme_selectableItemBackgroundBorderless
 android.support.v7.appcompat.R$styleable: int Theme_spinnerDropDownItemStyle
@@ -2963,10 +3098,15 @@ android.support.v7.internal.widget.ActivityChooserView: void setDefaultActionBut
 android.support.v7.internal.widget.ActivityChooserView: android.support.v7.widget.ListPopupWindow getListPopupWindow()
 android.support.v7.internal.widget.ActivityChooserView$InnerLayout
 android.support.v7.internal.widget.ActivityChooserView$InnerLayout: ActivityChooserView$InnerLayout(android.content.Context,android.util.AttributeSet)
+android.support.v7.internal.widget.ButtonBarLayout
+android.support.v7.internal.widget.ButtonBarLayout: ButtonBarLayout(android.content.Context,android.util.AttributeSet)
+android.support.v7.internal.widget.ButtonBarLayout: void setAllowStacking(boolean)
+android.support.v7.internal.widget.ButtonBarLayout: void setStacked(boolean)
 android.support.v7.internal.widget.ContentFrameLayout
 android.support.v7.internal.widget.ContentFrameLayout: ContentFrameLayout(android.content.Context)
 android.support.v7.internal.widget.ContentFrameLayout: ContentFrameLayout(android.content.Context,android.util.AttributeSet)
 android.support.v7.internal.widget.ContentFrameLayout: ContentFrameLayout(android.content.Context,android.util.AttributeSet,int)
+android.support.v7.internal.widget.ContentFrameLayout: void setAttachListener(android.support.v7.internal.widget.ContentFrameLayout$OnAttachListener)
 android.support.v7.internal.widget.ContentFrameLayout: android.util.TypedValue getMinWidthMajor()
 android.support.v7.internal.widget.ContentFrameLayout: android.util.TypedValue getMinWidthMinor()
 android.support.v7.internal.widget.ContentFrameLayout: android.util.TypedValue getFixedWidthMajor()
@@ -2990,11 +3130,6 @@ android.support.v7.internal.widget.ListViewCompat: void setSelectorEnabled(boole
 android.support.v7.internal.widget.ScrollingTabContainerView: void setAllowCollapse(boolean)
 android.support.v7.internal.widget.ScrollingTabContainerView: void setTabSelected(int)
 android.support.v7.internal.widget.ScrollingTabContainerView: void setContentHeight(int)
-android.support.v7.internal.widget.TintImageView
-android.support.v7.internal.widget.TintImageView: TintImageView(android.content.Context)
-android.support.v7.internal.widget.TintImageView: TintImageView(android.content.Context,android.util.AttributeSet)
-android.support.v7.internal.widget.TintImageView: TintImageView(android.content.Context,android.util.AttributeSet,int)
-android.support.v7.internal.widget.TintImageView: void setImageResource(int)
 android.support.v7.internal.widget.ViewStubCompat
 android.support.v7.internal.widget.ViewStubCompat: ViewStubCompat(android.content.Context,android.util.AttributeSet)
 android.support.v7.internal.widget.ViewStubCompat: ViewStubCompat(android.content.Context,android.util.AttributeSet,int)
@@ -3069,6 +3204,20 @@ android.support.v7.widget.AppCompatEditText: void setSupportBackgroundTintList(a
 android.support.v7.widget.AppCompatEditText: android.content.res.ColorStateList getSupportBackgroundTintList()
 android.support.v7.widget.AppCompatEditText: void setSupportBackgroundTintMode(android.graphics.PorterDuff$Mode)
 android.support.v7.widget.AppCompatEditText: android.graphics.PorterDuff$Mode getSupportBackgroundTintMode()
+android.support.v7.widget.AppCompatImageButton: void setImageResource(int)
+android.support.v7.widget.AppCompatImageButton: void setBackgroundResource(int)
+android.support.v7.widget.AppCompatImageButton: void setBackgroundDrawable(android.graphics.drawable.Drawable)
+android.support.v7.widget.AppCompatImageButton: void setSupportBackgroundTintList(android.content.res.ColorStateList)
+android.support.v7.widget.AppCompatImageButton: android.content.res.ColorStateList getSupportBackgroundTintList()
+android.support.v7.widget.AppCompatImageButton: void setSupportBackgroundTintMode(android.graphics.PorterDuff$Mode)
+android.support.v7.widget.AppCompatImageButton: android.graphics.PorterDuff$Mode getSupportBackgroundTintMode()
+android.support.v7.widget.AppCompatImageView: void setImageResource(int)
+android.support.v7.widget.AppCompatImageView: void setBackgroundResource(int)
+android.support.v7.widget.AppCompatImageView: void setBackgroundDrawable(android.graphics.drawable.Drawable)
+android.support.v7.widget.AppCompatImageView: void setSupportBackgroundTintList(android.content.res.ColorStateList)
+android.support.v7.widget.AppCompatImageView: android.content.res.ColorStateList getSupportBackgroundTintList()
+android.support.v7.widget.AppCompatImageView: void setSupportBackgroundTintMode(android.graphics.PorterDuff$Mode)
+android.support.v7.widget.AppCompatImageView: android.graphics.PorterDuff$Mode getSupportBackgroundTintMode()
 android.support.v7.widget.AppCompatMultiAutoCompleteTextView: void setDropDownBackgroundResource(int)
 android.support.v7.widget.AppCompatMultiAutoCompleteTextView: void setBackgroundResource(int)
 android.support.v7.widget.AppCompatMultiAutoCompleteTextView: void setBackgroundDrawable(android.graphics.drawable.Drawable)
@@ -3083,7 +3232,6 @@ android.support.v7.widget.AppCompatRadioButton: void setSupportButtonTintList(an
 android.support.v7.widget.AppCompatRadioButton: android.content.res.ColorStateList getSupportButtonTintList()
 android.support.v7.widget.AppCompatRadioButton: void setSupportButtonTintMode(android.graphics.PorterDuff$Mode)
 android.support.v7.widget.AppCompatRadioButton: android.graphics.PorterDuff$Mode getSupportButtonTintMode()
-android.support.v7.widget.AppCompatRatingBar: android.graphics.drawable.shapes.Shape getDrawableShape()
 android.support.v7.widget.AppCompatSpinner: android.content.Context getPopupContext()
 android.support.v7.widget.AppCompatSpinner: void setPopupBackgroundDrawable(android.graphics.drawable.Drawable)
 android.support.v7.widget.AppCompatSpinner: void setPopupBackgroundResource(int)
@@ -3107,6 +3255,12 @@ android.support.v7.widget.AppCompatSpinner: void setAdapter(android.widget.Adapt
 android.support.v7.widget.AppCompatTextView: AppCompatTextView(android.content.Context)
 android.support.v7.widget.AppCompatTextView: AppCompatTextView(android.content.Context,android.util.AttributeSet)
 android.support.v7.widget.AppCompatTextView: AppCompatTextView(android.content.Context,android.util.AttributeSet,int)
+android.support.v7.widget.AppCompatTextView: void setBackgroundResource(int)
+android.support.v7.widget.AppCompatTextView: void setBackgroundDrawable(android.graphics.drawable.Drawable)
+android.support.v7.widget.AppCompatTextView: void setSupportBackgroundTintList(android.content.res.ColorStateList)
+android.support.v7.widget.AppCompatTextView: android.content.res.ColorStateList getSupportBackgroundTintList()
+android.support.v7.widget.AppCompatTextView: void setSupportBackgroundTintMode(android.graphics.PorterDuff$Mode)
+android.support.v7.widget.AppCompatTextView: android.graphics.PorterDuff$Mode getSupportBackgroundTintMode()
 android.support.v7.widget.LinearLayoutCompat: LinearLayoutCompat(android.content.Context)
 android.support.v7.widget.LinearLayoutCompat: LinearLayoutCompat(android.content.Context,android.util.AttributeSet)
 android.support.v7.widget.LinearLayoutCompat: LinearLayoutCompat(android.content.Context,android.util.AttributeSet,int)
@@ -3618,10 +3772,6 @@ com.devspark.robototextview.R$dimen: int abc_text_size_subhead_material
 com.devspark.robototextview.R$dimen: int abc_text_size_subtitle_material_toolbar
 com.devspark.robototextview.R$dimen: int abc_text_size_title_material
 com.devspark.robototextview.R$dimen: int abc_text_size_title_material_toolbar
-com.devspark.robototextview.R$dimen: int dialog_fixed_height_major
-com.devspark.robototextview.R$dimen: int dialog_fixed_height_minor
-com.devspark.robototextview.R$dimen: int dialog_fixed_width_major
-com.devspark.robototextview.R$dimen: int dialog_fixed_width_minor
 com.devspark.robototextview.R$dimen: int disabled_alpha_material_dark
 com.devspark.robototextview.R$dimen: int disabled_alpha_material_light
 com.devspark.robototextview.R$dimen: int highlight_alpha_material_colored
@@ -4027,7 +4177,6 @@ com.devspark.robototextview.R$style: int Platform_V14_AppCompat_Light
 com.devspark.robototextview.R$style: int Platform_Widget_AppCompat_Spinner
 com.devspark.robototextview.R$style: int RtlOverlay_DialogWindowTitle_AppCompat
 com.devspark.robototextview.R$style: int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem
-com.devspark.robototextview.R$style: int RtlOverlay_Widget_AppCompat_ActionButton_Overflow
 com.devspark.robototextview.R$style: int RtlOverlay_Widget_AppCompat_DialogTitle_Icon
 com.devspark.robototextview.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem
 com.devspark.robototextview.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup
@@ -16582,6 +16731,7 @@ jp.wasabeef.recyclerview.R$attr: int alertDialogButtonGroupStyle
 jp.wasabeef.recyclerview.R$attr: int alertDialogCenterButtons
 jp.wasabeef.recyclerview.R$attr: int alertDialogStyle
 jp.wasabeef.recyclerview.R$attr: int alertDialogTheme
+jp.wasabeef.recyclerview.R$attr: int allowStacking
 jp.wasabeef.recyclerview.R$attr: int arrowHeadLength
 jp.wasabeef.recyclerview.R$attr: int arrowShaftLength
 jp.wasabeef.recyclerview.R$attr: int autoCompleteTextViewStyle
@@ -16649,6 +16799,7 @@ jp.wasabeef.recyclerview.R$attr: int homeAsUpIndicator
 jp.wasabeef.recyclerview.R$attr: int homeLayout
 jp.wasabeef.recyclerview.R$attr: int icon
 jp.wasabeef.recyclerview.R$attr: int iconifiedByDefault
+jp.wasabeef.recyclerview.R$attr: int imageButtonStyle
 jp.wasabeef.recyclerview.R$attr: int indeterminateProgressStyle
 jp.wasabeef.recyclerview.R$attr: int initialActivityCount
 jp.wasabeef.recyclerview.R$attr: int isLightTheme
@@ -16693,6 +16844,7 @@ jp.wasabeef.recyclerview.R$attr: int reverseLayout
 jp.wasabeef.recyclerview.R$attr: int searchHintIcon
 jp.wasabeef.recyclerview.R$attr: int searchIcon
 jp.wasabeef.recyclerview.R$attr: int searchViewStyle
+jp.wasabeef.recyclerview.R$attr: int seekBarStyle
 jp.wasabeef.recyclerview.R$attr: int selectableItemBackground
 jp.wasabeef.recyclerview.R$attr: int selectableItemBackgroundBorderless
 jp.wasabeef.recyclerview.R$attr: int showAsAction
@@ -16754,6 +16906,7 @@ jp.wasabeef.recyclerview.R$attr: int windowNoTitle
 jp.wasabeef.recyclerview.R$bool: int abc_action_bar_embed_tabs
 jp.wasabeef.recyclerview.R$bool: int abc_action_bar_embed_tabs_pre_jb
 jp.wasabeef.recyclerview.R$bool: int abc_action_bar_expanded_action_views_exclusive
+jp.wasabeef.recyclerview.R$bool: int abc_allow_stacked_button_bar
 jp.wasabeef.recyclerview.R$bool: int abc_config_actionMenuItemAllCaps
 jp.wasabeef.recyclerview.R$bool: int abc_config_allowActionMenuItemTextWithIcon
 jp.wasabeef.recyclerview.R$bool: int abc_config_closeDialogWhenTouchOutside
@@ -16852,6 +17005,10 @@ jp.wasabeef.recyclerview.R$dimen: int abc_config_prefDialogWidth
 jp.wasabeef.recyclerview.R$dimen: int abc_control_corner_material
 jp.wasabeef.recyclerview.R$dimen: int abc_control_inset_material
 jp.wasabeef.recyclerview.R$dimen: int abc_control_padding_material
+jp.wasabeef.recyclerview.R$dimen: int abc_dialog_fixed_height_major
+jp.wasabeef.recyclerview.R$dimen: int abc_dialog_fixed_height_minor
+jp.wasabeef.recyclerview.R$dimen: int abc_dialog_fixed_width_major
+jp.wasabeef.recyclerview.R$dimen: int abc_dialog_fixed_width_minor
 jp.wasabeef.recyclerview.R$dimen: int abc_dialog_list_padding_vertical_material
 jp.wasabeef.recyclerview.R$dimen: int abc_dialog_min_width_major
 jp.wasabeef.recyclerview.R$dimen: int abc_dialog_min_width_minor
@@ -16870,6 +17027,9 @@ jp.wasabeef.recyclerview.R$dimen: int abc_list_item_padding_horizontal_material
 jp.wasabeef.recyclerview.R$dimen: int abc_panel_menu_list_width
 jp.wasabeef.recyclerview.R$dimen: int abc_search_view_preferred_width
 jp.wasabeef.recyclerview.R$dimen: int abc_search_view_text_min_width
+jp.wasabeef.recyclerview.R$dimen: int abc_seekbar_track_background_height_material
+jp.wasabeef.recyclerview.R$dimen: int abc_seekbar_track_progress_height_material
+jp.wasabeef.recyclerview.R$dimen: int abc_select_dialog_padding_start_material
 jp.wasabeef.recyclerview.R$dimen: int abc_switch_padding
 jp.wasabeef.recyclerview.R$dimen: int abc_text_size_body_1_material
 jp.wasabeef.recyclerview.R$dimen: int abc_text_size_body_2_material
@@ -16888,10 +17048,6 @@ jp.wasabeef.recyclerview.R$dimen: int abc_text_size_subhead_material
 jp.wasabeef.recyclerview.R$dimen: int abc_text_size_subtitle_material_toolbar
 jp.wasabeef.recyclerview.R$dimen: int abc_text_size_title_material
 jp.wasabeef.recyclerview.R$dimen: int abc_text_size_title_material_toolbar
-jp.wasabeef.recyclerview.R$dimen: int dialog_fixed_height_major
-jp.wasabeef.recyclerview.R$dimen: int dialog_fixed_height_minor
-jp.wasabeef.recyclerview.R$dimen: int dialog_fixed_width_major
-jp.wasabeef.recyclerview.R$dimen: int dialog_fixed_width_minor
 jp.wasabeef.recyclerview.R$dimen: int disabled_alpha_material_dark
 jp.wasabeef.recyclerview.R$dimen: int disabled_alpha_material_light
 jp.wasabeef.recyclerview.R$dimen: int highlight_alpha_material_colored
@@ -16951,6 +17107,13 @@ jp.wasabeef.recyclerview.R$drawable: int abc_list_selector_holo_light
 jp.wasabeef.recyclerview.R$drawable: int abc_menu_hardkey_panel_mtrl_mult
 jp.wasabeef.recyclerview.R$drawable: int abc_popup_background_mtrl_mult
 jp.wasabeef.recyclerview.R$drawable: int abc_ratingbar_full_material
+jp.wasabeef.recyclerview.R$drawable: int abc_scrubber_control_off_mtrl_alpha
+jp.wasabeef.recyclerview.R$drawable: int abc_scrubber_control_to_pressed_mtrl_000
+jp.wasabeef.recyclerview.R$drawable: int abc_scrubber_control_to_pressed_mtrl_005
+jp.wasabeef.recyclerview.R$drawable: int abc_scrubber_primary_mtrl_alpha
+jp.wasabeef.recyclerview.R$drawable: int abc_scrubber_track_mtrl_alpha
+jp.wasabeef.recyclerview.R$drawable: int abc_seekbar_thumb_material
+jp.wasabeef.recyclerview.R$drawable: int abc_seekbar_track_material
 jp.wasabeef.recyclerview.R$drawable: int abc_spinner_mtrl_am_alpha
 jp.wasabeef.recyclerview.R$drawable: int abc_spinner_textfield_background_material
 jp.wasabeef.recyclerview.R$drawable: int abc_switch_thumb_material
@@ -17021,6 +17184,8 @@ jp.wasabeef.recyclerview.R$id: int progress_circular
 jp.wasabeef.recyclerview.R$id: int progress_horizontal
 jp.wasabeef.recyclerview.R$id: int radio
 jp.wasabeef.recyclerview.R$id: int screen
+jp.wasabeef.recyclerview.R$id: int scrollIndicatorDown
+jp.wasabeef.recyclerview.R$id: int scrollIndicatorUp
 jp.wasabeef.recyclerview.R$id: int scrollView
 jp.wasabeef.recyclerview.R$id: int search_badge
 jp.wasabeef.recyclerview.R$id: int search_bar
@@ -17037,6 +17202,7 @@ jp.wasabeef.recyclerview.R$id: int shortcut
 jp.wasabeef.recyclerview.R$id: int showCustom
 jp.wasabeef.recyclerview.R$id: int showHome
 jp.wasabeef.recyclerview.R$id: int showTitle
+jp.wasabeef.recyclerview.R$id: int spacer
 jp.wasabeef.recyclerview.R$id: int split_action_bar
 jp.wasabeef.recyclerview.R$id: int src_atop
 jp.wasabeef.recyclerview.R$id: int src_in
@@ -17069,6 +17235,7 @@ jp.wasabeef.recyclerview.R$layout: int abc_action_mode_bar
 jp.wasabeef.recyclerview.R$layout: int abc_action_mode_close_item_material
 jp.wasabeef.recyclerview.R$layout: int abc_activity_chooser_view
 jp.wasabeef.recyclerview.R$layout: int abc_activity_chooser_view_list_item
+jp.wasabeef.recyclerview.R$layout: int abc_alert_dialog_button_bar_material
 jp.wasabeef.recyclerview.R$layout: int abc_alert_dialog_material
 jp.wasabeef.recyclerview.R$layout: int abc_dialog_title_material
 jp.wasabeef.recyclerview.R$layout: int abc_expanded_menu_layout
@@ -17104,6 +17271,8 @@ jp.wasabeef.recyclerview.R$string: int abc_action_menu_overflow_description
 jp.wasabeef.recyclerview.R$string: int abc_action_mode_done
 jp.wasabeef.recyclerview.R$string: int abc_activity_chooser_view_see_all
 jp.wasabeef.recyclerview.R$string: int abc_activitychooserview_choose_application
+jp.wasabeef.recyclerview.R$string: int abc_capital_off
+jp.wasabeef.recyclerview.R$string: int abc_capital_on
 jp.wasabeef.recyclerview.R$string: int abc_search_hint
 jp.wasabeef.recyclerview.R$string: int abc_searchview_description_clear
 jp.wasabeef.recyclerview.R$string: int abc_searchview_description_query
@@ -17231,6 +17400,7 @@ jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_DrawerArrowToggle
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_DrawerArrowToggle_Common
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_DropDownItem_Spinner
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_EditText
+jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_ImageButton
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_Light_ActionBar
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_Light_ActionBar_Solid
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_Light_ActionBar_TabBar
@@ -17251,6 +17421,7 @@ jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_ProgressBar_Horizont
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_RatingBar
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_SearchView
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_SearchView_ActionBar
+jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_SeekBar
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_Spinner
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_Spinner_Underlined
 jp.wasabeef.recyclerview.R$style: int Base_Widget_AppCompat_TextView_SpinnerItem
@@ -17268,7 +17439,6 @@ jp.wasabeef.recyclerview.R$style: int Platform_V14_AppCompat_Light
 jp.wasabeef.recyclerview.R$style: int Platform_Widget_AppCompat_Spinner
 jp.wasabeef.recyclerview.R$style: int RtlOverlay_DialogWindowTitle_AppCompat
 jp.wasabeef.recyclerview.R$style: int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem
-jp.wasabeef.recyclerview.R$style: int RtlOverlay_Widget_AppCompat_ActionButton_Overflow
 jp.wasabeef.recyclerview.R$style: int RtlOverlay_Widget_AppCompat_DialogTitle_Icon
 jp.wasabeef.recyclerview.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem
 jp.wasabeef.recyclerview.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup
@@ -17279,6 +17449,8 @@ jp.wasabeef.recyclerview.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDow
 jp.wasabeef.recyclerview.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2
 jp.wasabeef.recyclerview.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Query
 jp.wasabeef.recyclerview.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Text
+jp.wasabeef.recyclerview.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton
+jp.wasabeef.recyclerview.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton_Overflow
 jp.wasabeef.recyclerview.R$style: int TextAppearance_AppCompat
 jp.wasabeef.recyclerview.R$style: int TextAppearance_AppCompat_Body1
 jp.wasabeef.recyclerview.R$style: int TextAppearance_AppCompat_Body2
@@ -17375,6 +17547,7 @@ jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_CompoundButton_Switch
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_DrawerArrowToggle
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_DropDownItem_Spinner
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_EditText
+jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_ImageButton
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_Light_ActionBar
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_Light_ActionBar_Solid
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_Light_ActionBar_Solid_Inverse
@@ -17409,6 +17582,7 @@ jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_ProgressBar_Horizontal
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_RatingBar
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_SearchView
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_SearchView_ActionBar
+jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_SeekBar
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_Spinner
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_Spinner_DropDown
 jp.wasabeef.recyclerview.R$style: int Widget_AppCompat_Spinner_DropDown_ActionBar
@@ -17469,6 +17643,8 @@ jp.wasabeef.recyclerview.R$styleable: int AlertDialog_singleChoiceItemLayout
 jp.wasabeef.recyclerview.R$styleable: int[] AppCompatTextView
 jp.wasabeef.recyclerview.R$styleable: int AppCompatTextView_android_textAppearance
 jp.wasabeef.recyclerview.R$styleable: int AppCompatTextView_textAllCaps
+jp.wasabeef.recyclerview.R$styleable: int[] ButtonBarLayout
+jp.wasabeef.recyclerview.R$styleable: int ButtonBarLayout_allowStacking
 jp.wasabeef.recyclerview.R$styleable: int[] CompoundButton
 jp.wasabeef.recyclerview.R$styleable: int CompoundButton_android_button
 jp.wasabeef.recyclerview.R$styleable: int CompoundButton_buttonTint
@@ -17580,6 +17756,10 @@ jp.wasabeef.recyclerview.R$styleable: int SwitchCompat_switchTextAppearance
 jp.wasabeef.recyclerview.R$styleable: int SwitchCompat_thumbTextPadding
 jp.wasabeef.recyclerview.R$styleable: int SwitchCompat_track
 jp.wasabeef.recyclerview.R$styleable: int[] TextAppearance
+jp.wasabeef.recyclerview.R$styleable: int TextAppearance_android_shadowColor
+jp.wasabeef.recyclerview.R$styleable: int TextAppearance_android_shadowDx
+jp.wasabeef.recyclerview.R$styleable: int TextAppearance_android_shadowDy
+jp.wasabeef.recyclerview.R$styleable: int TextAppearance_android_shadowRadius
 jp.wasabeef.recyclerview.R$styleable: int TextAppearance_android_textColor
 jp.wasabeef.recyclerview.R$styleable: int TextAppearance_android_textSize
 jp.wasabeef.recyclerview.R$styleable: int TextAppearance_android_textStyle
@@ -17653,6 +17833,7 @@ jp.wasabeef.recyclerview.R$styleable: int Theme_editTextBackground
 jp.wasabeef.recyclerview.R$styleable: int Theme_editTextColor
 jp.wasabeef.recyclerview.R$styleable: int Theme_editTextStyle
 jp.wasabeef.recyclerview.R$styleable: int Theme_homeAsUpIndicator
+jp.wasabeef.recyclerview.R$styleable: int Theme_imageButtonStyle
 jp.wasabeef.recyclerview.R$styleable: int Theme_listChoiceBackgroundIndicator
 jp.wasabeef.recyclerview.R$styleable: int Theme_listDividerAlertDialog
 jp.wasabeef.recyclerview.R$styleable: int Theme_listPopupWindowStyle
@@ -17669,6 +17850,7 @@ jp.wasabeef.recyclerview.R$styleable: int Theme_popupWindowStyle
 jp.wasabeef.recyclerview.R$styleable: int Theme_radioButtonStyle
 jp.wasabeef.recyclerview.R$styleable: int Theme_ratingBarStyle
 jp.wasabeef.recyclerview.R$styleable: int Theme_searchViewStyle
+jp.wasabeef.recyclerview.R$styleable: int Theme_seekBarStyle
 jp.wasabeef.recyclerview.R$styleable: int Theme_selectableItemBackground
 jp.wasabeef.recyclerview.R$styleable: int Theme_selectableItemBackgroundBorderless
 jp.wasabeef.recyclerview.R$styleable: int Theme_spinnerDropDownItemStyle
@@ -18081,6 +18263,7 @@ org.neidhardt.dynamicsoundboard.R$attr: int alertDialogButtonGroupStyle
 org.neidhardt.dynamicsoundboard.R$attr: int alertDialogCenterButtons
 org.neidhardt.dynamicsoundboard.R$attr: int alertDialogStyle
 org.neidhardt.dynamicsoundboard.R$attr: int alertDialogTheme
+org.neidhardt.dynamicsoundboard.R$attr: int allowStacking
 org.neidhardt.dynamicsoundboard.R$attr: int arrowHeadLength
 org.neidhardt.dynamicsoundboard.R$attr: int arrowShaftLength
 org.neidhardt.dynamicsoundboard.R$attr: int autoCompleteTextViewStyle
@@ -18127,6 +18310,10 @@ org.neidhardt.dynamicsoundboard.R$attr: int contentInsetRight
 org.neidhardt.dynamicsoundboard.R$attr: int contentInsetStart
 org.neidhardt.dynamicsoundboard.R$attr: int contentScrim
 org.neidhardt.dynamicsoundboard.R$attr: int controlBackground
+org.neidhardt.dynamicsoundboard.R$attr: int counterEnabled
+org.neidhardt.dynamicsoundboard.R$attr: int counterMaxLength
+org.neidhardt.dynamicsoundboard.R$attr: int counterOverflowTextAppearance
+org.neidhardt.dynamicsoundboard.R$attr: int counterTextAppearance
 org.neidhardt.dynamicsoundboard.R$attr: int customNavigationLayout
 org.neidhardt.dynamicsoundboard.R$attr: int defaultQueryHint
 org.neidhardt.dynamicsoundboard.R$attr: int dialogPreferredPadding
@@ -18163,6 +18350,7 @@ org.neidhardt.dynamicsoundboard.R$attr: int fab_colorRipple
 org.neidhardt.dynamicsoundboard.R$attr: int fab_shadow
 org.neidhardt.dynamicsoundboard.R$attr: int fab_type
 org.neidhardt.dynamicsoundboard.R$attr: int fontFamily
+org.neidhardt.dynamicsoundboard.R$attr: int foregroundInsidePadding
 org.neidhardt.dynamicsoundboard.R$attr: int gapBetweenBars
 org.neidhardt.dynamicsoundboard.R$attr: int goIcon
 org.neidhardt.dynamicsoundboard.R$attr: int has_recycler_view
@@ -18176,6 +18364,7 @@ org.neidhardt.dynamicsoundboard.R$attr: int homeAsUpIndicator
 org.neidhardt.dynamicsoundboard.R$attr: int homeLayout
 org.neidhardt.dynamicsoundboard.R$attr: int icon
 org.neidhardt.dynamicsoundboard.R$attr: int iconifiedByDefault
+org.neidhardt.dynamicsoundboard.R$attr: int imageButtonStyle
 org.neidhardt.dynamicsoundboard.R$attr: int indeterminateProgressStyle
 org.neidhardt.dynamicsoundboard.R$attr: int initialActivityCount
 org.neidhardt.dynamicsoundboard.R$attr: int insetForeground
@@ -18238,6 +18427,7 @@ org.neidhardt.dynamicsoundboard.R$attr: int rippleColor
 org.neidhardt.dynamicsoundboard.R$attr: int searchHintIcon
 org.neidhardt.dynamicsoundboard.R$attr: int searchIcon
 org.neidhardt.dynamicsoundboard.R$attr: int searchViewStyle
+org.neidhardt.dynamicsoundboard.R$attr: int seekBarStyle
 org.neidhardt.dynamicsoundboard.R$attr: int selectableItemBackground
 org.neidhardt.dynamicsoundboard.R$attr: int selectableItemBackgroundBorderless
 org.neidhardt.dynamicsoundboard.R$attr: int showAsAction
@@ -18343,6 +18533,7 @@ org.neidhardt.dynamicsoundboard.R$attr: int windowNoTitle
 org.neidhardt.dynamicsoundboard.R$bool: int abc_action_bar_embed_tabs
 org.neidhardt.dynamicsoundboard.R$bool: int abc_action_bar_embed_tabs_pre_jb
 org.neidhardt.dynamicsoundboard.R$bool: int abc_action_bar_expanded_action_views_exclusive
+org.neidhardt.dynamicsoundboard.R$bool: int abc_allow_stacked_button_bar
 org.neidhardt.dynamicsoundboard.R$bool: int abc_config_actionMenuItemAllCaps
 org.neidhardt.dynamicsoundboard.R$bool: int abc_config_allowActionMenuItemTextWithIcon
 org.neidhardt.dynamicsoundboard.R$bool: int abc_config_closeDialogWhenTouchOutside
@@ -18474,6 +18665,10 @@ org.neidhardt.dynamicsoundboard.R$dimen: int abc_config_prefDialogWidth
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_control_corner_material
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_control_inset_material
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_control_padding_material
+org.neidhardt.dynamicsoundboard.R$dimen: int abc_dialog_fixed_height_major
+org.neidhardt.dynamicsoundboard.R$dimen: int abc_dialog_fixed_height_minor
+org.neidhardt.dynamicsoundboard.R$dimen: int abc_dialog_fixed_width_major
+org.neidhardt.dynamicsoundboard.R$dimen: int abc_dialog_fixed_width_minor
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_dialog_list_padding_vertical_material
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_dialog_min_width_major
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_dialog_min_width_minor
@@ -18492,6 +18687,9 @@ org.neidhardt.dynamicsoundboard.R$dimen: int abc_list_item_padding_horizontal_ma
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_panel_menu_list_width
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_search_view_preferred_width
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_search_view_text_min_width
+org.neidhardt.dynamicsoundboard.R$dimen: int abc_seekbar_track_background_height_material
+org.neidhardt.dynamicsoundboard.R$dimen: int abc_seekbar_track_progress_height_material
+org.neidhardt.dynamicsoundboard.R$dimen: int abc_select_dialog_padding_start_material
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_switch_padding
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_text_size_body_1_material
 org.neidhardt.dynamicsoundboard.R$dimen: int abc_text_size_body_2_material
@@ -18535,11 +18733,9 @@ org.neidhardt.dynamicsoundboard.R$dimen: int design_snackbar_padding_vertical
 org.neidhardt.dynamicsoundboard.R$dimen: int design_snackbar_padding_vertical_2lines
 org.neidhardt.dynamicsoundboard.R$dimen: int design_snackbar_text_size
 org.neidhardt.dynamicsoundboard.R$dimen: int design_tab_max_width
-org.neidhardt.dynamicsoundboard.R$dimen: int design_tab_min_width
-org.neidhardt.dynamicsoundboard.R$dimen: int dialog_fixed_height_major
-org.neidhardt.dynamicsoundboard.R$dimen: int dialog_fixed_height_minor
-org.neidhardt.dynamicsoundboard.R$dimen: int dialog_fixed_width_major
-org.neidhardt.dynamicsoundboard.R$dimen: int dialog_fixed_width_minor
+org.neidhardt.dynamicsoundboard.R$dimen: int design_tab_scrollable_min_width
+org.neidhardt.dynamicsoundboard.R$dimen: int design_tab_text_size
+org.neidhardt.dynamicsoundboard.R$dimen: int design_tab_text_size_2line
 org.neidhardt.dynamicsoundboard.R$dimen: int disabled_alpha_material_dark
 org.neidhardt.dynamicsoundboard.R$dimen: int disabled_alpha_material_light
 org.neidhardt.dynamicsoundboard.R$dimen: int elevation_normal
@@ -18644,6 +18840,13 @@ org.neidhardt.dynamicsoundboard.R$drawable: int abc_list_selector_holo_light
 org.neidhardt.dynamicsoundboard.R$drawable: int abc_menu_hardkey_panel_mtrl_mult
 org.neidhardt.dynamicsoundboard.R$drawable: int abc_popup_background_mtrl_mult
 org.neidhardt.dynamicsoundboard.R$drawable: int abc_ratingbar_full_material
+org.neidhardt.dynamicsoundboard.R$drawable: int abc_scrubber_control_off_mtrl_alpha
+org.neidhardt.dynamicsoundboard.R$drawable: int abc_scrubber_control_to_pressed_mtrl_000
+org.neidhardt.dynamicsoundboard.R$drawable: int abc_scrubber_control_to_pressed_mtrl_005
+org.neidhardt.dynamicsoundboard.R$drawable: int abc_scrubber_primary_mtrl_alpha
+org.neidhardt.dynamicsoundboard.R$drawable: int abc_scrubber_track_mtrl_alpha
+org.neidhardt.dynamicsoundboard.R$drawable: int abc_seekbar_thumb_material
+org.neidhardt.dynamicsoundboard.R$drawable: int abc_seekbar_track_material
 org.neidhardt.dynamicsoundboard.R$drawable: int abc_spinner_mtrl_am_alpha
 org.neidhardt.dynamicsoundboard.R$drawable: int abc_spinner_textfield_background_material
 org.neidhardt.dynamicsoundboard.R$drawable: int abc_switch_thumb_material
@@ -18820,6 +19023,10 @@ org.neidhardt.dynamicsoundboard.R$id: int custom
 org.neidhardt.dynamicsoundboard.R$id: int customPanel
 org.neidhardt.dynamicsoundboard.R$id: int decor_content_parent
 org.neidhardt.dynamicsoundboard.R$id: int default_activity_button
+org.neidhardt.dynamicsoundboard.R$id: int design_menu_item_action_area
+org.neidhardt.dynamicsoundboard.R$id: int design_menu_item_action_area_stub
+org.neidhardt.dynamicsoundboard.R$id: int design_menu_item_text
+org.neidhardt.dynamicsoundboard.R$id: int design_navigation_view
 org.neidhardt.dynamicsoundboard.R$id: int disableHome
 org.neidhardt.dynamicsoundboard.R$id: int edit_query
 org.neidhardt.dynamicsoundboard.R$id: int edittext
@@ -18877,6 +19084,7 @@ org.neidhardt.dynamicsoundboard.R$id: int middle
 org.neidhardt.dynamicsoundboard.R$id: int mini
 org.neidhardt.dynamicsoundboard.R$id: int multiply
 org.neidhardt.dynamicsoundboard.R$id: int navigation_drawer_fragment
+org.neidhardt.dynamicsoundboard.R$id: int navigation_header_container
 org.neidhardt.dynamicsoundboard.R$id: int never
 org.neidhardt.dynamicsoundboard.R$id: int none
 org.neidhardt.dynamicsoundboard.R$id: int normal
@@ -18924,6 +19132,8 @@ org.neidhardt.dynamicsoundboard.R$id: int s_sound_sheets
 org.neidhardt.dynamicsoundboard.R$id: int sb_progress
 org.neidhardt.dynamicsoundboard.R$id: int screen
 org.neidhardt.dynamicsoundboard.R$id: int scroll
+org.neidhardt.dynamicsoundboard.R$id: int scrollIndicatorDown
+org.neidhardt.dynamicsoundboard.R$id: int scrollIndicatorUp
 org.neidhardt.dynamicsoundboard.R$id: int scrollView
 org.neidhardt.dynamicsoundboard.R$id: int scrollable
 org.neidhardt.dynamicsoundboard.R$id: int search_badge
@@ -18943,7 +19153,9 @@ org.neidhardt.dynamicsoundboard.R$id: int showHome
 org.neidhardt.dynamicsoundboard.R$id: int showTitle
 org.neidhardt.dynamicsoundboard.R$id: int snackbar_action
 org.neidhardt.dynamicsoundboard.R$id: int snackbar_text
+org.neidhardt.dynamicsoundboard.R$id: int snap
 org.neidhardt.dynamicsoundboard.R$id: int sound_sheets
+org.neidhardt.dynamicsoundboard.R$id: int spacer
 org.neidhardt.dynamicsoundboard.R$id: int spb_interpolator_accelerate
 org.neidhardt.dynamicsoundboard.R$id: int spb_interpolator_acceleratedecelerate
 org.neidhardt.dynamicsoundboard.R$id: int spb_interpolator_decelerate
@@ -19015,6 +19227,7 @@ org.neidhardt.dynamicsoundboard.R$layout: int abc_action_mode_bar
 org.neidhardt.dynamicsoundboard.R$layout: int abc_action_mode_close_item_material
 org.neidhardt.dynamicsoundboard.R$layout: int abc_activity_chooser_view
 org.neidhardt.dynamicsoundboard.R$layout: int abc_activity_chooser_view_list_item
+org.neidhardt.dynamicsoundboard.R$layout: int abc_alert_dialog_button_bar_material
 org.neidhardt.dynamicsoundboard.R$layout: int abc_alert_dialog_material
 org.neidhardt.dynamicsoundboard.R$layout: int abc_dialog_title_material
 org.neidhardt.dynamicsoundboard.R$layout: int abc_expanded_menu_layout
@@ -19042,11 +19255,13 @@ org.neidhardt.dynamicsoundboard.R$layout: int design_layout_snackbar
 org.neidhardt.dynamicsoundboard.R$layout: int design_layout_snackbar_include
 org.neidhardt.dynamicsoundboard.R$layout: int design_layout_tab_icon
 org.neidhardt.dynamicsoundboard.R$layout: int design_layout_tab_text
+org.neidhardt.dynamicsoundboard.R$layout: int design_menu_item_action_area
 org.neidhardt.dynamicsoundboard.R$layout: int design_navigation_item
 org.neidhardt.dynamicsoundboard.R$layout: int design_navigation_item_header
 org.neidhardt.dynamicsoundboard.R$layout: int design_navigation_item_separator
 org.neidhardt.dynamicsoundboard.R$layout: int design_navigation_item_subheader
 org.neidhardt.dynamicsoundboard.R$layout: int design_navigation_menu
+org.neidhardt.dynamicsoundboard.R$layout: int design_navigation_menu_item
 org.neidhardt.dynamicsoundboard.R$layout: int dialog_add_new_sound
 org.neidhardt.dynamicsoundboard.R$layout: int dialog_add_new_sound_from_directory
 org.neidhardt.dynamicsoundboard.R$layout: int dialog_add_new_sound_from_intent
@@ -19111,6 +19326,8 @@ org.neidhardt.dynamicsoundboard.R$string: int abc_action_menu_overflow_descripti
 org.neidhardt.dynamicsoundboard.R$string: int abc_action_mode_done
 org.neidhardt.dynamicsoundboard.R$string: int abc_activity_chooser_view_see_all
 org.neidhardt.dynamicsoundboard.R$string: int abc_activitychooserview_choose_application
+org.neidhardt.dynamicsoundboard.R$string: int abc_capital_off
+org.neidhardt.dynamicsoundboard.R$string: int abc_capital_on
 org.neidhardt.dynamicsoundboard.R$string: int abc_search_hint
 org.neidhardt.dynamicsoundboard.R$string: int abc_searchview_description_clear
 org.neidhardt.dynamicsoundboard.R$string: int abc_searchview_description_query
@@ -19144,6 +19361,7 @@ org.neidhardt.dynamicsoundboard.R$string: int appbar_scrolling_view_behavior
 org.neidhardt.dynamicsoundboard.R$string: int cab_title_delete_play_list_sounds
 org.neidhardt.dynamicsoundboard.R$string: int cab_title_delete_sound_layouts
 org.neidhardt.dynamicsoundboard.R$string: int cab_title_delete_sound_sheets
+org.neidhardt.dynamicsoundboard.R$string: int character_counter_pattern
 org.neidhardt.dynamicsoundboard.R$string: int define_FloatingActionButton
 org.neidhardt.dynamicsoundboard.R$string: int define_smoothprogressbar
 org.neidhardt.dynamicsoundboard.R$string: int dialog_add
@@ -19163,11 +19381,14 @@ org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_sheet_title
 org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_title
 org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_toast_no_sounds
 org.neidhardt.dynamicsoundboard.R$string: int dialog_cancel
+org.neidhardt.dynamicsoundboard.R$string: int dialog_close
 org.neidhardt.dynamicsoundboard.R$string: int dialog_confirm_delete_all_soundsheets_message
 org.neidhardt.dynamicsoundboard.R$string: int dialog_confirm_delete_sounds_in_soundheet_message
 org.neidhardt.dynamicsoundboard.R$string: int dialog_confirm_delete_soundsheet_message
 org.neidhardt.dynamicsoundboard.R$string: int dialog_confirm_delete_title
 org.neidhardt.dynamicsoundboard.R$string: int dialog_delete
+org.neidhardt.dynamicsoundboard.R$string: int dialog_denial
+org.neidhardt.dynamicsoundboard.R$string: int dialog_grant
 org.neidhardt.dynamicsoundboard.R$string: int dialog_load
 org.neidhardt.dynamicsoundboard.R$string: int dialog_load_layout_message
 org.neidhardt.dynamicsoundboard.R$string: int dialog_load_layout_no_file_info
@@ -19238,6 +19459,10 @@ org.neidhardt.dynamicsoundboard.R$string: int preferences_enable_one_swipe_delet
 org.neidhardt.dynamicsoundboard.R$string: int preferences_use_system_file_browser_key
 org.neidhardt.dynamicsoundboard.R$string: int preferences_use_system_file_browser_summary
 org.neidhardt.dynamicsoundboard.R$string: int preferences_use_system_file_browser_title
+org.neidhardt.dynamicsoundboard.R$string: int request_permission_read_phone_state_message
+org.neidhardt.dynamicsoundboard.R$string: int request_permission_read_storage_message
+org.neidhardt.dynamicsoundboard.R$string: int request_permission_title
+org.neidhardt.dynamicsoundboard.R$string: int request_permission_write_storage_message
 org.neidhardt.dynamicsoundboard.R$string: int sound_control_content_description_loop
 org.neidhardt.dynamicsoundboard.R$string: int sound_control_content_description_play
 org.neidhardt.dynamicsoundboard.R$string: int sound_control_content_description_playlist
@@ -19378,6 +19603,7 @@ org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_DrawerArrowTo
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_DrawerArrowToggle_Common
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_DropDownItem_Spinner
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_EditText
+org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_ImageButton
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_Light_ActionBar
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_Light_ActionBar_Solid
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_Light_ActionBar_TabBar
@@ -19398,6 +19624,7 @@ org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_ProgressBar_H
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_RatingBar
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_SearchView
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_SearchView_ActionBar
+org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_SeekBar
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_Spinner
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_Spinner_Underlined
 org.neidhardt.dynamicsoundboard.R$style: int Base_Widget_AppCompat_TextView_SpinnerItem
@@ -19421,7 +19648,6 @@ org.neidhardt.dynamicsoundboard.R$style: int Platform_Widget_AppCompat_Spinner
 org.neidhardt.dynamicsoundboard.R$style: int ProgressBarAppTheme
 org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_DialogWindowTitle_AppCompat
 org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem
-org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_Widget_AppCompat_ActionButton_Overflow
 org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_Widget_AppCompat_DialogTitle_Icon
 org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem
 org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup
@@ -19432,6 +19658,8 @@ org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_Widget_AppCompat_Search_
 org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Query
 org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Text
 org.neidhardt.dynamicsoundboard.R$style: int RtlOverlay_Widget_AppCompat_SearchView_MagIcon
+org.neidhardt.dynamicsoundboard.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton
+org.neidhardt.dynamicsoundboard.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton_Overflow
 org.neidhardt.dynamicsoundboard.R$style: int SPB
 org.neidhardt.dynamicsoundboard.R$style: int SeekBarAppTheme
 org.neidhardt.dynamicsoundboard.R$style: int SmoothProgressBar
@@ -19480,6 +19708,8 @@ org.neidhardt.dynamicsoundboard.R$style: int TextAppearance_AppCompat_Widget_Pop
 org.neidhardt.dynamicsoundboard.R$style: int TextAppearance_AppCompat_Widget_Switch
 org.neidhardt.dynamicsoundboard.R$style: int TextAppearance_AppCompat_Widget_TextView_SpinnerItem
 org.neidhardt.dynamicsoundboard.R$style: int TextAppearance_Design_CollapsingToolbar_Expanded
+org.neidhardt.dynamicsoundboard.R$style: int TextAppearance_Design_Counter
+org.neidhardt.dynamicsoundboard.R$style: int TextAppearance_Design_Counter_Overflow
 org.neidhardt.dynamicsoundboard.R$style: int TextAppearance_Design_Error
 org.neidhardt.dynamicsoundboard.R$style: int TextAppearance_Design_Hint
 org.neidhardt.dynamicsoundboard.R$style: int TextAppearance_Design_Snackbar_Message
@@ -19538,6 +19768,7 @@ org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_CompoundButton_Swi
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_DrawerArrowToggle
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_DropDownItem_Spinner
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_EditText
+org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_ImageButton
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_Light_ActionBar
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_Light_ActionBar_Solid
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_Light_ActionBar_Solid_Inverse
@@ -19572,6 +19803,7 @@ org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_ProgressBar_Horizo
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_RatingBar
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_SearchView
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_SearchView_ActionBar
+org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_SeekBar
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_Spinner
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_Spinner_DropDown
 org.neidhardt.dynamicsoundboard.R$style: int Widget_AppCompat_Spinner_DropDown_ActionBar
@@ -19648,6 +19880,8 @@ org.neidhardt.dynamicsoundboard.R$styleable: int AppBarLayout_LayoutParams_layou
 org.neidhardt.dynamicsoundboard.R$styleable: int[] AppCompatTextView
 org.neidhardt.dynamicsoundboard.R$styleable: int AppCompatTextView_android_textAppearance
 org.neidhardt.dynamicsoundboard.R$styleable: int AppCompatTextView_textAllCaps
+org.neidhardt.dynamicsoundboard.R$styleable: int[] ButtonBarLayout
+org.neidhardt.dynamicsoundboard.R$styleable: int ButtonBarLayout_allowStacking
 org.neidhardt.dynamicsoundboard.R$styleable: int[] CollapsingAppBarLayout_LayoutParams
 org.neidhardt.dynamicsoundboard.R$styleable: int CollapsingAppBarLayout_LayoutParams_layout_collapseMode
 org.neidhardt.dynamicsoundboard.R$styleable: int CollapsingAppBarLayout_LayoutParams_layout_collapseParallaxMultiplier
@@ -19714,6 +19948,10 @@ org.neidhardt.dynamicsoundboard.R$styleable: int FloatingActionButton_fab_shadow
 org.neidhardt.dynamicsoundboard.R$styleable: int FloatingActionButton_fab_type
 org.neidhardt.dynamicsoundboard.R$styleable: int FloatingActionButton_pressedTranslationZ
 org.neidhardt.dynamicsoundboard.R$styleable: int FloatingActionButton_rippleColor
+org.neidhardt.dynamicsoundboard.R$styleable: int[] ForegroundLinearLayout
+org.neidhardt.dynamicsoundboard.R$styleable: int ForegroundLinearLayout_android_foreground
+org.neidhardt.dynamicsoundboard.R$styleable: int ForegroundLinearLayout_android_foregroundGravity
+org.neidhardt.dynamicsoundboard.R$styleable: int ForegroundLinearLayout_foregroundInsidePadding
 org.neidhardt.dynamicsoundboard.R$styleable: int[] IntroductionListItem
 org.neidhardt.dynamicsoundboard.R$styleable: int IntroductionListItem_action_icon
 org.neidhardt.dynamicsoundboard.R$styleable: int IntroductionListItem_action_summary
@@ -19944,6 +20182,10 @@ org.neidhardt.dynamicsoundboard.R$styleable: int TabLayout_tabSelectedTextColor
 org.neidhardt.dynamicsoundboard.R$styleable: int TabLayout_tabTextAppearance
 org.neidhardt.dynamicsoundboard.R$styleable: int TabLayout_tabTextColor
 org.neidhardt.dynamicsoundboard.R$styleable: int[] TextAppearance
+org.neidhardt.dynamicsoundboard.R$styleable: int TextAppearance_android_shadowColor
+org.neidhardt.dynamicsoundboard.R$styleable: int TextAppearance_android_shadowDx
+org.neidhardt.dynamicsoundboard.R$styleable: int TextAppearance_android_shadowDy
+org.neidhardt.dynamicsoundboard.R$styleable: int TextAppearance_android_shadowRadius
 org.neidhardt.dynamicsoundboard.R$styleable: int TextAppearance_android_textColor
 org.neidhardt.dynamicsoundboard.R$styleable: int TextAppearance_android_textSize
 org.neidhardt.dynamicsoundboard.R$styleable: int TextAppearance_android_textStyle
@@ -19952,6 +20194,10 @@ org.neidhardt.dynamicsoundboard.R$styleable: int TextAppearance_textAllCaps
 org.neidhardt.dynamicsoundboard.R$styleable: int[] TextInputLayout
 org.neidhardt.dynamicsoundboard.R$styleable: int TextInputLayout_android_hint
 org.neidhardt.dynamicsoundboard.R$styleable: int TextInputLayout_android_textColorHint
+org.neidhardt.dynamicsoundboard.R$styleable: int TextInputLayout_counterEnabled
+org.neidhardt.dynamicsoundboard.R$styleable: int TextInputLayout_counterMaxLength
+org.neidhardt.dynamicsoundboard.R$styleable: int TextInputLayout_counterOverflowTextAppearance
+org.neidhardt.dynamicsoundboard.R$styleable: int TextInputLayout_counterTextAppearance
 org.neidhardt.dynamicsoundboard.R$styleable: int TextInputLayout_errorEnabled
 org.neidhardt.dynamicsoundboard.R$styleable: int TextInputLayout_errorTextAppearance
 org.neidhardt.dynamicsoundboard.R$styleable: int TextInputLayout_hintAnimationEnabled
@@ -20024,6 +20270,7 @@ org.neidhardt.dynamicsoundboard.R$styleable: int Theme_editTextBackground
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_editTextColor
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_editTextStyle
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_homeAsUpIndicator
+org.neidhardt.dynamicsoundboard.R$styleable: int Theme_imageButtonStyle
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_listChoiceBackgroundIndicator
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_listDividerAlertDialog
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_listPopupWindowStyle
@@ -20040,6 +20287,7 @@ org.neidhardt.dynamicsoundboard.R$styleable: int Theme_popupWindowStyle
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_radioButtonStyle
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_ratingBarStyle
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_searchViewStyle
+org.neidhardt.dynamicsoundboard.R$styleable: int Theme_seekBarStyle
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_selectableItemBackground
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_selectableItemBackgroundBorderless
 org.neidhardt.dynamicsoundboard.R$styleable: int Theme_spinnerDropDownItemStyle
@@ -20338,8 +20586,6 @@ org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActio
 org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonPresenter: void onEvent(org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent)
 org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour
 org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour: FloatingActionButtonBehaviour(android.content.Context,android.util.AttributeSet)
-org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour2
-org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour2: FloatingActionButtonBehaviour2(android.content.Context,android.util.AttributeSet)
 org.neidhardt.dynamicsoundboard.views.progressbar.ActivityProgressBar
 org.neidhardt.dynamicsoundboard.views.progressbar.ActivityProgressBar: ActivityProgressBar(android.content.Context)
 org.neidhardt.dynamicsoundboard.views.progressbar.ActivityProgressBar: ActivityProgressBar(android.content.Context,android.util.AttributeSet)
