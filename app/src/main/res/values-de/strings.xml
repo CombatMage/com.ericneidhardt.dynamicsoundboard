@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<!-- com.emtronics.dragsortrecycler -->
+	<!-- misc -->
 	<string name="app_name">Dynamic Soundboard</string>
 	<string name="suggested_sound_sheet_name">neue Kategorie</string>
 	<string name="suggested_sound_layout_name">neues Abenteuer</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
+
+	<!-- permissions -->
+	<string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
+	<string name="request_permission_read_storage_message">Die Berechtigung vom Dateisystem zu lesen ist erforderlich um Sounddateien zum Abspielen zu laden. Die App wird ohne diese Berechtigung beendet.</string>
+	<string name="request_permission_write_storage_message">Die Berechtigung auf das Dateisystem zu schreiben wird unter anderem benötigt um die Sound Zusammenstellung abzuspeichern. Die App wird ohne diese Berechtigung beendet.</string>
 
 	<!-- soundmanagement -->
 	<string name="music_service_loading_sound_failed">Eine Sound konnte nicht geladen werden:</string>
@@ -113,6 +118,9 @@
 	</string>
 
 	<!-- dialog -->
+	<string name="dialog_grant">Erlauben</string>
+	<string name="dialog_close">Beenden</string>
+	<string name="dialog_denial">Verweigern</string>
 	<string name="dialog_ok">OK</string>
 	<string name="dialog_delete">Löschen</string>
 	<string name="dialog_add">Hinzufügen</string>
