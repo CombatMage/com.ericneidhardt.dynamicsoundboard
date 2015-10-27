@@ -35,11 +35,7 @@
 						android:id="@+id/main_frame"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
-						android:background="@color/background">
-
-					<include layout="@layout/view_introduction"/>
-
-				</FrameLayout>
+						android:background="@color/background"/>
 
 				<org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 						android:id="@+id/fab_add"
