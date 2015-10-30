@@ -48,6 +48,11 @@
 						app:fab_colorPressed="@color/accent_400"
 						app:fab_shadow="true"/>
 
+				<View
+						android:layout_width="match_parent"
+						android:layout_height="@dimen/height_shadow"
+						android:background="@drawable/shape_shadow_horizontal"/>
+
 				<include layout="@layout/progressbar"/>
 
 			</FrameLayout>

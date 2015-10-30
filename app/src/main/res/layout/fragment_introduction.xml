@@ -1,49 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
-			xmlns:android="http://schemas.android.com/apk/res/android"
-			xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/background_secondary">
+
+	<LinearLayout
 			android:orientation="vertical"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:background="@color/background_secondary">
+			android:layout_height="wrap_content">
 
-	<FrameLayout android:layout_width="match_parent"
-				 android:layout_height="wrap_content">
-
-		<LinearLayout
-				android:orientation="vertical"
+		<org.neidhardt.dynamicsoundboard.introduction.views.IntroductionListItem
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
+				android:layout_height="wrap_content"
+				app:action_icon="@drawable/ic_new_sound_layout"
+				app:action_title="@string/introduction_action_new_sound_sheet_title"
+				app:action_summary="@string/introduction_action_new_sound_sheet_summary"/>
 
-			<org.neidhardt.dynamicsoundboard.introduction.views.IntroductionListItem
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					app:action_icon="@drawable/ic_new_sound_layout"
-					app:action_title="@string/introduction_action_new_sound_sheet_title"
-					app:action_summary="@string/introduction_action_new_sound_sheet_summary"/>
+		<include layout="@layout/view_introduction_divider"/>
 
-			<include layout="@layout/view_introduction_divider"/>
-
-			<org.neidhardt.dynamicsoundboard.introduction.views.IntroductionListItem
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					app:action_icon="@drawable/ic_add_sound_dir"
-					app:action_title="@string/introduction_action_add_new_sound_from_dir_title"
-					app:action_summary="@string/introduction_action_add_new_sound_from_dir_summary"/>
-
-			<include layout="@layout/view_introduction_divider"/>
-
-			<org.neidhardt.dynamicsoundboard.introduction.views.IntroductionListItem
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					app:action_icon="@drawable/ic_add_sound"
-					app:action_title="@string/introduction_action_add_new_sound_title"
-					app:action_summary="@string/introduction_action_add_new_sound_summary"/>
-
-		</LinearLayout>
-		<View
+		<org.neidhardt.dynamicsoundboard.introduction.views.IntroductionListItem
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
-				android:background="@drawable/shape_shadow_horizontal"/>
-	</FrameLayout>
+				android:layout_height="wrap_content"
+				app:action_icon="@drawable/ic_add_sound_dir"
+				app:action_title="@string/introduction_action_add_new_sound_from_dir_title"
+				app:action_summary="@string/introduction_action_add_new_sound_from_dir_summary"/>
+
+		<include layout="@layout/view_introduction_divider"/>
+
+		<org.neidhardt.dynamicsoundboard.introduction.views.IntroductionListItem
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:action_icon="@drawable/ic_add_sound"
+				app:action_title="@string/introduction_action_add_new_sound_title"
+				app:action_summary="@string/introduction_action_add_new_sound_summary"/>
+
+	</LinearLayout>
 </android.support.v4.widget.NestedScrollView>

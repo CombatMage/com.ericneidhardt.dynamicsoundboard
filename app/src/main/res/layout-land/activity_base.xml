@@ -33,6 +33,11 @@
 					android:layout_height="match_parent"
 					android:background="@color/background"/>
 
+			<View
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/height_shadow"
+					android:background="@drawable/shape_shadow_horizontal"/>
+
 			<include layout="@layout/progressbar"/>
 
 		</FrameLayout>

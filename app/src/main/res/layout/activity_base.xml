@@ -33,6 +33,11 @@
 					android:layout_height="match_parent"
 					android:background="@color/background"/>
 
+			<View
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/height_shadow"
+					android:background="@drawable/shape_shadow_horizontal"/>
+
 			<include layout="@layout/progressbar"/>
 
 		</FrameLayout>
@@ -44,7 +49,6 @@
 				android:layout_margin="@dimen/margin_default"
 				android:layout_gravity="end|bottom"
 				android:src="@drawable/selector_ic_fab"
-				app:layout_behavior="org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour"
 				app:fab_colorNormal="@color/accent_200"
 				app:fab_colorPressed="@color/accent_400"
 				app:fab_shadow="true"/>

@@ -188,25 +188,30 @@ public class SoundActivity :
 		soundSheetLabel.setOnTextEditedListener(this)
 
 		val currentSoundSheetFragment = this.getCurrentSoundFragment()
-		if (currentSoundSheetFragment != null) {
+		if (currentSoundSheetFragment != null)
+		{
 			val currentActiveSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.fragmentTag)
 			if (currentActiveSoundSheet != null)
 				soundSheetLabel.setText(currentActiveSoundSheet.label)
 		}
 	}
 
-	private fun initNavigationDrawer() {
+	private fun initNavigationDrawer()
+	{
 		// The navigation drawer is fixed on tablets in landscape mode, therefore we need to check the Views type
 		val navigationDrawerLayout = this.findViewById(R.id.root_layout)
-		if (navigationDrawerLayout != null && navigationDrawerLayout is DrawerLayout) {
+		if (navigationDrawerLayout != null && navigationDrawerLayout is DrawerLayout)
+		{
 			this.navigationDrawerLayout = navigationDrawerLayout
 			this.drawerToggle = object : ActionBarDrawerToggle(this,
 					this.navigationDrawerLayout,
 					this.findViewById(R.id.toolbar) as Toolbar,
 					R.string.navigation_drawer_content_description_open,
 					R.string.navigation_drawer_content_description_close) {
+
 				// override onDrawerSlide and pass 0 to super disable arrow animation
-				override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+				override fun onDrawerSlide(drawerView: View, slideOffset: Float)
+				{
 					super.onDrawerSlide(drawerView, 0f)
 				}
 			}
@@ -350,7 +355,8 @@ public class SoundActivity :
 	 * @param event delivered FabClickedEvent
 	 */
 	@SuppressWarnings("unused")
-	public fun onEvent(event: FabClickedEvent) {
+	public fun onEvent(event: FabClickedEvent)
+	{
 		Logger.d(TAG, "onEvent: " + event)
 
 		val soundSheetFragment = this.getCurrentSoundFragment()
@@ -385,12 +391,14 @@ public class SoundActivity :
 		Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
 	}
 
-	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean
+	{
 		super.onOptionsItemSelected(item)
 		if (this.drawerToggle != null && this.drawerToggle!!.onOptionsItemSelected(item))
 			return true
 
-		when (item?.itemId) {
+		when (item?.itemId)
+		{
 			R.id.action_load_sound_sheets -> {
 				LoadLayoutDialog.showInstance(this.fragmentManager)
 				return true
@@ -417,18 +425,23 @@ public class SoundActivity :
 		}
 	}
 
-	override fun onClick(view: View) {
-		when (view.id) {
+	override fun onClick(view: View)
+	{
+		when (view.id)
+		{
 			R.id.action_add_sound_sheet -> AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
 			else -> Logger.e(TAG, "unknown item clicked " + view)
 		}
 	}
 
-	override fun onTextEdited(text: String) {
+	override fun onTextEdited(text: String)
+	{
 		val currentSoundSheetFragment = this.getCurrentSoundFragment()
-		if (currentSoundSheetFragment != null) {
+		if (currentSoundSheetFragment != null)
+		{
 			val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.fragmentTag)
-			if (soundSheet != null) {
+			if (soundSheet != null)
+			{
 				soundSheet.label = text
 				soundSheet.updateItemInDatabaseAsync()
 				this.eventBus.post(SoundSheetChangedEvent(soundSheet))
@@ -436,18 +449,21 @@ public class SoundActivity :
 		}
 	}
 
-	override fun onSupportActionModeStarted(mode: ActionMode?) {
+	override fun onSupportActionModeStarted(mode: ActionMode?)
+	{
 		super.onSupportActionModeStarted(mode)
 		this.isActionModeActive = true
 	}
 
-	override fun onSupportActionModeFinished(mode: ActionMode?) {
+	override fun onSupportActionModeFinished(mode: ActionMode?)
+	{
 		super.onSupportActionModeFinished(mode)
 		this.isActionModeActive = false
 	}
 
 	@SuppressWarnings("ResourceType") // for unknown reason, inspection demand using Gravity.START, but this would lead to warnings
-	fun closeNavigationDrawer() {
+	fun closeNavigationDrawer()
+	{
 		if (this.navigationDrawerLayout == null)
 			return
 		if (this.navigationDrawerLayout!!.isDrawerOpen(Gravity.START))
@@ -458,12 +474,14 @@ public class SoundActivity :
 		return this.fragmentManager.findFragmentById(R.id.navigation_drawer_fragment) as NavigationDrawerFragment
 	}
 
-	public fun removeSoundFragments(soundSheets: List<SoundSheet>?) {
+	public fun removeSoundFragments(soundSheets: List<SoundSheet>?)
+	{
 		if (soundSheets == null || soundSheets.size() == 0)
 			return
 
 		val fragmentManager = this.fragmentManager
-		for (soundSheet in soundSheets) {
+		for (soundSheet in soundSheets)
+		{
 			val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag)
 			if (fragment != null)
 				fragmentManager.beginTransaction().remove(fragment).commit()
@@ -536,7 +554,7 @@ public class SoundActivity :
 	private fun getCurrentSoundFragment(): SoundSheetFragment?
 	{
 		val currentFragment = this.fragmentManager.findFragmentById(R.id.main_frame)
-		if (currentFragment != null && currentFragment.isVisible && currentFragment is SoundSheetFragment)
+		if (currentFragment != null && currentFragment is SoundSheetFragment)
 			return currentFragment
 		return null
 	}

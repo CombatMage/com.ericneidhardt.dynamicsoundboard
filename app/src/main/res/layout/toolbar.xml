@@ -14,5 +14,4 @@
 
 	<include layout="@layout/view_toolbar_content"/>
 
-
 </android.support.v7.widget.Toolbar>
