@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
@@ -66,7 +67,8 @@ public class SoundActivity :
 		OnOpenSoundLayoutSettingsEvent,
 		OnSoundSheetOpenEventListener,
 		OnSoundSheetsInitEventLisenter,
-		OnSoundSheetsChangedEventListener {
+		OnSoundSheetsChangedEventListener
+{
 	private val TAG = javaClass.name
 
 	public var isActivityVisible = true
@@ -87,7 +89,8 @@ public class SoundActivity :
 	private val soundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataAccess()
 	private val soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
 
-	override fun onCreate(savedInstanceState: Bundle?) {
+	override fun onCreate(savedInstanceState: Bundle?)
+	{
 		super.onCreate(savedInstanceState)
 		this.setContentView(R.layout.activity_base)
 
@@ -104,7 +107,7 @@ public class SoundActivity :
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
 			this.requestPermissionsReadPhoneState()
 
-		this.initActionbar()
+		this.initToolbar()
 		this.initNavigationDrawer()
 		this.openIntroductionFragmentIfRequired()
 
@@ -112,30 +115,35 @@ public class SoundActivity :
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
 	}
 
-	private fun requestPermissionsReadPhoneState() {
+	private fun requestPermissionsReadPhoneState()
+	{
 		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE))
 			ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_phone_state_message, Manifest.permission.READ_PHONE_STATE, false)
 		else
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
 	}
 
-	private fun requestPermissionsReadStorage() {
+	private fun requestPermissionsReadStorage()
+	{
 		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE))
 			ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_storage_message, Manifest.permission.READ_EXTERNAL_STORAGE, true)
 		else
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_READ_STORAGE)
 	}
 
-	private fun requestPermissionsWriteStorage() {
+	private fun requestPermissionsWriteStorage()
+	{
 		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 			ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_write_storage_message, Manifest.permission.WRITE_EXTERNAL_STORAGE, true)
 		else
 			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE)
 	}
 
-	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
+	{
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-		when (requestCode) {
+		when (requestCode)
+		{
 			IntentRequest.REQUEST_PERMISSION_READ_STORAGE -> {
 				if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 					this.soundsDataUtil.initIfRequired()
@@ -152,16 +160,19 @@ public class SoundActivity :
 		}
 	}
 
-	override fun onNewIntent(intent: Intent?) {
+	override fun onNewIntent(intent: Intent?)
+	{
 		super.onNewIntent(intent)
 		this.handleIntent(intent)
 	}
 
-	public fun handleIntent(intent: Intent?) {
+	public fun handleIntent(intent: Intent?)
+	{
 		if (intent == null)
 			return
 
-		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
+		if (intent.action == Intent.ACTION_VIEW && intent.data != null)
+		{
 			if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
 				AddNewSoundFromIntent.showInstance(this.fragmentManager, intent.data,
 						this.soundSheetsDataUtil.getSuggestedName(), null)
@@ -171,12 +182,17 @@ public class SoundActivity :
 		}
 	}
 
-	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean
+	{
 		this.menuInflater.inflate(R.menu.overflow_menu, menu)
 		return true
 	}
 
-	private fun initActionbar() {
+	private fun initToolbar()
+	{
+		val appBarLayout = this.findViewById(R.id.appBarLayout) as AppBarLayout
+		appBarLayout.setExpanded(true);
+
 		val toolbar = this.findViewById(R.id.toolbar) as Toolbar
 		this.setSupportActionBar(toolbar)
 
@@ -207,7 +223,8 @@ public class SoundActivity :
 					this.navigationDrawerLayout,
 					this.findViewById(R.id.toolbar) as Toolbar,
 					R.string.navigation_drawer_content_description_open,
-					R.string.navigation_drawer_content_description_close) {
+					R.string.navigation_drawer_content_description_close)
+			{
 
 				// override onDrawerSlide and pass 0 to super disable arrow animation
 				override fun onDrawerSlide(drawerView: View, slideOffset: Float)
