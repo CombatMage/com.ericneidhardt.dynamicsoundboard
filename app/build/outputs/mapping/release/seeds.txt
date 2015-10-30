@@ -18753,6 +18753,7 @@ org.neidhardt.dynamicsoundboard.R$dimen: int height_list_item_large
 org.neidhardt.dynamicsoundboard.R$dimen: int height_list_item_xlarge
 org.neidhardt.dynamicsoundboard.R$dimen: int height_navigation_drawer_header
 org.neidhardt.dynamicsoundboard.R$dimen: int height_shadow
+org.neidhardt.dynamicsoundboard.R$dimen: int height_shadow_fixed
 org.neidhardt.dynamicsoundboard.R$dimen: int height_title
 org.neidhardt.dynamicsoundboard.R$dimen: int highlight_alpha_material_colored
 org.neidhardt.dynamicsoundboard.R$dimen: int highlight_alpha_material_dark
