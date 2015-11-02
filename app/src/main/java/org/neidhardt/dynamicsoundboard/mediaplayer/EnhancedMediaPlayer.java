@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import java.io.IOException;
 
 
-public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener, Runnable
+public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener, Runnable
 {
 	private static final String TAG = EnhancedMediaPlayer.class.getName();
 
@@ -39,6 +39,8 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		DESTROYED
 	}
 
+	private EventBus eventBus = EventBus.getDefault();
+
 	private State currentState;
 	private int duration;
 	private int volume;
@@ -54,6 +56,9 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 		this.soundsDataAccess = soundsDataAccess;
 		this.rawData = data;
+
+		this.setOnErrorListener(this);
+
 		this.setLooping(data.getIsLoop());
 
 		this.currentState = State.IDLE;
@@ -65,6 +70,9 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		super();
 
 		this.rawData = data;
+
+		this.setOnErrorListener(this);
+
 		this.setLooping(data.getIsLoop());
 
 		this.currentState = State.IDLE;
@@ -412,12 +420,32 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 
 	private void postStateChangedEvent(boolean isAlive)
 	{
-		EventBus.getDefault().post(new MediaPlayerStateChangedEvent(this, isAlive));
+		this.eventBus.post(new MediaPlayerStateChangedEvent(this, isAlive));
 	}
 
 	private void postCompletedEvent()
 	{
-		EventBus.getDefault().post(new MediaPlayerCompletedEvent(this));
+		this.eventBus.post(new MediaPlayerCompletedEvent(this));
 	}
 
+	@Override
+	public boolean onError(MediaPlayer mp, int what, int extra)
+	{
+		Logger.e(TAG, "onError(" + mp.toString() + ") what: " + what + " extra: " + extra);
+
+		return false;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "EnhancedMediaPlayer{" +
+				"currentState=" + currentState +
+				", duration=" + duration +
+				", volume=" + volume +
+				", handler=" + handler +
+				", soundsDataAccess=" + soundsDataAccess +
+				", rawData=" + rawData +
+				'}';
+	}
 }
