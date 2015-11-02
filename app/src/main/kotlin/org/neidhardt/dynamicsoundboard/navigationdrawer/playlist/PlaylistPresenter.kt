@@ -41,7 +41,11 @@ public class PlaylistPresenter
 	{
 		super.onAttachedToWindow()
 		this.values.clear()
-		this.values.addAll(this.soundsDataAccess.getPlaylist())
+
+		val playlist = this.soundsDataAccess.getPlaylist()
+		this.setPlaylistSortOrder(playlist)
+		this.values.addAll(playlist)
+
 		this.adapter?.notifyDataSetChanged()
 		this.adapter?.startProgressUpdateTimer()
 	}
@@ -50,7 +54,6 @@ public class PlaylistPresenter
 	{
 		this.adapter?.stopProgressUpdateTimer()
 	}
-
 
 	override fun deleteSelectedItems()
 	{
@@ -132,7 +135,11 @@ public class PlaylistPresenter
 	override fun onEventMainThread(event: PlaylistChangedEvent)
 	{
 		this.values.clear()
-		this.values.addAll(this.soundsDataAccess.getPlaylist())
+
+		val playlist = this.soundsDataAccess.getPlaylist()
+		this.setPlaylistSortOrder(playlist)
+		this.values.addAll(playlist)
+
 		this.adapter?.notifyDataSetChanged()
 		this.adapter?.startProgressUpdateTimer()
 	}
@@ -144,6 +151,9 @@ public class PlaylistPresenter
 		{
 			val index = this.values.indexOf(player)
 			this.values.remove(player)
+
+			this.setPlaylistSortOrder(this.values)
+
 			this.adapter?.notifyItemRemoved(index)
 		}
 		else
@@ -165,6 +175,16 @@ public class PlaylistPresenter
 
 			this.values.get(this.currentItemIndex!!).playSound()
 			this.adapter?.notifyDataSetChanged()
+		}
+	}
+
+	private fun setPlaylistSortOrder(playlist: List<EnhancedMediaPlayer>)
+	{
+		val count = playlist.size()
+		for (i in 0..count - 1)
+		{
+			playlist.get(i).getMediaPlayerData()?.sortOrder = i
+			playlist.get(i).mediaPlayerData?.updateItemInDatabaseAsync()
 		}
 	}
 }
