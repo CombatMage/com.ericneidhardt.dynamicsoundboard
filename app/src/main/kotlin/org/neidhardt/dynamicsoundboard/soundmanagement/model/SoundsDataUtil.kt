@@ -16,7 +16,7 @@ public interface SoundsDataUtil
 	/**
 	 * Release all existing `EnhancedMediaPlayer` loaded in sounds and playlist.
 	 */
-	public fun release()
+	public fun releaseAll()
 
 	/**
 	 * Check if the given sound is part of the playlist or part of the regular sounds

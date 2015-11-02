@@ -75,7 +75,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		}
 	}
 
-	override fun release()
+	override fun releaseAll()
 	{
 		this.isInitDone = false
 

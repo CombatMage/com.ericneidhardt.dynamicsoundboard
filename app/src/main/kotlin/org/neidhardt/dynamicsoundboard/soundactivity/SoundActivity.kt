@@ -322,7 +322,7 @@ public class SoundActivity :
 		this.setSoundSheetActionsEnable(false)
 		this.soundSheetsDataUtil.initIfRequired()
 
-		this.soundsDataUtil.release()
+		this.soundsDataUtil.releaseAll()
 		this.soundsDataUtil.initIfRequired()
 	}
 

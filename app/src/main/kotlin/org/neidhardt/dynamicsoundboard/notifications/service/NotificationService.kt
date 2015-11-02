@@ -53,7 +53,7 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 
 		this.eventBus.unregister(this)
 		this.notificationHandler!!.onServiceDestroyed()
-		this.soundsDataUtil.release()
+		this.soundsDataUtil.releaseAll()
 
 		super.onDestroy()
 	}
