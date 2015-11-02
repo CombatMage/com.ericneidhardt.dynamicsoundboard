@@ -155,10 +155,10 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 				this.getSoundSheetsDataStorage().addSoundSheetToManager(soundSheet);
 
 				String fragmentTag = soundSheet.getFragmentTag();
-				mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(fragmentTag, uri, soundLabel);
+				mediaPlayerData = EnhancedMediaPlayer.Companion.getMediaPlayerData(fragmentTag, uri, soundLabel);
 			}
 			else
-				mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, uri, soundLabel);
+				mediaPlayerData = EnhancedMediaPlayer.Companion.getMediaPlayerData(this.fragmentTag, uri, soundLabel);
 
 			this.getSoundsDataStorage().createSoundAndAddToManager(mediaPlayerData);
 		}

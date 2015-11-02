@@ -180,7 +180,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 		String soundLabel = this.soundName.getText().toString();
 		Uri soundUri = this.uri;
 
-		MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.getMediaPlayerData(soundSheetFragmentTag, soundUri, soundLabel);
+		MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.Companion.getMediaPlayerData(soundSheetFragmentTag, soundUri, soundLabel);
 		this.getSoundsDataStorage().createSoundAndAddToManager(mediaPlayerData);
 	}
 

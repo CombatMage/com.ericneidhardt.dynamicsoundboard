@@ -99,7 +99,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean = this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.fragmentTag)
 
-	override fun getCurrentlyPlayingSounds(): Set<EnhancedMediaPlayer> = this.currentlyPlayingSounds
+	override fun getCurrentlyPlayingSounds(): MutableSet<EnhancedMediaPlayer> = this.currentlyPlayingSounds
 
 	override fun getPlaylist(): List<EnhancedMediaPlayer> = this.playlist
 
@@ -303,7 +303,11 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		try
 		{
-			return EnhancedMediaPlayer(playerData, this)
+			return EnhancedMediaPlayer(
+					context = DynamicSoundboardApplication.getContext(),
+					eventBus = this.eventBus,
+					mediaPlayerData = playerData,
+					soundsDataAccess = this)
 		}
 		catch (e: IOException) {
 			Logger.d(TAG, e.getMessage())

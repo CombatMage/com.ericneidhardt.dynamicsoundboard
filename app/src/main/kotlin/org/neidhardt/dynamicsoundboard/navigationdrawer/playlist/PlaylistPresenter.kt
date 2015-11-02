@@ -183,7 +183,7 @@ public class PlaylistPresenter
 		val count = playlist.size()
 		for (i in 0..count - 1)
 		{
-			playlist.get(i).getMediaPlayerData()?.sortOrder = i
+			playlist.get(i).mediaPlayerData?.sortOrder = i
 			playlist.get(i).mediaPlayerData?.updateItemInDatabaseAsync()
 		}
 	}

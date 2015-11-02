@@ -11,7 +11,7 @@ public interface SoundsDataAccess
 	 * Retrieve a set of currently playing sound in the whole SoundBoard.
 	 * @return a set of currently playing sounds
 	 */
-	public fun getCurrentlyPlayingSounds(): Set<EnhancedMediaPlayer>
+	public fun getCurrentlyPlayingSounds(): MutableSet<EnhancedMediaPlayer>
 
 	/**
 	 * Retrieve a list of sounds currently in Playlist
