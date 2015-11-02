@@ -38,7 +38,7 @@ public class SoundViewHolder
     private val TAG = javaClass.name
 
 	private val HEIGHT_LIST_ITEM = itemView.resources.getDimensionPixelSize(R.dimen.height_list_item_xlarge)
-	private val HEIGHT_SHADOW = itemView.resources.getDimensionPixelSize(R.dimen.height_shadow)
+	private val HEIGHT_SHADOW = itemView.resources.getDimensionPixelSize(R.dimen.height_shadow_fixed)
 
 	private val eventBus = eventBus
 	private val soundsDataStorage = soundsDataStorage

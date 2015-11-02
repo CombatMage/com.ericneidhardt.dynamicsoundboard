@@ -23,26 +23,26 @@
 
 		<View
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
+				android:layout_height="@dimen/height_shadow_fixed"
 				android:background="@drawable/shape_shadow_horizontal"/>
 
 		<View
 				android:id="@+id/v_shadow_bottom_left"
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
+				android:layout_height="@dimen/height_shadow_fixed"
 				android:layout_gravity="bottom"
 				android:rotation="180"
 				android:background="@drawable/shape_shadow_horizontal"/>
 
 		<View
-				android:layout_width="@dimen/height_shadow"
+				android:layout_width="@dimen/height_shadow_fixed"
 				android:layout_height="@dimen/height_list_item_xlarge"
 				android:layout_gravity="end"
 				android:rotation="180"
 				android:background="@drawable/shape_shadow_vertical"/>
 
 		<View
-				android:layout_width="@dimen/height_shadow"
+				android:layout_width="@dimen/height_shadow_fixed"
 				android:layout_height="@dimen/height_list_item_xlarge"
 				android:layout_gravity="start"
 				android:background="@drawable/shape_shadow_vertical"/>
@@ -63,7 +63,7 @@
 		<View
 				android:id="@+id/v_shadow_bottom"
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
+				android:layout_height="@dimen/height_shadow_fixed"
 				android:visibility="gone"
 				android:background="@drawable/shape_shadow_horizontal"/>
 
@@ -88,26 +88,26 @@
 
 		<View
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
+				android:layout_height="@dimen/height_shadow_fixed"
 				android:background="@drawable/shape_shadow_horizontal"/>
 
 		<View
 				android:id="@+id/v_shadow_bottom_right"
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/height_shadow"
+				android:layout_height="@dimen/height_shadow_fixed"
 				android:layout_gravity="bottom"
 				android:rotation="180"
 				android:background="@drawable/shape_shadow_horizontal"/>
 
 		<View
-				android:layout_width="@dimen/height_shadow"
+				android:layout_width="@dimen/height_shadow_fixed"
 				android:layout_height="@dimen/height_list_item_xlarge"
 				android:layout_gravity="end"
 				android:rotation="180"
 				android:background="@drawable/shape_shadow_vertical"/>
 
 		<View
-				android:layout_width="@dimen/height_shadow"
+				android:layout_width="@dimen/height_shadow_fixed"
 				android:layout_height="@dimen/height_list_item_xlarge"
 				android:layout_gravity="start"
 				android:background="@drawable/shape_shadow_vertical"/>
