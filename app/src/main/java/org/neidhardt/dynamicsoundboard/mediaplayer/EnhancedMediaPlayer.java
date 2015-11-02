@@ -18,7 +18,14 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess;
 import java.io.IOException;
 
 
-public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener, Runnable
+public class EnhancedMediaPlayer
+		extends
+			MediaPlayer
+		implements
+			MediaPlayer.OnCompletionListener,
+			MediaPlayer.OnErrorListener,
+			MediaPlayer.OnInfoListener,
+			Runnable
 {
 	private static final String TAG = EnhancedMediaPlayer.class.getName();
 
@@ -58,6 +65,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.rawData = data;
 
 		this.setOnErrorListener(this);
+		this.setOnInfoListener(this);
 
 		this.setLooping(data.getIsLoop());
 
@@ -72,6 +80,7 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.rawData = data;
 
 		this.setOnErrorListener(this);
+		this.setOnInfoListener(this);
 
 		this.setLooping(data.getIsLoop());
 
@@ -418,13 +427,11 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 		this.postCompletedEvent();
 	}
 
-	private void postStateChangedEvent(boolean isAlive)
-	{
+	private void postStateChangedEvent(boolean isAlive) {
 		this.eventBus.post(new MediaPlayerStateChangedEvent(this, isAlive));
 	}
 
-	private void postCompletedEvent()
-	{
+	private void postCompletedEvent() {
 		this.eventBus.post(new MediaPlayerCompletedEvent(this));
 	}
 
@@ -432,6 +439,14 @@ public class EnhancedMediaPlayer extends MediaPlayer implements MediaPlayer.OnCo
 	public boolean onError(MediaPlayer mp, int what, int extra)
 	{
 		Logger.e(TAG, "onError(" + mp.toString() + ") what: " + what + " extra: " + extra);
+
+		return false;
+	}
+
+	@Override
+	public boolean onInfo(MediaPlayer mp, int what, int extra)
+	{
+		Logger.d(TAG, "onError(" + mp.toString() + ") what: " + what + " extra: " + extra);
 
 		return false;
 	}

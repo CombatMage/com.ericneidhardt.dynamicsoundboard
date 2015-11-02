@@ -64,8 +64,6 @@ public class AnimationUtils
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	public static Animator createCircularReveal(View view, int startX, int startY, float startRadius, float endRadius)
 	{
-		Logger.d(TAG, "createCircularReveal(" + view + "," + startX + "," + startY + "," + startRadius + "," + endRadius + ")");
-
 		if (!Util.IS_LOLLIPOP_AVAILABLE)
 			return null;
 
