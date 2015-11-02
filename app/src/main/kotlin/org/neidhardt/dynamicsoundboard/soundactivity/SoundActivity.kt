@@ -293,7 +293,7 @@ public class SoundActivity :
 
 		if (this.isFinishing) {
 			// we remove all loaded sounds, which have no corresponding SoundSheet
-			val fragmentsWithLoadedSounds = this.soundsDataAccess.getSounds().keySet()
+			val fragmentsWithLoadedSounds = this.soundsDataAccess.sounds.keySet()
 			val fragmentsWithLoadedSoundsToRemove = HashSet<String>()
 
 			for (fragmentTag in fragmentsWithLoadedSounds) {
@@ -377,7 +377,7 @@ public class SoundActivity :
 		Logger.d(TAG, "onEvent: " + event)
 
 		val soundSheetFragment = this.getCurrentSoundFragment()
-		val currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds()
+		val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
 		if (currentlyPlayingSounds.size() > 0) {
 			val copyCurrentlyPlayingSounds = ArrayList<EnhancedMediaPlayer>(currentlyPlayingSounds.size())
 			copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds)

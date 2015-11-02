@@ -28,9 +28,9 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	private var dbPlaylist: DaoSession? = null
 	private var dbSounds: DaoSession? = null
 
-	private val sounds: MutableMap<String, MutableList<EnhancedMediaPlayer>> = HashMap()
-	private val playlist: MutableList<EnhancedMediaPlayer> = ArrayList()
-	private val currentlyPlayingSounds: MutableSet<EnhancedMediaPlayer> = HashSet()
+	override val sounds: MutableMap<String, MutableList<EnhancedMediaPlayer>> = HashMap()
+	override val playlist: MutableList<EnhancedMediaPlayer> = ArrayList()
+	override val currentlyPlayingSounds: MutableSet<EnhancedMediaPlayer> = HashSet()
 
 	private var isInitDone: Boolean = false
 
@@ -45,7 +45,6 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getContext(), getDatabaseNameSounds(this.soundLayoutsAccess))
 		return this.dbSounds as DaoSession
 	}
-
 
 	override fun getDbPlaylist(): DaoSession
 	{
@@ -98,12 +97,6 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	}
 
 	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean = this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.fragmentTag)
-
-	override fun getCurrentlyPlayingSounds(): MutableSet<EnhancedMediaPlayer> = this.currentlyPlayingSounds
-
-	override fun getPlaylist(): List<EnhancedMediaPlayer> = this.playlist
-
-	override fun getSounds(): Map<String, List<EnhancedMediaPlayer>> = this.sounds
 
 	override fun getSoundsInFragment(fragmentTag: String): List<EnhancedMediaPlayer>
 	{

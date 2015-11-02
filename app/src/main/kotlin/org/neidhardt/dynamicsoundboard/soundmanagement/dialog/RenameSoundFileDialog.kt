@@ -106,14 +106,14 @@ private class RenameSoundFileDialogPresenter
 	{
 		val players = ArrayList<EnhancedMediaPlayer>()
 
-		val playlist = this.soundsDataAccess.getPlaylist()
+		val playlist = this.soundsDataAccess.playlist
 		for (player in playlist)
 		{
 			if (player.mediaPlayerData.uri == uri)
 				players.add(player)
 		}
 
-		val fragments = this.soundsDataAccess.getSounds().keySet()
+		val fragments = this.soundsDataAccess.sounds.keySet()
 		for (fragment in fragments)
 		{
 			val soundsInFragment = this.soundsDataAccess.getSoundsInFragment(fragment)

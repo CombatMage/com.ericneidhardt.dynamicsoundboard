@@ -63,7 +63,7 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 		if (event.isActivityClosed)
 		{
 			this.isActivityVisible = false
-			if (this.soundsDataAccess.getCurrentlyPlayingSounds().size() == 0)
+			if (this.soundsDataAccess.currentlyPlayingSounds.size() == 0)
 				this.stopSelf()
 		}
 		else if (event.isActivityResumed)

@@ -11,19 +11,19 @@ public interface SoundsDataAccess
 	 * Retrieve a set of currently playing sound in the whole SoundBoard.
 	 * @return a set of currently playing sounds
 	 */
-	public fun getCurrentlyPlayingSounds(): MutableSet<EnhancedMediaPlayer>
+	public val currentlyPlayingSounds: MutableSet<EnhancedMediaPlayer>
 
 	/**
 	 * Retrieve a list of sounds currently in Playlist
 	 * @return a list of sound in the current Playlist
 	 */
-	public fun getPlaylist(): List<EnhancedMediaPlayer>
+	public val playlist: List<EnhancedMediaPlayer>
 
 	/**
 	 * Retrieve a map of all sound in every SoundSheet.
 	 * @return a map of sounds, currently added sound to SoundSheets
 	 */
-	public fun getSounds(): Map<String, List<EnhancedMediaPlayer>>
+	public val sounds: Map<String, List<EnhancedMediaPlayer>>
 
 	/**
 	 * Retrieve a List of sound in a certain SoundSheet. The SoundSheet is identified by it's fragment tag.

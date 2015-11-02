@@ -93,7 +93,7 @@ class EnhancedMediaPlayer
 		this.currentState = State.DESTROYED
 		this.reset()
 		this.release()
-		this.soundsDataAccess.getCurrentlyPlayingSounds().remove(this)
+		this.soundsDataAccess.currentlyPlayingSounds.remove(this)
 		if (postStateChanged)
 			this.postStateChangedEvent(false)
 	}
@@ -167,7 +167,7 @@ class EnhancedMediaPlayer
 			this.start()
 			this.currentState = State.STARTED
 
-			this.soundsDataAccess.getCurrentlyPlayingSounds().add(this)
+			this.soundsDataAccess.currentlyPlayingSounds.add(this)
 			this.postStateChangedEvent(true)
 			return true
 		}
@@ -228,7 +228,7 @@ class EnhancedMediaPlayer
 			this.pause()
 			this.currentState = State.PAUSED
 
-			this.soundsDataAccess.getCurrentlyPlayingSounds().remove(this)
+			this.soundsDataAccess.currentlyPlayingSounds.remove(this)
 			this.postStateChangedEvent(true)
 			return true
 		}
@@ -354,7 +354,7 @@ class EnhancedMediaPlayer
 
 		// for unknown reason, this must be set to paused instead of stopped. This contradicts MediaPlayer Documentation, but calling prepare for restart throws illegal state exception
 		this.currentState = State.PAUSED
-		this.soundsDataAccess.getCurrentlyPlayingSounds().remove(this)
+		this.soundsDataAccess.currentlyPlayingSounds.remove(this)
 		this.postStateChangedEvent(true)
 		this.postCompletedEvent()
 	}

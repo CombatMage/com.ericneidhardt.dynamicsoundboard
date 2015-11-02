@@ -42,7 +42,7 @@ public class PlaylistPresenter
 		super.onAttachedToWindow()
 		this.values.clear()
 
-		val playlist = this.soundsDataAccess.getPlaylist()
+		val playlist = this.soundsDataAccess.playlist
 		this.setPlaylistSortOrder(playlist)
 		this.values.addAll(playlist)
 
@@ -136,7 +136,7 @@ public class PlaylistPresenter
 	{
 		this.values.clear()
 
-		val playlist = this.soundsDataAccess.getPlaylist()
+		val playlist = this.soundsDataAccess.playlist
 		this.setPlaylistSortOrder(playlist)
 		this.values.addAll(playlist)
 
@@ -183,8 +183,8 @@ public class PlaylistPresenter
 		val count = playlist.size()
 		for (i in 0..count - 1)
 		{
-			playlist.get(i).mediaPlayerData?.sortOrder = i
-			playlist.get(i).mediaPlayerData?.updateItemInDatabaseAsync()
+			playlist.get(i).mediaPlayerData.sortOrder = i
+			playlist.get(i).mediaPlayerData.updateItemInDatabaseAsync()
 		}
 	}
 }

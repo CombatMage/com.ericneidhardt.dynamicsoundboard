@@ -147,8 +147,8 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 			JsonPojo.writeToFile(
 					super.adapter.selectedFiles.elementAt(0),
 					this.soundSheetsDataAccess.getSoundSheets(),
-					this.soundsDataAccess.getPlaylist(),
-					this.soundsDataAccess.getSounds())
+					this.soundsDataAccess.playlist,
+					this.soundsDataAccess.sounds)
 
 			this.dismiss()
 		}

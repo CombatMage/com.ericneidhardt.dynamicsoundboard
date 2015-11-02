@@ -137,7 +137,7 @@ public class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.
 
 	private fun addLoadedPlayList(playList: List<MediaPlayerData>)
 	{
-		this.soundsDataStorage.removeSoundsFromPlaylist(this.soundsDataAccess.getPlaylist()) // clear playlist before adding new values
+		this.soundsDataStorage.removeSoundsFromPlaylist(this.soundsDataAccess.playlist) // clear playlist before adding new values
 
 		for (mediaPlayerData in playList)
 			this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData)
