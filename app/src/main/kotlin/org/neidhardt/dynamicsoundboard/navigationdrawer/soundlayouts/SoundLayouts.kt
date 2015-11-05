@@ -80,15 +80,11 @@ public class SoundLayouts : NavigationDrawerList
 		this.presenter.view = this
 	}
 
-	override fun getItemCount(): Int
-	{
-		return presenter.values.size()
-	}
+	override val itemCount: Int
+		get() = presenter.values.size()
 
-	override fun getActionModeTitle(): Int
-	{
-		return R.string.cab_title_delete_sound_layouts
-	}
+	override val actionModeTitle: Int
+		get() = R.string.cab_title_delete_sound_layouts
 
 	public fun isActive(): Boolean
 	{
@@ -113,8 +109,4 @@ public class SoundLayouts : NavigationDrawerList
 		this.visibility = View.INVISIBLE
 	}
 
-	override fun getPresenter(): NavigationDrawerListPresenter<*>?
-	{
-		return this.presenter
-	}
 }

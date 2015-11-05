@@ -27,6 +27,8 @@ class ActionbarEditText(context: Context, attrs: AttributeSet) :
 	override fun inflateLayout(context: Context)
 	{
 		LayoutInflater.from(context).inflate(R.layout.view_actionbar_edittext, this, true)
+
+		this.input = this.findViewById(R.id.edittext) as EditTextBackEvent
 		this.divider = this.findViewById(R.id.v_divider)
 
 		this.disableEditText()

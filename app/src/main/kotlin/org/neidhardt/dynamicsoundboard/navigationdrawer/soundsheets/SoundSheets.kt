@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
 
@@ -77,19 +76,11 @@ public class SoundSheets : NavigationDrawerList
 		this.presenter.view = this
 	}
 
-	override fun getActionModeTitle(): Int
-	{
-		return R.string.cab_title_delete_sound_sheets
-	}
+	override val itemCount: Int
+		get() = presenter.values.size()
 
-	override fun getItemCount(): Int
-	{
-		return presenter.values.size()
-	}
+	override val actionModeTitle: Int
+		get() = R.string.cab_title_delete_sound_sheets
 
-	override fun getPresenter(): NavigationDrawerListPresenter<*>?
-	{
-		return this.presenter
-	}
 }
 

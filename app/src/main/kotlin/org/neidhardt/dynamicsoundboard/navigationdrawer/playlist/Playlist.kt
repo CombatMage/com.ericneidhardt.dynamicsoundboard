@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
 /**
@@ -75,22 +74,16 @@ public class Playlist : NavigationDrawerList
 		super.onDetachedFromWindow()
 	}
 
-	override fun onFinishInflate() {
+	override fun onFinishInflate()
+	{
 		super.onFinishInflate()
 		this.presenter.view = this
 	}
 
-	override fun getActionModeTitle(): Int {
-		return R.string.cab_title_delete_play_list_sounds
-	}
+	override val itemCount: Int
+		get() = this.adapter.itemCount
 
-	override fun getItemCount(): Int
-	{
-		return this.adapter.itemCount
-	}
+	override val actionModeTitle: Int
+		get() = R.string.cab_title_delete_play_list_sounds
 
-	override fun getPresenter(): NavigationDrawerListPresenter<*>?
-	{
-		return this.presenter
-	}
 }

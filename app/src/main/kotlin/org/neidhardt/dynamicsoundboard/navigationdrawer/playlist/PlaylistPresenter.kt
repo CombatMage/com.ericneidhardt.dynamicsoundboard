@@ -71,10 +71,8 @@ public class PlaylistPresenter
 		super.onSelectedItemsDeleted()
 	}
 
-	override fun getNumberOfItemsSelectedForDeletion(): Int
-	{
-		return this.getPlayersSelectedForDeletion().size()
-	}
+	override val numberOfItemsSelectedForDeletion: Int
+		get() = this.getPlayersSelectedForDeletion().size()
 
 	private fun getPlayersSelectedForDeletion(): List<EnhancedMediaPlayer>
 	{
