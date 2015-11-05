@@ -19,3 +19,4 @@ class MediaPlayerComparator : Comparator<MediaPlayerData>
 		return lhs.sortOrder!!.compareTo(rhs.sortOrder)
 	}
 }
+

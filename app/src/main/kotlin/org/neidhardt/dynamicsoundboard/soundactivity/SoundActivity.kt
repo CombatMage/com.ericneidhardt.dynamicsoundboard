@@ -1,13 +1,10 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
-import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -62,6 +59,7 @@ public class SoundActivity :
 		AppCompatActivity(),
 		View.OnClickListener,
 		CustomEditText.OnTextEditedListener,
+		RequestPermissionHelper,
 		OnActionModeChangeRequestedEventListener,
 		OnSoundLayoutSelectedEventListener,
 		OnOpenSoundLayoutSettingsEvent,
@@ -94,18 +92,13 @@ public class SoundActivity :
 		super.onCreate(savedInstanceState)
 		this.setContentView(R.layout.activity_base)
 
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-			this.requestPermissionsReadStorage()
-		else {
+		if (!this.requestPermissionsReadStorageIfRequired())
+		{
 			this.soundsDataUtil.initIfRequired()
 			this.soundSheetsDataUtil.initIfRequired()
 		}
-
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-			this.requestPermissionsWriteStorage()
-
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
-			this.requestPermissionsReadPhoneState()
+		this.requestPermissionsWriteStorageIfRequired()
+		this.requestPermissionsReadPhoneStateIfRequired()
 
 		this.initToolbar()
 		this.initNavigationDrawer()
@@ -113,30 +106,6 @@ public class SoundActivity :
 
 		this.phoneStateListener = PauseSoundOnCallListener()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
-	}
-
-	private fun requestPermissionsReadPhoneState()
-	{
-		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE))
-			ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_phone_state_message, Manifest.permission.READ_PHONE_STATE, false)
-		else
-			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
-	}
-
-	private fun requestPermissionsReadStorage()
-	{
-		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE))
-			ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_storage_message, Manifest.permission.READ_EXTERNAL_STORAGE, true)
-		else
-			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_READ_STORAGE)
-	}
-
-	private fun requestPermissionsWriteStorage()
-	{
-		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-			ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_write_storage_message, Manifest.permission.WRITE_EXTERNAL_STORAGE, true)
-		else
-			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE)
 	}
 
 	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
@@ -199,16 +168,14 @@ public class SoundActivity :
 		this.findViewById(R.id.tv_app_name).visibility = View.VISIBLE
 		this.findViewById(R.id.action_add_sound_sheet).setOnClickListener(this)
 
-		val soundSheetLabel = this.findViewById(R.id.et_set_label) as ActionbarEditText
-		soundSheetLabel.visibility = View.GONE
-		soundSheetLabel.setOnTextEditedListener(this)
-
-		val currentSoundSheetFragment = this.getCurrentSoundFragment()
-		if (currentSoundSheetFragment != null)
-		{
-			val currentActiveSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.fragmentTag)
-			if (currentActiveSoundSheet != null)
-				soundSheetLabel.setText(currentActiveSoundSheet.label)
+		(this.findViewById(R.id.et_set_label) as ActionbarEditText).apply {
+			visibility = View.GONE
+			setOnTextEditedListener(this@SoundActivity)
+			getCurrentSoundFragment()?.apply {
+				soundSheetsDataAccess.getSoundSheetForFragmentTag(this.fragmentTag)?.apply {
+					setText(this.label)
+				}
+			}
 		}
 	}
 
@@ -238,22 +205,26 @@ public class SoundActivity :
 		}
 	}
 
-	override fun onPostCreate(savedInstanceState: Bundle?) {
+	override fun onPostCreate(savedInstanceState: Bundle?)
+	{
 		super.onPostCreate(savedInstanceState)
 		this.drawerToggle?.syncState()
 	}
 
-	override fun onWindowFocusChanged(hasFocus: Boolean) {
+	override fun onWindowFocusChanged(hasFocus: Boolean)
+	{
 		super.onWindowFocusChanged(hasFocus)
 		this.getNavigationDrawerFragment().adjustViewPagerToContent()
 	}
 
-	override fun onStart() {
+	override fun onStart()
+	{
 		super.onStart()
 		this.eventBus.registerSticky(this)
 	}
 
-	override fun onResume() {
+	override fun onResume()
+	{
 		super.onResume()
 
 		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener)

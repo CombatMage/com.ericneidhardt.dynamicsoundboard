@@ -31,7 +31,6 @@ public abstract class CustomEditText
 	private static final String TAG = CustomEditText.class.getName();
 
 	EditTextBackEvent input;
-
 	OnTextEditedListener onTextEditedListener;
 	private OnFocusChangeListener onFocusChangeListener;
 

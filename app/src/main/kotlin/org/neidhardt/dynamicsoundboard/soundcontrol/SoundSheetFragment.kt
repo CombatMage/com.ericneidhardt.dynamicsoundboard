@@ -106,17 +106,16 @@ public class SoundSheetFragment :
 
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
 
-		val soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
-		soundLayout.adapter = this.soundAdapter
-		soundLayout.layoutManager = LinearLayoutManager(this.activity)
-		soundLayout.itemAnimator = this.soundLayoutAnimator
-		soundLayout.addItemDecoration(DividerItemDecoration())
-		soundLayout.addItemDecoration(this.dragSortRecycler)
-		soundLayout.addOnItemTouchListener(this.dragSortRecycler)
-		soundLayout.addOnScrollListener(this.scrollListener)
-		soundLayout.addOnScrollListener(this.dragSortRecycler!!.scrollListener)
-		this.soundLayout = soundLayout
-
+		this.soundLayout = (fragmentView.findViewById(R.id.rv_sounds) as RecyclerView).apply {
+			adapter = soundAdapter
+			layoutManager = LinearLayoutManager(activity)
+			itemAnimator = soundLayoutAnimator
+			addItemDecoration(DividerItemDecoration())
+			addItemDecoration(dragSortRecycler)
+			addOnItemTouchListener(dragSortRecycler)
+			addOnScrollListener(scrollListener)
+			addOnScrollListener(dragSortRecycler!!.scrollListener)
+		}
 		this.soundAdapter?.recyclerView = this.soundLayout
 
 		return fragmentView
@@ -165,7 +164,6 @@ public class SoundSheetFragment :
 		if (fab == null || this.soundLayout == null)
 			return
 
-		//TODO remove when behaviour is implemeted
 		fab.attachToRecyclerView(this.soundLayout)
 		fab.show(false)
 	}
@@ -209,17 +207,17 @@ public class SoundSheetFragment :
 	override fun onDragStart()
 	{
 		Logger.d(LOG_TAG, "onDragStart")
-		this.soundLayout!!.itemAnimator = null // drag does not work with default animator
-		this.soundAdapter!!.stopProgressUpdateTimer()
+		this.soundLayout?.itemAnimator = null // drag does not work with default animator
+		this.soundAdapter?.stopProgressUpdateTimer()
 	}
 
 	override fun onDragStop()
 	{
 		Logger.d(LOG_TAG, "onDragStop")
-		this.soundLayout!!.invalidateItemDecorations()
-		this.soundAdapter!!.notifyDataSetChanged()
-		this.soundLayout!!.itemAnimator = this.soundLayoutAnimator // add animator for delete animation
-		this.soundAdapter!!.startProgressUpdateTimer()
+		this.soundLayout?.invalidateItemDecorations()
+		this.soundAdapter?.notifyDataSetChanged()
+		this.soundLayout?.itemAnimator = this.soundLayoutAnimator // add animator for delete animation
+		this.soundAdapter?.startProgressUpdateTimer()
 	}
 
 	override fun onItemMoved(from: Int, to: Int)

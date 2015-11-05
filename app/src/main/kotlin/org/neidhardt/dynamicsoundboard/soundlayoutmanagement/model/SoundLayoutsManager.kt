@@ -29,7 +29,6 @@ public class SoundLayoutsManager :
 		}
 	}
 
-	// weak visibility for testing purpose
 	private val daoSession: DaoSession = Util.setupDatabase(DynamicSoundboardApplication.getContext(), DB_SOUND_LAYOUTS)
 	private val soundLayouts: MutableList<SoundLayout> = ArrayList()
 
