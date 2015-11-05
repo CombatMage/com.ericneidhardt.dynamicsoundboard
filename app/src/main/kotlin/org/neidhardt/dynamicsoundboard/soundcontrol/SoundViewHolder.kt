@@ -63,7 +63,7 @@ public class SoundViewHolder
 
 	init
 	{
-		this.name.setOnTextEditedListener(this)
+		this.name.onTextEditedListener = this
 		this.play.setOnClickListener(this)
 		this.loop.setOnClickListener(this)
 		this.inPlaylist.setOnClickListener(this)
@@ -87,7 +87,7 @@ public class SoundViewHolder
 		val playerData = this.player?.mediaPlayerData as MediaPlayerData
 
 		if (!this.name.hasFocus())
-			this.name.setText(playerData.label)
+			this.name.text = playerData.label
 
 		val isPlaying = this.player?.isPlaying as Boolean
 		this.play.isSelected = isPlaying
@@ -133,9 +133,9 @@ public class SoundViewHolder
 			this.timePosition.progress = player!!.currentPosition
 	}
 
-	override fun onTextEdited(newLabel: String?)
+	override fun onTextEdited(text: String)
 	{
-		Logger.d(TAG, "onTextEdited: " + newLabel)
+		Logger.d(TAG, "onTextEdited: $text")
 
 		this.name.clearFocus()
 		if (this.player != null)
@@ -143,9 +143,9 @@ public class SoundViewHolder
 			val playerData = this.player!!.mediaPlayerData
 			val currentLabel = playerData.label
 
-			if (!currentLabel.equals(newLabel))
+			if (!currentLabel.equals(text))
 			{
-				playerData.label = newLabel
+				playerData.label = text
 				playerData.updateItemInDatabaseAsync()
 
 				this.eventBus.post(OpenSoundRenameEvent(playerData))

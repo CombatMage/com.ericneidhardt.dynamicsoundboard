@@ -170,10 +170,10 @@ public class SoundActivity :
 
 		(this.findViewById(R.id.et_set_label) as ActionbarEditText).apply {
 			visibility = View.GONE
-			setOnTextEditedListener(this@SoundActivity)
+			onTextEditedListener = this@SoundActivity
 			getCurrentSoundFragment()?.apply {
 				soundSheetsDataAccess.getSoundSheetForFragmentTag(this.fragmentTag)?.apply {
-					setText(this.label)
+					text = this.label
 				}
 			}
 		}
@@ -536,7 +536,7 @@ public class SoundActivity :
 		transaction.commit()
 		fragmentManager.executePendingTransactions()
 
-		(this.findViewById(R.id.et_set_label) as ActionbarEditText).setText(soundSheet.label)
+		(this.findViewById(R.id.et_set_label) as ActionbarEditText).text = soundSheet.label
 	}
 
 	private fun getCurrentSoundFragment(): SoundSheetFragment?
