@@ -2,10 +2,8 @@ package org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers
 
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-
-import java.util.ArrayList
+import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 public val UPDATE_INTERVAL: Int = 500
@@ -65,7 +63,7 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
 		val count = allSounds.size()
 		for (i in 0..count - 1)
 		{
-			if (allSounds.get(i).isPlaying())
+			if (allSounds.get(i).isPlaying)
 				playingSounds.add(i)
 		}
 		return playingSounds

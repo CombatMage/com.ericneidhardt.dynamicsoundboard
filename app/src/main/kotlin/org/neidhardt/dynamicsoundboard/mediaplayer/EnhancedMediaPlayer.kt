@@ -56,6 +56,17 @@ class EnhancedMediaPlayer
 		this.init(context)
 	}
 
+	/**
+	 * Check if this MediaPlayer is currently playing, ie. State.STARTED.
+	 * The call is not forwarded to the native implementation (super.isPlaying), because
+	 * of ab described here:
+	 * @see [.9732: internal/external state mismatch corrected](https://code.google.com/p/android/issues/detail?id=9732)
+
+	 * @return true if player ist playing, false otherwise
+	 */
+	override val isPlaying: Boolean
+		get() = this.currentState == State.STARTED
+
 	override var trackDuration: Int = 0
 		private set
 		get()
@@ -151,26 +162,6 @@ class EnhancedMediaPlayer
 	{
 		Logger.d(TAG, "preparing media player " + this.mediaPlayerData.label + " with uri " + this.mediaPlayerData.uri)
 		super.prepare()
-	}
-
-	/**
-	 * Check if this MediaPlayer is currently playing, ie. State.STARTED.
-	 * The call is not forwarded to the native implementation (super.isPlaying), because
-	 * of ab described here:
-	 * @see [.9732: internal/external state mismatch corrected](https://code.google.com/p/android/issues/detail?id=9732)
-
-	 * @return true if player ist playing, false otherwise
-	 */
-	override fun isPlaying(): Boolean
-	{
-		return this.currentState == State.STARTED
-	}
-
-	override fun getCurrentPosition(): Int
-	{
-		if (this.currentState == State.DESTROYED)
-			return 0
-		return super.getCurrentPosition()
 	}
 
 	override fun setLooping(looping: Boolean)

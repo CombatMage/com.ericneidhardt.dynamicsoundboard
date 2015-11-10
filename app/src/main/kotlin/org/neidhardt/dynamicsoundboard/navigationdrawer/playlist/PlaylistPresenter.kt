@@ -118,7 +118,7 @@ public class PlaylistPresenter
 				player.stopSound()
 		}
 
-		if (nextActivePlayer.isPlaying())
+		if (nextActivePlayer.isPlaying)
 		{
 			this.adapter?.stopProgressUpdateTimer()
 			nextActivePlayer.pauseSound()

@@ -92,7 +92,7 @@ public class SoundViewHolder
 		if (!this.name.hasFocus())
 			this.name.text = playerData.label
 
-		val isPlaying = player.isPlaying()
+		val isPlaying = player.isPlaying
 		this.play.isSelected = isPlaying
 		this.loop.isSelected = playerData.isLoop
 		this.inPlaylist.isSelected = playerData.isInPlaylist

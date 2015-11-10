@@ -39,7 +39,7 @@ public class PlaylistViewHolder
 
 		this.timePosition.max = player.trackDuration
 		this.label.text = player.mediaPlayerData.label
-		this.selectionIndicator.visibility = if (player.isPlaying()) View.VISIBLE else View.INVISIBLE
+		this.selectionIndicator.visibility = if (player.isPlaying) View.VISIBLE else View.INVISIBLE
 
 		this.label.isActivated = player.mediaPlayerData.isSelectedForDeletion
 		this.itemView.isSelected = player.mediaPlayerData.isSelectedForDeletion
@@ -50,7 +50,7 @@ public class PlaylistViewHolder
 	override fun onProgressUpdate()
 	{
 		this.player?.apply {
-			if (isPlaying())
+			if (isPlaying)
 			{
 				timePosition.progress = progress
 				timePosition.visibility = View.VISIBLE

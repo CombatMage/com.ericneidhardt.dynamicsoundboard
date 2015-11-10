@@ -122,7 +122,7 @@ public class NotificationHandler
 		val player = searchInMapForId(playerId, soundsDataAccess.sounds)
 
 		// if player stops playing and the service is still bound, we remove the notification
-		if (player == null || !player.isPlaying() && this.service.isActivityVisible())
+		if (player == null || !player.isPlaying && this.service.isActivityVisible())
 		{
 			this.removeNotificationForPlayer(playerId)
 			return true
@@ -159,13 +159,13 @@ public class NotificationHandler
 			if (isInPlaylist)
 			{
 				val player = searchInListForId(playerId, soundsDataAccess.playlist)
-				if (player != null && !player.isPlaying())
+				if (player != null && !player.isPlaying)
 					this.removePlayListNotification()
 			}
 			else
 			{
 				val player = searchInMapForId(playerId, soundsDataAccess.sounds)
-				if (player == null || !player.isPlaying())
+				if (player == null || !player.isPlaying)
 					this.removeNotificationForPlayer(playerId)
 			}
 		}
@@ -228,7 +228,7 @@ public class NotificationHandler
 		if (player != null)
 		{
 			// if player stops playing and the service is still bound, we remove the notification
-			if (!player.isPlaying() && this.service.isActivityVisible())
+			if (!player.isPlaying && this.service.isActivityVisible())
 			{
 				this.removePlayListNotification()
 				return true
@@ -254,7 +254,7 @@ public class NotificationHandler
 		}
 	}
 
-	private fun getPlayingSoundFromPlaylist(): MediaPlayerController? = soundsDataAccess.playlist.firstOrNull { player -> player.isPlaying() }
+	private fun getPlayingSoundFromPlaylist(): MediaPlayerController? = soundsDataAccess.playlist.firstOrNull { player -> player.isPlaying }
 
 	private inner class NotificationActionReceiver : BroadcastReceiver()
 	{
