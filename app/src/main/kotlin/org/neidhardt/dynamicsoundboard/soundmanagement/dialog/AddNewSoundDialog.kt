@@ -23,7 +23,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.fileexplorer.FileResultHandler
 import org.neidhardt.dynamicsoundboard.fileexplorer.GetNewSoundFromDirectoryDialog
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
@@ -33,7 +33,7 @@ import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 import java.io.File
-import java.util.ArrayList
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 30.06.2015.
@@ -234,7 +234,7 @@ private class AddNewSoundDialogPresenter
 
 			val soundUri = item.uri
 			val soundLabel = item.label
-			val playerData = EnhancedMediaPlayer.getMediaPlayerData(this.dialog.callingFragmentTag, soundUri, soundLabel)
+			val playerData = getNewMediaPlayerData(this.dialog.callingFragmentTag, soundUri, soundLabel)
 			playersData.add(playerData)
 
 			if (item.wasSoundRenamed)

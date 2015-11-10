@@ -17,6 +17,8 @@ interface MediaPlayerController
 
 	var isLoopingEnabled: Boolean
 
+	fun setIsInPlaylist(inPlaylist: Boolean) // TODO convert to property
+
 	fun playSound(): Boolean
 
 	fun stopSound(): Boolean
@@ -25,9 +27,8 @@ interface MediaPlayerController
 
 	fun fadeOutSound()
 
-	fun setIsInPlaylist(inPlaylist: Boolean)
-
 	fun setSoundUri(uri: String)
 
 	fun destroy(postStateChanged: Boolean)
+
 }

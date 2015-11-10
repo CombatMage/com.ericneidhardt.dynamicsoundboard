@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer.events
 
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 
 /**

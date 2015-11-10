@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
@@ -29,7 +28,7 @@ public class SoundViewHolder
 		itemView: View,
 		eventBus: EventBus,
 		soundsDataStorage: SoundsDataStorage,
-		onItemDelete: (EnhancedMediaPlayer, Int) -> Unit,
+		onItemDelete: (MediaPlayerController, Int) -> Unit,
 		progressTimer: SoundProgressTimer
 ) :
 		DismissibleItemViewHolder<SoundItemPagerAdapter>(itemView, SoundItemPagerAdapter()),
@@ -125,7 +124,7 @@ public class SoundViewHolder
 	override fun delete()
 	{
 		if (this.player != null)
-			this.onItemDelete(this.player as EnhancedMediaPlayer, this.layoutPosition)
+			this.onItemDelete(this.player as MediaPlayerController, this.layoutPosition)
 
 		Handler().startTimerDelayed()
 	}

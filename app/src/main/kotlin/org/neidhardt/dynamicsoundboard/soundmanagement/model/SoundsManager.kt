@@ -5,10 +5,11 @@ import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.Util
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
@@ -283,7 +284,21 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		try
 		{
-			return EnhancedMediaPlayer.getInstanceForPlayList(playerData)
+			val newPlayerData = MediaPlayerData()
+			newPlayerData.id = playerData.id
+			newPlayerData.isInPlaylist = true
+			newPlayerData.playerId = playerData.playerId
+			newPlayerData.fragmentTag = Playlist.TAG
+			newPlayerData.isLoop = false
+			newPlayerData.label = playerData.label
+			newPlayerData.uri = playerData.uri
+
+			return getNewMediaPlayerController (
+					context = DynamicSoundboardApplication.getContext(),
+					eventBus = EventBus.getDefault(),
+					mediaPlayerData = newPlayerData,
+					soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
+			)
 		}
 		catch (e: IOException)
 		{
@@ -293,11 +308,11 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		}
 	}
 
-	private fun createSound(playerData: MediaPlayerData): EnhancedMediaPlayer?
+	private fun createSound(playerData: MediaPlayerData): MediaPlayerController?
 	{
 		try
 		{
-			return EnhancedMediaPlayer(
+			return getNewMediaPlayerController(
 					context = DynamicSoundboardApplication.getContext(),
 					eventBus = this.eventBus,
 					mediaPlayerData = playerData,

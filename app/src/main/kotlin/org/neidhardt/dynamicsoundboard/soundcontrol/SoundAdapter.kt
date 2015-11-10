@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
@@ -43,7 +42,7 @@ public class SoundAdapter
 		return SoundViewHolder(view, this.eventBus, this.soundsDataStorage, {player, position -> delete(player)}, this)
 	}
 
-	private fun delete(player: EnhancedMediaPlayer)
+	private fun delete(player: MediaPlayerController)
 	{
 		this.soundsDataStorage.removeSounds(listOf(player))
 	}

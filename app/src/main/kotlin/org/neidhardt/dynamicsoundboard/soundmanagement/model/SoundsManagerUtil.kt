@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 

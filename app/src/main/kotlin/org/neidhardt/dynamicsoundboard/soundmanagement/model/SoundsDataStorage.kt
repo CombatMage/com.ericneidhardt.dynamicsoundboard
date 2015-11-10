@@ -2,7 +2,6 @@ package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 
 /**

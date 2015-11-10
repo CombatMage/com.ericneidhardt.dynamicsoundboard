@@ -13,7 +13,6 @@ import android.widget.Toast
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -31,21 +30,23 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 06.07.2015.
  */
-public class RenameSoundFileDialog : SoundSettingsBaseDialog {
+public class RenameSoundFileDialog : SoundSettingsBaseDialog
+{
 
 	private val TAG = javaClass.name
 
 	private var presenter: RenameSoundFileDialogPresenter? = null
 
-	public constructor() : super() {
-	}
+	public constructor() : super()
 
-	public constructor(manager: FragmentManager, playerData: MediaPlayerData) : super() {
+	public constructor(manager: FragmentManager, playerData: MediaPlayerData) : super()
+	{
 		SoundSettingsBaseDialog.addArguments(this, playerData.playerId, playerData.fragmentTag)
 		this.show(manager, TAG)
 	}
 
-	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
+	{
 		@SuppressLint("InflateParams")
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_rename_sound_file_layout, null)
 

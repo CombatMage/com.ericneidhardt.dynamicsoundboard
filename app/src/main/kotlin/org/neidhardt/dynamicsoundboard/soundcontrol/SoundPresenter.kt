@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol
 
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
@@ -9,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import java.util.ArrayList
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 02.07.2015.

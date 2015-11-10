@@ -11,9 +11,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-
 import java.io.IOException
 
 private enum class State
@@ -27,7 +25,36 @@ private enum class State
 	DESTROYED
 }
 
-class EnhancedMediaPlayer
+private val FADE_OUT_DURATION = 100
+private val INT_VOLUME_MAX = 100
+private val INT_VOLUME_MIN = 0
+private val FLOAT_VOLUME_MAX = 1f
+private val FLOAT_VOLUME_MIN = 0f
+
+fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): MediaPlayerData
+{
+	val data = MediaPlayerData()
+
+	val playerId = Integer.toString((uri.toString() + DynamicSoundboardApplication.getRandomNumber()).hashCode())
+	data.playerId = playerId
+	data.fragmentTag = fragmentTag
+	data.label = label
+	data.uri = uri.toString()
+	data.isInPlaylist = false
+	data.isLoop = false
+
+	return data
+}
+
+fun getNewMediaPlayerController(context: Context,
+							 eventBus: EventBus,
+							 mediaPlayerData: MediaPlayerData,
+							 soundsDataAccess: SoundsDataAccess): MediaPlayerController
+{
+	return EnhancedMediaPlayer(context, eventBus, mediaPlayerData, soundsDataAccess)
+}
+
+private class EnhancedMediaPlayer
 (
 		context: Context,
 		private val eventBus: EventBus,
@@ -41,6 +68,8 @@ class EnhancedMediaPlayer
 		MediaPlayer.OnInfoListener,
 		Runnable
 {
+	private val TAG = EnhancedMediaPlayer::class.java.name
+
 	private var handler: Handler? = null
 	private var currentState: State? = null
 	private var volume: Int = 0
@@ -118,7 +147,7 @@ class EnhancedMediaPlayer
 		}
 
 	override var isLoopingEnabled: Boolean
-		get() = throw UnsupportedOperationException()
+		get() = this.mediaPlayerData.isLoop
 		set(value)
 		{
 			super.setLooping(value)
@@ -373,49 +402,4 @@ class EnhancedMediaPlayer
 		return "EnhancedMediaPlayer{currentState=$currentState, duration=$duration, volume=$volume, handler=$handler, soundsDataAccess=$soundsDataAccess, rawData=$mediaPlayerData}"
 	}
 
-	companion object
-	{
-		private val TAG = EnhancedMediaPlayer::class.java.name
-
-		private val FADE_OUT_DURATION = 100
-		private val INT_VOLUME_MAX = 100
-		private val INT_VOLUME_MIN = 0
-		private val FLOAT_VOLUME_MAX = 1f
-		private val FLOAT_VOLUME_MIN = 0f
-
-		@Throws(IOException::class)
-		fun getInstanceForPlayList(data: MediaPlayerData): MediaPlayerController
-		{
-			val playListData = MediaPlayerData()
-			playListData.id = data.id
-			playListData.isInPlaylist = true
-			playListData.playerId = data.playerId
-			playListData.fragmentTag = Playlist.TAG
-			playListData.isLoop = false
-			playListData.label = data.label
-			playListData.uri = data.uri
-
-			return EnhancedMediaPlayer (
-					context = DynamicSoundboardApplication.getContext(),
-					eventBus = EventBus.getDefault(),
-					mediaPlayerData = playListData,
-					soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
-			)
-		}
-
-		fun getMediaPlayerData(fragmentTag: String, uri: Uri, label: String): MediaPlayerData
-		{
-			val data = MediaPlayerData()
-
-			val playerId = Integer.toString((uri.toString() + DynamicSoundboardApplication.getRandomNumber()).hashCode())
-			data.playerId = playerId
-			data.fragmentTag = fragmentTag
-			data.label = label
-			data.uri = uri.toString()
-			data.isInPlaylist = false
-			data.isLoop = false
-
-			return data
-		}
-	}
 }

@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
@@ -11,8 +10,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
-import java.util.ArrayList
-import java.util.HashSet
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 26.05.2015.

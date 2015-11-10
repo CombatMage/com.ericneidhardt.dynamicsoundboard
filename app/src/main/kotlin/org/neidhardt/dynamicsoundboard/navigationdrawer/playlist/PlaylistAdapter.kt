@@ -3,7 +3,6 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter
