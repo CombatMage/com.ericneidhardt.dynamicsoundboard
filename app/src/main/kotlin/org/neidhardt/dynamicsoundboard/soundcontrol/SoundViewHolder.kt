@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -15,7 +14,10 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.*
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolder
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressTimer
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.UPDATE_INTERVAL
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
@@ -96,7 +98,7 @@ public class SoundViewHolder
 		this.inPlaylist.isSelected = playerData.isInPlaylist
 
 		this.timePosition.max = player.trackDuration
-		this.timePosition.progress = player.getCurrentPosition()
+		this.timePosition.progress = player.progress
 	}
 
 	public fun showShadowForLastItem(isLastItem: Boolean)
@@ -130,8 +132,9 @@ public class SoundViewHolder
 
 	override fun onProgressUpdate()
 	{
-		if (player != null)
-			this.timePosition.progress = player!!.getCurrentPosition()
+		this.player?.apply {
+			timePosition.progress = progress
+		}
 	}
 
 	override fun onTextEdited(text: String)
@@ -200,7 +203,7 @@ public class SoundViewHolder
 	override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean)
 	{
 		if (fromUser)
-			this.player?.setPositionTo(progress)
+			this.player?.progress = progress
 	}
 
 	override fun onStartTrackingTouch(seekBar: SeekBar?) {

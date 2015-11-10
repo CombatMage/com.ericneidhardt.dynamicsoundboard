@@ -45,15 +45,6 @@ class EnhancedMediaPlayer
 	private var currentState: State? = null
 	private var volume: Int = 0
 
-	override var trackDuration: Int = 0
-		private set
-		get()
-		{
-			if (this.currentState == State.DESTROYED || this.currentState == State.IDLE)
-				return 0
-			return field
-		}
-
 	init
 	{
 		this.setOnErrorListener(this)
@@ -64,6 +55,56 @@ class EnhancedMediaPlayer
 		this.currentState = State.IDLE
 		this.init(context)
 	}
+
+	override var trackDuration: Int = 0
+		private set
+		get()
+		{
+			if (this.currentState == State.DESTROYED || this.currentState == State.IDLE)
+				return 0
+			return field
+		}
+
+	override var progress: Int
+		get()
+		{
+			if (this.currentState == State.DESTROYED)
+				return 0
+			return super.getCurrentPosition()
+		}
+		set(value)
+		{
+			try
+			{
+				when (this.currentState)
+				{
+					State.INIT -> {
+						this.prepare()
+						this.seekTo(value)
+						this.currentState = State.PREPARED
+					}
+					State.PREPARED -> this.seekTo(value)
+					State.STARTED -> this.seekTo(value)
+					State.PAUSED -> this.seekTo(value)
+					State.STOPPED -> {
+						this.prepare()
+						this.seekTo(value)
+						this.currentState = State.PREPARED
+					}
+					else -> {}
+				}
+			}
+			catch (e: IOException)
+			{
+				Logger.e(TAG, e.getMessage())
+				this.reportExceptions(e)
+			}
+			catch (e: IllegalStateException)
+			{
+				Logger.e(TAG, e.getMessage())
+				this.reportExceptions(e)
+			}
+		}
 
 	@Throws(IOException::class)
 	override fun setSoundUri(uri: String)
@@ -291,54 +332,6 @@ class EnhancedMediaPlayer
 			fVolume = FLOAT_VOLUME_MAX
 
 		this.setVolume(fVolume, fVolume)
-	}
-
-	override fun setPositionTo(timePosition: Int): Boolean
-	{
-		try
-		{
-			when (this.currentState)
-			{
-				State.INIT -> {
-					this.prepare()
-					this.seekTo(timePosition)
-					this.currentState = State.PREPARED
-					return true
-				}
-				State.PREPARED -> {
-					this.seekTo(timePosition)
-					return true
-				}
-				State.STARTED -> {
-					this.seekTo(timePosition)
-					return true
-				}
-				State.PAUSED -> {
-					this.seekTo(timePosition)
-					return true
-				}
-				State.STOPPED -> {
-					this.prepare()
-					this.seekTo(timePosition)
-					this.currentState = State.PREPARED
-					return true
-				}
-				else -> return false
-			}
-		}
-		catch (e: IOException)
-		{
-			Logger.e(TAG, e.getMessage())
-			this.reportExceptions(e)
-			return false
-		}
-		catch (e: IllegalStateException)
-		{
-			Logger.e(TAG, e.getMessage())
-			this.reportExceptions(e)
-			return false
-		}
-
 	}
 
 	private fun reportExceptions(e: Exception)

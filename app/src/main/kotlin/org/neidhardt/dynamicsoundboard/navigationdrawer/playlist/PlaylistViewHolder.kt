@@ -49,13 +49,15 @@ public class PlaylistViewHolder
 
 	override fun onProgressUpdate()
 	{
-		if (player?.isPlaying() ?: false)
-		{
-			timePosition.progress = player!!.getCurrentPosition()
-			timePosition.visibility = View.VISIBLE
+		this.player?.apply {
+			if (isPlaying())
+			{
+				timePosition.progress = progress
+				timePosition.visibility = View.VISIBLE
+			}
+			else
+				timePosition.visibility = View.INVISIBLE
 		}
-		else
-			timePosition.visibility = View.INVISIBLE
 	}
 
 }

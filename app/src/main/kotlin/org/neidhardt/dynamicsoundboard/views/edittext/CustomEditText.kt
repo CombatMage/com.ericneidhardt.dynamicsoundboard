@@ -57,9 +57,11 @@ abstract class CustomEditText :
 
 	fun initTextListeners()
 	{
-		this.input!!.setOnEditorActionListener(this)
-		this.input!!.setOnEditTextImeBackListener(this)
-		this.input!!.onFocusChangeListener = this
+		this.input?.apply {
+			onFocusChangeListener = this@CustomEditText
+			onImeBackListener = this@CustomEditText
+			setOnEditorActionListener(this@CustomEditText)
+		}
 	}
 
 	fun setValuesAttributeSet(context: Context, attrs: AttributeSet)
