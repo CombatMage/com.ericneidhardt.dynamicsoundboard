@@ -41,12 +41,18 @@ class EnhancedMediaPlayer
 		MediaPlayer.OnInfoListener,
 		Runnable
 {
-
+	private var handler: Handler? = null
 	private var currentState: State? = null
-	private var duration: Int = 0
 	private var volume: Int = 0
 
-	private var handler: Handler? = null
+	override var trackDuration: Int = 0
+		private set
+		get()
+		{
+			if (this.currentState == State.DESTROYED || this.currentState == State.IDLE)
+				return 0
+			return field
+		}
 
 	init
 	{
@@ -83,7 +89,7 @@ class EnhancedMediaPlayer
 		this.currentState = State.PREPARED
 
 		this.volume = INT_VOLUME_MAX
-		this.duration = super.getDuration()
+		this.trackDuration = super.getDuration()
 		this.setOnCompletionListener(this)
 	}
 
@@ -104,13 +110,6 @@ class EnhancedMediaPlayer
 	{
 		Logger.d(TAG, "preparing media player " + this.mediaPlayerData.label + " with uri " + this.mediaPlayerData.uri)
 		super.prepare()
-	}
-
-	override fun getDuration(): Int
-	{
-		if (this.currentState == State.DESTROYED || this.currentState == State.IDLE)
-			return 0
-		return this.duration
 	}
 
 	/**

@@ -95,7 +95,7 @@ public class SoundViewHolder
 		this.loop.isSelected = playerData.isLoop
 		this.inPlaylist.isSelected = playerData.isInPlaylist
 
-		this.timePosition.max = player.getDuration()
+		this.timePosition.max = player.trackDuration
 		this.timePosition.progress = player.getCurrentPosition()
 	}
 

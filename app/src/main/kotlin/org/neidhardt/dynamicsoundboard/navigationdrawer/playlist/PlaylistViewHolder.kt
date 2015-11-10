@@ -37,7 +37,7 @@ public class PlaylistViewHolder
 	{
 		this.player = player
 
-		this.timePosition.max = player.getDuration()
+		this.timePosition.max = player.trackDuration
 		this.label.text = player.mediaPlayerData.label
 		this.selectionIndicator.visibility = if (player.isPlaying()) View.VISIBLE else View.INVISIBLE
 
