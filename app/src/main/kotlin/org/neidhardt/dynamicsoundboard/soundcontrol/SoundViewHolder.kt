@@ -9,6 +9,7 @@ import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
@@ -59,7 +60,7 @@ public class SoundViewHolder
 	private val shadowBottomDeleteViewRight = itemView.findViewById(R.id.v_shadow_bottom_right)
 	private val shadowBottom = itemView.findViewById(R.id.v_shadow_bottom)
 
-	private var player: EnhancedMediaPlayer? = null
+	private var player: MediaPlayerController? = null
 
 	init
 	{
@@ -72,7 +73,7 @@ public class SoundViewHolder
 		this.timePosition.setOnSeekBarChangeListener(this)
 	}
 
-	public fun bindData(data: EnhancedMediaPlayer)
+	public fun bindData(data: MediaPlayerController)
 	{
 		this.player = data
 
@@ -83,19 +84,19 @@ public class SoundViewHolder
 
 	private fun updateViewToPlayerState()
 	{
-		val player = this.player as EnhancedMediaPlayer
-		val playerData = this.player?.mediaPlayerData as MediaPlayerData
+		val player = this.player as MediaPlayerController
+		val playerData = player.mediaPlayerData
 
 		if (!this.name.hasFocus())
 			this.name.text = playerData.label
 
-		val isPlaying = this.player?.isPlaying as Boolean
+		val isPlaying = player.isPlaying()
 		this.play.isSelected = isPlaying
 		this.loop.isSelected = playerData.isLoop
 		this.inPlaylist.isSelected = playerData.isInPlaylist
 
-		this.timePosition.max = player.duration
-		this.timePosition.progress = player.currentPosition
+		this.timePosition.max = player.getDuration()
+		this.timePosition.progress = player.getCurrentPosition()
 	}
 
 	public fun showShadowForLastItem(isLastItem: Boolean)
@@ -130,7 +131,7 @@ public class SoundViewHolder
 	override fun onProgressUpdate()
 	{
 		if (player != null)
-			this.timePosition.progress = player!!.currentPosition
+			this.timePosition.progress = player!!.getCurrentPosition()
 	}
 
 	override fun onTextEdited(text: String)

@@ -14,13 +14,12 @@ import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
-
 import java.io.File
 import java.io.IOException
-import java.util.ArrayList
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 14.11.2014.
@@ -123,7 +122,7 @@ public class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.
 	{
 		val oldCurrentSoundSheet = this.soundSheetsDataAccess.getSoundSheets()
 
-		val playersToRemove = ArrayList<EnhancedMediaPlayer>()
+		val playersToRemove = ArrayList<MediaPlayerController>()
 		for (soundSheet in oldCurrentSoundSheet)
 			playersToRemove.addAll(this.soundsDataAccess.getSoundsInFragment(soundSheet.fragmentTag))
 

@@ -14,6 +14,7 @@ import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
@@ -81,7 +82,7 @@ private class RenameSoundFileDialogPresenter
 {
 	private val TAG = javaClass.name
 
-	private var playersWithMatchingUri: List<EnhancedMediaPlayer>? = null
+	private var playersWithMatchingUri: List<MediaPlayerController>? = null
 
 	init
 	{
@@ -102,9 +103,9 @@ private class RenameSoundFileDialogPresenter
 		this.newName.text = this.appendFileTypeToNewPath(this.playerData.label, currentFileName)
 	}
 
-	private fun getPlayersWithMatchingUri(uri: String): List<EnhancedMediaPlayer>
+	private fun getPlayersWithMatchingUri(uri: String): List<MediaPlayerController>
 	{
-		val players = ArrayList<EnhancedMediaPlayer>()
+		val players = ArrayList<MediaPlayerController>()
 
 		val playlist = this.soundsDataAccess.playlist
 		for (player in playlist)
@@ -201,7 +202,7 @@ private class RenameSoundFileDialogPresenter
 		return newNameFilePath
 	}
 
-	private fun setUriForPlayer(player: EnhancedMediaPlayer, uri: String): Boolean
+	private fun setUriForPlayer(player: MediaPlayerController, uri: String): Boolean
 	{
 		try
 		{

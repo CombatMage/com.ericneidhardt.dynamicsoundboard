@@ -10,7 +10,7 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.support.v7.app.NotificationCompat
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.Util
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
@@ -38,7 +38,7 @@ public class PendingSoundNotificationBuilder
 @JvmOverloads constructor
 (
 		context: Context,
-		player: EnhancedMediaPlayer,
+		player: MediaPlayerController,
 		public val notificationId: Int = player.mediaPlayerData.playerId.hashCode(),
 		title: String = player.mediaPlayerData.label,
 		message: String? = null
@@ -50,7 +50,7 @@ public class PendingSoundNotificationBuilder
 	{
 		val isLollipopStyleAvailable = Util.IS_LOLLIPOP_AVAILABLE
 		this.setActionStop(context, isLollipopStyleAvailable)
-		if (player.isPlaying)
+		if (player.isPlaying())
 		{
 			this.setOngoing(true)
 			this.setActionFadeOut(context, isLollipopStyleAvailable)

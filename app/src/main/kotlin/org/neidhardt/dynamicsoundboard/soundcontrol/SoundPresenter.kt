@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundcontrol
 
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
@@ -26,7 +27,7 @@ public class SoundPresenter
 
 	public var adapter: SoundAdapter? = null
 
-	public val values: MutableList<EnhancedMediaPlayer> = ArrayList()
+	public val values: MutableList<MediaPlayerController> = ArrayList()
 
 	fun onAttachedToWindow()
 	{
@@ -89,7 +90,7 @@ public class SoundPresenter
 		}
 	}
 
-	private fun insertPlayer(position: Int, player: EnhancedMediaPlayer)
+	private fun insertPlayer(position: Int, player: MediaPlayerController)
 	{
 		this.values.add(position, player)
 		this.adapter?.notifyItemInserted(position)
@@ -131,7 +132,7 @@ public class SoundPresenter
 		}
 	}
 
-	private fun removePlayerAndUpdateSortOrder(player: EnhancedMediaPlayer)
+	private fun removePlayerAndUpdateSortOrder(player: MediaPlayerController)
 	{
 		val index = this.values.indexOf(player)
 		if (index != -1)

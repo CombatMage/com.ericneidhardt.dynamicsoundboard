@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
@@ -97,7 +98,7 @@ public open class SoundSheetsPresenter
 		return selectedSoundSheets
 	}
 
-	public fun getSoundsInFragment(fragmentTag: String): List<EnhancedMediaPlayer>
+	public fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController>
 	{
 		return this.soundsDataAccess.getSoundsInFragment(fragmentTag)
 	}

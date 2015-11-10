@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter
@@ -21,7 +22,7 @@ public class SoundAdapter
 ) :
 		SoundProgressAdapter<SoundViewHolder>()
 {
-	override fun getValues(): List<EnhancedMediaPlayer>
+	override fun getValues(): List<MediaPlayerController>
 	{
 		return this.presenter.values
 	}

@@ -31,10 +31,11 @@ class EnhancedMediaPlayer
 (
 		context: Context,
 		private val eventBus: EventBus,
-		public val mediaPlayerData: MediaPlayerData,
+		public override val mediaPlayerData: MediaPlayerData,
 		private val soundsDataAccess: SoundsDataAccess
 ) :
 		MediaPlayer(),
+		MediaPlayerController,
 		MediaPlayer.OnCompletionListener,
 		MediaPlayer.OnErrorListener,
 		MediaPlayer.OnInfoListener,
@@ -59,7 +60,7 @@ class EnhancedMediaPlayer
 	}
 
 	@Throws(IOException::class)
-	fun setSoundUri(uri: String)
+	override fun setSoundUri(uri: String)
 	{
 		this.mediaPlayerData.uri = uri
 		this.mediaPlayerData.updateItemInDatabaseAsync()
@@ -86,7 +87,7 @@ class EnhancedMediaPlayer
 		this.setOnCompletionListener(this)
 	}
 
-	fun destroy(postStateChanged: Boolean)
+	override fun destroy(postStateChanged: Boolean)
 	{
 		if (this.handler != null)
 			this.handler!!.removeCallbacks(this)
@@ -143,13 +144,13 @@ class EnhancedMediaPlayer
 		}
 	}
 
-	fun setIsInPlaylist(inPlaylist: Boolean)
+	override fun setIsInPlaylist(inPlaylist: Boolean)
 	{
 		this.mediaPlayerData.isInPlaylist = inPlaylist
 		this.mediaPlayerData.updateItemInDatabaseAsync()
 	}
 
-	fun playSound(): Boolean
+	override fun playSound(): Boolean
 	{
 		if (this.isPlaying)
 			return true
@@ -186,7 +187,7 @@ class EnhancedMediaPlayer
 
 	}
 
-	fun stopSound(): Boolean
+	override fun stopSound(): Boolean
 	{
 		if (this.pauseSound())
 		{
@@ -196,7 +197,7 @@ class EnhancedMediaPlayer
 		return false
 	}
 
-	fun pauseSound(): Boolean {
+	override fun pauseSound(): Boolean {
 		if (!this.isPlaying)
 			return true
 		try {
@@ -246,7 +247,7 @@ class EnhancedMediaPlayer
 		}
 	}
 
-	fun fadeOutSound()
+	override fun fadeOutSound()
 	{
 		this.updateVolume(0)
 		this.scheduleNextVolumeChange()
@@ -293,7 +294,7 @@ class EnhancedMediaPlayer
 		this.setVolume(fVolume, fVolume)
 	}
 
-	fun setPositionTo(timePosition: Int): Boolean
+	override fun setPositionTo(timePosition: Int): Boolean
 	{
 		try
 		{

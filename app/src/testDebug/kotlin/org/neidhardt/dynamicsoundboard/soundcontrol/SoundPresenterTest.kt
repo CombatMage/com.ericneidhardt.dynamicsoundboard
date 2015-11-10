@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator
-import java.util.ArrayList
+import java.util.*
 import kotlin.test.assertEquals
 
 /**
@@ -109,4 +109,5 @@ public class SoundPresenterTest : BaseTest()
 			assertEquals(itemSortOrder, i)
 		}
 	}
+
 }

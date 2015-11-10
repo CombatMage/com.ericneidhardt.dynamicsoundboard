@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundmanagement.views;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 
 /**
@@ -15,7 +15,7 @@ public abstract class SoundSettingsBaseDialog extends BaseDialog
 	private static final String KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsBaseDialog.fragmentTag";
 
 	protected String fragmentTag;
-	protected EnhancedMediaPlayer player;
+	protected MediaPlayerController player;
 
 	public static void addArguments(SoundSettingsBaseDialog dialog, String playerId, String fragmentTag)
 	{

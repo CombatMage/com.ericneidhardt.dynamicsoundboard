@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundmanagement.model
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
@@ -34,13 +35,13 @@ public interface SoundsDataStorage
 	 * Remove all given Sounds from the currently loaded sounds, but not from the playlist.
 	 * @param soundsToRemove list of sounds to remove
 	 */
-	public fun removeSounds(soundsToRemove: List<EnhancedMediaPlayer>)
+	public fun removeSounds(soundsToRemove: List<MediaPlayerController>)
 
 	/**
 	 * Remove all given Sounds from the currently loaded sounds, from the playlist.
 	 * @param soundsToRemove list of sounds to remove
 	 */
-	public fun removeSoundsFromPlaylist(soundsToRemove: List<EnhancedMediaPlayer>)
+	public fun removeSoundsFromPlaylist(soundsToRemove: List<MediaPlayerController>)
 
 	/**
 	 * Moves a certain sound in the list of sounds to another position

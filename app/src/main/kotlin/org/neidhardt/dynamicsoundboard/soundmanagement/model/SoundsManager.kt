@@ -6,6 +6,7 @@ import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.Util
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
@@ -30,7 +31,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override val sounds: MutableMap<String, MutableList<EnhancedMediaPlayer>> = HashMap()
 	override val playlist: MutableList<EnhancedMediaPlayer> = ArrayList()
-	override val currentlyPlayingSounds: MutableSet<EnhancedMediaPlayer> = HashSet()
+	override val currentlyPlayingSounds: MutableSet<MediaPlayerController> = HashSet()
 
 	private var isInitDone: Boolean = false
 
@@ -109,7 +110,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		return soundsInFragment
 	}
 
-	override fun getSoundById(fragmentTag: String, playerId: String): EnhancedMediaPlayer?
+	override fun getSoundById(fragmentTag: String, playerId: String): MediaPlayerController?
 	{
 		if (this.soundSheetsDataUtil.isPlaylistSoundSheet(fragmentTag))
 			return searchInListForId(playerId, playlist)
@@ -215,11 +216,11 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		this.eventBus.post(SoundAddedEvent(player))
 	}
 
-	override fun removeSounds(soundsToRemove: List<EnhancedMediaPlayer>)
+	override fun removeSounds(soundsToRemove: List<MediaPlayerController>)
 	{
 		if (soundsToRemove.size() > 0)
 		{
-			val copyList = ArrayList<EnhancedMediaPlayer>(soundsToRemove.size())
+			val copyList = ArrayList<MediaPlayerController>(soundsToRemove.size())
 			copyList.addAll(soundsToRemove) // this is done to prevent concurrent modification exception
 
 			for (playerToRemove in copyList)
@@ -246,7 +247,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		}
 	}
 
-	override fun removeSoundsFromPlaylist(soundsToRemove: List<EnhancedMediaPlayer>)
+	override fun removeSoundsFromPlaylist(soundsToRemove: List<MediaPlayerController>)
 	{
 		soundsToRemove.map { player -> this.toggleSoundInPlaylist(player.mediaPlayerData.playerId, false) }
 		this.eventBus.post(SoundsRemovedEvent(soundsToRemove))

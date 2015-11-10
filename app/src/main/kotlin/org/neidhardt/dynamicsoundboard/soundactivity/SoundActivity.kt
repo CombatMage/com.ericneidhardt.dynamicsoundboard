@@ -23,7 +23,7 @@ import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDial
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog
 import org.neidhardt.dynamicsoundboard.introduction.IntroductionFragment
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -76,7 +76,7 @@ public class SoundActivity :
 	private var drawerToggle: ActionBarDrawerToggle? = null
 	private var actionMode: android.support.v7.view.ActionMode? = null
 
-	private var phoneStateListener: PauseSoundOnCallListener? = null
+	private var phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private val eventBus = EventBus.getDefault()
 
@@ -104,7 +104,6 @@ public class SoundActivity :
 		this.initNavigationDrawer()
 		this.openIntroductionFragmentIfRequired()
 
-		this.phoneStateListener = PauseSoundOnCallListener()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
 	}
 
@@ -297,19 +296,23 @@ public class SoundActivity :
 		this.soundsDataUtil.initIfRequired()
 	}
 
-	override fun onEvent(event: OpenSoundLayoutSettingsEvent) {
+	override fun onEvent(event: OpenSoundLayoutSettingsEvent)
+	{
 		SoundLayoutSettingsDialog.showInstance(this.fragmentManager, event.soundLayout.databaseId)
 	}
 
-	override fun onEvent(event: OpenSoundSheetEvent) {
+	override fun onEvent(event: OpenSoundSheetEvent)
+	{
 		this.openSoundFragment(event.soundSheetToOpen)
 	}
 
-	override fun onEvent(event: SoundSheetsInitEvent) {
+	override fun onEvent(event: SoundSheetsInitEvent)
+	{
 		this.onSoundSheetsInit()
 	}
 
-	override fun onEventMainThread(event: SoundSheetsRemovedEvent) {
+	override fun onEventMainThread(event: SoundSheetsRemovedEvent)
+	{
 		val removedSoundSheets = event.soundSheets
 		this.removeSoundFragments(removedSoundSheets)
 
@@ -317,23 +320,26 @@ public class SoundActivity :
 			this.setSoundSheetActionsEnable(false)
 	}
 
-	override fun onEventMainThread(event: SoundSheetAddedEvent) {
-	}
+	override fun onEventMainThread(event: SoundSheetAddedEvent) {}
 
-	override fun onEventMainThread(event: SoundSheetChangedEvent) {
-	}
+	override fun onEventMainThread(event: SoundSheetChangedEvent) {}
 
-	override fun onEvent(event: ActionModeChangeRequestedEvent) {
+	override fun onEvent(event: ActionModeChangeRequestedEvent)
+	{
 		val requestedAction = event.requestedAction
-		if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.START) {
+		if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.START)
+		{
 			this.actionMode = this.startSupportActionMode(event.actionModeCallback)
 			return
 		}
-		if (this.actionMode != null) {
-			if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.STOP) {
+		if (this.actionMode != null)
+		{
+			if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.STOP)
+			{
 				this.actionMode?.finish()
 				this.actionMode = null
-			} else if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.INVALIDATE)
+			}
+			else if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.INVALIDATE)
 				this.actionMode?.invalidate()
 		}
 	}
@@ -349,19 +355,28 @@ public class SoundActivity :
 
 		val soundSheetFragment = this.getCurrentSoundFragment()
 		val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
-		if (currentlyPlayingSounds.size() > 0) {
-			val copyCurrentlyPlayingSounds = ArrayList<EnhancedMediaPlayer>(currentlyPlayingSounds.size())
+
+		if (currentlyPlayingSounds.size() > 0)
+		{
+			val copyCurrentlyPlayingSounds = ArrayList<MediaPlayerController>(currentlyPlayingSounds.size())
 			copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds)
 			for (sound in copyCurrentlyPlayingSounds)
 				sound.pauseSound()
-		} else if (soundSheetFragment == null) {
+		}
+		else if (soundSheetFragment == null)
+		{
 			AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
-		} else {
-			if (SoundboardPreferences.useSystemBrowserForFiles()) {
+		}
+		else
+		{
+			if (SoundboardPreferences.useSystemBrowserForFiles())
+			{
 				val intent = Intent(Intent.ACTION_GET_CONTENT)
 				intent.setType(FileUtils.MIME_AUDIO)
 				soundSheetFragment.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
-			} else {
+			}
+			else
+			{
 				val currentSoundSheet = this.getCurrentSoundFragment()
 				if (currentSoundSheet != null)
 					AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, currentSoundSheet.fragmentTag)

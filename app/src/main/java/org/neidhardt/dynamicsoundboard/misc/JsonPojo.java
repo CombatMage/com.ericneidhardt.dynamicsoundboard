@@ -1,11 +1,11 @@
 package org.neidhardt.dynamicsoundboard.misc;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,16 +57,16 @@ public class JsonPojo
 		this.sounds = sounds;
 	}
 
-	public void addPlayList(List<EnhancedMediaPlayer> playlist)
+	public void addPlayList(List<MediaPlayerController> playlist)
 	{
 		if (playlist == null)
 			return;
 		this.playList = new ArrayList<>(playlist.size());
-		for (EnhancedMediaPlayer player : playlist)
+		for (MediaPlayerController player : playlist)
 			this.playList.add(player.getMediaPlayerData());
 	}
 
-	public void addSounds(Map<String, List<EnhancedMediaPlayer>> sounds)
+	public void addSounds(Map<String, List<MediaPlayerController>> sounds)
 	{
 		if (sounds == null)
 			return;
@@ -76,7 +76,7 @@ public class JsonPojo
 		for (String key : sounds.keySet())
 		{
 			List<MediaPlayerData> soundsPerSoundSheet = new ArrayList<>();
-			for (EnhancedMediaPlayer player : sounds.get(key))
+			for (MediaPlayerController player : sounds.get(key))
 				soundsPerSoundSheet.add(player.getMediaPlayerData());
 
 			this.sounds.put(key, soundsPerSoundSheet);
@@ -84,7 +84,7 @@ public class JsonPojo
 	}
 
 	public static void writeToFile(File file, List<SoundSheet> soundSheets,
-								   List<EnhancedMediaPlayer> playlist, Map<String, List<EnhancedMediaPlayer>> sounds) throws IOException
+								   List<MediaPlayerController> playlist, Map<String, List<MediaPlayerController>> sounds) throws IOException
 	{
 		ObjectMapper mapper = new ObjectMapper();
 

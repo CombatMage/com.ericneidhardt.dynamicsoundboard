@@ -1,13 +1,14 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer.events
 
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 
 /**
  * File created by eric.neidhardt on 02.11.2015.
  */
-data class MediaPlayerCompletedEvent(val player: EnhancedMediaPlayer)
+data class MediaPlayerCompletedEvent(val player: MediaPlayerController)
 
-data class MediaPlayerStateChangedEvent(val player: EnhancedMediaPlayer, val isAlive: Boolean)
+data class MediaPlayerStateChangedEvent(val player: MediaPlayerController, val isAlive: Boolean)
 {
 	val playerId: String
 		get() = this.player.mediaPlayerData.playerId

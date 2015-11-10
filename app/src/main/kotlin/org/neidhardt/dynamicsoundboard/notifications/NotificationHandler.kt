@@ -7,7 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
@@ -64,7 +64,7 @@ public class NotificationHandler
 
 	private fun showAllNotifications()
 	{
-		var pendingPlaylistPlayer: EnhancedMediaPlayer? = null
+		var pendingPlaylistPlayer: MediaPlayerController? = null
 
 		val pendingSounds = this.soundsDataAccess.currentlyPlayingSounds
 		for (player in pendingSounds)
@@ -82,10 +82,10 @@ public class NotificationHandler
 		}
 	}
 
-	private fun getNotificationForSound(player: EnhancedMediaPlayer): PendingSoundNotificationBuilder
+	private fun getNotificationForSound(player: MediaPlayerController): PendingSoundNotificationBuilder
 			= PendingSoundNotificationBuilder(this.service.applicationContext, player)
 
-	private fun getNotificationForPlaylist(player: EnhancedMediaPlayer): PendingSoundNotificationBuilder
+	private fun getNotificationForPlaylist(player: MediaPlayerController): PendingSoundNotificationBuilder
 			= PendingSoundNotificationBuilder(this.service.applicationContext, player, NOTIFICATION_ID_PLAYLIST,
 				this.service.getString(R.string.notification_playlist), player.mediaPlayerData.label)
 
@@ -121,8 +121,8 @@ public class NotificationHandler
 		val notificationId = correspondingNotification.notificationId
 		val player = searchInMapForId(playerId, soundsDataAccess.sounds)
 
-		if (player == null || !player.isPlaying && this.service.isActivityVisible())
 		// if player stops playing and the service is still bound, we remove the notification
+		if (player == null || !player.isPlaying() && this.service.isActivityVisible())
 		{
 			this.removeNotificationForPlayer(playerId)
 			return true
@@ -159,13 +159,13 @@ public class NotificationHandler
 			if (isInPlaylist)
 			{
 				val player = searchInListForId(playerId, soundsDataAccess.playlist)
-				if (player != null && !player.isPlaying)
+				if (player != null && !player.isPlaying())
 					this.removePlayListNotification()
 			}
 			else
 			{
 				val player = searchInMapForId(playerId, soundsDataAccess.sounds)
-				if (player == null || !player.isPlaying)
+				if (player == null || !player.isPlaying())
 					this.removeNotificationForPlayer(playerId)
 			}
 		}
@@ -204,7 +204,7 @@ public class NotificationHandler
 
 	override fun onEvent(event: MediaPlayerCompletedEvent) {}
 
-	private fun handlePlaylistPlayerStateChanged(player: EnhancedMediaPlayer)
+	private fun handlePlaylistPlayerStateChanged(player: MediaPlayerController)
 	{
 		val isPendingNotification = this.updateOrRemovePendingPlaylistNotification()
 		if (!isPendingNotification)
@@ -228,7 +228,7 @@ public class NotificationHandler
 		if (player != null)
 		{
 			// if player stops playing and the service is still bound, we remove the notification
-			if (!player.isPlaying && this.service.isActivityVisible())
+			if (!player.isPlaying() && this.service.isActivityVisible())
 			{
 				this.removePlayListNotification()
 				return true
@@ -254,7 +254,7 @@ public class NotificationHandler
 		}
 	}
 
-	private fun getPlayingSoundFromPlaylist(): EnhancedMediaPlayer? = soundsDataAccess.playlist.firstOrNull { player -> player.isPlaying }
+	private fun getPlayingSoundFromPlaylist(): MediaPlayerController? = soundsDataAccess.playlist.firstOrNull { player -> player.isPlaying() }
 
 	private inner class NotificationActionReceiver : BroadcastReceiver()
 	{
@@ -270,7 +270,7 @@ public class NotificationHandler
 				this.dismissPendingMediaPlayer(notificationId)
 			else
 			{
-				val player: EnhancedMediaPlayer?
+				val player: MediaPlayerController?
 				if (notificationId == NOTIFICATION_ID_PLAYLIST)
 					player = searchInListForId(playerId, soundsDataAccess.playlist)
 				else

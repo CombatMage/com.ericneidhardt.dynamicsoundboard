@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter
 
@@ -15,10 +16,10 @@ public class PlaylistAdapter
 		private val presenter: PlaylistPresenter
 ) :
 		SoundProgressAdapter<PlaylistViewHolder>(),
-		NavigationDrawerItemClickListener<EnhancedMediaPlayer>
+		NavigationDrawerItemClickListener<MediaPlayerController>
 {
 
-	override fun getValues(): List<EnhancedMediaPlayer>
+	override fun getValues(): List<MediaPlayerController>
 	{
 		return this.presenter.values
 	}
@@ -45,7 +46,7 @@ public class PlaylistAdapter
 		holder.bindData(data)
 	}
 
-	override fun onItemClick(data: EnhancedMediaPlayer)
+	override fun onItemClick(data: MediaPlayerController)
 	{
 		this.presenter.onItemClick(data)
 	}

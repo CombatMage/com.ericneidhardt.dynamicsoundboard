@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist
 
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
@@ -22,13 +22,13 @@ public class PlaylistPresenter
 
 ) :
 		NavigationDrawerListPresenter<Playlist>(),
-		NavigationDrawerItemClickListener<EnhancedMediaPlayer>,
+		NavigationDrawerItemClickListener<MediaPlayerController>,
 		OnPlaylistChangedEventListener,
 		MediaPlayerEventListener
 {
 	public var adapter: PlaylistAdapter? = null
 
-	public val values: MutableList<EnhancedMediaPlayer> = ArrayList()
+	public val values: MutableList<MediaPlayerController> = ArrayList()
 
 	private var currentItemIndex: Int? = null
 
@@ -74,9 +74,9 @@ public class PlaylistPresenter
 	override val numberOfItemsSelectedForDeletion: Int
 		get() = this.getPlayersSelectedForDeletion().size()
 
-	private fun getPlayersSelectedForDeletion(): List<EnhancedMediaPlayer>
+	private fun getPlayersSelectedForDeletion(): List<MediaPlayerController>
 	{
-		val selectedItems = ArrayList<EnhancedMediaPlayer>()
+		val selectedItems = ArrayList<MediaPlayerController>()
 		val existingItems = this.values
 		for (player in existingItems) {
 			if (player.mediaPlayerData.isSelectedForDeletion)
@@ -95,7 +95,7 @@ public class PlaylistPresenter
 		}
 	}
 
-	override fun onItemClick(data: EnhancedMediaPlayer)
+	override fun onItemClick(data: MediaPlayerController)
 	{
 		if (this.isInSelectionMode)
 		{
@@ -106,7 +106,7 @@ public class PlaylistPresenter
 			this.startOrStopPlayList(data)
 	}
 
-	public fun startOrStopPlayList(nextActivePlayer: EnhancedMediaPlayer)
+	public fun startOrStopPlayList(nextActivePlayer: MediaPlayerController)
 	{
 		if (!this.values.contains(nextActivePlayer))
 			throw IllegalStateException("next active player $nextActivePlayer is not in playlist")
@@ -118,7 +118,7 @@ public class PlaylistPresenter
 				player.stopSound()
 		}
 
-		if (nextActivePlayer.isPlaying)
+		if (nextActivePlayer.isPlaying())
 		{
 			this.adapter?.stopProgressUpdateTimer()
 			nextActivePlayer.pauseSound()
@@ -176,7 +176,7 @@ public class PlaylistPresenter
 		}
 	}
 
-	private fun setPlaylistSortOrder(playlist: List<EnhancedMediaPlayer>)
+	private fun setPlaylistSortOrder(playlist: List<MediaPlayerController>)
 	{
 		val count = playlist.size()
 		for (i in 0..count - 1)

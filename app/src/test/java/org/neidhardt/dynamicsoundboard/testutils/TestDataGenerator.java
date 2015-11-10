@@ -61,6 +61,7 @@ public class TestDataGenerator
 	{
 		EnhancedMediaPlayer player = mock(EnhancedMediaPlayer.class);
 		when(player.getMediaPlayerData()).thenReturn(data);
+
 		return player;
 	}
 }
