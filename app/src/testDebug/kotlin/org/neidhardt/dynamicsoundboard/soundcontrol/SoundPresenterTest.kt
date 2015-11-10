@@ -7,7 +7,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.neidhardt.dynamicsoundboard.BaseTest
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -20,7 +20,7 @@ import kotlin.test.assertEquals
  */
 public class SoundPresenterTest : BaseTest()
 {
-	private val FRAGMENT_TAG = javaClass.getName()
+	private val FRAGMENT_TAG = javaClass.name
 
 	private var soundPresenter: SoundPresenter? = null
 
@@ -64,7 +64,7 @@ public class SoundPresenterTest : BaseTest()
 		event = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
 		this.soundPresenter!!.onEventMainThread(event)
 
-		val list = ArrayList<EnhancedMediaPlayer>()
+		val list = ArrayList<MediaPlayerController>()
 		list.add(this.soundPresenter!!.values.get(1))
 		list.add(this.soundPresenter!!.values.get(2))
 
@@ -79,15 +79,15 @@ public class SoundPresenterTest : BaseTest()
 	fun onSoundAddedWithReverseSortOrderGivenEvent()
 	{
 		val event0 = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		event0.player.mediaPlayerData.setSortOrder(2)
+		event0.player.mediaPlayerData.sortOrder = 2
 		this.soundPresenter!!.onEventMainThread(event0)
 
 		val event1 = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		event1.player.mediaPlayerData.setSortOrder(1)
+		event1.player.mediaPlayerData.sortOrder = 1
 		this.soundPresenter!!.onEventMainThread(event1)
 
 		val event2 = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		event2.player.mediaPlayerData.setSortOrder(0)
+		event2.player.mediaPlayerData.sortOrder = 0
 		this.soundPresenter!!.onEventMainThread(event2)
 
 		assertThat(this.soundPresenter!!.values.size(), equalTo(3))
@@ -105,7 +105,7 @@ public class SoundPresenterTest : BaseTest()
 		val count = values.size()
 		for (i in 0..count - 1)
 		{
-			val itemSortOrder = values.get(i).mediaPlayerData.getSortOrder()
+			val itemSortOrder = values.get(i).mediaPlayerData.sortOrder
 			assertEquals(itemSortOrder, i)
 		}
 	}

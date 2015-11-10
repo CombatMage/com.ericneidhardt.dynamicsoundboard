@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.misc;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController;
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator;
 
 import java.io.File;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -22,8 +22,8 @@ import static org.mockito.Mockito.mock;
 public class JsonPojoTest extends BaseTest
 {
 	private List<SoundSheet> sheets;
-	private List<EnhancedMediaPlayer> playlist;
-	private Map<String, List<EnhancedMediaPlayer>> sounds;
+	private List<MediaPlayerController> playlist;
+	private Map<String, List<MediaPlayerController>> sounds;
 
 	private File file;
 
@@ -35,10 +35,10 @@ public class JsonPojoTest extends BaseTest
 		this.sheets.add(TestDataGenerator.getRandomSoundSheet());
 
 		this.playlist = new ArrayList<>();
-		this.playlist.add(mock(EnhancedMediaPlayer.class));
+		this.playlist.add(mock(MediaPlayerController.class));
 
-		List<EnhancedMediaPlayer> soundList = new ArrayList<>();
-		soundList.add(mock(EnhancedMediaPlayer.class));
+		List<MediaPlayerController> soundList = new ArrayList<>();
+		soundList.add(mock(MediaPlayerController.class));
 		this.sounds = new HashMap<>();
 		this.sounds.put("test", soundList);
 

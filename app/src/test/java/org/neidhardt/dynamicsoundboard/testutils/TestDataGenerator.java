@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.testutils;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController;
 
 import java.io.File;
 import java.util.Random;
@@ -44,9 +44,9 @@ public class TestDataGenerator
 		return data;
 	}
 
-	public static EnhancedMediaPlayer getRandomPlayer(String fragmentTag) throws Exception
+	public static MediaPlayerController getRandomPlayer(String fragmentTag) throws Exception
 	{
-		EnhancedMediaPlayer player = TestDataGenerator.getMockEnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData());
+		MediaPlayerController player = TestDataGenerator.getMockEnhancedMediaPlayer(TestDataGenerator.getRandomPlayerData());
 		player.getMediaPlayerData().setFragmentTag(fragmentTag);
 		return player;
 	}
@@ -57,9 +57,9 @@ public class TestDataGenerator
 		return file.getPath();
 	}
 
-	public static EnhancedMediaPlayer getMockEnhancedMediaPlayer(MediaPlayerData data)
+	public static MediaPlayerController getMockEnhancedMediaPlayer(MediaPlayerData data)
 	{
-		EnhancedMediaPlayer player = mock(EnhancedMediaPlayer.class);
+		MediaPlayerController player = mock(MediaPlayerController.class);
 		when(player.getMediaPlayerData()).thenReturn(data);
 
 		return player;
