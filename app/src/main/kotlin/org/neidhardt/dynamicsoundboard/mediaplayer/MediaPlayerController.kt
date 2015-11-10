@@ -15,6 +15,8 @@ interface MediaPlayerController
 
 	var progress: Int
 
+	var isLoopingEnabled: Boolean
+
 	fun playSound(): Boolean
 
 	fun stopSound(): Boolean
@@ -24,8 +26,6 @@ interface MediaPlayerController
 	fun fadeOutSound()
 
 	fun setIsInPlaylist(inPlaylist: Boolean)
-
-	fun setLooping(looping: Boolean)
 
 	fun setSoundUri(uri: String)
 

@@ -5,9 +5,7 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-
-import java.util.ArrayList
+import java.util.*
 
 
 class PauseSoundOnCallListener : PhoneStateListener()
@@ -47,13 +45,13 @@ class PauseSoundOnCallListener : PhoneStateListener()
 
 		fun registerListener(context: Context, listener: PauseSoundOnCallListener) {
 			val manager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-			manager?.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
+			manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
 		}
 
 		fun unregisterListener(context: Context, listener: PauseSoundOnCallListener) {
 			listener.clearReferences()
 			val manager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-			manager?.listen(listener, PhoneStateListener.LISTEN_NONE)
+			manager.listen(listener, PhoneStateListener.LISTEN_NONE)
 		}
 	}
 }

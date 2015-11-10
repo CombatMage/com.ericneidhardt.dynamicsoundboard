@@ -117,6 +117,19 @@ class EnhancedMediaPlayer
 			}
 		}
 
+	override var isLoopingEnabled: Boolean
+		get() = throw UnsupportedOperationException()
+		set(value)
+		{
+			super.setLooping(value)
+
+			if (this.mediaPlayerData.isLoop != value)
+			{
+				this.mediaPlayerData.isLoop = value
+				this.mediaPlayerData.updateItemInDatabaseAsync()
+			}
+		}
+
 	@Throws(IOException::class)
 	override fun setSoundUri(uri: String)
 	{
@@ -162,17 +175,6 @@ class EnhancedMediaPlayer
 	{
 		Logger.d(TAG, "preparing media player " + this.mediaPlayerData.label + " with uri " + this.mediaPlayerData.uri)
 		super.prepare()
-	}
-
-	override fun setLooping(looping: Boolean)
-	{
-		super.setLooping(looping)
-
-		if (this.mediaPlayerData.isLoop != looping)
-		{
-			this.mediaPlayerData.isLoop = looping
-			this.mediaPlayerData.updateItemInDatabaseAsync()
-		}
 	}
 
 	override fun setIsInPlaylist(inPlaylist: Boolean)
@@ -382,7 +384,7 @@ class EnhancedMediaPlayer
 		private val FLOAT_VOLUME_MIN = 0f
 
 		@Throws(IOException::class)
-		fun getInstanceForPlayList(data: MediaPlayerData): EnhancedMediaPlayer
+		fun getInstanceForPlayList(data: MediaPlayerData): MediaPlayerController
 		{
 			val playListData = MediaPlayerData()
 			playListData.id = data.id

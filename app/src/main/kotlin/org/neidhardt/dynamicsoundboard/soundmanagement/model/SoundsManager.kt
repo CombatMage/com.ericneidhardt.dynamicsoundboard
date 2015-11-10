@@ -29,8 +29,8 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	private var dbPlaylist: DaoSession? = null
 	private var dbSounds: DaoSession? = null
 
-	override val sounds: MutableMap<String, MutableList<EnhancedMediaPlayer>> = HashMap()
-	override val playlist: MutableList<EnhancedMediaPlayer> = ArrayList()
+	override val sounds: MutableMap<String, MutableList<MediaPlayerController>> = HashMap()
+	override val playlist: MutableList<MediaPlayerController> = ArrayList()
 	override val currentlyPlayingSounds: MutableSet<MediaPlayerController> = HashSet()
 
 	private var isInitDone: Boolean = false
@@ -99,12 +99,12 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean = this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.fragmentTag)
 
-	override fun getSoundsInFragment(fragmentTag: String): List<EnhancedMediaPlayer>
+	override fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController>
 	{
-		var soundsInFragment: List<EnhancedMediaPlayer>? = this.sounds.get(fragmentTag)
+		var soundsInFragment: List<MediaPlayerController>? = this.sounds.get(fragmentTag)
 		if (soundsInFragment == null)
 		{
-			soundsInFragment = ArrayList<EnhancedMediaPlayer>()
+			soundsInFragment = ArrayList<MediaPlayerController>()
 			this.sounds.put(fragmentTag, soundsInFragment)
 		}
 		return soundsInFragment
@@ -192,7 +192,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		}
 	}
 
-	private fun addSoundToPlayList(player: EnhancedMediaPlayer)
+	private fun addSoundToPlayList(player: MediaPlayerController)
 	{
 		this.playlist.add(player)
 
@@ -202,12 +202,12 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		this.eventBus.post(PlaylistChangedEvent())
 	}
 
-	private fun addSoundToSounds(player: EnhancedMediaPlayer)
+	private fun addSoundToSounds(player: MediaPlayerController)
 	{
 		val data = player.mediaPlayerData
 		val fragmentTag = data.fragmentTag
 		if (this.sounds[fragmentTag] == null)
-			this.sounds[fragmentTag] = ArrayList<EnhancedMediaPlayer>()
+			this.sounds[fragmentTag] = ArrayList<MediaPlayerController>()
 
 		this.sounds[fragmentTag]?.add(player)
 
@@ -279,18 +279,18 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		}
 	}
 
-	private fun createPlaylistSound(playerData: MediaPlayerData): EnhancedMediaPlayer?
+	private fun createPlaylistSound(playerData: MediaPlayerData): MediaPlayerController?
 	{
 		try
 		{
 			return EnhancedMediaPlayer.getInstanceForPlayList(playerData)
-		} catch (e: IOException)
+		}
+		catch (e: IOException)
 		{
 			Logger.d(TAG, playerData.toString() + " " + e.getMessage())
 			this.removePlaylistDataFromDatabase(playerData)
 			return null
 		}
-
 	}
 
 	private fun createSound(playerData: MediaPlayerData): EnhancedMediaPlayer?

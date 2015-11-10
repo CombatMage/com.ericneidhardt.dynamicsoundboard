@@ -161,7 +161,7 @@ public class SoundViewHolder
 	{
 		super.onClick(view)
 
-		val player = this.player as EnhancedMediaPlayer
+		val player = this.player as MediaPlayerController
 
 		val isSelected = view.isSelected
 		val id = view.id
@@ -174,7 +174,7 @@ public class SoundViewHolder
 			R.id.b_loop ->
 			{
 				view.isSelected = !isSelected
-				player.isLooping = !isSelected
+				player.isLoopingEnabled = !isSelected
 			}
 			R.id.b_add_to_playlist ->
 			{
