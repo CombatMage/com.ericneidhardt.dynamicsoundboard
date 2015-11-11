@@ -31,21 +31,6 @@ private val INT_VOLUME_MIN = 0
 private val FLOAT_VOLUME_MAX = 1f
 private val FLOAT_VOLUME_MIN = 0f
 
-fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): MediaPlayerData
-{
-	val data = MediaPlayerData()
-
-	val playerId = Integer.toString((uri.toString() + DynamicSoundboardApplication.getRandomNumber()).hashCode())
-	data.playerId = playerId
-	data.fragmentTag = fragmentTag
-	data.label = label
-	data.uri = uri.toString()
-	data.isInPlaylist = false
-	data.isLoop = false
-
-	return data
-}
-
 fun getNewMediaPlayerController(context: Context,
 							 eventBus: EventBus,
 							 mediaPlayerData: MediaPlayerData,
@@ -73,17 +58,6 @@ private class EnhancedMediaPlayer
 	private var handler: Handler? = null
 	private var currentState: State? = null
 	private var volume: Int = 0
-
-	init
-	{
-		this.setOnErrorListener(this)
-		this.setOnInfoListener(this)
-
-		this.isLooping = mediaPlayerData.isLoop
-
-		this.currentState = State.IDLE
-		this.init(context)
-	}
 
 	/**
 	 * Check if this MediaPlayer is currently playing, ie. State.STARTED.
@@ -146,7 +120,7 @@ private class EnhancedMediaPlayer
 			}
 		}
 
-	override var isLoopingEnabled: Boolean
+	override var isLooping: Boolean
 		get() = this.mediaPlayerData.isLoop
 		set(value)
 		{
@@ -158,6 +132,28 @@ private class EnhancedMediaPlayer
 				this.mediaPlayerData.updateItemInDatabaseAsync()
 			}
 		}
+
+	override var isInPlaylist: Boolean
+		get() = this.mediaPlayerData.isInPlaylist
+		set(value)
+		{
+			if (value != this.mediaPlayerData.isInPlaylist)
+			{
+				this.mediaPlayerData.isInPlaylist = value
+				this.mediaPlayerData.updateItemInDatabaseAsync()
+			}
+		}
+
+	init
+	{
+		this.setOnErrorListener(this)
+		this.setOnInfoListener(this)
+
+		this.isLooping = mediaPlayerData.isLoop
+
+		this.currentState = State.IDLE
+		this.init(context)
+	}
 
 	@Throws(IOException::class)
 	override fun setSoundUri(uri: String)
@@ -204,12 +200,6 @@ private class EnhancedMediaPlayer
 	{
 		Logger.d(TAG, "preparing media player " + this.mediaPlayerData.label + " with uri " + this.mediaPlayerData.uri)
 		super.prepare()
-	}
-
-	override fun setIsInPlaylist(inPlaylist: Boolean)
-	{
-		this.mediaPlayerData.isInPlaylist = inPlaylist
-		this.mediaPlayerData.updateItemInDatabaseAsync()
 	}
 
 	override fun playSound(): Boolean

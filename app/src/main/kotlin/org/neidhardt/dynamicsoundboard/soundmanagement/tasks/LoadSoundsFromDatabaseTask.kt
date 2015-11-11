@@ -5,7 +5,6 @@ import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerComparator
-import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
@@ -107,7 +106,7 @@ public class LoadSoundsFromFileListTask
 		val soundUri = Uri.parse(file.absolutePath)
 		val soundLabel = FileUtils.stripFileTypeFromName(
 				FileUtils.getFileNameFromUri(DynamicSoundboardApplication.getContext(), soundUri))
-		return getNewMediaPlayerData(fragmentTag, soundUri, soundLabel)
+		return MediaPlayerData.getNewMediaPlayerData(fragmentTag, soundUri, soundLabel)
 	}
 
 }

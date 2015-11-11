@@ -167,7 +167,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 			if (player != null)
 			{
-				player.setIsInPlaylist(true)
+				player.isInPlaylist = true
 
 				val playerForPlaylist = createPlaylistSound(player.mediaPlayerData)
 				if (playerForPlaylist == null)
@@ -184,7 +184,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			if (playerInPlaylist == null)
 				return
 
-			player?.setIsInPlaylist(false)
+			player?.isInPlaylist = false
 
 			this.playlist.remove(playerInPlaylist)
 

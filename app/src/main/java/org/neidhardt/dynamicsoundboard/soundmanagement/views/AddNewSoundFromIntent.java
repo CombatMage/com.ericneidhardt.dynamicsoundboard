@@ -14,7 +14,6 @@ import android.widget.EditText;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.misc.FileUtils;
 import org.neidhardt.dynamicsoundboard.views.BaseDialog;
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner;
@@ -180,7 +179,7 @@ public class AddNewSoundFromIntent extends BaseDialog implements View.OnClickLis
 		String soundLabel = this.soundName.getText().toString();
 		Uri soundUri = this.uri;
 
-		MediaPlayerData mediaPlayerData = EnhancedMediaPlayer.Companion.getMediaPlayerData(soundSheetFragmentTag, soundUri, soundLabel);
+		MediaPlayerData mediaPlayerData = MediaPlayerData.getNewMediaPlayerData(soundSheetFragmentTag, soundUri, soundLabel);
 		this.getSoundsDataStorage().createSoundAndAddToManager(mediaPlayerData);
 	}
 

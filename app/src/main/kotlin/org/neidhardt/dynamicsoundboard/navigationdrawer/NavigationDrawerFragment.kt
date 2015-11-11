@@ -16,8 +16,8 @@ import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OnOpenSoundLayoutsEventListener
+import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayouts
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets
@@ -31,7 +31,7 @@ public class NavigationDrawerFragment :
 		View.OnClickListener,
 		TabLayout.OnTabSelectedListener,
 		OnActionModeChangeRequestedEventListener,
-		NavigationDrawerHeaderPresenter.OnOpenSoundLayoutsEvent
+		OnOpenSoundLayoutsEventListener
 {
 	private val TAG = javaClass.name
 
@@ -178,7 +178,7 @@ public class NavigationDrawerFragment :
 		animator?.start()
 	}
 
-	override fun onEvent(event: OpenSoundLayoutsEvent)
+	override fun onEvent(event: OpenSoundLayoutsRequestedEvent)
 	{
 		this.soundLayoutList!!.toggleVisibility()
 		this.animateSoundLayoutsListAppear()

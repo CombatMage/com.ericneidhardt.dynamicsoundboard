@@ -11,7 +11,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.Soun
  */
 public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 {
-
 	private var databaseId: String? = null
 
 	override fun onCreate(savedInstanceState: Bundle?)
@@ -42,10 +41,12 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 				name = this.getHintForName()
 
 			val layout = this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)
-			layout?.label = name
-			layout?.updateItemInDatabaseAsync()
+			if (layout != null) {
+				layout.label = name
+				layout.updateItemInDatabaseAsync()
 
-			EventBus.getDefault().post(SoundLayoutRenamedEvent(layout))
+				EventBus.getDefault().post(SoundLayoutRenamedEvent(layout))
+			}
 		}
 	}
 

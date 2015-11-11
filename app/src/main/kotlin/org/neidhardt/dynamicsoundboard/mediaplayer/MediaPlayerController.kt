@@ -15,9 +15,9 @@ interface MediaPlayerController
 
 	var progress: Int
 
-	var isLoopingEnabled: Boolean
+	var isLooping: Boolean
 
-	fun setIsInPlaylist(inPlaylist: Boolean) // TODO convert to property
+	var isInPlaylist: Boolean
 
 	fun playSound(): Boolean
 
@@ -30,5 +30,4 @@ interface MediaPlayerController
 	fun setSoundUri(uri: String)
 
 	fun destroy(postStateChanged: Boolean)
-
 }

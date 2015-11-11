@@ -14,7 +14,6 @@ import de.greenrobot.event.EventBus;
 import org.neidhardt.dynamicsoundboard.R;
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData;
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet;
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer;
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog;
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent;
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText;
@@ -155,10 +154,10 @@ public class SoundSettingsDialog extends SoundSettingsBaseDialog implements View
 				this.getSoundSheetsDataStorage().addSoundSheetToManager(soundSheet);
 
 				String fragmentTag = soundSheet.getFragmentTag();
-				mediaPlayerData = EnhancedMediaPlayer.Companion.getMediaPlayerData(fragmentTag, uri, soundLabel);
+				mediaPlayerData = MediaPlayerData.getNewMediaPlayerData(fragmentTag, uri, soundLabel);
 			}
 			else
-				mediaPlayerData = EnhancedMediaPlayer.Companion.getMediaPlayerData(this.fragmentTag, uri, soundLabel);
+				mediaPlayerData = MediaPlayerData.getNewMediaPlayerData(this.fragmentTag, uri, soundLabel);
 
 			this.getSoundsDataStorage().createSoundAndAddToManager(mediaPlayerData);
 		}

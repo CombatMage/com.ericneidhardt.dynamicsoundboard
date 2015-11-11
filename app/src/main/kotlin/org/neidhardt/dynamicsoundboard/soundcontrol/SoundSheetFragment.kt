@@ -14,9 +14,9 @@ import de.greenrobot.event.EventBus
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
-import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -176,7 +176,7 @@ public class SoundSheetFragment :
 			{
 				val soundUri = data!!.data
 				val soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
-				val playerData = getNewMediaPlayerData(this.fragmentTag, soundUri, soundLabel)
+				val playerData = MediaPlayerData.getNewMediaPlayerData(this.fragmentTag, soundUri, soundLabel)
 
 				this.soundsDataStorage.createSoundAndAddToManager(playerData)
 				return

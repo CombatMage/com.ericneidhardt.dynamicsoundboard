@@ -173,12 +173,12 @@ public class SoundViewHolder
 			R.id.b_loop ->
 			{
 				view.isSelected = !isSelected
-				player.isLoopingEnabled = !isSelected
+				player.isLooping = !isSelected
 			}
 			R.id.b_add_to_playlist ->
 			{
 				view.isSelected = !isSelected
-				player.setIsInPlaylist(!isSelected)
+				player.isInPlaylist = !isSelected
 				player.mediaPlayerData.updateItemInDatabaseAsync()
 				soundsDataStorage.toggleSoundInPlaylist(player.mediaPlayerData.playerId, !isSelected)
 			}
