@@ -5,6 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess;
 
 import static org.junit.Assert.assertTrue;
@@ -64,11 +68,11 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	@Test
 	public void testOnSoundLayoutRenamedEvent() throws Exception
 	{
-		this.presenter.onEvent(new SoundLayoutRenamedEvent(null));
+		this.presenter.onEvent(new SoundLayoutRenamedEvent(new SoundLayout()));
 		verify(this.view, times(1)).showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
 
 		this.presenter.setView(null);
-		this.presenter.onEvent(new SoundLayoutRenamedEvent(null));
+		this.presenter.onEvent(new SoundLayoutRenamedEvent(new SoundLayout()));
 		verify(this.view, times(1)).showCurrentLayoutName(anyString());
 	}
 
@@ -100,6 +104,6 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 		this.presenter.onChangeLayoutClicked();
 
 		verify(this.view, times(1)).animateLayoutChanges();
-		verify(this.bus, times(1)).post(any(OpenSoundLayoutsEvent.class));
+		verify(this.bus, times(1)).post(any(OpenSoundLayoutsRequestedEvent.class));
 	}
 }

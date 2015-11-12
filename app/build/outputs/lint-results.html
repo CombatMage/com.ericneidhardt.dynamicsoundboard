@@ -1,0 +1,1519 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Lint Report</title>
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto" />
+<link rel="stylesheet" type="text/css" href="lint-results_files/hololike.css" />
+<script language="javascript" type="text/javascript"> 
+<!--
+function reveal(id) {
+if (document.getElementById) {
+document.getElementById(id).style.display = 'block';
+document.getElementById(id+'Link').style.display = 'none';
+}
+}
+//--> 
+</script>
+</head>
+<body>
+<h1>Lint Report</h1>
+<div class="titleSeparator"></div>
+Check performed at Thu Nov 12 12:03:34 CET 2015.<br/>
+0 errors and 116 warnings found:<br/><br/>
+<table class="overview">
+<tr><td></td><td class="categoryColumn"><a href="#Correctness">Correctness</a>
+</td></tr>
+<tr>
+<td class="countColumn">4</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#PrivateResource">PrivateResource: Using private resources</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Correctness:Messages">Correctness:Messages</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#Typos">Typos: Spelling error</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Security">Security</a>
+</td></tr>
+<tr>
+<td class="countColumn">2</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#AllowBackup">AllowBackup: AllowBackup/FullBackupContent Problems</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Performance">Performance</a>
+</td></tr>
+<tr>
+<td class="countColumn">13</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#Overdraw">Overdraw: Overdraw: Painting regions more than once</a>
+</td></tr>
+<tr>
+<td class="countColumn">89</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#UnusedResources">UnusedResources: Unused resources</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Usability:Icons">Usability:Icons</a>
+</td></tr>
+<tr>
+<td class="countColumn">2</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#IconDipSize">IconDipSize: Icon density-independent size validation</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#IconDuplicatesConfig">IconDuplicatesConfig: Identical bitmaps across various configurations</a>
+</td></tr>
+<tr>
+<td class="countColumn">2</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#IconDensities">IconDensities: Icon densities validation</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Usability">Usability</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#GoogleAppIndexingWarning">GoogleAppIndexingWarning: Missing support for Google App Indexing</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Bi-directional Text">Bi-directional Text</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
+<a href="#RtlEnabled">RtlEnabled: Using RTL attributes without enabling RTL support</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#MissingIssues">Disabled Checks (13)</a>
+</td></tr></table>
+<br/>
+<a name="Correctness"></a>
+<div class="category"><a href="#" title="Return to top">Correctness</a><div class="categorySeparator"></div>
+</div>
+<a name="PrivateResource"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">PrivateResource: Using private resources</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/main/res/layout-land/toolbar.xml">../../src/main/res/layout-land/toolbar.xml</a>:7</span>: <span class="message">The resource <code>@dimen/abc_action_bar_default_height_material</code> is marked as private in com.android.support:appcompat-v7</span><br /><pre class="errorlines">
+<span class="lineno">   4</span> 		xmlns:android="http://schemas.android.com/apk/res/android"
+<span class="lineno">   5</span> 		xmlns:app="http://schemas.android.com/apk/res-auto"
+<span class="lineno">   6</span> 		android:id="@+id/toolbar"
+<span class="lineno">   7</span> 		android:layout_height="<span class="errorspan">@dimen/abc_action_bar_default_height_material"</span>
+<span class="lineno">   8</span> 		android:layout_width="match_parent"
+<span class="lineno">   9</span> 		android:minHeight="?attr/actionBarSize"
+</pre>
+<span class="location"><a href="../../src/main/res/layout/toolbar.xml">../../src/main/res/layout/toolbar.xml</a>:7</span>: <span class="message">The resource <code>@dimen/abc_action_bar_default_height_material</code> is marked as private in com.android.support:appcompat-v7</span><br /><pre class="errorlines">
+<span class="lineno">   4</span> 		xmlns:android="http://schemas.android.com/apk/res/android"
+<span class="lineno">   5</span> 		xmlns:app="http://schemas.android.com/apk/res-auto"
+<span class="lineno">   6</span> 		android:id="@+id/toolbar"
+<span class="lineno">   7</span> 		android:layout_height="<span class="errorspan">@dimen/abc_action_bar_default_height_material"</span>
+<span class="lineno">   8</span> 		android:layout_width="match_parent"
+<span class="lineno">   9</span> 		android:minHeight="?attr/actionBarSize"
+</pre>
+<span class="location"><a href="../../src/main/res/layout/toolbar_preferences.xml">../../src/main/res/layout/toolbar_preferences.xml</a>:11</span>: <span class="message">The resource <code>@string/abc_action_bar_up_description</code> is marked as private in com.android.support:appcompat-v7</span><br /><pre class="errorlines">
+<span class="lineno">   8</span> 		android:paddingTop="@dimen/status_bar_padding"
+<span class="lineno">   9</span> 		android:minHeight="?attr/actionBarSize"
+<span class="lineno">  10</span> 		android:background="?attr/colorPrimary"
+<span class="lineno">  11</span> 		app:navigationContentDescription="<span class="errorspan">@string/abc_action_bar_up_description"</span>
+<span class="lineno">  12</span> 		app:navigationIcon="?attr/homeAsUpIndicator"
+<span class="lineno">  13</span> 		app:title="@string/preferences"
+</pre>
+<span class="location"><a href="../../src/main/res/layout/view_toolbar_content.xml">../../src/main/res/layout/view_toolbar_content.xml</a>:7</span>: <span class="message">The resource <code>@dimen/abc_action_bar_default_height_material</code> is marked as private in com.android.support:appcompat-v7</span><br /><pre class="errorlines">
+<span class="lineno">   4</span> 		xmlns:app="http://schemas.android.com/apk/res-auto"
+<span class="lineno">   5</span> 		xmlns:tools="http://schemas.android.com/tools"
+<span class="lineno">   6</span> 		android:layout_width="match_parent"
+<span class="lineno">   7</span> 		android:layout_height="<span class="errorspan">@dimen/abc_action_bar_default_height_material"</span>
+<span class="lineno">   8</span> 		tools:background="@color/primary_500">
+<span class="lineno">   9</span> 
+</pre>
+</div>
+<div class="metadata">Priority: 3 / 10<br/>
+Category: Correctness</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Using private resources.</div>
+<div class="explanation">
+Private resources should not be referenced; the may not be present everywhere, and even where they are they may disappear without notice.<br/>
+<br/>
+To fix this, copy the resource into your own project instead.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "PrivateResource" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Correctness:Messages"></a>
+<div class="category"><a href="#" title="Return to top">Correctness:Messages</a><div class="categorySeparator"></div>
+</div>
+<a name="Typos"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">Typos: Spelling error</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:98</span>: <span class="message">"Autor" is a common misspelling; did you mean "Author" ?</span><br /><pre class="errorlines">
+<span class="lineno">  95</span> 		Ansonsten wird der Browser der App verwendet (empfohlen).&lt;/string>
+<span class="lineno">  96</span> 
+<span class="lineno">  97</span> 	&lt;string name="about">Über&lt;/string>
+<span class="lineno">  98</span> 	&lt;string name="about_author_title"><span class="errorspan">Autor&lt;/string></span>
+<span class="lineno">  99</span> 	&lt;string name="about_author_summary">Eric Neidhardt&lt;/string>
+<span class="lineno"> 100</span> 	&lt;string name="about_version_title">Version&lt;/string>
+</pre>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Eclipse/ADT & Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint-results_files/lint-run.png" />
+<br>
+Priority: 7 / 10<br/>
+Category: Correctness:Messages</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Spelling error.</div>
+<div class="explanation">
+This check looks through the string definitions, and if it finds any words that look like likely misspellings, they are flagged.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "Typos" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Security"></a>
+<div class="category"><a href="#" title="Return to top">Security</a><div class="categorySeparator"></div>
+</div>
+<a name="AllowBackup"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">AllowBackup: AllowBackup/FullBackupContent Problems</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/debug/AndroidManifest.xml">../../src/debug/AndroidManifest.xml</a>:7</span>: <span class="message">On SDK version 23 and up, your app data will be automatically backed up and restored on app install. Consider adding the attribute <code>android:fullBackupContent</code> to specify an <code>@xml</code> resource which configures which files to backup. More info: https://developer.android.com/preview/backup/index.html</span><br /><pre class="errorlines">
+<span class="lineno">   4</span> 		xmlns:tools="http://schemas.android.com/tools"
+<span class="lineno">   5</span> 		package="org.neidhardt.dynamicsoundboard">
+<span class="lineno">   6</span> 
+<span class="lineno">   7</span> 	<span class="errorspan">&lt;application</span>
+<span class="lineno">   8</span> 			android:name=".DynamicSoundboardApplication"
+<span class="lineno">   9</span> 			android:allowBackup="true"
+</pre>
+<span class="location"><a href="../../src/main/AndroidManifest.xml">../../src/main/AndroidManifest.xml</a>:11</span>: <span class="message">On SDK version 23 and up, your app data will be automatically backed up and restored on app install. Consider adding the attribute <code>android:fullBackupContent</code> to specify an <code>@xml</code> resource which configures which files to backup. More info: https://developer.android.com/preview/backup/index.html</span><br /><pre class="errorlines">
+<span class="lineno">   8</span> 	&lt;uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<span class="lineno">   9</span> 	&lt;uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+<span class="lineno">  10</span> 
+<span class="lineno">  11</span> 	<span class="errorspan">&lt;application</span>
+<span class="lineno">  12</span> 			android:name=".DynamicSoundboardApplication"
+<span class="lineno">  13</span> 			android:allowBackup="true"
+</pre>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Eclipse/ADT & Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint-results_files/lint-run.png" />
+<br>
+Priority: 3 / 10<br/>
+Category: Security</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: AllowBackup/FullBackupContent Problems.</div>
+<div class="explanation">
+The <code>allowBackup</code> attribute determines if an application's data can be backed up and restored. It is documented at <a href="http://developer.android.com/reference/android/R.attr.html#allowBackup">http://developer.android.com/reference/android/R.attr.html#allowBackup</a><br/>
+<br/>
+By default, this flag is set to <code>true</code>. When this flag is set to <code>true</code>, application data can be backed up and restored by the user using <code>adb backup</code> and <code>adb restore</code>.<br/>
+<br/>
+This may have security consequences for an application. <code>adb backup</code> allows users who have enabled USB debugging to copy application data off of the device. Once backed up, all application data can be read by the user. <code>adb restore</code> allows creation of application data from a source specified by the user. Following a restore, applications should not assume that the data, file permissions, and directory permissions were created by the application itself.<br/>
+<br/>
+Setting <code>allowBackup="false"</code> opts an application out of both backup and restore.<br/>
+<br/>
+To fix this warning, decide whether your application should support backup, and explicitly set <code>android:allowBackup=(true|false)"</code>.<br/>
+<br/>
+If not set to false, and if targeting API 23 or later, lint will also warn that you should set <code>android:fullBackupContent</code> to configure auto backup.
+</div>
+<br/><div class="moreinfo">More info: <ul><li><a href="https://developer.android.com/preview/backup/index.html">https://developer.android.com/preview/backup/index.html</a>
+<li><a href="http://developer.android.com/reference/android/R.attr.html#allowBackup">http://developer.android.com/reference/android/R.attr.html#allowBackup</a>
+</ul></div><br/>To suppress this error, use the issue id "AllowBackup" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Performance"></a>
+<div class="category"><a href="#" title="Return to top">Performance</a><div class="categorySeparator"></div>
+</div>
+<a name="Overdraw"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">Overdraw: Overdraw: Painting regions more than once</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/main/res/layout/activity_preferences.xml">../../src/main/res/layout/activity_preferences.xml</a>:6</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/background</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   3</span> 			  android:orientation="vertical"
+<span class="lineno">   4</span> 			  android:layout_width="match_parent"
+<span class="lineno">   5</span> 			  android:layout_height="match_parent"
+<span class="lineno">   6</span> 			  <span class="errorspan">android:background="@color/background"></span>
+<span class="lineno">   7</span> 
+<span class="lineno">   8</span> 	&lt;include
+</pre>
+<span class="location"><a href="../../src/main/res/layout/fragment_introduction.xml">../../src/main/res/layout/fragment_introduction.xml</a>:8</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/background_secondary</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   5</span> 		android:orientation="vertical"
+<span class="lineno">   6</span> 		android:layout_width="match_parent"
+<span class="lineno">   7</span> 		android:layout_height="match_parent"
+<span class="lineno">   8</span> 		<span class="errorspan">android:background="@color/background_secondary"></span>
+<span class="lineno">   9</span> 
+<span class="lineno">  10</span> 	&lt;LinearLayout
+</pre>
+<span class="location"><a href="../../src/main/res/layout/fragment_navigation_drawer.xml">../../src/main/res/layout/fragment_navigation_drawer.xml</a>:5</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/background</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   2</span> &lt;FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<span class="lineno">   3</span> 			 android:layout_width="match_parent"
+<span class="lineno">   4</span> 			 android:layout_height="match_parent"
+<span class="lineno">   5</span> 			 <span class="errorspan">android:background="@color/background"></span>
+<span class="lineno">   6</span> 
+<span class="lineno">   7</span> 	&lt;include layout="@layout/navigation_drawer_content"/>
+</pre>
+<span class="location"><a href="../../src/main/res/layout/fragment_soundsheet.xml">../../src/main/res/layout/fragment_soundsheet.xml</a>:7</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/background_secondary</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   4</span> 		xmlns:android="http://schemas.android.com/apk/res/android"
+<span class="lineno">   5</span> 		android:layout_width="match_parent"
+<span class="lineno">   6</span> 		android:layout_height="match_parent"
+<span class="lineno">   7</span> 		<span class="errorspan">android:background="@color/background_secondary"></span>
+<span class="lineno">   8</span> 
+<span class="lineno">   9</span> 	&lt;android.support.v7.widget.RecyclerView
+</pre>
+<span class="location"><a href="../../src/main/res/layout/navigation_drawer_header.xml">../../src/main/res/layout/navigation_drawer_header.xml</a>:7</span>: <span class="message">Possible overdraw: Root element paints background <code>@drawable/ic_background_navigation_drawer</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   4</span> 				android:layout_width="match_parent"
+<span class="lineno">   5</span> 				android:layout_height="@dimen/height_navigation_drawer_header"
+<span class="lineno">   6</span> 				android:paddingTop="@dimen/status_bar_padding"
+<span class="lineno">   7</span> 				<span class="errorspan">android:background="@drawable/ic_background_navigation_drawer"></span>
+<span class="lineno">   8</span> 
+<span class="lineno">   9</span> 	&lt;RelativeLayout
+</pre>
+<button id="OverdrawDivLink" onclick="reveal('OverdrawDiv');" />+ 8 More Occurrences...</button>
+<div id="OverdrawDiv" style="display: none">
+<span class="location"><a href="../../src/main/res/layout-land/toolbar.xml">../../src/main/res/layout-land/toolbar.xml</a>:10</span>: <span class="message">Possible overdraw: Root element paints background <code>?attr/colorPrimary</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   7</span> 		android:layout_height="@dimen/abc_action_bar_default_height_material"
+<span class="lineno">   8</span> 		android:layout_width="match_parent"
+<span class="lineno">   9</span> 		android:minHeight="?attr/actionBarSize"
+<span class="lineno">  10</span> 		<span class="errorspan">android:background="?attr/colorPrimary"</span>
+<span class="lineno">  11</span> 		app:theme="@style/Actionbar.Color"
+<span class="lineno">  12</span> 		android:theme="@style/Actionbar.Color"
+</pre>
+<span class="location"><a href="../../src/main/res/layout/toolbar.xml">../../src/main/res/layout/toolbar.xml</a>:10</span>: <span class="message">Possible overdraw: Root element paints background <code>?attr/colorPrimary</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   7</span> 		android:layout_height="@dimen/abc_action_bar_default_height_material"
+<span class="lineno">   8</span> 		android:layout_width="match_parent"
+<span class="lineno">   9</span> 		android:minHeight="?attr/actionBarSize"
+<span class="lineno">  10</span> 		<span class="errorspan">android:background="?attr/colorPrimary"</span>
+<span class="lineno">  11</span> 		app:theme="@style/Actionbar.Color"
+<span class="lineno">  12</span> 		android:theme="@style/Actionbar.Color"
+</pre>
+<span class="location"><a href="../../src/main/res/layout/toolbar_preferences.xml">../../src/main/res/layout/toolbar_preferences.xml</a>:10</span>: <span class="message">Possible overdraw: Root element paints background <code>?attr/colorPrimary</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   7</span> 		android:layout_height="wrap_content"
+<span class="lineno">   8</span> 		android:paddingTop="@dimen/status_bar_padding"
+<span class="lineno">   9</span> 		android:minHeight="?attr/actionBarSize"
+<span class="lineno">  10</span> 		<span class="errorspan">android:background="?attr/colorPrimary"</span>
+<span class="lineno">  11</span> 		app:navigationContentDescription="@string/abc_action_bar_up_description"
+<span class="lineno">  12</span> 		app:navigationIcon="?attr/homeAsUpIndicator"
+</pre>
+<span class="location"><a href="../../src/main/res/layout/view_introduction_divider.xml">../../src/main/res/layout/view_introduction_divider.xml</a>:7</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/divider</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   4</span> 	  android:layout_height="@dimen/stroke"
+<span class="lineno">   5</span> 	  android:layout_marginLeft="@dimen/height_list_item_large"
+<span class="lineno">   6</span> 	  android:layout_marginStart="@dimen/height_list_item_large"
+<span class="lineno">   7</span> 	  <span class="errorspan">android:background="@color/divider"/></span>
+
+</pre>
+<span class="location"><a href="../../src/main/res/layout/view_playlist.xml">../../src/main/res/layout/view_playlist.xml</a>:8</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/background</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   5</span> 		android:layout_width="match_parent"
+<span class="lineno">   6</span> 		android:layout_height="match_parent"
+<span class="lineno">   7</span> 		android:paddingTop="@dimen/margin_small"
+<span class="lineno">   8</span> 		<span class="errorspan">android:background="@color/background"></span>
+<span class="lineno">   9</span> 
+<span class="lineno">  10</span> 	&lt;android.support.v7.widget.RecyclerView
+</pre>
+<span class="location"><a href="../../src/main/res/layout/view_sound_control.xml">../../src/main/res/layout/view_sound_control.xml</a>:8</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/background</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   5</span> 		xmlns:app="http://schemas.android.com/apk/res-auto"
+<span class="lineno">   6</span> 		android:layout_width="match_parent"
+<span class="lineno">   7</span> 		android:layout_height="@dimen/height_list_item_xlarge"
+<span class="lineno">   8</span> 		<span class="errorspan">android:background="@color/background"></span>
+<span class="lineno">   9</span> 
+<span class="lineno">  10</span> 	&lt;include
+</pre>
+<span class="location"><a href="../../src/main/res/layout/view_sound_layout_list.xml">../../src/main/res/layout/view_sound_layout_list.xml</a>:8</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/background</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   5</span> 		android:layout_width="match_parent"
+<span class="lineno">   6</span> 		android:layout_height="match_parent"
+<span class="lineno">   7</span> 		android:orientation="vertical"
+<span class="lineno">   8</span> 		<span class="errorspan">android:background="@color/background"></span>
+<span class="lineno">   9</span> 
+<span class="lineno">  10</span> 	&lt;RelativeLayout
+</pre>
+<span class="location"><a href="../../src/main/res/layout/view_sound_sheets.xml">../../src/main/res/layout/view_sound_sheets.xml</a>:8</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/background</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   5</span> 		android:layout_width="match_parent"
+<span class="lineno">   6</span> 		android:layout_height="match_parent"
+<span class="lineno">   7</span> 		android:paddingTop="@dimen/margin_small"
+<span class="lineno">   8</span> 		<span class="errorspan">android:background="@color/background"></span>
+<span class="lineno">   9</span> 
+<span class="lineno">  10</span> 	&lt;android.support.v7.widget.RecyclerView
+</pre>
+</div>
+</div>
+<div class="metadata">Priority: 3 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Overdraw: Painting regions more than once.</div>
+<div class="explanation">
+If you set a background drawable on a root view, then you should use a custom theme where the theme background is null. Otherwise, the theme background will be painted first, only to have your custom background completely cover it; this is called "overdraw".<br/>
+<br/>
+NOTE: This detector relies on figuring out which layouts are associated with which activities based on scanning the Java code, and it's currently doing that using an inexact pattern matching algorithm. Therefore, it can incorrectly conclude which activity the layout is associated with and then wrongly complain that a background-theme is hidden.<br/>
+<br/>
+If you want your custom background on multiple pages, then you should consider making a custom theme with your custom background and just using that theme instead of a root element background.<br/>
+<br/>
+Of course it's possible that your custom drawable is translucent and you want it to be mixed with the background. However, you will get better performance if you pre-mix the background with your drawable and use that resulting image or color as a custom theme background instead.<br/>
+
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "Overdraw" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="UnusedResources"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">UnusedResources: Unused resources</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/main/res/layout/activity_base.xml">../../src/main/res/layout/activity_base.xml</a></span>: <span class="message">The resource <code>R.layout.activity_base</code> appears to be unused</span><br />
+<ul></ul><button id="Location1DivLink" onclick="reveal('Location1Div');" />+ 2 Additional Locations...</button>
+<div id="Location1Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/layout-land/activity_base.xml">../../src/main/res/layout-land/activity_base.xml</a></span>
+<li> <span class="location"><a href="../../src/main/res/layout-large-land/activity_base.xml">../../src/main/res/layout-large-land/activity_base.xml</a></span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/anim/anim_slide_in.xml">../../src/main/res/anim/anim_slide_in.xml</a></span>: <span class="message">The resource <code>R.anim.anim_slide_in</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_add_new_sound.xml">../../src/main/res/layout/dialog_add_new_sound.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_add_new_sound</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_add_new_sound_from_directory.xml">../../src/main/res/layout/dialog_add_new_sound_from_directory.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_add_new_sound_from_directory</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_add_new_sound_layout.xml">../../src/main/res/layout/dialog_add_new_sound_layout.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_add_new_sound_layout</code> appears to be unused</span><br />
+<button id="UnusedResourcesDivLink" onclick="reveal('UnusedResourcesDiv');" />+ 84 More Occurrences...</button>
+<div id="UnusedResourcesDiv" style="display: none">
+<span class="location"><a href="../../src/main/res/layout/dialog_base_no_title.xml">../../src/main/res/layout/dialog_base_no_title.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_base_no_title</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_base_recycler_view_no_title.xml">../../src/main/res/layout/dialog_base_recycler_view_no_title.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_base_recycler_view_no_title</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_base_recycler_view_title.xml">../../src/main/res/layout/dialog_base_recycler_view_title.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_base_recycler_view_title</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_base_title.xml">../../src/main/res/layout/dialog_base_title.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_base_title</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_button_bar.xml">../../src/main/res/layout/dialog_button_bar.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_button_bar</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_load_sound_sheets.xml">../../src/main/res/layout/dialog_load_sound_sheets.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_load_sound_sheets</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_rename_sound_file_layout.xml">../../src/main/res/layout/dialog_rename_sound_file_layout.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_rename_sound_file_layout</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_sound_layout_settings.xml">../../src/main/res/layout/dialog_sound_layout_settings.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_sound_layout_settings</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/dialog_store_sound_sheets.xml">../../src/main/res/layout/dialog_store_sound_sheets.xml</a></span>: <span class="message">The resource <code>R.layout.dialog_store_sound_sheets</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/values/dimens.xml">../../src/main/res/values/dimens.xml</a>:17</span>: <span class="message">The resource <code>R.dimen.height_title</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  14</span> 	&lt;dimen name="height_navigation_drawer_header">142dp&lt;/dimen>
+<span class="lineno">  15</span> 	&lt;dimen name="height_shadow">3dp&lt;/dimen>
+<span class="lineno">  16</span> 	&lt;dimen name="height_shadow_fixed">3dp&lt;/dimen>
+<span class="lineno">  17</span> 	&lt;dimen <span class="errorspan">name="height_title">48dp&lt;/dimen></span>
+<span class="lineno">  18</span> 	&lt;dimen name="height_input_field">44dp&lt;/dimen>
+<span class="lineno">  19</span> 	&lt;dimen name="height_list_item">56dp&lt;/dimen>
+</pre>
+<span class="location"><a href="../../src/main/res/values/dimens.xml">../../src/main/res/values/dimens.xml</a>:29</span>: <span class="message">The resource <code>R.dimen.elevation_toolbar</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  26</span> 	&lt;dimen name="width_min_dialog">280dp&lt;/dimen>
+<span class="lineno">  27</span> 	&lt;dimen name="width_min_button">64dp&lt;/dimen>
+<span class="lineno">  28</span> 
+<span class="lineno">  29</span> 	&lt;dimen <span class="errorspan">name="elevation_toolbar">4dp&lt;/dimen></span>
+<span class="lineno">  30</span> 	&lt;dimen name="elevation_normal">4dp&lt;/dimen>
+<span class="lineno">  31</span> 
+</pre>
+<span class="location"><a href="../../src/main/res/values/dimens.xml">../../src/main/res/values/dimens.xml</a>:30</span>: <span class="message">The resource <code>R.dimen.elevation_normal</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  27</span> 	&lt;dimen name="width_min_button">64dp&lt;/dimen>
+<span class="lineno">  28</span> 
+<span class="lineno">  29</span> 	&lt;dimen name="elevation_toolbar">4dp&lt;/dimen>
+<span class="lineno">  30</span> 	&lt;dimen <span class="errorspan">name="elevation_normal">4dp&lt;/dimen></span>
+<span class="lineno">  31</span> 
+<span class="lineno">  32</span> 	&lt;dimen name="margin_xlarge">24dp&lt;/dimen>
+</pre>
+<span class="location"><a href="../../src/main/res/values/dimens.xml">../../src/main/res/values/dimens.xml</a>:32</span>: <span class="message">The resource <code>R.dimen.margin_xlarge</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  29</span> 	&lt;dimen name="elevation_toolbar">4dp&lt;/dimen>
+<span class="lineno">  30</span> 	&lt;dimen name="elevation_normal">4dp&lt;/dimen>
+<span class="lineno">  31</span> 
+<span class="lineno">  32</span> 	&lt;dimen <span class="errorspan">name="margin_xlarge">24dp&lt;/dimen></span>
+<span class="lineno">  33</span> 	&lt;dimen name="margin_large">20dp&lt;/dimen>
+<span class="lineno">  34</span> 	&lt;dimen name="margin_default">16dp&lt;/dimen>
+</pre>
+<span class="location"><a href="../../src/main/res/values/dimens.xml">../../src/main/res/values/dimens.xml</a>:44</span>: <span class="message">The resource <code>R.dimen.stroke_thick</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  41</span> 	&lt;dimen name="padding_dialog">24dp&lt;/dimen>
+<span class="lineno">  42</span> 
+<span class="lineno">  43</span> 	&lt;dimen name="stroke">1dp&lt;/dimen>
+<span class="lineno">  44</span> 	&lt;dimen <span class="errorspan">name="stroke_thick">2dp&lt;/dimen></span>
+<span class="lineno">  45</span> 
+<span class="lineno">  46</span> 	&lt;dimen name="text_title">20sp&lt;/dimen>
+</pre>
+<span class="location"><a href="../../src/main/res/values/dimens.xml">../../src/main/res/values/dimens.xml</a>:47</span>: <span class="message">The resource <code>R.dimen.text_headline</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  44</span> 	&lt;dimen name="stroke_thick">2dp&lt;/dimen>
+<span class="lineno">  45</span> 
+<span class="lineno">  46</span> 	&lt;dimen name="text_title">20sp&lt;/dimen>
+<span class="lineno">  47</span> 	&lt;dimen <span class="errorspan">name="text_headline">24sp&lt;/dimen></span>
+<span class="lineno">  48</span> 	&lt;dimen name="text_subheading">16sp&lt;/dimen>
+<span class="lineno">  49</span> 	&lt;dimen name="text_body">15sp&lt;/dimen>
+</pre>
+<span class="location"><a href="../../src/main/res/layout/fragment_introduction.xml">../../src/main/res/layout/fragment_introduction.xml</a></span>: <span class="message">The resource <code>R.layout.fragment_introduction</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/fragment_soundsheet.xml">../../src/main/res/layout/fragment_soundsheet.xml</a></span>: <span class="message">The resource <code>R.layout.fragment_soundsheet</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/drawable-hdpi/ic_notification_large.png">../../src/main/res/drawable-hdpi/ic_notification_large.png</a></span>: <span class="message">The resource <code>R.drawable.ic_notification_large</code> appears to be unused</span><br />
+<ul></ul><button id="Location23DivLink" onclick="reveal('Location23Div');" />+ 3 Additional Locations...</button>
+<div id="Location23Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi/ic_notification_large.png">../../src/main/res/drawable-mdpi/ic_notification_large.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xhdpi/ic_notification_large.png">../../src/main/res/drawable-xhdpi/ic_notification_large.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xxhdpi/ic_notification_large.png">../../src/main/res/drawable-xxhdpi/ic_notification_large.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi/ic_notification_large.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi/ic_notification_large.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi/ic_notification_large.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi/ic_notification_large.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi/ic_notification_large.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/ic_notification_large.png" /></a>
+</td><td><a href="../../src/main/res/drawable-xxhdpi/ic_notification_large.png"><img border="0" align="top" src="../../src/main/res/drawable-xxhdpi/ic_notification_large.png" /></a>
+</td></tr><tr><th>xhdpi</th><th>hdpi</th><th>mdpi</th><th>xxhdpi</th></tr>
+</table>
+<span class="location"><a href="../../src/main/res/drawable-hdpi/ic_notification_pause.png">../../src/main/res/drawable-hdpi/ic_notification_pause.png</a></span>: <span class="message">The resource <code>R.drawable.ic_notification_pause</code> appears to be unused</span><br />
+<ul></ul><button id="Location24DivLink" onclick="reveal('Location24Div');" />+ 3 Additional Locations...</button>
+<div id="Location24Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi/ic_notification_pause.png">../../src/main/res/drawable-mdpi/ic_notification_pause.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xhdpi/ic_notification_pause.png">../../src/main/res/drawable-xhdpi/ic_notification_pause.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xxhdpi/ic_notification_pause.png">../../src/main/res/drawable-xxhdpi/ic_notification_pause.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi/ic_notification_pause.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi/ic_notification_pause.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi/ic_notification_pause.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi/ic_notification_pause.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi/ic_notification_pause.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/ic_notification_pause.png" /></a>
+</td><td><a href="../../src/main/res/drawable-xxhdpi/ic_notification_pause.png"><img border="0" align="top" src="../../src/main/res/drawable-xxhdpi/ic_notification_pause.png" /></a>
+</td></tr><tr><th>xhdpi</th><th>hdpi</th><th>mdpi</th><th>xxhdpi</th></tr>
+</table>
+<span class="location"><a href="../../src/main/res/drawable-hdpi/ic_notification_play.png">../../src/main/res/drawable-hdpi/ic_notification_play.png</a></span>: <span class="message">The resource <code>R.drawable.ic_notification_play</code> appears to be unused</span><br />
+<ul></ul><button id="Location25DivLink" onclick="reveal('Location25Div');" />+ 3 Additional Locations...</button>
+<div id="Location25Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi/ic_notification_play.png">../../src/main/res/drawable-mdpi/ic_notification_play.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xhdpi/ic_notification_play.png">../../src/main/res/drawable-xhdpi/ic_notification_play.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xxhdpi/ic_notification_play.png">../../src/main/res/drawable-xxhdpi/ic_notification_play.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi/ic_notification_play.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi/ic_notification_play.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi/ic_notification_play.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi/ic_notification_play.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi/ic_notification_play.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/ic_notification_play.png" /></a>
+</td><td><a href="../../src/main/res/drawable-xxhdpi/ic_notification_play.png"><img border="0" align="top" src="../../src/main/res/drawable-xxhdpi/ic_notification_play.png" /></a>
+</td></tr><tr><th>xhdpi</th><th>hdpi</th><th>mdpi</th><th>xxhdpi</th></tr>
+</table>
+<span class="location"><a href="../../src/main/res/drawable-hdpi/ic_notification_stop.png">../../src/main/res/drawable-hdpi/ic_notification_stop.png</a></span>: <span class="message">The resource <code>R.drawable.ic_notification_stop</code> appears to be unused</span><br />
+<ul></ul><button id="Location26DivLink" onclick="reveal('Location26Div');" />+ 3 Additional Locations...</button>
+<div id="Location26Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi/ic_notification_stop.png">../../src/main/res/drawable-mdpi/ic_notification_stop.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xhdpi/ic_notification_stop.png">../../src/main/res/drawable-xhdpi/ic_notification_stop.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xxhdpi/ic_notification_stop.png">../../src/main/res/drawable-xxhdpi/ic_notification_stop.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi/ic_notification_stop.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi/ic_notification_stop.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi/ic_notification_stop.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi/ic_notification_stop.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi/ic_notification_stop.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/ic_notification_stop.png" /></a>
+</td><td><a href="../../src/main/res/drawable-xxhdpi/ic_notification_stop.png"><img border="0" align="top" src="../../src/main/res/drawable-xxhdpi/ic_notification_stop.png" /></a>
+</td></tr><tr><th>xhdpi</th><th>hdpi</th><th>mdpi</th><th>xxhdpi</th></tr>
+</table>
+<span class="location"><a href="../../src/main/res/drawable-hdpi/ic_stat_pending_sounds.png">../../src/main/res/drawable-hdpi/ic_stat_pending_sounds.png</a></span>: <span class="message">The resource <code>R.drawable.ic_stat_pending_sounds</code> appears to be unused</span><br />
+<ul></ul><button id="Location27DivLink" onclick="reveal('Location27Div');" />+ 3 Additional Locations...</button>
+<div id="Location27Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi/ic_stat_pending_sounds.png">../../src/main/res/drawable-mdpi/ic_stat_pending_sounds.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xhdpi/ic_stat_pending_sounds.png">../../src/main/res/drawable-xhdpi/ic_stat_pending_sounds.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xxhdpi/ic_stat_pending_sounds.png">../../src/main/res/drawable-xxhdpi/ic_stat_pending_sounds.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi/ic_stat_pending_sounds.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi/ic_stat_pending_sounds.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi/ic_stat_pending_sounds.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi/ic_stat_pending_sounds.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi/ic_stat_pending_sounds.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/ic_stat_pending_sounds.png" /></a>
+</td><td><a href="../../src/main/res/drawable-xxhdpi/ic_stat_pending_sounds.png"><img border="0" align="top" src="../../src/main/res/drawable-xxhdpi/ic_stat_pending_sounds.png" /></a>
+</td></tr><tr><th>xhdpi</th><th>hdpi</th><th>mdpi</th><th>xxhdpi</th></tr>
+</table>
+<span class="location"><a href="../../src/main/res/raw/keep.xml">../../src/main/res/raw/keep.xml</a></span>: <span class="message">The resource <code>R.raw.keep</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/navigation_drawer_header.xml">../../src/main/res/layout/navigation_drawer_header.xml</a></span>: <span class="message">The resource <code>R.layout.navigation_drawer_header</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/menu/overflow_menu.xml">../../src/main/res/menu/overflow_menu.xml</a></span>: <span class="message">The resource <code>R.menu.overflow_menu</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/drawable/progress_horizontal_actionbar.xml">../../src/main/res/drawable/progress_horizontal_actionbar.xml</a></span>: <span class="message">The resource <code>R.drawable.progress_horizontal_actionbar</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/drawable/selector_ic_file.xml">../../src/main/res/drawable/selector_ic_file.xml</a></span>: <span class="message">The resource <code>R.drawable.selector_ic_file</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/drawable/selector_ic_file_sound.xml">../../src/main/res/drawable/selector_ic_file_sound.xml</a></span>: <span class="message">The resource <code>R.drawable.selector_ic_file_sound</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/drawable/selector_ic_folder.xml">../../src/main/res/drawable/selector_ic_folder.xml</a></span>: <span class="message">The resource <code>R.drawable.selector_ic_folder</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/drawable/selector_ic_folder_sound.xml">../../src/main/res/drawable/selector_ic_folder_sound.xml</a></span>: <span class="message">The resource <code>R.drawable.selector_ic_folder_sound</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/drawable/selector_ic_parent_directory.xml">../../src/main/res/drawable/selector_ic_parent_directory.xml</a></span>: <span class="message">The resource <code>R.drawable.selector_ic_parent_directory</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/drawable-hdpi/spinner_ab_disabled_actionbar.9.png">../../src/main/res/drawable-hdpi/spinner_ab_disabled_actionbar.9.png</a></span>: <span class="message">The resource <code>R.drawable.spinner_ab_disabled_actionbar</code> appears to be unused</span><br />
+<ul></ul><button id="Location37DivLink" onclick="reveal('Location37Div');" />+ 2 Additional Locations...</button>
+<div id="Location37Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi/spinner_ab_disabled_actionbar.9.png">../../src/main/res/drawable-mdpi/spinner_ab_disabled_actionbar.9.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xhdpi/spinner_ab_disabled_actionbar.9.png">../../src/main/res/drawable-xhdpi/spinner_ab_disabled_actionbar.9.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi/spinner_ab_disabled_actionbar.9.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi/spinner_ab_disabled_actionbar.9.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi/spinner_ab_disabled_actionbar.9.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi/spinner_ab_disabled_actionbar.9.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi/spinner_ab_disabled_actionbar.9.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/spinner_ab_disabled_actionbar.9.png" /></a>
+</td></tr><tr><th>xhdpi</th><th>hdpi</th><th>mdpi</th></tr>
+</table>
+<span class="location"><a href="../../src/main/res/drawable-hdpi/spinner_ab_focused_actionbar.9.png">../../src/main/res/drawable-hdpi/spinner_ab_focused_actionbar.9.png</a></span>: <span class="message">The resource <code>R.drawable.spinner_ab_focused_actionbar</code> appears to be unused</span><br />
+<ul></ul><button id="Location38DivLink" onclick="reveal('Location38Div');" />+ 2 Additional Locations...</button>
+<div id="Location38Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi/spinner_ab_focused_actionbar.9.png">../../src/main/res/drawable-mdpi/spinner_ab_focused_actionbar.9.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xhdpi/spinner_ab_focused_actionbar.9.png">../../src/main/res/drawable-xhdpi/spinner_ab_focused_actionbar.9.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi/spinner_ab_focused_actionbar.9.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi/spinner_ab_focused_actionbar.9.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi/spinner_ab_focused_actionbar.9.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi/spinner_ab_focused_actionbar.9.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi/spinner_ab_focused_actionbar.9.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/spinner_ab_focused_actionbar.9.png" /></a>
+</td></tr><tr><th>xhdpi</th><th>hdpi</th><th>mdpi</th></tr>
+</table>
+<span class="location"><a href="../../src/main/res/drawable-hdpi/spinner_ab_pressed_actionbar.9.png">../../src/main/res/drawable-hdpi/spinner_ab_pressed_actionbar.9.png</a></span>: <span class="message">The resource <code>R.drawable.spinner_ab_pressed_actionbar</code> appears to be unused</span><br />
+<ul></ul><button id="Location39DivLink" onclick="reveal('Location39Div');" />+ 2 Additional Locations...</button>
+<div id="Location39Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi/spinner_ab_pressed_actionbar.9.png">../../src/main/res/drawable-mdpi/spinner_ab_pressed_actionbar.9.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xhdpi/spinner_ab_pressed_actionbar.9.png">../../src/main/res/drawable-xhdpi/spinner_ab_pressed_actionbar.9.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi/spinner_ab_pressed_actionbar.9.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi/spinner_ab_pressed_actionbar.9.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi/spinner_ab_pressed_actionbar.9.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi/spinner_ab_pressed_actionbar.9.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi/spinner_ab_pressed_actionbar.9.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/spinner_ab_pressed_actionbar.9.png" /></a>
+</td></tr><tr><th>xhdpi</th><th>hdpi</th><th>mdpi</th></tr>
+</table>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:11</span>: <span class="message">The resource <code>R.string.request_permission_title</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   8</span> 	&lt;string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl&lt;/string>
+<span class="lineno">   9</span> 
+<span class="lineno">  10</span> 	&lt;!-- permissions -->
+<span class="lineno">  11</span> 	&lt;string <span class="errorspan">name="request_permission_title">Berechtigung erforderlich&lt;/string></span>
+<span class="lineno">  12</span> 	&lt;string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.&lt;/string>
+<span class="lineno">  13</span> 	&lt;string name="request_permission_read_storage_message">Die Berechtigung vom Dateisystem zu lesen ist erforderlich um Sounddateien zum Abspielen zu laden. Die App wird ohne diese Berechtigung beendet.&lt;/string>
+</pre>
+<ul></ul><button id="Location40DivLink" onclick="reveal('Location40Div');" />+ 1 Additional Locations...</button>
+<div id="Location40Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:11</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:12</span>: <span class="message">The resource <code>R.string.request_permission_read_phone_state_message</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   9</span> 
+<span class="lineno">  10</span> 	&lt;!-- permissions -->
+<span class="lineno">  11</span> 	&lt;string name="request_permission_title">Berechtigung erforderlich&lt;/string>
+<span class="lineno">  12</span> 	&lt;string <span class="errorspan">name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.&lt;/string></span>
+<span class="lineno">  13</span> 	&lt;string name="request_permission_read_storage_message">Die Berechtigung vom Dateisystem zu lesen ist erforderlich um Sounddateien zum Abspielen zu laden. Die App wird ohne diese Berechtigung beendet.&lt;/string>
+<span class="lineno">  14</span> 	&lt;string name="request_permission_write_storage_message">Die Berechtigung auf das Dateisystem zu schreiben wird unter anderem benötigt um die Sound Zusammenstellung abzuspeichern. Die App wird ohne diese Berechtigung beendet.&lt;/string>
+</pre>
+<ul></ul><button id="Location41DivLink" onclick="reveal('Location41Div');" />+ 1 Additional Locations...</button>
+<div id="Location41Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:12</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:13</span>: <span class="message">The resource <code>R.string.request_permission_read_storage_message</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  10</span> 	&lt;!-- permissions -->
+<span class="lineno">  11</span> 	&lt;string name="request_permission_title">Berechtigung erforderlich&lt;/string>
+<span class="lineno">  12</span> 	&lt;string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.&lt;/string>
+<span class="lineno">  13</span> 	&lt;string <span class="errorspan">name="request_permission_read_storage_message">Die Berechtigung vom Dateisystem zu lesen ist erforderlich um Sounddateien zum Abspielen zu laden. Die App wird ohne diese Berechtigung beendet.&lt;/string></span>
+<span class="lineno">  14</span> 	&lt;string name="request_permission_write_storage_message">Die Berechtigung auf das Dateisystem zu schreiben wird unter anderem benötigt um die Sound Zusammenstellung abzuspeichern. Die App wird ohne diese Berechtigung beendet.&lt;/string>
+<span class="lineno">  15</span> 
+</pre>
+<ul></ul><button id="Location42DivLink" onclick="reveal('Location42Div');" />+ 1 Additional Locations...</button>
+<div id="Location42Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:13</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:14</span>: <span class="message">The resource <code>R.string.request_permission_write_storage_message</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  11</span> 	&lt;string name="request_permission_title">Berechtigung erforderlich&lt;/string>
+<span class="lineno">  12</span> 	&lt;string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.&lt;/string>
+<span class="lineno">  13</span> 	&lt;string name="request_permission_read_storage_message">Die Berechtigung vom Dateisystem zu lesen ist erforderlich um Sounddateien zum Abspielen zu laden. Die App wird ohne diese Berechtigung beendet.&lt;/string>
+<span class="lineno">  14</span> 	&lt;string <span class="errorspan">name="request_permission_write_storage_message">Die Berechtigung auf das Dateisystem zu schreiben wird unter anderem benötigt um die Sound Zusammenstellung abzuspeichern. Die App wird ohne diese Berechtigung beendet.&lt;/string></span>
+<span class="lineno">  15</span> 
+<span class="lineno">  16</span> 	&lt;!-- soundmanagement -->
+</pre>
+<ul></ul><button id="Location43DivLink" onclick="reveal('Location43Div');" />+ 1 Additional Locations...</button>
+<div id="Location43Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:14</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:17</span>: <span class="message">The resource <code>R.string.music_service_loading_sound_failed</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  14</span> 	&lt;string name="request_permission_write_storage_message">Die Berechtigung auf das Dateisystem zu schreiben wird unter anderem benötigt um die Sound Zusammenstellung abzuspeichern. Die App wird ohne diese Berechtigung beendet.&lt;/string>
+<span class="lineno">  15</span> 
+<span class="lineno">  16</span> 	&lt;!-- soundmanagement -->
+<span class="lineno">  17</span> 	&lt;string <span class="errorspan">name="music_service_loading_sound_failed">Eine Sound konnte nicht geladen werden:&lt;/string></span>
+<span class="lineno">  18</span> 
+<span class="lineno">  19</span> 	&lt;!-- navigation drawer -->
+</pre>
+<ul></ul><button id="Location44DivLink" onclick="reveal('Location44Div');" />+ 1 Additional Locations...</button>
+<div id="Location44Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:17</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:22</span>: <span class="message">The resource <code>R.string.navigation_drawer_content_description_open</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  19</span> 	&lt;!-- navigation drawer -->
+<span class="lineno">  20</span> 	&lt;string name="navigation_drawer_content_description_select_sound_layout">Hier klicken um zu einem anderen Sound Layout zu wechseln&lt;/string>
+<span class="lineno">  21</span> 	&lt;string name="navigation_drawer_select_sound_layout">Sound layout wechseln&lt;/string>
+<span class="lineno">  22</span> 	&lt;string <span class="errorspan">name="navigation_drawer_content_description_open">Navigation öffnen&lt;/string></span>
+<span class="lineno">  23</span> 	&lt;string name="navigation_drawer_content_description_close">Navigation schließen&lt;/string>
+<span class="lineno">  24</span> 	&lt;string name="navigation_drawer_content_description_avatar">App Icon&lt;/string>
+</pre>
+<ul></ul><button id="Location45DivLink" onclick="reveal('Location45Div');" />+ 1 Additional Locations...</button>
+<div id="Location45Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:22</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:23</span>: <span class="message">The resource <code>R.string.navigation_drawer_content_description_close</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  20</span> 	&lt;string name="navigation_drawer_content_description_select_sound_layout">Hier klicken um zu einem anderen Sound Layout zu wechseln&lt;/string>
+<span class="lineno">  21</span> 	&lt;string name="navigation_drawer_select_sound_layout">Sound layout wechseln&lt;/string>
+<span class="lineno">  22</span> 	&lt;string name="navigation_drawer_content_description_open">Navigation öffnen&lt;/string>
+<span class="lineno">  23</span> 	&lt;string <span class="errorspan">name="navigation_drawer_content_description_close">Navigation schließen&lt;/string></span>
+<span class="lineno">  24</span> 	&lt;string name="navigation_drawer_content_description_avatar">App Icon&lt;/string>
+<span class="lineno">  25</span> 	&lt;string name="navigation_drawer_add">Hinzufügen&lt;/string>
+</pre>
+<ul></ul><button id="Location46DivLink" onclick="reveal('Location46Div');" />+ 1 Additional Locations...</button>
+<div id="Location46Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:23</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:29</span>: <span class="message">The resource <code>R.string.tab_sound_sheets</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  26</span> 	&lt;string name="navigation_drawer_delete">Löschen&lt;/string>
+<span class="lineno">  27</span> 	&lt;string name="navigation_drawer_delete_selected">Alle markierten löschen&lt;/string>
+<span class="lineno">  28</span> 
+<span class="lineno">  29</span> 	&lt;string <span class="errorspan">name="tab_sound_sheets">Gruppen&lt;/string></span>
+<span class="lineno">  30</span> 	&lt;string name="tab_sound_sheets_content_description_selected">Aktuell geöffnete Sound Kategorie&lt;/string>
+<span class="lineno">  31</span> 	&lt;string name="tab_sound_sheets_content_description_delete">Diese Kategorie löschen&lt;/string>
+</pre>
+<ul></ul><button id="Location47DivLink" onclick="reveal('Location47Div');" />+ 1 Additional Locations...</button>
+<div id="Location47Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:29</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:31</span>: <span class="message">The resource <code>R.string.tab_sound_sheets_content_description_delete</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  28</span> 
+<span class="lineno">  29</span> 	&lt;string name="tab_sound_sheets">Gruppen&lt;/string>
+<span class="lineno">  30</span> 	&lt;string name="tab_sound_sheets_content_description_selected">Aktuell geöffnete Sound Kategorie&lt;/string>
+<span class="lineno">  31</span> 	&lt;string <span class="errorspan">name="tab_sound_sheets_content_description_delete">Diese Kategorie löschen&lt;/string></span>
+<span class="lineno">  32</span> 	&lt;string name="tab_sound_sheets_sound_count_label">Sounds:&lt;/string>
+<span class="lineno">  33</span> 
+</pre>
+<ul></ul><button id="Location48DivLink" onclick="reveal('Location48Div');" />+ 1 Additional Locations...</button>
+<div id="Location48Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:31</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:34</span>: <span class="message">The resource <code>R.string.tab_play_list</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  31</span> 	&lt;string name="tab_sound_sheets_content_description_delete">Diese Kategorie löschen&lt;/string>
+<span class="lineno">  32</span> 	&lt;string name="tab_sound_sheets_sound_count_label">Sounds:&lt;/string>
+<span class="lineno">  33</span> 
+<span class="lineno">  34</span> 	&lt;string <span class="errorspan">name="tab_play_list">Playliste&lt;/string></span>
+<span class="lineno">  35</span> 	&lt;string name="tab_play_list_content_description_playlist">Sound wird aus der Playliste entfernt&lt;/string>
+<span class="lineno">  36</span> 
+</pre>
+<ul></ul><button id="Location49DivLink" onclick="reveal('Location49Div');" />+ 1 Additional Locations...</button>
+<div id="Location49Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:34</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:35</span>: <span class="message">The resource <code>R.string.tab_play_list_content_description_playlist</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  32</span> 	&lt;string name="tab_sound_sheets_sound_count_label">Sounds:&lt;/string>
+<span class="lineno">  33</span> 
+<span class="lineno">  34</span> 	&lt;string name="tab_play_list">Playliste&lt;/string>
+<span class="lineno">  35</span> 	&lt;string <span class="errorspan">name="tab_play_list_content_description_playlist">Sound wird aus der Playliste entfernt&lt;/string></span>
+<span class="lineno">  36</span> 
+<span class="lineno">  37</span> 	&lt;string name="sound_layout_default">Neue Sound Kollektion&lt;/string>
+</pre>
+<ul></ul><button id="Location50DivLink" onclick="reveal('Location50Div');" />+ 1 Additional Locations...</button>
+<div id="Location50Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:35</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:40</span>: <span class="message">The resource <code>R.string.action_menu</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  37</span> 	&lt;string name="sound_layout_default">Neue Sound Kollektion&lt;/string>
+<span class="lineno">  38</span> 
+<span class="lineno">  39</span> 	&lt;!-- toolbar -->
+<span class="lineno">  40</span> 	&lt;string <span class="errorspan">name="action_menu">Sound Layouts öffnen&lt;/string></span>
+<span class="lineno">  41</span> 	&lt;string name="action_add_new_sound_sheet">Eine neue Sound Gruppe hinzufügen&lt;/string>
+<span class="lineno">  42</span> 	&lt;string name="action_add_new_sound">Einen neuen Sound hinzufügen&lt;/string>
+</pre>
+<ul></ul><button id="Location51DivLink" onclick="reveal('Location51Div');" />+ 1 Additional Locations...</button>
+<div id="Location51Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:40</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:52</span>: <span class="message">The resource <code>R.string.cab_title_delete_sound_sheets</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  49</span> 	&lt;string name="action_preferences">Einstellungen&lt;/string>
+<span class="lineno">  50</span> 	&lt;string name="action_about">Über&lt;/string>
+<span class="lineno">  51</span> 
+<span class="lineno">  52</span> 	&lt;string <span class="errorspan">name="cab_title_delete_sound_sheets">Kategorien zum löschen markieren&lt;/string></span>
+<span class="lineno">  53</span> 	&lt;string name="cab_title_delete_play_list_sounds">Sounds zum löschen markieren&lt;/string>
+<span class="lineno">  54</span> 	&lt;string name="cab_title_delete_sound_layouts">Soundlayouts zum löschen markieren&lt;/string>
+</pre>
+<ul></ul><button id="Location52DivLink" onclick="reveal('Location52Div');" />+ 1 Additional Locations...</button>
+<div id="Location52Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:52</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:53</span>: <span class="message">The resource <code>R.string.cab_title_delete_play_list_sounds</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  50</span> 	&lt;string name="action_about">Über&lt;/string>
+<span class="lineno">  51</span> 
+<span class="lineno">  52</span> 	&lt;string name="cab_title_delete_sound_sheets">Kategorien zum löschen markieren&lt;/string>
+<span class="lineno">  53</span> 	&lt;string <span class="errorspan">name="cab_title_delete_play_list_sounds">Sounds zum löschen markieren&lt;/string></span>
+<span class="lineno">  54</span> 	&lt;string name="cab_title_delete_sound_layouts">Soundlayouts zum löschen markieren&lt;/string>
+<span class="lineno">  55</span> 
+</pre>
+<ul></ul><button id="Location53DivLink" onclick="reveal('Location53Div');" />+ 1 Additional Locations...</button>
+<div id="Location53Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:53</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:54</span>: <span class="message">The resource <code>R.string.cab_title_delete_sound_layouts</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  51</span> 
+<span class="lineno">  52</span> 	&lt;string name="cab_title_delete_sound_sheets">Kategorien zum löschen markieren&lt;/string>
+<span class="lineno">  53</span> 	&lt;string name="cab_title_delete_play_list_sounds">Sounds zum löschen markieren&lt;/string>
+<span class="lineno">  54</span> 	&lt;string <span class="errorspan">name="cab_title_delete_sound_layouts">Soundlayouts zum löschen markieren&lt;/string></span>
+<span class="lineno">  55</span> 
+<span class="lineno">  56</span> 	&lt;!-- sound control -->
+</pre>
+<ul></ul><button id="Location54DivLink" onclick="reveal('Location54Div');" />+ 1 Additional Locations...</button>
+<div id="Location54Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:54</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:64</span>: <span class="message">The resource <code>R.string.sound_control_delete_confirm</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  61</span> 	&lt;string name="sound_control_content_description_settings">Sound editieren, verschieben, umbenennen&lt;/string>
+<span class="lineno">  62</span> 	&lt;string name="sound_control_content_description_reorder">Sound neusortieren&lt;/string>
+<span class="lineno">  63</span> 	&lt;string name="sound_control_delete">Sound entfernen&lt;/string>
+<span class="lineno">  64</span> 	&lt;string <span class="errorspan">name="sound_control_delete_confirm">Sound entfernen bestätigen&lt;/string></span>
+<span class="lineno">  65</span> 
+<span class="lineno">  66</span> 	&lt;!-- notification -->
+</pre>
+<ul></ul><button id="Location55DivLink" onclick="reveal('Location55Div');" />+ 1 Additional Locations...</button>
+<div id="Location55Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:64</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:67</span>: <span class="message">The resource <code>R.string.notification_pause_sound</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  64</span> 	&lt;string name="sound_control_delete_confirm">Sound entfernen bestätigen&lt;/string>
+<span class="lineno">  65</span> 
+<span class="lineno">  66</span> 	&lt;!-- notification -->
+<span class="lineno">  67</span> 	&lt;string <span class="errorspan">name="notification_pause_sound">Sound pausieren&lt;/string></span>
+<span class="lineno">  68</span> 	&lt;string name="notification_stop_sound">Sound stoppen&lt;/string>
+<span class="lineno">  69</span> 	&lt;string name="notification_play_sound">Sound abspielen&lt;/string>
+</pre>
+<ul></ul><button id="Location56DivLink" onclick="reveal('Location56Div');" />+ 1 Additional Locations...</button>
+<div id="Location56Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:67</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:68</span>: <span class="message">The resource <code>R.string.notification_stop_sound</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  65</span> 
+<span class="lineno">  66</span> 	&lt;!-- notification -->
+<span class="lineno">  67</span> 	&lt;string name="notification_pause_sound">Sound pausieren&lt;/string>
+<span class="lineno">  68</span> 	&lt;string <span class="errorspan">name="notification_stop_sound">Sound stoppen&lt;/string></span>
+<span class="lineno">  69</span> 	&lt;string name="notification_play_sound">Sound abspielen&lt;/string>
+<span class="lineno">  70</span> 	&lt;string name="notification_playlist">Playliste&lt;/string>
+</pre>
+<ul></ul><button id="Location57DivLink" onclick="reveal('Location57Div');" />+ 1 Additional Locations...</button>
+<div id="Location57Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:68</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:69</span>: <span class="message">The resource <code>R.string.notification_play_sound</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  66</span> 	&lt;!-- notification -->
+<span class="lineno">  67</span> 	&lt;string name="notification_pause_sound">Sound pausieren&lt;/string>
+<span class="lineno">  68</span> 	&lt;string name="notification_stop_sound">Sound stoppen&lt;/string>
+<span class="lineno">  69</span> 	&lt;string <span class="errorspan">name="notification_play_sound">Sound abspielen&lt;/string></span>
+<span class="lineno">  70</span> 	&lt;string name="notification_playlist">Playliste&lt;/string>
+<span class="lineno">  71</span> 
+</pre>
+<ul></ul><button id="Location58DivLink" onclick="reveal('Location58Div');" />+ 1 Additional Locations...</button>
+<div id="Location58Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:69</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:70</span>: <span class="message">The resource <code>R.string.notification_playlist</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  67</span> 	&lt;string name="notification_pause_sound">Sound pausieren&lt;/string>
+<span class="lineno">  68</span> 	&lt;string name="notification_stop_sound">Sound stoppen&lt;/string>
+<span class="lineno">  69</span> 	&lt;string name="notification_play_sound">Sound abspielen&lt;/string>
+<span class="lineno">  70</span> 	&lt;string <span class="errorspan">name="notification_playlist">Playliste&lt;/string></span>
+<span class="lineno">  71</span> 
+<span class="lineno">  72</span> 	&lt;!-- introduction -->
+</pre>
+<ul></ul><button id="Location59DivLink" onclick="reveal('Location59Div');" />+ 1 Additional Locations...</button>
+<div id="Location59Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:70</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:122</span>: <span class="message">The resource <code>R.string.dialog_grant</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 119</span> 	&lt;/string>
+<span class="lineno"> 120</span> 
+<span class="lineno"> 121</span> 	&lt;!-- dialog -->
+<span class="lineno"> 122</span> 	&lt;string <span class="errorspan">name="dialog_grant">Erlauben&lt;/string></span>
+<span class="lineno"> 123</span> 	&lt;string name="dialog_close">Beenden&lt;/string>
+<span class="lineno"> 124</span> 	&lt;string name="dialog_denial">Verweigern&lt;/string>
+</pre>
+<ul></ul><button id="Location60DivLink" onclick="reveal('Location60Div');" />+ 1 Additional Locations...</button>
+<div id="Location60Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:122</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:123</span>: <span class="message">The resource <code>R.string.dialog_close</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 120</span> 
+<span class="lineno"> 121</span> 	&lt;!-- dialog -->
+<span class="lineno"> 122</span> 	&lt;string name="dialog_grant">Erlauben&lt;/string>
+<span class="lineno"> 123</span> 	&lt;string <span class="errorspan">name="dialog_close">Beenden&lt;/string></span>
+<span class="lineno"> 124</span> 	&lt;string name="dialog_denial">Verweigern&lt;/string>
+<span class="lineno"> 125</span> 	&lt;string name="dialog_ok">OK&lt;/string>
+</pre>
+<ul></ul><button id="Location61DivLink" onclick="reveal('Location61Div');" />+ 1 Additional Locations...</button>
+<div id="Location61Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:123</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:124</span>: <span class="message">The resource <code>R.string.dialog_denial</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 121</span> 	&lt;!-- dialog -->
+<span class="lineno"> 122</span> 	&lt;string name="dialog_grant">Erlauben&lt;/string>
+<span class="lineno"> 123</span> 	&lt;string name="dialog_close">Beenden&lt;/string>
+<span class="lineno"> 124</span> 	&lt;string <span class="errorspan">name="dialog_denial">Verweigern&lt;/string></span>
+<span class="lineno"> 125</span> 	&lt;string name="dialog_ok">OK&lt;/string>
+<span class="lineno"> 126</span> 	&lt;string name="dialog_delete">Löschen&lt;/string>
+</pre>
+<ul></ul><button id="Location62DivLink" onclick="reveal('Location62Div');" />+ 1 Additional Locations...</button>
+<div id="Location62Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:124</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:133</span>: <span class="message">The resource <code>R.string.dialog_confirm_delete_title</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 130</span> 	&lt;string name="dialog_load">Laden&lt;/string>
+<span class="lineno"> 131</span> 	&lt;string name="dialog_rename">Umbenennen&lt;/string>
+<span class="lineno"> 132</span> 
+<span class="lineno"> 133</span> 	&lt;string <span class="errorspan">name="dialog_confirm_delete_title">Wirklich entfernen?&lt;/string></span>
+<span class="lineno"> 134</span> 	&lt;string name="dialog_confirm_delete_soundsheet_message">Soll diese Kategorie entfernt werden?&lt;/string>
+<span class="lineno"> 135</span> 	&lt;string name="dialog_confirm_delete_sounds_in_soundheet_message">Sollen alle Sounds in dieser Kategorie entfernt werden?&lt;/string>
+</pre>
+<ul></ul><button id="Location63DivLink" onclick="reveal('Location63Div');" />+ 1 Additional Locations...</button>
+<div id="Location63Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:133</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:138</span>: <span class="message">The resource <code>R.string.dialog_add_new_sound_from_directory_title</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 135</span> 	&lt;string name="dialog_confirm_delete_sounds_in_soundheet_message">Sollen alle Sounds in dieser Kategorie entfernt werden?&lt;/string>
+<span class="lineno"> 136</span> 	&lt;string name="dialog_confirm_delete_all_soundsheets_message">Sollen alle Kategorien des Soundboards entfernt werden?&lt;/string>
+<span class="lineno"> 137</span> 
+<span class="lineno"> 138</span> 	&lt;string <span class="errorspan">name="dialog_add_new_sound_from_directory_title">Verzeichniss auswählen&lt;/string></span>
+<span class="lineno"> 139</span> 	&lt;string name="dialog_add_new_sound_from_directory_message">Dem Soundbord werden alle Sounds in dem ausgewählten Verzeichniss hinzugefügt&lt;/string>
+<span class="lineno"> 140</span> 	&lt;string name="dialog_add_new_sound_from_directory_content_description_file_type">Dateityp&lt;/string>-
+</pre>
+<ul></ul><button id="Location64DivLink" onclick="reveal('Location64Div');" />+ 1 Additional Locations...</button>
+<div id="Location64Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:138</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:159</span>: <span class="message">The resource <code>R.string.dialog_add_new_sound_title</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 156</span> 	&lt;string name="dialog_add_new_sound_from_intent_to_sound_sheet_message">Welcher Kategorie soll der Sound hinzugefügt werden, oder soll eine neue Kategorie angelegt werden?&lt;/string>
+<span class="lineno"> 157</span> 	&lt;string name="dialog_add_new_sound_from_intent_to_sound_sheet_checkbox">Eine neue Katagorie anlegen&lt;/string>
+<span class="lineno"> 158</span> 
+<span class="lineno"> 159</span> 	&lt;string <span class="errorspan">name="dialog_add_new_sound_title">Sound hinzufügen&lt;/string></span>
+<span class="lineno"> 160</span> 	&lt;string name="dialog_add_new_sound_message">Mit dem Plus kann ein weiterer Sound ausgewählt werden.&lt;/string>
+<span class="lineno"> 161</span> 	&lt;string name="dialog_add_new_sound_content_description">Öffnet den Dateibrowser um eine weitern Sound hinzuzufügen.&lt;/string>
+</pre>
+<ul></ul><button id="Location65DivLink" onclick="reveal('Location65Div');" />+ 1 Additional Locations...</button>
+<div id="Location65Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:159</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:162</span>: <span class="message">The resource <code>R.string.dialog_add_new_sound_toast_no_sounds</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 159</span> 	&lt;string name="dialog_add_new_sound_title">Sound hinzufügen&lt;/string>
+<span class="lineno"> 160</span> 	&lt;string name="dialog_add_new_sound_message">Mit dem Plus kann ein weiterer Sound ausgewählt werden.&lt;/string>
+<span class="lineno"> 161</span> 	&lt;string name="dialog_add_new_sound_content_description">Öffnet den Dateibrowser um eine weitern Sound hinzuzufügen.&lt;/string>
+<span class="lineno"> 162</span> 	&lt;string <span class="errorspan">name="dialog_add_new_sound_toast_no_sounds">Drücke auf Plus um weitere Sounds auszuwählen.&lt;/string></span>
+<span class="lineno"> 163</span> 
+<span class="lineno"> 164</span> 	&lt;string name="dialog_store_layout_message">Eine Datei anlegen oder Auswählen um die aktuelle Sound Zusammenstellung abzuspeichern.&lt;/string>
+</pre>
+<ul></ul><button id="Location66DivLink" onclick="reveal('Location66Div');" />+ 1 Additional Locations...</button>
+<div id="Location66Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:162</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:165</span>: <span class="message">The resource <code>R.string.dialog_store_layout_no_file_info</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 162</span> 	&lt;string name="dialog_add_new_sound_toast_no_sounds">Drücke auf Plus um weitere Sounds auszuwählen.&lt;/string>
+<span class="lineno"> 163</span> 
+<span class="lineno"> 164</span> 	&lt;string name="dialog_store_layout_message">Eine Datei anlegen oder Auswählen um die aktuelle Sound Zusammenstellung abzuspeichern.&lt;/string>
+<span class="lineno"> 165</span> 	&lt;string <span class="errorspan">name="dialog_store_layout_no_file_info">Keine Datei zum Speichern ausgewählt.&lt;/string></span>
+<span class="lineno"> 166</span> 	&lt;string name="dialog_store_layout_no_file_name">Kein Name eingegeben.&lt;/string>
+<span class="lineno"> 167</span> 	&lt;string name="dialog_store_layout_failed_create_file">Datei konnte nicht angelegt werden. Ist der Ordner schreibgeschützt?&lt;/string>
+</pre>
+<ul></ul><button id="Location67DivLink" onclick="reveal('Location67Div');" />+ 1 Additional Locations...</button>
+<div id="Location67Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:165</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:166</span>: <span class="message">The resource <code>R.string.dialog_store_layout_no_file_name</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 163</span> 
+<span class="lineno"> 164</span> 	&lt;string name="dialog_store_layout_message">Eine Datei anlegen oder Auswählen um die aktuelle Sound Zusammenstellung abzuspeichern.&lt;/string>
+<span class="lineno"> 165</span> 	&lt;string name="dialog_store_layout_no_file_info">Keine Datei zum Speichern ausgewählt.&lt;/string>
+<span class="lineno"> 166</span> 	&lt;string <span class="errorspan">name="dialog_store_layout_no_file_name">Kein Name eingegeben.&lt;/string></span>
+<span class="lineno"> 167</span> 	&lt;string name="dialog_store_layout_failed_create_file">Datei konnte nicht angelegt werden. Ist der Ordner schreibgeschützt?&lt;/string>
+<span class="lineno"> 168</span> 	&lt;string name="dialog_store_layout_failed_store_layout">Das Layout konnte leider nicht gespeichert werden.&lt;/string>
+</pre>
+<ul></ul><button id="Location68DivLink" onclick="reveal('Location68Div');" />+ 1 Additional Locations...</button>
+<div id="Location68Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:166</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:167</span>: <span class="message">The resource <code>R.string.dialog_store_layout_failed_create_file</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 164</span> 	&lt;string name="dialog_store_layout_message">Eine Datei anlegen oder Auswählen um die aktuelle Sound Zusammenstellung abzuspeichern.&lt;/string>
+<span class="lineno"> 165</span> 	&lt;string name="dialog_store_layout_no_file_info">Keine Datei zum Speichern ausgewählt.&lt;/string>
+<span class="lineno"> 166</span> 	&lt;string name="dialog_store_layout_no_file_name">Kein Name eingegeben.&lt;/string>
+<span class="lineno"> 167</span> 	&lt;string <span class="errorspan">name="dialog_store_layout_failed_create_file">Datei konnte nicht angelegt werden. Ist der Ordner schreibgeschützt?&lt;/string></span>
+<span class="lineno"> 168</span> 	&lt;string name="dialog_store_layout_failed_store_layout">Das Layout konnte leider nicht gespeichert werden.&lt;/string>
+<span class="lineno"> 169</span> 	&lt;string name="dialog_store_layout_file_exists">Eine Datei mit diesem Namen existiert bereits.&lt;/string>
+</pre>
+<ul></ul><button id="Location69DivLink" onclick="reveal('Location69Div');" />+ 1 Additional Locations...</button>
+<div id="Location69Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:167</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:168</span>: <span class="message">The resource <code>R.string.dialog_store_layout_failed_store_layout</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 165</span> 	&lt;string name="dialog_store_layout_no_file_info">Keine Datei zum Speichern ausgewählt.&lt;/string>
+<span class="lineno"> 166</span> 	&lt;string name="dialog_store_layout_no_file_name">Kein Name eingegeben.&lt;/string>
+<span class="lineno"> 167</span> 	&lt;string name="dialog_store_layout_failed_create_file">Datei konnte nicht angelegt werden. Ist der Ordner schreibgeschützt?&lt;/string>
+<span class="lineno"> 168</span> 	&lt;string <span class="errorspan">name="dialog_store_layout_failed_store_layout">Das Layout konnte leider nicht gespeichert werden.&lt;/string></span>
+<span class="lineno"> 169</span> 	&lt;string name="dialog_store_layout_file_exists">Eine Datei mit diesem Namen existiert bereits.&lt;/string>
+<span class="lineno"> 170</span> 
+</pre>
+<ul></ul><button id="Location70DivLink" onclick="reveal('Location70Div');" />+ 1 Additional Locations...</button>
+<div id="Location70Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:168</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:169</span>: <span class="message">The resource <code>R.string.dialog_store_layout_file_exists</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 166</span> 	&lt;string name="dialog_store_layout_no_file_name">Kein Name eingegeben.&lt;/string>
+<span class="lineno"> 167</span> 	&lt;string name="dialog_store_layout_failed_create_file">Datei konnte nicht angelegt werden. Ist der Ordner schreibgeschützt?&lt;/string>
+<span class="lineno"> 168</span> 	&lt;string name="dialog_store_layout_failed_store_layout">Das Layout konnte leider nicht gespeichert werden.&lt;/string>
+<span class="lineno"> 169</span> 	&lt;string <span class="errorspan">name="dialog_store_layout_file_exists">Eine Datei mit diesem Namen existiert bereits.&lt;/string></span>
+<span class="lineno"> 170</span> 
+<span class="lineno"> 171</span> 	&lt;string name="dialog_load_layout_message">Eine gespeichtere SoundKonfiguration auswählen um diese zu laden.&lt;/string>
+</pre>
+<ul></ul><button id="Location71DivLink" onclick="reveal('Location71Div');" />+ 1 Additional Locations...</button>
+<div id="Location71Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:169</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:172</span>: <span class="message">The resource <code>R.string.dialog_load_layout_no_file_info</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 169</span> 	&lt;string name="dialog_store_layout_file_exists">Eine Datei mit diesem Namen existiert bereits.&lt;/string>
+<span class="lineno"> 170</span> 
+<span class="lineno"> 171</span> 	&lt;string name="dialog_load_layout_message">Eine gespeichtere SoundKonfiguration auswählen um diese zu laden.&lt;/string>
+<span class="lineno"> 172</span> 	&lt;string <span class="errorspan">name="dialog_load_layout_no_file_info">Keine Datei zum Laden ausgewählt.&lt;/string></span>
+<span class="lineno"> 173</span> 
+<span class="lineno"> 174</span> 	&lt;string name="dialog_rename_sound_file_title">Datei auch umbenennen?&lt;/string>
+</pre>
+<ul></ul><button id="Location72DivLink" onclick="reveal('Location72Div');" />+ 1 Additional Locations...</button>
+<div id="Location72Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:172</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:174</span>: <span class="message">The resource <code>R.string.dialog_rename_sound_file_title</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 171</span> 	&lt;string name="dialog_load_layout_message">Eine gespeichtere SoundKonfiguration auswählen um diese zu laden.&lt;/string>
+<span class="lineno"> 172</span> 	&lt;string name="dialog_load_layout_no_file_info">Keine Datei zum Laden ausgewählt.&lt;/string>
+<span class="lineno"> 173</span> 
+<span class="lineno"> 174</span> 	&lt;string <span class="errorspan">name="dialog_rename_sound_file_title">Datei auch umbenennen?&lt;/string></span>
+<span class="lineno"> 175</span> 	&lt;string name="dialog_rename_sound_file_message">Soll die zugehörige Musikdatei ebenfalls umbenannt werden?&lt;/string>
+<span class="lineno"> 176</span> 	&lt;string name="dialog_rename_sound_file_current_name">Aktueller Name:&lt;/string>
+</pre>
+<ul></ul><button id="Location73DivLink" onclick="reveal('Location73Div');" />+ 1 Additional Locations...</button>
+<div id="Location73Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:174</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:176</span>: <span class="message">The resource <code>R.string.dialog_rename_sound_file_current_name</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 173</span> 
+<span class="lineno"> 174</span> 	&lt;string name="dialog_rename_sound_file_title">Datei auch umbenennen?&lt;/string>
+<span class="lineno"> 175</span> 	&lt;string name="dialog_rename_sound_file_message">Soll die zugehörige Musikdatei ebenfalls umbenannt werden?&lt;/string>
+<span class="lineno"> 176</span> 	&lt;string <span class="errorspan">name="dialog_rename_sound_file_current_name">Aktueller Name:&lt;/string></span>
+<span class="lineno"> 177</span> 	&lt;string name="dialog_rename_sound_file_new_name">Neuer Name:&lt;/string>
+<span class="lineno"> 178</span> 	&lt;string name="dialog_rename_sound_file_all_occurrences_message">Sollen alle geladenen Sounds die diese Datei benutzen auch umbenannt werden? ({%s0} Sounds)&lt;/string>
+</pre>
+<ul></ul><button id="Location74DivLink" onclick="reveal('Location74Div');" />+ 1 Additional Locations...</button>
+<div id="Location74Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:176</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:179</span>: <span class="message">The resource <code>R.string.dialog_rename_sound_toast_file_not_found</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 176</span> 	&lt;string name="dialog_rename_sound_file_current_name">Aktueller Name:&lt;/string>
+<span class="lineno"> 177</span> 	&lt;string name="dialog_rename_sound_file_new_name">Neuer Name:&lt;/string>
+<span class="lineno"> 178</span> 	&lt;string name="dialog_rename_sound_file_all_occurrences_message">Sollen alle geladenen Sounds die diese Datei benutzen auch umbenannt werden? ({%s0} Sounds)&lt;/string>
+<span class="lineno"> 179</span> 	&lt;string <span class="errorspan">name="dialog_rename_sound_toast_file_not_found">Die Sounddatei konnte leider nicht umbenannt werden&lt;/string></span>
+<span class="lineno"> 180</span> 	&lt;string name="dialog_rename_sound_toast_player_not_updated">Die Änderung konnte nicht für alle Sounds übernommen werden. Ein paar Sounds mussten leider entfernt werden.&lt;/string>
+<span class="lineno"> 181</span> &lt;/resources>
+</pre>
+<ul></ul><button id="Location75DivLink" onclick="reveal('Location75Div');" />+ 1 Additional Locations...</button>
+<div id="Location75Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:179</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:180</span>: <span class="message">The resource <code>R.string.dialog_rename_sound_toast_player_not_updated</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 177</span> 	&lt;string name="dialog_rename_sound_file_new_name">Neuer Name:&lt;/string>
+<span class="lineno"> 178</span> 	&lt;string name="dialog_rename_sound_file_all_occurrences_message">Sollen alle geladenen Sounds die diese Datei benutzen auch umbenannt werden? ({%s0} Sounds)&lt;/string>
+<span class="lineno"> 179</span> 	&lt;string name="dialog_rename_sound_toast_file_not_found">Die Sounddatei konnte leider nicht umbenannt werden&lt;/string>
+<span class="lineno"> 180</span> 	&lt;string <span class="errorspan">name="dialog_rename_sound_toast_player_not_updated">Die Änderung konnte nicht für alle Sounds übernommen werden. Ein paar Sounds mussten leider entfernt werden.&lt;/string></span>
+<span class="lineno"> 181</span> &lt;/resources>
+<span class="lineno"> 182</span> 
+</pre>
+<ul></ul><button id="Location76DivLink" onclick="reveal('Location76Div');" />+ 1 Additional Locations...</button>
+<div id="Location76Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/values-de/strings.xml">../../src/main/res/values-de/strings.xml</a>:180</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../../src/main/res/values/time.xml">../../src/main/res/values/time.xml</a>:3</span>: <span class="message">The resource <code>R.integer.animation_slide_in_fast</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   1</span> &lt;?xml version="1.0" encoding="utf-8"?>
+<span class="lineno">   2</span> &lt;resources>
+<span class="lineno">   3</span> 	&lt;integer <span class="errorspan">name="animation_slide_in_fast">@android:integer/config_shortAnimTime&lt;/integer></span>
+<span class="lineno">   4</span> &lt;/resources>
+
+</pre>
+<span class="location"><a href="../../src/main/res/layout/view_actionbar_edittext.xml">../../src/main/res/layout/view_actionbar_edittext.xml</a></span>: <span class="message">The resource <code>R.layout.view_actionbar_edittext</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_add_sound_list_item.xml">../../src/main/res/layout/view_add_sound_list_item.xml</a></span>: <span class="message">The resource <code>R.layout.view_add_sound_list_item</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_directory_item.xml">../../src/main/res/layout/view_directory_item.xml</a></span>: <span class="message">The resource <code>R.layout.view_directory_item</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_introduction_list_item.xml">../../src/main/res/layout/view_introduction_list_item.xml</a></span>: <span class="message">The resource <code>R.layout.view_introduction_list_item</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_no_underscore_edittext.xml">../../src/main/res/layout/view_no_underscore_edittext.xml</a></span>: <span class="message">The resource <code>R.layout.view_no_underscore_edittext</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_playlist.xml">../../src/main/res/layout/view_playlist.xml</a></span>: <span class="message">The resource <code>R.layout.view_playlist</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_playlist_item.xml">../../src/main/res/layout/view_playlist_item.xml</a></span>: <span class="message">The resource <code>R.layout.view_playlist_item</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_sound_item.xml">../../src/main/res/layout/view_sound_item.xml</a></span>: <span class="message">The resource <code>R.layout.view_sound_item</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_sound_layout_item.xml">../../src/main/res/layout/view_sound_layout_item.xml</a></span>: <span class="message">The resource <code>R.layout.view_sound_layout_item</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_sound_layout_list.xml">../../src/main/res/layout/view_sound_layout_list.xml</a></span>: <span class="message">The resource <code>R.layout.view_sound_layout_list</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_sound_sheet_item.xml">../../src/main/res/layout/view_sound_sheet_item.xml</a></span>: <span class="message">The resource <code>R.layout.view_sound_sheet_item</code> appears to be unused</span><br />
+<span class="location"><a href="../../src/main/res/layout/view_sound_sheets.xml">../../src/main/res/layout/view_sound_sheets.xml</a></span>: <span class="message">The resource <code>R.layout.view_sound_sheets</code> appears to be unused</span><br />
+</div>
+</div>
+<div class="metadata">Priority: 3 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Unused resources.</div>
+<div class="explanation">
+Unused resources make applications larger and slow down builds.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "UnusedResources" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Usability:Icons"></a>
+<div class="category"><a href="#" title="Return to top">Usability:Icons</a><div class="categorySeparator"></div>
+</div>
+<a name="IconDipSize"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">IconDipSize: Icon density-independent size validation</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/main/res/drawable-mdpi-v19/ic_background_navigation_drawer.png">../../src/main/res/drawable-mdpi-v19/ic_background_navigation_drawer.png</a></span>: <span class="message">The image <code>ic_background_navigation_drawer.png</code> varies significantly in its density-independent (dip) size across the various density versions: drawable-hdpi-v19\ic_background_navigation_drawer.png: 333x221 dp (499x332 px), drawable-xxxhdpi-v19\ic_background_navigation_drawer.png: 250x166 dp (999x664 px), drawable-xxhdpi-v19\ic_background_navigation_drawer.png: 250x166 dp (749x498 px), drawable-xhdpi-v19\ic_background_navigation_drawer.png: 250x166 dp (499x332 px), drawable-mdpi-v19\ic_background_navigation_drawer.png: 250x166 dp (250x166 px)</span><br />
+<ul></ul><button id="Location1DivLink" onclick="reveal('Location1Div');" />+ 4 Additional Locations...</button>
+<div id="Location1Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-xhdpi-v19/ic_background_navigation_drawer.png">../../src/main/res/drawable-xhdpi-v19/ic_background_navigation_drawer.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xxhdpi-v19/ic_background_navigation_drawer.png">../../src/main/res/drawable-xxhdpi-v19/ic_background_navigation_drawer.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xxxhdpi-v19/ic_background_navigation_drawer.png">../../src/main/res/drawable-xxxhdpi-v19/ic_background_navigation_drawer.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-hdpi-v19/ic_background_navigation_drawer.png">../../src/main/res/drawable-hdpi-v19/ic_background_navigation_drawer.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi-v19/ic_background_navigation_drawer.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi-v19/ic_background_navigation_drawer.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi-v19/ic_background_navigation_drawer.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi-v19/ic_background_navigation_drawer.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi-v19/ic_background_navigation_drawer.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi-v19/ic_background_navigation_drawer.png" /></a>
+</td><td><a href="../../src/main/res/drawable-xxhdpi-v19/ic_background_navigation_drawer.png"><img border="0" align="top" src="../../src/main/res/drawable-xxhdpi-v19/ic_background_navigation_drawer.png" /></a>
+</td><td><a href="../../src/main/res/drawable-xxxhdpi-v19/ic_background_navigation_drawer.png"><img border="0" align="top" src="../../src/main/res/drawable-xxxhdpi-v19/ic_background_navigation_drawer.png" /></a>
+</td></tr><tr><th>xhdpi-v19</th><th>hdpi-v19</th><th>mdpi-v19</th><th>xxhdpi-v19</th><th>xxxhdpi-v19</th></tr>
+</table>
+<span class="location"><a href="../../src/main/res/drawable-xhdpi/ic_launcher.png">../../src/main/res/drawable-xhdpi/ic_launcher.png</a></span>: <span class="message">The image <code>ic_launcher.png</code> varies significantly in its density-independent (dip) size across the various density versions: drawable-mdpi\ic_launcher.png: 1600x1600 dp (1600x1600 px), drawable-hdpi\ic_launcher.png: 1067x1067 dp (1600x1600 px), drawable-xxxhdpi\ic_launcher.png: 400x400 dp (1600x1600 px), drawable-xxhdpi\ic_launcher.png: 48x48 dp (144x144 px), drawable-xhdpi\ic_launcher.png: 48x48 dp (96x96 px)</span><br />
+<ul></ul><button id="Location2DivLink" onclick="reveal('Location2Div');" />+ 4 Additional Locations...</button>
+<div id="Location2Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-xxhdpi/ic_launcher.png">../../src/main/res/drawable-xxhdpi/ic_launcher.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-xxxhdpi/ic_launcher.png">../../src/main/res/drawable-xxxhdpi/ic_launcher.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-hdpi/ic_launcher.png">../../src/main/res/drawable-hdpi/ic_launcher.png</a></span>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi/ic_launcher.png">../../src/main/res/drawable-mdpi/ic_launcher.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-xhdpi/ic_launcher.png"><img border="0" align="top" src="../../src/main/res/drawable-xhdpi/ic_launcher.png" /></a>
+</td><td><a href="../../src/main/res/drawable-hdpi/ic_launcher.png"><img border="0" align="top" src="../../src/main/res/drawable-hdpi/ic_launcher.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi/ic_launcher.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/ic_launcher.png" /></a>
+</td><td><a href="../../src/main/res/drawable-xxhdpi/ic_launcher.png"><img border="0" align="top" src="../../src/main/res/drawable-xxhdpi/ic_launcher.png" /></a>
+</td><td><a href="../../src/main/res/drawable-xxxhdpi/ic_launcher.png"><img border="0" align="top" src="../../src/main/res/drawable-xxxhdpi/ic_launcher.png" /></a>
+</td></tr><tr><th>xhdpi</th><th>hdpi</th><th>mdpi</th><th>xxhdpi</th><th>xxxhdpi</th></tr>
+</table>
+</div>
+<div class="metadata">Priority: 5 / 10<br/>
+Category: Usability:Icons</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Icon density-independent size validation.</div>
+<div class="explanation">
+Checks the all icons which are provided in multiple densities, all compute to roughly the same density-independent pixel (<code>dip</code>) size. This catches errors where images are either placed in the wrong folder, or icons are changed to new sizes but some folders are forgotten.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "IconDipSize" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="IconDuplicatesConfig"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">IconDuplicatesConfig: Identical bitmaps across various configurations</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/main/res/drawable-mdpi/ic_background_navigation_drawer.png">../../src/main/res/drawable-mdpi/ic_background_navigation_drawer.png</a></span>: <span class="message">The <code>ic_background_navigation_drawer.png</code> icon has identical contents in the following configuration folders: drawable-mdpi-v19, drawable-mdpi</span><br />
+<ul></ul><button id="Location1DivLink" onclick="reveal('Location1Div');" />+ 1 Additional Locations...</button>
+<div id="Location1Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../../src/main/res/drawable-mdpi-v19/ic_background_navigation_drawer.png">../../src/main/res/drawable-mdpi-v19/ic_background_navigation_drawer.png</a></span>
+</ul>
+</div><br/><br/>
+<table><tr><td><a href="../../src/main/res/drawable-mdpi/ic_background_navigation_drawer.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi/ic_background_navigation_drawer.png" /></a>
+</td><td><a href="../../src/main/res/drawable-mdpi-v19/ic_background_navigation_drawer.png"><img border="0" align="top" src="../../src/main/res/drawable-mdpi-v19/ic_background_navigation_drawer.png" /></a>
+</td></tr><tr><th>mdpi</th><th>mdpi-v19</th></tr>
+</table>
+</div>
+<div class="metadata">Priority: 5 / 10<br/>
+Category: Usability:Icons</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Identical bitmaps across various configurations.</div>
+<div class="explanation">
+If an icon is provided under different configuration parameters such as <code>drawable-hdpi</code> or <code>-v11</code>, they should typically be different. This detector catches cases where the same icon is provided in different configuration folder which is usually not intentional.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "IconDuplicatesConfig" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="IconDensities"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">IconDensities: Icon densities validation</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/main/res/drawable-xxhdpi">../../src/main/res/drawable-xxhdpi</a></span>: <span class="message">Missing the following drawables in <code>drawable-xxhdpi</code>: spinner_ab_disabled_actionbar.9.png, spinner_ab_focused_actionbar.9.png, spinner_ab_pressed_actionbar.9.png</span><br />
+<span class="location"><a href="../../src/main/res/drawable-xxxhdpi">../../src/main/res/drawable-xxxhdpi</a></span>: <span class="message">Missing the following drawables in <code>drawable-xxxhdpi</code>: background_focused.9.png, background_pressed.9.png, btn_cab_done_default_actionbar.9.png, btn_cab_done_focused_actionbar.9.png, btn_cab_done_pressed_actionbar.9.png... (56 more)</span><br />
+</div>
+<div class="metadata">Priority: 4 / 10<br/>
+Category: Usability:Icons</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Icon densities validation.</div>
+<div class="explanation">
+Icons will look best if a custom version is provided for each of the major screen density classes (low, medium, high, extra high). This lint check identifies icons which do not have complete coverage across the densities.<br/>
+<br/>
+Low density is not really used much anymore, so this check ignores the ldpi density. To force lint to include it, set the environment variable <code>ANDROID_LINT_INCLUDE_LDPI=true</code>. For more information on current density usage, see <a href="http://developer.android.com/resources/dashboard/screens.html">http://developer.android.com/resources/dashboard/screens.html</a>
+</div>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/guide/practices/screens_support.html">http://developer.android.com/guide/practices/screens_support.html</a>
+</div><br/>To suppress this error, use the issue id "IconDensities" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Usability"></a>
+<div class="category"><a href="#" title="Return to top">Usability</a><div class="categorySeparator"></div>
+</div>
+<a name="GoogleAppIndexingWarning"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">GoogleAppIndexingWarning: Missing support for Google App Indexing</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/debug/AndroidManifest.xml">../../src/debug/AndroidManifest.xml</a>:7</span>: <span class="message">App is not indexable by Google Search; consider adding at least one Activity with an ACTION-VIEW intent-filler. See issue explanation for more details.</span><br /><pre class="errorlines">
+<span class="lineno">   4</span> 		xmlns:tools="http://schemas.android.com/tools"
+<span class="lineno">   5</span> 		package="org.neidhardt.dynamicsoundboard">
+<span class="lineno">   6</span> 
+<span class="lineno">   7</span> 	<span class="errorspan">&lt;application</span>
+<span class="lineno">   8</span> 			android:name=".DynamicSoundboardApplication"
+<span class="lineno">   9</span> 			android:allowBackup="true"
+</pre>
+</div>
+<div class="metadata">Priority: 5 / 10<br/>
+Category: Usability</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Missing support for Google App Indexing.</div>
+<div class="explanation">
+Adds deep links to get your app into the Google index, to get installs and traffic to your app from Google Search.
+</div>
+<br/><div class="moreinfo">More info: <a href="https://g.co/AppIndexing/AndroidStudio">https://g.co/AppIndexing/AndroidStudio</a>
+</div><br/>To suppress this error, use the issue id "GoogleAppIndexingWarning" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Bi-directional Text"></a>
+<div class="category"><a href="#" title="Return to top">Bi-directional Text</a><div class="categorySeparator"></div>
+</div>
+<a name="RtlEnabled"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">RtlEnabled: Using RTL attributes without enabling RTL support</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../src/main/AndroidManifest.xml">../../src/main/AndroidManifest.xml</a></span>: <span class="message">The project references RTL attributes, but does not explicitly enable or disable RTL support with <code>android:supportsRtl</code> in the manifest</span><br />
+</div>
+<div class="metadata">Priority: 3 / 10<br/>
+Category: Bi-directional Text</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Using RTL attributes without enabling RTL support.</div>
+<div class="explanation">
+To enable right-to-left support, when running on API 17 and higher, you must set the <code>android:supportsRtl</code> attribute in the manifest <code>&lt;application></code> element.<br/>
+<br/>
+If you have started adding RTL attributes, but have not yet finished the migration, you can set the attribute to false to satisfy this lint check.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "RtlEnabled" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="MissingIssues"></a>
+<div class="category">Disabled Checks<div class="categorySeparator"></div>
+</div>
+The following issues were not run by lint, either because the check is not enabled by default, or because it was disabled with a command line flag or via one or more lint.xml configuration files in the project directories.
+<br/><br/>
+<a name="BackButton"></a>
+<div class="issue">
+<div class="id">BackButton<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 6 / 10<br/>
+Category: Usability</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Back button.</div>
+<div class="explanation">
+According to the Android Design Guide,<br/>
+<br/>
+"Other platforms use an explicit back button with label to allow the user to navigate up the application's hierarchy. Instead, Android uses the main action bar's app icon for hierarchical navigation and the navigation bar's back button for temporal navigation."<br/>
+This check is not very sophisticated (it just looks for buttons with the label "Back"), so it is disabled by default to not trigger on common scenarios like pairs of Back/Next buttons to paginate through screens.
+</div>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/design/patterns/pure-android.html">http://developer.android.com/design/patterns/pure-android.html</a>
+</div><br/>To suppress this error, use the issue id "BackButton" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="EasterEgg"></a>
+<div class="issue">
+<div class="id">EasterEgg<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 6 / 10<br/>
+Category: Security</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Code contains easter egg.</div>
+<div class="explanation">
+An "easter egg" is code deliberately hidden in the code, both from potential users and even from other developers. This lint check looks for code which looks like it may be hidden from sight.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "EasterEgg" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="FieldGetter"></a>
+<div class="issue">
+<div class="id">FieldGetter<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 4 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Using getter instead of field.</div>
+<div class="explanation">
+Accessing a field within the class that defines a getter for that field is at least 3 times faster than calling the getter. For simple getters that do nothing other than return the field, you might want to just reference the local field directly instead.<br/>
+<br/>
+<b>NOTE</b>: As of Android 2.3 (Gingerbread), this optimization is performed automatically by Dalvik, so there is no need to change your code; this is only relevant if you are targeting older versions of Android.
+</div>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/guide/practices/design/performance.html#internal_get_set">http://developer.android.com/guide/practices/design/performance.html#internal_get_set</a>
+</div><br/>To suppress this error, use the issue id "FieldGetter" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="GoogleAppIndexingApiWarning"></a>
+<div class="issue">
+<div class="id">GoogleAppIndexingApiWarning<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 5 / 10<br/>
+Category: Usability</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Missing support for Google App Indexing Api.</div>
+<div class="explanation">
+Adds deep links to get your app into the Google index, to get installs and traffic to your app from Google Search.
+</div>
+<br/><div class="moreinfo">More info: <a href="https://g.co/AppIndexing/AndroidStudio">https://g.co/AppIndexing/AndroidStudio</a>
+</div><br/>To suppress this error, use the issue id "GoogleAppIndexingApiWarning" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="IconExpectedSize"></a>
+<div class="issue">
+<div class="id">IconExpectedSize<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 5 / 10<br/>
+Category: Usability:Icons</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Icon has incorrect size.</div>
+<div class="explanation">
+There are predefined sizes (for each density) for launcher icons. You should follow these conventions to make sure your icons fit in with the overall look of the platform.
+</div>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/design/style/iconography.html">http://developer.android.com/design/style/iconography.html</a>
+</div><br/>To suppress this error, use the issue id "IconExpectedSize" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="LogConditional"></a>
+<div class="issue">
+<div class="id">LogConditional<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 5 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Unconditional Logging Calls.</div>
+<div class="explanation">
+The BuildConfig class (available in Tools 17) provides a constant, "DEBUG", which indicates whether the code is being built in release mode or in debug mode. In release mode, you typically want to strip out all the logging calls. Since the compiler will automatically remove all code which is inside a "if (false)" check, surrounding your logging calls with a check for BuildConfig.DEBUG is a good idea.<br/>
+<br/>
+If you <b>really</b> intend for the logging to be present in release mode, you can suppress this warning with a @SuppressLint annotation for the intentional logging calls.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "LogConditional" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="MangledCRLF"></a>
+<div class="issue">
+<div class="id">MangledCRLF<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Eclipse/ADT&nbsp;<img alt="Fix" border="0" align="top" src="lint-results_files/lint-run.png" />
+<br>
+Disabled By: Default<br/>
+Priority: 2 / 10<br/>
+Category: Correctness</div>
+Severity: <span class="error">Error</span><div class="summary">
+Explanation: Mangled file line endings.</div>
+<div class="explanation">
+On Windows, line endings are typically recorded as carriage return plus newline: \r\n.<br/>
+<br/>
+This detector looks for invalid line endings with repeated carriage return characters (without newlines). Previous versions of the ADT plugin could accidentally introduce these into the file, and when editing the file, the editor could produce confusing visual artifacts.
+</div>
+<br/><div class="moreinfo">More info: <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=375421">https://bugs.eclipse.org/bugs/show_bug.cgi?id=375421</a>
+</div><br/>To suppress this error, use the issue id "MangledCRLF" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="NegativeMargin"></a>
+<div class="issue">
+<div class="id">NegativeMargin<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 4 / 10<br/>
+Category: Usability</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Negative Margins.</div>
+<div class="explanation">
+Margin values should be positive. Negative values are generally a sign that you are making assumptions about views surrounding the current one, or may be tempted to turn off child clipping to allow a view to escape its parent. Turning off child clipping to do this not only leads to poor graphical performance, it also results in wrong touch event handling since touch events are based strictly on a chain of parent-rect hit tests. Finally, making assumptions about the size of strings can lead to localization problems.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "NegativeMargin" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="NewerVersionAvailable"></a>
+<div class="issue">
+<div class="id">NewerVersionAvailable<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint-results_files/lint-run.png" />
+<br>
+Disabled By: Default<br/>
+Priority: 4 / 10<br/>
+Category: Correctness</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Newer Library Versions Available.</div>
+<div class="explanation">
+This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project. This is similar to the <code>GradleDependency</code> check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also <b>much</b> slower.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "NewerVersionAvailable" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="SelectableText"></a>
+<div class="issue">
+<div class="id">SelectableText<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint-results_files/lint-run.png" />
+<br>
+Disabled By: Default<br/>
+Priority: 7 / 10<br/>
+Category: Usability</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Dynamic text should probably be selectable.</div>
+<div class="explanation">
+If a <code>&lt;TextView></code> is used to display data, the user might want to copy that data and paste it elsewhere. To allow this, the <code>&lt;TextView></code> should specify <code>android:textIsSelectable="true"</code>.<br/>
+<br/>
+This lint check looks for TextViews which are likely to be displaying data: views whose text is set dynamically. This value will be ignored on platforms older than API 11, so it is okay to set it regardless of your <code>minSdkVersion</code>.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "SelectableText" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="StopShip"></a>
+<div class="issue">
+<div class="id">StopShip<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint-results_files/lint-run.png" />
+<br>
+Disabled By: Default<br/>
+Priority: 10 / 10<br/>
+Category: Correctness</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Code contains <code>STOPSHIP</code> marker.</div>
+<div class="explanation">
+Using the comment <code>// STOPSHIP</code> can be used to flag code that is incomplete but checked in. This comment marker can be used to indicate that the code should not be shipped until the issue is addressed, and lint will look for these.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "StopShip" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="TypographyQuotes"></a>
+<div class="issue">
+<div class="id">TypographyQuotes<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Eclipse/ADT & Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint-results_files/lint-run.png" />
+<br>
+Disabled By: Default<br/>
+Priority: 5 / 10<br/>
+Category: Usability:Typography</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Straight quotes can be replaced with curvy quotes.</div>
+<div class="explanation">
+Straight single quotes and double quotes, when used as a pair, can be replaced by "curvy quotes" (or directional quotes). This can make the text more readable.<br/>
+<br/>
+Note that you should never use grave accents and apostrophes to quote, `like this'.<br/>
+<br/>
+(Also note that you should not use curvy quotes for code fragments.)
+</div>
+<br/><div class="moreinfo">More info: <a href="http://en.wikipedia.org/wiki/Quotation_mark">http://en.wikipedia.org/wiki/Quotation_mark</a>
+</div><br/>To suppress this error, use the issue id "TypographyQuotes" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="UnusedIds"></a>
+<div class="issue">
+<div class="id">UnusedIds<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 1 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Unused id.</div>
+<div class="explanation">
+This resource id definition appears not to be needed since it is not referenced from anywhere. Having id definitions, even if unused, is not necessarily a bad idea since they make working on layouts and menus easier, so there is not a strong reason to delete these.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "UnusedIds" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="SuppressInfo"></a>
+<div class="category">Suppressing Warnings and Errors<div class="categorySeparator"></div>
+</div>
+Lint errors can be suppressed in a variety of ways:<br/>
+<br/>
+1. With a <code>@SuppressLint</code> annotation in the Java code<br/>
+2. With a <code>tools:ignore</code> attribute in the XML file<br/>
+3. With ignore flags specified in the <code>build.gradle</code> file, as explained below<br/>
+4. With a <code>lint.xml</code> configuration file in the project<br/>
+5. With a <code>lint.xml</code> configuration file passed to lint via the --config flag<br/>
+6. With the --ignore flag passed to lint.<br/>
+<br/>
+To suppress a lint warning with an annotation, add a <code>@SuppressLint("id")</code> annotation on the class, method or variable declaration closest to the warning instance you want to disable. The id can be one or more issue id's, such as <code>"UnusedResources"</code> or <code>{"UnusedResources","UnusedIds"}</code>, or it can be <code>"all"</code> to suppress all lint warnings in the given scope.<br/>
+<br/>
+To suppress a lint warning in an XML file, add a <code>tools:ignore="id"</code> attribute on the element containing the error, or one of its surrounding elements. You also need to define the namespace for the tools prefix on the root element in your document, next to the <code>xmlns:android</code> declaration:<br/>
+<code>xmlns:tools="http://schemas.android.com/tools"</code><br/>
+<br/>
+To suppress a lint warning in a <code>build.gradle</code> file, add a section like this:<br/>
+<br/>
+android {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;lintOptions {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;disable 'TypographyFractions','TypographyQuotes'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+}<br/>
+<br/>
+Here we specify a comma separated list of issue id's after the disable command. You can also use <code>warning</code> or <code>error</code> instead of <code>disable</code> to change the severity of issues.<br/>
+<br/>
+To suppress lint warnings with a configuration XML file, create a file named <code>lint.xml</code> and place it at the root directory of the project in which it applies.<br/>
+<br/>
+The format of the <code>lint.xml</code> file is something like the following:<br/>
+<br/>
+&lt;?xml version="1.0" encoding="UTF-8"?><br/>
+&lt;lint><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Disable this given check in this project --><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;issue id="IconMissingDensityFolder" severity="ignore" /><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Ignore the ObsoleteLayoutParam issue in the given files --><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;issue id="ObsoleteLayoutParam"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ignore path="res/layout/activation.xml" /><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ignore path="res/layout-xlarge/activation.xml" /><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/issue><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Ignore the UselessLeaf issue in the given file --><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;issue id="UselessLeaf"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ignore path="res/layout/main.xml" /><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/issue><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Change the severity of hardcoded strings to "error" --><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;issue id="HardcodedText" severity="error" /><br/>
+&lt;/lint><br/>
+<br/>
+To suppress lint checks from the command line, pass the --ignore flag with a comma separated list of ids to be suppressed, such as:<br/>
+<code>$ lint --ignore UnusedResources,UselessLeaf /my/project/path</code><br/>
+<br/>
+For more information, see <a href="http://g.co/androidstudio/suppressing-lint-warnings">http://g.co/androidstudio/suppressing-lint-warnings</a><br/>
+
+
+</body>
+</html>

@@ -804,7 +804,6 @@ android.support.v4.app.NotificationCompat$BigTextStyle:
     1733:1734:public android.support.v4.app.NotificationCompat$BigTextStyle bigText(java.lang.CharSequence)
 android.support.v4.app.NotificationCompat$Builder:
     private static final int MAX_CHARSEQUENCE_LENGTH
-    950:951:public android.support.v4.app.NotificationCompat$Builder setWhen(long)
     959:960:public android.support.v4.app.NotificationCompat$Builder setShowWhen(boolean)
     975:976:public android.support.v4.app.NotificationCompat$Builder setUsesChronometer(boolean)
     1002:1004:public android.support.v4.app.NotificationCompat$Builder setSmallIcon(int,int)
@@ -814,14 +813,12 @@ android.support.v4.app.NotificationCompat$Builder:
     1060:1063:public android.support.v4.app.NotificationCompat$Builder setProgress(int,int,boolean)
     1070:1071:public android.support.v4.app.NotificationCompat$Builder setContent(android.widget.RemoteViews)
     1118:1120:public android.support.v4.app.NotificationCompat$Builder setFullScreenIntent(android.app.PendingIntent,boolean)
-    1128:1129:public android.support.v4.app.NotificationCompat$Builder setTicker(java.lang.CharSequence)
     1138:1140:public android.support.v4.app.NotificationCompat$Builder setTicker(java.lang.CharSequence,android.widget.RemoteViews)
     1160:1162:public android.support.v4.app.NotificationCompat$Builder setSound(android.net.Uri)
     1177:1179:public android.support.v4.app.NotificationCompat$Builder setSound(android.net.Uri,int)
     1194:1195:public android.support.v4.app.NotificationCompat$Builder setVibrate(long[])
     1204:1210:public android.support.v4.app.NotificationCompat$Builder setLights(int,int,int)
     1234:1235:public android.support.v4.app.NotificationCompat$Builder setOnlyAlertOnce(boolean)
-    1245:1246:public android.support.v4.app.NotificationCompat$Builder setAutoCancel(boolean)
     1256:1257:public android.support.v4.app.NotificationCompat$Builder setLocalOnly(boolean)
     1268:1269:public android.support.v4.app.NotificationCompat$Builder setCategory(java.lang.String)
     1283:1287:public android.support.v4.app.NotificationCompat$Builder setDefaults(int)
@@ -4693,9 +4690,10 @@ android.support.v7.widget.helper.ItemTouchUIUtilImpl$Gingerbread
 android.support.v7.widget.helper.ItemTouchUIUtilImpl$Honeycomb
 android.support.v7.widget.helper.ItemTouchUIUtilImpl$Lollipop
 android.support.v7.widget.util.SortedListAdapterCallback
+ch.acra.acra.BuildConfig
 com.devspark.robototextview.BuildConfig
 com.devspark.robototextview.R:
-    9:938:public R()
+    9:968:public R()
 com.devspark.robototextview.R$anim
 com.devspark.robototextview.R$attr
 com.devspark.robototextview.R$bool
@@ -4708,17 +4706,18 @@ com.devspark.robototextview.R$layout
 com.devspark.robototextview.R$string
 com.devspark.robototextview.R$style
 com.devspark.robototextview.R$styleable:
-    938:938:public R$styleable()
+    968:968:public R$styleable()
+com.devspark.robototextview.style.RobotoTextAppearanceSpan
 com.devspark.robototextview.style.RobotoTypefaceSpan
-com.devspark.robototextview.util.RobotoTextViewUtils:
-    35:36:private RobotoTextViewUtils()
-    90:92:public static void setTypeface(android.graphics.Paint,android.graphics.Typeface)
 com.devspark.robototextview.util.RobotoTypefaceManager:
     27:369:public RobotoTypefaceManager()
 com.devspark.robototextview.util.RobotoTypefaceManager$FontFamily
 com.devspark.robototextview.util.RobotoTypefaceManager$TextStyle
 com.devspark.robototextview.util.RobotoTypefaceManager$TextWeight
 com.devspark.robototextview.util.RobotoTypefaceManager$Typeface
+com.devspark.robototextview.util.RobotoTypefaceUtils:
+    37:38:private RobotoTypefaceUtils()
+    96:98:public static void setup(android.graphics.Paint,android.graphics.Typeface)
 com.devspark.robototextview.widget.RobotoAutoCompleteTextView
 com.devspark.robototextview.widget.RobotoCheckBox
 com.devspark.robototextview.widget.RobotoCheckedTextView
@@ -5124,39 +5123,39 @@ com.nineoldandroids.view.animation.AnimatorProxy:
     169:173:public int getScrollY()
     176:180:public void setScrollY(int)
 de.greenrobot.dao.AbstractDao:
-    70:71:public AbstractDao(de.greenrobot.dao.internal.DaoConfig)
-    87:87:public de.greenrobot.dao.AbstractDaoSession getSession()
-    91:91:de.greenrobot.dao.internal.TableStatements getStatements()
-    103:103:public de.greenrobot.dao.Property getPkProperty()
-    111:111:public java.lang.String[] getPkColumns()
-    115:115:public java.lang.String[] getNonPkColumns()
-    126:139:public java.lang.Object load(java.lang.Object)
-    143:145:public java.lang.Object loadByRowId(long)
-    150:152:protected java.lang.Object loadUniqueAndCloseCursor(android.database.Cursor)
-    157:163:protected java.lang.Object loadUnique(android.database.Cursor)
-    168:169:public java.util.List loadAll()
-    174:178:public boolean detach(java.lang.Object)
-    197:198:public void insertInTx(java.lang.Iterable)
-    207:208:public varargs void insertInTx(java.lang.Object[])
-    220:222:public void insertInTx(java.lang.Iterable,boolean)
-    234:236:public void insertOrReplaceInTx(java.lang.Iterable,boolean)
-    245:246:public void insertOrReplaceInTx(java.lang.Iterable)
-    255:256:public varargs void insertOrReplaceInTx(java.lang.Object[])
-    259:285:private void executeInsertInTx(android.database.sqlite.SQLiteStatement,java.lang.Iterable,boolean)
-    303:323:public long insertWithoutSettingPk(java.lang.Object)
-    332:332:public long insertOrReplace(java.lang.Object)
-    457:457:protected final java.lang.Object loadCurrentOther(de.greenrobot.dao.AbstractDao,android.database.Cursor,int)
-    462:463:public varargs java.util.List queryRaw(java.lang.String,java.lang.String[])
-    471:472:public varargs de.greenrobot.dao.query.Query queryRawCreate(java.lang.String,java.lang.Object[])
-    480:480:public de.greenrobot.dao.query.Query queryRawCreateListArgs(java.lang.String,java.util.Collection)
-    487:491:public void deleteAll()
-    597:598:public varargs void deleteInTx(java.lang.Object[])
-    607:608:public void deleteByKeyInTx(java.lang.Iterable)
-    617:618:public varargs void deleteByKeyInTx(java.lang.Object[])
-    622:640:public void refresh(java.lang.Object)
-    719:752:public void updateInTx(java.lang.Iterable)
-    761:762:public varargs void updateInTx(java.lang.Object[])
-    771:771:public long count()
+    69:70:public AbstractDao(de.greenrobot.dao.internal.DaoConfig)
+    86:86:public de.greenrobot.dao.AbstractDaoSession getSession()
+    90:90:de.greenrobot.dao.internal.TableStatements getStatements()
+    102:102:public de.greenrobot.dao.Property getPkProperty()
+    110:110:public java.lang.String[] getPkColumns()
+    114:114:public java.lang.String[] getNonPkColumns()
+    124:137:public java.lang.Object load(java.lang.Object)
+    141:143:public java.lang.Object loadByRowId(long)
+    148:150:protected java.lang.Object loadUniqueAndCloseCursor(android.database.Cursor)
+    155:161:protected java.lang.Object loadUnique(android.database.Cursor)
+    166:167:public java.util.List loadAll()
+    172:176:public boolean detach(java.lang.Object)
+    194:195:public void insertInTx(java.lang.Iterable)
+    203:204:public varargs void insertInTx(java.lang.Object[])
+    214:216:public void insertInTx(java.lang.Iterable,boolean)
+    226:228:public void insertOrReplaceInTx(java.lang.Iterable,boolean)
+    236:237:public void insertOrReplaceInTx(java.lang.Iterable)
+    245:246:public varargs void insertOrReplaceInTx(java.lang.Object[])
+    249:275:private void executeInsertInTx(android.database.sqlite.SQLiteStatement,java.lang.Iterable,boolean)
+    293:313:public long insertWithoutSettingPk(java.lang.Object)
+    322:322:public long insertOrReplace(java.lang.Object)
+    494:494:protected final java.lang.Object loadCurrentOther(de.greenrobot.dao.AbstractDao,android.database.Cursor,int)
+    499:500:public varargs java.util.List queryRaw(java.lang.String,java.lang.String[])
+    508:509:public varargs de.greenrobot.dao.query.Query queryRawCreate(java.lang.String,java.lang.Object[])
+    517:517:public de.greenrobot.dao.query.Query queryRawCreateListArgs(java.lang.String,java.util.Collection)
+    524:528:public void deleteAll()
+    632:633:public varargs void deleteInTx(java.lang.Object[])
+    641:642:public void deleteByKeyInTx(java.lang.Iterable)
+    650:651:public varargs void deleteByKeyInTx(java.lang.Object[])
+    655:673:public void refresh(java.lang.Object)
+    748:781:public void updateInTx(java.lang.Iterable)
+    789:790:public varargs void updateInTx(java.lang.Object[])
+    799:799:public long count()
     protected abstract void readEntity(android.database.Cursor,java.lang.Object,int)
     protected abstract boolean isEntityUpdateable()
 de.greenrobot.dao.AbstractDaoMaster:
@@ -5165,21 +5164,22 @@ de.greenrobot.dao.AbstractDaoMaster:
     public abstract de.greenrobot.dao.AbstractDaoSession newSession()
     public abstract de.greenrobot.dao.AbstractDaoSession newSession(de.greenrobot.dao.identityscope.IdentityScopeType)
 de.greenrobot.dao.AbstractDaoSession:
-    62:63:public long insert(java.lang.Object)
-    69:70:public long insertOrReplace(java.lang.Object)
-    76:78:public void refresh(java.lang.Object)
-    83:85:public void update(java.lang.Object)
-    90:92:public void delete(java.lang.Object)
-    97:99:public void deleteAll(java.lang.Class)
-    104:105:public java.lang.Object load(java.lang.Class,java.lang.Object)
-    111:112:public java.util.List loadAll(java.lang.Class)
-    118:119:public varargs java.util.List queryRaw(java.lang.Class,java.lang.String,java.lang.String[])
-    125:126:public de.greenrobot.dao.query.QueryBuilder queryBuilder(java.lang.Class)
-    130:134:public de.greenrobot.dao.AbstractDao getDao(java.lang.Class)
-    155:161:public java.lang.Object callInTx(java.util.concurrent.Callable)
-    170:181:public java.lang.Object callInTxNoException(java.util.concurrent.Callable)
-    187:187:public android.database.sqlite.SQLiteDatabase getDatabase()
-    194:194:public de.greenrobot.dao.async.AsyncSession startAsyncSession()
+    64:65:public long insert(java.lang.Object)
+    71:72:public long insertOrReplace(java.lang.Object)
+    78:80:public void refresh(java.lang.Object)
+    85:87:public void update(java.lang.Object)
+    92:94:public void delete(java.lang.Object)
+    99:101:public void deleteAll(java.lang.Class)
+    106:107:public java.lang.Object load(java.lang.Class,java.lang.Object)
+    113:114:public java.util.List loadAll(java.lang.Class)
+    120:121:public varargs java.util.List queryRaw(java.lang.Class,java.lang.String,java.lang.String[])
+    127:128:public de.greenrobot.dao.query.QueryBuilder queryBuilder(java.lang.Class)
+    132:136:public de.greenrobot.dao.AbstractDao getDao(java.lang.Class)
+    157:163:public java.lang.Object callInTx(java.util.concurrent.Callable)
+    172:183:public java.lang.Object callInTxNoException(java.util.concurrent.Callable)
+    189:189:public android.database.sqlite.SQLiteDatabase getDatabase()
+    194:194:public java.util.Collection getAllDaos()
+    201:201:public de.greenrobot.dao.async.AsyncSession startAsyncSession()
 de.greenrobot.dao.DaoException:
     private static final long serialVersionUID
     42:44:public DaoException(java.lang.Throwable)
@@ -5251,7 +5251,9 @@ de.greenrobot.dao.internal.LongHashMap:
     155:164:public void logStats()
 de.greenrobot.dao.internal.SqlUtils:
     22:22:public SqlUtils()
-    119:124:public static java.lang.String createSqlSelectCountStar(java.lang.String,java.lang.String)
+    120:125:public static java.lang.String createSqlSelectCountStar(java.lang.String,java.lang.String)
+    151:151:public static java.lang.String escapeBlobArgument(byte[])
+    155:161:public static java.lang.String toHex(byte[])
 de.greenrobot.dao.internal.TableStatements:
     private android.database.sqlite.SQLiteStatement insertOrReplaceStatement
     private volatile java.lang.String selectAll
@@ -5264,13 +5266,22 @@ de.greenrobot.dao.internal.TableStatements:
     95:101:public java.lang.String getSelectByKey()
     105:108:public java.lang.String getSelectByRowId()
 de.greenrobot.dao.query.AbstractQuery:
-    68:74:public void setParameter(int,java.lang.Object)
+    70:76:public void setParameter(int,java.lang.Object)
 de.greenrobot.dao.query.AbstractQueryData:
     24:28:de.greenrobot.dao.query.AbstractQuery forCurrentThread(de.greenrobot.dao.query.AbstractQuery)
+de.greenrobot.dao.query.AbstractQueryWithLimit:
+    45:49:public void setParameter(int,java.lang.Object)
+    52:54:public void setParameter(int,java.util.Date)
+    57:59:public void setParameter(int,java.lang.Boolean)
+    67:72:public void setLimit(int)
+    80:85:public void setOffset(int)
 de.greenrobot.dao.query.CloseableListIterator
 de.greenrobot.dao.query.CountQuery
 de.greenrobot.dao.query.CountQuery$1
 de.greenrobot.dao.query.CountQuery$QueryData
+de.greenrobot.dao.query.CursorQuery
+de.greenrobot.dao.query.CursorQuery$1
+de.greenrobot.dao.query.CursorQuery$QueryData
 de.greenrobot.dao.query.DeleteQuery
 de.greenrobot.dao.query.DeleteQuery$1
 de.greenrobot.dao.query.DeleteQuery$QueryData
@@ -5280,47 +5291,50 @@ de.greenrobot.dao.query.Join:
     61:62:public varargs de.greenrobot.dao.query.Join whereOr(de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
     71:71:public varargs de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
     80:80:public varargs de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
+    89:89:public java.lang.String getTablePrefix()
 de.greenrobot.dao.query.LazyList
 de.greenrobot.dao.query.LazyList$LazyIterator
 de.greenrobot.dao.query.Query:
-    55:55:public static de.greenrobot.dao.query.Query internalCreate(de.greenrobot.dao.AbstractDao,java.lang.String,java.lang.Object[])
-    78:78:public de.greenrobot.dao.query.Query forCurrentThread()
-    86:90:public void setParameter(int,java.lang.Object)
-    93:95:public void setParameter(int,java.util.Date)
-    98:100:public void setParameter(int,java.lang.Boolean)
-    107:112:public void setLimit(int)
-    119:124:public void setOffset(int)
-    139:141:public de.greenrobot.dao.query.LazyList listLazy()
-    149:151:public de.greenrobot.dao.query.LazyList listLazyUncached()
-    159:159:public de.greenrobot.dao.query.CloseableListIterator listIterator()
-    169:171:public java.lang.Object unique()
-    181:185:public java.lang.Object uniqueOrThrow()
+    50:50:public static de.greenrobot.dao.query.Query internalCreate(de.greenrobot.dao.AbstractDao,java.lang.String,java.lang.Object[])
+    69:69:public de.greenrobot.dao.query.Query forCurrentThread()
+    85:87:public de.greenrobot.dao.query.LazyList listLazy()
+    95:97:public de.greenrobot.dao.query.LazyList listLazyUncached()
+    105:105:public de.greenrobot.dao.query.CloseableListIterator listIterator()
+    115:117:public java.lang.Object unique()
+    127:131:public java.lang.Object uniqueOrThrow()
+    30:30:public bridge synthetic void setOffset(int)
+    30:30:public bridge synthetic void setLimit(int)
+    30:30:public bridge synthetic void setParameter(int,java.lang.Boolean)
+    30:30:public bridge synthetic void setParameter(int,java.util.Date)
+    30:30:public bridge synthetic void setParameter(int,java.lang.Object)
 de.greenrobot.dao.query.QueryBuilder:
-    80:85:private void checkOrderBuilder()
-    101:102:public varargs de.greenrobot.dao.query.QueryBuilder whereOr(de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
-    111:111:public varargs de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
-    120:120:public varargs de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
-    128:128:public de.greenrobot.dao.query.Join join(java.lang.Class,de.greenrobot.dao.Property)
-    136:138:public de.greenrobot.dao.query.Join join(de.greenrobot.dao.Property,java.lang.Class)
-    146:147:public de.greenrobot.dao.query.Join join(de.greenrobot.dao.Property,java.lang.Class,de.greenrobot.dao.Property)
-    158:159:public de.greenrobot.dao.query.Join join(de.greenrobot.dao.query.Join,de.greenrobot.dao.Property,java.lang.Class,de.greenrobot.dao.Property)
-    164:168:private de.greenrobot.dao.query.Join addJoin(java.lang.String,de.greenrobot.dao.Property,de.greenrobot.dao.AbstractDao,de.greenrobot.dao.Property)
-    173:174:public varargs de.greenrobot.dao.query.QueryBuilder orderAsc(de.greenrobot.dao.Property[])
-    179:180:public varargs de.greenrobot.dao.query.QueryBuilder orderDesc(de.greenrobot.dao.Property[])
-    184:192:private varargs void orderAscOrDesc(java.lang.String,de.greenrobot.dao.Property[])
-    196:199:public de.greenrobot.dao.query.QueryBuilder orderCustom(de.greenrobot.dao.Property,java.lang.String)
-    207:209:public de.greenrobot.dao.query.QueryBuilder orderRaw(java.lang.String)
-    213:215:protected java.lang.StringBuilder append(java.lang.StringBuilder,de.greenrobot.dao.Property)
-    221:222:public de.greenrobot.dao.query.QueryBuilder limit(int)
-    230:231:public de.greenrobot.dao.query.QueryBuilder offset(int)
-    276:293:public de.greenrobot.dao.query.DeleteQuery buildDelete()
-    301:309:public de.greenrobot.dao.query.CountQuery buildCount()
-    362:362:public de.greenrobot.dao.query.LazyList listLazy()
-    371:371:public de.greenrobot.dao.query.LazyList listLazyUncached()
-    380:380:public de.greenrobot.dao.query.CloseableListIterator listIterator()
-    389:389:public java.lang.Object unique()
-    399:399:public java.lang.Object uniqueOrThrow()
-    408:408:public long count()
+    81:86:private void checkOrderBuilder()
+    90:91:public de.greenrobot.dao.query.QueryBuilder distinct()
+    108:109:public varargs de.greenrobot.dao.query.QueryBuilder whereOr(de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
+    118:118:public varargs de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
+    127:127:public varargs de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
+    135:135:public de.greenrobot.dao.query.Join join(java.lang.Class,de.greenrobot.dao.Property)
+    143:145:public de.greenrobot.dao.query.Join join(de.greenrobot.dao.Property,java.lang.Class)
+    153:154:public de.greenrobot.dao.query.Join join(de.greenrobot.dao.Property,java.lang.Class,de.greenrobot.dao.Property)
+    165:166:public de.greenrobot.dao.query.Join join(de.greenrobot.dao.query.Join,de.greenrobot.dao.Property,java.lang.Class,de.greenrobot.dao.Property)
+    171:175:private de.greenrobot.dao.query.Join addJoin(java.lang.String,de.greenrobot.dao.Property,de.greenrobot.dao.AbstractDao,de.greenrobot.dao.Property)
+    180:181:public varargs de.greenrobot.dao.query.QueryBuilder orderAsc(de.greenrobot.dao.Property[])
+    186:187:public varargs de.greenrobot.dao.query.QueryBuilder orderDesc(de.greenrobot.dao.Property[])
+    191:199:private varargs void orderAscOrDesc(java.lang.String,de.greenrobot.dao.Property[])
+    203:206:public de.greenrobot.dao.query.QueryBuilder orderCustom(de.greenrobot.dao.Property,java.lang.String)
+    214:216:public de.greenrobot.dao.query.QueryBuilder orderRaw(java.lang.String)
+    220:222:protected java.lang.StringBuilder append(java.lang.StringBuilder,de.greenrobot.dao.Property)
+    228:229:public de.greenrobot.dao.query.QueryBuilder limit(int)
+    237:238:public de.greenrobot.dao.query.QueryBuilder offset(int)
+    261:268:public de.greenrobot.dao.query.CursorQuery buildCursor()
+    311:328:public de.greenrobot.dao.query.DeleteQuery buildDelete()
+    336:344:public de.greenrobot.dao.query.CountQuery buildCount()
+    397:397:public de.greenrobot.dao.query.LazyList listLazy()
+    406:406:public de.greenrobot.dao.query.LazyList listLazyUncached()
+    415:415:public de.greenrobot.dao.query.CloseableListIterator listIterator()
+    424:424:public java.lang.Object unique()
+    434:434:public java.lang.Object uniqueOrThrow()
+    443:443:public long count()
 de.greenrobot.dao.query.WhereCollector:
     50:62:varargs de.greenrobot.dao.query.WhereCondition combineWhereConditions(java.lang.String,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition,de.greenrobot.dao.query.WhereCondition[])
     66:69:void addCondition(java.lang.StringBuilder,java.util.List,de.greenrobot.dao.query.WhereCondition)
@@ -15850,53 +15864,50 @@ kotlin.throws
 kotlin.util.TimingUtilsKt
 kotlin.util.UtilPackage
 org.acra.ACRAConfiguration:
-    110:111:public org.acra.ACRAConfiguration setHttpHeaders(java.util.Map)
-    152:153:public org.acra.ACRAConfiguration setAdditionalDropboxTags(java.lang.String[])
-    163:164:public org.acra.ACRAConfiguration setAdditionalSharedPreferences(java.lang.String[])
-    174:175:public org.acra.ACRAConfiguration setConnectionTimeout(java.lang.Integer)
-    185:186:public org.acra.ACRAConfiguration setCustomReportContent(org.acra.ReportField[])
-    196:197:public org.acra.ACRAConfiguration setDeleteUnapprovedReportsOnApplicationStart(java.lang.Boolean)
-    206:207:public org.acra.ACRAConfiguration setDeleteOldUnsentReportsOnApplicationStart(java.lang.Boolean)
-    217:218:public org.acra.ACRAConfiguration setDropboxCollectionMinutes(java.lang.Integer)
-    228:229:public org.acra.ACRAConfiguration setForceCloseDialogAfterToast(java.lang.Boolean)
-    244:245:public org.acra.ACRAConfiguration setFormUri(java.lang.String)
-    255:256:public org.acra.ACRAConfiguration setFormUriBasicAuthLogin(java.lang.String)
-    266:267:public org.acra.ACRAConfiguration setFormUriBasicAuthPassword(java.lang.String)
-    277:278:public org.acra.ACRAConfiguration setIncludeDropboxSystemTags(java.lang.Boolean)
-    288:289:public org.acra.ACRAConfiguration setLogcatArguments(java.lang.String[])
-    304:305:public org.acra.ACRAConfiguration setMailTo(java.lang.String)
-    315:316:public org.acra.ACRAConfiguration setMaxNumberOfRequestRetries(java.lang.Integer)
-    331:333:public org.acra.ACRAConfiguration setMode(org.acra.ReportingInteractionMode)
-    338:339:public org.acra.ACRAConfiguration setResDialogPositiveButtonText(int)
-    344:345:public org.acra.ACRAConfiguration setResDialogNegativeButtonText(int)
-    350:351:public org.acra.ACRAConfiguration setReportDialogClass(java.lang.Class)
-    366:367:public org.acra.ACRAConfiguration setResDialogCommentPrompt(int)
-    382:383:public org.acra.ACRAConfiguration setResDialogEmailPrompt(int)
-    397:398:public org.acra.ACRAConfiguration setResDialogIcon(int)
-    412:413:public org.acra.ACRAConfiguration setResDialogOkToast(int)
-    427:428:public org.acra.ACRAConfiguration setResDialogText(int)
-    442:443:public org.acra.ACRAConfiguration setResDialogTitle(int)
-    457:458:public org.acra.ACRAConfiguration setResNotifIcon(int)
-    472:473:public org.acra.ACRAConfiguration setResNotifText(int)
-    488:489:public org.acra.ACRAConfiguration setResNotifTickerText(int)
-    503:504:public org.acra.ACRAConfiguration setResNotifTitle(int)
-    518:519:public org.acra.ACRAConfiguration setResToastText(int)
-    529:530:public org.acra.ACRAConfiguration setSharedPreferenceMode(java.lang.Integer)
-    540:541:public org.acra.ACRAConfiguration setSharedPreferenceName(java.lang.String)
-    551:552:public org.acra.ACRAConfiguration setSocketTimeout(java.lang.Integer)
-    564:565:public org.acra.ACRAConfiguration setLogcatFilterByPid(java.lang.Boolean)
-    577:578:public org.acra.ACRAConfiguration setSendReportsInDevMode(java.lang.Boolean)
-    591:592:public org.acra.ACRAConfiguration setSendReportsAtShutdown(java.lang.Boolean)
-    605:606:public org.acra.ACRAConfiguration setExcludeMatchingSharedPreferencesKeys(java.lang.String[])
-    619:620:public org.acra.ACRAConfiguration setExcludeMatchingSettingsKeys(java.lang.String[])
-    625:626:public org.acra.ACRAConfiguration setBuildConfigClass(java.lang.Class)
-    637:638:public org.acra.ACRAConfiguration setApplicationLogFile(java.lang.String)
-    651:652:public org.acra.ACRAConfiguration setApplicationLogFileLines(int)
-    663:664:public org.acra.ACRAConfiguration setDisableSSLCertValidation(boolean)
-    675:676:public org.acra.ACRAConfiguration setHttpMethod(org.acra.sender.HttpSender$Method)
-    688:689:public org.acra.ACRAConfiguration setReportType(org.acra.sender.HttpSender$Type)
-    699:700:public void setKeyStore(java.security.KeyStore)
-    1291:1292:public void setHttpsSocketFactoryFactory(org.acra.util.HttpsSocketFactoryFactory)
+    100:101:public org.acra.ACRAConfiguration setHttpHeaders(java.util.Map)
+    142:143:public org.acra.ACRAConfiguration setAdditionalDropboxTags(java.lang.String[])
+    153:154:public org.acra.ACRAConfiguration setAdditionalSharedPreferences(java.lang.String[])
+    164:165:public org.acra.ACRAConfiguration setConnectionTimeout(java.lang.Integer)
+    175:176:public org.acra.ACRAConfiguration setCustomReportContent(org.acra.ReportField[])
+    186:187:public org.acra.ACRAConfiguration setDeleteUnapprovedReportsOnApplicationStart(java.lang.Boolean)
+    196:197:public org.acra.ACRAConfiguration setDeleteOldUnsentReportsOnApplicationStart(java.lang.Boolean)
+    207:208:public org.acra.ACRAConfiguration setDropboxCollectionMinutes(java.lang.Integer)
+    218:219:public org.acra.ACRAConfiguration setForceCloseDialogAfterToast(java.lang.Boolean)
+    234:235:public org.acra.ACRAConfiguration setFormUri(java.lang.String)
+    245:246:public org.acra.ACRAConfiguration setFormUriBasicAuthLogin(java.lang.String)
+    256:257:public org.acra.ACRAConfiguration setFormUriBasicAuthPassword(java.lang.String)
+    267:268:public org.acra.ACRAConfiguration setIncludeDropboxSystemTags(java.lang.Boolean)
+    278:279:public org.acra.ACRAConfiguration setLogcatArguments(java.lang.String[])
+    294:295:public org.acra.ACRAConfiguration setMailTo(java.lang.String)
+    310:312:public org.acra.ACRAConfiguration setMode(org.acra.ReportingInteractionMode)
+    317:318:public org.acra.ACRAConfiguration setResDialogPositiveButtonText(int)
+    323:324:public org.acra.ACRAConfiguration setResDialogNegativeButtonText(int)
+    329:330:public org.acra.ACRAConfiguration setReportDialogClass(java.lang.Class)
+    345:346:public org.acra.ACRAConfiguration setResDialogCommentPrompt(int)
+    361:362:public org.acra.ACRAConfiguration setResDialogEmailPrompt(int)
+    376:377:public org.acra.ACRAConfiguration setResDialogIcon(int)
+    391:392:public org.acra.ACRAConfiguration setResDialogOkToast(int)
+    406:407:public org.acra.ACRAConfiguration setResDialogText(int)
+    421:422:public org.acra.ACRAConfiguration setResDialogTitle(int)
+    436:437:public org.acra.ACRAConfiguration setResNotifIcon(int)
+    451:452:public org.acra.ACRAConfiguration setResNotifText(int)
+    467:468:public org.acra.ACRAConfiguration setResNotifTickerText(int)
+    482:483:public org.acra.ACRAConfiguration setResNotifTitle(int)
+    497:498:public org.acra.ACRAConfiguration setResToastText(int)
+    508:509:public org.acra.ACRAConfiguration setSharedPreferenceMode(java.lang.Integer)
+    519:520:public org.acra.ACRAConfiguration setSharedPreferenceName(java.lang.String)
+    530:531:public org.acra.ACRAConfiguration setSocketTimeout(java.lang.Integer)
+    543:544:public org.acra.ACRAConfiguration setLogcatFilterByPid(java.lang.Boolean)
+    556:557:public org.acra.ACRAConfiguration setSendReportsInDevMode(java.lang.Boolean)
+    570:571:public org.acra.ACRAConfiguration setSendReportsAtShutdown(java.lang.Boolean)
+    584:585:public org.acra.ACRAConfiguration setExcludeMatchingSharedPreferencesKeys(java.lang.String[])
+    598:599:public org.acra.ACRAConfiguration setExcludeMatchingSettingsKeys(java.lang.String[])
+    604:605:public org.acra.ACRAConfiguration setBuildConfigClass(java.lang.Class)
+    616:617:public org.acra.ACRAConfiguration setApplicationLogFile(java.lang.String)
+    630:631:public org.acra.ACRAConfiguration setApplicationLogFileLines(int)
+    642:643:public org.acra.ACRAConfiguration setHttpMethod(org.acra.sender.HttpSender$Method)
+    655:656:public org.acra.ACRAConfiguration setReportType(org.acra.sender.HttpSender$Type)
+    666:667:public void setKeyStore(java.security.KeyStore)
 org.acra.ACRAConfigurationException:
     private static final long serialVersionUID
 org.acra.ACRAConstants:
@@ -15947,25 +15958,26 @@ org.acra.CrashReportPersister:
     private static final int IGNORE
     private static final java.lang.String LINE_SEPARATOR
 org.acra.ErrorReporter:
-    226:226:public static org.acra.ErrorReporter getInstance()
-    266:266:public java.lang.String putCustomData(java.lang.String,java.lang.String)
-    298:299:public void setExceptionHandlerInitializer(org.acra.ExceptionHandlerInitializer)
-    312:312:public java.lang.String removeCustomData(java.lang.String)
-    320:321:public void clearCustomData()
-    334:334:public java.lang.String getCustomData(java.lang.String)
-    356:357:public void removeReportSender(org.acra.sender.ReportSender)
-    367:374:public void removeReportSenders(java.lang.Class)
-    632:638:public void handleException(java.lang.Throwable,boolean)
-    651:654:public void handleException(java.lang.Throwable)
+    227:227:public static org.acra.ErrorReporter getInstance()
+    267:267:public java.lang.String putCustomData(java.lang.String,java.lang.String)
+    299:300:public void setExceptionHandlerInitializer(org.acra.ExceptionHandlerInitializer)
+    313:313:public java.lang.String removeCustomData(java.lang.String)
+    321:322:public void clearCustomData()
+    335:335:public java.lang.String getCustomData(java.lang.String)
+    357:358:public void removeReportSender(org.acra.sender.ReportSender)
+    368:375:public void removeReportSenders(java.lang.Class)
+    633:639:public void handleException(java.lang.Throwable,boolean)
+    652:655:public void handleException(java.lang.Throwable)
 org.acra.ErrorReporter$ReportBuilder:
-    1055:1056:public org.acra.ErrorReporter$ReportBuilder message(java.lang.String)
-    1082:1084:private void initCustomData()
-    1095:1097:public org.acra.ErrorReporter$ReportBuilder customData(java.util.Map)
-    1110:1112:public org.acra.ErrorReporter$ReportBuilder customData(java.lang.String,java.lang.String)
+    1064:1065:public org.acra.ErrorReporter$ReportBuilder message(java.lang.String)
+    1091:1093:private void initCustomData()
+    1104:1106:public org.acra.ErrorReporter$ReportBuilder customData(java.util.Map)
+    1119:1121:public org.acra.ErrorReporter$ReportBuilder customData(java.lang.String,java.lang.String)
 org.acra.collector.CollectorUtil:
     6:6:public CollectorUtil()
 org.acra.collector.Compatibility:
-    29:29:public Compatibility()
+    29:31:public Compatibility()
+org.acra.collector.Compatibility$VERSION_CODES
 org.acra.collector.ConfigurationCollector:
     private static final java.lang.String SUFFIX_MASK
     private static final java.lang.String FIELD_SCREENLAYOUT
@@ -15984,9 +15996,9 @@ org.acra.collector.ConfigurationCollector:
 org.acra.collector.CrashReportData:
     private static final long serialVersionUID
 org.acra.collector.CrashReportDataFactory:
-    98:98:public java.lang.String removeCustomData(java.lang.String)
-    105:106:public void clearCustomData()
-    116:116:public java.lang.String getCustomData(java.lang.String)
+    99:99:public java.lang.String removeCustomData(java.lang.String)
+    106:107:public void clearCustomData()
+    117:117:public java.lang.String getCustomData(java.lang.String)
 org.acra.collector.DeviceFeaturesCollector:
     33:33:DeviceFeaturesCollector()
 org.acra.collector.DisplayManagerCollector:
@@ -16000,7 +16012,7 @@ org.acra.collector.LogCatCollector:
     private static final int DEFAULT_TAIL_COUNT
     41:41:LogCatCollector()
 org.acra.collector.LogFileCollector:
-    41:42:private LogFileCollector()
+    46:47:private LogFileCollector()
 org.acra.collector.MediaCodecListCollector:
     private static final java.lang.String COLOR_FORMAT_PREFIX
     34:35:public MediaCodecListCollector()
@@ -16014,12 +16026,9 @@ org.acra.collector.ThreadCollector:
     25:25:public ThreadCollector()
 org.acra.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksAdapter
 org.acra.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper:
-    38:38:public ApplicationHelper()
-    80:85:public void unregisterActivityLifecycleCallbacks(android.app.Application,org.acra.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat)
-    88:89:private static void preIcsUnregisterActivityLifecycleCallbacks(org.acra.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat)
-    93:94:private static void postIcsUnregisterActivityLifecycleCallbacks(android.app.Application,org.acra.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat)
-org.acra.jraf.android.util.activitylifecyclecallbackscompat.MainLifecycleDispatcher:
-    58:61:void unregisterActivityLifecycleCallbacks(org.acra.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat)
+    37:37:public ApplicationHelper()
+    61:62:public void unregisterActivityLifecycleCallbacks(android.app.Application,org.acra.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat)
+org.acra.jraf.android.util.activitylifecyclecallbackscompat.MainLifecycleDispatcher
 org.acra.log.ACRALog:
     public abstract int v(java.lang.String,java.lang.String,java.lang.Throwable)
     public abstract int i(java.lang.String,java.lang.String,java.lang.Throwable)
@@ -16043,12 +16052,12 @@ org.acra.util.JSONReportBuilder:
     21:230:public JSONReportBuilder()
 org.acra.util.JSONReportBuilder$JSONReportException:
     private static final long serialVersionUID
+org.acra.util.NaiveTrustManager
+org.acra.util.ReflectionException
+org.acra.util.ReflectionHelper
 org.acra.util.ReportUtils:
-    29:29:public ReportUtils()
-    91:110:public static java.lang.String sparseArrayToString(android.util.SparseArray)
-org.acra.util.TlsSniSocketFactory:
-    private static final int VERSION_CODES_JELLY_BEAN_MR1
-    private static final int VERSION_CODES_LOLLIPOP
+    28:28:public ReportUtils()
+    90:109:public static java.lang.String sparseArrayToString(android.util.SparseArray)
 org.acra.util.ToastSender:
     16:16:public ToastSender()
 org.jetbrains.annotations.Mutable

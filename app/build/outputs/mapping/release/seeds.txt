@@ -3466,6 +3466,7 @@ com.devspark.robototextview.R$attr: int alertDialogButtonGroupStyle
 com.devspark.robototextview.R$attr: int alertDialogCenterButtons
 com.devspark.robototextview.R$attr: int alertDialogStyle
 com.devspark.robototextview.R$attr: int alertDialogTheme
+com.devspark.robototextview.R$attr: int allowStacking
 com.devspark.robototextview.R$attr: int arrowHeadLength
 com.devspark.robototextview.R$attr: int arrowShaftLength
 com.devspark.robototextview.R$attr: int autoCompleteTextViewStyle
@@ -3534,6 +3535,7 @@ com.devspark.robototextview.R$attr: int homeAsUpIndicator
 com.devspark.robototextview.R$attr: int homeLayout
 com.devspark.robototextview.R$attr: int icon
 com.devspark.robototextview.R$attr: int iconifiedByDefault
+com.devspark.robototextview.R$attr: int imageButtonStyle
 com.devspark.robototextview.R$attr: int indeterminateProgressStyle
 com.devspark.robototextview.R$attr: int initialActivityCount
 com.devspark.robototextview.R$attr: int isLightTheme
@@ -3576,6 +3578,7 @@ com.devspark.robototextview.R$attr: int ratingBarStyle
 com.devspark.robototextview.R$attr: int searchHintIcon
 com.devspark.robototextview.R$attr: int searchIcon
 com.devspark.robototextview.R$attr: int searchViewStyle
+com.devspark.robototextview.R$attr: int seekBarStyle
 com.devspark.robototextview.R$attr: int selectableItemBackground
 com.devspark.robototextview.R$attr: int selectableItemBackgroundBorderless
 com.devspark.robototextview.R$attr: int showAsAction
@@ -3638,6 +3641,7 @@ com.devspark.robototextview.R$attr: int windowNoTitle
 com.devspark.robototextview.R$bool: int abc_action_bar_embed_tabs
 com.devspark.robototextview.R$bool: int abc_action_bar_embed_tabs_pre_jb
 com.devspark.robototextview.R$bool: int abc_action_bar_expanded_action_views_exclusive
+com.devspark.robototextview.R$bool: int abc_allow_stacked_button_bar
 com.devspark.robototextview.R$bool: int abc_config_actionMenuItemAllCaps
 com.devspark.robototextview.R$bool: int abc_config_allowActionMenuItemTextWithIcon
 com.devspark.robototextview.R$bool: int abc_config_closeDialogWhenTouchOutside
@@ -3736,6 +3740,10 @@ com.devspark.robototextview.R$dimen: int abc_config_prefDialogWidth
 com.devspark.robototextview.R$dimen: int abc_control_corner_material
 com.devspark.robototextview.R$dimen: int abc_control_inset_material
 com.devspark.robototextview.R$dimen: int abc_control_padding_material
+com.devspark.robototextview.R$dimen: int abc_dialog_fixed_height_major
+com.devspark.robototextview.R$dimen: int abc_dialog_fixed_height_minor
+com.devspark.robototextview.R$dimen: int abc_dialog_fixed_width_major
+com.devspark.robototextview.R$dimen: int abc_dialog_fixed_width_minor
 com.devspark.robototextview.R$dimen: int abc_dialog_list_padding_vertical_material
 com.devspark.robototextview.R$dimen: int abc_dialog_min_width_major
 com.devspark.robototextview.R$dimen: int abc_dialog_min_width_minor
@@ -3754,6 +3762,9 @@ com.devspark.robototextview.R$dimen: int abc_list_item_padding_horizontal_materi
 com.devspark.robototextview.R$dimen: int abc_panel_menu_list_width
 com.devspark.robototextview.R$dimen: int abc_search_view_preferred_width
 com.devspark.robototextview.R$dimen: int abc_search_view_text_min_width
+com.devspark.robototextview.R$dimen: int abc_seekbar_track_background_height_material
+com.devspark.robototextview.R$dimen: int abc_seekbar_track_progress_height_material
+com.devspark.robototextview.R$dimen: int abc_select_dialog_padding_start_material
 com.devspark.robototextview.R$dimen: int abc_switch_padding
 com.devspark.robototextview.R$dimen: int abc_text_size_body_1_material
 com.devspark.robototextview.R$dimen: int abc_text_size_body_2_material
@@ -3830,6 +3841,13 @@ com.devspark.robototextview.R$drawable: int abc_list_selector_holo_light
 com.devspark.robototextview.R$drawable: int abc_menu_hardkey_panel_mtrl_mult
 com.devspark.robototextview.R$drawable: int abc_popup_background_mtrl_mult
 com.devspark.robototextview.R$drawable: int abc_ratingbar_full_material
+com.devspark.robototextview.R$drawable: int abc_scrubber_control_off_mtrl_alpha
+com.devspark.robototextview.R$drawable: int abc_scrubber_control_to_pressed_mtrl_000
+com.devspark.robototextview.R$drawable: int abc_scrubber_control_to_pressed_mtrl_005
+com.devspark.robototextview.R$drawable: int abc_scrubber_primary_mtrl_alpha
+com.devspark.robototextview.R$drawable: int abc_scrubber_track_mtrl_alpha
+com.devspark.robototextview.R$drawable: int abc_seekbar_thumb_material
+com.devspark.robototextview.R$drawable: int abc_seekbar_track_material
 com.devspark.robototextview.R$drawable: int abc_spinner_mtrl_am_alpha
 com.devspark.robototextview.R$drawable: int abc_spinner_textfield_background_material
 com.devspark.robototextview.R$drawable: int abc_switch_thumb_material
@@ -3928,6 +3946,8 @@ com.devspark.robototextview.R$id: int roboto_slab_thin
 com.devspark.robototextview.R$id: int roboto_thin
 com.devspark.robototextview.R$id: int roboto_thin_italic
 com.devspark.robototextview.R$id: int screen
+com.devspark.robototextview.R$id: int scrollIndicatorDown
+com.devspark.robototextview.R$id: int scrollIndicatorUp
 com.devspark.robototextview.R$id: int scrollView
 com.devspark.robototextview.R$id: int search_badge
 com.devspark.robototextview.R$id: int search_bar
@@ -3944,6 +3964,7 @@ com.devspark.robototextview.R$id: int shortcut
 com.devspark.robototextview.R$id: int showCustom
 com.devspark.robototextview.R$id: int showHome
 com.devspark.robototextview.R$id: int showTitle
+com.devspark.robototextview.R$id: int spacer
 com.devspark.robototextview.R$id: int split_action_bar
 com.devspark.robototextview.R$id: int src_atop
 com.devspark.robototextview.R$id: int src_in
@@ -3978,6 +3999,7 @@ com.devspark.robototextview.R$layout: int abc_action_mode_bar
 com.devspark.robototextview.R$layout: int abc_action_mode_close_item_material
 com.devspark.robototextview.R$layout: int abc_activity_chooser_view
 com.devspark.robototextview.R$layout: int abc_activity_chooser_view_list_item
+com.devspark.robototextview.R$layout: int abc_alert_dialog_button_bar_material
 com.devspark.robototextview.R$layout: int abc_alert_dialog_material
 com.devspark.robototextview.R$layout: int abc_dialog_title_material
 com.devspark.robototextview.R$layout: int abc_expanded_menu_layout
@@ -4013,6 +4035,8 @@ com.devspark.robototextview.R$string: int abc_action_menu_overflow_description
 com.devspark.robototextview.R$string: int abc_action_mode_done
 com.devspark.robototextview.R$string: int abc_activity_chooser_view_see_all
 com.devspark.robototextview.R$string: int abc_activitychooserview_choose_application
+com.devspark.robototextview.R$string: int abc_capital_off
+com.devspark.robototextview.R$string: int abc_capital_on
 com.devspark.robototextview.R$string: int abc_search_hint
 com.devspark.robototextview.R$string: int abc_searchview_description_clear
 com.devspark.robototextview.R$string: int abc_searchview_description_query
@@ -4140,6 +4164,7 @@ com.devspark.robototextview.R$style: int Base_Widget_AppCompat_DrawerArrowToggle
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_DrawerArrowToggle_Common
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_DropDownItem_Spinner
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_EditText
+com.devspark.robototextview.R$style: int Base_Widget_AppCompat_ImageButton
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_Light_ActionBar
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_Light_ActionBar_Solid
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_Light_ActionBar_TabBar
@@ -4160,6 +4185,7 @@ com.devspark.robototextview.R$style: int Base_Widget_AppCompat_ProgressBar_Horiz
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_RatingBar
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_SearchView
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_SearchView_ActionBar
+com.devspark.robototextview.R$style: int Base_Widget_AppCompat_SeekBar
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_Spinner
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_Spinner_Underlined
 com.devspark.robototextview.R$style: int Base_Widget_AppCompat_TextView_SpinnerItem
@@ -4187,6 +4213,8 @@ com.devspark.robototextview.R$style: int RtlOverlay_Widget_AppCompat_Search_Drop
 com.devspark.robototextview.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2
 com.devspark.robototextview.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Query
 com.devspark.robototextview.R$style: int RtlOverlay_Widget_AppCompat_Search_DropDown_Text
+com.devspark.robototextview.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton
+com.devspark.robototextview.R$style: int RtlUnderlay_Widget_AppCompat_ActionButton_Overflow
 com.devspark.robototextview.R$style: int TextAppearance_AppCompat
 com.devspark.robototextview.R$style: int TextAppearance_AppCompat_Body1
 com.devspark.robototextview.R$style: int TextAppearance_AppCompat_Body2
@@ -4283,6 +4311,7 @@ com.devspark.robototextview.R$style: int Widget_AppCompat_CompoundButton_Switch
 com.devspark.robototextview.R$style: int Widget_AppCompat_DrawerArrowToggle
 com.devspark.robototextview.R$style: int Widget_AppCompat_DropDownItem_Spinner
 com.devspark.robototextview.R$style: int Widget_AppCompat_EditText
+com.devspark.robototextview.R$style: int Widget_AppCompat_ImageButton
 com.devspark.robototextview.R$style: int Widget_AppCompat_Light_ActionBar
 com.devspark.robototextview.R$style: int Widget_AppCompat_Light_ActionBar_Solid
 com.devspark.robototextview.R$style: int Widget_AppCompat_Light_ActionBar_Solid_Inverse
@@ -4317,6 +4346,7 @@ com.devspark.robototextview.R$style: int Widget_AppCompat_ProgressBar_Horizontal
 com.devspark.robototextview.R$style: int Widget_AppCompat_RatingBar
 com.devspark.robototextview.R$style: int Widget_AppCompat_SearchView
 com.devspark.robototextview.R$style: int Widget_AppCompat_SearchView_ActionBar
+com.devspark.robototextview.R$style: int Widget_AppCompat_SeekBar
 com.devspark.robototextview.R$style: int Widget_AppCompat_Spinner
 com.devspark.robototextview.R$style: int Widget_AppCompat_Spinner_DropDown
 com.devspark.robototextview.R$style: int Widget_AppCompat_Spinner_DropDown_ActionBar
@@ -4377,6 +4407,8 @@ com.devspark.robototextview.R$styleable: int AlertDialog_singleChoiceItemLayout
 com.devspark.robototextview.R$styleable: int[] AppCompatTextView
 com.devspark.robototextview.R$styleable: int AppCompatTextView_android_textAppearance
 com.devspark.robototextview.R$styleable: int AppCompatTextView_textAllCaps
+com.devspark.robototextview.R$styleable: int[] ButtonBarLayout
+com.devspark.robototextview.R$styleable: int ButtonBarLayout_allowStacking
 com.devspark.robototextview.R$styleable: int[] CompoundButton
 com.devspark.robototextview.R$styleable: int CompoundButton_android_button
 com.devspark.robototextview.R$styleable: int CompoundButton_buttonTint
@@ -4557,6 +4589,10 @@ com.devspark.robototextview.R$styleable: int SwitchCompat_switchTextAppearance
 com.devspark.robototextview.R$styleable: int SwitchCompat_thumbTextPadding
 com.devspark.robototextview.R$styleable: int SwitchCompat_track
 com.devspark.robototextview.R$styleable: int[] TextAppearance
+com.devspark.robototextview.R$styleable: int TextAppearance_android_shadowColor
+com.devspark.robototextview.R$styleable: int TextAppearance_android_shadowDx
+com.devspark.robototextview.R$styleable: int TextAppearance_android_shadowDy
+com.devspark.robototextview.R$styleable: int TextAppearance_android_shadowRadius
 com.devspark.robototextview.R$styleable: int TextAppearance_android_textColor
 com.devspark.robototextview.R$styleable: int TextAppearance_android_textSize
 com.devspark.robototextview.R$styleable: int TextAppearance_android_textStyle
@@ -4630,6 +4666,7 @@ com.devspark.robototextview.R$styleable: int Theme_editTextBackground
 com.devspark.robototextview.R$styleable: int Theme_editTextColor
 com.devspark.robototextview.R$styleable: int Theme_editTextStyle
 com.devspark.robototextview.R$styleable: int Theme_homeAsUpIndicator
+com.devspark.robototextview.R$styleable: int Theme_imageButtonStyle
 com.devspark.robototextview.R$styleable: int Theme_listChoiceBackgroundIndicator
 com.devspark.robototextview.R$styleable: int Theme_listDividerAlertDialog
 com.devspark.robototextview.R$styleable: int Theme_listPopupWindowStyle
@@ -4646,6 +4683,7 @@ com.devspark.robototextview.R$styleable: int Theme_popupWindowStyle
 com.devspark.robototextview.R$styleable: int Theme_radioButtonStyle
 com.devspark.robototextview.R$styleable: int Theme_ratingBarStyle
 com.devspark.robototextview.R$styleable: int Theme_searchViewStyle
+com.devspark.robototextview.R$styleable: int Theme_seekBarStyle
 com.devspark.robototextview.R$styleable: int Theme_selectableItemBackground
 com.devspark.robototextview.R$styleable: int Theme_selectableItemBackgroundBorderless
 com.devspark.robototextview.R$styleable: int Theme_spinnerDropDownItemStyle
@@ -18104,7 +18142,6 @@ org.acra.ACRA: boolean shouldDisableACRA(android.content.SharedPreferences)
 org.acra.ACRA: void checkCrashResources(org.acra.annotation.ReportsCrashes)
 org.acra.ACRA: android.content.SharedPreferences getACRASharedPreferences()
 org.acra.ACRA: org.acra.ACRAConfiguration getConfig()
-org.acra.ACRA: void setConfig(org.acra.ACRAConfiguration)
 org.acra.ACRA: org.acra.ACRAConfiguration getNewDefaultConfig(android.app.Application)
 org.acra.ACRA: boolean isDebuggable()
 org.acra.ACRA: android.app.Application getApplication()
