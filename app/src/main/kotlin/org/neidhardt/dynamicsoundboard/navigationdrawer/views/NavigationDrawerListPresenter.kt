@@ -3,12 +3,12 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.views
 import android.view.Menu
 import android.view.MenuItem
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent
-import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter
+import org.neidhardt.dynamicsoundboard.views.presenter.ViewPresenter
 
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
-abstract class NavigationDrawerListPresenter<T: NavigationDrawerList> : BaseViewPresenter<T>(), android.support.v7.view.ActionMode.Callback
+abstract class NavigationDrawerListPresenter<T: NavigationDrawerList?> : ViewPresenter<T>, android.support.v7.view.ActionMode.Callback
 {
 	private val TAG = javaClass.name
 
@@ -33,14 +33,13 @@ abstract class NavigationDrawerListPresenter<T: NavigationDrawerList> : BaseView
 	{
 		if (this.view == null)
 			throw NullPointerException(TAG + ".onPrepareActionMode failed, supplied view is null ")
-
-		actionMode.setTitle(this.view.actionModeTitle)
+		actionMode.setTitle(this.view!!.actionModeTitle)
 
 		val count = this.numberOfItemsSelectedForDeletion
 		var countString = Integer.toString(count)
 		if (countString.length() == 1)
 			countString = " " + countString
-		countString = countString + "/" + this.view.itemCount
+		countString = countString + "/" + this.view!!.itemCount
 
 		actionMode.subtitle = countString
 		return true

@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
+import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent
@@ -18,23 +19,20 @@ import java.util.*
  */
 public class SoundLayoutsPresenter
 (
+		override val eventBus: EventBus,
 		private val soundLayoutsAccess: SoundLayoutsAccess,
 		private val soundLayoutsStorage: SoundLayoutsStorage
 ) :
-		NavigationDrawerListPresenter<SoundLayouts>(),
+		NavigationDrawerListPresenter<SoundLayouts?>(),
 		NavigationDrawerItemClickListener<SoundLayout>,
 		SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
 		AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener
 {
+	override val isEventBusSubscriber: Boolean = true
+	override var view: SoundLayouts? = null
 
-	public var adapter: SoundLayoutsAdapter? = null
-
-	public var values: MutableList<SoundLayout> = ArrayList()
-
-	override fun isEventBusSubscriber(): Boolean
-	{
-		return true
-	}
+	var adapter: SoundLayoutsAdapter? = null
+	var values: MutableList<SoundLayout> = ArrayList()
 
 	override fun onAttachedToWindow()
 	{
@@ -91,7 +89,7 @@ public class SoundLayoutsPresenter
 		else
 		{
 			this.soundLayoutsAccess.setSoundLayoutSelected(this.values.indexOf(data))
-			this.view.toggleVisibility()
+			this.view?.toggleVisibility()
 			this.eventBus.post(SoundLayoutSelectedEvent(data))
 		}
 		this.adapter?.notifyDataSetChanged()

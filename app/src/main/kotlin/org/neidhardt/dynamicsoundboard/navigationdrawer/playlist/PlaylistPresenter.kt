@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist
 
+import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
@@ -17,25 +18,23 @@ import java.util.*
  */
 public class PlaylistPresenter
 (
-		private val soundsDataStorage: SoundsDataStorage,
+		override val eventBus: EventBus,
+		val soundsDataStorage: SoundsDataStorage,
 		private val soundsDataAccess: SoundsDataAccess
 
 ) :
-		NavigationDrawerListPresenter<Playlist>(),
+		NavigationDrawerListPresenter<Playlist?>(),
 		NavigationDrawerItemClickListener<MediaPlayerController>,
 		OnPlaylistChangedEventListener,
 		MediaPlayerEventListener
 {
-	public var adapter: PlaylistAdapter? = null
+	override val isEventBusSubscriber: Boolean = true
+	override var view: Playlist? = null
 
-	public val values: MutableList<MediaPlayerController> = ArrayList()
+	var adapter: PlaylistAdapter? = null
+	val values: MutableList<MediaPlayerController> = ArrayList()
 
 	private var currentItemIndex: Int? = null
-
-	override fun isEventBusSubscriber(): Boolean
-	{
-		return true
-	}
 
 	override fun onAttachedToWindow()
 	{

@@ -11,7 +11,6 @@ import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
@@ -26,7 +25,7 @@ public class SoundLayouts : NavigationDrawerList
 	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
 	private val soundLayoutsStorage: SoundLayoutsStorage = DynamicSoundboardApplication.getSoundLayoutsStorage()
 
-	public var presenter: SoundLayoutsPresenter = SoundLayoutsPresenter(this.soundLayoutsAccess, this.soundLayoutsStorage)
+	public var presenter: SoundLayoutsPresenter = SoundLayoutsPresenter(EventBus.getDefault(), this.soundLayoutsAccess, this.soundLayoutsStorage)
 	public var adapter: SoundLayoutsAdapter = SoundLayoutsAdapter(this.presenter, this.eventBus)
 
 	@SuppressWarnings("unused")

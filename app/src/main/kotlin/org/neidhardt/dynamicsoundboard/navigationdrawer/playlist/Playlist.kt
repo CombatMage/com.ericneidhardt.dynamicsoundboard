@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
@@ -24,7 +25,7 @@ public class Playlist : NavigationDrawerList
 	private val soundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
 	private val soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
 
-	public val presenter: PlaylistPresenter = PlaylistPresenter(this.soundsDataStorage, this.soundsDataAccess)
+	public val presenter: PlaylistPresenter = PlaylistPresenter(EventBus.getDefault(), this.soundsDataStorage, this.soundsDataAccess)
 	public val adapter:PlaylistAdapter = PlaylistAdapter(this.presenter)
 
 	@SuppressWarnings("unused")

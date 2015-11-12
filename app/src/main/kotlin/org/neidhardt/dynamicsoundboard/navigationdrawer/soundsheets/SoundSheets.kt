@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
@@ -21,7 +22,8 @@ public class SoundSheets : NavigationDrawerList
 	private val soundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataAccess()
 	private val soundSheetsDataStorage = DynamicSoundboardApplication.getSoundSheetsDataStorage()
 
-	public var presenter: SoundSheetsPresenter = SoundSheetsPresenter(this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess, this.soundsDataStorage)
+	public var presenter: SoundSheetsPresenter = SoundSheetsPresenter(
+			EventBus.getDefault(), this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess, this.soundsDataStorage)
 	public var adapter: SoundSheetsAdapter  = SoundSheetsAdapter(this.presenter)
 
 	@SuppressWarnings("unused")

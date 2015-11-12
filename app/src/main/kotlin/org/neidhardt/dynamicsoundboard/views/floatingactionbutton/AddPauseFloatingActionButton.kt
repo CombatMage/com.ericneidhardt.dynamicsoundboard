@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
-import android.animation.Animator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -13,70 +12,72 @@ import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
  */
 public class AddPauseFloatingActionButton : com.melnykov.fab.FloatingActionButton, Runnable, View.OnClickListener {
 
+	companion object {
+		private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
+	}
+
 	private var presenter: AddPauseFloatingActionButtonPresenter? = null
 
 	@SuppressWarnings("unused")
-	public constructor(context: Context) : super(context) {
-		this.init()
+	public constructor(context: Context) : super(context)
+	{
+		this.presenter = AddPauseFloatingActionButtonPresenter(de.greenrobot.event.EventBus.getDefault(), DynamicSoundboardApplication.getSoundsDataAccess())
 	}
 
 	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-		this.init()
+	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+	{
+		this.presenter = AddPauseFloatingActionButtonPresenter(de.greenrobot.event.EventBus.getDefault(), DynamicSoundboardApplication.getSoundsDataAccess())
 	}
 
 	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-		this.init()
+	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
+	{
+		this.presenter = AddPauseFloatingActionButtonPresenter(de.greenrobot.event.EventBus.getDefault(), DynamicSoundboardApplication.getSoundsDataAccess())
 	}
 
-	private fun init() {
-		this.presenter = AddPauseFloatingActionButtonPresenter(DynamicSoundboardApplication.getSoundsDataAccess())
-	}
-
-	override fun onFinishInflate() {
+	override fun onFinishInflate()
+	{
 		super.onFinishInflate()
 		this.setOnClickListener(this)
-		this.presenter!!.view = this
+		this.presenter?.view = this
 	}
 
-	override fun onAttachedToWindow() {
+	override fun onAttachedToWindow()
+	{
 		super.onAttachedToWindow()
-		this.presenter!!.onAttachedToWindow()
+		this.presenter?.onAttachedToWindow()
 	}
 
-	override fun onDetachedFromWindow() {
-		this.presenter!!.onDetachedFromWindow()
+	override fun onDetachedFromWindow()
+	{
+		this.presenter?.onDetachedFromWindow()
 		super.onDetachedFromWindow()
 	}
 
 	override fun onClick(v: View) {
-		this.presenter!!.onFabClicked()
+		this.presenter?.onFabClicked()
 	}
 
-	override fun onCreateDrawableState(extraSpace: Int): IntArray {
+	override fun onCreateDrawableState(extraSpace: Int): IntArray
+	{
 		val state = super.onCreateDrawableState(extraSpace + PAUSE_STATE.size())
-		if (this.presenter != null && this.presenter!!.isStatePause)
+		if (this.presenter?.isStatePause ?: false)
 			View.mergeDrawableStates(state, PAUSE_STATE)
-
 		return state
 	}
 
-	fun animateUiChanges() {
+	fun animateUiChanges()
+	{
 		this.post(this)
 	}
 
-	override fun run() {
-		val animator = AnimationUtils.createCircularReveal(this@AddPauseFloatingActionButton,
+	override fun run()
+	{
+		AnimationUtils.createCircularReveal(this@AddPauseFloatingActionButton,
 				width,
 				height,
 				0f,
-				(height * 2).toFloat())
-
-		animator?.start()
-	}
-
-	companion object {
-		private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
+				(height * 2).toFloat())?.apply { start() }
 	}
 }

@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views;
 
+import de.greenrobot.event.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -22,6 +23,7 @@ public class SoundSheetsPresenterTest extends BaseTest
 {
 	private SoundSheetsPresenter presenter;
 
+	@Mock private EventBus eventBus;
 	@Mock private SoundSheetsDataAccess mockSoundSheetsDataAccess;
 	@Mock private SoundSheetsDataStorage mockSoundSheetsDataStorage;
 	@Mock private SoundsDataAccess mockSoundsDataAccess;
@@ -34,7 +36,11 @@ public class SoundSheetsPresenterTest extends BaseTest
 		super.setUp();
 		MockitoAnnotations.initMocks(this);
 
-		this.presenter = spy(new SoundSheetsPresenter(this.mockSoundSheetsDataAccess, this.mockSoundSheetsDataStorage, this.mockSoundsDataAccess, this.mockSoundsDataStorage));
+		this.presenter = spy(new SoundSheetsPresenter(this.eventBus,
+				this.mockSoundSheetsDataAccess,
+				this.mockSoundSheetsDataStorage,
+				this.mockSoundsDataAccess,
+				this.mockSoundsDataStorage));
 		this.presenter.setAdapter(this.mockAdapter);
 	}
 

@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
+import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
@@ -17,24 +18,22 @@ import java.util.*
  */
 public open class SoundSheetsPresenter
 (
+		override val eventBus: EventBus,
 		public val soundSheetsDataAccess: SoundSheetsDataAccess,
 		private val soundSheetsDataStorage: SoundSheetsDataStorage,
 		private val soundsDataAccess: SoundsDataAccess,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
-		NavigationDrawerListPresenter<SoundSheets>(),
+		NavigationDrawerListPresenter<SoundSheets?>(),
 		NavigationDrawerItemClickListener<SoundSheet>,
 		OnSoundSheetsChangedEventListener,
 		OnSoundsChangedEventListener
 {
-	public var adapter: SoundSheetsAdapter? = null
+	override var view: SoundSheets? = null
+	override val isEventBusSubscriber: Boolean = true
 
-	public val values: MutableList<SoundSheet> = ArrayList()
-
-	override fun isEventBusSubscriber(): Boolean
-	{
-		return true
-	}
+	var adapter: SoundSheetsAdapter? = null
+	val values: MutableList<SoundSheet> = ArrayList()
 
 	override fun onAttachedToWindow()
 	{

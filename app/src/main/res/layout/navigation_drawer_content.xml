@@ -85,7 +85,7 @@
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
 
-			<org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeader
+			<org.neidhardt.dynamicsoundboard.navigationdrawer.header.NavigationDrawerHeaderView
 					android:layout_width="match_parent"
 					android:layout_height="@dimen/height_navigation_drawer_header"/>
 
