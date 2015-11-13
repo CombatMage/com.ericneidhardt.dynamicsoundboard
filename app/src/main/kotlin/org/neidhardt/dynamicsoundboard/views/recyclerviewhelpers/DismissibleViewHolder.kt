@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
-public abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View, pagerAdapter: T) :
+abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View, pagerAdapter: T) :
 		RecyclerView.ViewHolder(itemView),
 		View.OnClickListener,
 		ViewPager.OnPageChangeListener

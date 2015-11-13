@@ -222,7 +222,7 @@ class SoundViewHolder
 	}
 }
 
-private class SoundItemPagerAdapter : PagerAdapter()
+class SoundItemPagerAdapter : PagerAdapter()
 {
 
 	override fun getCount(): Int
