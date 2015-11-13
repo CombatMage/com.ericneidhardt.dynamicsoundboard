@@ -38,7 +38,7 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 	override fun deliverResult()
 	{
 		var name = super.soundLayoutName?.text.toString()
-		if (name.length() == 0)
+		if (name.length == 0)
 			name = this.getHintForName()
 
 		val layout = SoundLayout()

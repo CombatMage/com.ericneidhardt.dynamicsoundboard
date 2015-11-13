@@ -87,7 +87,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		this.playlist.map { player-> player.destroy(false) }
 
-		val allPlayers = this.sounds.values()
+		val allPlayers = this.sounds.values
 		for (players in allPlayers)
 			players.map { player-> player.destroy(false) }
 
@@ -219,9 +219,9 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun removeSounds(soundsToRemove: List<MediaPlayerController>)
 	{
-		if (soundsToRemove.size() > 0)
+		if (soundsToRemove.size > 0)
 		{
-			val copyList = ArrayList<MediaPlayerController>(soundsToRemove.size())
+			val copyList = ArrayList<MediaPlayerController>(soundsToRemove.size)
 			copyList.addAll(soundsToRemove) // this is done to prevent concurrent modification exception
 
 			for (playerToRemove in copyList)
@@ -259,7 +259,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		val soundsInFragment = this.sounds.get(fragmentTag)
 		if (soundsInFragment != null)
 		{
-			val size = soundsInFragment.size()
+			val size = soundsInFragment.size
 			var indexFrom = from
 			var indexTo = to
 
@@ -273,7 +273,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			else if (indexTo < 0)
 				indexTo = 0
 
-			val playerToMove = soundsInFragment.remove(indexFrom)
+			val playerToMove = soundsInFragment.removeAt(indexFrom)
 			soundsInFragment.add(indexTo, playerToMove)
 
 			this.eventBus.post(SoundMovedEvent(playerToMove, from, to))
@@ -302,7 +302,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		}
 		catch (e: IOException)
 		{
-			Logger.d(TAG, playerData.toString() + " " + e.getMessage())
+			Logger.d(TAG, playerData.toString() + " " + e.message)
 			this.removePlaylistDataFromDatabase(playerData)
 			return null
 		}
@@ -319,7 +319,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 					soundsDataAccess = this)
 		}
 		catch (e: IOException) {
-			Logger.d(TAG, e.getMessage())
+			Logger.d(TAG, e.message)
 			this.removeSoundDataFromDatabase(playerData)
 			return null
 		}

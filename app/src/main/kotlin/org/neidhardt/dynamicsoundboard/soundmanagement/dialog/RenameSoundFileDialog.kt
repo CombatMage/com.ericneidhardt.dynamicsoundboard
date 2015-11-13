@@ -88,11 +88,11 @@ private class RenameSoundFileDialogPresenter
 	init
 	{
 		this.playersWithMatchingUri = this.getPlayersWithMatchingUri(this.playerData.uri)
-		if (playersWithMatchingUri!!.size() > 1)
+		if (playersWithMatchingUri!!.size > 1)
 		{
 			this.renameAllOccurrences.visibility = View.VISIBLE
 			this.renameAllOccurrences.text = this.renameAllOccurrences.text.toString()
-					.replace("{%s0}", Integer.toString(playersWithMatchingUri!!.size()))
+					.replace("{%s0}", Integer.toString(playersWithMatchingUri!!.size))
 		}
 		else
 			this.renameAllOccurrences.visibility = View.GONE
@@ -115,7 +115,7 @@ private class RenameSoundFileDialogPresenter
 				players.add(player)
 		}
 
-		val fragments = this.soundsDataAccess.sounds.keySet()
+		val fragments = this.soundsDataAccess.sounds.keys
 		for (fragment in fragments)
 		{
 			val soundsInFragment = this.soundsDataAccess.getSoundsInFragment(fragment)
@@ -195,8 +195,8 @@ private class RenameSoundFileDialogPresenter
 			throw NullPointerException(TAG + ": cannot create new file name, either old name or new name is null")
 
 		val segments = oldFilePath.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-		if (segments.size() > 1) {
-			val fileType = segments[segments.size() - 1]
+		if (segments.size > 1) {
+			val fileType = segments[segments.size - 1]
 			return newNameFilePath + "." + fileType
 		}
 
@@ -212,7 +212,7 @@ private class RenameSoundFileDialogPresenter
 		}
 		catch (e: IOException)
 		{
-			Logger.e(TAG, e.getMessage())
+			Logger.e(TAG, e.message)
 			if (player.mediaPlayerData.fragmentTag == Playlist.TAG)
 				this.soundsDataStorage.removeSoundsFromPlaylist(listOf(player))
 			else

@@ -47,7 +47,7 @@ public class SoundPresenterTest : BaseTest()
 		event = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
 		this.soundPresenter!!.onEventMainThread(event)
 
-		assertThat(this.soundPresenter!!.values.size(), equalTo(3))
+		assertThat(this.soundPresenter!!.values.size, equalTo(3))
 		this.verifySortOrder()
 	}
 
@@ -71,7 +71,7 @@ public class SoundPresenterTest : BaseTest()
 		val removeEvent = SoundsRemovedEvent(list)
 		this.soundPresenter!!.onEventMainThread(removeEvent)
 
-		assertThat(this.soundPresenter!!.values.size(), equalTo(2))
+		assertThat(this.soundPresenter!!.values.size, equalTo(2))
 		this.verifySortOrder()
 	}
 
@@ -90,7 +90,7 @@ public class SoundPresenterTest : BaseTest()
 		event2.player.mediaPlayerData.sortOrder = 0
 		this.soundPresenter!!.onEventMainThread(event2)
 
-		assertThat(this.soundPresenter!!.values.size(), equalTo(3))
+		assertThat(this.soundPresenter!!.values.size, equalTo(3))
 
 		assertEquals(this.soundPresenter!!.values.get(0), event2.player)
 		assertEquals(this.soundPresenter!!.values.get(1), event1.player)
@@ -102,7 +102,7 @@ public class SoundPresenterTest : BaseTest()
 	private fun verifySortOrder()
 	{
 		val values = this.soundPresenter!!.values
-		val count = values.size()
+		val count = values.size
 		for (i in 0..count - 1)
 		{
 			val itemSortOrder = values.get(i).mediaPlayerData.sortOrder

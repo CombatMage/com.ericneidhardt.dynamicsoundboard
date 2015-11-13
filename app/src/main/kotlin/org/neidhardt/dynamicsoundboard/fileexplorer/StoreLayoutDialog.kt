@@ -16,9 +16,7 @@ import android.widget.Toast
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.JsonPojo
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
-
 import java.io.File
 import java.io.IOException
 
@@ -86,7 +84,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 				if (currentDirectory != null)
 					this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
 
-				if (super.adapter.selectedFiles.size() != 0)
+				if (super.adapter.selectedFiles.size != 0)
 					this.saveDataAndDismiss()
 				else
 					Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()

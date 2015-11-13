@@ -37,7 +37,7 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 		if (this.databaseId != null)
 		{
 			var name = super.soundLayoutName?.text.toString()
-			if (name.length() == 0)
+			if (name.length == 0)
 				name = this.getHintForName()
 
 			val layout = this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)

@@ -112,7 +112,7 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 			val uris = savedInstanceState.getStringArrayList(KEY_SOUNDS_URI)
 			if (labels != null && uris != null)
 			{
-				val count = labels.size()
+				val count = labels.size
 				for (i in 0..count - 1)
 				{
 					val uri = Uri.parse(uris.get(i))
@@ -131,7 +131,7 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 
 		val presenter = this.presenter as AddNewSoundDialogPresenter
 
-		val count = presenter.getValues().size()
+		val count = presenter.getValues().size
 		val uris = ArrayList<String>(count)
 		val labels = ArrayList<String>(count)
 
@@ -215,7 +215,7 @@ private class AddNewSoundDialogPresenter
 
 	private fun addSoundsToSoundSheet()
 	{
-		if (soundsToAdd.size() > 0)
+		if (soundsToAdd.size > 0)
 		{
 			this.returnResultsToCallingFragment()
 			this.dialog.dismiss()
@@ -224,7 +224,7 @@ private class AddNewSoundDialogPresenter
 
 	private fun returnResultsToCallingFragment()
 	{
-		val count = this.soundsToAdd.size()
+		val count = this.soundsToAdd.size
 		val playersData = ArrayList<MediaPlayerData>(count)
 		val renamedPlayers = ArrayList<MediaPlayerData>()
 		for (i in 0..count - 1)
@@ -277,7 +277,7 @@ private class AddNewSoundDialogPresenter
 		this.add.isEnabled = true
 		this.soundsToAdd.add(data)
 		this.dialog.mainView!!.enableRecyclerViewDividers(true)
-		this.adapter.notifyItemInserted(this.soundsToAdd.size() - 1)
+		this.adapter.notifyItemInserted(this.soundsToAdd.size - 1)
 	}
 
 	internal fun getValues() : List<NewSoundData>
@@ -296,7 +296,7 @@ private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter)
 
 	override fun getItemCount(): Int
 	{
-		return this.presenter.getValues().size()
+		return this.presenter.getValues().size
 	}
 
 	override fun onBindViewHolder(holder: NewSoundViewHolder, position: Int)

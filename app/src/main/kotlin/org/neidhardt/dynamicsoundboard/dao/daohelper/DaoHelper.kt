@@ -30,7 +30,7 @@ private class InsertPlayerAsyncTask
 	override fun call(): Void?
 	{
 		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size() == 0)
+			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size == 0)
 				dao.insert(data)
 		}
 		return null
@@ -61,7 +61,7 @@ private class UpdatePlayerAsyncTask
 	override fun call(): Void?
 	{
 		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size() != 0)
+			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size != 0)
 				dao.update(data) // do not update if item was not added before
 		}
 		return null
@@ -86,7 +86,7 @@ private class InsertSoundSheetAsyncTask
 	override fun call(): Void?
 	{
 		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size() == 0)
+			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size == 0)
 				dao.insert(data)
 		}
 		return null
@@ -111,7 +111,7 @@ private class UpdateSoundSheetsAsyncTask
 	override fun call(): Void?
 	{
 		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size() != 0)
+			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size != 0)
 				dao.update(data) // do not update if item was not added before
 		}
 		return null

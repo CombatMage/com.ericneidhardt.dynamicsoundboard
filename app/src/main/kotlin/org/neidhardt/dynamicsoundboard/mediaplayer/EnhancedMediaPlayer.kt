@@ -64,10 +64,9 @@ private class EnhancedMediaPlayer
 	 * The call is not forwarded to the native implementation (super.isPlaying), because
 	 * of ab described here:
 	 * @see [.9732: internal/external state mismatch corrected](https://code.google.com/p/android/issues/detail?id=9732)
-
 	 * @return true if player ist playing, false otherwise
 	 */
-	override val isPlaying: Boolean
+	override val isPlayingSound: Boolean
 		get() = this.currentState == State.STARTED
 
 	override var trackDuration: Int = 0
@@ -110,17 +109,17 @@ private class EnhancedMediaPlayer
 			}
 			catch (e: IOException)
 			{
-				Logger.e(TAG, e.getMessage())
+				Logger.e(TAG, e.message)
 				this.reportExceptions(e)
 			}
 			catch (e: IllegalStateException)
 			{
-				Logger.e(TAG, e.getMessage())
+				Logger.e(TAG, e.message)
 				this.reportExceptions(e)
 			}
 		}
 
-	override var isLooping: Boolean
+	override var isLoopingEnabled: Boolean
 		get() = this.mediaPlayerData.isLoop
 		set(value)
 		{
@@ -149,7 +148,7 @@ private class EnhancedMediaPlayer
 		this.setOnErrorListener(this)
 		this.setOnInfoListener(this)
 
-		this.isLooping = mediaPlayerData.isLoop
+		this.isLoopingEnabled = mediaPlayerData.isLoop
 
 		this.currentState = State.IDLE
 		this.init(context)
@@ -174,7 +173,7 @@ private class EnhancedMediaPlayer
 		this.setAudioStreamType(AudioManager.STREAM_MUSIC)
 		val soundUri = Uri.parse(this.mediaPlayerData.uri)
 		this.setDataSource(context, soundUri)
-		this.isLooping = this.mediaPlayerData.isLoop
+		this.isLoopingEnabled = this.mediaPlayerData.isLoop
 		this.prepare()
 		this.currentState = State.PREPARED
 
@@ -204,7 +203,7 @@ private class EnhancedMediaPlayer
 
 	override fun playSound(): Boolean
 	{
-		if (this.isPlaying)
+		if (this.isPlayingSound)
 			return true
 		try
 		{
@@ -250,7 +249,7 @@ private class EnhancedMediaPlayer
 	}
 
 	override fun pauseSound(): Boolean {
-		if (!this.isPlaying)
+		if (!this.isPlayingSound)
 			return true
 		try {
 			when (this.currentState)
@@ -354,7 +353,7 @@ private class EnhancedMediaPlayer
 	override fun onCompletion(mp: MediaPlayer)
 	{
 		// for unknown reason, onCompletion is called even if the player is set to looping, therefore we needs to do an additional check
-		if (this.isLooping)
+		if (this.isLoopingEnabled)
 			return
 
 		// for unknown reason, this must be set to paused instead of stopped. This contradicts MediaPlayer Documentation, but calling prepare for restart throws illegal state exception

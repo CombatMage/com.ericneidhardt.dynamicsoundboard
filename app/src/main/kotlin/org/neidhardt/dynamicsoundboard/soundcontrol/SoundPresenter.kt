@@ -47,7 +47,7 @@ public class SoundPresenter
 	{
 		val playerId = event.playerId
 		val players = this.values
-		val count = players.size()
+		val count = players.size
 		for (i in 0..count - 1)
 		{
 			if (players.get(i).mediaPlayerData.playerId == playerId)
@@ -65,7 +65,7 @@ public class SoundPresenter
 		val newPlayer = event.player
 		if (newPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
 		{
-			val count = this.values.size()
+			val count = this.values.size
 			val positionToInsert = newPlayer.mediaPlayerData.sortOrder
 			if (positionToInsert == null)
 			{
@@ -93,7 +93,7 @@ public class SoundPresenter
 	{
 		this.values.add(position, player)
 		this.adapter?.notifyItemInserted(position)
-		if (position == this.values.size() - 1)
+		if (position == this.values.size - 1)
 			this.adapter?.notifyItemChanged(position - 1)
 	}
 
@@ -102,7 +102,7 @@ public class SoundPresenter
 		val movedPlayer = event.player
 		if (movedPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
 		{
-			this.values.remove(event.from)
+			this.values.removeAt(event.from)
 			this.values.add(event.to, movedPlayer)
 
 			val start = Math.min(event.from, event.to); // we need to update all sound after the moved one
@@ -145,7 +145,7 @@ public class SoundPresenter
 
 	private fun updateSortOrdersAfter(index: Int)
 	{
-		val count = this.values.size();
+		val count = this.values.size
 		for (i in index + 1 .. count - 1)
 		{
 			val playerData = this.values.get(i).mediaPlayerData

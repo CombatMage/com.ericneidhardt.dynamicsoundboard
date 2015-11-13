@@ -18,10 +18,6 @@ interface ViewPresenter<T>
 	 * Retrieve reference of controlled ui component from presenter.
 	 * @return controlled ui object
 	 */
-	/**
-	 * Pass reference to controlled ui component to presenter.
-	 * @param view ui object to be controlled by presenter
-	 */
 	var view: T
 
 	/**

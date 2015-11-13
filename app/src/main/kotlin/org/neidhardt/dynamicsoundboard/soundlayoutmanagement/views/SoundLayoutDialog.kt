@@ -23,7 +23,7 @@ public abstract class SoundLayoutDialog : BaseDialog(), View.OnClickListener
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(this.getLayoutId(), null)
 		this.soundLayoutName = view.findViewById(R.id.et_name_sound_layout) as EditText
 		this.soundLayoutInput = view.findViewById(R.id.ti_name_sound_layout) as TextInputLayout
-		this.soundLayoutInput?.setHint(this.getHintForName())
+        this.soundLayoutInput?.hint = this.getHintForName()
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this)
 		view.findViewById(R.id.b_ok).setOnClickListener(this)

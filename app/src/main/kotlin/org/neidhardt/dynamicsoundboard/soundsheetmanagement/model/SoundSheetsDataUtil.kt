@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model
 
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 
 /**

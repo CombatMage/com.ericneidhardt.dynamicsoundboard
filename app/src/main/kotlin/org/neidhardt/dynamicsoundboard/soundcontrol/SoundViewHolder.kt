@@ -23,7 +23,7 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.UPDATE_INTERVAL
  */
 private val VIEWPAGER_INDEX_SOUND_CONTROLS = 1
 
-public class SoundViewHolder
+class SoundViewHolder
 (
 		itemView: View,
 		eventBus: EventBus,
@@ -91,7 +91,7 @@ public class SoundViewHolder
 		if (!this.name.hasFocus())
 			this.name.text = playerData.label
 
-		val isPlaying = player.isPlaying
+		val isPlaying = player.isPlayingSound
 		this.play.isSelected = isPlaying
 		this.loop.isSelected = playerData.isLoop
 		this.inPlaylist.isSelected = playerData.isInPlaylist
@@ -173,7 +173,7 @@ public class SoundViewHolder
 			R.id.b_loop ->
 			{
 				view.isSelected = !isSelected
-				player.isLooping = !isSelected
+				player.isLoopingEnabled = !isSelected
 			}
 			R.id.b_add_to_playlist ->
 			{

@@ -1,11 +1,9 @@
 package org.neidhardt.dynamicsoundboard.fileexplorer
 
 import android.animation.Animator
-import android.media.audiofx.BassBoost
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
-import android.provider.Settings
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +25,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 {
 	private val KEY_PARENT_FILE = "org.neidhardt.dynamicsoundboard.fileexplorer.parentFile"
 
-	public val adapter: DirectoryAdapter = DirectoryAdapter()
+	internal val adapter: DirectoryAdapter = DirectoryAdapter()
 
 	protected abstract fun canSelectDirectory(): Boolean
 
@@ -70,7 +68,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 		outState.putString(KEY_PARENT_FILE, this.adapter.parentFile!!.path)
 	}
 
-	public inner class DirectoryAdapter : RecyclerView.Adapter<DirectoryEntry>()
+	internal inner class DirectoryAdapter : RecyclerView.Adapter<DirectoryEntry>()
 	{
 		internal var parentFile: File? = null
 		internal var selectedEntries: MutableSet<DirectoryEntry> = HashSet()
@@ -113,7 +111,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		override fun getItemCount(): Int
 		{
-			return this.fileList.size()
+			return this.fileList.size
 		}
 	}
 

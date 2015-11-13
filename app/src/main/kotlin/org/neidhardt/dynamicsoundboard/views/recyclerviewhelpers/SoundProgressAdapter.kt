@@ -63,7 +63,7 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
 		val count = allSounds.size()
 		for (i in 0..count - 1)
 		{
-			if (allSounds.get(i).isPlaying)
+			if (allSounds.get(i).isPlayingSound)
 				playingSounds.add(i)
 		}
 		return playingSounds

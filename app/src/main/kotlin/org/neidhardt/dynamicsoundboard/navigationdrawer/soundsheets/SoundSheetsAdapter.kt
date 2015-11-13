@@ -26,7 +26,7 @@ public open class SoundSheetsAdapter
 
 	override fun getItemCount(): Int
 	{
-		return this.getValues().size()
+		return this.getValues().size
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundSheetViewHolder
@@ -40,7 +40,7 @@ public open class SoundSheetsAdapter
 		val data = this.getValues().get(position)
 
 		val sounds = this.presenter.getSoundsInFragment(data.fragmentTag)
-		val soundCount = sounds.size()
+		val soundCount = sounds.size
 
 		holder.bindData(data, soundCount)
 	}

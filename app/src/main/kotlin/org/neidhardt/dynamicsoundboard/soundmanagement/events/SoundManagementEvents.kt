@@ -20,8 +20,5 @@ public data class SoundsRemovedEvent(public var players: List<MediaPlayerControl
 {
 	public constructor() : this(null)
 
-	public fun removeAll(): Boolean
-	{
-		return this.players == null
-	}
+	public fun removeAll(): Boolean = this.players == null
 }

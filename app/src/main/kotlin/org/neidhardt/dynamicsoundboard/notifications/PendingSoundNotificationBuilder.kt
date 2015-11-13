@@ -50,7 +50,7 @@ public class PendingSoundNotificationBuilder
 	{
 		val isLollipopStyleAvailable = Util.IS_LOLLIPOP_AVAILABLE
 		this.setActionStop(context, isLollipopStyleAvailable)
-		if (player.isPlaying)
+		if (player.isPlayingSound)
 		{
 			this.setOngoing(true)
 			this.setActionFadeOut(context, isLollipopStyleAvailable)

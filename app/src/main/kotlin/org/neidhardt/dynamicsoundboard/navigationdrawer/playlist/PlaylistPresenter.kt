@@ -71,7 +71,7 @@ public class PlaylistPresenter
 	}
 
 	override val numberOfItemsSelectedForDeletion: Int
-		get() = this.getPlayersSelectedForDeletion().size()
+		get() = this.getPlayersSelectedForDeletion().size
 
 	private fun getPlayersSelectedForDeletion(): List<MediaPlayerController>
 	{
@@ -117,7 +117,7 @@ public class PlaylistPresenter
 				player.stopSound()
 		}
 
-		if (nextActivePlayer.isPlaying)
+		if (nextActivePlayer.isPlayingSound)
 		{
 			this.adapter?.stopProgressUpdateTimer()
 			nextActivePlayer.pauseSound()

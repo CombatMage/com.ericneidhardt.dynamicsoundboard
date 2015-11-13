@@ -30,7 +30,7 @@ public class PlaylistAdapter
 
 	override fun getItemCount(): Int
 	{
-		return this.getValues().size()
+		return this.getValues().size
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder

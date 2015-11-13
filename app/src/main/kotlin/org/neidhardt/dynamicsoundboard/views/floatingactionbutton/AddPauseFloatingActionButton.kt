@@ -61,7 +61,7 @@ public class AddPauseFloatingActionButton : com.melnykov.fab.FloatingActionButto
 
 	override fun onCreateDrawableState(extraSpace: Int): IntArray
 	{
-		val state = super.onCreateDrawableState(extraSpace + PAUSE_STATE.size())
+		val state = super.onCreateDrawableState(extraSpace + PAUSE_STATE.size)
 		if (this.presenter?.isStatePause ?: false)
 			View.mergeDrawableStates(state, PAUSE_STATE)
 		return state

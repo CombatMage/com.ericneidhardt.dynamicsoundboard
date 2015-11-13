@@ -55,7 +55,7 @@ public class SoundLayoutsPresenter
 	}
 
 	override val numberOfItemsSelectedForDeletion: Int
-		get() = this.getSoundLayoutsSelectedForDeletion().size()
+		get() = this.getSoundLayoutsSelectedForDeletion().size
 
 	override fun deselectAllItemsSelectedForDeletion()
 	{

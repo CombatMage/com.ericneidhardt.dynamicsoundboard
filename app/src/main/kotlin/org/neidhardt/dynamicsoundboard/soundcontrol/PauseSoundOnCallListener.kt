@@ -20,8 +20,8 @@ class PauseSoundOnCallListener : PhoneStateListener()
 		if (state == TelephonyManager.CALL_STATE_RINGING)
 		{
 			val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
-			if (currentlyPlayingSounds.size() > 0) {
-				val copyCurrentlyPlayingSounds = ArrayList<MediaPlayerController>(currentlyPlayingSounds.size()) // copy to prevent concurrent modification exception
+			if (currentlyPlayingSounds.size > 0) {
+				val copyCurrentlyPlayingSounds = ArrayList<MediaPlayerController>(currentlyPlayingSounds.size) // copy to prevent concurrent modification exception
 				copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds)
 
 				for (sound in copyCurrentlyPlayingSounds)

@@ -79,7 +79,7 @@ public class SoundSheets : NavigationDrawerList
 	}
 
 	override val itemCount: Int
-		get() = presenter.values.size()
+		get() = presenter.values.size
 
 	override val actionModeTitle: Int
 		get() = R.string.cab_title_delete_sound_sheets

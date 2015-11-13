@@ -86,7 +86,7 @@ public class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.
 				if (currentDirectory != null)
 					this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
 
-				if (super.adapter.selectedFiles.size() != 0)
+				if (super.adapter.selectedFiles.size != 0)
 					this.loadFromFileAndDismiss(super.adapter.selectedFiles.iterator().next())
 				else
 					Toast.makeText(this.activity, R.string.dialog_load_layout_no_file_info, Toast.LENGTH_SHORT).show()

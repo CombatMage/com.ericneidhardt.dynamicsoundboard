@@ -237,7 +237,7 @@ public class SoundSheetFragment :
 
 	override fun onEventMainThread(event: SoundsRemovedEvent)
 	{
-		if (this.soundAdapter!!.getValues().size() == 0)
+		if (this.soundAdapter!!.getValues().size == 0)
 		{
 			val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
 			fab?.show()

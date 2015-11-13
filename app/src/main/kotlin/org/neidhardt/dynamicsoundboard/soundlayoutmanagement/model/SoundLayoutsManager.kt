@@ -35,7 +35,7 @@ public class SoundLayoutsManager :
 	init
 	{
 		this.soundLayouts.addAll(this.daoSession.soundLayoutDao.queryBuilder().list())
-		if (this.soundLayouts.size() == 0)
+		if (this.soundLayouts.size == 0)
 		{
 			val defaultLayout = this.getDefaultSoundLayout()
 			defaultLayout.isSelected = true
@@ -76,7 +76,7 @@ public class SoundLayoutsManager :
 
 	override fun getSuggestedName(): String
 	{
-		return DynamicSoundboardApplication.getContext().resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size()
+		return DynamicSoundboardApplication.getContext().resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size
 	}
 
 	private fun getDefaultSoundLayout(): SoundLayout
@@ -93,7 +93,7 @@ public class SoundLayoutsManager :
 	{
 		this.soundLayouts.removeAll(soundLayoutsToRemove)
 
-		if (this.soundLayouts.size() == 0)
+		if (this.soundLayouts.size == 0)
 			this.soundLayouts.add(this.getDefaultSoundLayout())
 
 		var newSelectionRequired = false
@@ -104,7 +104,7 @@ public class SoundLayoutsManager :
 
 			this.daoSession.soundLayoutDao.delete(soundLayout)
 		}
-		if (this.soundLayouts.size() == 0)
+		if (this.soundLayouts.size == 0)
 		{
 			val defaultLayout = this.getDefaultSoundLayout()
 			defaultLayout.isSelected = true
@@ -122,7 +122,7 @@ public class SoundLayoutsManager :
 
 	override public fun setSoundLayoutSelected(position: Int)
 	{
-		val size = this.soundLayouts.size()
+		val size = this.soundLayouts.size
 		for (i in 0..size - 1)
 		{
 			val layout = this.soundLayouts.get(i)

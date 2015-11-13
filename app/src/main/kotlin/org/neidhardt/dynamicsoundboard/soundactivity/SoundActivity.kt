@@ -141,7 +141,7 @@ public class SoundActivity :
 
 		if (intent.action == Intent.ACTION_VIEW && intent.data != null)
 		{
-			if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
+			if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
 				AddNewSoundFromIntent.showInstance(this.fragmentManager, intent.data,
 						this.soundSheetsDataUtil.getSuggestedName(), null)
 			else
@@ -263,7 +263,7 @@ public class SoundActivity :
 
 		if (this.isFinishing) {
 			// we remove all loaded sounds, which have no corresponding SoundSheet
-			val fragmentsWithLoadedSounds = this.soundsDataAccess.sounds.keySet()
+			val fragmentsWithLoadedSounds = this.soundsDataAccess.sounds.keys
 			val fragmentsWithLoadedSoundsToRemove = HashSet<String>()
 
 			for (fragmentTag in fragmentsWithLoadedSounds) {
@@ -316,7 +316,7 @@ public class SoundActivity :
 		val removedSoundSheets = event.soundSheets
 		this.removeSoundFragments(removedSoundSheets)
 
-		if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
+		if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
 			this.setSoundSheetActionsEnable(false)
 	}
 
@@ -356,9 +356,9 @@ public class SoundActivity :
 		val soundSheetFragment = this.getCurrentSoundFragment()
 		val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
 
-		if (currentlyPlayingSounds.size() > 0)
+		if (currentlyPlayingSounds.size > 0)
 		{
-			val copyCurrentlyPlayingSounds = ArrayList<MediaPlayerController>(currentlyPlayingSounds.size())
+			val copyCurrentlyPlayingSounds = ArrayList<MediaPlayerController>(currentlyPlayingSounds.size)
 			copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds)
 			for (sound in copyCurrentlyPlayingSounds)
 				sound.pauseSound()
@@ -479,7 +479,7 @@ public class SoundActivity :
 
 	public fun removeSoundFragments(soundSheets: List<SoundSheet>?)
 	{
-		if (soundSheets == null || soundSheets.size() == 0)
+		if (soundSheets == null || soundSheets.size == 0)
 			return
 
 		val fragmentManager = this.fragmentManager
@@ -491,7 +491,7 @@ public class SoundActivity :
 		}
 		fragmentManager.executePendingTransactions()
 
-		if (this.soundSheetsDataAccess.getSoundSheets().size() == 0)
+		if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
 			this.setSoundSheetActionsEnable(false)
 	}
 

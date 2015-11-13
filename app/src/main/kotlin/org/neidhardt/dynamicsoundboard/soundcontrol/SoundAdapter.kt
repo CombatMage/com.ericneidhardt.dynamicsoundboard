@@ -21,20 +21,11 @@ public class SoundAdapter
 ) :
 		SoundProgressAdapter<SoundViewHolder>()
 {
-	override fun getValues(): List<MediaPlayerController>
-	{
-		return this.presenter.values
-	}
+	override fun getValues(): List<MediaPlayerController> = this.presenter.values
 
-	override fun getItemCount(): Int
-	{
-		return this.getValues().size()
-	}
+	override fun getItemCount(): Int = this.getValues().size
 
-	override fun getItemViewType(position: Int): Int
-	{
-		return R.layout.view_sound_item
-	}
+	override fun getItemViewType(position: Int): Int = R.layout.view_sound_item
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder
 	{

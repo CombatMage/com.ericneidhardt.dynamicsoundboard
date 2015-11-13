@@ -9,13 +9,13 @@ interface MediaPlayerController
 {
 	val mediaPlayerData: MediaPlayerData
 
-	val isPlaying: Boolean
+	val isPlayingSound: Boolean
 
 	var trackDuration: Int
 
 	var progress: Int
 
-	var isLooping: Boolean
+	var isLoopingEnabled: Boolean
 
 	var isInPlaylist: Boolean
 

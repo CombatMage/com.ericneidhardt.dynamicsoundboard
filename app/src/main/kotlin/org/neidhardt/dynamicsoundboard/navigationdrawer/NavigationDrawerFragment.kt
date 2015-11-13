@@ -237,7 +237,7 @@ public class NavigationDrawerFragment :
 		val dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke)
 		val padding = resources.getDimensionPixelSize(R.dimen.margin_small)
 
-		val soundSheetCount = this.soundSheetsDataAccess.getSoundSheets().size()
+		val soundSheetCount = this.soundSheetsDataAccess.getSoundSheets().size
 		val playListCount = this.playlist!!.adapter.itemCount
 
 		val heightSoundSheetChildren = soundSheetCount * childHeight

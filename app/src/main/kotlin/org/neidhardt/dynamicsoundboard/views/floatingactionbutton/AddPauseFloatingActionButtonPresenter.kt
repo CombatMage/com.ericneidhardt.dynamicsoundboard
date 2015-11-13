@@ -49,7 +49,7 @@ public class AddPauseFloatingActionButtonPresenter
 	private fun updateToMediaPlayersState()
 	{
 		val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
-		if (currentlyPlayingSounds.size() > 0)
+		if (currentlyPlayingSounds.size > 0)
 			this.setPauseState(true)
 		else
 			this.setPauseState(false)

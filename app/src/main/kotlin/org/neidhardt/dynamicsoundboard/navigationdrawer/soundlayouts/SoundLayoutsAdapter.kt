@@ -29,7 +29,7 @@ public class SoundLayoutsAdapter
 
 	override fun getItemCount(): Int
 	{
-		return this.getValues().size()
+		return this.getValues().size
 	}
 
 	override fun getItemViewType(position: Int): Int

@@ -37,7 +37,7 @@ abstract class NavigationDrawerListPresenter<T: NavigationDrawerList?> : ViewPre
 
 		val count = this.numberOfItemsSelectedForDeletion
 		var countString = Integer.toString(count)
-		if (countString.length() == 1)
+		if (countString.length == 1)
 			countString = " " + countString
 		countString = countString + "/" + this.view!!.itemCount
 

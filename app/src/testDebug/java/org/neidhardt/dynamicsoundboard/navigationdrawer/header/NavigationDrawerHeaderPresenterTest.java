@@ -49,7 +49,7 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	@Test
 	public void testIsEventBusSubscriber() throws Exception
 	{
-		assertTrue(this.presenter.getIsEventBusSubscriber());
+		assertTrue(this.presenter.isEventBusSubscriber());
 	}
 
 	@Test

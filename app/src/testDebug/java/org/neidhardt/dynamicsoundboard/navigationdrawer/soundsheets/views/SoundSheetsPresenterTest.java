@@ -47,7 +47,7 @@ public class SoundSheetsPresenterTest extends BaseTest
 	@Test
 	public void testOnItemClick() throws Exception
 	{
-		this.presenter.setIsInSelectionMode(true);
+		this.presenter.setInSelectionMode(true);
 		SoundSheet data = mock(SoundSheet.class);
 		when(data.getIsSelectedForDeletion()).thenReturn(false);
 

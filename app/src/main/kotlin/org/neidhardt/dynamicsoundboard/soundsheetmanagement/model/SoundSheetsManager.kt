@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAdd
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask
-import java.util.ArrayList
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 06.07.2015.
@@ -91,7 +91,7 @@ public class SoundSheetsManager :
 
 	override fun removeSoundSheets(soundSheets: List<SoundSheet>)
 	{
-		val copyList = ArrayList<SoundSheet>(soundSheets.size());
+		val copyList = ArrayList<SoundSheet>(soundSheets.size)
 		copyList.addAll(soundSheets); // this is done to prevent concurrent modification exception
 
 		val dao = this.getDbSoundSheets().soundSheetDao
@@ -100,7 +100,7 @@ public class SoundSheetsManager :
 			this.soundSheets.remove(soundSheetToRemove)
 			if (soundSheetToRemove.isSelected)
 			{
-				if (this.soundSheets.size() > 0)
+				if (this.soundSheets.size > 0)
 					this.setSoundSheetSelected(this.soundSheets.get(0))
 
 			}
@@ -119,7 +119,7 @@ public class SoundSheetsManager :
 	override fun getSoundSheetForFragmentTag(fragmentTag: String): SoundSheet?
 	{
 		val results = this.soundSheets.filter { soundSheet -> soundSheet.fragmentTag.equals(fragmentTag) }
-		return if (results.size() > 0) results.get(0) else null
+		return if (results.size > 0) results.get(0) else null
 	}
 
 	override fun setSoundSheetSelected(soundSheetToSelect: SoundSheet)
@@ -144,13 +144,13 @@ public class SoundSheetsManager :
 	override fun getSelectedItem(): SoundSheet?
 	{
 		val results = this.soundSheets.filter { soundSheet -> soundSheet.isSelected }
-		return if (results.size() > 0) results.get(0) else null
+		return if (results.size > 0) results.get(0) else null
 	}
 
 	override fun getSuggestedName(): String
 	{
 		return DynamicSoundboardApplication.getContext()
-				.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size()
+				.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
 	}
 
 	override fun getNewSoundSheet(label: String): SoundSheet

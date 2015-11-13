@@ -19,7 +19,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInListForId
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInMapForId
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
-import java.util.ArrayList
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 23.03.2015.
@@ -122,7 +122,7 @@ public class NotificationHandler
 		val player = searchInMapForId(playerId, soundsDataAccess.sounds)
 
 		// if player stops playing and the service is still bound, we remove the notification
-		if (player == null || !player.isPlaying && this.service.isActivityVisible())
+		if (player == null || !player.isPlayingSound && this.service.isActivityVisible())
 		{
 			this.removeNotificationForPlayer(playerId)
 			return true
@@ -159,13 +159,13 @@ public class NotificationHandler
 			if (isInPlaylist)
 			{
 				val player = searchInListForId(playerId, soundsDataAccess.playlist)
-				if (player != null && !player.isPlaying)
+				if (player != null && !player.isPlayingSound)
 					this.removePlayListNotification()
 			}
 			else
 			{
 				val player = searchInMapForId(playerId, soundsDataAccess.sounds)
-				if (player == null || !player.isPlaying)
+				if (player == null || !player.isPlayingSound)
 					this.removeNotificationForPlayer(playerId)
 			}
 		}
@@ -228,7 +228,7 @@ public class NotificationHandler
 		if (player != null)
 		{
 			// if player stops playing and the service is still bound, we remove the notification
-			if (!player.isPlaying && this.service.isActivityVisible())
+			if (!player.isPlayingSound && this.service.isActivityVisible())
 			{
 				this.removePlayListNotification()
 				return true
@@ -254,7 +254,7 @@ public class NotificationHandler
 		}
 	}
 
-	private fun getPlayingSoundFromPlaylist(): MediaPlayerController? = soundsDataAccess.playlist.firstOrNull { player -> player.isPlaying }
+	private fun getPlayingSoundFromPlaylist(): MediaPlayerController? = soundsDataAccess.playlist.firstOrNull { player -> player.isPlayingSound }
 
 	private inner class NotificationActionReceiver : BroadcastReceiver()
 	{
@@ -295,7 +295,7 @@ public class NotificationHandler
 		{
 			notifications.dropLastWhile { notification -> notification.notificationId == notificationId }
 
-			if (!service.isActivityVisible() && notifications.size() == 0)
+			if (!service.isActivityVisible() && notifications.size == 0)
 				service.stopSelf()
 		}
 	}
