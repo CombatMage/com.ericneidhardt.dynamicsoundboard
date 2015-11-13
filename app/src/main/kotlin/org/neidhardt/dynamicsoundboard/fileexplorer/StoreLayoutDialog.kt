@@ -152,7 +152,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 		}
 		catch (e: IOException)
 		{
-			Logger.d(TAG, e.getMessage())
+			Logger.d(TAG, e.message)
 			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_store_layout, Toast.LENGTH_SHORT).show()
 		}
 

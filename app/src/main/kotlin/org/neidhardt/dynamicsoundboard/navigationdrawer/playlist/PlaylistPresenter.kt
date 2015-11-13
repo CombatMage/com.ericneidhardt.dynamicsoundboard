@@ -167,7 +167,7 @@ public class PlaylistPresenter
 				return
 
 			this.currentItemIndex = (this.currentItemIndex as Int) + 1
-			if ((this.currentItemIndex as Int) >= this.values.size())
+			if ((this.currentItemIndex as Int) >= this.values.size)
 				this.currentItemIndex = 0
 
 			this.values.get(this.currentItemIndex!!).playSound()
@@ -177,7 +177,7 @@ public class PlaylistPresenter
 
 	private fun setPlaylistSortOrder(playlist: List<MediaPlayerController>)
 	{
-		val count = playlist.size()
+		val count = playlist.size
 		for (i in 0..count - 1)
 		{
 			playlist.get(i).mediaPlayerData.sortOrder = i

@@ -107,7 +107,7 @@ public class SoundLayoutsPresenter
 		if (!this.values.contains(newLayout))
 		{
 			this.values.add(newLayout)
-			this.adapter?.notifyItemInserted(this.values.size() - 1)
+			this.adapter?.notifyItemInserted(this.values.size - 1)
 		}
 	}
 

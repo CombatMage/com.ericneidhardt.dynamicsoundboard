@@ -39,7 +39,7 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
 	override fun run()
 	{
 		val itemsWithProgressChanged = getPlayingItems()
-		if (itemsWithProgressChanged.size() == 0)
+		if (itemsWithProgressChanged.size == 0)
 		{
 			this.stopProgressUpdateTimer()
 			return
@@ -60,10 +60,10 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
 	{
 		val playingSounds = ArrayList<Int>()
 		val allSounds = this.getValues()
-		val count = allSounds.size()
+		val count = allSounds.size
 		for (i in 0..count - 1)
 		{
-			if (allSounds.get(i).isPlayingSound)
+			if (allSounds[i].isPlayingSound)
 				playingSounds.add(i)
 		}
 		return playingSounds
