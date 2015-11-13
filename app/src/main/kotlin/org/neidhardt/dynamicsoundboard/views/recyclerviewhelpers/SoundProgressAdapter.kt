@@ -8,10 +8,11 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 public val UPDATE_INTERVAL: Int = 500
 
-public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
+public abstract class SoundProgressAdapter<T> :
 		BaseAdapter<MediaPlayerController, T>(),
 		SoundProgressTimer,
-		Runnable where T : SoundProgressViewHolder
+		Runnable
+where T : RecyclerView.ViewHolder, T : SoundProgressViewHolder
 {
 
 	private val TAG = javaClass.name
