@@ -50,7 +50,7 @@ public class SoundPresenter
 		val count = players.size
 		for (i in 0..count - 1)
 		{
-			if (players.get(i).mediaPlayerData.playerId == playerId)
+			if (players[i].mediaPlayerData.playerId == playerId)
 				this.adapter?.notifyItemChanged(i)
 		}
 	}
@@ -77,7 +77,7 @@ public class SoundPresenter
 			{
 				for (i in 0..count - 1)
 				{
-					val existingPlayer = this.values.get(i)
+					val existingPlayer = this.values[i]
 					if (positionToInsert < existingPlayer.mediaPlayerData.sortOrder)
 					{
 						this.insertPlayer(i, newPlayer)
@@ -110,7 +110,7 @@ public class SoundPresenter
 
 			for (i in start..end)
 			{
-				val playerData = this.values.get(i).mediaPlayerData
+				val playerData = this.values[i].mediaPlayerData
 				playerData.sortOrder = i;
 				playerData.updateItemInDatabaseAsync();
 			}
@@ -148,7 +148,7 @@ public class SoundPresenter
 		val count = this.values.size
 		for (i in index + 1 .. count - 1)
 		{
-			val playerData = this.values.get(i).mediaPlayerData
+			val playerData = this.values[i].mediaPlayerData
 			val sortOrder = playerData.sortOrder
 			playerData.sortOrder = sortOrder - 1;
 			playerData.updateItemInDatabaseAsync();

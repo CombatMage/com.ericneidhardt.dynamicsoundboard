@@ -37,7 +37,7 @@ public open class SoundSheetsAdapter
 
 	override fun onBindViewHolder(holder: SoundSheetViewHolder, position: Int)
 	{
-		val data = this.getValues().get(position)
+		val data = this.getValues()[position]
 
 		val sounds = this.presenter.getSoundsInFragment(data.fragmentTag)
 		val soundCount = sounds.size

@@ -139,7 +139,7 @@ public open class SoundSheetsPresenter
 	override fun onEventMainThread(event: SoundSheetAddedEvent)
 	{
 		this.values.add(event.soundSheet)
-		this.adapter?.notifyItemInserted(this.values.size())
+		this.adapter?.notifyItemInserted(this.values.size)
 	}
 
 	override fun onEventMainThread(event: SoundSheetChangedEvent){
@@ -158,7 +158,7 @@ public open class SoundSheetsPresenter
 		val index = this.values.indexOf(soundSheet)
 		if (index != -1) // should no happen
 		{
-			this.values.remove(index)
+            this.values.removeAt(index)
 			this.adapter?.notifyItemRemoved(index)
 		}
 	}

@@ -40,7 +40,7 @@ public class SoundAdapter
 
 	override fun onBindViewHolder(holder: SoundViewHolder, position: Int)
 	{
-		holder.bindData(this.getValues().get(position))
+		holder.bindData(this.getValues()[position])
 		holder.showShadowForLastItem(position == this.itemCount - 1)
 		holder.setLabelToDeletionSettings(SoundboardPreferences.isOneSwipeToDeleteEnabled())
 	}
