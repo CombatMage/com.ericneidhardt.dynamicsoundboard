@@ -286,13 +286,13 @@ private class EnhancedMediaPlayer
 		}
 		catch (e: IOException)
 		{
-			Logger.e(TAG, e.getMessage())
+			Logger.e(TAG, e.message)
 			this.reportExceptions(e)
 			return false
 		}
 		catch (e: IllegalStateException)
 		{
-			Logger.e(TAG, e.getMessage())
+			Logger.e(TAG, e.message)
 			this.reportExceptions(e)
 			return false
 		}

@@ -144,7 +144,7 @@ public class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.
 
 	private fun addLoadedSounds(sounds: Map<String, List<MediaPlayerData>>)
 	{
-		for (key in sounds.keySet()) {
+		for (key in sounds.keys) {
 			val soundsPerFragment = sounds.get(key).orEmpty()
 			for (mediaPlayerData in soundsPerFragment)
 				this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData)
