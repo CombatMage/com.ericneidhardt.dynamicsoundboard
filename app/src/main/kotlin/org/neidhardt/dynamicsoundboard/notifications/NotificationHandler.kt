@@ -122,7 +122,7 @@ public class NotificationHandler
 		val player = searchInMapForId(playerId, soundsDataAccess.sounds)
 
 		// if player stops playing and the service is still bound, we remove the notification
-		if (player == null || !player.isPlayingSound && this.service.isActivityVisible())
+		if (player == null || !player.isPlayingSound && this.service.isActivityVisible)
 		{
 			this.removeNotificationForPlayer(playerId)
 			return true
@@ -228,7 +228,7 @@ public class NotificationHandler
 		if (player != null)
 		{
 			// if player stops playing and the service is still bound, we remove the notification
-			if (!player.isPlayingSound && this.service.isActivityVisible())
+			if (!player.isPlayingSound && this.service.isActivityVisible)
 			{
 				this.removePlayListNotification()
 				return true
@@ -295,7 +295,7 @@ public class NotificationHandler
 		{
 			notifications.dropLastWhile { notification -> notification.notificationId == notificationId }
 
-			if (!service.isActivityVisible() && notifications.size == 0)
+			if (!service.isActivityVisible && notifications.size == 0)
 				service.stopSelf()
 		}
 	}

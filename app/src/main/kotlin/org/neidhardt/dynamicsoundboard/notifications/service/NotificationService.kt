@@ -24,9 +24,11 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 	private val eventBus = EventBus.getDefault()
 
 	private var notificationHandler: NotificationHandler? = null
-	private var isActivityVisible: Boolean = false
 
-	override fun onBind(intent: Intent): IBinder = null
+    var isActivityVisible: Boolean = false
+		private set
+
+	override fun onBind(intent: Intent): IBinder? = null
 
 	override fun onCreate()
 	{
@@ -68,10 +70,5 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 			this.isActivityVisible = true
 			this.notificationHandler!!.removeNotificationsForPausedSounds()
 		}
-	}
-
-	public fun isActivityVisible(): Boolean
-	{
-		return isActivityVisible
 	}
 }

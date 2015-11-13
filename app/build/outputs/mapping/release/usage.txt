@@ -13949,6 +13949,8 @@ org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotificationBuilder:
     public PendingSoundNotificationBuilder(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController,int,java.lang.String)
     public PendingSoundNotificationBuilder(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController,int)
     public PendingSoundNotificationBuilder(android.content.Context,org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController)
+org.neidhardt.dynamicsoundboard.notifications.service.NotificationService:
+    28:28:private final void setActivityVisible(boolean)
 org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences:
     12:12:public SoundboardPreferences()
 org.neidhardt.dynamicsoundboard.soundactivity.RequestPermissionHelper:

@@ -50,7 +50,7 @@ public class DynamicSoundboardApplication : Application()
 
 		public fun reportError(error: Exception)
 		{
-			Logger.e(TAG, error.getMessage())
+			Logger.e(TAG, error.message)
 			// nothing to be done in release mode
 		}
 	}
