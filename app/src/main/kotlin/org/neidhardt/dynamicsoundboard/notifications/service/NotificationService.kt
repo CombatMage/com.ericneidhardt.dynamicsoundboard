@@ -26,10 +26,7 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 	private var notificationHandler: NotificationHandler? = null
 	private var isActivityVisible: Boolean = false
 
-	override fun onBind(intent: Intent): IBinder?
-	{
-		return null
-	}
+	override fun onBind(intent: Intent): IBinder = null
 
 	override fun onCreate()
 	{
