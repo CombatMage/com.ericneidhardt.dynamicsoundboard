@@ -65,8 +65,8 @@ public class SoundPresenterTest : BaseTest()
 		this.soundPresenter!!.onEventMainThread(event)
 
 		val list = ArrayList<MediaPlayerController>()
-		list.add(this.soundPresenter!!.values.get(1))
-		list.add(this.soundPresenter!!.values.get(2))
+		list.add(this.soundPresenter!!.values[1])
+		list.add(this.soundPresenter!!.values[2])
 
 		val removeEvent = SoundsRemovedEvent(list)
 		this.soundPresenter!!.onEventMainThread(removeEvent)
@@ -92,12 +92,13 @@ public class SoundPresenterTest : BaseTest()
 
 		assertThat(this.soundPresenter!!.values.size, equalTo(3))
 
-		assertEquals(this.soundPresenter!!.values.get(0), event2.player)
-		assertEquals(this.soundPresenter!!.values.get(1), event1.player)
-		assertEquals(this.soundPresenter!!.values.get(2), event0.player)
+		assertEquals(this.soundPresenter!!.values[0], event2.player)
+		assertEquals(this.soundPresenter!!.values[1], event1.player)
+		assertEquals(this.soundPresenter!!.values[2], event0.player)
 
 		this.verifySortOrder()
 	}
+
 
 	private fun verifySortOrder()
 	{
