@@ -25,15 +25,11 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 			this.suggestedName = args.getString(KEY_SUGGESTED_NAME)
 	}
 
-	override fun getLayoutId(): Int
-	{
-		return R.layout.dialog_add_new_sound_layout
-	}
+	override fun getLayoutId(): Int = R.layout.dialog_add_new_sound_layout
 
-	override fun getHintForName(): String
-	{
-		return this.suggestedName ?: ""
-	}
+	override fun getHintForName(): String = this.suggestedName ?: ""
+
+    override fun getTitleId(): Int = R.string.dialog_add_new_sound_layout_title
 
 	override fun deliverResult()
 	{

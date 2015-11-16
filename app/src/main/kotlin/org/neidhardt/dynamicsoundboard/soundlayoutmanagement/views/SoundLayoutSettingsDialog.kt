@@ -22,15 +22,11 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 			this.databaseId = args.getString(KEY_DATABASE_ID)
 	}
 
-	override fun getLayoutId(): Int
-	{
-		return R.layout.dialog_sound_layout_settings
-	}
+	override fun getLayoutId(): Int = R.layout.dialog_sound_layout_settings
 
-	override fun getHintForName(): String
-	{
-		return this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)?.label ?: ""
-	}
+	override fun getHintForName(): String = this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)?.label ?: ""
+
+    override fun getTitleId(): Int = R.string.dialog_sound_layout_settings_title
 
 	override fun deliverResult()
 	{

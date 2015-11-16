@@ -149,9 +149,9 @@
 	<string name="dialog_sound_settings_title">Sound editieren</string>
 	<string name="dialog_sound_settings_message">Sound umbenennen oder in eine andere Kategorie verschieben?</string>
 
-	<string name="dialog_sound_layout_settings_message">Abenteuer umbenennen</string>
+	<string name="dialog_sound_layout_settings_title">Abenteuer umbenennen</string>
 
-	<string name="dialog_add_new_sound_layout_message">Ein weitere Abenteuer anlegen</string>
+	<string name="dialog_add_new_sound_layout_title">Ein weitere Abenteuer anlegen</string>
 
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_message">Welcher Kategorie soll der Sound hinzugefügt werden, oder soll eine neue Kategorie angelegt werden?</string>
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_checkbox">Eine neue Katagorie anlegen</string>

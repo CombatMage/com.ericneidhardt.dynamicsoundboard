@@ -10,16 +10,6 @@
 		app:text_cancle_button="@string/dialog_cancel"
 		app:text_ok_button="@string/dialog_save">
 
-	<com.devspark.robototextview.widget.RobotoTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:textColor="@color/text_content_secondary"
-			android:textSize="@dimen/text_body"
-			android:text="@string/dialog_sound_layout_settings_message"
-			android:focusable="true"
-			android:focusableInTouchMode="true"
-			app:typeface="roboto_medium"/>
-
 	<android.support.design.widget.TextInputLayout
 			android:id="@+id/ti_name_sound_layout"
 			android:layout_width="@dimen/width_min_dialog"

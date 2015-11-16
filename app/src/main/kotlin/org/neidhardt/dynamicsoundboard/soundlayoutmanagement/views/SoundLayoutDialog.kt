@@ -28,11 +28,14 @@ public abstract class SoundLayoutDialog : BaseDialog(), View.OnClickListener
 		view.findViewById(R.id.b_cancel).setOnClickListener(this)
 		view.findViewById(R.id.b_ok).setOnClickListener(this)
 
-		val dialog = AppCompatDialog(this.activity, R.style.DialogThemeNoTitle)
+		val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
+        dialog.setTitle(this.getTitleId())
 		dialog.setContentView(view)
 
 		return dialog
 	}
+
+    protected abstract fun getTitleId(): Int
 
 	protected abstract fun getLayoutId(): Int
 
