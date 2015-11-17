@@ -16498,6 +16498,17 @@ com.fasterxml.jackson.databind.util.ViewMatcher$Single: long serialVersionUID
 com.fasterxml.jackson.databind.util.ViewMatcher$Single: java.lang.Class _view
 com.fasterxml.jackson.databind.util.ViewMatcher$Single: ViewMatcher$Single(java.lang.Class)
 com.fasterxml.jackson.databind.util.ViewMatcher$Single: boolean isVisibleForView(java.lang.Class)
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: java.lang.Object start
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: java.lang.Object endInclusive
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: java.lang.Object getEnd()
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: java.lang.Object getFirst()
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: java.lang.Object getLast()
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: java.lang.Object getIncrement()
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: boolean isEmpty()
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: java.lang.Object getStart()
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: java.lang.Object getEndInclusive()
+com.fasterxml.jackson.module.kotlin.ClosedRangeMixin: ClosedRangeMixin(java.lang.Object,java.lang.Object)
 com.fasterxml.jackson.module.kotlin.ExtensionsKt
 com.fasterxml.jackson.module.kotlin.ExtensionsKt: com.fasterxml.jackson.databind.ObjectMapper jacksonObjectMapper()
 com.fasterxml.jackson.module.kotlin.ExtensionsKt: com.fasterxml.jackson.databind.ObjectMapper registerKotlinModule(com.fasterxml.jackson.databind.ObjectMapper)
@@ -16572,14 +16583,6 @@ com.fasterxml.jackson.module.kotlin.PackageVersion: com.fasterxml.jackson.core.V
 com.fasterxml.jackson.module.kotlin.PackageVersion: PackageVersion()
 com.fasterxml.jackson.module.kotlin.PackageVersion: com.fasterxml.jackson.core.Version version()
 com.fasterxml.jackson.module.kotlin.PackageVersion: void <clinit>()
-com.fasterxml.jackson.module.kotlin.RangeMixin
-com.fasterxml.jackson.module.kotlin.RangeMixin: java.lang.Comparable start
-com.fasterxml.jackson.module.kotlin.RangeMixin: java.lang.Comparable end
-com.fasterxml.jackson.module.kotlin.RangeMixin: boolean isEmpty()
-com.fasterxml.jackson.module.kotlin.RangeMixin: java.lang.Comparable getIncrement()
-com.fasterxml.jackson.module.kotlin.RangeMixin: java.lang.Comparable getStart()
-com.fasterxml.jackson.module.kotlin.RangeMixin: java.lang.Comparable getEnd()
-com.fasterxml.jackson.module.kotlin.RangeMixin: RangeMixin(java.lang.Comparable,java.lang.Comparable)
 com.melnykov.fab.FloatingActionButton: FloatingActionButton(android.content.Context)
 com.melnykov.fab.FloatingActionButton: FloatingActionButton(android.content.Context,android.util.AttributeSet)
 com.melnykov.fab.FloatingActionButton: FloatingActionButton(android.content.Context,android.util.AttributeSet,int)
@@ -18058,12 +18061,6 @@ kotlin.reflect.jvm.internal.impl.renderer.RenderingFormat: kotlin.reflect.jvm.in
 kotlin.reflect.jvm.internal.impl.renderer.RenderingFormat: kotlin.reflect.jvm.internal.impl.renderer.RenderingFormat valueOf(java.lang.String)
 kotlin.reflect.jvm.internal.impl.resolve.OverridingUtil$OverrideCompatibilityInfo$Result: kotlin.reflect.jvm.internal.impl.resolve.OverridingUtil$OverrideCompatibilityInfo$Result[] values()
 kotlin.reflect.jvm.internal.impl.resolve.OverridingUtil$OverrideCompatibilityInfo$Result: kotlin.reflect.jvm.internal.impl.resolve.OverridingUtil$OverrideCompatibilityInfo$Result valueOf(java.lang.String)
-kotlin.reflect.jvm.internal.impl.resolve.calls.inference.ConstraintSystemImpl$ConstraintKind: kotlin.reflect.jvm.internal.impl.resolve.calls.inference.ConstraintSystemImpl$ConstraintKind[] values()
-kotlin.reflect.jvm.internal.impl.resolve.calls.inference.ConstraintSystemImpl$ConstraintKind: kotlin.reflect.jvm.internal.impl.resolve.calls.inference.ConstraintSystemImpl$ConstraintKind valueOf(java.lang.String)
-kotlin.reflect.jvm.internal.impl.resolve.calls.inference.TypeBounds$BoundKind: kotlin.reflect.jvm.internal.impl.resolve.calls.inference.TypeBounds$BoundKind[] values()
-kotlin.reflect.jvm.internal.impl.resolve.calls.inference.TypeBounds$BoundKind: kotlin.reflect.jvm.internal.impl.resolve.calls.inference.TypeBounds$BoundKind valueOf(java.lang.String)
-kotlin.reflect.jvm.internal.impl.resolve.calls.inference.constraintPosition.ConstraintPositionKind: kotlin.reflect.jvm.internal.impl.resolve.calls.inference.constraintPosition.ConstraintPositionKind[] values()
-kotlin.reflect.jvm.internal.impl.resolve.calls.inference.constraintPosition.ConstraintPositionKind: kotlin.reflect.jvm.internal.impl.resolve.calls.inference.constraintPosition.ConstraintPositionKind valueOf(java.lang.String)
 kotlin.reflect.jvm.internal.impl.resolve.jvm.JvmPrimitiveType: kotlin.reflect.jvm.internal.impl.resolve.jvm.JvmPrimitiveType[] values()
 kotlin.reflect.jvm.internal.impl.resolve.jvm.JvmPrimitiveType: kotlin.reflect.jvm.internal.impl.resolve.jvm.JvmPrimitiveType valueOf(java.lang.String)
 kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf$Annotation$Argument$Value$Type: kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf$Annotation$Argument$Value$Type[] values()
@@ -19396,7 +19393,7 @@ org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_from_intent_m
 org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_from_intent_title
 org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_from_intent_to_sound_sheet_checkbox
 org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_from_intent_to_sound_sheet_message
-org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_layout_message
+org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_layout_title
 org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_message
 org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_sheet_message
 org.neidhardt.dynamicsoundboard.R$string: int dialog_add_new_sound_sheet_title
@@ -19424,7 +19421,7 @@ org.neidhardt.dynamicsoundboard.R$string: int dialog_rename_sound_file_title
 org.neidhardt.dynamicsoundboard.R$string: int dialog_rename_sound_toast_file_not_found
 org.neidhardt.dynamicsoundboard.R$string: int dialog_rename_sound_toast_player_not_updated
 org.neidhardt.dynamicsoundboard.R$string: int dialog_save
-org.neidhardt.dynamicsoundboard.R$string: int dialog_sound_layout_settings_message
+org.neidhardt.dynamicsoundboard.R$string: int dialog_sound_layout_settings_title
 org.neidhardt.dynamicsoundboard.R$string: int dialog_sound_settings_message
 org.neidhardt.dynamicsoundboard.R$string: int dialog_sound_settings_title
 org.neidhardt.dynamicsoundboard.R$string: int dialog_store_layout_failed_create_file
