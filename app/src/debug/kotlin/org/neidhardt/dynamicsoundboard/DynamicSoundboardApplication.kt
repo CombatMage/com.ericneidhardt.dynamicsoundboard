@@ -63,7 +63,7 @@ public class DynamicSoundboardApplication : Application()
 		super.onCreate()
 		ACRA.init(this);
 
-		applicationContext = this.applicationContext;
+		applicationContext = this.applicationContext
 		soundLayoutsManager = SoundLayoutsManager()
 		soundSheetsManager = SoundSheetsManager()
 		soundsManager = SoundsManager()
