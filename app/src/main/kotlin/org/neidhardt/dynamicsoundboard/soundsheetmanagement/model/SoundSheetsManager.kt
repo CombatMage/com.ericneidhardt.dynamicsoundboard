@@ -101,7 +101,7 @@ public class SoundSheetsManager :
 			if (soundSheetToRemove.isSelected)
 			{
 				if (this.soundSheets.size > 0)
-					this.setSoundSheetSelected(this.soundSheets.get(0))
+					this.setSoundSheetSelected(this.soundSheets[0])
 
 			}
 			if (soundSheetToRemove.id != null)
@@ -119,7 +119,7 @@ public class SoundSheetsManager :
 	override fun getSoundSheetForFragmentTag(fragmentTag: String): SoundSheet?
 	{
 		val results = this.soundSheets.filter { soundSheet -> soundSheet.fragmentTag.equals(fragmentTag) }
-		return if (results.size > 0) results.get(0) else null
+		return if (results.size > 0) results[0] else null
 	}
 
 	override fun setSoundSheetSelected(soundSheetToSelect: SoundSheet)
@@ -144,7 +144,7 @@ public class SoundSheetsManager :
 	override fun getSelectedItem(): SoundSheet?
 	{
 		val results = this.soundSheets.filter { soundSheet -> soundSheet.isSelected }
-		return if (results.size > 0) results.get(0) else null
+		return if (results.size > 0) results[0] else null
 	}
 
 	override fun getSuggestedName(): String

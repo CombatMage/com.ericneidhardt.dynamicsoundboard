@@ -33,7 +33,7 @@ public abstract class LongTermTask<T> extends SafeAsyncTask<T>
 	protected void onException(Exception e) throws RuntimeException
 	{
 		super.onException(e);
-		Logger.e(getTag(), e.getMessage());
+		Logger.INSTANCE.e(getTag(), e.getMessage());
 		taskCounter--;
 		EventBus.getDefault().postSticky(new LongTermTaskStateChangedEvent(false, taskCounter));
 		throw new RuntimeException(e);

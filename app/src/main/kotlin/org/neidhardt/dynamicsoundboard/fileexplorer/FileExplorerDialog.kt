@@ -105,7 +105,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		override fun onBindViewHolder(directoryEntry: DirectoryEntry, position: Int)
 		{
-			val file = this.fileList.get(position)
+			val file = this.fileList[position]
 			directoryEntry.bindData(file)
 		}
 
@@ -186,7 +186,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		override fun onClick(v: View)
 		{
-			val file = adapter.fileList.get(this.layoutPosition)
+			val file = adapter.fileList[this.layoutPosition]
 			if (!file.isDirectory)
 				return
 			adapter.setParent(file)
@@ -195,7 +195,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		override fun onLongClick(v: View): Boolean
 		{
-			val file = adapter.fileList.get(this.layoutPosition)
+			val file = adapter.fileList[this.layoutPosition]
 			if (file == adapter.parentFile!!.parentFile)
 				return false
 

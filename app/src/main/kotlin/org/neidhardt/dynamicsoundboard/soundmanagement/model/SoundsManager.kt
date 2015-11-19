@@ -102,7 +102,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController>
 	{
-		var soundsInFragment: List<MediaPlayerController>? = this.sounds.get(fragmentTag)
+		var soundsInFragment: List<MediaPlayerController>? = this.sounds[fragmentTag]
 		if (soundsInFragment == null)
 		{
 			soundsInFragment = ArrayList<MediaPlayerController>()
@@ -116,7 +116,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		if (this.soundSheetsDataUtil.isPlaylistSoundSheet(fragmentTag))
 			return searchInListForId(playerId, playlist)
 		else
-			return searchInListForId(playerId, this.sounds.get(fragmentTag).orEmpty())
+			return searchInListForId(playerId, this.sounds[fragmentTag].orEmpty())
 	}
 
 	override fun createSoundAndAddToManager(data: MediaPlayerData)
@@ -227,7 +227,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			for (playerToRemove in copyList)
 			{
 				val data = playerToRemove.mediaPlayerData
-				this.sounds.get(data.fragmentTag)?.remove(playerToRemove)
+				this.sounds[data.fragmentTag]?.remove(playerToRemove)
 
 				if (data.isInPlaylist)
 				{
@@ -256,7 +256,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun moveSoundInFragment(fragmentTag: String, from: Int, to: Int)
 	{
-		val soundsInFragment = this.sounds.get(fragmentTag)
+		val soundsInFragment = this.sounds[fragmentTag]
 		if (soundsInFragment != null)
 		{
 			val size = soundsInFragment.size

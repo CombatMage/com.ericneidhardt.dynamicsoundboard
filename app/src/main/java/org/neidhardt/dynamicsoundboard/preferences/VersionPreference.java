@@ -47,7 +47,7 @@ public class VersionPreference extends Preference
 		}
 		catch (PackageManager.NameNotFoundException e)
 		{
-			Logger.d(TAG, e.getMessage()); // should never happen, because this is the app  package
+			Logger.INSTANCE.d(TAG, e.getMessage()); // should never happen, because this is the app  package
 		}
 		super.setSummary(versionName);
 	}

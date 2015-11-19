@@ -40,7 +40,7 @@ internal fun searchInMapForId(playerId: String, sounds: Map<String, List<MediaPl
 	val soundSheets = sounds.keys
 	for (soundSheet in soundSheets)
 	{
-		val playersInSoundSheet = sounds.get(soundSheet)
+		val playersInSoundSheet = sounds[soundSheet]
 		val player = searchInListForId(playerId, playersInSoundSheet.orEmpty())
 		if (player != null)
 			return player

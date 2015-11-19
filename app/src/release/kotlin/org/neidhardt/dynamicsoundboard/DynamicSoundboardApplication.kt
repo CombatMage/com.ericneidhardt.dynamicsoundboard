@@ -26,7 +26,7 @@ public class DynamicSoundboardApplication : Application()
 
 		private var applicationContext: Context? = null
 
-		private val random = Random();
+		private val random = Random()
 
 		private var soundLayoutsManager: SoundLayoutsManager? = null
 		private var soundsManager: SoundsManager? = null
@@ -59,7 +59,7 @@ public class DynamicSoundboardApplication : Application()
 	{
 		super.onCreate()
 
-		applicationContext = this.applicationContext;
+		applicationContext = this.applicationContext
 
 		soundLayoutsManager = SoundLayoutsManager()
 		soundSheetsManager = SoundSheetsManager()

@@ -9,12 +9,10 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 
 /**
- * Created by eric.neidhardt on 31.03.2015.
+ * File created by eric.neidhardt on 31.03.2015.
  */
 public class AnimationUtils
 {
-	private static final String TAG = AnimationUtils.class.getName();
-
 	public static Animator createSlowCircularReveal(final View view, int startX, int startY, float startRadius, float endRadius)
 	{
 		if (!Util.IS_LOLLIPOP_AVAILABLE)

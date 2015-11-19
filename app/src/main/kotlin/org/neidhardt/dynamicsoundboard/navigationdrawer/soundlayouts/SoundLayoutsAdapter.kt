@@ -51,7 +51,7 @@ public class SoundLayoutsAdapter
 
 	override fun onBindViewHolder(holder: SoundLayoutViewHolder, position: Int)
 	{
-		val data = this.getValues().get(position)
+		val data = this.getValues()[position]
 		holder.bindData(data)
 	}
 

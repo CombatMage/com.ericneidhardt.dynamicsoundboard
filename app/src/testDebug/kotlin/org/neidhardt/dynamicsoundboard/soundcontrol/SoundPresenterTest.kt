@@ -106,7 +106,7 @@ public class SoundPresenterTest : BaseTest()
 		val count = values.size
 		for (i in 0..count - 1)
 		{
-			val itemSortOrder = values.get(i).mediaPlayerData.sortOrder
+			val itemSortOrder = values[i].mediaPlayerData.sortOrder
 			assertEquals(itemSortOrder, i)
 		}
 	}

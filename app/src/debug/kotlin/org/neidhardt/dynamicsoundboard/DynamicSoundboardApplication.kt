@@ -1,23 +1,22 @@
 package org.neidhardt.dynamicsoundboard;
 
-import android.app.Application;
-import android.content.Context;
+import android.app.Application
+import android.content.Context
 import org.acra.ACRA
 import org.acra.annotation.ReportsCrashes
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsUtil
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManager;
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsManager
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager;
-
-import java.util.Random;
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager
+import java.util.*
 
 
 @ReportsCrashes(
@@ -61,7 +60,7 @@ public class DynamicSoundboardApplication : Application()
 	override fun onCreate()
 	{
 		super.onCreate()
-		ACRA.init(this);
+		ACRA.init(this)
 
 		applicationContext = this.applicationContext
 		soundLayoutsManager = SoundLayoutsManager()

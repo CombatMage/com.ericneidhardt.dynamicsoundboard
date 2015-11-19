@@ -41,7 +41,7 @@ public class PlaylistAdapter
 
 	override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int)
 	{
-		val data = this.getValues().get(position)
+		val data = this.getValues()[position]
 		holder.bindData(data)
 	}
 

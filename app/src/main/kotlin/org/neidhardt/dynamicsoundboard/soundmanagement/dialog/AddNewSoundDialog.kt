@@ -115,8 +115,8 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 				val count = labels.size
 				for (i in 0..count - 1)
 				{
-					val uri = Uri.parse(uris.get(i))
-					val label = labels.get(i)
+					val uri = Uri.parse(uris[i])
+					val label = labels[i]
 
 					this.updateHeightToContent()
 					presenter.addNewSound(NewSoundData(uri, label))
@@ -137,7 +137,7 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 
 		for (i in 0..count - 1)
 		{
-			val data = presenter.getValues().get(i)
+			val data = presenter.getValues()[i]
 
 			labels.add(i, data.label)
 			uris.add(i, data.uri.toString())
@@ -229,7 +229,7 @@ private class AddNewSoundDialogPresenter
 		val renamedPlayers = ArrayList<MediaPlayerData>()
 		for (i in 0..count - 1)
 		{
-			val item = this.getValues().get(i)
+			val item = this.getValues()[i]
 
 			val soundUri = item.uri
 			val soundLabel = item.label
@@ -301,7 +301,7 @@ private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter)
 
 	override fun onBindViewHolder(holder: NewSoundViewHolder, position: Int)
 	{
-		holder.bindData(this.presenter.getValues().get(position))
+		holder.bindData(this.presenter.getValues()[position])
 	}
 }
 

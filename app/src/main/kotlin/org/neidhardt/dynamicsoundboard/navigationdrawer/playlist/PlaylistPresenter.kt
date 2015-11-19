@@ -162,7 +162,7 @@ public class PlaylistPresenter
 		val finishedPlayerData = event.player.mediaPlayerData
 		if (this.currentItemIndex != null)
 		{
-			val currentPlayer = this.values.get(this.currentItemIndex!!).mediaPlayerData
+			val currentPlayer = this.values[this.currentItemIndex!!].mediaPlayerData
 			if (currentPlayer !== finishedPlayerData)
 				return
 
@@ -170,7 +170,7 @@ public class PlaylistPresenter
 			if ((this.currentItemIndex as Int) >= this.values.size)
 				this.currentItemIndex = 0
 
-			this.values.get(this.currentItemIndex!!).playSound()
+			this.values[this.currentItemIndex!!].playSound()
 			this.adapter?.notifyDataSetChanged()
 		}
 	}
@@ -180,8 +180,8 @@ public class PlaylistPresenter
 		val count = playlist.size
 		for (i in 0..count - 1)
 		{
-			playlist.get(i).mediaPlayerData.sortOrder = i
-			playlist.get(i).mediaPlayerData.updateItemInDatabaseAsync()
+			playlist[i].mediaPlayerData.sortOrder = i
+			playlist[i].mediaPlayerData.updateItemInDatabaseAsync()
 		}
 	}
 }

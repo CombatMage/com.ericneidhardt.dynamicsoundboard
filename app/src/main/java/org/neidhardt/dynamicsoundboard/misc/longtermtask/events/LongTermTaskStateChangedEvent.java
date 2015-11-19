@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.misc.longtermtask.events;
 
 /**
- * Created by eric.neidhardt on 28.04.2015.
+ * File created by eric.neidhardt on 28.04.2015.
  */
 public class LongTermTaskStateChangedEvent
 {

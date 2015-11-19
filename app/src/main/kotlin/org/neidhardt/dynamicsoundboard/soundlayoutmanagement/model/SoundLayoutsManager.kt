@@ -19,9 +19,9 @@ public class SoundLayoutsManager :
 {
 	companion object
 	{
-		public val DB_DEFAULT: String = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default"
+		public const val DB_DEFAULT: String = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default"
 
-		private val DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts"
+		private const val DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts"
 
 		public fun getNewDatabaseIdForLabel(label: String): String
 		{
@@ -62,7 +62,7 @@ public class SoundLayoutsManager :
 				return soundLayout
 		}
 		// no layout is currently selected
-		val layout = this.soundLayouts.get(0)
+		val layout = this.soundLayouts[0]
 		layout.isSelected = true
 		layout.updateItemInDatabaseAsync()
 		return layout
@@ -115,8 +115,8 @@ public class SoundLayoutsManager :
 
 		if (!newSelectionRequired)
 		{
-			this.soundLayouts.get(0).isSelected = true
-			this.soundLayouts.get(0).updateItemInDatabaseAsync()
+			this.soundLayouts[0].isSelected = true
+			this.soundLayouts[0].updateItemInDatabaseAsync()
 		}
 	}
 
@@ -125,7 +125,7 @@ public class SoundLayoutsManager :
 		val size = this.soundLayouts.size
 		for (i in 0..size - 1)
 		{
-			val layout = this.soundLayouts.get(i)
+			val layout = this.soundLayouts[i]
 			if (layout.isSelected && i != position)
 			{
 				layout.isSelected = false

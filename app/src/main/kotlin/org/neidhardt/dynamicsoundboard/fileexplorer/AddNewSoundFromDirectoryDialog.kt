@@ -11,11 +11,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromFileListTask
-import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
-
 import java.io.File
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
