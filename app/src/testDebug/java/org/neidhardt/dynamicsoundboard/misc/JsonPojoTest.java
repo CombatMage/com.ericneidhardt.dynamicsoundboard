@@ -48,9 +48,9 @@ public class JsonPojoTest extends BaseTest
 	@Test
 	public void testWriteAndReadFromFile() throws Exception
 	{
-		JsonPojo.writeToFile(this.file, this.sheets, this.playlist, this.sounds);
+		JsonPojoKt.writeToFile(this.file, this.sheets, this.playlist, this.sounds);
 
-		JsonPojo pojo = JsonPojo.readFromFile(this.file);
+		JsonPojo pojo = JsonPojoKt.readFromFile(this.file);
 		assertThat(pojo.getSoundSheets().size(), equalTo(1));
 		assertThat(pojo.getPlayList().size(), equalTo(1));
 		assertThat(pojo.getSounds().get("test").size(), equalTo(1));

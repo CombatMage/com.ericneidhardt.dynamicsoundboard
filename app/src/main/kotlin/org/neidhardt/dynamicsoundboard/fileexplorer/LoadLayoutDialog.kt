@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.misc.JsonPojo
+import org.neidhardt.dynamicsoundboard.misc.readFromFile
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 import java.io.File
 import java.io.IOException
@@ -98,7 +98,7 @@ public class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.
 	{
 		try
 		{
-			val parsedJson = JsonPojo.readFromFile(file)
+			val parsedJson = readFromFile(file)
 
 			val soundSheets = parsedJson.soundSheets
 			val playList = parsedJson.playList

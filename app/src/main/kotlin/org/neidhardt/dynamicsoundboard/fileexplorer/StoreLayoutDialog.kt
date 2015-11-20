@@ -14,8 +14,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.misc.JsonPojo
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.misc.writeToFile
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 import java.io.File
 import java.io.IOException
@@ -142,7 +142,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 	{
 		try
 		{
-			JsonPojo.writeToFile(
+			writeToFile(
 					super.adapter.selectedFiles.elementAt(0),
 					this.soundSheetsDataAccess.getSoundSheets(),
 					this.soundsDataAccess.playlist,
