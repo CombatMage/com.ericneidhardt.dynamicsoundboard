@@ -20,12 +20,10 @@ class AddNewSoundSheetDialog : BaseDialog(), View.OnClickListener
     {
 		super.onCreate(savedInstanceState)
 
-		val args = this.arguments
-		if (args != null)
-			this.suggestedName = args.getString(KEY_SUGGESTED_NAME)
+		this.suggestedName = this.arguments?.getString(KEY_SUGGESTED_NAME)
 	}
 
-	override fun onCreateDialog(savedInstanceState: Bundle): Dialog
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
     {
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_sheet, null)
 
