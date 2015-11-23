@@ -6,7 +6,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
-import org.neidhardt.dynamicsoundboard.misc.Util
+import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
@@ -50,7 +50,7 @@ public class SoundSheetsManager :
 			this.isInitDone = true
 
 			this.soundSheets.clear()
-			this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getContext(), this.getDatabaseName())
+			this.daoSession = GreenDaoHelper.setupDatabase(DynamicSoundboardApplication.getContext(), this.getDatabaseName())
 
 			val task = LoadSoundSheetsTask(this.getDbSoundSheets(), this)
 			task.execute()

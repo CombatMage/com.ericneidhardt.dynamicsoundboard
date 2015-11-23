@@ -7,8 +7,8 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
+import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.misc.Util
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask
@@ -44,14 +44,14 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	override fun getDbSounds(): DaoSession
 	{
 		if (this.dbSounds == null)
-			this.dbSounds = Util.setupDatabase(DynamicSoundboardApplication.getContext(), getDatabaseNameSounds(this.soundLayoutsAccess))
+			this.dbSounds = GreenDaoHelper.setupDatabase(DynamicSoundboardApplication.getContext(), getDatabaseNameSounds(this.soundLayoutsAccess))
 		return this.dbSounds as DaoSession
 	}
 
 	override fun getDbPlaylist(): DaoSession
 	{
 		if (this.dbPlaylist == null)
-			this.dbPlaylist = Util.setupDatabase(DynamicSoundboardApplication.getContext(), getDatabaseNamePlayList(this.soundLayoutsAccess))
+			this.dbPlaylist = GreenDaoHelper.setupDatabase(DynamicSoundboardApplication.getContext(), getDatabaseNamePlayList(this.soundLayoutsAccess))
 		return this.dbPlaylist as DaoSession
 	}
 
@@ -87,8 +87,8 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		this.playlist.map { player-> player.destroy(false) }
 
-		val allPlayers = this.sounds.values
-		for (players in allPlayers)
+		val allPlayerLists = this.sounds.values
+		for (players in allPlayerLists)
 			players.map { player-> player.destroy(false) }
 
 		this.playlist.clear()

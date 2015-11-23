@@ -11,8 +11,8 @@ import android.net.Uri
 import android.support.v7.app.NotificationCompat
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.misc.AndroidVersion
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.misc.Util
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 
 /**
@@ -48,7 +48,7 @@ public class PendingSoundNotificationBuilder
 
 	init
 	{
-		val isLollipopStyleAvailable = Util.IS_LOLLIPOP_AVAILABLE
+		val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
 		this.setActionStop(context, isLollipopStyleAvailable)
 		if (player.isPlayingSound)
 		{

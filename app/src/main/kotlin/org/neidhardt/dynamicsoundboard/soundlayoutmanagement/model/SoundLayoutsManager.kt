@@ -4,7 +4,7 @@ import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
-import org.neidhardt.dynamicsoundboard.misc.Util
+import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import java.util.*
 
 /**
@@ -29,7 +29,7 @@ public class SoundLayoutsManager :
 		}
 	}
 
-	private val daoSession: DaoSession = Util.setupDatabase(DynamicSoundboardApplication.getContext(), DB_SOUND_LAYOUTS)
+	private val daoSession: DaoSession = GreenDaoHelper.setupDatabase(DynamicSoundboardApplication.getContext(), DB_SOUND_LAYOUTS)
 	private val soundLayouts: MutableList<SoundLayout> = ArrayList()
 
 	init

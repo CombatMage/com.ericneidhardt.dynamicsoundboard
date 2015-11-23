@@ -19,10 +19,7 @@
 -keepattributes LineNumberTable,SourceFile,*Annotation*,Signature
 -dontobfuscate
 -optimizations !code/allocation/variable
-
-#kotlin
--dontwarn kotlin.** 
--dontwarn org.w3c.dom.events.* 
+-dontoptimize #there is currently a problem with proguad and kotlin, when using this flag
 
 #jackson and pojos
 -dontwarn com.fasterxml.jackson.databind.**
