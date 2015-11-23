@@ -10,7 +10,7 @@ import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
 /**
  * File created by Eric Neidhardt on 12.11.2014.
  */
-public class AddPauseFloatingActionButton : com.melnykov.fab.FloatingActionButton, Runnable, View.OnClickListener {
+public class AddPauseFloatingActionButton : com.melnykov.fab.FloatingActionButton, View.OnClickListener {
 
 	companion object {
 		private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
@@ -69,15 +69,10 @@ public class AddPauseFloatingActionButton : com.melnykov.fab.FloatingActionButto
 
 	fun animateUiChanges()
 	{
-		this.post(this)
-	}
-
-	override fun run()
-	{
-		AnimationUtils.createCircularReveal(this@AddPauseFloatingActionButton,
+		this.post { AnimationUtils.createCircularReveal(this,
 				width,
 				height,
 				0f,
-				(height * 2).toFloat())?.apply { start() }
+				(height * 2).toFloat())?.apply { start() } }
 	}
 }

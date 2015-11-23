@@ -4,7 +4,6 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Handler
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
@@ -12,6 +11,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
+import org.neidhardt.util.enhanced_handler.EnhancedHandler
+import org.neidhardt.util.enhanced_handler.KillableRunnable
 import java.io.IOException
 
 private enum class State
@@ -50,12 +51,12 @@ private class EnhancedMediaPlayer
 		MediaPlayerController,
 		MediaPlayer.OnCompletionListener,
 		MediaPlayer.OnErrorListener,
-		MediaPlayer.OnInfoListener,
-		Runnable
+		MediaPlayer.OnInfoListener
 {
-	private val TAG = EnhancedMediaPlayer::class.java.name
+	private val TAG = javaClass.name
 
-	private var handler: Handler? = null
+	private var handler: EnhancedHandler? = null
+	private var fadeOutSchedule: KillableRunnable? = null
 	private var currentState: State? = null
 	private var volume: Int = 0
 
@@ -184,8 +185,8 @@ private class EnhancedMediaPlayer
 
 	override fun destroy(postStateChanged: Boolean)
 	{
-		if (this.handler != null)
-			this.handler!!.removeCallbacks(this)
+		this.fadeOutSchedule?.apply { handler?.removeCallbacks(this) }
+
 		this.currentState = State.DESTROYED
 		this.reset()
 		this.release()
@@ -301,6 +302,7 @@ private class EnhancedMediaPlayer
 	override fun fadeOutSound()
 	{
 		this.updateVolume(0)
+        this.fadeOutSchedule?.apply { handler?.removeCallbacks(this) }
 		this.scheduleNextVolumeChange()
 	}
 
@@ -308,14 +310,25 @@ private class EnhancedMediaPlayer
 	{
 		val delay = FADE_OUT_DURATION / INT_VOLUME_MAX
 		if (this.handler == null)
-			this.handler = Handler()
-		this.handler!!.postDelayed(this, delay.toLong())
+			this.handler = EnhancedHandler()
+
+		this.fadeOutSchedule = object : KillableRunnable
+		{
+			override var isKilled: Boolean = false
+
+			override fun run()
+			{
+				if (!this.isKilled)
+					scheduleNexFadeOutIteration()
+			}
+		}.apply { handler?.postDelayed(this, delay.toLong()) }
 	}
 
-	override fun run()
+	private fun scheduleNexFadeOutIteration()
 	{
 		updateVolume(-1)
-		if (volume == INT_VOLUME_MIN) {
+		if (volume == INT_VOLUME_MIN)
+        {
 			updateVolume(INT_VOLUME_MAX)
 			pauseSound()
 		}

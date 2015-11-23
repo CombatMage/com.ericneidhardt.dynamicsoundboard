@@ -17,8 +17,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
 		targetSdkVersion 23
-		versionCode 21906
-		versionName "2.19.6"
+		versionCode 21907
+		versionName "2.19.7"
 		resConfigs "de"
 	}
 
@@ -81,6 +81,7 @@ dependencies {
 
 	compile project(':safe_async_task')
 	compile project(':drag_drop_recycler_view')
+	compile project(':enhanced_handler')
 
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
