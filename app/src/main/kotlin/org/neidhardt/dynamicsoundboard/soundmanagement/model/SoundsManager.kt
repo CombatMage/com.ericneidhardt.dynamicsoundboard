@@ -212,6 +212,16 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		this.eventBus.post(SoundAddedEvent(player))
 	}
 
+	override fun addSoundToCurrentlyPlayingSounds(soundToAdd: MediaPlayerController)
+	{
+		this.currentlyPlayingSounds.add(soundToAdd)
+	}
+
+	override fun removeSoundFromCurrentlyPlayingSounds(soundToRemove: MediaPlayerController)
+	{
+		this.currentlyPlayingSounds.remove(soundToRemove)
+	}
+
 	override fun removeSounds(soundsToRemove: List<MediaPlayerController>)
 	{
 		if (soundsToRemove.size > 0)
@@ -292,7 +302,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 					context = DynamicSoundboardApplication.getContext(),
 					eventBus = EventBus.getDefault(),
 					mediaPlayerData = newPlayerData,
-					soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
+					soundsDataStorage = this
 			)
 		}
 		catch (e: IOException)
@@ -311,7 +321,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 					context = DynamicSoundboardApplication.getContext(),
 					eventBus = this.eventBus,
 					mediaPlayerData = playerData,
-					soundsDataAccess = this)
+					soundsDataStorage = this)
 		}
 		catch (e: IOException) {
 			Logger.d(TAG, e.message)

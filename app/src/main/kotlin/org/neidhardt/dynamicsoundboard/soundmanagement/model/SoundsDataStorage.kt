@@ -13,14 +13,14 @@ public interface SoundsDataStorage
 	 * Create an new `EnhancedMediaPlayer` from given data and adds this player to the corresponding list of sounds.
 	 * @param data `MediaPlayerData` to create player from
 	 */
-	public fun createSoundAndAddToManager(data: MediaPlayerData)
+	fun createSoundAndAddToManager(data: MediaPlayerData)
 
 	/**
 	 * Create an new `EnhancedMediaPlayer` from given data and adds this player to the playlist.
 	 * If creation failed, a new `CreatingPlayerFailedEvent` is posted.
 	 * @param data `MediaPlayerData` to create player from
 	 */
-	public fun createPlaylistSoundAndAddToManager(data: MediaPlayerData)
+	fun createPlaylistSoundAndAddToManager(data: MediaPlayerData)
 
 	/**
 	 * Add or remove the sound from playlist.
@@ -28,19 +28,33 @@ public interface SoundsDataStorage
 	 * *
 	 * @param addToPlaylist player's state in playlist
 	 */
-	public fun toggleSoundInPlaylist(playerId: String, addToPlaylist: Boolean)
+	fun toggleSoundInPlaylist(playerId: String, addToPlaylist: Boolean)
 
 	/**
 	 * Remove all given Sounds from the currently loaded sounds, but not from the playlist.
 	 * @param soundsToRemove list of sounds to remove
 	 */
-	public fun removeSounds(soundsToRemove: List<MediaPlayerController>)
+	fun removeSounds(soundsToRemove: List<MediaPlayerController>)
 
 	/**
 	 * Remove all given Sounds from the currently loaded sounds, from the playlist.
 	 * @param soundsToRemove list of sounds to remove
 	 */
-	public fun removeSoundsFromPlaylist(soundsToRemove: List<MediaPlayerController>)
+	fun removeSoundsFromPlaylist(soundsToRemove: List<MediaPlayerController>)
+
+	/**
+	 * Removes the given Sound from the list of currently playing sounds. The sound is not paused or stopped.
+	 * The caller should take care, that the sound is no longer playing.
+	 * @param soundToRemove sound to remove
+	 */
+	fun removeSoundFromCurrentlyPlayingSounds(soundToRemove: MediaPlayerController)
+
+	/**
+	 * Adds the given Sound to the list of currently playing sounds. The sound is not started.
+	 * The caller should take care, that the sound is already playing.
+	 * @param soundToAdd sound to add
+	 */
+	fun addSoundToCurrentlyPlayingSounds(soundToAdd: MediaPlayerController)
 
 	/**
 	 * Moves a certain sound in the list of sounds to another position
@@ -50,29 +64,29 @@ public interface SoundsDataStorage
 	 * *
 	 * @param to new position of moved sound
 	 */
-	public fun moveSoundInFragment(fragmentTag: String, from: Int, to: Int)
+	fun moveSoundInFragment(fragmentTag: String, from: Int, to: Int)
 
 	/**
 	 * Removes the given `MediaPlayerData` from the database of regular sound items.
 	 * @param playerData `MediaPlayerData` to remove
 	 */
-	public fun removeSoundDataFromDatabase(playerData: MediaPlayerData)
+	fun removeSoundDataFromDatabase(playerData: MediaPlayerData)
 
 	/**
 	 * Removes the given `MediaPlayerData` from the database of playlist items.
 	 * @param playerData `MediaPlayerData` to remove
 	 */
-	public fun removePlaylistDataFromDatabase(playerData: MediaPlayerData)
+	fun removePlaylistDataFromDatabase(playerData: MediaPlayerData)
 
 	/**
 	 * Get DaoSession used for storing `MediaPlayerData` of regular sounds
 	 * @return corresponding `DaoSession`
 	 */
-	public fun getDbSounds(): DaoSession
+	fun getDbSounds(): DaoSession
 
 	/**
 	 * Get DaoSession used for storing `MediaPlayerData` of sounds in playlist
 	 * @return corresponding `DaoSession`
 	 */
-	public fun getDbPlaylist(): DaoSession
+	fun getDbPlaylist(): DaoSession
 }

@@ -10,7 +10,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import java.io.IOException
@@ -35,9 +35,9 @@ private val FLOAT_VOLUME_MIN = 0f
 fun getNewMediaPlayerController(context: Context,
 							 eventBus: EventBus,
 							 mediaPlayerData: MediaPlayerData,
-							 soundsDataAccess: SoundsDataAccess): MediaPlayerController
+							 soundsDataStorage: SoundsDataStorage): MediaPlayerController
 {
-	return EnhancedMediaPlayer(context, eventBus, mediaPlayerData, soundsDataAccess)
+	return EnhancedMediaPlayer(context, eventBus, mediaPlayerData, soundsDataStorage)
 }
 
 private class EnhancedMediaPlayer
@@ -45,7 +45,7 @@ private class EnhancedMediaPlayer
 		context: Context,
 		private val eventBus: EventBus,
 		public override val mediaPlayerData: MediaPlayerData,
-		private val soundsDataAccess: SoundsDataAccess
+		private val soundsDataStorage: SoundsDataStorage
 ) :
 		MediaPlayer(),
 		MediaPlayerController,
@@ -190,7 +190,7 @@ private class EnhancedMediaPlayer
 		this.currentState = State.DESTROYED
 		this.reset()
 		this.release()
-		this.soundsDataAccess.currentlyPlayingSounds.remove(this)
+		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		if (postStateChanged)
 			this.postStateChangedEvent(false)
 	}
@@ -220,7 +220,7 @@ private class EnhancedMediaPlayer
 			this.start()
 			this.currentState = State.STARTED
 
-			this.soundsDataAccess.currentlyPlayingSounds.add(this)
+			this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
 			this.postStateChangedEvent(true)
 			return true
 		}
@@ -281,7 +281,7 @@ private class EnhancedMediaPlayer
 			this.pause()
 			this.currentState = State.PAUSED
 
-			this.soundsDataAccess.currentlyPlayingSounds.remove(this)
+			this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 			this.postStateChangedEvent(true)
 			return true
 		}
@@ -302,7 +302,7 @@ private class EnhancedMediaPlayer
 	override fun fadeOutSound()
 	{
 		this.updateVolume(0)
-        this.fadeOutSchedule?.apply { handler?.removeCallbacks(this) }
+		this.fadeOutSchedule?.apply { handler?.removeCallbacks(this) }
 		this.scheduleNextVolumeChange()
 	}
 
@@ -314,7 +314,7 @@ private class EnhancedMediaPlayer
 
 		this.fadeOutSchedule = object : KillableRunnable
 		{
-            @Volatile override var isKilled: Boolean = false
+			@Volatile override var isKilled: Boolean = false
 
 			override fun run()
 			{
@@ -328,7 +328,7 @@ private class EnhancedMediaPlayer
 	{
 		updateVolume(-1)
 		if (volume == INT_VOLUME_MIN)
-        {
+		{
 			updateVolume(INT_VOLUME_MAX)
 			pauseSound()
 		}
@@ -371,7 +371,7 @@ private class EnhancedMediaPlayer
 
 		// for unknown reason, this must be set to paused instead of stopped. This contradicts MediaPlayer Documentation, but calling prepare for restart throws illegal state exception
 		this.currentState = State.PAUSED
-		this.soundsDataAccess.currentlyPlayingSounds.remove(this)
+		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
 		this.postCompletedEvent()
 	}
