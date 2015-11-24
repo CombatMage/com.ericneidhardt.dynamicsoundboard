@@ -6,19 +6,22 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 23.11.2015.
  */
-class EnhancedHandler : Handler() {
+class EnhancedHandler : Handler()
+{
+	val submittedCallbacks: MutableSet<KillableRunnable> = HashSet()
 
-	private val submittedCallbacks: MutableSet<KillableRunnable> = HashSet()
-
-	fun removeCallbacks(r: KillableRunnable?) {
+	fun removeCallbacks(r: KillableRunnable?)
+    {
 		if (r == null)
 		{
 			this.submittedCallbacks.map { it.isKilled = true }
+            this.submittedCallbacks.clear()
 			super.removeCallbacks(null)
 		}
 		else
 		{
 			r.isKilled = true
+            this.submittedCallbacks.remove(r)
 			super.removeCallbacks(r)
 		}
 	}
@@ -38,5 +41,4 @@ class EnhancedHandler : Handler() {
 			this.submittedCallbacks.add(r)
 		return wasSubmitted
 	}
-
 }

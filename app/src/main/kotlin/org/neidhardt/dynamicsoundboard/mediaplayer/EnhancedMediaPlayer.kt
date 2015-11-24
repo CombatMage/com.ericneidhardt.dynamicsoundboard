@@ -314,7 +314,7 @@ private class EnhancedMediaPlayer
 
 		this.fadeOutSchedule = object : KillableRunnable
 		{
-			override var isKilled: Boolean = false
+            @Volatile override var isKilled: Boolean = false
 
 			override fun run()
 			{
@@ -400,8 +400,7 @@ private class EnhancedMediaPlayer
 		return false
 	}
 
-	override fun toString(): String {
-		return "EnhancedMediaPlayer{currentState=$currentState, duration=$duration, volume=$volume, handler=$handler, soundsDataAccess=$soundsDataAccess, rawData=$mediaPlayerData}"
-	}
+	override fun toString(): String =
+		"EnhancedMediaPlayer{currentState=$currentState, trackDuration=$trackDuration, isPlaying=$isPlayingSound, volume=$volume, handler=$handler, rawData=$mediaPlayerData}"
 
 }
