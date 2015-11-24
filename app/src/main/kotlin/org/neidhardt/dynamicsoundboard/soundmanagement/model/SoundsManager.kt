@@ -80,11 +80,6 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		this.isInitDone = false
 
-		this.releaseMediaPlayers()
-	}
-
-	private fun releaseMediaPlayers()
-	{
 		this.playlist.map { player-> player.destroy(false) }
 
 		val allPlayerLists = this.sounds.values

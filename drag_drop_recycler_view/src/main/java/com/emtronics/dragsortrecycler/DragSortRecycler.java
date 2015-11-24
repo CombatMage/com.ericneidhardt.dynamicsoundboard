@@ -26,14 +26,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import org.neidhardt.util.enhanced_handler.EnhancedHandler;
+import org.neidhardt.util.enhanced_handler.KillableRunnable;
 
 
-public class DragSortRecycler extends RecyclerView.ItemDecoration implements RecyclerView.OnItemTouchListener, Runnable
+public class DragSortRecycler extends RecyclerView.ItemDecoration implements RecyclerView.OnItemTouchListener
 {
 	private static final String TAG = DragSortRecycler.class.getName();
 
@@ -63,7 +64,8 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	private OnDragStateChangedListener dragStateChangedListener;
 	private OnItemMovedListener moveInterface;
 
-	private Handler handler = new Handler();
+	private EnhancedHandler handler = new EnhancedHandler();
+	private KillableRunnable dragResetCallback;
 
 	public interface OnItemMovedListener {
 		void onItemMoved(int from, int to);
@@ -214,12 +216,6 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	}
 
 	@Override
-	public void run() {
-		debugLog("timeout: stop dragging");
-		this.stopDragging(null);
-	}
-
-	@Override
 	public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
 		this.debugLog("onInterceptTouchEvent");
@@ -299,12 +295,36 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 	}
 
 	private void scheduleDragTimeout() {
-		this.handler.removeCallbacks(this);
-		this.handler.postDelayed(this, TIMEOUT_DRAG);
+		if (this.dragResetCallback != null)
+			this.handler.removeCallbacks(this.dragResetCallback);
+
+		this.dragResetCallback = new KillableRunnable() {
+			private boolean isKilled = false;
+
+			@Override
+			public boolean isKilled() {
+				return this.isKilled;
+			}
+
+			@Override
+			public void setKilled(boolean b) {
+				this.isKilled = b;
+			}
+
+			@Override
+			public void run() {
+				if (!this.isKilled) {
+					debugLog("timeout: stop dragging");
+					stopDragging(null);
+				}
+			}
+		};
+		this.handler.postDelayed(this.dragResetCallback, TIMEOUT_DRAG);
 	}
 
 	private void stopDragging(RecyclerView rv) {
-		this.handler.removeCallbacks(this); // remove pending callbacks if dragging was finished
+		if (this.dragResetCallback != null)
+			this.handler.removeCallbacks(this.dragResetCallback); // remove pending callbacks if dragging was finished
 		setIsDragging(false);
 
 		selectedDragItemPos = -1;
