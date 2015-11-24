@@ -15,6 +15,9 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDat
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
 import java.io.IOException
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CopyOnWriteArraySet
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
@@ -30,9 +33,9 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	private var dbPlaylist: DaoSession? = null
 	private var dbSounds: DaoSession? = null
 
-	override val sounds: MutableMap<String, MutableList<MediaPlayerController>> = HashMap()
-	override val playlist: MutableList<MediaPlayerController> = ArrayList()
-	override val currentlyPlayingSounds: MutableSet<MediaPlayerController> = HashSet()
+	override val sounds: MutableMap<String, MutableList<MediaPlayerController>> = ConcurrentHashMap()
+	override val playlist: MutableList<MediaPlayerController> = CopyOnWriteArrayList()
+	override val currentlyPlayingSounds: MutableSet<MediaPlayerController> = CopyOnWriteArraySet()
 
 	private var isInitDone: Boolean = false
 
@@ -121,7 +124,6 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			Logger.d(TAG, "player: $data is already loaded")
 			return
 		}
-
 		val player = this.createSound(data)
 		if (player == null)
 		{
