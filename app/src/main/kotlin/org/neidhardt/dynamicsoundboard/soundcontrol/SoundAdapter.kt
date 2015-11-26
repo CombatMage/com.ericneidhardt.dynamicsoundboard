@@ -25,13 +25,13 @@ public class SoundAdapter
 
 	override fun getItemCount(): Int = this.getValues().size
 
-	override fun getItemViewType(position: Int): Int = R.layout.view_sound_item
-
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder
-	{
-		val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-		return SoundViewHolder(view, this.eventBus, this.soundsDataStorage, {player, position -> delete(player)}, this)
-	}
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder =
+			SoundViewHolder(
+				LayoutInflater.from(parent.context).inflate(R.layout.view_sound_item, parent, false),
+				this.eventBus,
+				this.soundsDataStorage,
+				{player, position -> delete(player)},
+				this)
 
 	private fun delete(player: MediaPlayerController)
 	{
