@@ -39,9 +39,7 @@ import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
-import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
-import org.neidhardt.dynamicsoundboard.soundcontrol.getNewInstance
+import org.neidhardt.dynamicsoundboard.soundcontrol.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent
@@ -227,7 +225,7 @@ public class SoundActivity :
 	{
 		super.onResume()
 
-		PauseSoundOnCallListener.registerListener(this, this.phoneStateListener)
+		this.registerPauseSoundOnCallListener(this.phoneStateListener)
 
 		this.startService(Intent(this.applicationContext, NotificationService::class.java))
 
@@ -241,28 +239,31 @@ public class SoundActivity :
 			this.onSoundSheetsInit()
 	}
 
-	private fun onSoundSheetsInit() {
+	private fun onSoundSheetsInit()
+    {
 		this.handleIntent(this.intent) // sound sheets have been loaded, check if there is pending intent to handle
 		this.openSoundFragment(this.soundSheetsDataAccess.getSelectedItem())
 	}
 
-	override fun onPause() {
+	override fun onPause()
+    {
 		super.onPause()
-
 		this.isActivityVisible = false
-
-		PauseSoundOnCallListener.unregisterListener(this, this.phoneStateListener)
+		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
 	}
 
-	override fun onUserLeaveHint() {
+	override fun onUserLeaveHint()
+    {
 		super.onUserLeaveHint()
 		this.eventBus.postSticky(ActivityStateChangedEvent(false))
 	}
 
-	override fun onStop() {
+	override fun onStop()
+    {
 		this.eventBus.unregister(this)
 
-		if (this.isFinishing) {
+		if (this.isFinishing)
+        {
 			// we remove all loaded sounds, which have no corresponding SoundSheet
 			val fragmentsWithLoadedSounds = this.soundsDataAccess.sounds.keys
 			val fragmentsWithLoadedSoundsToRemove = HashSet<String>()
@@ -278,7 +279,8 @@ public class SoundActivity :
 		super.onStop()
 	}
 
-	public fun setSoundSheetActionsEnable(enable: Boolean) {
+	public fun setSoundSheetActionsEnable(enable: Boolean)
+    {
 		var viewState = if (enable) View.VISIBLE else View.GONE
 		this.findViewById(R.id.action_add_sound).visibility = viewState
 		this.findViewById(R.id.action_add_sound_dir).visibility = viewState
@@ -288,7 +290,8 @@ public class SoundActivity :
 		this.findViewById(R.id.tv_app_name).visibility = viewState
 	}
 
-	override fun onEvent(event: SoundLayoutSelectedEvent) {
+	override fun onEvent(event: SoundLayoutSelectedEvent)
+    {
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
 		this.setSoundSheetActionsEnable(false)
 		this.soundSheetsDataUtil.initIfRequired()
@@ -398,7 +401,7 @@ public class SoundActivity :
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean
 	{
 		super.onOptionsItemSelected(item)
-		if (this.drawerToggle != null && this.drawerToggle!!.onOptionsItemSelected(item))
+		if (this.drawerToggle?.onOptionsItemSelected(item) ?: false)
 			return true
 
 		when (item?.itemId)
@@ -520,11 +523,8 @@ public class SoundActivity :
 		val fragmentManager = this.fragmentManager
 		val transaction = fragmentManager.beginTransaction()
 
-		val fragment = fragmentManager.findFragmentByTag(IntroductionFragment.TAG)
-		if (fragment != null)
-			transaction.replace(R.id.main_frame, fragment, IntroductionFragment.TAG)
-		else
-			transaction.replace(R.id.main_frame, IntroductionFragment(), IntroductionFragment.TAG)
+		val fragment = fragmentManager.findFragmentByTag(IntroductionFragment.TAG) ?: IntroductionFragment()
+		transaction.replace(R.id.main_frame, fragment, IntroductionFragment.TAG)
 
 		transaction.commit()
 		fragmentManager.executePendingTransactions()
@@ -543,11 +543,8 @@ public class SoundActivity :
 		val fragmentManager = this.fragmentManager
 		val transaction = fragmentManager.beginTransaction()
 
-		val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag) as SoundSheetFragment?
-		if (fragment != null)
-			transaction.replace(R.id.main_frame, fragment, soundSheet.fragmentTag)
-		else
-			transaction.replace(R.id.main_frame, getNewInstance(soundSheet), soundSheet.fragmentTag)
+		val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag) ?: getNewInstance(soundSheet)
+		transaction.replace(R.id.main_frame, fragment, soundSheet.fragmentTag)
 
 		transaction.commit()
 		fragmentManager.executePendingTransactions()
