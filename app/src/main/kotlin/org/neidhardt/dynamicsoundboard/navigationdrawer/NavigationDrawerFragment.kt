@@ -26,8 +26,7 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLa
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 
-public class NavigationDrawerFragment :
-		BaseFragment(),
+class NavigationDrawerFragment : BaseFragment(),
 		View.OnClickListener,
 		TabLayout.OnTabSelectedListener,
 		OnActionModeChangeRequestedEventListener,
@@ -45,19 +44,19 @@ public class NavigationDrawerFragment :
 
 	private val eventBus = EventBus.getDefault()
 
+	private val listObserver: ViewPagerContentObserver = ViewPagerContentObserver()
+
 	private var tabBar: TabLayout? = null
 	private var tabContent: ViewPager? = null
 	private val tabContentAdapter = TabContentAdapter()
 
 	private var listContainer: ViewGroup? = null
 	private var soundLayoutList: SoundLayouts? = null
-	public var playlist: Playlist? = null
+	private var playlist: Playlist? = null
 	private var soundSheets: SoundSheets? = null
 
 	private var contextualActionContainer: View? = null
 	private var deleteSelected: View? = null
-
-	private var listObserver: ViewPagerContentObserver? = null
 
 	private var minHeightOfListContent = 0
 
@@ -65,8 +64,6 @@ public class NavigationDrawerFragment :
 	{
 		super.onCreate(savedInstanceState)
 		this.retainInstance = true
-
-		this.listObserver = ViewPagerContentObserver()
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
