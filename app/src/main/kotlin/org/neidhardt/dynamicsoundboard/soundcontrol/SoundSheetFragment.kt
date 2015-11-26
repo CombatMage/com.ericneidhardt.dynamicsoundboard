@@ -42,11 +42,11 @@ private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.Sou
 
 fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
 {
-    val fragment = SoundSheetFragment()
-    val args = Bundle()
-    args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
-    fragment.arguments = args
-    return fragment
+	val fragment = SoundSheetFragment()
+	val args = Bundle()
+	args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
+	fragment.arguments = args
+	return fragment
 }
 
 class SoundSheetFragment :
@@ -56,44 +56,39 @@ class SoundSheetFragment :
 		OnOpenSoundDialogEventListener,
 		OnSoundsChangedEventListener
 {
-    private val LOG_TAG = SoundSheetFragment::class.java.name
+	private val LOG_TAG = javaClass.name
 
 	var fragmentTag: String = javaClass.name
 
-	private var eventBus: EventBus = EventBus.getDefault()
+	private val eventBus: EventBus = EventBus.getDefault()
+	private val soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
+	private val soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
 
-	private var dragSortRecycler: SoundDragSortRecycler? = null
-	private var scrollListener: SoundSheetScrollListener? = null
+	private val dragSortRecycler: SoundDragSortRecycler = SoundDragSortRecycler(R.id.b_reorder).apply {
+		this.setOnItemMovedListener(this@SoundSheetFragment)
+		this.setOnDragStateChangedListener(this@SoundSheetFragment)
+	}
+	private val scrollListener: SoundSheetScrollListener = SoundSheetScrollListener(this.dragSortRecycler)
+
 	private var soundPresenter: SoundPresenter? = null
 	private var soundAdapter: SoundAdapter? = null
 	private var soundLayout: RecyclerView? = null
 	private val soundLayoutAnimator = SlideInLeftAnimator()
 
-	var soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
-	var soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
-
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-
 		this.retainInstance = true
 		this.setHasOptionsMenu(true)
 
 		val args = this.arguments
-
 		var fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
 				?: throw NullPointerException(LOG_TAG + ": cannot create fragment, given fragmentTag is null")
-
 		this.fragmentTag = fragmentTag as String
 
 		this.soundPresenter = SoundPresenter(this.fragmentTag, this.eventBus, this.soundsDataAccess)
 		this.soundAdapter = SoundAdapter(this.soundPresenter as SoundPresenter, this.soundsDataStorage, this.eventBus)
-		this.soundPresenter!!.adapter = this.soundAdapter
-
-		this.dragSortRecycler = SoundDragSortRecycler(R.id.b_reorder)
-		this.dragSortRecycler!!.setOnItemMovedListener(this)
-		this.dragSortRecycler!!.setOnDragStateChangedListener(this)
-		this.scrollListener = SoundSheetScrollListener(this.dragSortRecycler)
+		this.soundPresenter?.adapter = this.soundAdapter
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -111,7 +106,7 @@ class SoundSheetFragment :
 			addItemDecoration(dragSortRecycler)
 			addOnItemTouchListener(dragSortRecycler)
 			addOnScrollListener(scrollListener)
-			addOnScrollListener(dragSortRecycler!!.scrollListener)
+			addOnScrollListener(dragSortRecycler.scrollListener)
 		}
 		this.soundAdapter?.recyclerView = this.soundLayout
 
