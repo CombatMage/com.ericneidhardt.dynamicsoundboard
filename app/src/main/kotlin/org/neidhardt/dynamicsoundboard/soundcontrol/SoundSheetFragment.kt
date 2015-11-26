@@ -38,30 +38,27 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDeco
 /**
  * File created by eric.neidhardt on 02.07.2015.
  */
-public class SoundSheetFragment :
+private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
+
+fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
+{
+    val fragment = SoundSheetFragment()
+    val args = Bundle()
+    args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
+    fragment.arguments = args
+    return fragment
+}
+
+class SoundSheetFragment :
 		BaseFragment(),
 		DragSortRecycler.OnDragStateChangedListener,
 		DragSortRecycler.OnItemMovedListener,
 		OnOpenSoundDialogEventListener,
 		OnSoundsChangedEventListener
 {
+    private val LOG_TAG = SoundSheetFragment::class.java.name
 
-	companion object
-	{
-		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
-		private val LOG_TAG = SoundSheetFragment::class.java.name
-
-		public fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
-		{
-			val fragment = SoundSheetFragment()
-			val args = Bundle()
-			args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
-			fragment.arguments = args
-			return fragment
-		}
-	}
-
-	public var fragmentTag: String = javaClass.name
+	var fragmentTag: String = javaClass.name
 
 	private var eventBus: EventBus = EventBus.getDefault()
 

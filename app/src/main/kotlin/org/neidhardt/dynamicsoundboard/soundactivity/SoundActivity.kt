@@ -41,6 +41,7 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
+import org.neidhardt.dynamicsoundboard.soundcontrol.getNewInstance
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent
@@ -546,7 +547,7 @@ public class SoundActivity :
 		if (fragment != null)
 			transaction.replace(R.id.main_frame, fragment, soundSheet.fragmentTag)
 		else
-			transaction.replace(R.id.main_frame, SoundSheetFragment.getNewInstance(soundSheet), soundSheet.fragmentTag)
+			transaction.replace(R.id.main_frame, getNewInstance(soundSheet), soundSheet.fragmentTag)
 
 		transaction.commit()
 		fragmentManager.executePendingTransactions()
