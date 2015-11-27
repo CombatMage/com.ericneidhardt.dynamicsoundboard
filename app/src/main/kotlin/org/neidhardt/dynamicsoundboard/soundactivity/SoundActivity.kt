@@ -240,30 +240,30 @@ public class SoundActivity :
 	}
 
 	private fun onSoundSheetsInit()
-    {
+	{
 		this.handleIntent(this.intent) // sound sheets have been loaded, check if there is pending intent to handle
 		this.openSoundFragment(this.soundSheetsDataAccess.getSelectedItem())
 	}
 
 	override fun onPause()
-    {
+	{
 		super.onPause()
 		this.isActivityVisible = false
 		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
 	}
 
 	override fun onUserLeaveHint()
-    {
+	{
 		super.onUserLeaveHint()
 		this.eventBus.postSticky(ActivityStateChangedEvent(false))
 	}
 
 	override fun onStop()
-    {
+	{
 		this.eventBus.unregister(this)
 
 		if (this.isFinishing)
-        {
+		{
 			// we remove all loaded sounds, which have no corresponding SoundSheet
 			val fragmentsWithLoadedSounds = this.soundsDataAccess.sounds.keys
 			val fragmentsWithLoadedSoundsToRemove = HashSet<String>()
@@ -280,7 +280,7 @@ public class SoundActivity :
 	}
 
 	public fun setSoundSheetActionsEnable(enable: Boolean)
-    {
+	{
 		var viewState = if (enable) View.VISIBLE else View.GONE
 		this.findViewById(R.id.action_add_sound).visibility = viewState
 		this.findViewById(R.id.action_add_sound_dir).visibility = viewState
@@ -291,7 +291,7 @@ public class SoundActivity :
 	}
 
 	override fun onEvent(event: SoundLayoutSelectedEvent)
-    {
+	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
 		this.setSoundSheetActionsEnable(false)
 		this.soundSheetsDataUtil.initIfRequired()
@@ -398,13 +398,13 @@ public class SoundActivity :
 		Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
 	}
 
-	override fun onOptionsItemSelected(item: MenuItem?): Boolean
+	override fun onOptionsItemSelected(item: MenuItem): Boolean
 	{
 		super.onOptionsItemSelected(item)
 		if (this.drawerToggle?.onOptionsItemSelected(item) ?: false)
 			return true
 
-		when (item?.itemId)
+		when (item.itemId)
 		{
 			R.id.action_load_sound_sheets -> {
 				LoadLayoutDialog.showInstance(this.fragmentManager)
@@ -471,14 +471,10 @@ public class SoundActivity :
 	@SuppressWarnings("ResourceType") // for unknown reason, inspection demand using Gravity.START, but this would lead to warnings
 	fun closeNavigationDrawer()
 	{
-		if (this.navigationDrawerLayout == null)
-			return
-		if (this.navigationDrawerLayout!!.isDrawerOpen(Gravity.START))
-			this.navigationDrawerLayout!!.closeDrawer(Gravity.START)
-	}
-
-	public fun getNavigationDrawerFragment(): NavigationDrawerFragment {
-		return this.fragmentManager.findFragmentById(R.id.navigation_drawer_fragment) as NavigationDrawerFragment
+		this.navigationDrawerLayout?.apply {
+			if (this.isDrawerOpen(Gravity.START))
+				this.closeDrawer(Gravity.START)
+		}
 	}
 
 	public fun removeSoundFragments(soundSheets: List<SoundSheet>?)
@@ -560,4 +556,7 @@ public class SoundActivity :
 		return null
 	}
 
+	public fun getNavigationDrawerFragment(): NavigationDrawerFragment {
+		return this.fragmentManager.findFragmentById(R.id.navigation_drawer_fragment) as NavigationDrawerFragment
+	}
 }
