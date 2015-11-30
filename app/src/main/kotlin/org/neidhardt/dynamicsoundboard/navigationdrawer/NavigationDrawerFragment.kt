@@ -10,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent
@@ -37,10 +37,10 @@ class NavigationDrawerFragment : BaseFragment(),
 	private val INDEX_SOUND_SHEETS = 0
 	private val INDEX_PLAYLIST = 1
 
-	private val soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
-	private val soundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataAccess()
+	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
+	private val soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
 
-	private val soundLayoutsUtil = DynamicSoundboardApplication.getSoundLayoutsUtil()
+	private val soundLayoutsUtil = SoundboardApplication.getSoundLayoutsUtil()
 
 	private val eventBus = EventBus.getDefault()
 
@@ -229,7 +229,7 @@ class NavigationDrawerFragment : BaseFragment(),
 	 */
 	public fun adjustViewPagerToContent()
 	{
-		val resources = DynamicSoundboardApplication.getContext().resources
+		val resources = SoundboardApplication.context.resources
 		val childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item)
 		val dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke)
 		val padding = resources.getDimensionPixelSize(R.dimen.margin_small)

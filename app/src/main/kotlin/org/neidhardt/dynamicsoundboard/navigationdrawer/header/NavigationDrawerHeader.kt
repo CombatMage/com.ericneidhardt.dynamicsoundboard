@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
@@ -30,7 +30,7 @@ class NavigationDrawerHeaderView :
 		View.OnClickListener,
 		NavigationDrawerHeader
 {
-	private val presenter = NavigationDrawerHeaderPresenter(EventBus.getDefault(), DynamicSoundboardApplication.getSoundLayoutsAccess())
+	private val presenter = NavigationDrawerHeaderPresenter(EventBus.getDefault(), SoundboardApplication.getSoundLayoutsAccess())
 
 	private var currentLayoutName: TextView? = null
 	private var indicator: View? = null

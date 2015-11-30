@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
@@ -17,9 +17,9 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 {
 	private val TAG: String = javaClass.name
 
-	private val soundsDataUtil = DynamicSoundboardApplication.getSoundsDataUtil()
-	private val soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
-	private val soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
+	private val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
+	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
+	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
 	private val eventBus = EventBus.getDefault()
 

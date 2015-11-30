@@ -3,37 +3,33 @@ package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
 
 /**
  * File created by Eric Neidhardt on 12.11.2014.
  */
-public class AddPauseFloatingActionButton : com.melnykov.fab.FloatingActionButton, View.OnClickListener {
+private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
 
-	companion object {
-		private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
-	}
-
+public class AddPauseFloatingActionButton : com.melnykov.fab.FloatingActionButton, View.OnClickListener
+{
+	private val eventBus = EventBus.getDefault()
 	private var presenter: AddPauseFloatingActionButtonPresenter? = null
 
 	@SuppressWarnings("unused")
-	public constructor(context: Context) : super(context)
-	{
-		this.presenter = AddPauseFloatingActionButtonPresenter(de.greenrobot.event.EventBus.getDefault(), DynamicSoundboardApplication.getSoundsDataAccess())
-	}
+	public constructor(context: Context) : super(context) { this.init() }
 
 	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-	{
-		this.presenter = AddPauseFloatingActionButtonPresenter(de.greenrobot.event.EventBus.getDefault(), DynamicSoundboardApplication.getSoundsDataAccess())
-	}
+	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { this.init() }
 
 	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
+	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) { this.init() }
+
+	private fun init()
 	{
-		this.presenter = AddPauseFloatingActionButtonPresenter(de.greenrobot.event.EventBus.getDefault(), DynamicSoundboardApplication.getSoundsDataAccess())
+		this.presenter = AddPauseFloatingActionButtonPresenter(this.eventBus, SoundboardApplication.getSoundsDataAccess())
 	}
 
 	override fun onFinishInflate()

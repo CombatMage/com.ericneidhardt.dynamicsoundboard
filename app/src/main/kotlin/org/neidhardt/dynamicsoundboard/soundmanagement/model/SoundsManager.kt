@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
@@ -27,8 +27,8 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()
 
-	private val soundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
-	private val soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
+	private val soundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
+	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
 	private var dbPlaylist: DaoSession? = null
 	private var dbSounds: DaoSession? = null
@@ -47,14 +47,14 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	override fun getDbSounds(): DaoSession
 	{
 		if (this.dbSounds == null)
-			this.dbSounds = GreenDaoHelper.setupDatabase(DynamicSoundboardApplication.getContext(), getDatabaseNameSounds(this.soundLayoutsAccess))
+			this.dbSounds = GreenDaoHelper.setupDatabase(SoundboardApplication.context, getDatabaseNameSounds(this.soundLayoutsAccess))
 		return this.dbSounds as DaoSession
 	}
 
 	override fun getDbPlaylist(): DaoSession
 	{
 		if (this.dbPlaylist == null)
-			this.dbPlaylist = GreenDaoHelper.setupDatabase(DynamicSoundboardApplication.getContext(), getDatabaseNamePlayList(this.soundLayoutsAccess))
+			this.dbPlaylist = GreenDaoHelper.setupDatabase(SoundboardApplication.context, getDatabaseNamePlayList(this.soundLayoutsAccess))
 		return this.dbPlaylist as DaoSession
 	}
 
@@ -301,7 +301,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			newPlayerData.uri = playerData.uri
 
 			return getNewMediaPlayerController (
-					context = DynamicSoundboardApplication.getContext(),
+					context = SoundboardApplication.context,
 					eventBus = EventBus.getDefault(),
 					mediaPlayerData = newPlayerData,
 					soundsDataStorage = this
@@ -320,7 +320,7 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 		try
 		{
 			return getNewMediaPlayerController(
-					context = DynamicSoundboardApplication.getContext(),
+					context = SoundboardApplication.context,
 					eventBus = this.eventBus,
 					mediaPlayerData = playerData,
 					soundsDataStorage = this)

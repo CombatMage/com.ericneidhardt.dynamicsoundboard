@@ -16,8 +16,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog
@@ -79,12 +79,12 @@ public class SoundActivity :
 
 	private val eventBus = EventBus.getDefault()
 
-	private val soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
-	private val soundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
-	private val soundsDataUtil = DynamicSoundboardApplication.getSoundsDataUtil()
+	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
+	private val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
+	private val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
 
-	private val soundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataAccess()
-	private val soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
+	private val soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
+	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{

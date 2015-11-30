@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
@@ -16,11 +16,11 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDeco
 public class SoundSheets : NavigationDrawerList
 {
 
-	private val soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
-	private val soundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
+	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
+	private val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
 
-	private val soundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataAccess()
-	private val soundSheetsDataStorage = DynamicSoundboardApplication.getSoundSheetsDataStorage()
+	private val soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
+	private val soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage()
 
 	public var presenter: SoundSheetsPresenter = SoundSheetsPresenter(
 			EventBus.getDefault(), this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess, this.soundsDataStorage)

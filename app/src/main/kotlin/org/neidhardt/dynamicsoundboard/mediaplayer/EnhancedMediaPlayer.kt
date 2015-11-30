@@ -5,11 +5,12 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.reportError
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
@@ -162,7 +163,7 @@ private class EnhancedMediaPlayer
 		this.mediaPlayerData.updateItemInDatabaseAsync()
 		this.reset()
 
-		this.init(DynamicSoundboardApplication.getContext())
+		this.init(SoundboardApplication.context)
 	}
 
 	@Throws(IOException::class)
@@ -209,7 +210,7 @@ private class EnhancedMediaPlayer
 		try
 		{
 			if (this.currentState == State.IDLE || this.currentState == State.DESTROYED)
-				this.init(DynamicSoundboardApplication.getContext())
+				this.init(SoundboardApplication.context)
 
 			if (this.currentState == State.INIT || this.currentState == State.STOPPED)
 				this.prepare()
@@ -256,11 +257,11 @@ private class EnhancedMediaPlayer
 			when (this.currentState)
 			{
 				State.IDLE -> {
-					this.init(DynamicSoundboardApplication.getContext())
+					this.init(SoundboardApplication.context)
 					this.start()
 				}
 				State.DESTROYED -> {
-					this.init(DynamicSoundboardApplication.getContext())
+					this.init(SoundboardApplication.context)
 					this.start()
 				}
 				State.INIT -> {
@@ -360,7 +361,7 @@ private class EnhancedMediaPlayer
 
 	private fun reportExceptions(e: Exception)
 	{
-		DynamicSoundboardApplication.reportError(e)
+		SoundboardApplication.reportError(e)
 	}
 
 	override fun onCompletion(mp: MediaPlayer)

@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundcontrol
 import android.content.Context
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 import java.util.*
@@ -12,7 +12,7 @@ import java.util.*
 class PauseSoundOnCallListener : PhoneStateListener()
 {
 	private val pauseSounds: MutableList<MediaPlayerController> = ArrayList()
-	private val soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
+	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 
 	override fun onCallStateChanged(state: Int, incomingNumber: String?)
 	{

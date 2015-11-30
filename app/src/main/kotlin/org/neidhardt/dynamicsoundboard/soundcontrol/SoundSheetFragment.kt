@@ -12,8 +12,8 @@ import android.view.ViewGroup
 import com.emtronics.dragsortrecycler.DragSortRecycler
 import de.greenrobot.event.EventBus
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
@@ -61,8 +61,8 @@ class SoundSheetFragment :
 	var fragmentTag: String = javaClass.name
 
 	private val eventBus: EventBus = EventBus.getDefault()
-	private val soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
-	private val soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
+	private val soundsDataStorage: SoundsDataStorage = SoundboardApplication.getSoundsDataStorage()
+	private val soundsDataAccess: SoundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 
 	private val dragSortRecycler: SoundDragSortRecycler = SoundDragSortRecycler(R.id.b_reorder).apply {
 		this.setOnItemMovedListener(this@SoundSheetFragment)

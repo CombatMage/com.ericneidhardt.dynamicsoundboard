@@ -8,8 +8,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
@@ -22,8 +22,8 @@ public class SoundLayouts : NavigationDrawerList
 {
 	private val eventBus: EventBus = EventBus.getDefault()
 
-	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
-	private val soundLayoutsStorage: SoundLayoutsStorage = DynamicSoundboardApplication.getSoundLayoutsStorage()
+	private val soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
+	private val soundLayoutsStorage: SoundLayoutsStorage = SoundboardApplication.getSoundLayoutsStorage()
 
 	public var presenter: SoundLayoutsPresenter = SoundLayoutsPresenter(EventBus.getDefault(), this.soundLayoutsAccess, this.soundLayoutsStorage)
 	public var adapter: SoundLayoutsAdapter = SoundLayoutsAdapter(this.presenter, this.eventBus)

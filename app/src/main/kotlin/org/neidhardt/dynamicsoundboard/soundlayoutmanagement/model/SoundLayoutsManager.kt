@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model
 
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
@@ -25,11 +25,11 @@ public class SoundLayoutsManager :
 
 		public fun getNewDatabaseIdForLabel(label: String): String
 		{
-			return Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode())
+			return Integer.toString((label + SoundboardApplication.getRandomNumber()).hashCode())
 		}
 	}
 
-	private val daoSession: DaoSession = GreenDaoHelper.setupDatabase(DynamicSoundboardApplication.getContext(), DB_SOUND_LAYOUTS)
+	private val daoSession: DaoSession = GreenDaoHelper.setupDatabase(SoundboardApplication.context, DB_SOUND_LAYOUTS)
 	private val soundLayouts: MutableList<SoundLayout> = ArrayList()
 
 	init
@@ -76,13 +76,13 @@ public class SoundLayoutsManager :
 
 	override fun getSuggestedName(): String
 	{
-		return DynamicSoundboardApplication.getContext().resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size
+		return SoundboardApplication.context.resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size
 	}
 
 	private fun getDefaultSoundLayout(): SoundLayout
 	{
 		val layout = SoundLayout()
-		val label = DynamicSoundboardApplication.getContext().getString(R.string.sound_layout_default)
+		val label = SoundboardApplication.context.getString(R.string.sound_layout_default)
 		layout.databaseId = DB_DEFAULT
 		layout.label = label
 		layout.isSelected = true

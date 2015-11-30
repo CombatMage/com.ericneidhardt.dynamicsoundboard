@@ -3,8 +3,8 @@ package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views
 import android.app.FragmentManager
 import android.os.Bundle
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
@@ -42,7 +42,7 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 		layout.databaseId = SoundLayoutsManager.getNewDatabaseIdForLabel(name)
 		layout.label = name
 
-		DynamicSoundboardApplication.getSoundLayoutsStorage().addSoundLayout(layout)
+        SoundboardApplication.getSoundLayoutsStorage().addSoundLayout(layout)
 
 		EventBus.getDefault().post(SoundLayoutAddedEvent(layout))
 	}

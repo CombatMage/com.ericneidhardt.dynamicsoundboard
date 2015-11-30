@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import java.io.File
@@ -37,7 +37,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 	public fun storePathToSharedPreferences(key: String, path: String)
 	{
-		val context = DynamicSoundboardApplication.getContext()
+		val context = SoundboardApplication.context
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		val editor = preferences.edit()
 		editor.putString(key, path)
@@ -46,7 +46,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 	public fun getPathFromSharedPreferences(key: String): String?
 	{
-		val context = DynamicSoundboardApplication.getContext()
+		val context = SoundboardApplication.context
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		return preferences.getString(key, null)
 	}

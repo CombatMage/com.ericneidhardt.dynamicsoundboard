@@ -10,12 +10,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.readFromFile
+import org.neidhardt.dynamicsoundboard.reportError
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 import java.io.File
 import java.io.IOException
@@ -113,9 +114,8 @@ public class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.
 		} catch (e: IOException)
 		{
 			e.printStackTrace()
-			DynamicSoundboardApplication.reportError(e)
+			SoundboardApplication.reportError(e)
 		}
-
 	}
 
 	private fun addLoadedSoundSheets(newSoundSheets: List<SoundSheet>)

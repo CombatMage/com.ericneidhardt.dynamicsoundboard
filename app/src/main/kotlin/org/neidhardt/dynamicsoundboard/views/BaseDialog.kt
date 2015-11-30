@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.views
 
 import android.app.DialogFragment
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -17,14 +17,14 @@ public abstract class BaseDialog : DialogFragment()
 {
 	protected val KEY_CALLING_FRAGMENT_TAG: String = "org.neidhardt.dynamicsoundboard.views.BaseDialog.callingFragmentTag"
 
-	protected var soundSheetsDataAccess: SoundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataAccess()
-	protected var soundSheetsDataStorage: SoundSheetsDataStorage = DynamicSoundboardApplication.getSoundSheetsDataStorage()
-	protected var soundSheetsDataUtil: SoundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
+	protected var soundSheetsDataAccess: SoundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
+	protected var soundSheetsDataStorage: SoundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage()
+	protected var soundSheetsDataUtil: SoundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
-	protected var soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
-	protected var soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
+	protected var soundsDataStorage: SoundsDataStorage = SoundboardApplication.getSoundsDataStorage()
+	protected var soundsDataAccess: SoundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 
-	public var soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
+	public var soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
 
 	public var mainView: DialogBaseLayout? = null
 

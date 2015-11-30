@@ -1,8 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model
 
 import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
@@ -36,7 +36,7 @@ public class SoundSheetsManager :
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
 	private val eventBus: EventBus = EventBus.getDefault()
 
-	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
+	private val soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
 
 	init
 	{
@@ -50,7 +50,7 @@ public class SoundSheetsManager :
 			this.isInitDone = true
 
 			this.soundSheets.clear()
-			this.daoSession = GreenDaoHelper.setupDatabase(DynamicSoundboardApplication.getContext(), this.getDatabaseName())
+			this.daoSession = GreenDaoHelper.setupDatabase(SoundboardApplication.context, this.getDatabaseName())
 
 			val task = LoadSoundSheetsTask(this.getDbSoundSheets(), this)
 			task.execute()
@@ -149,13 +149,13 @@ public class SoundSheetsManager :
 
 	override fun getSuggestedName(): String
 	{
-		return DynamicSoundboardApplication.getContext()
+		return SoundboardApplication.context
 				.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
 	}
 
 	override fun getNewSoundSheet(label: String): SoundSheet
 	{
-		val tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode())
+		val tag = Integer.toString((label + SoundboardApplication.getRandomNumber()).hashCode())
 		return SoundSheet(null, tag, label, false)
 	}
 

@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.tasks
 
 import android.net.Uri
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerComparator
@@ -105,7 +105,7 @@ public class LoadSoundsFromFileListTask
 	{
 		val soundUri = Uri.parse(file.absolutePath)
 		val soundLabel = FileUtils.stripFileTypeFromName(
-				FileUtils.getFileNameFromUri(DynamicSoundboardApplication.getContext(), soundUri))
+				FileUtils.getFileNameFromUri(SoundboardApplication.context, soundUri))
 		return MediaPlayerData.getNewMediaPlayerData(fragmentTag, soundUri, soundLabel)
 	}
 
