@@ -32,7 +32,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
-import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
 /**
@@ -152,12 +151,13 @@ class SoundSheetFragment :
 
 	private fun attachScrollViewToFab()
 	{
-		val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
+        // TODO
+		/*val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
 		if (fab == null || this.soundLayout == null)
 			return
 
 		fab.attachToRecyclerView(this.soundLayout)
-		fab.show(false)
+		fab.show(false)*/
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
@@ -229,11 +229,13 @@ class SoundSheetFragment :
 
 	override fun onEventMainThread(event: SoundsRemovedEvent)
 	{
+        // TODO
+        /*
 		if (this.soundAdapter!!.getValues().size == 0)
 		{
 			val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
 			fab?.show()
-		}
+		}*/
 	}
 
 	override fun onEventMainThread(event: SoundMovedEvent) {}

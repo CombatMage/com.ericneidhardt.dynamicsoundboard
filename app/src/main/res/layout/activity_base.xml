@@ -42,17 +42,6 @@
 
 		</FrameLayout>
 
-		<org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
-				android:id="@+id/fab_add"
-				android:layout_width="@dimen/size_floating_button"
-				android:layout_height="@dimen/size_floating_button"
-				android:layout_margin="@dimen/margin_default"
-				android:layout_gravity="end|bottom"
-				android:src="@drawable/selector_ic_fab"
-				app:fab_colorNormal="@color/accent_200"
-				app:fab_colorPressed="@color/accent_400"
-				app:fab_shadow="true"/>
-
 	</android.support.design.widget.CoordinatorLayout>
 
 	<android.support.design.widget.NavigationView

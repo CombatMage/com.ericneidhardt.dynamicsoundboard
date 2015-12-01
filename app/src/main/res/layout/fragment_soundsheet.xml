@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
+<android.support.design.widget.CoordinatorLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -14,4 +15,17 @@
 			android:overScrollMode="never"
 			tools:listitem="@layout/view_sound_control"/>
 
-</FrameLayout>
+	<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/fab"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/margin_small"
+			android:layout_gravity="end|bottom"
+			android:src="@drawable/ic_fab_add_sound"
+			app:layout_behavior="org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour"
+			app:fab_size="normal"
+			app:fab_colorNormal="@color/primary_500"
+			app:fab_colorPressed="@color/primary_700"
+			app:fab_colorRipple="@color/primary_700"/>
+
+</android.support.design.widget.CoordinatorLayout>

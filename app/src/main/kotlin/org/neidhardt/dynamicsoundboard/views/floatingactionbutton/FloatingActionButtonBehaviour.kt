@@ -2,29 +2,47 @@ package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
-import android.widget.Toast
+import com.github.clans.fab.FloatingActionButton
 
 /**
  * File created by eric.neidhardt on 24.09.2015.
  */
-@SuppressWarnings("unused")
-public class FloatingActionButtonBehaviour(context : Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<AddPauseFloatingActionButton>(context, attrs)
+public class FloatingActionButtonBehaviour(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<FloatingActionButton>(context, attrs)
 {
-	public override fun layoutDependsOn(parent: CoordinatorLayout, fab: AddPauseFloatingActionButton, dependency: View) : Boolean
-	{
-		return super.layoutDependsOn(parent, fab, dependency) || (dependency is RecyclerView)
-	}
+	private val SCROLL_THRESHOLD = 4
 
-	public override fun onDependentViewChanged(parent: CoordinatorLayout, fab: AddPauseFloatingActionButton, dependency: View) : Boolean
-	{
-		val returnValue = super.onDependentViewChanged(parent, fab, dependency)
-		if (dependency is RecyclerView)
+	public override fun layoutDependsOn(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean
+			= super.layoutDependsOn(parent, fab, dependency) || (dependency is RecyclerView)
+
+	override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout,
+									 fab: FloatingActionButton,
+									 directTargetChild: View,
+									 target: View,
+									 nestedScrollAxes: Int): Boolean
+		= nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL && target is RecyclerView
+
+	override fun onNestedScroll(coordinatorLayout: CoordinatorLayout,
+								fab: FloatingActionButton,
+								target: View,
+								dxConsumed: Int,
+								dyConsumed: Int,
+								dxUnconsumed: Int,
+								dyUnconsumed: Int)
+    {
+		if (target is RecyclerView)
 		{
-			Toast.makeText(parent.context, "test", Toast.LENGTH_SHORT).show()
-		}
-		return returnValue
+			if (Math.abs(dyConsumed) > SCROLL_THRESHOLD)
+			{
+				if (dyConsumed > 0)
+					fab.hide(true)
+				else
+					fab.show(true)
+			}
+		} else
+			super.onNestedScroll(coordinatorLayout, fab, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed)
 	}
 }
