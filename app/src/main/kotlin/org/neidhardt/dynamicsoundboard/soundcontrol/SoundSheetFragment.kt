@@ -100,7 +100,7 @@ class SoundSheetFragment :
 
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
 
-		this.floatingActionButton = fragmentView.findViewById(R.id.fab) as AddPauseFloatingActionButton
+		this.floatingActionButton = fragmentView.findViewById(R.id.fab) as AddPauseFloatingActionButton?
 
 		this.soundLayout = (fragmentView.findViewById(R.id.rv_sounds) as RecyclerView).apply {
 			adapter = soundAdapter
