@@ -2,7 +2,6 @@
 
 <android.support.design.widget.CoordinatorLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -14,17 +13,5 @@
 			android:layout_height="match_parent"
 			android:overScrollMode="never"
 			tools:listitem="@layout/view_sound_control"/>
-
-	<org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
-			android:id="@+id/fab"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/margin_small"
-			android:layout_gravity="end|bottom"
-			android:src="@drawable/selector_ic_fab"
-			app:layout_behavior="org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour"
-			app:fab_size="normal"
-			app:fab_colorNormal="@color/accent_200"
-			app:fab_colorPressed="@color/accent_400"/>
 
 </android.support.design.widget.CoordinatorLayout>
