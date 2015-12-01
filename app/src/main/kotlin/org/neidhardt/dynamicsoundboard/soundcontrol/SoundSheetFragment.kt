@@ -32,6 +32,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
+import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
 /**
@@ -69,6 +70,8 @@ class SoundSheetFragment :
 	}
 	private val scrollListener: SoundSheetScrollListener = SoundSheetScrollListener(this.dragSortRecycler)
 
+	private var floatingActionButton: AddPauseFloatingActionButton? = null
+
 	private var soundPresenter: SoundPresenter? = null
 	private var soundAdapter: SoundAdapter? = null
 	private var soundLayout: RecyclerView? = null
@@ -96,6 +99,8 @@ class SoundSheetFragment :
 			return null
 
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
+
+		this.floatingActionButton = fragmentView.findViewById(R.id.fab) as AddPauseFloatingActionButton
 
 		this.soundLayout = (fragmentView.findViewById(R.id.rv_sounds) as RecyclerView).apply {
 			adapter = soundAdapter
@@ -151,13 +156,7 @@ class SoundSheetFragment :
 
 	private fun attachScrollViewToFab()
 	{
-        // TODO
-		/*val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
-		if (fab == null || this.soundLayout == null)
-			return
-
-		fab.attachToRecyclerView(this.soundLayout)
-		fab.show(false)*/
+		this.floatingActionButton?.show(true)
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
@@ -229,13 +228,8 @@ class SoundSheetFragment :
 
 	override fun onEventMainThread(event: SoundsRemovedEvent)
 	{
-        // TODO
-        /*
-		if (this.soundAdapter!!.getValues().size == 0)
-		{
-			val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
-			fab?.show()
-		}*/
+		if (this.soundAdapter?.getValues()?.size == 0)
+			this.floatingActionButton?.show(true)
 	}
 
 	override fun onEventMainThread(event: SoundMovedEvent) {}

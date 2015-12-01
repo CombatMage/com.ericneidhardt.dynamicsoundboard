@@ -24,8 +24,8 @@
 			android:src="@drawable/selector_ic_fab"
 			app:layout_behavior="org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour"
 			app:fab_size="normal"
-			app:fab_colorNormal="@color/primary_500"
-			app:fab_colorPressed="@color/primary_700"
-			app:fab_colorRipple="@color/primary_700"/>
+			app:fab_colorNormal="@color/accent_200"
+			app:fab_colorPressed="@color/accent_400"
+	/>
 
 </android.support.design.widget.CoordinatorLayout>
