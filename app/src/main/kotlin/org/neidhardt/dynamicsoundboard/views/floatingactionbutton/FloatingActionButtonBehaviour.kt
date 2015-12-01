@@ -11,11 +11,11 @@ import com.github.clans.fab.FloatingActionButton
 /**
  * File created by eric.neidhardt on 24.09.2015.
  */
-public class FloatingActionButtonBehaviour(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<FloatingActionButton>(context, attrs)
+class FloatingActionButtonBehaviour(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<FloatingActionButton>(context, attrs)
 {
 	private val SCROLL_THRESHOLD = 4
 
-	public override fun layoutDependsOn(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean
+	override fun layoutDependsOn(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean
 			= super.layoutDependsOn(parent, fab, dependency) || (dependency is RecyclerView)
 
 	override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout,

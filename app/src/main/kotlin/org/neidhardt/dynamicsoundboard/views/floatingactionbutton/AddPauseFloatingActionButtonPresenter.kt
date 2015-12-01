@@ -1,9 +1,16 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
+import de.greenrobot.event.EventBus
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
+import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
+import org.neidhardt.dynamicsoundboard.views.presenter.ViewPresenter
+
 /**
  * File created by eric.neidhardt on 21.05.2015.
  */
-/*
 public class AddPauseFloatingActionButtonPresenter
 (
 		override val eventBus: EventBus,
@@ -63,4 +70,3 @@ public class AddPauseFloatingActionButtonPresenter
 		}
 	}
 }
-*/

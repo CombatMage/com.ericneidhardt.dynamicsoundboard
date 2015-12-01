@@ -1,11 +1,20 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
+import android.content.Context
+import android.util.AttributeSet
+import android.view.View
+import com.github.clans.fab.FloatingActionButton
+import de.greenrobot.event.EventBus
+import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
+
 /**
  * File created by Eric Neidhardt on 12.11.2014.
  */
-/*private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
+private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
 
-public class AddPauseFloatingActionButton : com.melnykov.fab.FloatingActionButton, View.OnClickListener
+class AddPauseFloatingActionButton : FloatingActionButton, View.OnClickListener
 {
 	private val eventBus = EventBus.getDefault()
 	private var presenter: AddPauseFloatingActionButtonPresenter? = null
@@ -63,4 +72,4 @@ public class AddPauseFloatingActionButton : com.melnykov.fab.FloatingActionButto
 				0f,
 				(height * 2).toFloat())?.apply { start() } }
 	}
-}*/
+}
