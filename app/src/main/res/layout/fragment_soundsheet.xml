@@ -15,16 +15,6 @@
 			android:overScrollMode="never"
 			tools:listitem="@layout/view_sound_control"/>
 
-	<org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
-			android:id="@+id/fab"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/margin_small"
-			android:layout_gravity="end|bottom"
-			android:src="@drawable/selector_ic_fab"
-			app:layout_behavior="org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour"
-			app:fab_size="normal"
-			app:fab_colorNormal="@color/accent_200"
-			app:fab_colorPressed="@color/accent_400"/>
+	<include layout="@layout/view_fab"/>
 
 </android.support.design.widget.CoordinatorLayout>
