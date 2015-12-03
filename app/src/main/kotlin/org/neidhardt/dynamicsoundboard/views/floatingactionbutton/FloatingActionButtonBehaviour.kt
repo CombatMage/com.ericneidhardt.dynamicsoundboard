@@ -11,7 +11,8 @@ import com.github.clans.fab.FloatingActionButton
 /**
  * File created by eric.neidhardt on 24.09.2015.
  */
-class FloatingActionButtonBehaviour(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<FloatingActionButton>(context, attrs)
+class FloatingActionButtonBehaviour(context: Context, attrs: AttributeSet) :
+		CoordinatorLayout.Behavior<FloatingActionButton>(context, attrs)
 {
 	private val SCROLL_THRESHOLD = 4
 
@@ -32,7 +33,7 @@ class FloatingActionButtonBehaviour(context: Context, attrs: AttributeSet) : Coo
 								dyConsumed: Int,
 								dxUnconsumed: Int,
 								dyUnconsumed: Int)
-    {
+	{
 		if (target is ScrollingView)
 		{
 			if (Math.abs(dyConsumed) > SCROLL_THRESHOLD)

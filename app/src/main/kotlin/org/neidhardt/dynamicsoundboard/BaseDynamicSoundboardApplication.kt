@@ -2,8 +2,6 @@ package org.neidhardt.dynamicsoundboard;
 
 import android.app.Application
 import android.content.Context
-import org.acra.ACRA
-import org.acra.annotation.ReportsCrashes
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
@@ -19,17 +17,14 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsMan
 import java.util.*
 
 
-@ReportsCrashes(
-	mailTo = "eric@neidhardt-erkner.de"
-)
 open class SoundboardApplication : Application()
 {
 
 	companion object
 	{
 		private var applicationContext: Context? = null
-        val context: Context
-            get() = this.applicationContext as Context
+		val context: Context
+			get() = this.applicationContext as Context
 
 		private val random = Random();
 
@@ -55,7 +50,6 @@ open class SoundboardApplication : Application()
 	override fun onCreate()
 	{
 		super.onCreate()
-		ACRA.init(this)
 
 		applicationContext = this.applicationContext
 		soundLayoutsManager = SoundLayoutsManager()
