@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import de.greenrobot.event.EventBus
-import fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStateChangedEvent
 import org.neidhardt.dynamicsoundboard.views.presenter.ViewPresenter
@@ -17,7 +17,7 @@ interface ActivityProgressBar
 	fun setVisibility(v: Int)
 }
 
-class ActivityProgressBarView : SmoothProgressBar, ActivityProgressBar
+class ActivityProgressBarView : MaterialProgressBar, ActivityProgressBar
 {
 	private var presenter: ActivityProgressBarPresenter = ActivityProgressBarPresenter(EventBus.getDefault())
 
