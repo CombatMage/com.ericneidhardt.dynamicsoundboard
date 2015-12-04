@@ -80,9 +80,9 @@ public class LoadSoundsFromFileListTask
 	}
 
 	@Throws(Exception::class)
-	override fun onSuccess(t: List<File>)
+	override fun onSuccess(result: List<File>)
 	{
-		super.onSuccess(t)
+		super.onSuccess(result)
 	}
 
 	private fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): MediaPlayerData
