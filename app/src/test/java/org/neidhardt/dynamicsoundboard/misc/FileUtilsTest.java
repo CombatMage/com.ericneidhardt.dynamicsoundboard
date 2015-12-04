@@ -26,14 +26,14 @@ public class FileUtilsTest extends BaseTest
 	{
 		File file = new File("test.mp3");
 		assertFalse(file.exists());
-		File testFile = FileUtils.getFileForUri(Uri.fromFile(file));
+		File testFile = FileUtils.INSTANCE.getFileForUri(Uri.fromFile(file));
 		assertNull(testFile);
 
 		file = createFile("test.mp3");
 		assertNotNull(file);
 		assertTrue(file.exists());
 
-		testFile = FileUtils.getFileForUri(Uri.fromFile(file));
+		testFile = FileUtils.INSTANCE.getFileForUri(Uri.fromFile(file));
 		assertNotNull(testFile);
 		assertEquals(file.getAbsolutePath(), testFile.getAbsolutePath());
 		assertEquals(Uri.fromFile(file), Uri.fromFile(testFile));
@@ -47,7 +47,7 @@ public class FileUtilsTest extends BaseTest
 		boolean wasExceptionThrown = false;
 		try
 		{
-			FileUtils.stripFileTypeFromName(testName);
+			FileUtils.INSTANCE.stripFileTypeFromName(testName);
 		}
 		catch (NullPointerException e) {
 			wasExceptionThrown = true;
@@ -55,12 +55,12 @@ public class FileUtilsTest extends BaseTest
 		assertTrue(wasExceptionThrown);
 
 		testName = "test";
-		assertThat(FileUtils.stripFileTypeFromName(testName), equalTo("test"));
+		assertThat(FileUtils.INSTANCE.stripFileTypeFromName(testName), equalTo("test"));
 
 		testName = "test.mp3";
-		assertThat(FileUtils.stripFileTypeFromName(testName), equalTo("test"));
+		assertThat(FileUtils.INSTANCE.stripFileTypeFromName(testName), equalTo("test"));
 
 		testName = "test.test.mp3";
-		assertThat(FileUtils.stripFileTypeFromName(testName), equalTo("test.test"));
+		assertThat(FileUtils.INSTANCE.stripFileTypeFromName(testName), equalTo("test.test"));
 	}
 }

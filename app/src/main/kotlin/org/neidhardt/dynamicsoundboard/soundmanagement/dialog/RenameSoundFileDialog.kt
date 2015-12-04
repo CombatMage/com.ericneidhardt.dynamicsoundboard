@@ -99,7 +99,7 @@ private class RenameSoundFileDialogPresenter
 
 
 		val currentFile = FileUtils.getFileForUri(Uri.parse(this.playerData.uri))
-		val currentFileName = currentFile.name
+		val currentFileName = currentFile?.name
 
 		this.newName.text = this.appendFileTypeToNewPath(this.playerData.label, currentFileName)
 	}
