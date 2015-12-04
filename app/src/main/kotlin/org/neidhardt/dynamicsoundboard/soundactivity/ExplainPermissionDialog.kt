@@ -3,7 +3,6 @@ package org.neidhardt.dynamicsoundboard.soundactivity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.FragmentManager
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import org.neidhardt.dynamicsoundboard.R
@@ -55,11 +54,11 @@ public class ExplainPermissionDialog : BaseDialog
 
 		if (this.closeAppOnDenial)
 			dialogBuilder.setNegativeButton(R.string.dialog_close,
-					DialogInterface.OnClickListener { dialogInterface, which -> this.activity?.finish() })
+                    { dialogInterface, which -> this.activity?.finish() })
 		else
 			dialogBuilder.setNegativeButton(R.string.dialog_denial, null)
 
-		dialogBuilder.setPositiveButton(R.string.dialog_grant, DialogInterface.OnClickListener { dialogInterface, i -> this.requestPermission() })
+		dialogBuilder.setPositiveButton(R.string.dialog_grant, { dialogInterface, i -> this.requestPermission() })
 
 		return dialogBuilder.create();
 	}
