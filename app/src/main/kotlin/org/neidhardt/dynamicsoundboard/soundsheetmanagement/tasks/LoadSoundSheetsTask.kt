@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks
 
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
-import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask
+import org.neidhardt.dynamicsoundboard.longtermtask.LongTermTask
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
 
 /**
@@ -15,12 +15,7 @@ public class LoadSoundSheetsTask
 )
 : LongTermTask<List<SoundSheet>>()
 {
-	private val TAG = javaClass.name
-
-	override fun getTag(): String
-	{
-		return TAG
-	}
+	override val TAG = javaClass.name
 
 	@Throws(Exception::class)
 	override fun call(): List<SoundSheet>
@@ -29,10 +24,10 @@ public class LoadSoundSheetsTask
 	}
 
 	@Throws(Exception::class)
-	override fun onSuccess(loadedSoundSheets: List<SoundSheet>)
+	override fun onSuccess(result: List<SoundSheet>)
 	{
-		super.onSuccess(loadedSoundSheets)
-		for (soundSheet in loadedSoundSheets)
+		super.onSuccess(result)
+		for (soundSheet in result)
 			this.soundSheetsDataStorage.addSoundSheetToManager(soundSheet)
 	}
 

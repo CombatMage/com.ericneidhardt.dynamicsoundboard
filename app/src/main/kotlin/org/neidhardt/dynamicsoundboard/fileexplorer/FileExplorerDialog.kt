@@ -85,16 +85,18 @@ public abstract class FileExplorerDialog : BaseDialog()
 		public fun setParent(parent: File)
 		{
 			this.parentFile = parent
-			this.fileList = FileUtils.getFilesInDirectory(this.parentFile)
+			this.fileList = FileUtils.getFilesInDirectory(parent)
 			if (parent.parentFile != null)
 				this.fileList.add(0, parent.parentFile)
 		}
 
 		public fun refreshDirectory()
 		{
-			this.fileList = FileUtils.getFilesInDirectory(this.parentFile)
-			if (this.parentFile!!.parentFile != null)
-				this.fileList.add(0, this.parentFile!!.parentFile)
+			this.parentFile?.apply {
+				fileList = FileUtils.getFilesInDirectory(this)
+				if (this.parentFile != null)
+					fileList.add(0, this.parentFile)
+			}
 		}
 
 		override fun onCreateViewHolder(parent: ViewGroup, i: Int): DirectoryEntry
