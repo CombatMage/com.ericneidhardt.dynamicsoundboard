@@ -4,9 +4,9 @@ import android.net.Uri
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.longtermtask.LongTermTask
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerComparator
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.misc.longtermtask.LongTermTask
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import java.io.File
 import java.util.*
@@ -21,10 +21,9 @@ public class LoadSoundsFromDatabaseTask
 ) :
 		LongTermTask<List<MediaPlayerData>>()
 {
-	private val TAG = javaClass.name
+    override val TAG: String = javaClass.name
 
-
-	@Throws(Exception::class)
+    @Throws(Exception::class)
 	override fun call(): List<MediaPlayerData>
 	{
 		val mediaPlayersData = this.daoSession.mediaPlayerDataDao.queryBuilder().list()
@@ -35,11 +34,6 @@ public class LoadSoundsFromDatabaseTask
 
 		return mediaPlayersData
 	}
-
-	override fun getTag(): String
-	{
-		return TAG
-	}
 }
 
 public class LoadPlaylistFromDatabaseTask
@@ -49,7 +43,7 @@ public class LoadPlaylistFromDatabaseTask
 ) :
 		LongTermTask<List<MediaPlayerData>>()
 {
-	private val TAG = javaClass.name
+    override val TAG: String = javaClass.name
 
 	@Throws(Exception::class)
 	override fun call(): List<MediaPlayerData>
@@ -61,11 +55,6 @@ public class LoadPlaylistFromDatabaseTask
 			this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData)
 		return mediaPlayersData
 	}
-
-	override fun getTag(): String
-	{
-		return TAG
-	}
 }
 
 public class LoadSoundsFromFileListTask
@@ -76,7 +65,7 @@ public class LoadSoundsFromFileListTask
 ) :
 		LongTermTask<List<File>>()
 {
-	private val TAG = javaClass.name
+    override val TAG: String = javaClass.name
 
 	@Throws(Exception::class)
 	override fun call(): List<File>
@@ -91,14 +80,9 @@ public class LoadSoundsFromFileListTask
 	}
 
 	@Throws(Exception::class)
-	override fun onSuccess(files: List<File>)
+	override fun onSuccess(t: List<File>)
 	{
-		super.onSuccess(files)
-	}
-
-	override fun getTag(): String
-	{
-		return TAG
+		super.onSuccess(t)
 	}
 
 	private fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): MediaPlayerData

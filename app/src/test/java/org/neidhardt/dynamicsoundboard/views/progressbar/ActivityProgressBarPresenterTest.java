@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.neidhardt.dynamicsoundboard.BaseTest;
-import org.neidhardt.dynamicsoundboard.misc.longtermtask.events.LongTermTaskStateChangedEvent;
+import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent;
 
 import static org.mockito.Mockito.*;
 
