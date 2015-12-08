@@ -17,8 +17,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
 		targetSdkVersion 23
-		versionCode 21908
-		versionName "2.19.8"
+		versionCode 21909
+		versionName "2.19.9"
 		resConfigs "de"
 	}
 
@@ -96,7 +96,7 @@ dependencies {
 	compile 'de.greenrobot:greendao:2.1.0'
 
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
-	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.6.3-4'
+	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.6.4'
 
 	compile 'com.github.clans:fab:1.6.2'
 

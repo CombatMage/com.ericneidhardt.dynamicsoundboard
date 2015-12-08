@@ -18,7 +18,8 @@ interface RequestPermissionHelper
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
 		{
 			if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE))
-				ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_phone_state_message, Manifest.permission.READ_PHONE_STATE, false)
+				ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_phone_state_message,
+						Manifest.permission.READ_PHONE_STATE, IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE, false)
 			else
 				ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
 		}
@@ -33,7 +34,8 @@ interface RequestPermissionHelper
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
 		{
 			if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE))
-				ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_storage_message, Manifest.permission.READ_EXTERNAL_STORAGE, true)
+				ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_read_storage_message,
+						Manifest.permission.READ_EXTERNAL_STORAGE, IntentRequest.REQUEST_PERMISSION_READ_STORAGE, true)
 			else
 				ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_READ_STORAGE)
 
@@ -48,7 +50,8 @@ interface RequestPermissionHelper
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
 		{
 			if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-				ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_write_storage_message, Manifest.permission.WRITE_EXTERNAL_STORAGE, true)
+				ExplainPermissionDialog(this.fragmentManager, R.string.request_permission_write_storage_message,
+						Manifest.permission.WRITE_EXTERNAL_STORAGE, IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE, true)
 			else
 				ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE)
 		}
