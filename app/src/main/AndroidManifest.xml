@@ -11,6 +11,7 @@
 	<application
 			android:name=".DynamicSoundboardApplication"
 			android:allowBackup="true"
+			android:largeHeap="true"
 			android:icon="@drawable/ic_launcher"
 			android:label="Dynamic Soundboard (Beta)"
 			android:theme="@style/Theme.AppTheme">

@@ -15,7 +15,6 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDeco
 
 public class SoundSheets : NavigationDrawerList
 {
-
 	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 	private val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
 

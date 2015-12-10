@@ -1,35 +1,41 @@
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="horizontal"
-		android:fitsSystemWindows="true"
-		tools:ignore="InconsistentLayout">
+		android:layout_height="match_parent">
 
-	<fragment
-			android:id="@+id/navigation_drawer_fragment"
-			android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
-			android:layout_width="@dimen/navigation_drawer_width"
-			android:layout_height="match_parent"
-			android:layout_gravity="start"
-			tools:layout="@layout/fragment_navigation_drawer"/>
-
-	<android.support.design.widget.CoordinatorLayout
+	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:orientation="vertical">
 
-		<LinearLayout
+		<android.support.design.widget.AppBarLayout
+				android:id="@+id/appBarLayout"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:orientation="vertical">
+				android:layout_height="wrap_content">
 
 			<include layout="@layout/toolbar"/>
 
+		</android.support.design.widget.AppBarLayout>
+
+		<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+
+			<fragment
+					android:id="@+id/navigation_drawer_fragment"
+					android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
+					android:layout_width="@dimen/navigation_drawer_width"
+					android:layout_height="match_parent"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					tools:layout="@layout/fragment_navigation_drawer"/>
+
 			<FrameLayout
 					android:layout_width="match_parent"
-					android:layout_height="match_parent">
+					android:layout_height="match_parent"
+					android:layout_toLeftOf="@id/navigation_drawer_fragment"
+					android:layout_toStartOf="@id/navigation_drawer_fragment">
 
 				<FrameLayout
 						android:id="@+id/main_frame"
@@ -38,18 +44,22 @@
 						android:background="@color/background"/>
 
 				<View
-						android:layout_width="match_parent"
-						android:layout_height="@dimen/height_shadow"
-						android:background="@drawable/shape_shadow_horizontal"/>
+						android:layout_width="@dimen/height_shadow_fixed"
+						android:layout_height="match_parent"
+						android:layout_gravity="end"
+						android:rotation="180"
+						android:background="@drawable/shape_shadow_vertical"/>
 
 				<include layout="@layout/progressbar"/>
 
 			</FrameLayout>
-		</LinearLayout>
 
-		<View
-				android:layout_width="@dimen/height_shadow"
-				android:layout_height="match_parent"
-				android:background="@drawable/shape_shadow_vertical"/>
-	</android.support.design.widget.CoordinatorLayout>
-</LinearLayout>
+			<View
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/height_shadow"
+					android:background="@drawable/shape_shadow_horizontal"/>
+
+		</RelativeLayout>
+	</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
