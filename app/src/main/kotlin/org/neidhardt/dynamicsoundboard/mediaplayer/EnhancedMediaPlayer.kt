@@ -310,7 +310,7 @@ private class EnhancedMediaPlayer
 	{
 		val delay = FADE_OUT_DURATION / INT_VOLUME_MAX
 		if (this.handler == null)
-            this.handler = EnhancedHandler()
+			this.handler = EnhancedHandler()
 
 		this.fadeOutSchedule = object : KillableRunnable
 		{

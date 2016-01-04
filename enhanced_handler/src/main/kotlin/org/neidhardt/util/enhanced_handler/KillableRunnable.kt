@@ -5,6 +5,5 @@ package org.neidhardt.util.enhanced_handler
  */
 interface KillableRunnable : Runnable
 {
-	@Volatile
 	var isKilled: Boolean
 }
