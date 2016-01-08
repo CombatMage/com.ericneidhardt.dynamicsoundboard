@@ -4,7 +4,7 @@ import android.app.FragmentManager
 import android.os.Bundle
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 
 /**
  * File created by eric.neidhardt on 12.03.2015.

@@ -3,11 +3,8 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog
@@ -26,7 +23,8 @@ public class SoundLayoutsPresenter
 		NavigationDrawerListPresenter<SoundLayouts?>(),
 		NavigationDrawerItemClickListener<SoundLayout>,
 		SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
-		AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener
+		AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener,
+		OnSoundLayoutsChangedEventListener
 {
 	override val isEventBusSubscriber: Boolean = true
 	override var view: SoundLayouts? = null
@@ -47,9 +45,6 @@ public class SoundLayoutsPresenter
 		val soundLayoutsToRemove = this.getSoundLayoutsSelectedForDeletion()
 
 		this.soundLayoutsStorage.removeSoundLayouts(soundLayoutsToRemove)
-
-		this.adapter?.notifyDataSetChanged()
-		this.eventBus.post(SoundLayoutRemovedEvent())
 
 		super.onSelectedItemsDeleted()
 	}
@@ -111,4 +106,19 @@ public class SoundLayoutsPresenter
 		}
 	}
 
+	override fun onEventMainThread(event: SoundLayoutsRemovedEvent) {
+		val layoutsToRemove = event.soundLayouts
+		for (layout in layoutsToRemove)
+			this.removeLayout(layout)
+	}
+
+	private fun removeLayout(soundSheet: SoundLayout)
+	{
+		val index = this.values.indexOf(soundSheet)
+		if (index != -1) // should no happen
+		{
+			this.values.removeAt(index)
+			this.adapter?.notifyItemRemoved(index)
+		}
+	}
 }

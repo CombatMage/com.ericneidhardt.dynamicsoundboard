@@ -10,7 +10,7 @@ import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.*
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.views.presenter.ViewPresenter
@@ -93,8 +93,8 @@ class NavigationDrawerHeaderPresenter
 ) :
 		ViewPresenter<NavigationDrawerHeader?>,
 		SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
-		OnSoundLayoutRemovedEventListener,
-		OnSoundLayoutSelectedEventListener
+        OnSoundLayoutsChangedEventListener,
+        OnSoundLayoutSelectedEventListener
 {
 	private val TAG = javaClass.name
 
@@ -125,7 +125,7 @@ class NavigationDrawerHeaderPresenter
 		this.view?.showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().label)
 	}
 
-	override fun onEvent(event: SoundLayoutRemovedEvent) {
+	override fun onEventMainThread(event: SoundLayoutsRemovedEvent) {
 		if (this.view == null || this.soundLayoutModel == null)
 			return
 
