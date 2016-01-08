@@ -54,7 +54,7 @@
 				android:layout_alignParentLeft="true"
 				android:layout_alignParentStart="true"
 				android:textSize="@dimen/text_sub_text"
-				android:text="@string/sound_layout_default"
+				android:text="@string/suggested_sound_layout_name"
 				android:textColor="@color/text_header"
 				app:typeface="roboto_regular"/>
 	</RelativeLayout>

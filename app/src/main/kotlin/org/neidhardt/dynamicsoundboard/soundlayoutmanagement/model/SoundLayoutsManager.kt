@@ -82,7 +82,7 @@ public class SoundLayoutsManager :
 	private fun getDefaultSoundLayout(): SoundLayout
 	{
 		val layout = SoundLayout()
-		val label = SoundboardApplication.context.getString(R.string.sound_layout_default)
+		val label = SoundboardApplication.context.getString(R.string.suggested_sound_layout_name)
 		layout.databaseId = DB_DEFAULT
 		layout.label = label
 		layout.isSelected = true
