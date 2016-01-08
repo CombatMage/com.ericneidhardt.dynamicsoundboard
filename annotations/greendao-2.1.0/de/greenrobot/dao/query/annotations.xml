@@ -1,0 +1,212 @@
+<root>
+    <item name='de.greenrobot.dao.query.WhereCondition void appendTo(java.lang.StringBuilder, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; orderRaw(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; whereOr(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.Join&lt;SRC,DST&gt; whereOr(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; orderDesc(de.greenrobot.dao.Property...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.Join&lt;SRC,DST&gt; where(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; orderAsc(de.greenrobot.dao.Property...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Query T uniqueOrThrow()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.Join&lt;SRC,DST&gt; whereOr(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; whereOr(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.WhereCondition.PropertyCondition PropertyCondition(de.greenrobot.dao.Property, java.lang.String, java.lang.Object[]) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.LazyList de.greenrobot.dao.query.CloseableListIterator&lt;E&gt; listIteratorAutoClose()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder java.lang.StringBuilder append(java.lang.StringBuilder, de.greenrobot.dao.Property) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; where(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.LazyList de.greenrobot.dao.query.CloseableListIterator&lt;E&gt; listIterator()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; orderCustom(de.greenrobot.dao.Property, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.Join&lt;SRC,DST&gt; where(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.WhereCondition.StringCondition void appendTo(java.lang.StringBuilder, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.LazyList&lt;T&gt; listLazy()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.CloseableListIterator&lt;T&gt; listIterator()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Query de.greenrobot.dao.query.LazyList&lt;T&gt; listLazyUncached()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.LazyList E get(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder T uniqueOrThrow()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; offset(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; distinct()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T2&gt; internalCreate(de.greenrobot.dao.AbstractDao&lt;T2,?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; limit(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder java.lang.StringBuilder append(java.lang.StringBuilder, de.greenrobot.dao.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.WhereCondition.PropertyCondition void appendTo(java.lang.StringBuilder, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.LazyList.LazyIterator E previous()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.Join&lt;SRC,DST&gt; whereOr(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; whereOr(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.Join&lt;T,J&gt; join(de.greenrobot.dao.Property, java.lang.Class&lt;J&gt;, de.greenrobot.dao.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.LazyList.LazyIterator E next()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.LazyList&lt;T&gt; listLazyUncached()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.Join&lt;T,J&gt; join(de.greenrobot.dao.query.Join&lt;?,T&gt;, de.greenrobot.dao.Property, java.lang.Class&lt;J&gt;, de.greenrobot.dao.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.Join&lt;T,J&gt; join(de.greenrobot.dao.Property, java.lang.Class&lt;J&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.WhereCondition.PropertyCondition PropertyCondition(de.greenrobot.dao.Property, java.lang.String, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; orderCustom(de.greenrobot.dao.Property, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; orderDesc(de.greenrobot.dao.Property...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.LazyList java.util.Iterator&lt;E&gt; iterator()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; where(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Query de.greenrobot.dao.query.CloseableListIterator&lt;T&gt; listIterator()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.Join&lt;SRC,DST&gt; whereOr(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; whereOr(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Join de.greenrobot.dao.query.WhereCondition and(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.QueryBuilder&lt;T&gt; orderAsc(de.greenrobot.dao.Property...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.LazyList E loadEntity(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.Join&lt;T,J&gt; join(de.greenrobot.dao.query.Join&lt;?,T&gt;, de.greenrobot.dao.Property, java.lang.Class&lt;J&gt;, de.greenrobot.dao.Property) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.LazyList java.util.ListIterator listIterator()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder java.lang.StringBuilder append(java.lang.StringBuilder, de.greenrobot.dao.Property) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.WhereCondition or(de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition, de.greenrobot.dao.query.WhereCondition...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.LazyList java.util.ListIterator&lt;E&gt; listIterator(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.QueryBuilder de.greenrobot.dao.query.Join&lt;T,J&gt; join(java.lang.Class&lt;J&gt;, de.greenrobot.dao.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.query.Query de.greenrobot.dao.query.LazyList&lt;T&gt; listLazy()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

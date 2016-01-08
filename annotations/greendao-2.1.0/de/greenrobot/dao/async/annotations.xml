@@ -1,0 +1,236 @@
+<root>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType Insert'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertOrReplaceInTx(java.lang.Class&lt;E&gt;, java.lang.Iterable&lt;E&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation updateInTx(java.lang.Class&lt;E&gt;, java.lang.Iterable&lt;E&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insert(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertOrReplaceInTx(java.lang.Class&lt;E&gt;, E...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation update(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType TransactionCallable'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation callInTx(java.util.concurrent.Callable&lt;?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insert(java.lang.Object, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation updateInTx(java.lang.Class&lt;E&gt;, E...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation queryList(de.greenrobot.dao.query.Query&lt;?&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation refresh(java.lang.Object, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType Load'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType DeleteAll'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType Delete'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation queryList(de.greenrobot.dao.query.Query&lt;?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType LoadAll'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation callInTx(java.util.concurrent.Callable&lt;?&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType Update'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertInTx(java.lang.Class&lt;E&gt;, java.lang.Iterable&lt;E&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType UpdateInTxIterable'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType InsertInTxArray'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertOrReplace(java.lang.Object, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation delete(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteByKey(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType TransactionRunnable'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation load(java.lang.Class&lt;?&gt;, java.lang.Object, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType UpdateInTxArray'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType Count'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteByKey(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation update(java.lang.Object, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType InsertOrReplaceInTxIterable'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteInTx(java.lang.Class&lt;E&gt;, E...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation updateInTx(java.lang.Class&lt;E&gt;, java.lang.Iterable&lt;E&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation runInTx(java.lang.Runnable)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation count(java.lang.Class&lt;?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation delete(java.lang.Object, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertInTx(java.lang.Class&lt;E&gt;, java.lang.Iterable&lt;E&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation loadAll(java.lang.Class&lt;?&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertInTx(java.lang.Class&lt;E&gt;, int, E...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertOrReplace(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation queryUnique(de.greenrobot.dao.query.Query&lt;?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType InsertOrReplaceInTxArray'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation load(java.lang.Class&lt;?&gt;, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation refresh(java.lang.Object, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType QueryList'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertOrReplace(java.lang.Object, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType Refresh'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteInTx(java.lang.Class&lt;E&gt;, java.lang.Iterable&lt;E&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation queryUnique(de.greenrobot.dao.query.Query&lt;?&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation runInTx(java.lang.Runnable, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insert(java.lang.Object, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation updateInTx(java.lang.Class&lt;E&gt;, int, E...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation delete(java.lang.Object, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteAll(java.lang.Class&lt;E&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation refresh(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteByKey(java.lang.Object, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType QueryUnique'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType DeleteInTxArray'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation delete(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType InsertInTxIterable'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertOrReplaceInTx(java.lang.Class&lt;E&gt;, java.lang.Iterable&lt;E&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteInTx(java.lang.Class&lt;E&gt;, java.lang.Iterable&lt;E&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation count(java.lang.Class&lt;?&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertOrReplaceInTx(java.lang.Class&lt;E&gt;, int, E...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType DeleteByKey'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation update(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteAll(java.lang.Class&lt;E&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation refresh(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation update(java.lang.Object, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteByKey(java.lang.Object, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation loadAll(java.lang.Class&lt;?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType DeleteInTxIterable'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation deleteInTx(java.lang.Class&lt;E&gt;, int, E...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertInTx(java.lang.Class&lt;E&gt;, E...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncOperation.OperationType InsertOrReplace'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insert(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.async.AsyncSession de.greenrobot.dao.async.AsyncOperation insertOrReplace(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

@@ -9,6 +9,9 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
@@ -22,10 +25,11 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
 	private val eventBus = EventBus.getDefault()
+	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private var notificationHandler: NotificationHandler? = null
 
-    var isActivityVisible: Boolean = false
+	var isActivityVisible: Boolean = false
 		private set
 
 	override fun onBind(intent: Intent): IBinder? = null
@@ -50,6 +54,8 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 	{
 		Logger.d(TAG, "onDestroy")
 
+		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
+
 		this.eventBus.unregister(this)
 		this.notificationHandler!!.onServiceDestroyed()
 		this.soundsDataUtil.releaseAll()
@@ -62,11 +68,15 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 		if (event.isActivityClosed)
 		{
 			this.isActivityVisible = false
+
+			this.registerPauseSoundOnCallListener(this.phoneStateListener)
 			if (this.soundsDataAccess.currentlyPlayingSounds.size == 0)
 				this.stopSelf()
 		}
 		else if (event.isActivityResumed)
 		{
+			this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
+
 			this.isActivityVisible = true
 			this.notificationHandler!!.removeNotificationsForPausedSounds()
 		}

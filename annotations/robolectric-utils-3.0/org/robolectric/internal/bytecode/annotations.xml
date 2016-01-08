@@ -1,0 +1,5 @@
+<root>
+    <item name='org.robolectric.internal.bytecode.DirectObjectMarker INSTANCE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

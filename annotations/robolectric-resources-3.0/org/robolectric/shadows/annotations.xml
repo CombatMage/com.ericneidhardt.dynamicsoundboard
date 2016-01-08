@@ -1,0 +1,164 @@
+<root>
+    <item name='org.robolectric.shadows.Converter.FromArray org.robolectric.res.TypedResource[] getItems(org.robolectric.res.TypedResource) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet java.lang.String getAttributeValue(java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromAttrData java.lang.CharSequence asCharSequence(org.robolectric.res.TypedResource) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromCharSequence java.lang.CharSequence asCharSequence(org.robolectric.res.TypedResource) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet org.robolectric.shadows.RoboAttributeSet put(org.robolectric.res.Attribute)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromColor int asInt(org.robolectric.res.TypedResource) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter org.robolectric.shadows.Converter getConverter(org.robolectric.res.ResType) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet org.robolectric.shadows.RoboAttributeSet put(java.lang.String, java.lang.String, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromAttrData void fillTypedValue(java.lang.Object, android.util.TypedValue) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.Converter void convertAndFill(org.robolectric.res.Attribute, android.util.TypedValue, org.robolectric.res.ResourceLoader, java.lang.String, org.robolectric.res.AttrData, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromDrawableValue int asInt(org.robolectric.res.TypedResource) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboLayoutInflater android.view.LayoutInflater cloneInContext(android.content.Context)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter void convertAndFill(org.robolectric.res.Attribute, android.util.TypedValue, org.robolectric.res.ResourceLoader, java.lang.String, org.robolectric.res.AttrData, boolean) 4'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter void fillTypedValue(T, android.util.TypedValue) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromCharSequence void fillTypedValue(java.lang.Object, android.util.TypedValue) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet float getAttributeFloatValue(java.lang.String, java.lang.String, float) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromDrawableValue void fillTypedValue(java.lang.Object, android.util.TypedValue) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet int getAttributeIntValue(java.lang.String, java.lang.String, int) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromCharSequence int asInt(org.robolectric.res.TypedResource) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet int getAttributeResourceValue(java.lang.String, java.lang.String, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromColor void fillTypedValue(java.lang.Object, android.util.TypedValue) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet boolean getAttributeBooleanValue(java.lang.String, java.lang.String, boolean) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet java.lang.String getPositionDescription()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter org.robolectric.shadows.Converter getConverter(org.robolectric.res.ResType)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet java.lang.String getAttributeValue(java.lang.String, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter java.lang.CharSequence asCharSequence(org.robolectric.res.TypedResource) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet org.robolectric.shadows.RoboAttributeSet put(java.lang.String, java.lang.String, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromDrawableValue void fillTypedValue(java.lang.String, android.util.TypedValue) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet org.robolectric.shadows.RoboAttributeSet put(java.lang.String, java.lang.String, java.lang.String) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromAttrData void fillTypedValue(java.lang.Object, android.util.TypedValue) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet org.robolectric.shadows.RoboAttributeSet put(java.lang.String, java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter int asInt(org.robolectric.res.TypedResource) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromColor void fillTypedValue(java.lang.String, android.util.TypedValue) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet float getAttributeFloatValue(java.lang.String, java.lang.String, float) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromCharSequence void fillTypedValue(java.lang.Object, android.util.TypedValue) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.Converter void convertAndFill(org.robolectric.res.Attribute, android.util.TypedValue, org.robolectric.res.ResourceLoader, java.lang.String, org.robolectric.res.AttrData, boolean) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter void fillTypedValue(T, android.util.TypedValue) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromDrawableValue void fillTypedValue(java.lang.Object, android.util.TypedValue) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet int getAttributeIntValue(java.lang.String, java.lang.String, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet int getAttributeResourceValue(java.lang.String, java.lang.String, int) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromCharSequence void fillTypedValue(java.lang.String, android.util.TypedValue) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.shadows.Converter.FromColor void fillTypedValue(java.lang.Object, android.util.TypedValue) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.Converter org.robolectric.res.TypedResource[] getItems(org.robolectric.res.TypedResource) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.robolectric.shadows.RoboAttributeSet boolean getAttributeBooleanValue(java.lang.String, java.lang.String, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

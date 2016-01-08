@@ -75,7 +75,7 @@ public class SoundActivity :
 	private var drawerToggle: ActionBarDrawerToggle? = null
 	private var actionMode: android.support.v7.view.ActionMode? = null
 
-	private var phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
+	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private val eventBus = EventBus.getDefault()
 

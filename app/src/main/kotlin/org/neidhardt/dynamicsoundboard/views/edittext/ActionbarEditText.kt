@@ -38,7 +38,7 @@ class ActionbarEditText(context: Context, attrs: AttributeSet) :
 		}
 	}
 
-	override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent): Boolean
+	override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent?): Boolean
 	{
 		if (actionId == EditorInfo.IME_ACTION_DONE)
 		{
@@ -64,7 +64,8 @@ class ActionbarEditText(context: Context, attrs: AttributeSet) :
 		this.input!!.keyListener = null
 	}
 
-	private fun enableEditText() {
+	private fun enableEditText()
+	{
 		this.divider?.visibility = View.VISIBLE
 
 		this.input!!.keyListener = this.editTextKeyListener
