@@ -6,6 +6,7 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutAddedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
 import java.util.*
 
@@ -97,21 +98,28 @@ public class SoundLayoutsManager :
 	{
 		this.soundLayouts.removeAll(soundLayoutsToRemove)
 
-		if (this.soundLayouts.size == 0) // make sure there is always at least 1 layout left
-		{
-			this.addSoundLayout(this.getDefaultSoundLayout())
-		}
-
+		var wasActiveLayoutRemoved = false
 		for (layout in soundLayoutsToRemove)
 		{
 			this.daoSession.soundLayoutDao.delete(layout)
 			if (layout.isSelected) // if the current active layout was removed, we need to select another one
-			{
-				this.soundLayouts[0].isSelected = true
-				this.soundLayouts[0].updateItemInDatabaseAsync()
+				wasActiveLayoutRemoved = true
+		}
 
-                // TODO post soundlayout selected event
-			}
+		if (this.soundLayouts.size == 0) // make sure there is always at least 1 layout left
+		{
+			val defaultLayout = this.getDefaultSoundLayout()
+			if (defaultLayout.isSelected)
+				wasActiveLayoutRemoved = false // no need to set a new sound layout active, because the default layout is active
+
+			this.addSoundLayout(defaultLayout)
+			this.eventBus.post(SoundLayoutAddedEvent(defaultLayout))
+		}
+
+		if (wasActiveLayoutRemoved)
+		{
+			this.soundLayouts[0].isSelected = true
+			this.soundLayouts[0].updateItemInDatabaseAsync()
 		}
 
 		this.eventBus.post(SoundLayoutsRemovedEvent(soundLayoutsToRemove))

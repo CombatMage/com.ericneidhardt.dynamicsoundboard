@@ -106,10 +106,14 @@ public class SoundLayoutsPresenter
 		}
 	}
 
-	override fun onEventMainThread(event: SoundLayoutsRemovedEvent) {
+	override fun onEventMainThread(event: SoundLayoutsRemovedEvent)
+	{
 		val layoutsToRemove = event.soundLayouts
 		for (layout in layoutsToRemove)
 			this.removeLayout(layout)
+
+		val soundLayout = this.soundLayoutsAccess.getActiveSoundLayout()
+		this.adapter?.notifyItemChanged(soundLayout)
 	}
 
 	private fun removeLayout(soundSheet: SoundLayout)
