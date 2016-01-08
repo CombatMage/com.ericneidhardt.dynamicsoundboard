@@ -294,6 +294,8 @@ public class SoundActivity :
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
 		this.setSoundSheetActionsEnable(false)
+
+		this.soundSheetsDataUtil.releaseAll()
 		this.soundSheetsDataUtil.initIfRequired()
 
 		this.soundsDataUtil.releaseAll()

@@ -72,8 +72,6 @@ android {
 		debug.java.srcDirs += 'src/debug/kotlin'
 		release.java.srcDirs += 'src/release/kotlin'
 		test.java.srcDirs += 'src/test/kotlin'
-		testDebug.java.srcDirs += 'src/testDebug/kotlin'
-		testRelease.java.srcDirs += 'src/testDebug/kotlin'
 	}
 }
 

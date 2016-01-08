@@ -31,10 +31,11 @@ public class SoundSheetsManager :
 	private val DB_SOUND_SHEETS = "db_sound_sheets"
 
 	private var daoSession: DaoSession? = null
-	private var isInitDone: Boolean = false
 
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
 	private val eventBus: EventBus = EventBus.getDefault()
+
+	private var isInitDone: Boolean = false
 
 	private val soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
 
@@ -59,6 +60,18 @@ public class SoundSheetsManager :
 		}
 		else
 			return false
+	}
+
+	override fun releaseAll()
+	{
+		this.isInitDone = false
+
+		val copyList = ArrayList<SoundSheet>(soundSheets.size)
+		copyList.addAll(soundSheets)
+
+		this.soundSheets.clear()
+
+		this.eventBus.post(SoundSheetsRemovedEvent(copyList))
 	}
 
 	private fun getDatabaseName(): String
@@ -92,7 +105,7 @@ public class SoundSheetsManager :
 	override fun removeSoundSheets(soundSheets: List<SoundSheet>)
 	{
 		val copyList = ArrayList<SoundSheet>(soundSheets.size)
-		copyList.addAll(soundSheets); // this is done to prevent concurrent modification exception
+		copyList.addAll(soundSheets) // this is done to prevent concurrent modification exception
 
 		val dao = this.getDbSoundSheets().soundSheetDao
 		for (soundSheetToRemove in copyList)

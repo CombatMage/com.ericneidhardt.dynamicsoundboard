@@ -14,7 +14,7 @@ public interface SoundsDataUtil
 	public fun initIfRequired()
 
 	/**
-	 * Release all existing `EnhancedMediaPlayer` loaded in sounds and playlist.
+	 * Release all existing `EnhancedMediaPlayer` loaded in sounds and playlist and set state to not init.
 	 */
 	public fun releaseAll()
 

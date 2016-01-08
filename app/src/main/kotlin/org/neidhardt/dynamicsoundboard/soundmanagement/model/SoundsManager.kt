@@ -33,11 +33,11 @@ public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	private var dbPlaylist: DaoSession? = null
 	private var dbSounds: DaoSession? = null
 
+	private var isInitDone: Boolean = false
+
 	override val sounds: MutableMap<String, MutableList<MediaPlayerController>> = ConcurrentHashMap()
 	override val playlist: MutableList<MediaPlayerController> = CopyOnWriteArrayList()
 	override val currentlyPlayingSounds: MutableSet<MediaPlayerController> = CopyOnWriteArraySet()
-
-	private var isInitDone: Boolean = false
 
 	init
 	{

@@ -15,6 +15,11 @@ public interface SoundSheetsDataUtil
 	public fun initIfRequired(): Boolean
 
 	/**
+	 * Release all existing `SoundSheet` and set state to not init.
+	 */
+	public fun releaseAll()
+
+	/**
 	 * Generate a new SoundSheet instance with unique fragmentTag, derived from the given label.
 	 * @param label label of the new `SoundSheet`
 	 * *
