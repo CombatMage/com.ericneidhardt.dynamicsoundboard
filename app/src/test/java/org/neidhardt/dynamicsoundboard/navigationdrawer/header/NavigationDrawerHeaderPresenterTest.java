@@ -8,10 +8,12 @@ import org.mockito.MockitoAnnotations;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout;
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRemovedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutRenamedEvent;
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutSelectedEvent;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent;
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -80,11 +82,11 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	@Test
 	public void testOnSoundLayoutRemovedEvent() throws Exception
 	{
-		this.presenter.onEvent(new SoundLayoutRemovedEvent());
+		this.presenter.onEventMainThread(new SoundLayoutsRemovedEvent(new ArrayList<SoundLayout>()));
 		verify(this.view, times(1)).showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
 
 		this.presenter.setView(null);
-		this.presenter.onEvent(new SoundLayoutRemovedEvent());
+		this.presenter.onEventMainThread(new SoundLayoutsRemovedEvent(new ArrayList<SoundLayout>()));
 		verify(this.view, times(1)).showCurrentLayoutName(anyString());
 	}
 
