@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundcontrol
 
 import de.greenrobot.event.EventBus
 import org.hamcrest.CoreMatchers.equalTo
+import org.junit.Assert
 import org.junit.Assert.assertThat
 import org.junit.Test
 import org.mockito.Mock
@@ -13,7 +14,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.testutils.TestDataGenerator
 import java.util.*
-import kotlin.test.assertEquals
 
 /**
  * File created by eric.neidhardt on 03.07.2015.
@@ -92,9 +92,9 @@ public class SoundPresenterTest : BaseTest()
 
 		assertThat(this.soundPresenter!!.values.size, equalTo(3))
 
-		assertEquals(this.soundPresenter!!.values[0], event2.player)
-		assertEquals(this.soundPresenter!!.values[1], event1.player)
-		assertEquals(this.soundPresenter!!.values[2], event0.player)
+		Assert.assertEquals(this.soundPresenter!!.values[0], event2.player)
+        Assert.assertEquals(this.soundPresenter!!.values[1], event1.player)
+        Assert.assertEquals(this.soundPresenter!!.values[2], event0.player)
 
 		this.verifySortOrder()
 	}
@@ -107,7 +107,7 @@ public class SoundPresenterTest : BaseTest()
 		for (i in 0..count - 1)
 		{
 			val itemSortOrder = values[i].mediaPlayerData.sortOrder
-			assertEquals(itemSortOrder, i)
+            Assert.assertEquals(itemSortOrder, i)
 		}
 	}
 
