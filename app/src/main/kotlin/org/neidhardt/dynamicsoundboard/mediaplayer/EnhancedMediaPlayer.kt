@@ -249,30 +249,34 @@ private class EnhancedMediaPlayer
 		return false
 	}
 
-	override fun pauseSound(): Boolean {
+	override fun pauseSound(): Boolean
+	{
 		if (!this.isPlayingSound)
 			return true
-		try {
+		try
+		{
 			when (this.currentState)
 			{
-				State.IDLE -> {
+				State.IDLE ->
+				{
 					this.init(SoundboardApplication.context)
 					this.start()
 				}
-				State.DESTROYED -> {
+				State.DESTROYED ->
+				{
 					this.init(SoundboardApplication.context)
 					this.start()
 				}
-				State.INIT -> {
+				State.INIT ->
+				{
 					this.prepare()
 					this.start()
 				}
 				State.PREPARED -> this.start()
-				State.STARTED -> {
-				}
-				State.PAUSED -> {
-				}
-				State.STOPPED -> {
+				State.STARTED -> { }
+				State.PAUSED -> {}
+				State.STOPPED ->
+				{
 					this.prepare()
 					this.start()
 				}
