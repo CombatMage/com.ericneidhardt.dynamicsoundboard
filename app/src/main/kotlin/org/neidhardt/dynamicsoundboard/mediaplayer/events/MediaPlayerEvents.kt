@@ -16,6 +16,8 @@ data class MediaPlayerStateChangedEvent(val player: MediaPlayerController, val i
 		get() = this.player.mediaPlayerData.fragmentTag
 }
 
+data class MediaPlayerFailedEvent(val player: MediaPlayerController)
+
 interface MediaPlayerEventListener
 {
 	/**
@@ -26,7 +28,17 @@ interface MediaPlayerEventListener
 
 	/**
 	 * This is called by greenRobot EventBus in case a MediaPlayer has finished playing.
-	 * @param event delivered MediaPlayerStateChangedEvent
+	 * @param event delivered MediaPlayerCompletedEvent
 	 */
 	fun onEvent(event: MediaPlayerCompletedEvent)
+}
+
+interface MediaPlayerFailedEventListener
+{
+	/**
+	 * this is called by greenrobot eventbus in case a mediaplayer has thrown an exception.
+	 * @param event delivered mediaplayerfailedevent
+	 */
+	fun onEvent(event: MediaPlayerFailedEvent)
+
 }

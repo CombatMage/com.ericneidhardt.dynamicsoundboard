@@ -8,6 +8,7 @@ import de.greenrobot.event.EventBus
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.reportError
@@ -110,12 +111,10 @@ private class EnhancedMediaPlayer
 			}
 			catch (e: IOException)
 			{
-				Logger.e(TAG, e.message)
 				this.reportExceptions(e)
 			}
 			catch (e: IllegalStateException)
 			{
-				Logger.e(TAG, e.message)
 				this.reportExceptions(e)
 			}
 		}
@@ -226,14 +225,10 @@ private class EnhancedMediaPlayer
 		}
 		catch (e: IOException)
 		{
-			Logger.e(TAG, e.toString())
-			this.reportExceptions(e)
 			return false
 		}
 		catch (e: IllegalStateException)
 		{
-			Logger.e(TAG, e.toString())
-			this.reportExceptions(e)
 			return false
 		}
 
@@ -291,13 +286,11 @@ private class EnhancedMediaPlayer
 		}
 		catch (e: IOException)
 		{
-			Logger.e(TAG, e.message)
 			this.reportExceptions(e)
 			return false
 		}
 		catch (e: IllegalStateException)
 		{
-			Logger.e(TAG, e.message)
 			this.reportExceptions(e)
 			return false
 		}
@@ -364,6 +357,8 @@ private class EnhancedMediaPlayer
 
 	private fun reportExceptions(e: Exception)
 	{
+		Logger.e(TAG, e.message)
+		this.eventBus.post(MediaPlayerFailedEvent(this))
 		SoundboardApplication.reportError(e)
 	}
 
@@ -393,7 +388,7 @@ private class EnhancedMediaPlayer
 	override fun onError(mp: MediaPlayer, what: Int, extra: Int): Boolean
 	{
 		Logger.e(TAG, "onError(" + mp.toString() + ") what: " + what + " extra: " + extra)
-
+		this.eventBus.post(MediaPlayerFailedEvent(this))
 		return false
 	}
 
