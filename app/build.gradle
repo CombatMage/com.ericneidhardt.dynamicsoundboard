@@ -93,12 +93,12 @@ dependencies {
 	compile 'de.greenrobot:eventbus:2.4.1'
 	compile 'de.greenrobot:greendao:2.1.0'
 
-	compile 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
-	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.6.4'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.0'
+	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.0'
 
 	compile 'com.github.clans:fab:1.6.2'
 
-	compile 'com.github.johnkil.android-robototextview:robototextview:2.4.3'
+	compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
 
 	compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
 
