@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.support.v4.view.ScrollingView
 import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
@@ -11,28 +12,40 @@ import com.github.clans.fab.FloatingActionButton
 /**
  * File created by eric.neidhardt on 24.09.2015.
  */
-class FloatingActionButtonBehaviour(context: Context, attrs: AttributeSet) :
-		CoordinatorLayout.Behavior<FloatingActionButton>(context, attrs)
+private val SCROLL_THRESHOLD = 4
+
+interface SnackbarBehaviour
 {
-	private val SCROLL_THRESHOLD = 4
+	fun layoutDependsOn(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean
+			= (dependency is Snackbar.SnackbarLayout)
 
-	override fun layoutDependsOn(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean
-			= super.layoutDependsOn(parent, fab, dependency) || (dependency is ScrollingView)
+	fun onDependentViewChanged(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean
+	{
+		val translationY = Math.min(0f, dependency.translationY - dependency.height)
+		fab.translationY = translationY;
+		return true;
+	}
+}
 
-	override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout,
-									 fab: FloatingActionButton,
-									 directTargetChild: View,
-									 target: View,
-									 nestedScrollAxes: Int): Boolean
-		= nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL && target is ScrollingView
+interface ScrollViewBehaviour
+{
+	fun layoutDependsOn(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean
+			= (dependency is ScrollingView)
 
-	override fun onNestedScroll(coordinatorLayout: CoordinatorLayout,
-								fab: FloatingActionButton,
-								target: View,
-								dxConsumed: Int,
-								dyConsumed: Int,
-								dxUnconsumed: Int,
-								dyUnconsumed: Int)
+	fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout,
+							fab: FloatingActionButton,
+							directTargetChild: View,
+							target: View,
+							nestedScrollAxes: Int): Boolean
+			= nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL && target is ScrollingView
+
+	fun onNestedScroll(coordinatorLayout: CoordinatorLayout,
+					   fab: FloatingActionButton,
+					   target: View,
+					   dxConsumed: Int,
+					   dyConsumed: Int,
+					   dxUnconsumed: Int,
+					   dyUnconsumed: Int)
 	{
 		if (target is ScrollingView)
 		{
@@ -43,7 +56,37 @@ class FloatingActionButtonBehaviour(context: Context, attrs: AttributeSet) :
 				else
 					fab.show(true)
 			}
-		} else
-			super.onNestedScroll(coordinatorLayout, fab, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed)
+		}
 	}
+}
+
+class FloatingActionButtonBehaviour(context: Context, attrs: AttributeSet) :
+		CoordinatorLayout.Behavior<FloatingActionButton>(context, attrs),
+		ScrollViewBehaviour,
+		SnackbarBehaviour
+{
+	override fun layoutDependsOn(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean =
+			super<CoordinatorLayout.Behavior>.layoutDependsOn(parent, fab, dependency)
+			|| super<ScrollViewBehaviour>.layoutDependsOn(parent, fab, dependency)
+			|| super<SnackbarBehaviour>.layoutDependsOn(parent, fab, dependency)
+
+	override fun onDependentViewChanged(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean =
+			super<CoordinatorLayout.Behavior>.layoutDependsOn(parent, fab, dependency)
+			|| super<SnackbarBehaviour>.onDependentViewChanged(parent, fab, dependency)
+
+	override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout,
+									 fab: FloatingActionButton,
+									 directTargetChild: View,
+									 target: View,
+									 nestedScrollAxes: Int): Boolean
+		= super<ScrollViewBehaviour>.onStartNestedScroll(coordinatorLayout, fab, directTargetChild, target, nestedScrollAxes)
+
+	override fun onNestedScroll(coordinatorLayout: CoordinatorLayout,
+								fab: FloatingActionButton,
+								target: View,
+								dxConsumed: Int,
+								dyConsumed: Int,
+								dxUnconsumed: Int,
+								dyUnconsumed: Int)
+		= super<ScrollViewBehaviour>.onNestedScroll(coordinatorLayout, fab, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed)
 }
