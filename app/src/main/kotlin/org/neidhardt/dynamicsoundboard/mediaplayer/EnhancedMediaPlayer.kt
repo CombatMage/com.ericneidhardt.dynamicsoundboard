@@ -28,6 +28,14 @@ private enum class State
 	DESTROYED
 }
 
+public enum class PlayerAction
+{
+	PLAY,
+	PAUSE,
+	PROGRESS,
+	UNDEFINDED
+}
+
 private val FADE_OUT_DURATION = 100
 private val INT_VOLUME_MAX = 100
 private val INT_VOLUME_MIN = 0
@@ -111,11 +119,11 @@ private class EnhancedMediaPlayer
 			}
 			catch (e: IOException)
 			{
-				this.reportExceptions(e)
+				this.reportExceptions(e, PlayerAction.PROGRESS)
 			}
 			catch (e: IllegalStateException)
 			{
-				this.reportExceptions(e)
+				this.reportExceptions(e, PlayerAction.PROGRESS)
 			}
 		}
 
@@ -225,10 +233,12 @@ private class EnhancedMediaPlayer
 		}
 		catch (e: IOException)
 		{
+			this.reportExceptions(e, PlayerAction.PLAY)
 			return false
 		}
 		catch (e: IllegalStateException)
 		{
+			this.reportExceptions(e, PlayerAction.PLAY)
 			return false
 		}
 
@@ -286,12 +296,12 @@ private class EnhancedMediaPlayer
 		}
 		catch (e: IOException)
 		{
-			this.reportExceptions(e)
+			this.reportExceptions(e, PlayerAction.PAUSE)
 			return false
 		}
 		catch (e: IllegalStateException)
 		{
-			this.reportExceptions(e)
+			this.reportExceptions(e, PlayerAction.PAUSE)
 			return false
 		}
 	}
@@ -355,10 +365,10 @@ private class EnhancedMediaPlayer
 		this.setVolume(fVolume, fVolume)
 	}
 
-	private fun reportExceptions(e: Exception)
+	private fun reportExceptions(e: Exception, failingAction: PlayerAction)
 	{
 		Logger.e(TAG, e.message)
-		this.eventBus.post(MediaPlayerFailedEvent(this))
+		this.eventBus.post(MediaPlayerFailedEvent(this, failingAction))
 		SoundboardApplication.reportError(e)
 	}
 
@@ -388,7 +398,7 @@ private class EnhancedMediaPlayer
 	override fun onError(mp: MediaPlayer, what: Int, extra: Int): Boolean
 	{
 		Logger.e(TAG, "onError(" + mp.toString() + ") what: " + what + " extra: " + extra)
-		this.eventBus.post(MediaPlayerFailedEvent(this))
+		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINDED))
 		return false
 	}
 

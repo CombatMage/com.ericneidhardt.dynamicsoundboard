@@ -3,6 +3,8 @@ package org.neidhardt.dynamicsoundboard.soundcontrol
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -17,6 +19,8 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -54,7 +58,8 @@ class SoundSheetFragment :
 		DragSortRecycler.OnDragStateChangedListener,
 		DragSortRecycler.OnItemMovedListener,
 		OnOpenSoundDialogEventListener,
-		OnSoundsChangedEventListener
+		OnSoundsChangedEventListener,
+		MediaPlayerFailedEventListener
 {
 	private val LOG_TAG = javaClass.name
 
@@ -76,6 +81,8 @@ class SoundSheetFragment :
 	private var soundAdapter: SoundAdapter? = null
 	private var soundLayout: RecyclerView? = null
 	private val soundLayoutAnimator = SlideInLeftAnimator()
+
+	private var coordinatorLayout: CoordinatorLayout? = null
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -101,6 +108,7 @@ class SoundSheetFragment :
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
 
 		this.floatingActionButton = fragmentView.findViewById(R.id.fab) as AddPauseFloatingActionButton?
+		this.coordinatorLayout = fragmentView.findViewWithTag(R.id.coordinator_layout) as CoordinatorLayout
 
 		this.soundLayout = (fragmentView.findViewById(R.id.rv_sounds) as RecyclerView).apply {
 			adapter = soundAdapter
@@ -230,6 +238,12 @@ class SoundSheetFragment :
 	{
 		if (this.soundAdapter?.getValues()?.size == 0)
 			this.floatingActionButton?.show(true)
+	}
+
+	override fun onEvent(event: MediaPlayerFailedEvent)
+	{
+		Snackbar.make(this.coordinatorLayout, "Test", Snackbar.LENGTH_LONG).show()
+		// TODO
 	}
 
 	override fun onEventMainThread(event: SoundMovedEvent) {}

@@ -1,11 +1,14 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer.events
 
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlayerAction
 
 /**
  * File created by eric.neidhardt on 02.11.2015.
  */
 data class MediaPlayerCompletedEvent(val player: MediaPlayerController)
+
+data class MediaPlayerFailedEvent(val player: MediaPlayerController, val failingAction: PlayerAction)
 
 data class MediaPlayerStateChangedEvent(val player: MediaPlayerController, val isAlive: Boolean)
 {
@@ -15,8 +18,6 @@ data class MediaPlayerStateChangedEvent(val player: MediaPlayerController, val i
 	val fragmentTag: String
 		get() = this.player.mediaPlayerData.fragmentTag
 }
-
-data class MediaPlayerFailedEvent(val player: MediaPlayerController)
 
 interface MediaPlayerEventListener
 {

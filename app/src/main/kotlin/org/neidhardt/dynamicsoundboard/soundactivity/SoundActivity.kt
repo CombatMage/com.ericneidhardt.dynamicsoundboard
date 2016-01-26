@@ -24,8 +24,6 @@ import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog
 import org.neidhardt.dynamicsoundboard.introduction.IntroductionFragment
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -66,8 +64,7 @@ public class SoundActivity :
 		OnOpenSoundLayoutSettingsEventListener,
 		OnSoundSheetOpenEventListener,
 		OnSoundSheetsInitEventLisenter,
-		OnSoundSheetsChangedEventListener,
-		MediaPlayerFailedEventListener
+		OnSoundSheetsChangedEventListener
 {
 	private val TAG = javaClass.name
 
@@ -391,12 +388,6 @@ public class SoundActivity :
 					AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, currentSoundSheet.fragmentTag)
 			}
 		}
-	}
-
-    // TODO
-	override fun onEvent(event: MediaPlayerFailedEvent)
-	{
-		throw UnsupportedOperationException()
 	}
 
 	/**
