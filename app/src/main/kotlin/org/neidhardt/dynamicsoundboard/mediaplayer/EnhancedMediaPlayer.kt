@@ -170,6 +170,7 @@ private class EnhancedMediaPlayer
 		this.reset()
 
 		this.init(SoundboardApplication.context)
+		this.postStateChangedEvent(true)
 	}
 
 	@Throws(IOException::class)
@@ -229,6 +230,8 @@ private class EnhancedMediaPlayer
 
 			this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
 			this.postStateChangedEvent(true)
+
+			this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 			return true
 		}
 		catch (e: IOException)

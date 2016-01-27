@@ -52,7 +52,9 @@
 	<string name="cab_title_delete_sound_layouts">Soundlayouts zum löschen markieren</string>
 
 	<!-- sound control -->
+	<string name="sound_control_reset_player">Mediaplayer zurück setzen?</string>
 	<string name="sound_control_play_failed">{%s0} konnte nicht gestartet werden.</string>
+	<string name="sound_control_failed">{%s0} hat einen Fehler verursacht.</string>
 	<string name="sound_control_content_description_stop">Setzt den Sound zurück</string>
 	<string name="sound_control_content_description_play">Startet oder Pausiert den Sound</string>
 	<string name="sound_control_content_description_loop">Sound wird in einer Schleife abgespielt</string>

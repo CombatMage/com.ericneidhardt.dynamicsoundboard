@@ -19,6 +19,8 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlayerAction
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
@@ -108,7 +110,7 @@ class SoundSheetFragment :
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
 
 		this.floatingActionButton = fragmentView.findViewById(R.id.fab) as AddPauseFloatingActionButton?
-		this.coordinatorLayout = fragmentView.findViewWithTag(R.id.coordinator_layout) as CoordinatorLayout
+		this.coordinatorLayout = fragmentView.findViewById(R.id.coordinator_layout) as CoordinatorLayout
 
 		this.soundLayout = (fragmentView.findViewById(R.id.rv_sounds) as RecyclerView).apply {
 			adapter = soundAdapter
@@ -242,8 +244,26 @@ class SoundSheetFragment :
 
 	override fun onEvent(event: MediaPlayerFailedEvent)
 	{
-		Snackbar.make(this.coordinatorLayout, "Test", Snackbar.LENGTH_LONG).show()
-		// TODO
+		val snackbar = this.getSnackbarForError(event.player, event.failingAction)
+		snackbar.show()
+	}
+
+	private fun getSnackbarForError(failingPlayer: MediaPlayerController, failingAction: PlayerAction): Snackbar
+	{
+		val messageId = if (failingAction == PlayerAction.PLAY)
+			R.string.sound_control_play_failed
+		else
+			R.string.sound_control_failed
+
+		val message = this.resources.getString(messageId).replace("{%s0}", failingPlayer.mediaPlayerData.label)
+		val snackbar = Snackbar.make(this.coordinatorLayout, message, Snackbar.LENGTH_LONG)
+
+		snackbar.setAction(R.string.sound_control_reset_player, {
+			val soundUri = failingPlayer.mediaPlayerData.uri
+			failingPlayer.setSoundUri(soundUri)
+		})
+
+		return snackbar
 	}
 
 	override fun onEventMainThread(event: SoundMovedEvent) {}
@@ -252,3 +272,4 @@ class SoundSheetFragment :
 
 	override fun onEventMainThread(event: SoundChangedEvent) {}
 }
+
