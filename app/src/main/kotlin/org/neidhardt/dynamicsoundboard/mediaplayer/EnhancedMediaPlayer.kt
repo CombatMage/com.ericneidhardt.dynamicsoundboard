@@ -231,7 +231,6 @@ private class EnhancedMediaPlayer
 			this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
 			this.postStateChangedEvent(true)
 
-			this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 			return true
 		}
 		catch (e: IOException)
