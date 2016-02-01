@@ -21,9 +21,13 @@ interface SnackbarBehaviour
 
 	fun onDependentViewChanged(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean
 	{
-		val translationY = Math.min(0f, dependency.translationY - dependency.height)
-		fab.translationY = translationY;
-		return true;
+		if (dependency is Snackbar.SnackbarLayout)
+		{
+			val translationY = Math.min(0f, dependency.translationY - dependency.height)
+			fab.translationY = translationY;
+			return true;
+		}
+		return false
 	}
 }
 

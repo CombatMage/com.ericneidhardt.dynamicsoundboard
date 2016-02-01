@@ -30,7 +30,8 @@ class AddPauseFloatingActionButton : FloatingActionButton, View.OnClickListener
 
 	private fun init()
 	{
-		this.presenter = AddPauseFloatingActionButtonPresenter(this.eventBus, SoundboardApplication.getSoundsDataAccess())
+		if (!this.isInEditMode)
+			this.presenter = AddPauseFloatingActionButtonPresenter(this.eventBus, SoundboardApplication.getSoundsDataAccess())
 	}
 
 	override fun onFinishInflate()
