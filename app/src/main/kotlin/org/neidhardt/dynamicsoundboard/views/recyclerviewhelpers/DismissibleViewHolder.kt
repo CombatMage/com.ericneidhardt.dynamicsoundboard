@@ -56,7 +56,7 @@ abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View, pager
 
 	override fun onClick(view: View)
 	{
-		if (SoundboardPreferences.isOneSwipeToDeleteEnabled())
+		if (SoundboardPreferences.isOneSwipeToDeleteEnabled)
 			return
 
 		val id = view.id
@@ -66,7 +66,7 @@ abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View, pager
 
 	override fun onPageSelected(selectedPage: Int)
 	{
-		if (selectedPage != getIndexOfContentPage() && SoundboardPreferences.isOneSwipeToDeleteEnabled())
+		if (selectedPage != getIndexOfContentPage() && SoundboardPreferences.isOneSwipeToDeleteEnabled)
 			this.handler.deleteItemDelayed() // delay deletion, because page is selected before scrolling has settled
 	}
 

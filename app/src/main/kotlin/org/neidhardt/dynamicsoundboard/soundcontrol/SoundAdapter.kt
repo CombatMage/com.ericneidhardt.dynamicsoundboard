@@ -42,6 +42,6 @@ public class SoundAdapter
 	{
 		holder.bindData(this.getValues()[position])
 		holder.showShadowForLastItem(position == this.itemCount - 1)
-		holder.setLabelToDeletionSettings(SoundboardPreferences.isOneSwipeToDeleteEnabled())
+		holder.setLabelToDeletionSettings(SoundboardPreferences.isOneSwipeToDeleteEnabled)
 	}
 }

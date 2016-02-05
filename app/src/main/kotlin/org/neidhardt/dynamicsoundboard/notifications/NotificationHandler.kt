@@ -24,7 +24,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 23.03.2015.
  */
-public class NotificationHandler
+class NotificationHandler
 (
 		private val service: NotificationService,
 		private val soundsDataAccess: SoundsDataAccess,
@@ -49,14 +49,14 @@ public class NotificationHandler
 		this.service.registerReceiver(this.notificationActionReceiver, getNotificationIntentFilter())
 	}
 
-	public fun onServiceDestroyed()
+	fun onServiceDestroyed()
 	{
 		this.eventBus.unregister(this)
 		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this)
 		this.service.unregisterReceiver(this.notificationActionReceiver)
 	}
 
-	public fun dismissAllNotifications()
+	fun dismissAllNotifications()
 	{
 		this.notifications.map { notification -> this.notificationManager.cancel(notification.notificationId) }
 		this.notifications.clear()
@@ -149,7 +149,7 @@ public class NotificationHandler
 	private fun findPlaylistNotification(): PendingSoundNotification?
 			= this.notifications.firstOrNull { notification -> notification.isPlaylistNotification() }
 
-	public fun removeNotificationsForPausedSounds()
+	fun removeNotificationsForPausedSounds()
 	{
 		for (notification in this.notifications)
 		{

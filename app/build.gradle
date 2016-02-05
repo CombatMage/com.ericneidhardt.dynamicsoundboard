@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 //apply from: '../jacoco.gradle'
 
@@ -93,8 +94,8 @@ dependencies {
 	compile 'de.greenrobot:eventbus:2.4.1'
 	compile 'de.greenrobot:greendao:2.1.0'
 
-	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.0'
-	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.0'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
+	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.1'
 
 	compile 'com.github.clans:fab:1.6.2'
 
@@ -102,12 +103,12 @@ dependencies {
 
 	compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
 
-	compile 'jp.wasabeef:recyclerview-animators:2.1.0'
+	compile 'jp.wasabeef:recyclerview-animators:2.2.0'
 
-	compile 'ch.acra:acra:4.7.0'
+	compile 'ch.acra:acra:4.8.1'
 
 	testCompile 'junit:junit:4.12'
-	testCompile 'org.mockito:mockito-core:2.0.31-beta'
+	testCompile 'org.mockito:mockito-core:2.0.41-beta'
 
 	testCompile 'org.robolectric:shadows-support-v4:3.0'
 	testCompile ('org.robolectric:robolectric:3.0') {

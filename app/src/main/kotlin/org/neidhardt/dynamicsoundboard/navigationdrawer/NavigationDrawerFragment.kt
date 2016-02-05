@@ -79,13 +79,14 @@ class NavigationDrawerFragment : BaseFragment(),
 		fragmentView.findViewById(R.id.b_delete).setOnClickListener(this)
 		fragmentView.findViewById(R.id.b_ok).setOnClickListener(this)
 
-		this.tabContent = fragmentView.findViewById(R.id.vp_tab_content) as ViewPager
-		this.tabContent!!.adapter = this.tabContentAdapter
+		val tabContent = fragmentView.findViewById(R.id.vp_tab_content) as ViewPager
+		tabContent.adapter = this.tabContentAdapter
+		this.tabContent = tabContent
 
-		this.tabBar = fragmentView.findViewById(R.id.tl_tab_bar) as TabLayout
-
-		this.tabBar!!.setOnTabSelectedListener(this)
-		this.tabBar!!.setupWithViewPager(this.tabContent)
+		val tabBar = fragmentView.findViewById(R.id.tl_tab_bar) as TabLayout
+		tabBar.setOnTabSelectedListener(this)
+		tabBar.setupWithViewPager(tabContent)
+		this.tabBar = tabBar
 
 		this.soundLayoutList = fragmentView.findViewById(R.id.layout_select_sound_layout) as SoundLayouts
 		this.playlist = fragmentView.findViewById(R.id.playlist) as Playlist
@@ -109,7 +110,7 @@ class NavigationDrawerFragment : BaseFragment(),
 	 * Calculates the minimum require height of the viewpager's content (this is the height used if the content is smaller than the
 	 * screens height). Recalculation is require every time the screen's metric changes (ie. switch from/to full immersive mode).
 	 */
-	public fun calculateMinHeightOfListContent()
+	fun calculateMinHeightOfListContent()
 	{
 		this.minHeightOfListContent = this.contextualActionContainer!!.top - listContainer!!.top  // this is the minimal height required to fill the screen properly
 	}
@@ -227,7 +228,7 @@ class NavigationDrawerFragment : BaseFragment(),
 	 * This function resize the view pagers height to its content. It is necessary, because the viewpager can not
 	 * have layout parameter wrap_content.
 	 */
-	public fun adjustViewPagerToContent()
+	fun adjustViewPagerToContent()
 	{
 		val resources = SoundboardApplication.context.resources
 		val childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item)

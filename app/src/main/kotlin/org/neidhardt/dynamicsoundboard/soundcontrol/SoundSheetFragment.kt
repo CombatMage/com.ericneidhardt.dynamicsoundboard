@@ -256,7 +256,7 @@ class SoundSheetFragment :
 			R.string.sound_control_failed
 
 		val message = this.resources.getString(messageId).replace("{%s0}", failingPlayer.mediaPlayerData.label)
-		val snackbar = Snackbar.make(this.coordinatorLayout, message, Snackbar.LENGTH_LONG)
+		val snackbar = Snackbar.make(this.coordinatorLayout as CoordinatorLayout, message, Snackbar.LENGTH_LONG)
 
 		snackbar.setAction(R.string.sound_control_reset_player, {
 			val soundUri = failingPlayer.mediaPlayerData.uri

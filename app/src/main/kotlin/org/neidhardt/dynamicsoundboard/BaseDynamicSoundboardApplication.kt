@@ -22,9 +22,9 @@ open class SoundboardApplication : Application()
 
 	companion object
 	{
-		private var applicationContext: Context? = null
+		private var staticContext: Context? = null
 		val context: Context
-			get() = this.applicationContext as Context
+			get() = this.staticContext as Context
 
 		private val random = Random();
 
@@ -32,26 +32,26 @@ open class SoundboardApplication : Application()
 		private var soundsManager: SoundsManager? = null
 		private var soundSheetsManager: SoundSheetsManager? = null
 
-		public fun getSoundsDataAccess(): SoundsDataAccess = this.soundsManager as SoundsDataAccess
-		public fun getSoundsDataStorage(): SoundsDataStorage = this.soundsManager as SoundsDataStorage
-		public fun getSoundsDataUtil(): SoundsDataUtil = this.soundsManager as SoundsDataUtil
+		fun getSoundsDataAccess(): SoundsDataAccess = this.soundsManager as SoundsDataAccess
+		fun getSoundsDataStorage(): SoundsDataStorage = this.soundsManager as SoundsDataStorage
+		fun getSoundsDataUtil(): SoundsDataUtil = this.soundsManager as SoundsDataUtil
 
-		public fun getSoundSheetsDataAccess(): SoundSheetsDataAccess = this.soundSheetsManager as SoundSheetsDataAccess
-		public fun getSoundSheetsDataStorage(): SoundSheetsDataStorage = this.soundSheetsManager as SoundSheetsDataStorage
-		public fun getSoundSheetsDataUtil(): SoundSheetsDataUtil = this.soundSheetsManager as SoundSheetsDataUtil
+		fun getSoundSheetsDataAccess(): SoundSheetsDataAccess = this.soundSheetsManager as SoundSheetsDataAccess
+		fun getSoundSheetsDataStorage(): SoundSheetsDataStorage = this.soundSheetsManager as SoundSheetsDataStorage
+		fun getSoundSheetsDataUtil(): SoundSheetsDataUtil = this.soundSheetsManager as SoundSheetsDataUtil
 
-		public fun getSoundLayoutsAccess(): SoundLayoutsAccess = this.soundLayoutsManager as SoundLayoutsAccess
-		public fun getSoundLayoutsStorage(): SoundLayoutsStorage = this.soundLayoutsManager as SoundLayoutsStorage
-		public fun getSoundLayoutsUtil(): SoundLayoutsUtil = this.soundLayoutsManager as SoundLayoutsUtil
+		fun getSoundLayoutsAccess(): SoundLayoutsAccess = this.soundLayoutsManager as SoundLayoutsAccess
+		fun getSoundLayoutsStorage(): SoundLayoutsStorage = this.soundLayoutsManager as SoundLayoutsStorage
+		fun getSoundLayoutsUtil(): SoundLayoutsUtil = this.soundLayoutsManager as SoundLayoutsUtil
 
-		public fun getRandomNumber(): Int = random.nextInt(Integer.MAX_VALUE)
+		fun getRandomNumber(): Int = random.nextInt(Integer.MAX_VALUE)
 	}
 
 	override fun onCreate()
 	{
 		super.onCreate()
 
-		applicationContext = this.applicationContext
+		staticContext = this.applicationContext
 		soundLayoutsManager = SoundLayoutsManager()
 		soundSheetsManager = SoundSheetsManager()
 		soundsManager = SoundsManager()
