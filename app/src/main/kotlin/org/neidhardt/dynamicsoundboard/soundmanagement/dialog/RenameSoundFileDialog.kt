@@ -30,22 +30,24 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 06.07.2015.
  */
-public class RenameSoundFileDialog : SoundSettingsBaseDialog
+class RenameSoundFileDialog : SoundSettingsBaseDialog
 {
+	override var player: MediaPlayerController? = null
+	override var fragmentTag: String? = null
 
 	private val TAG = javaClass.name
 
 	private var presenter: RenameSoundFileDialogPresenter? = null
 
-	public constructor() : super()
+	constructor() : super()
 
-	public constructor(manager: FragmentManager, playerData: MediaPlayerData) : super()
+	constructor(manager: FragmentManager, playerData: MediaPlayerData) : super()
 	{
 		SoundSettingsBaseDialog.addArguments(this, playerData.playerId, playerData.fragmentTag)
 		this.show(manager, TAG)
 	}
 
-	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
+	override fun onCreateDialog(savedInstanceState: Bundle): Dialog
 	{
 		@SuppressLint("InflateParams")
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_rename_sound_file_layout, null)
@@ -56,7 +58,7 @@ public class RenameSoundFileDialog : SoundSettingsBaseDialog
 		dialog.setContentView(view)
 
 		val presenter = RenameSoundFileDialogPresenter(
-				playerData = this.player.mediaPlayerData,
+				playerData = this.player!!.mediaPlayerData,
 				soundsDataAccess = this.soundsDataAccess,
 				soundsDataStorage = this.soundsDataStorage,
 				dialog = this,

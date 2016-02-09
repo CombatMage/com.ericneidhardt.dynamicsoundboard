@@ -1,19 +1,19 @@
-package org.neidhardt.dynamicsoundboard.soundcontrol.events;
+package org.neidhardt.dynamicsoundboard.soundcontrol.events
 
 /**
  * File created by eric.neidhardt on 29.05.2015.
  */
-public interface OnOpenSoundDialogEventListener
+interface OnOpenSoundDialogEventListener
 {
 	/**
 	 * This is called by greenRobot EventBus in case the rename dialog for a certain sound is requested.
 	 * @param event delivered OpenSoundRenameEvent
 	 */
-	void onEvent(OpenSoundRenameEvent event);
+	fun onEvent(event: OpenSoundRenameEvent)
 
 	/**
 	 * This is called by greenRobot EventBus in case the settings for a certain sound are requested.
 	 * @param event delivered OpenSoundSettingsEvent
 	 */
-	void onEvent(OpenSoundSettingsEvent event);
+	fun onEvent(event: OpenSoundSettingsEvent)
 }
