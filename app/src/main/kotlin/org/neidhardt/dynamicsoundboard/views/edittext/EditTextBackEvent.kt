@@ -10,7 +10,7 @@ import com.devspark.robototextview.widget.RobotoEditText
  */
 class EditTextBackEvent : RobotoEditText
 {
-	public var onImeBackListener: EditTextImeBackListener? = null
+	var onImeBackListener: EditTextImeBackListener? = null
 
 	@SuppressWarnings("unused")
 	constructor(context: Context) : super(context)

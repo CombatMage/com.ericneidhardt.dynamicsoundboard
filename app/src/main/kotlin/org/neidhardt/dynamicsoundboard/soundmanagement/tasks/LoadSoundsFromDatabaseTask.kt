@@ -14,7 +14,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 10.04.2015.
  */
-public class LoadSoundsFromDatabaseTask
+class LoadSoundsFromDatabaseTask
 (
 		private val daoSession: DaoSession,
 		private val soundsDataStorage: SoundsDataStorage
@@ -36,7 +36,7 @@ public class LoadSoundsFromDatabaseTask
 	}
 }
 
-public class LoadPlaylistFromDatabaseTask
+class LoadPlaylistFromDatabaseTask
 (
 		private val daoSession: DaoSession,
 		private val soundsDataStorage: SoundsDataStorage
@@ -57,7 +57,7 @@ public class LoadPlaylistFromDatabaseTask
 	}
 }
 
-public class LoadSoundsFromFileListTask
+class LoadSoundsFromFileListTask
 (
 		private val filesToLoad: List<File>,
 		private val fragmentTag: String,

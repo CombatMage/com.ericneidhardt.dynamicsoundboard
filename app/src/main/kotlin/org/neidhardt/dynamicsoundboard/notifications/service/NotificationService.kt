@@ -3,7 +3,8 @@ package org.neidhardt.dynamicsoundboard.notifications.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler
@@ -16,7 +17,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallLi
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
-public class NotificationService : Service(), ActivityStateChangedEventListener
+class NotificationService : Service(), ActivityStateChangedEventListener
 {
 	private val TAG: String = javaClass.name
 
@@ -40,7 +41,7 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 		this.notificationHandler = NotificationHandler(this, this.soundsDataAccess, this.soundsDataUtil, this.soundSheetsDataUtil)
 
 		if (!this.eventBus.isRegistered(this))
-			this.eventBus.registerSticky(this)
+			this.eventBus.register(this)
 	}
 
 	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int
@@ -63,6 +64,7 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 		super.onDestroy()
 	}
 
+	@Subscribe(sticky = true)
 	override fun onEvent(event: ActivityStateChangedEvent)
 	{
 		if (event.isActivityClosed)

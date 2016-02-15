@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 /**
  * File created by eric.neidhardt on 04.12.2014.
  */
-public fun getNotificationIntentFilter(): IntentFilter
+fun getNotificationIntentFilter(): IntentFilter
 {
 	val filter = IntentFilter()
 	filter.addAction(ACTION_DISMISS)
@@ -28,23 +28,22 @@ public fun getNotificationIntentFilter(): IntentFilter
 	return filter
 }
 
-data
-public class PendingSoundNotification(public val notificationId: Int, public var playerId: String, public var notification: Notification)
+data class PendingSoundNotification(val notificationId: Int, var playerId: String, var notification: Notification)
 {
-	public fun isPlaylistNotification(): Boolean = this.notificationId == NOTIFICATION_ID_PLAYLIST
+	fun isPlaylistNotification(): Boolean = this.notificationId == NOTIFICATION_ID_PLAYLIST
 }
 
-public class PendingSoundNotificationBuilder
+class PendingSoundNotificationBuilder
 @JvmOverloads constructor
 (
 		context: Context,
 		player: MediaPlayerController,
-		public val notificationId: Int = player.mediaPlayerData.playerId.hashCode(),
+		val notificationId: Int = player.mediaPlayerData.playerId.hashCode(),
 		title: String = player.mediaPlayerData.label,
 		message: String? = null
 ) : NotificationCompat.Builder(context)
 {
-	public val playerId: String = player.mediaPlayerData.playerId
+	val playerId: String = player.mediaPlayerData.playerId
 
 	init
 	{

@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.views;
 
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

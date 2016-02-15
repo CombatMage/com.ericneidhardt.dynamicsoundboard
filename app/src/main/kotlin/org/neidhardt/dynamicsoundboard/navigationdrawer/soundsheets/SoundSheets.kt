@@ -6,14 +6,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
 
-public class SoundSheets : NavigationDrawerList
+class SoundSheets : NavigationDrawerList
 {
 	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 	private val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
@@ -21,24 +21,21 @@ public class SoundSheets : NavigationDrawerList
 	private val soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
 	private val soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage()
 
-	public var presenter: SoundSheetsPresenter = SoundSheetsPresenter(
+	var presenter: SoundSheetsPresenter = SoundSheetsPresenter(
 			EventBus.getDefault(), this.soundSheetsDataAccess, this.soundSheetsDataStorage, this.soundsDataAccess, this.soundsDataStorage)
-	public var adapter: SoundSheetsAdapter  = SoundSheetsAdapter(this.presenter)
+	var adapter: SoundSheetsAdapter  = SoundSheetsAdapter(this.presenter)
 
-	@SuppressWarnings("unused")
-	public constructor(context: Context) : super(context)
+	@SuppressWarnings("unused") constructor(context: Context) : super(context)
 	{
 		this.init(context)
 	}
 
-	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+	@SuppressWarnings("unused") constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 	{
 		this.init(context)
 	}
 
-	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
+	@SuppressWarnings("unused") constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 	{
 		this.init(context)
 	}
@@ -53,8 +50,8 @@ public class SoundSheets : NavigationDrawerList
 		if (!this.isInEditMode)
 		{
 			soundSheets.itemAnimator = DefaultItemAnimator()
-			soundSheets.layoutManager = LinearLayoutManager(context)
-			soundSheets.addItemDecoration(DividerItemDecoration())
+			soundSheets.layoutManager = LinearLayoutManager(this.context)
+			soundSheets.addItemDecoration(DividerItemDecoration(this.context))
 		}
 		soundSheets.adapter = this.adapter
 	}

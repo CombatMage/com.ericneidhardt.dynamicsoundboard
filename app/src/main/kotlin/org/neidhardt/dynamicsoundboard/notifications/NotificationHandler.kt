@@ -5,7 +5,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
@@ -44,7 +45,7 @@ class NotificationHandler
 
 	init
 	{
-		this.eventBus.registerSticky(this)
+		this.eventBus.register(this)
 		SoundboardPreferences.registerSharedPreferenceChangedListener(this)
 		this.service.registerReceiver(this.notificationActionReceiver, getNotificationIntentFilter())
 	}
@@ -172,6 +173,7 @@ class NotificationHandler
 	}
 
 	// Update notifications, according to player state or notification actions
+	@Subscribe(sticky = true)
 	override fun onEvent(event: MediaPlayerStateChangedEvent)
 	{
 		Logger.d(TAG, event.toString())
@@ -202,6 +204,7 @@ class NotificationHandler
 		}
 	}
 
+	@Subscribe(sticky = true)
 	override fun onEvent(event: MediaPlayerCompletedEvent) {}
 
 	private fun handlePlaylistPlayerStateChanged(player: MediaPlayerController)

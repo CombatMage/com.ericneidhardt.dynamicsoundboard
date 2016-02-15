@@ -3,21 +3,20 @@ package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events
 /**
  * File created by eric.neidhardt on 08.01.2016.
  */
-public interface OnSoundLayoutsChangedEventListener
+interface OnSoundLayoutsChangedEventListener
 {
 	/**
 	 * This is called by greenRobot EventBus in case one or more {@code SoundLayout}s have been removed.
 	 * @param event delivered SoundLayoutsRemovedEvent
 	 */
-	@SuppressWarnings("unused")
-	public fun onEventMainThread(event: SoundLayoutsRemovedEvent)
+	fun onEvent(event: SoundLayoutsRemovedEvent)
 }
 
-public interface OnSoundLayoutSelectedEventListener
+interface OnSoundLayoutSelectedEventListener
 {
 	/**
 	 * This is called by greenRobot EventBus in case a new SoundLayout was selected.
 	 * @param event delivered SoundLayoutRenamedEvent
 	 */
-	public fun onEvent(event: SoundLayoutSelectedEvent)
+	fun onEvent(event: SoundLayoutSelectedEvent)
 }

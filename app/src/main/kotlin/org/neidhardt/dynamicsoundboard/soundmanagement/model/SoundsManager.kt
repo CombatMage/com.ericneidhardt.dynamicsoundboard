@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
@@ -22,7 +22,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
-public class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
+class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 {
 	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()

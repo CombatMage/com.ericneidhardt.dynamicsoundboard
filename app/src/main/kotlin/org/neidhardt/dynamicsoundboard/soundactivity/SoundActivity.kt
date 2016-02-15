@@ -15,7 +15,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
@@ -54,7 +56,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 29.09.2015.
  */
-public class SoundActivity :
+class SoundActivity :
 		AppCompatActivity(),
 		View.OnClickListener,
 		CustomEditText.OnTextEditedListener,
@@ -68,8 +70,8 @@ public class SoundActivity :
 {
 	private val TAG = javaClass.name
 
-	public var isActivityVisible = true
-	public var isActionModeActive = false
+	var isActivityVisible = true
+	var isActionModeActive = false
 
 	private var navigationDrawerLayout: DrawerLayout? = null
 	private var drawerToggle: ActionBarDrawerToggle? = null
@@ -133,7 +135,7 @@ public class SoundActivity :
 		this.handleIntent(intent)
 	}
 
-	public fun handleIntent(intent: Intent?)
+	fun handleIntent(intent: Intent?)
 	{
 		if (intent == null)
 			return
@@ -218,7 +220,7 @@ public class SoundActivity :
 	override fun onStart()
 	{
 		super.onStart()
-		this.eventBus.registerSticky(this)
+		this.eventBus.register(this)
 	}
 
 	override fun onResume()
@@ -279,7 +281,7 @@ public class SoundActivity :
 		super.onStop()
 	}
 
-	public fun setSoundSheetActionsEnable(enable: Boolean)
+	fun setSoundSheetActionsEnable(enable: Boolean)
 	{
 		var viewState = if (enable) View.VISIBLE else View.GONE
 		this.findViewById(R.id.action_add_sound).visibility = viewState
@@ -290,6 +292,7 @@ public class SoundActivity :
 		this.findViewById(R.id.tv_app_name).visibility = viewState
 	}
 
+	@Subscribe
 	override fun onEvent(event: SoundLayoutSelectedEvent)
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
@@ -302,22 +305,26 @@ public class SoundActivity :
 		this.soundsDataUtil.initIfRequired()
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundLayoutSettingsEvent)
 	{
 		SoundLayoutSettingsDialog.showInstance(this.fragmentManager, event.soundLayout.databaseId)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundSheetEvent)
 	{
 		this.openSoundFragment(event.soundSheetToOpen)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundSheetsInitEvent)
 	{
 		this.onSoundSheetsInit()
 	}
 
-	override fun onEventMainThread(event: SoundSheetsRemovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundSheetsRemovedEvent)
 	{
 		val removedSoundSheets = event.soundSheets
 		this.removeSoundFragments(removedSoundSheets)
@@ -326,10 +333,11 @@ public class SoundActivity :
 			this.setSoundSheetActionsEnable(false)
 	}
 
-	override fun onEventMainThread(event: SoundSheetAddedEvent) {}
+	override fun onEvent(event: SoundSheetAddedEvent) {}
 
-	override fun onEventMainThread(event: SoundSheetChangedEvent) {}
+	override fun onEvent(event: SoundSheetChangedEvent) {}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: ActionModeChangeRequestedEvent)
 	{
 		val requestedAction = event.requestedAction
@@ -355,7 +363,8 @@ public class SoundActivity :
 	 * @param event delivered FabClickedEvent
 	 */
 	@SuppressWarnings("unused")
-	public fun onEvent(event: FabClickedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onEvent(event: FabClickedEvent)
 	{
 		Logger.d(TAG, "onEvent: " + event)
 
@@ -378,7 +387,7 @@ public class SoundActivity :
 			if (SoundboardPreferences.useSystemBrowserForFiles())
 			{
 				val intent = Intent(Intent.ACTION_GET_CONTENT)
-				intent.setType(FileUtils.MIME_AUDIO)
+				intent.type = FileUtils.MIME_AUDIO
 				soundSheetFragment.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
 			}
 			else
@@ -395,7 +404,8 @@ public class SoundActivity :
 	 * @param event delivered CreatingPlayerFailedEvent
 	 */
 	@SuppressWarnings("unused")
-	public fun onEventMainThread(event: CreatingPlayerFailedEvent) {
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onEvent(event: CreatingPlayerFailedEvent) {
 		val message = resources.getString(R.string.music_service_loading_sound_failed) + " " + FileUtils.getFileNameFromUri(applicationContext, event.failingPlayerData.uri)
 		Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
 	}
@@ -479,7 +489,7 @@ public class SoundActivity :
 		}
 	}
 
-	public fun removeSoundFragments(soundSheets: List<SoundSheet>?)
+	fun removeSoundFragments(soundSheets: List<SoundSheet>?)
 	{
 		if (soundSheets == null || soundSheets.size == 0)
 			return
@@ -497,7 +507,7 @@ public class SoundActivity :
 			this.setSoundSheetActionsEnable(false)
 	}
 
-	public fun removeSoundFragment(soundSheet: SoundSheet)
+	fun removeSoundFragment(soundSheet: SoundSheet)
 	{
 		val fragmentManager = this.fragmentManager
 		val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag)
@@ -510,7 +520,7 @@ public class SoundActivity :
 		fragmentManager.executePendingTransactions()
 	}
 
-	public fun openIntroductionFragmentIfRequired()
+	fun openIntroductionFragmentIfRequired()
 	{
 		if (!this.isActivityVisible)
 			return
@@ -528,7 +538,7 @@ public class SoundActivity :
 		fragmentManager.executePendingTransactions()
 	}
 
-	public fun openSoundFragment(soundSheet: SoundSheet?)
+	fun openSoundFragment(soundSheet: SoundSheet?)
 	{
 		if (!this.isActivityVisible)
 			return
@@ -558,7 +568,7 @@ public class SoundActivity :
 		return null
 	}
 
-	public fun getNavigationDrawerFragment(): NavigationDrawerFragment {
+	fun getNavigationDrawerFragment(): NavigationDrawerFragment {
 		return this.fragmentManager.findFragmentById(R.id.navigation_drawer_fragment) as NavigationDrawerFragment
 	}
 }

@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressVi
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
-public class PlaylistViewHolder
+class PlaylistViewHolder
 (
 		itemView: View,
 		private val onItemClickListener: NavigationDrawerItemClickListener<MediaPlayerController>
@@ -33,7 +33,7 @@ public class PlaylistViewHolder
 		itemView.setOnClickListener( { view -> this.onItemClickListener.onItemClick(this.player as MediaPlayerController) })
 	}
 
-	public fun bindData(player: MediaPlayerController)
+	fun bindData(player: MediaPlayerController)
 	{
 		this.player = player
 

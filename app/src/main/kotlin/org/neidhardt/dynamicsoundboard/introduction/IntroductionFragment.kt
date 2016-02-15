@@ -11,11 +11,11 @@ import org.neidhardt.dynamicsoundboard.R
  * File created by eric.neidhardt on 27.10.2015.
  */
 
-public class IntroductionFragment : Fragment()
+class IntroductionFragment : Fragment()
 {
-	public companion object
+	companion object
 	{
-		public val TAG = IntroductionFragment::class.qualifiedName
+		val TAG = IntroductionFragment::class.qualifiedName
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?

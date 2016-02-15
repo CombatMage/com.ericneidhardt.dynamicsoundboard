@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.header;
 
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -82,11 +82,11 @@ public class NavigationDrawerHeaderPresenterTest extends BaseTest
 	@Test
 	public void testOnSoundLayoutRemovedEvent() throws Exception
 	{
-		this.presenter.onEventMainThread(new SoundLayoutsRemovedEvent(new ArrayList<SoundLayout>()));
+		this.presenter.onEvent(new SoundLayoutsRemovedEvent(new ArrayList<SoundLayout>()));
 		verify(this.view, times(1)).showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().getLabel());
 
 		this.presenter.setView(null);
-		this.presenter.onEventMainThread(new SoundLayoutsRemovedEvent(new ArrayList<SoundLayout>()));
+		this.presenter.onEvent(new SoundLayoutsRemovedEvent(new ArrayList<SoundLayout>()));
 		verify(this.view, times(1)).showCurrentLayoutName(anyString());
 	}
 

@@ -5,7 +5,7 @@ import android.support.v4.view.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -74,7 +74,7 @@ class SoundViewHolder
 		this.timePosition.setOnSeekBarChangeListener(this)
 	}
 
-	public fun bindData(data: MediaPlayerController)
+	fun bindData(data: MediaPlayerController)
 	{
 		this.player = data
 
@@ -100,7 +100,7 @@ class SoundViewHolder
 		this.timePosition.progress = player.progress
 	}
 
-	public fun showShadowForLastItem(isLastItem: Boolean)
+	fun showShadowForLastItem(isLastItem: Boolean)
 	{
 		var shadowViewState = if (isLastItem) View.GONE else View.VISIBLE
 		this.shadowBottomDeleteViewLeft.visibility = shadowViewState

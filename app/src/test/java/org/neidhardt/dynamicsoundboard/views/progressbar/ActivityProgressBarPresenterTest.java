@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.views.progressbar;
 
 import android.view.View;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -9,7 +9,8 @@ import org.mockito.MockitoAnnotations;
 import org.neidhardt.dynamicsoundboard.BaseTest;
 import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  * File created by eric.neidhardt on 22.05.2015.
@@ -35,13 +36,13 @@ public class ActivityProgressBarPresenterTest extends BaseTest
 	@Test
 	public void testOnEventMainThread() throws Exception
 	{
-		this.presenter.onEventMainThread(new LongTermTaskStateChangedEvent(true, 1));
+		this.presenter.onEvent(new LongTermTaskStateChangedEvent(true, 1));
 		verify(this.view, times(1)).setVisibility(View.VISIBLE);
 
-		this.presenter.onEventMainThread(new LongTermTaskStateChangedEvent(false, 0));
+		this.presenter.onEvent(new LongTermTaskStateChangedEvent(false, 0));
 		verify(this.view, times(1)).setVisibility(View.GONE);
 
-		this.presenter.onEventMainThread(new LongTermTaskStateChangedEvent(false, -1));
+		this.presenter.onEvent(new LongTermTaskStateChangedEvent(false, -1));
 		verify(this.view, times(2)).setVisibility(View.GONE);
 	}
 }

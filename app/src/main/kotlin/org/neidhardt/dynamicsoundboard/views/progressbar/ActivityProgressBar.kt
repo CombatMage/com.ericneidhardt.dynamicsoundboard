@@ -3,8 +3,10 @@ package org.neidhardt.dynamicsoundboard.views.progressbar
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import de.greenrobot.event.EventBus
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent
 import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEventListener
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -62,10 +64,11 @@ class ActivityProgressBarPresenter
 		{
 			field = value
 			if (this.lastReceivedEvent != null)
-				this.onEventMainThread(this.lastReceivedEvent as LongTermTaskStateChangedEvent)
+				this.onEvent(this.lastReceivedEvent as LongTermTaskStateChangedEvent)
 		}
 
-	override fun onEventMainThread(event: LongTermTaskStateChangedEvent)
+	@Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: LongTermTaskStateChangedEvent)
 	{
 		Logger.d(TAG, "onEvent() " + event)
 		this.lastReceivedEvent = event

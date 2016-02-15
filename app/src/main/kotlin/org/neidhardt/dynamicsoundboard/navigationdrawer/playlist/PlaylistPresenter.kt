@@ -1,6 +1,8 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
@@ -16,7 +18,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
-public class PlaylistPresenter
+class PlaylistPresenter
 (
 		override val eventBus: EventBus,
 		val soundsDataStorage: SoundsDataStorage,
@@ -105,7 +107,7 @@ public class PlaylistPresenter
 			this.startOrStopPlayList(data)
 	}
 
-	public fun startOrStopPlayList(nextActivePlayer: MediaPlayerController)
+	fun startOrStopPlayList(nextActivePlayer: MediaPlayerController)
 	{
 		if (!this.values.contains(nextActivePlayer))
 			throw IllegalStateException("next active player $nextActivePlayer is not in playlist")
@@ -129,7 +131,8 @@ public class PlaylistPresenter
 		this.adapter?.notifyDataSetChanged()
 	}
 
-	override fun onEventMainThread(event: PlaylistChangedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: PlaylistChangedEvent)
 	{
 		this.values.clear()
 
@@ -141,6 +144,7 @@ public class PlaylistPresenter
 		this.adapter?.startProgressUpdateTimer()
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerStateChangedEvent)
 	{
 		val player = event.player
@@ -157,6 +161,7 @@ public class PlaylistPresenter
 			this.adapter?.notifyDataSetChanged()
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerCompletedEvent)
 	{
 		val finishedPlayerData = event.player.mediaPlayerData

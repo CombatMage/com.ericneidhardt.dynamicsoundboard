@@ -35,7 +35,7 @@ abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View, pager
 		this.deleteSoundInfoRight.setOnClickListener(this)
 	}
 
-	public fun setLabelToDeletionSettings(isOneSwipeDeleteEnabled: Boolean)
+	fun setLabelToDeletionSettings(isOneSwipeDeleteEnabled: Boolean)
 	{
 		if (isOneSwipeDeleteEnabled)
 		{

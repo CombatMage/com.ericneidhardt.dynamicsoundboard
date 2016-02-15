@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.R
 /**
  * File created by eric.neidhardt on 26.06.2015.
  */
-public class DialogBaseLayout : LinearLayout
+class DialogBaseLayout : LinearLayout
 {
 	private var hasRecyclerView = false
 	private var hasTitle = true
@@ -20,14 +20,14 @@ public class DialogBaseLayout : LinearLayout
 	private var labelOk: String? = null
 	private var labelCancel: String? = null
 
-	public constructor(context: Context) : super(context) {}
+	constructor(context: Context) : super(context) {}
 
-	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+	constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 	{
 		this.readAttributes(context, attrs)
 	}
 
-	public constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+	constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 	{
 		this.readAttributes(context, attrs)
 	}
@@ -73,7 +73,7 @@ public class DialogBaseLayout : LinearLayout
 		this.addView(view);
 	}
 
-	public fun enableRecyclerViewDividers(enable: Boolean)
+	fun enableRecyclerViewDividers(enable: Boolean)
 	{
 		if (this.hasRecyclerView)
 		{

@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
@@ -15,18 +15,18 @@ import java.util.*
  */
 
 
-public class SoundLayoutsManager :
+class SoundLayoutsManager :
 		SoundLayoutsAccess,
 		SoundLayoutsStorage,
 		SoundLayoutsUtil
 {
 	companion object
 	{
-		public const val DB_DEFAULT: String = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default"
+		const val DB_DEFAULT: String = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default"
 
 		private const val DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts"
 
-		public fun getNewDatabaseIdForLabel(label: String): String
+		fun getNewDatabaseIdForLabel(label: String): String
 		{
 			return Integer.toString((label + SoundboardApplication.getRandomNumber()).hashCode())
 		}
@@ -72,7 +72,7 @@ public class SoundLayoutsManager :
 		return layout
 	}
 
-	override public fun addSoundLayout(soundLayout: SoundLayout)
+	override fun addSoundLayout(soundLayout: SoundLayout)
 	{
 		this.soundLayouts.add(soundLayout)
 		this.daoSession.soundLayoutDao.insert(soundLayout)
@@ -125,7 +125,7 @@ public class SoundLayoutsManager :
 		this.eventBus.post(SoundLayoutsRemovedEvent(soundLayoutsToRemove))
 	}
 
-	override public fun setSoundLayoutSelected(position: Int)
+	override fun setSoundLayoutSelected(position: Int)
 	{
 		val size = this.soundLayouts.size
 		for (i in 0..size - 1)
@@ -144,7 +144,7 @@ public class SoundLayoutsManager :
 		}
 	}
 
-	override public fun getSoundLayoutById(databaseId: String): SoundLayout?
+	override fun getSoundLayoutById(databaseId: String): SoundLayout?
 	{
 		for (layout in this.soundLayouts) {
 			if (layout.databaseId == databaseId)

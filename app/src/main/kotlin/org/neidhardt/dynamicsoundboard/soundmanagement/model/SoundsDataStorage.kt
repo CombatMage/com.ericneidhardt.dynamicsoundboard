@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
-public interface SoundsDataStorage
+interface SoundsDataStorage
 {
 	/**
 	 * Create an new `EnhancedMediaPlayer` from given data and adds this player to the corresponding list of sounds.

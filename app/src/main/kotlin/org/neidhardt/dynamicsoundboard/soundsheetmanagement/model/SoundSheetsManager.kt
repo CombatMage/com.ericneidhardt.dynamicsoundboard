@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
@@ -20,7 +20,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 06.07.2015.
  */
-public class SoundSheetsManager :
+class SoundSheetsManager :
 		SoundSheetsDataAccess,
 		SoundSheetsDataStorage,
 		SoundSheetsDataUtil
@@ -33,7 +33,7 @@ public class SoundSheetsManager :
 	private var daoSession: DaoSession? = null
 
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
-	private val eventBus: EventBus = EventBus.getDefault()
+	private val eventBus = EventBus.getDefault()
 
 	private var isInitDone: Boolean = false
 

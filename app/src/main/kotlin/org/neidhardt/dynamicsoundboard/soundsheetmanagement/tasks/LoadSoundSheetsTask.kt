@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 /**
  * File created by eric.neidhardt on 08.05.2015.
  */
-public class LoadSoundSheetsTask
+class LoadSoundSheetsTask
 (
 		private val daoSession: DaoSession,
 		private val soundSheetsDataStorage: SoundSheetsDataStorage

@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
 import org.junit.Assert.assertThat
@@ -39,13 +39,13 @@ public class SoundPresenterTest : BaseTest()
 	fun onSoundAddedEvent()
 	{
 		var event = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		this.soundPresenter!!.onEventMainThread(event)
+		this.soundPresenter!!.onEvent(event)
 
 		event = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		this.soundPresenter!!.onEventMainThread(event)
+		this.soundPresenter!!.onEvent(event)
 
 		event = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		this.soundPresenter!!.onEventMainThread(event)
+		this.soundPresenter!!.onEvent(event)
 
 		assertThat(this.soundPresenter!!.values.size, equalTo(3))
 		this.verifySortOrder()
@@ -56,20 +56,20 @@ public class SoundPresenterTest : BaseTest()
 	{
 		// prepare test
 		var event = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		this.soundPresenter!!.onEventMainThread(event)
+		this.soundPresenter!!.onEvent(event)
 		event = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		this.soundPresenter!!.onEventMainThread(event)
+		this.soundPresenter!!.onEvent(event)
 		event = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		this.soundPresenter!!.onEventMainThread(event)
+		this.soundPresenter!!.onEvent(event)
 		event = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
-		this.soundPresenter!!.onEventMainThread(event)
+		this.soundPresenter!!.onEvent(event)
 
 		val list = ArrayList<MediaPlayerController>()
 		list.add(this.soundPresenter!!.values[1])
 		list.add(this.soundPresenter!!.values[2])
 
 		val removeEvent = SoundsRemovedEvent(list)
-		this.soundPresenter!!.onEventMainThread(removeEvent)
+		this.soundPresenter!!.onEvent(removeEvent)
 
 		assertThat(this.soundPresenter!!.values.size, equalTo(2))
 		this.verifySortOrder()
@@ -80,15 +80,15 @@ public class SoundPresenterTest : BaseTest()
 	{
 		val event0 = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
 		event0.player.mediaPlayerData.sortOrder = 2
-		this.soundPresenter!!.onEventMainThread(event0)
+		this.soundPresenter!!.onEvent(event0)
 
 		val event1 = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
 		event1.player.mediaPlayerData.sortOrder = 1
-		this.soundPresenter!!.onEventMainThread(event1)
+		this.soundPresenter!!.onEvent(event1)
 
 		val event2 = SoundAddedEvent(TestDataGenerator.getRandomPlayer(FRAGMENT_TAG))
 		event2.player.mediaPlayerData.sortOrder = 0
-		this.soundPresenter!!.onEventMainThread(event2)
+		this.soundPresenter!!.onEvent(event2)
 
 		assertThat(this.soundPresenter!!.values.size, equalTo(3))
 

@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatDialog
 import android.view.View
 import android.widget.CheckBox
 import android.widget.CompoundButton
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController

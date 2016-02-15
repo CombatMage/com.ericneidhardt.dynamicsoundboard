@@ -1,6 +1,8 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
@@ -16,10 +18,10 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
-public open class SoundSheetsPresenter
+open class SoundSheetsPresenter
 (
 		override val eventBus: EventBus,
-		public val soundSheetsDataAccess: SoundSheetsDataAccess,
+		val soundSheetsDataAccess: SoundSheetsDataAccess,
 		private val soundSheetsDataStorage: SoundSheetsDataStorage,
 		private val soundsDataAccess: SoundsDataAccess,
 		private val soundsDataStorage: SoundsDataStorage
@@ -56,7 +58,7 @@ public open class SoundSheetsPresenter
 		super.onSelectedItemsDeleted()
 	}
 
-	public override fun onItemClick(data: SoundSheet)
+	override fun onItemClick(data: SoundSheet)
 	{
 		if (this.isInSelectionMode)
 		{
@@ -95,12 +97,13 @@ public open class SoundSheetsPresenter
 		return selectedSoundSheets
 	}
 
-	public fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController>
+	fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController>
 	{
 		return this.soundsDataAccess.getSoundsInFragment(fragmentTag)
 	}
 
-	override fun onEventMainThread(event: SoundAddedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundAddedEvent)
 	{
 		val fragmentTag = event.player.mediaPlayerData.fragmentTag
 		val changedSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag)
@@ -108,7 +111,8 @@ public open class SoundSheetsPresenter
 			this.adapter?.notifyItemChanged(changedSoundSheet)
 	}
 
-	override fun onEventMainThread(event: SoundsRemovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundsRemovedEvent)
 	{
 		val removedPlayers = event.players
 		if (event.removeAll())
@@ -132,25 +136,27 @@ public open class SoundSheetsPresenter
 		}
 	}
 
-	override fun onEventMainThread(event: SoundChangedEvent) {}
-
-	override fun onEventMainThread(event: SoundMovedEvent) {}
-
-	override fun onEventMainThread(event: SoundSheetAddedEvent)
-	{
-		this.values.add(event.soundSheet)
-		this.adapter?.notifyItemInserted(this.values.size)
-	}
-
-	override fun onEventMainThread(event: SoundSheetChangedEvent){
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundSheetChangedEvent){
 		this.adapter?.notifyItemChanged(event.soundSheet)
 	}
 
-	override fun onEventMainThread(event: SoundSheetsRemovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundSheetsRemovedEvent)
 	{
 		val soundSheetsToRemove = event.soundSheets
 		for (soundSheet in soundSheetsToRemove)
 			this.removeSoundSheet(soundSheet)
+	}
+
+	override fun onEvent(event: SoundChangedEvent) {}
+
+	override fun onEvent(event: SoundMovedEvent) {}
+
+	override fun onEvent(event: SoundSheetAddedEvent)
+	{
+		this.values.add(event.soundSheet)
+		this.adapter?.notifyItemInserted(this.values.size)
 	}
 
 	private fun removeSoundSheet(soundSheet: SoundSheet)

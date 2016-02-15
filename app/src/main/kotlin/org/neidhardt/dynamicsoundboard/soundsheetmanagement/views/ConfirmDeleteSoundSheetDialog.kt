@@ -32,7 +32,7 @@ class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog()
 			val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag)
 			if (soundSheet != null) {
 				this.soundSheetsDataStorage.removeSoundSheets(listOf(soundSheet))
-				this.getSoundActivity().removeSoundFragment(soundSheet)
+				this.soundActivity.removeSoundFragment(soundSheet)
 			}
 		}
 	}

@@ -12,8 +12,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.emtronics.dragsortrecycler.DragSortRecycler
-import de.greenrobot.event.EventBus
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
@@ -67,7 +69,7 @@ class SoundSheetFragment :
 
 	var fragmentTag: String = javaClass.name
 
-	private val eventBus: EventBus = EventBus.getDefault()
+	private val eventBus = EventBus.getDefault()
 	private val soundsDataStorage: SoundsDataStorage = SoundboardApplication.getSoundsDataStorage()
 	private val soundsDataAccess: SoundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 
@@ -114,9 +116,9 @@ class SoundSheetFragment :
 
 		this.soundLayout = (fragmentView.findViewById(R.id.rv_sounds) as RecyclerView).apply {
 			adapter = soundAdapter
-			layoutManager = LinearLayoutManager(activity)
+			layoutManager = LinearLayoutManager(this.context)
 			itemAnimator = soundLayoutAnimator
-			addItemDecoration(DividerItemDecoration())
+			addItemDecoration(DividerItemDecoration(this.context))
 			addItemDecoration(dragSortRecycler)
 			addOnItemTouchListener(dragSortRecycler)
 			addOnScrollListener(scrollListener)
@@ -226,22 +228,26 @@ class SoundSheetFragment :
 		this.soundsDataStorage.moveSoundInFragment(fragmentTag, from, to)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundRenameEvent)
 	{
 		RenameSoundFileDialog(this.fragmentManager, event.data)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundSettingsEvent)
 	{
 		SoundSettingsDialog.showInstance(this.fragmentManager, event.data)
 	}
 
-	override fun onEventMainThread(event: SoundsRemovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundsRemovedEvent)
 	{
 		if (this.soundAdapter?.getValues()?.size == 0)
 			this.floatingActionButton?.show(true)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerFailedEvent)
 	{
 		val snackbar = this.getSnackbarForError(event.player, event.failingAction)
@@ -266,10 +272,10 @@ class SoundSheetFragment :
 		return snackbar
 	}
 
-	override fun onEventMainThread(event: SoundMovedEvent) {}
+	override fun onEvent(event: SoundMovedEvent) {}
 
-	override fun onEventMainThread(event: SoundAddedEvent) {}
+	override fun onEvent(event: SoundAddedEvent) {}
 
-	override fun onEventMainThread(event: SoundChangedEvent) {}
+	override fun onEvent(event: SoundChangedEvent) {}
 }
 

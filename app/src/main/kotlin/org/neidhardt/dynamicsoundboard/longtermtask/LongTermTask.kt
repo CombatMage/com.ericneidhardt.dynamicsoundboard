@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.longtermtask
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import roboguice.util.SafeAsyncTask
@@ -13,6 +13,8 @@ abstract class LongTermTask<T> : SafeAsyncTask<T>()
 {
 	protected abstract val TAG: String
 
+	private val eventBus = EventBus.getDefault()
+
 	companion object
 	{
 		private var taskCounter: Int = 0
@@ -23,7 +25,7 @@ abstract class LongTermTask<T> : SafeAsyncTask<T>()
 	{
 		super.onPreExecute()
 		taskCounter++
-		EventBus.getDefault().postSticky(LongTermTaskStateChangedEvent(true, taskCounter))
+		this.eventBus.postSticky(LongTermTaskStateChangedEvent(true, taskCounter))
 	}
 
 	@Throws(Exception::class)
@@ -31,7 +33,7 @@ abstract class LongTermTask<T> : SafeAsyncTask<T>()
 	{
 		super.onSuccess(result)
 		taskCounter--
-		EventBus.getDefault().postSticky(LongTermTaskStateChangedEvent(false, taskCounter))
+		this.eventBus.postSticky(LongTermTaskStateChangedEvent(false, taskCounter))
 	}
 
 	@Throws(RuntimeException::class)
@@ -40,7 +42,7 @@ abstract class LongTermTask<T> : SafeAsyncTask<T>()
 		super.onException(e)
 		Logger.e(TAG, e.message)
 		taskCounter--
-		EventBus.getDefault().postSticky(LongTermTaskStateChangedEvent(false, taskCounter))
+		this.eventBus.postSticky(LongTermTaskStateChangedEvent(false, taskCounter))
 		throw RuntimeException(e)
 	}
 }

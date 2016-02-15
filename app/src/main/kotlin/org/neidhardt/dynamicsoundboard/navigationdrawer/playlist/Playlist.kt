@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerList
@@ -15,33 +15,30 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDeco
 /**
  * Project created by eric.neidhardt on 27.08.2014.
  */
-public class Playlist : NavigationDrawerList
+class Playlist : NavigationDrawerList
 {
 	companion object
 	{
-		public val TAG: String = Playlist::class.java.name
+		val TAG: String = Playlist::class.java.name
 	}
 
 	private val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
 	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 
-	public val presenter: PlaylistPresenter = PlaylistPresenter(EventBus.getDefault(), this.soundsDataStorage, this.soundsDataAccess)
-	public val adapter:PlaylistAdapter = PlaylistAdapter(this.presenter)
+	val presenter: PlaylistPresenter = PlaylistPresenter(EventBus.getDefault(), this.soundsDataStorage, this.soundsDataAccess)
+	val adapter:PlaylistAdapter = PlaylistAdapter(this.presenter)
 
-	@SuppressWarnings("unused")
-	public constructor(context: Context) : super(context)
+	@SuppressWarnings("unused") constructor(context: Context) : super(context)
 	{
 		this.init(context)
 	}
 
-	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+	@SuppressWarnings("unused") constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 	{
 		this.init(context)
 	}
 
-	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
+	@SuppressWarnings("unused") constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 	{
 		this.init(context)
 	}
@@ -54,8 +51,8 @@ public class Playlist : NavigationDrawerList
 
 		val playlist = this.findViewById(R.id.rv_playlist) as RecyclerView
 		if (!this.isInEditMode) {
-			playlist.addItemDecoration(DividerItemDecoration())
-			playlist.layoutManager = LinearLayoutManager(context)
+			playlist.addItemDecoration(DividerItemDecoration(this.context))
+			playlist.layoutManager = LinearLayoutManager(this.context)
 			playlist.itemAnimator = DefaultItemAnimator()
 		}
 		playlist.adapter = this.adapter

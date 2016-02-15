@@ -2,14 +2,14 @@ package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views
 
 import android.app.FragmentManager
 import android.os.Bundle
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 
 /**
  * File created by eric.neidhardt on 12.03.2015.
  */
-public class SoundLayoutSettingsDialog : SoundLayoutDialog()
+class SoundLayoutSettingsDialog : SoundLayoutDialog()
 {
 	private var databaseId: String? = null
 
@@ -46,13 +46,12 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 		}
 	}
 
-	public interface OnSoundLayoutRenamedEventListener {
+	interface OnSoundLayoutRenamedEventListener {
 		/**
 		 * This is called by greenRobot EventBus in case the SoundLayout was renamed.
 		 * @param event delivered SoundLayoutRenamedEvent
 		 */
-		@SuppressWarnings("unused")
-		public fun onEvent(event: SoundLayoutRenamedEvent)
+		fun onEvent(event: SoundLayoutRenamedEvent)
 	}
 
 	companion object {
@@ -60,7 +59,7 @@ public class SoundLayoutSettingsDialog : SoundLayoutDialog()
 
 		private val KEY_DATABASE_ID = "org.neidhardt.dynamicsoundboard.dialog.SoundLayoutSettingsDialog.databaseId"
 
-		public fun showInstance(manager: FragmentManager, databaseId: String) {
+		fun showInstance(manager: FragmentManager, databaseId: String) {
 			val dialog = SoundLayoutSettingsDialog()
 
 			val args = Bundle()

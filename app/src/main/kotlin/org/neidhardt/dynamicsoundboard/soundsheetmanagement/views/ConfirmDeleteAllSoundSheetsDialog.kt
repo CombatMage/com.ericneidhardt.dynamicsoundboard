@@ -14,7 +14,7 @@ class ConfirmDeleteAllSoundSheetsDialog : BaseConfirmDeleteDialog()
 	override fun delete()
     {
 		val soundSheets = this.soundSheetsDataAccess.getSoundSheets()
-		this.getSoundActivity().removeSoundFragments(soundSheets)
+		this.soundActivity.removeSoundFragments(soundSheets)
 
 		for (soundSheet in soundSheets)
         {

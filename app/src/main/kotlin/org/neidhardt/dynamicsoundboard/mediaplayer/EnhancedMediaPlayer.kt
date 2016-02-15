@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
@@ -28,7 +28,7 @@ private enum class State
 	DESTROYED
 }
 
-public enum class PlayerAction
+enum class PlayerAction
 {
 	PLAY,
 	PAUSE,
@@ -43,9 +43,9 @@ private val FLOAT_VOLUME_MAX = 1f
 private val FLOAT_VOLUME_MIN = 0f
 
 fun getNewMediaPlayerController(context: Context,
-							 eventBus: EventBus,
-							 mediaPlayerData: MediaPlayerData,
-							 soundsDataStorage: SoundsDataStorage): MediaPlayerController
+								eventBus: EventBus,
+								mediaPlayerData: MediaPlayerData,
+								soundsDataStorage: SoundsDataStorage): MediaPlayerController
 {
 	return EnhancedMediaPlayer(context, eventBus, mediaPlayerData, soundsDataStorage)
 }
@@ -54,7 +54,7 @@ private class EnhancedMediaPlayer
 (
 		context: Context,
 		private val eventBus: EventBus,
-		public override val mediaPlayerData: MediaPlayerData,
+		override val mediaPlayerData: MediaPlayerData,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
 		MediaPlayer(),

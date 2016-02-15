@@ -25,7 +25,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 14.11.2014.
  */
-public class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
+class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
 {
 	private var confirm: View? = null
 	private var directories: RecyclerView? = null
@@ -33,7 +33,7 @@ public class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.
 	companion object {
 		private val TAG = LoadLayoutDialog::class.java.name
 
-		public fun showInstance(manager: FragmentManager)
+		fun showInstance(manager: FragmentManager)
 		{
 			val dialog = LoadLayoutDialog()
 			dialog.show(manager, TAG)
@@ -48,11 +48,12 @@ public class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.
 		this.confirm!!.setOnClickListener(this)
 		this.confirm!!.isEnabled = false
 
-		this.directories = view.findViewById(R.id.rv_dialog) as RecyclerView
-		this.directories!!.addItemDecoration(DividerItemDecoration())
-		this.directories!!.layoutManager = LinearLayoutManager(this.activity)
-		this.directories!!.itemAnimator = DefaultItemAnimator()
-		this.directories!!.adapter = super.adapter
+		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
+			this.addItemDecoration(DividerItemDecoration(this.context))
+			this.layoutManager = LinearLayoutManager(this.context)
+			this.itemAnimator = DefaultItemAnimator()
+		}
+		this.directories?.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
 		if (previousPath != null)

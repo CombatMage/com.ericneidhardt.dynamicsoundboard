@@ -1,6 +1,8 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
@@ -11,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.views.presenter.ViewPresenter
 /**
  * File created by eric.neidhardt on 21.05.2015.
  */
-public class AddPauseFloatingActionButtonPresenter
+class AddPauseFloatingActionButtonPresenter
 (
 		override val eventBus: EventBus,
 		private val soundsDataAccess: SoundsDataAccess
@@ -36,11 +38,13 @@ public class AddPauseFloatingActionButtonPresenter
 		this.updateToMediaPlayersState()
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerStateChangedEvent)
 	{
 		this.updateToMediaPlayersState()
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerCompletedEvent)
 	{
 		this.updateToMediaPlayersState()

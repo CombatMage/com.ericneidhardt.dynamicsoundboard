@@ -7,10 +7,10 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
  * File created by eric.neidhardt on 10.07.2015.
  */
 
-public data class SoundSheetAddedEvent(public val soundSheet: SoundSheet)
+data class SoundSheetAddedEvent(val soundSheet: SoundSheet)
 
-public data class SoundSheetChangedEvent(public val soundSheet: SoundSheet)
+data class SoundSheetChangedEvent(val soundSheet: SoundSheet)
 
-public data class SoundSheetsRemovedEvent(public var soundSheets: List<SoundSheet>)
+data class SoundSheetsRemovedEvent(var soundSheets: List<SoundSheet>)
 
-public class SoundSheetsInitEvent()
+class SoundSheetsInitEvent()

@@ -11,11 +11,11 @@ interface SoundLayoutsAccess
 	 * Retrieve the currently selected SoundLayout.
 	 * @return currently active SoundLayout
 	 */
-	public fun getActiveSoundLayout(): SoundLayout
+	fun getActiveSoundLayout(): SoundLayout
 
-	public fun getSoundLayoutById(databaseId: String): SoundLayout?
+	fun getSoundLayoutById(databaseId: String): SoundLayout?
 
-	public fun setSoundLayoutSelected(position: Int)
+	fun setSoundLayoutSelected(position: Int)
 
-	public fun getSoundLayouts(): List<SoundLayout>
+	fun getSoundLayouts(): List<SoundLayout>
 }

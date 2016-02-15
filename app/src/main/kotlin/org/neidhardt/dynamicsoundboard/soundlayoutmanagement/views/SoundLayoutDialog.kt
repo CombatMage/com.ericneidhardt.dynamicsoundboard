@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.views.BaseDialog
 /**
  * File created by eric.neidhardt on 12.03.2015.
  */
-public abstract class SoundLayoutDialog : BaseDialog(), View.OnClickListener
+abstract class SoundLayoutDialog : BaseDialog(), View.OnClickListener
 {
 	protected var soundLayoutName: EditText? = null
 	protected var soundLayoutInput: TextInputLayout? = null

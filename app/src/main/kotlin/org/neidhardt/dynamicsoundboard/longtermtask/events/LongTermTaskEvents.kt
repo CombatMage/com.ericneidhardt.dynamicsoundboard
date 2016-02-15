@@ -15,5 +15,5 @@ interface LongTermTaskStateChangedEventListener
      * This is called by greenRobot EventBus in case a background task starts or finishes his execution
      * @param event delivered LongTermTaskStateChangedEvent
      */
-	fun onEventMainThread(event: LongTermTaskStateChangedEvent)
+	fun onEvent(event: LongTermTaskStateChangedEvent)
 }

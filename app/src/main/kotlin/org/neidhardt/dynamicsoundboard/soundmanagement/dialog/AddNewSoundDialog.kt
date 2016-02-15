@@ -37,9 +37,9 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
-public class AddNewSoundDialog : BaseDialog, FileResultHandler
+class AddNewSoundDialog : BaseDialog, FileResultHandler
 {
-	public val TAG: String = javaClass.name
+	val TAG: String = javaClass.name
 	private val KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAdd"
 	private val KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAddLabels"
 
@@ -48,9 +48,9 @@ public class AddNewSoundDialog : BaseDialog, FileResultHandler
 
 	internal var callingFragmentTag = ""
 
-	public constructor() : super() {}
+	constructor() : super() {}
 
-	public constructor(manager: FragmentManager, callingFragmentTag: String) : super()
+	constructor(manager: FragmentManager, callingFragmentTag: String) : super()
 	{
 		val args = Bundle()
 		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
@@ -205,9 +205,11 @@ private class AddNewSoundDialogPresenter
 		this.add.setOnClickListener({ view -> this.addSoundsToSoundSheet()})
 		this.addAnotherSound.setOnClickListener({ this.addAnotherSound() })
 
-		this.addedSoundsLayout.addItemDecoration(DividerItemDecoration())
-		this.addedSoundsLayout.layoutManager = LinearLayoutManager(dialog.activity)
-		this.addedSoundsLayout.itemAnimator = DefaultItemAnimator()
+		this.addedSoundsLayout.apply {
+			this.addItemDecoration(DividerItemDecoration(this.context))
+			this.layoutManager = LinearLayoutManager(this.context)
+			this.itemAnimator = DefaultItemAnimator()
+		}
 		this.addedSoundsLayout.adapter = adapter
 
 		this.dialog.mainView!!.enableRecyclerViewDividers(false)
@@ -263,7 +265,7 @@ private class AddNewSoundDialogPresenter
 		if (SoundboardPreferences.useSystemBrowserForFiles())
 		{
 			val intent = Intent(Intent.ACTION_GET_CONTENT)
-			intent.setType(FileUtils.MIME_AUDIO)
+			intent.type = FileUtils.MIME_AUDIO
 			this.dialog.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
 		}
 		else

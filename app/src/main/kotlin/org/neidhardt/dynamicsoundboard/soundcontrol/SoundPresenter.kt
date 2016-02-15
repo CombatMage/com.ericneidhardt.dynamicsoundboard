@@ -1,6 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
@@ -13,7 +15,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 02.07.2015.
  */
-public class SoundPresenter
+class SoundPresenter
 (
 		private val fragmentTag: String,
 		private val eventBus: EventBus,
@@ -24,9 +26,9 @@ public class SoundPresenter
 {
 	private val TAG = javaClass.name
 
-	public var adapter: SoundAdapter? = null
+	var adapter: SoundAdapter? = null
 
-	public val values: MutableList<MediaPlayerController> = ArrayList()
+	val values: MutableList<MediaPlayerController> = ArrayList()
 
 	fun onAttachedToWindow()
 	{
@@ -43,6 +45,7 @@ public class SoundPresenter
 		this.eventBus.unregister(this)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerStateChangedEvent)
 	{
 		val playerId = event.playerId
@@ -55,12 +58,14 @@ public class SoundPresenter
 		}
 	}
 
+	@Subscribe
 	override fun onEvent(event: MediaPlayerCompletedEvent)
 	{
 		Logger.d(TAG, "onEvent :" + event)
 	}
 
-	override fun onEventMainThread(event: SoundAddedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundAddedEvent)
 	{
 		val newPlayer = event.player
 		if (newPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
@@ -97,7 +102,8 @@ public class SoundPresenter
 			this.adapter?.notifyItemChanged(position - 1)
 	}
 
-	override fun onEventMainThread(event: SoundMovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundMovedEvent)
 	{
 		val movedPlayer = event.player
 		if (movedPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
@@ -119,7 +125,8 @@ public class SoundPresenter
 		}
 	}
 
-	override fun onEventMainThread(event: SoundsRemovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundsRemovedEvent)
 	{
 		if (event.removeAll())
 			this.adapter?.notifyDataSetChanged()
@@ -155,7 +162,8 @@ public class SoundPresenter
 		}
 	}
 
-	override fun onEventMainThread(event: SoundChangedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundChangedEvent)
 	{
 		val player = event.player
 		val index = this.values.indexOf(player)

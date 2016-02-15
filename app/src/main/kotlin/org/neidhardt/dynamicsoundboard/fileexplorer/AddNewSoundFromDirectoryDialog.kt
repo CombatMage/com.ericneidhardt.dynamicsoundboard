@@ -18,7 +18,7 @@ import java.util.*
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
  */
-public open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.OnClickListener
+open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.OnClickListener
 {
 	protected var callingFragmentTag: String? = null
 
@@ -29,7 +29,7 @@ public open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.On
 	{
 		private val TAG = AddNewSoundFromDirectoryDialog::class.java.name
 
-		public fun showInstance(manager: FragmentManager, callingFragmentTag: String)
+		fun showInstance(manager: FragmentManager, callingFragmentTag: String)
 		{
 			val dialog = AddNewSoundFromDirectoryDialog()
 
@@ -59,11 +59,12 @@ public open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.On
 
 		view.findViewById(R.id.b_cancel).setOnClickListener(this)
 
-		this.directories = view.findViewById(R.id.rv_dialog) as RecyclerView
-		this.directories!!.addItemDecoration(DividerItemDecoration())
-		this.directories!!.layoutManager = LinearLayoutManager(this.activity)
-		this.directories!!.itemAnimator = DefaultItemAnimator()
-		this.directories!!.adapter = super.adapter
+		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
+			this.addItemDecoration(DividerItemDecoration(this.context))
+			this.layoutManager = LinearLayoutManager(this.context)
+			this.itemAnimator = DefaultItemAnimator()
+		}
+		this.directories?.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(TAG)
 		if (previousPath != null)

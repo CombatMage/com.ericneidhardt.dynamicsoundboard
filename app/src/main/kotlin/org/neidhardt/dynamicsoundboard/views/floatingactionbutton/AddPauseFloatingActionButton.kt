@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import com.github.clans.fab.FloatingActionButton
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
@@ -20,13 +20,13 @@ class AddPauseFloatingActionButton : FloatingActionButton, View.OnClickListener
 	private var presenter: AddPauseFloatingActionButtonPresenter? = null
 
 	@SuppressWarnings("unused")
-	public constructor(context: Context) : super(context) { this.init() }
+	constructor(context: Context) : super(context) { this.init() }
 
 	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { this.init() }
+	constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { this.init() }
 
 	@SuppressWarnings("unused")
-	public constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) { this.init() }
+	constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) { this.init() }
 
 	private fun init()
 	{

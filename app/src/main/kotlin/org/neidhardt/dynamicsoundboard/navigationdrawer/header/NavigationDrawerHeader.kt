@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent
@@ -118,6 +120,7 @@ class NavigationDrawerHeaderPresenter
 		this.eventBus.post(OpenSoundLayoutsRequestedEvent())
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutRenamedEvent) {
 		if (this.view == null || this.soundLayoutModel == null)
 			return
@@ -125,13 +128,15 @@ class NavigationDrawerHeaderPresenter
 		this.view?.showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().label)
 	}
 
-	override fun onEventMainThread(event: SoundLayoutsRemovedEvent) {
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundLayoutsRemovedEvent) {
 		if (this.view == null || this.soundLayoutModel == null)
 			return
 
 		this.view?.showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().label)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutSelectedEvent) {
 		if (this.view == null || this.soundLayoutModel == null)
 			return

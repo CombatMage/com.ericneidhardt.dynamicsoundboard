@@ -10,7 +10,7 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAd
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
-public class PlaylistAdapter
+class PlaylistAdapter
 (
 		private val presenter: PlaylistPresenter
 ) :

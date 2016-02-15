@@ -23,7 +23,7 @@ import java.io.IOException
 /**
  * File created by eric.neidhardt on 12.11.2014.
  */
-public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
+class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
 {
 
 	private var inputFileName: EditText? = null
@@ -41,11 +41,12 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 
 		this.inputFileName = view.findViewById(R.id.et_name_file) as EditText
 
-		this.directories = view.findViewById(R.id.rv_dialog) as RecyclerView
-		this.directories!!.addItemDecoration(DividerItemDecoration())
-		this.directories!!.layoutManager = LinearLayoutManager(this.activity)
-		this.directories!!.itemAnimator = DefaultItemAnimator()
-		this.directories!!.adapter = super.adapter
+		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
+			this.addItemDecoration(DividerItemDecoration(this.context))
+			this.layoutManager = LinearLayoutManager(this.context)
+			this.itemAnimator = DefaultItemAnimator()
+		}
+		this.directories?.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
 		if (previousPath != null)

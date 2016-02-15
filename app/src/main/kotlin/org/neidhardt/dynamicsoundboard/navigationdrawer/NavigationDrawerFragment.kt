@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
@@ -176,6 +178,7 @@ class NavigationDrawerFragment : BaseFragment(),
 		animator?.start()
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundLayoutsRequestedEvent)
 	{
 		this.soundLayoutList!!.toggleVisibility()
@@ -184,6 +187,7 @@ class NavigationDrawerFragment : BaseFragment(),
 			this.soundLayoutList!!.presenter.prepareItemDeletion()
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: ActionModeChangeRequestedEvent)
 	{
 		val requestedAction = event.requestedAction

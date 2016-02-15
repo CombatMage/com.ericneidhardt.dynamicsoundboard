@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.views.BaseDialog
 /**
  * File created by eric.neidhardt on 22.10.2015.
  */
-public class ExplainPermissionDialog : BaseDialog
+class ExplainPermissionDialog : BaseDialog
 {
 	private val TAG = javaClass.name
 
@@ -25,7 +25,7 @@ public class ExplainPermissionDialog : BaseDialog
 	private var requestId = 0
 	private var closeAppOnDenial = true
 
-	public constructor(fragmentManager: FragmentManager, messageId: Int, permission: String, requestId: Int, closeAppOnDenial: Boolean) : super()
+	constructor(fragmentManager: FragmentManager, messageId: Int, permission: String, requestId: Int, closeAppOnDenial: Boolean) : super()
 	{
 		val args = Bundle()
 		args.putInt(KEY_MESSAGE_ID, messageId)

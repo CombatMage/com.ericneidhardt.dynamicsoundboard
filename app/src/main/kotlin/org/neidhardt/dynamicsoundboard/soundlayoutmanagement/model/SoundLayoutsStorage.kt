@@ -8,9 +8,9 @@ import org.neidhardt.dynamicsoundboard.dao.SoundLayout
  */
 interface SoundLayoutsStorage
 {
-	public fun getDbSoundLayouts(): DaoSession
+	fun getDbSoundLayouts(): DaoSession
 
-	public fun addSoundLayout(soundLayout: SoundLayout)
+	fun addSoundLayout(soundLayout: SoundLayout)
 
-	public fun removeSoundLayouts(soundLayoutsToRemove: List<SoundLayout>)
+	fun removeSoundLayouts(soundLayoutsToRemove: List<SoundLayout>)
 }

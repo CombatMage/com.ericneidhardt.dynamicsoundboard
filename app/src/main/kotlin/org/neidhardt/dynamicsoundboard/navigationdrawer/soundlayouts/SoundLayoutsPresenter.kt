@@ -1,6 +1,8 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
@@ -14,7 +16,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 17.07.2015.
  */
-public class SoundLayoutsPresenter
+class SoundLayoutsPresenter
 (
 		override val eventBus: EventBus,
 		private val soundLayoutsAccess: SoundLayoutsAccess,
@@ -90,12 +92,14 @@ public class SoundLayoutsPresenter
 		this.adapter?.notifyDataSetChanged()
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutRenamedEvent)
 	{
 		val renamedLayout = event.renamedSoundLayout
 		this.adapter?.notifyItemChanged(renamedLayout)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutAddedEvent)
 	{
 		val newLayout = event.data
@@ -106,7 +110,8 @@ public class SoundLayoutsPresenter
 		}
 	}
 
-	override fun onEventMainThread(event: SoundLayoutsRemovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundLayoutsRemovedEvent)
 	{
 		val layoutsToRemove = event.soundLayouts
 		for (layout in layoutsToRemove)

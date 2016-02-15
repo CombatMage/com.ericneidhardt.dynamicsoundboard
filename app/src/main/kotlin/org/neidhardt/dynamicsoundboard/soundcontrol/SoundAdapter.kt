@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundcontrol
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAd
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
-public class SoundAdapter
+class SoundAdapter
 (
 		private val presenter: SoundPresenter,
 		private val soundsDataStorage: SoundsDataStorage,

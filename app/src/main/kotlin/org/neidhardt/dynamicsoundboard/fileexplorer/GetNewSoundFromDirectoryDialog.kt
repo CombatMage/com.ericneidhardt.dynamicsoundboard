@@ -6,11 +6,11 @@ import android.os.Bundle
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
  */
-public class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
+class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
 {
 	private val TAG = javaClass.name
 
-	public constructor(manager: FragmentManager, callingFragmentTag: String) : this()
+	constructor(manager: FragmentManager, callingFragmentTag: String) : this()
 	{
 		val dialog = GetNewSoundFromDirectoryDialog()
 

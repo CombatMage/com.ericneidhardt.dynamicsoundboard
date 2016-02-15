@@ -6,9 +6,9 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
-public val UPDATE_INTERVAL: Int = 500
+val UPDATE_INTERVAL: Int = 500
 
-public abstract class SoundProgressAdapter<T> :
+abstract class SoundProgressAdapter<T> :
 		BaseAdapter<MediaPlayerController, T>(),
 		SoundProgressTimer,
 		Runnable
@@ -25,13 +25,13 @@ where T : RecyclerView.ViewHolder, T : SoundProgressViewHolder
 	/**
 	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
 	 */
-	public override fun startProgressUpdateTimer()
+	override fun startProgressUpdateTimer()
 	{
 		if (!this.hasTimerStarted.getAndSet(true))
 			this.handler.postDelayed(this, UPDATE_INTERVAL.toLong())
 	}
 
-	public override fun stopProgressUpdateTimer()
+	override fun stopProgressUpdateTimer()
 	{
 		if (this.hasTimerStarted.getAndSet(false))
 			this.handler.removeCallbacks(this)

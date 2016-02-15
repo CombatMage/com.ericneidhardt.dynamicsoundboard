@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 /**
  * File created by eric.neidhardt on 14.11.2014.
  */
-public abstract class BaseDialog : DialogFragment()
+abstract class BaseDialog : DialogFragment()
 {
 	protected val KEY_CALLING_FRAGMENT_TAG: String = "org.neidhardt.dynamicsoundboard.views.BaseDialog.callingFragmentTag"
 
@@ -24,13 +24,11 @@ public abstract class BaseDialog : DialogFragment()
 	protected var soundsDataStorage: SoundsDataStorage = SoundboardApplication.getSoundsDataStorage()
 	protected var soundsDataAccess: SoundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 
-	public var soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
+	var soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
 
-	public var mainView: DialogBaseLayout? = null
+	var mainView: DialogBaseLayout? = null
 
-	public fun getSoundActivity(): SoundActivity
-	{
-		return this.activity as SoundActivity
-	}
+	val soundActivity: SoundActivity
+		get() = this.activity as SoundActivity
 }
 
