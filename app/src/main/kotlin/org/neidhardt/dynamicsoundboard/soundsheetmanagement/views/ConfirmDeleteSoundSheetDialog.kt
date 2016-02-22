@@ -21,7 +21,7 @@ class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog()
 			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG)
 	}
 
-	override fun getInfoTextResource(): Int = R.string.dialog_confirm_delete_soundsheet_message
+	override val infoTextResource: Int = R.string.dialog_confirm_delete_soundsheet_message
 
 	override fun delete()
 	{

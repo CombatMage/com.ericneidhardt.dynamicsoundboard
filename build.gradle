@@ -2,7 +2,7 @@
 apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
-	ext.kotlin_version = '1.0.0-rc-1036'
+	ext.kotlin_version = '1.0.0'
 
 	repositories {
 		flatDir { dirs 'proguard' }
@@ -20,7 +20,7 @@ buildscript {
 
 ext {
 	compileSdkVersion = 23
-	buildToolsVersion = "23.0.1"
+	buildToolsVersion = "23.0.2"
 }
 
 allprojects {

@@ -31,8 +31,6 @@ class AddNewSoundFromIntent : BaseDialog(), View.OnClickListener, CompoundButton
 	private var availableSoundSheetLabels: List<String>? = null
 	private var availableSoundSheetIds: List<String>? = null
 
-	private var soundSheetsAlreadyExists: Boolean = false
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
@@ -43,11 +41,10 @@ class AddNewSoundFromIntent : BaseDialog(), View.OnClickListener, CompoundButton
 			this.availableSoundSheetLabels = args.getStringArrayList(KEY_AVAILABLE_SOUND_SHEET_LABELS)
 			this.availableSoundSheetIds = args.getStringArrayList(KEY_AVAILABLE_SOUND_SHEET_IDS)
 		}
-		this.soundSheetsAlreadyExists = this.availableSoundSheetLabels != null
 	}
 
 	override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
-		if (!this.soundSheetsAlreadyExists)
+		if (this.availableSoundSheetLabels == null)
 			return this.createDialogIfNoSheetsExists()
 		else
 			return this.createDialogToSelectSoundSheet()
@@ -95,9 +92,11 @@ class AddNewSoundFromIntent : BaseDialog(), View.OnClickListener, CompoundButton
 		if (this.uri != null)
 			this.soundName!!.setText(FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, this.uri as Uri)))
 
-		if (this.soundSheetsAlreadyExists) {
-			this.soundSheetSpinner!!.setItems(this.availableSoundSheetLabels)
-			this.soundSheetName!!.visibility = View.GONE
+		val soundSheetLabels = this.availableSoundSheetLabels
+		if (soundSheetLabels != null)
+		{
+			this.soundSheetSpinner?.setItems(soundSheetLabels)
+			this.soundSheetName?.visibility = View.GONE
 		}
 	}
 
@@ -127,7 +126,7 @@ class AddNewSoundFromIntent : BaseDialog(), View.OnClickListener, CompoundButton
 			newSoundSheetLabel = this.suggestedName as String
 
 		val soundSheetFragmentTag: String
-		if (!this.soundSheetsAlreadyExists || this.addNewSoundSheet!!.isChecked)
+		if (this.availableSoundSheetLabels == null || this.addNewSoundSheet!!.isChecked)
 			soundSheetFragmentTag = this.addNewSoundSheet(newSoundSheetLabel)
 		else
 			soundSheetFragmentTag = this.availableSoundSheetIds!![this.soundSheetSpinner!!.selectedItemPosition]

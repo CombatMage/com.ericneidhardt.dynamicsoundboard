@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
  */
 class ConfirmDeleteAllSoundSheetsDialog : BaseConfirmDeleteDialog()
 {
-	override fun getInfoTextResource(): Int = R.string.dialog_confirm_delete_all_soundsheets_message
+	override val infoTextResource: Int = R.string.dialog_confirm_delete_all_soundsheets_message
 
 	override fun delete()
     {
