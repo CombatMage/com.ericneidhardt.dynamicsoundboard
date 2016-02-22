@@ -14,7 +14,7 @@ import org.neidhardt.dynamicsoundboard.R
 abstract class BaseConfirmDeleteDialog : BaseDialog(), View.OnClickListener
 {
 
-	override fun onCreateDialog(savedInstanceState: Bundle): Dialog
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_confirm_delete, null)
 		val infoText = view.findViewById(R.id.tv_message) as TextView
