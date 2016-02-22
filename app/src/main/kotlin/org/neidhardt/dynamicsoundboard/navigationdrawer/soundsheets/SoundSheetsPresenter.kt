@@ -149,16 +149,14 @@ open class SoundSheetsPresenter
 			this.removeSoundSheet(soundSheet)
 	}
 
-	override fun onEvent(event: SoundChangedEvent) {}
-
-	override fun onEvent(event: SoundMovedEvent) {}
-
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundSheetAddedEvent)
 	{
 		this.values.add(event.soundSheet)
 		this.adapter?.notifyItemInserted(this.values.size)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	private fun removeSoundSheet(soundSheet: SoundSheet)
 	{
 		val index = this.values.indexOf(soundSheet)
@@ -168,4 +166,9 @@ open class SoundSheetsPresenter
 			this.adapter?.notifyItemRemoved(index)
 		}
 	}
+
+	// unused events
+	override fun onEvent(event: SoundChangedEvent) {}
+
+	override fun onEvent(event: SoundMovedEvent) {}
 }
