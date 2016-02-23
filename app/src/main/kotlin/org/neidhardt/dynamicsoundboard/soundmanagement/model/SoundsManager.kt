@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
+import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
@@ -15,7 +16,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDat
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
 import java.io.IOException
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -35,7 +35,7 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	private var isInitDone: Boolean = false
 
-	override val sounds: MutableMap<String, MutableList<MediaPlayerController>> = ConcurrentHashMap()
+	override val sounds: MutableMap<String, MutableList<MediaPlayerController>> = ListMap(HashMap<String, List<MediaPlayerController>>(), true)
 	override val playlist: MutableList<MediaPlayerController> = CopyOnWriteArrayList()
 	override val currentlyPlayingSounds: MutableSet<MediaPlayerController> = CopyOnWriteArraySet()
 
