@@ -503,8 +503,11 @@ class SoundActivity :
 		}
 		fragmentManager.executePendingTransactions()
 
-		if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
+		if (this.soundSheetsDataAccess.getSoundSheets().size == 0) 
+		{
 			this.setSoundSheetActionsEnable(false)
+			this.openIntroductionFragmentIfRequired()
+		}
 	}
 
 	fun removeSoundFragment(soundSheet: SoundSheet)
