@@ -1,22 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
-import android.content.Context
-import android.media.AudioManager
-import android.media.MediaPlayer
-import android.net.Uri
-import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.reportError
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.util.enhanced_handler.EnhancedHandler
-import org.neidhardt.util.enhanced_handler.KillableRunnable
-import java.io.IOException
-
+/*
 private enum class State
 {
 	IDLE,
@@ -415,3 +399,4 @@ private class EnhancedMediaPlayer
 		"EnhancedMediaPlayer{currentState=$currentState, trackDuration=$trackDuration, isPlaying=$isPlayingSound, volume=$volume, handler=$handler, rawData=$mediaPlayerData}"
 
 }
+*/
