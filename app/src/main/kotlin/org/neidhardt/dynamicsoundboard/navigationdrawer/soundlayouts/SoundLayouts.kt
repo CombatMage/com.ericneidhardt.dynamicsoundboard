@@ -26,7 +26,7 @@ class SoundLayouts : NavigationDrawerList
 	private val soundLayoutsStorage: SoundLayoutsStorage = SoundboardApplication.getSoundLayoutsStorage()
 
 	var presenter: SoundLayoutsPresenter = SoundLayoutsPresenter(this.eventBus, this.soundLayoutsAccess, this.soundLayoutsStorage)
-	var adapter: SoundLayoutsAdapter = SoundLayoutsAdapter(this.presenter, this.eventBus)
+	var adapter: SoundLayoutsAdapter = SoundLayoutsAdapter(this.eventBus, this.presenter)
 
 	@SuppressWarnings("unused") constructor(context: Context) : super(context)
 	{

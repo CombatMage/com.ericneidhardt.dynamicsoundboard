@@ -15,8 +15,8 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter
  */
 class SoundLayoutsAdapter
 (
-		private val presenter: SoundLayoutsPresenter,
-		private val eventBus: EventBus
+		private val eventBus: EventBus,
+		private val presenter: SoundLayoutsPresenter
 ) :
 		RecyclerView.Adapter<SoundLayoutViewHolder>(),
 		ListAdapter<SoundLayout>,

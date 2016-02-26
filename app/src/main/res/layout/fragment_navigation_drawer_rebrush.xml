@@ -45,7 +45,8 @@
 	<android.support.v7.widget.RecyclerView
 			android:id="@+id/rv_navigation_drawer_list"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_marginTop="@dimen/margin_small"
 			android:overScrollMode="never"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior"
 			tools:listitem="@layout/view_sound_sheet_item"/>
@@ -57,10 +58,25 @@
 			android:background="@color/shadow_dark"
 			android:visibility="gone"/>
 
-	<include
-			layout="@layout/view_navigation_drawer_button_bar"
+	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_gravity="bottom"/>
+			android:orientation="vertical"
+			android:layout_gravity="bottom">
+
+		<View
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_shadow_fixed"
+				android:background="@drawable/shape_shadow_horizontal"
+				android:rotation="180"/>
+
+		<include
+				layout="@layout/view_navigation_drawer_button_bar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="bottom"/>
+
+	</LinearLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

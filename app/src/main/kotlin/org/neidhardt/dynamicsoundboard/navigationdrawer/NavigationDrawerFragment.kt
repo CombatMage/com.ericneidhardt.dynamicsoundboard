@@ -15,18 +15,25 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OnOpenSoundLayoutsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayouts
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsAdapter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsUtil
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
@@ -45,11 +52,6 @@ class NavigationDrawerFragment : BaseFragment(),
 		OnActionModeChangeRequestedEventListener
 {
 	private val TAG = javaClass.name
-
-	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
-	private val soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
-
-	private val soundLayoutsUtil = SoundboardApplication.getSoundLayoutsUtil()
 
 	private val eventBus = EventBus.getDefault()
 
@@ -91,6 +93,9 @@ class NavigationDrawerFragment : BaseFragment(),
 				buttonOk = view.findViewById(R.id.b_ok),
 				buttonDelete = view.findViewById(R.id.b_delete),
 				buttonDeleteSelected = view.findViewById(R.id.b_delete_selected),
+
+				revealShadow = view.findViewById(R.id.v_reveal_shadow),
+
 				fragmentManager = this.fragmentManager,
 
 				recyclerView = layoutList,
@@ -102,7 +107,9 @@ class NavigationDrawerFragment : BaseFragment(),
 				soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage(),
 				soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess(),
 
-				soundLayoutsUtil = this.soundLayoutsUtil
+				soundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess(),
+				soundLayoutsStorage = SoundboardApplication.getSoundLayoutsStorage(),
+				soundLayoutsUtil = SoundboardApplication.getSoundLayoutsUtil()
 
 		).apply {
 			onAttachedToWindow()
@@ -165,12 +172,15 @@ private class NavigationDrawerFragmentPresenter
 		private val eventBus: EventBus,
 		private val fragmentManager: FragmentManager,
 		private val tabLayout: TabLayout,
+		private val revealShadow: View,
 		private val buttonOk: View,
 		private val buttonDelete: View,
 		private val buttonDeleteSelected: View,
 
 		private val recyclerView: RecyclerView,
 
+		private val soundLayoutsAccess: SoundLayoutsAccess,
+		private val soundLayoutsStorage: SoundLayoutsStorage,
 		private val soundLayoutsUtil: SoundLayoutsUtil,
 
 		private val soundsDataAccess: SoundsDataAccess,
@@ -200,6 +210,20 @@ private class NavigationDrawerFragmentPresenter
 			soundSheetsDataStorage = this.soundSheetsDataStorage
 	)
 	private val adapterSoundSheets = SoundSheetsAdapter(this.presenterSoundSheets)
+
+	private val presenterPlaylist = PlaylistPresenter(
+			eventBus = this.eventBus,
+			soundsDataAccess = this.soundsDataAccess,
+			soundsDataStorage = this.soundsDataStorage
+	)
+	private val adapterPlaylist = PlaylistAdapter(this.presenterPlaylist)
+
+	private val presenterSoundLayouts = SoundLayoutsPresenter(
+			eventBus = this.eventBus,
+			soundLayoutsAccess = this.soundLayoutsAccess,
+			soundLayoutsStorage = this.soundLayoutsStorage
+	)
+	private val adapterSoundLayouts = SoundLayoutsAdapter(this.eventBus, this.presenterSoundLayouts)
 
 	init
 	{
@@ -278,23 +302,18 @@ private class NavigationDrawerFragmentPresenter
 			this.tabPlayList ->
 			{
 				this.currentList = List.Playlist
+				this.currentPresenter = this.presenterPlaylist
+				this.recyclerView.adapter = this.adapterPlaylist
 			}
 			this.tabSoundLayouts ->
 			{
 				this.currentList = List.SoundLayouts
+				this.currentPresenter = this.presenterSoundLayouts
+				this.recyclerView.adapter = this.adapterSoundLayouts
 			}
 		}
 
 		this.currentPresenter?.onAttachedToWindow()
-		this.animateSoundLayoutsListAppear()
-	}
-
-	private fun animateSoundLayoutsListAppear()
-	{
-		/*val viewToAnimate = this.activity.findViewById(R.id.v_reveal_shadow)
-		val animator = AnimationUtils.createSlowCircularReveal(viewToAnimate, this.listContainer!!.width, 0, 0f, (2 * this.listContainer!!.height).toFloat())
-
-		animator?.start()*/
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -302,9 +321,20 @@ private class NavigationDrawerFragmentPresenter
 	{
 		if (event.openSoundLayouts) {
 			this.showContextTabBarAndContent()
+			this.animateSoundLayoutsListAppear()
 		}
 		else {
 			this.showDefaultTabBarAndContent()
+			this.animateSoundLayoutsListAppear()
+		}
+	}
+
+	private fun animateSoundLayoutsListAppear()
+	{
+		if (this.revealShadow.isAttachedToWindow)
+		{
+			val animator = AnimationUtils.createSlowCircularReveal(this.revealShadow, this.recyclerView.width, 0, 0f, (2 * this.recyclerView.height).toFloat())
+			animator?.start()
 		}
 	}
 
