@@ -201,7 +201,7 @@ class SoundActivity :
 			}
 
 			this.drawerToggle?.isDrawerIndicatorEnabled = true
-			this.navigationDrawerLayout?.setDrawerListener(drawerToggle)
+			this.navigationDrawerLayout?.addDrawerListener(drawerToggle!!)
 		}
 	}
 
@@ -209,12 +209,6 @@ class SoundActivity :
 	{
 		super.onPostCreate(savedInstanceState)
 		this.drawerToggle?.syncState()
-	}
-
-	override fun onWindowFocusChanged(hasFocus: Boolean)
-	{
-		super.onWindowFocusChanged(hasFocus)
-		this.getNavigationDrawerFragment().adjustViewPagerToContent()
 	}
 
 	override fun onStart()
@@ -468,13 +462,13 @@ class SoundActivity :
 		}
 	}
 
-	override fun onSupportActionModeStarted(mode: ActionMode?)
+	override fun onSupportActionModeStarted(mode: ActionMode)
 	{
 		super.onSupportActionModeStarted(mode)
 		this.isActionModeActive = true
 	}
 
-	override fun onSupportActionModeFinished(mode: ActionMode?)
+	override fun onSupportActionModeFinished(mode: ActionMode)
 	{
 		super.onSupportActionModeFinished(mode)
 		this.isActionModeActive = false
