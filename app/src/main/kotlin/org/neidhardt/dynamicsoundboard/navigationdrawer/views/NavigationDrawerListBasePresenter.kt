@@ -2,23 +2,51 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.views
 
 import android.view.Menu
 import android.view.MenuItem
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent
-import org.neidhardt.dynamicsoundboard.views.presenter.ViewPresenter
 
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
-abstract class NavigationDrawerListPresenter<T: NavigationDrawerList?> : ViewPresenter<T>, android.support.v7.view.ActionMode.Callback
+interface NavigationDrawerListPresenter {
+
+	fun prepareItemDeletion()
+
+	fun deleteSelectedItems()
+
+	fun onAttachedToWindow()
+
+	fun onDetachedFromWindow()
+}
+
+abstract class NavigationDrawerListBasePresenter<T: NavigationDrawerList?> :
+		NavigationDrawerListPresenter,
+		android.support.v7.view.ActionMode.Callback
 {
 	private val TAG = javaClass.name
 
 	var isInSelectionMode: Boolean = false
 
+	abstract var view: T
+
+	abstract val eventBus: EventBus
+
+	override fun onAttachedToWindow()
+	{
+		if (!this.eventBus.isRegistered(this))
+			this.eventBus.register(this)
+	}
+
+	override fun onDetachedFromWindow()
+	{
+		this.eventBus.unregister(this)
+	}
+
 	protected fun onItemSelectedForDeletion() = this.eventBus.post(ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.INVALIDATE))
 
 	protected fun onSelectedItemsDeleted() = this.eventBus.post(ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOP))
 
-	fun prepareItemDeletion() = this.eventBus.post(ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.START))
+	override fun prepareItemDeletion() = this.eventBus.post(ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.START))
 
 	override fun onCreateActionMode(actionMode: android.support.v7.view.ActionMode, menu: Menu): Boolean
 	{
@@ -54,8 +82,6 @@ abstract class NavigationDrawerListPresenter<T: NavigationDrawerList?> : ViewPre
 
 		this.eventBus.post(ActionModeChangeRequestedEvent(this, ActionModeChangeRequestedEvent.REQUEST.STOPPED))
 	}
-
-	abstract fun deleteSelectedItems()
 
 	protected abstract val numberOfItemsSelectedForDeletion: Int
 

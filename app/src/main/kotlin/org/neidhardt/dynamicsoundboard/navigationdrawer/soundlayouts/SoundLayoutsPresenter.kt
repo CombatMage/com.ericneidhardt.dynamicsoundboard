@@ -5,7 +5,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
@@ -22,13 +22,12 @@ class SoundLayoutsPresenter
 		private val soundLayoutsAccess: SoundLayoutsAccess,
 		private val soundLayoutsStorage: SoundLayoutsStorage
 ) :
-		NavigationDrawerListPresenter<SoundLayouts?>(),
+		NavigationDrawerListBasePresenter<SoundLayouts?>(),
 		NavigationDrawerItemClickListener<SoundLayout>,
 		SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
 		AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener,
 		OnSoundLayoutsChangedEventListener
 {
-	override val isEventBusSubscriber: Boolean = true
 	override var view: SoundLayouts? = null
 
 	var adapter: SoundLayoutsAdapter? = null

@@ -104,6 +104,8 @@ class NavigationDrawerHeaderPresenter
 
 	override var view: NavigationDrawerHeader? = null
 
+	private var openSoundLayouts = true
+
 	override fun onAttachedToWindow() {
 		super.onAttachedToWindow()
 		if (this.view == null)
@@ -117,7 +119,8 @@ class NavigationDrawerHeaderPresenter
 
 	fun onChangeLayoutClicked() {
 		this.view?.animateLayoutChanges()
-		this.eventBus.post(OpenSoundLayoutsRequestedEvent())
+		this.eventBus.post(OpenSoundLayoutsRequestedEvent(openSoundLayouts))
+		openSoundLayouts = !openSoundLayouts
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

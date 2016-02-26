@@ -6,7 +6,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
@@ -26,13 +26,12 @@ open class SoundSheetsPresenter
 		private val soundsDataAccess: SoundsDataAccess,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
-		NavigationDrawerListPresenter<SoundSheets?>(),
+		NavigationDrawerListBasePresenter<SoundSheets?>(),
 		NavigationDrawerItemClickListener<SoundSheet>,
 		OnSoundSheetsChangedEventListener,
 		OnSoundsChangedEventListener
 {
 	override var view: SoundSheets? = null
-	override val isEventBusSubscriber: Boolean = true
 
 	var adapter: SoundSheetsAdapter? = null
 	val values: MutableList<SoundSheet> = ArrayList()

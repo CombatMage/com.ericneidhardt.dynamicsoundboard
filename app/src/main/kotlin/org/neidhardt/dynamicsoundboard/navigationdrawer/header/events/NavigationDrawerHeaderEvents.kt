@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.header.events
 /**
  * File created by eric.neidhardt on 11.11.2015.
  */
-class OpenSoundLayoutsRequestedEvent
+data class OpenSoundLayoutsRequestedEvent(val openSoundLayouts: Boolean)
 
 interface OnOpenSoundLayoutsEventListener
 {
