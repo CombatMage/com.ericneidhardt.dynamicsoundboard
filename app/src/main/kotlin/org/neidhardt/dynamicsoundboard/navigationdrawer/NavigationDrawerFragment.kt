@@ -2,10 +2,12 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer
 
 import android.app.FragmentManager
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,15 +91,16 @@ class NavigationDrawerFragment : BaseFragment(),
 
 		this.presenter = NavigationDrawerFragmentPresenter(
 				eventBus = this.eventBus,
+
+				toolbar = view.findViewById(R.id.toolbar_navigation_drawer) as Toolbar,
+				appBarLayout = view.findViewById(R.id.abl_navigation_drawer) as AppBarLayout,
 				tabLayout = tabLayout,
 				buttonOk = view.findViewById(R.id.b_ok),
 				buttonDelete = view.findViewById(R.id.b_delete),
 				buttonDeleteSelected = view.findViewById(R.id.b_delete_selected),
-
 				revealShadow = view.findViewById(R.id.v_reveal_shadow),
 
 				fragmentManager = this.fragmentManager,
-
 				recyclerView = layoutList,
 
 				soundsDataAccess = SoundboardApplication.getSoundsDataAccess(),
@@ -171,6 +174,9 @@ private class NavigationDrawerFragmentPresenter
 (
 		private val eventBus: EventBus,
 		private val fragmentManager: FragmentManager,
+
+		private val toolbar: Toolbar,
+		private val appBarLayout: AppBarLayout,
 		private val tabLayout: TabLayout,
 		private val revealShadow: View,
 		private val buttonOk: View,
@@ -269,7 +275,13 @@ private class NavigationDrawerFragmentPresenter
 		val id = view.id
 		when (id)
 		{
-			this.buttonDelete.id -> this.currentPresenter?.prepareItemDeletion()
+			this.buttonDelete.id ->
+			{
+				this.currentPresenter?.prepareItemDeletion()
+				this.toolbar.visibility = View.VISIBLE
+				this.appBarLayout.setExpanded(false, true)
+				this.recyclerView.isNestedScrollingEnabled = false
+			}
 			this.buttonDeleteSelected.id -> this.currentPresenter?.deleteSelectedItems()
 			this.buttonOk.id ->
 				if (this.currentList == List.SoundLayouts)
