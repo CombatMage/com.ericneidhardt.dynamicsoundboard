@@ -6,8 +6,8 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
@@ -82,7 +82,7 @@ class SoundSheetsManager :
 		return baseName + DB_SOUND_SHEETS
 	}
 
-	override fun isPlaylistSoundSheet(fragmentTag: String): Boolean = fragmentTag.equals(Playlist.TAG)
+	override fun isPlaylistSoundSheet(fragmentTag: String): Boolean = fragmentTag.equals(PlaylistTAG)
 
 	override fun getDbSoundSheets(): DaoSession = this.daoSession as DaoSession
 

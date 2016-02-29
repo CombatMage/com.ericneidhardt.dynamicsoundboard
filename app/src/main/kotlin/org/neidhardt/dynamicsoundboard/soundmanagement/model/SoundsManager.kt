@@ -7,10 +7,10 @@ import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
@@ -295,7 +295,7 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			newPlayerData.id = playerData.id
 			newPlayerData.isInPlaylist = true
 			newPlayerData.playerId = playerData.playerId
-			newPlayerData.fragmentTag = Playlist.TAG
+			newPlayerData.fragmentTag = PlaylistTAG
 			newPlayerData.isLoop = false
 			newPlayerData.label = playerData.label
 			newPlayerData.uri = playerData.uri

@@ -23,9 +23,9 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.fileexplorer.FileResultHandler
 import org.neidhardt.dynamicsoundboard.fileexplorer.GetNewSoundFromDirectoryDialog
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
@@ -242,7 +242,7 @@ private class AddNewSoundDialogPresenter
 				renamedPlayers.add(playerData)
 		}
 
-		if (this.dialog.callingFragmentTag == Playlist.TAG)
+		if (this.dialog.callingFragmentTag == PlaylistTAG)
 		{
 			for (playerData in playersData)
 				this.soundsDataStorage.createPlaylistSoundAndAddToManager(playerData)

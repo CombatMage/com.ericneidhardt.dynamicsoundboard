@@ -14,9 +14,9 @@ import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -178,7 +178,7 @@ private class RenameSoundFileDialogPresenter
 				player.mediaPlayerData.updateItemInDatabaseAsync()
 			}
 
-			if (player.mediaPlayerData.fragmentTag == Playlist.TAG)
+			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
 				EventBus.getDefault().post(PlaylistChangedEvent())
 			else
 				EventBus.getDefault().post(SoundChangedEvent(player))
@@ -215,7 +215,7 @@ private class RenameSoundFileDialogPresenter
 		catch (e: IOException)
 		{
 			Logger.e(TAG, e.message)
-			if (player.mediaPlayerData.fragmentTag == Playlist.TAG)
+			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
 				this.soundsDataStorage.removeSoundsFromPlaylist(listOf(player))
 			else
 				this.soundsDataStorage.removeSounds(listOf(player))

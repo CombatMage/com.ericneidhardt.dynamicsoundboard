@@ -1,12 +1,13 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
+import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListBasePresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
@@ -26,12 +27,12 @@ open class SoundSheetsPresenter
 		private val soundsDataAccess: SoundsDataAccess,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
-		NavigationDrawerListBasePresenter<SoundSheets?>(),
+		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<SoundSheet>,
 		OnSoundSheetsChangedEventListener,
 		OnSoundsChangedEventListener
 {
-	override var view: SoundSheets? = null
+	override var view: RecyclerView? = null
 
 	var adapter: SoundSheetsAdapter? = null
 	val values: MutableList<SoundSheet> = ArrayList()
@@ -53,8 +54,6 @@ open class SoundSheetsPresenter
 			this.soundsDataStorage.removeSounds(soundsInFragment)
 		}
 		this.soundSheetsDataStorage.removeSoundSheets(soundSheetsToRemove)
-
-		super.onSelectedItemsDeleted()
 	}
 
 	override fun onItemClick(data: SoundSheet)
@@ -63,6 +62,7 @@ open class SoundSheetsPresenter
 		{
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			this.adapter!!.notifyItemChanged(data)
+
 			super.onItemSelectedForDeletion()
 		}
 		else

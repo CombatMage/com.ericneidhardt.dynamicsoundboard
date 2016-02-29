@@ -16,6 +16,8 @@ import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import java.io.IOException
 
+val PlaylistTAG = "PlaylistTAG"
+
 private val FADE_OUT_DURATION = 100
 private val INT_VOLUME_MAX = 100
 private val INT_VOLUME_MIN = 0

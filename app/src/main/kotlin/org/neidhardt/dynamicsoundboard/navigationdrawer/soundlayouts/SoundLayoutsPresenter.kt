@@ -1,11 +1,12 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
+import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListBasePresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
@@ -22,13 +23,13 @@ class SoundLayoutsPresenter
 		private val soundLayoutsAccess: SoundLayoutsAccess,
 		private val soundLayoutsStorage: SoundLayoutsStorage
 ) :
-		NavigationDrawerListBasePresenter<SoundLayouts?>(),
+		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<SoundLayout>,
 		SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
 		AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener,
 		OnSoundLayoutsChangedEventListener
 {
-	override var view: SoundLayouts? = null
+	override var view: RecyclerView? = null
 
 	var adapter: SoundLayoutsAdapter? = null
 	var values: MutableList<SoundLayout> = ArrayList()
@@ -46,8 +47,6 @@ class SoundLayoutsPresenter
 		val soundLayoutsToRemove = this.getSoundLayoutsSelectedForDeletion()
 
 		this.soundLayoutsStorage.removeSoundLayouts(soundLayoutsToRemove)
-
-		super.onSelectedItemsDeleted()
 	}
 
 	override val numberOfItemsSelectedForDeletion: Int
@@ -85,7 +84,6 @@ class SoundLayoutsPresenter
 		else
 		{
 			this.soundLayoutsAccess.setSoundLayoutSelected(this.values.indexOf(data))
-			this.view?.toggleVisibility()
 			this.eventBus.post(SoundLayoutSelectedEvent(data))
 		}
 		this.adapter?.notifyDataSetChanged()

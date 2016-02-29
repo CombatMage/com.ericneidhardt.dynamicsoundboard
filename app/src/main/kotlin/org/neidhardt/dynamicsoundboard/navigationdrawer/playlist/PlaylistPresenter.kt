@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist
 
+import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -8,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListBasePresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -25,12 +26,12 @@ class PlaylistPresenter
 		private val soundsDataAccess: SoundsDataAccess
 
 ) :
-		NavigationDrawerListBasePresenter<Playlist?>(),
+		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<MediaPlayerController>,
 		OnPlaylistChangedEventListener,
 		MediaPlayerEventListener
 {
-	override var view: Playlist? = null
+	override var view: RecyclerView? = null
 
 	var adapter: PlaylistAdapter? = null
 	val values: MutableList<MediaPlayerController> = ArrayList()
@@ -67,8 +68,6 @@ class PlaylistPresenter
 
 		}
 		this.soundsDataStorage.removeSoundsFromPlaylist(playersToRemove)
-
-		super.onSelectedItemsDeleted()
 	}
 
 	override val numberOfItemsSelectedForDeletion: Int

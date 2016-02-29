@@ -30,8 +30,6 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService
@@ -61,7 +59,6 @@ class SoundActivity :
 		View.OnClickListener,
 		CustomEditText.OnTextEditedListener,
 		RequestPermissionHelper,
-		OnActionModeChangeRequestedEventListener,
 		OnSoundLayoutSelectedEventListener,
 		OnOpenSoundLayoutSettingsEventListener,
 		OnSoundSheetOpenEventListener,
@@ -330,27 +327,6 @@ class SoundActivity :
 	override fun onEvent(event: SoundSheetAddedEvent) {}
 
 	override fun onEvent(event: SoundSheetChangedEvent) {}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: ActionModeChangeRequestedEvent)
-	{
-		val requestedAction = event.requestedAction
-		if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.START)
-		{
-			this.actionMode = this.startSupportActionMode(event.actionModeCallback)
-			return
-		}
-		if (this.actionMode != null)
-		{
-			if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.STOP)
-			{
-				this.actionMode?.finish()
-				this.actionMode = null
-			}
-			else if (requestedAction == ActionModeChangeRequestedEvent.REQUEST.INVALIDATE)
-				this.actionMode?.invalidate()
-		}
-	}
 
 	/**
 	 * This is called by greenRobot EventBus in case a the floating action button was clicked
