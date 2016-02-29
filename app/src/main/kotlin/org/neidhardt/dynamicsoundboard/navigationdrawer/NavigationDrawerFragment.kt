@@ -257,11 +257,16 @@ private class NavigationDrawerFragmentPresenter
 		val id = view.id
 		when (id)
 		{
-			this.buttonDelete.id -> this.currentPresenter?.startDeletionMode()
+			this.buttonDelete.id ->
+			{
+				this.showToolbarForDeletion()
+				this.currentPresenter?.startDeletionMode()
+			}
 			this.buttonDeleteSelected.id ->
 			{
 				this.currentPresenter?.deleteSelectedItems()
 				this.currentPresenter?.stopDeletionMode()
+				this.hideToolbarForDeletion()
 			}
 			this.buttonOk.id ->
 				if (this.currentList == List.SoundLayouts)

@@ -53,7 +53,7 @@ abstract class NavigationDrawerListBasePresenter<T: RecyclerView?> :
 	}
 
 	protected fun onItemSelectedForDeletion() {
-
+		// TODO
 	}
 
 	protected abstract val numberOfItemsSelectedForDeletion: Int
