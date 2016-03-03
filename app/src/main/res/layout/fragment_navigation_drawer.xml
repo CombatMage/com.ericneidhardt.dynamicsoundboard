@@ -18,7 +18,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				app:layout_scrollFlags="scroll|exitUntilCollapsed"
-				app:contentScrim="?attr/colorPrimaryDark"
+				app:contentScrim="@color/primary_700"
 				app:expandedTitleMarginStart="48dp"
 				app:expandedTitleMarginEnd="64dp">
 
@@ -44,7 +44,7 @@
 					android:layout_height="?attr/actionBarSize"
 					android:layout_marginTop="@dimen/status_bar_padding"
 					android:visibility="gone"
-					android:background="?attr/colorPrimaryDark"
+					android:background="@color/primary_700"
 					app:theme="@style/Actionbar.Color"
 					android:theme="@style/Actionbar.Color"
 					app:popupTheme="@style/Theme.AppTheme"

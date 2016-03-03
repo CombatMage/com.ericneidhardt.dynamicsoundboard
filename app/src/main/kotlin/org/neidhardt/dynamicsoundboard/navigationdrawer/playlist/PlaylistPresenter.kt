@@ -113,7 +113,7 @@ class PlaylistPresenter
 		this.currentItemIndex = this.values.indexOf(nextActivePlayer)
 		for (player in this.values)
 		{
-			if (player != nextActivePlayer)
+			if (player != nextActivePlayer && player.isPlayingSound)
 				player.stopSound()
 		}
 

@@ -161,9 +161,9 @@ class NavigationDrawerFragmentPresenter
 	private var currentList: List = List.SoundSheet
 	private var currentPresenter: NavigationDrawerListPresenter? = null
 
-	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, soundsDataAccess, soundsDataStorage, soundSheetsDataAccess, soundSheetsDataStorage)
-	private val presenterPlaylist = createPlaylistPresenter(eventBus, soundsDataAccess, soundsDataStorage)
-	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, soundLayoutsAccess, soundLayoutsStorage)
+	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage, soundSheetsDataAccess, soundSheetsDataStorage)
+	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
+	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView, soundLayoutsAccess, soundLayoutsStorage)
 
 	init
 	{
@@ -325,7 +325,7 @@ class NavigationDrawerFragmentPresenter
 }
 
 private fun createSoundSheetPresenter(
-		eventBus: EventBus,
+		eventBus: EventBus, recyclerView: RecyclerView,
 		soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage,
 		soundSheetsDataAccess: SoundSheetsDataAccess, soundSheetsDataStorage: SoundSheetsDataStorage): SoundSheetsPresenter
 {
@@ -337,11 +337,12 @@ private fun createSoundSheetPresenter(
 			soundSheetsDataStorage = soundSheetsDataStorage
 	).apply {
 		this.adapter = SoundSheetsAdapter(this)
+		this.view = recyclerView
 	}
 }
 
 private fun createPlaylistPresenter(
-		eventBus: EventBus, soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage): PlaylistPresenter
+		eventBus: EventBus, recyclerView: RecyclerView, soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage): PlaylistPresenter
 {
 	return PlaylistPresenter(
 			eventBus = eventBus,
@@ -349,11 +350,13 @@ private fun createPlaylistPresenter(
 			soundsDataStorage = soundsDataStorage
 	).apply {
 		this.adapter = PlaylistAdapter(this)
+		this.adapter?.recyclerView = recyclerView
+		this.view = recyclerView
 	}
 }
 
 private fun createSoundLayoutsPresenter(
-		eventBus: EventBus, soundLayoutsAccess: SoundLayoutsAccess, soundLayoutsStorage: SoundLayoutsStorage): SoundLayoutsPresenter
+		eventBus: EventBus, recyclerView: RecyclerView, soundLayoutsAccess: SoundLayoutsAccess, soundLayoutsStorage: SoundLayoutsStorage): SoundLayoutsPresenter
 {
 	return SoundLayoutsPresenter(
 			eventBus = eventBus,
@@ -361,6 +364,7 @@ private fun createSoundLayoutsPresenter(
 			soundLayoutsStorage = soundLayoutsStorage
 	).apply {
 		this.adapter = SoundLayoutsAdapter(eventBus, this)
+		this.view = recyclerView
 	}
 }
 
