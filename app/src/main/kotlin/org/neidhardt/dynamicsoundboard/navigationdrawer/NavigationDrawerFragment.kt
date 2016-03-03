@@ -43,13 +43,8 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
-private val INDEX_SOUND_SHEETS = 0
-private val INDEX_PLAYLIST = 1
-
 class NavigationDrawerFragment : BaseFragment()
 {
-	private val TAG = javaClass.name
-
 	private val eventBus = EventBus.getDefault()
 	private var presenter: NavigationDrawerFragmentPresenter? = null
 
@@ -124,7 +119,10 @@ enum class List
 	SoundLayouts
 }
 
-private class NavigationDrawerFragmentPresenter
+private val INDEX_SOUND_SHEETS = 0
+private val INDEX_PLAYLIST = 1
+
+class NavigationDrawerFragmentPresenter
 (
 		private val eventBus: EventBus,
 		private val fragmentManager: FragmentManager,
@@ -163,28 +161,9 @@ private class NavigationDrawerFragmentPresenter
 	private var currentList: List = List.SoundSheet
 	private var currentPresenter: NavigationDrawerListPresenter? = null
 
-	private val presenterSoundSheets = SoundSheetsPresenter(
-			eventBus = this.eventBus,
-			soundsDataAccess = this.soundsDataAccess,
-			soundsDataStorage = this.soundsDataStorage,
-			soundSheetsDataAccess = this.soundSheetsDataAccess,
-			soundSheetsDataStorage = this.soundSheetsDataStorage
-	)
-	private val adapterSoundSheets = SoundSheetsAdapter(this.presenterSoundSheets)
-
-	private val presenterPlaylist = PlaylistPresenter(
-			eventBus = this.eventBus,
-			soundsDataAccess = this.soundsDataAccess,
-			soundsDataStorage = this.soundsDataStorage
-	)
-	private val adapterPlaylist = PlaylistAdapter(this.presenterPlaylist)
-
-	private val presenterSoundLayouts = SoundLayoutsPresenter(
-			eventBus = this.eventBus,
-			soundLayoutsAccess = this.soundLayoutsAccess,
-			soundLayoutsStorage = this.soundLayoutsStorage
-	)
-	private val adapterSoundLayouts = SoundLayoutsAdapter(this.eventBus, this.presenterSoundLayouts)
+	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, soundsDataAccess, soundsDataStorage, soundSheetsDataAccess, soundSheetsDataStorage)
+	private val presenterPlaylist = createPlaylistPresenter(eventBus, soundsDataAccess, soundsDataStorage)
+	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, soundLayoutsAccess, soundLayoutsStorage)
 
 	init
 	{
@@ -294,19 +273,19 @@ private class NavigationDrawerFragmentPresenter
 			{
 				this.currentList = List.SoundSheet
 				this.currentPresenter = this.presenterSoundSheets
-				this.recyclerView.adapter = this.adapterSoundSheets
+				this.recyclerView.adapter = this.presenterSoundSheets.adapter
 			}
 			this.tabPlayList ->
 			{
 				this.currentList = List.Playlist
 				this.currentPresenter = this.presenterPlaylist
-				this.recyclerView.adapter = this.adapterPlaylist
+				this.recyclerView.adapter = this.presenterPlaylist.adapter
 			}
 			this.tabSoundLayouts ->
 			{
 				this.currentList = List.SoundLayouts
 				this.currentPresenter = this.presenterSoundLayouts
-				this.recyclerView.adapter = this.adapterSoundLayouts
+				this.recyclerView.adapter = this.presenterSoundLayouts.adapter
 			}
 		}
 
@@ -343,6 +322,46 @@ private class NavigationDrawerFragmentPresenter
 
 	override fun onTabReselected(tab: TabLayout.Tab?) {}
 	override fun onTabUnselected(tab: TabLayout.Tab?) {}
+}
+
+private fun createSoundSheetPresenter(
+		eventBus: EventBus,
+		soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage,
+		soundSheetsDataAccess: SoundSheetsDataAccess, soundSheetsDataStorage: SoundSheetsDataStorage): SoundSheetsPresenter
+{
+	return SoundSheetsPresenter(
+			eventBus = eventBus,
+			soundsDataAccess = soundsDataAccess,
+			soundsDataStorage = soundsDataStorage,
+			soundSheetsDataAccess = soundSheetsDataAccess,
+			soundSheetsDataStorage = soundSheetsDataStorage
+	).apply {
+		this.adapter = SoundSheetsAdapter(this)
+	}
+}
+
+private fun createPlaylistPresenter(
+		eventBus: EventBus, soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage): PlaylistPresenter
+{
+	return PlaylistPresenter(
+			eventBus = eventBus,
+			soundsDataAccess = soundsDataAccess,
+			soundsDataStorage = soundsDataStorage
+	).apply {
+		this.adapter = PlaylistAdapter(this)
+	}
+}
+
+private fun createSoundLayoutsPresenter(
+		eventBus: EventBus, soundLayoutsAccess: SoundLayoutsAccess, soundLayoutsStorage: SoundLayoutsStorage): SoundLayoutsPresenter
+{
+	return SoundLayoutsPresenter(
+			eventBus = eventBus,
+			soundLayoutsAccess = soundLayoutsAccess,
+			soundLayoutsStorage = soundLayoutsStorage
+	).apply {
+		this.adapter = SoundLayoutsAdapter(eventBus, this)
+	}
 }
 
 private fun TabLayout.createSoundSheetTab(): TabLayout.Tab = this.newTab().setText(R.string.tab_sound_sheets)
