@@ -95,16 +95,16 @@ dependencies {
 	compile 'de.greenrobot:greendao:2.1.0'
 	compile 'de.greenrobot:java-common:2.3.1'
 
-	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
-	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.1-2'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.2'
+	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.2'
 
 	compile 'com.github.clans:fab:1.6.2'
 
 	compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
 
-	compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
+	compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 
-	compile 'jp.wasabeef:recyclerview-animators:2.2.0'
+	compile 'jp.wasabeef:recyclerview-animators:2.2.1'
 
 	compile 'ch.acra:acra:4.8.2'
 
