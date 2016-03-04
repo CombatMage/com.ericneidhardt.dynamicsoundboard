@@ -49,7 +49,55 @@
 					android:theme="@style/Actionbar.Color"
 					app:popupTheme="@style/Theme.AppTheme"
 					app:layout_collapseMode="parallax"
-					tools:visibility="visible"/>
+					tools:visibility="visible">
+
+				<RelativeLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent">
+
+					<ImageButton
+							android:id="@+id/b_cancel_action_mode"
+							android:layout_width="48dp"
+							android:layout_height="48dp"
+							android:layout_alignParentEnd="true"
+							android:layout_alignParentRight="true"
+							style="@style/ActionBarItemMargin"
+							android:scaleType="centerInside"
+							android:background="@drawable/selector_background_actionbar"
+							android:contentDescription="@string/cab_content_description_cancel"
+							android:src="@drawable/ic_action_done"/>
+
+					<LinearLayout
+							android:id="@+id/ll_action_mode_title"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center_vertical"
+							android:orientation="vertical"
+							android:layout_toLeftOf="@id/b_cancel_action_mode"
+							android:layout_toStartOf="@id/b_cancel_action_mode"
+							android:background="@drawable/selector_background_actionbar">
+
+						<com.devspark.robototextview.widget.RobotoTextView
+								android:id="@+id/tv_action_mode_title"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:textColor="@color/text_header"
+								android:textSize="@dimen/text_title"
+								tools:text="@string/cab_title_delete_sound_sheets"/>
+
+						<com.devspark.robototextview.widget.RobotoTextView
+								android:id="@+id/tv_action_mode_sub_title"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:textColor="@color/text_header"
+								android:textSize="@dimen/text_subheading"
+								tools:text="2 / 20"/>
+
+					</LinearLayout>
+
+				</RelativeLayout>
+
+			</android.support.v7.widget.Toolbar>
 
 		</android.support.design.widget.CollapsingToolbarLayout>
 

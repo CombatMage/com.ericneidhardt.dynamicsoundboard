@@ -19,6 +19,23 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
+fun createSoundSheetPresenter(
+		eventBus: EventBus, recyclerView: RecyclerView,
+		soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage,
+		soundSheetsDataAccess: SoundSheetsDataAccess, soundSheetsDataStorage: SoundSheetsDataStorage): SoundSheetsPresenter
+{
+	return SoundSheetsPresenter(
+			eventBus = eventBus,
+			soundsDataAccess = soundsDataAccess,
+			soundsDataStorage = soundsDataStorage,
+			soundSheetsDataAccess = soundSheetsDataAccess,
+			soundSheetsDataStorage = soundSheetsDataStorage
+	).apply {
+		this.adapter = SoundSheetsAdapter(this)
+		this.view = recyclerView
+	}
+}
+
 open class SoundSheetsPresenter
 (
 		override val eventBus: EventBus,
@@ -74,6 +91,9 @@ open class SoundSheetsPresenter
 
 	override val numberOfItemsSelectedForDeletion: Int
 		get() = this.getSoundSheetsSelectedForDeletion().size
+
+	override val itemCount: Int
+		get() = this.values.size
 
 	override fun deselectAllItemsSelectedForDeletion()
 	{

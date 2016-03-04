@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import android.widget.TextView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -19,14 +20,13 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OnOpenSoundLayoutsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsAdapter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.createPlaylistPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.createSoundLayoutsPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.createSoundSheetPresenter
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutSelectedEventListener
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
@@ -77,6 +77,12 @@ class NavigationDrawerFragment : BaseFragment()
 				buttonOk = view.findViewById(R.id.b_ok),
 				buttonDelete = view.findViewById(R.id.b_delete),
 				buttonDeleteSelected = view.findViewById(R.id.b_delete_selected),
+				buttonCancelActionMode = view.findViewById(R.id.b_cancel_action_mode),
+				buttonSelectAll = view.findViewById(R.id.ll_action_mode_title),
+
+				actionModeTitle = view.findViewById(R.id.tv_action_mode_title) as TextView,
+				actionModeSubTitle= view.findViewById(R.id.tv_action_mode_sub_title) as TextView,
+
 				revealShadow = view.findViewById(R.id.v_reveal_shadow),
 
 				fragmentManager = this.fragmentManager,
@@ -134,7 +140,10 @@ class NavigationDrawerFragmentPresenter
 		private val buttonOk: View,
 		private val buttonDelete: View,
 		private val buttonDeleteSelected: View,
-
+		private val buttonCancelActionMode: View,
+		private val buttonSelectAll: View,
+		private val actionModeTitle: TextView,
+		private val actionModeSubTitle: TextView,
 		private val recyclerView: RecyclerView,
 
 		private val soundLayoutsAccess: SoundLayoutsAccess,
@@ -150,6 +159,7 @@ class NavigationDrawerFragmentPresenter
 
 ) :
 		View.OnClickListener,
+		ItemSelectedForDeletionListener,
 		OnOpenSoundLayoutsEventListener,
 		TabLayout.OnTabSelectedListener,
 		OnSoundLayoutSelectedEventListener
@@ -171,6 +181,8 @@ class NavigationDrawerFragmentPresenter
 		this.buttonOk.setOnClickListener(this)
 		this.buttonDelete.setOnClickListener(this)
 		this.buttonDeleteSelected.setOnClickListener(this)
+		this.buttonCancelActionMode.setOnClickListener(this)
+		this.buttonSelectAll.setOnClickListener(this)
 	}
 
 	fun onAttachedToWindow()
@@ -247,6 +259,15 @@ class NavigationDrawerFragmentPresenter
 				this.currentPresenter?.stopDeletionMode()
 				this.hideToolbarForDeletion()
 			}
+			this.buttonCancelActionMode.id ->
+			{
+				this.currentPresenter?.stopDeletionMode()
+				this.hideToolbarForDeletion()
+			}
+			this.buttonSelectAll.id ->
+			{
+				// TODO
+			}
 			this.buttonOk.id ->
 				if (this.currentList == List.SoundLayouts)
 				{
@@ -274,22 +295,40 @@ class NavigationDrawerFragmentPresenter
 				this.currentList = List.SoundSheet
 				this.currentPresenter = this.presenterSoundSheets
 				this.recyclerView.adapter = this.presenterSoundSheets.adapter
+				this.actionModeTitle.setText(R.string.cab_title_delete_sound_sheets)
 			}
 			this.tabPlayList ->
 			{
 				this.currentList = List.Playlist
 				this.currentPresenter = this.presenterPlaylist
 				this.recyclerView.adapter = this.presenterPlaylist.adapter
+				this.actionModeTitle.setText(R.string.cab_title_delete_play_list_sounds)
 			}
 			this.tabSoundLayouts ->
 			{
 				this.currentList = List.SoundLayouts
 				this.currentPresenter = this.presenterSoundLayouts
 				this.recyclerView.adapter = this.presenterSoundLayouts.adapter
+				this.actionModeTitle.setText(R.string.cab_title_delete_sound_layouts)
 			}
 		}
 
 		this.currentPresenter?.onAttachedToWindow()
+	}
+
+	override fun onEvent(event: ItemSelectedForDeletion)
+	{
+		this.setActionModeSubTitle(event.selectedItemCount, event.itemCount)
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	private fun setActionModeSubTitle(count: Int, maxValue: Int)
+	{
+		var countString = Integer.toString(count)
+		if (countString.length == 1)
+			countString = " " + countString
+		countString = countString + "/" + maxValue
+		this.actionModeSubTitle.text = countString
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -322,50 +361,6 @@ class NavigationDrawerFragmentPresenter
 
 	override fun onTabReselected(tab: TabLayout.Tab?) {}
 	override fun onTabUnselected(tab: TabLayout.Tab?) {}
-}
-
-private fun createSoundSheetPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView,
-		soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage,
-		soundSheetsDataAccess: SoundSheetsDataAccess, soundSheetsDataStorage: SoundSheetsDataStorage): SoundSheetsPresenter
-{
-	return SoundSheetsPresenter(
-			eventBus = eventBus,
-			soundsDataAccess = soundsDataAccess,
-			soundsDataStorage = soundsDataStorage,
-			soundSheetsDataAccess = soundSheetsDataAccess,
-			soundSheetsDataStorage = soundSheetsDataStorage
-	).apply {
-		this.adapter = SoundSheetsAdapter(this)
-		this.view = recyclerView
-	}
-}
-
-private fun createPlaylistPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView, soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage): PlaylistPresenter
-{
-	return PlaylistPresenter(
-			eventBus = eventBus,
-			soundsDataAccess = soundsDataAccess,
-			soundsDataStorage = soundsDataStorage
-	).apply {
-		this.adapter = PlaylistAdapter(this)
-		this.adapter?.recyclerView = recyclerView
-		this.view = recyclerView
-	}
-}
-
-private fun createSoundLayoutsPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView, soundLayoutsAccess: SoundLayoutsAccess, soundLayoutsStorage: SoundLayoutsStorage): SoundLayoutsPresenter
-{
-	return SoundLayoutsPresenter(
-			eventBus = eventBus,
-			soundLayoutsAccess = soundLayoutsAccess,
-			soundLayoutsStorage = soundLayoutsStorage
-	).apply {
-		this.adapter = SoundLayoutsAdapter(eventBus, this)
-		this.view = recyclerView
-	}
 }
 
 private fun TabLayout.createSoundSheetTab(): TabLayout.Tab = this.newTab().setText(R.string.tab_sound_sheets)

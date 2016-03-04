@@ -17,6 +17,19 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 17.07.2015.
  */
+fun createSoundLayoutsPresenter(
+		eventBus: EventBus, recyclerView: RecyclerView, soundLayoutsAccess: SoundLayoutsAccess, soundLayoutsStorage: SoundLayoutsStorage): SoundLayoutsPresenter
+{
+	return SoundLayoutsPresenter(
+			eventBus = eventBus,
+			soundLayoutsAccess = soundLayoutsAccess,
+			soundLayoutsStorage = soundLayoutsStorage
+	).apply {
+		this.adapter = SoundLayoutsAdapter(eventBus, this)
+		this.view = recyclerView
+	}
+}
+
 class SoundLayoutsPresenter
 (
 		override val eventBus: EventBus,
@@ -51,6 +64,9 @@ class SoundLayoutsPresenter
 
 	override val numberOfItemsSelectedForDeletion: Int
 		get() = this.getSoundLayoutsSelectedForDeletion().size
+
+	override val itemCount: Int
+		get() = this.values.size
 
 	override fun deselectAllItemsSelectedForDeletion()
 	{

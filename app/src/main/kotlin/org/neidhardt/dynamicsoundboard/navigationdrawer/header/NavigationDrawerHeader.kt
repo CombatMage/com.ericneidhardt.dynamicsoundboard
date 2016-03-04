@@ -32,7 +32,7 @@ class NavigationDrawerHeaderView :
 		View.OnClickListener,
 		NavigationDrawerHeader
 {
-	private val presenter = NavigationDrawerHeaderPresenter(EventBus.getDefault(), SoundboardApplication.getSoundLayoutsAccess())
+	private var presenter: NavigationDrawerHeaderPresenter? = null
 
 	private var currentLayoutName: TextView? = null
 	private var indicator: View? = null
@@ -58,25 +58,28 @@ class NavigationDrawerHeaderView :
 		this.indicator = this.findViewById(R.id.iv_change_sound_layout_indicator)
 
 		this.findViewById(R.id.layout_change_sound_layout).setOnClickListener(this)
+
+		if (!this.isInEditMode)
+			this.presenter = NavigationDrawerHeaderPresenter(EventBus.getDefault(), SoundboardApplication.getSoundLayoutsAccess())
 	}
 
 	override fun onAttachedToWindow() {
 		super.onAttachedToWindow()
-		this.presenter.onAttachedToWindow()
+		this.presenter?.onAttachedToWindow()
 	}
 
 	override fun onDetachedFromWindow() {
-		this.presenter.onDetachedFromWindow()
+		this.presenter?.onDetachedFromWindow()
 		super.onDetachedFromWindow()
 	}
 
 	override fun onFinishInflate() {
 		super.onFinishInflate()
-		this.presenter.view = this
+		this.presenter?.view = this
 	}
 
 	override fun onClick(v: View) {
-		this.presenter.onChangeLayoutClicked()
+		this.presenter?.onChangeLayoutClicked()
 	}
 
 	override fun showCurrentLayoutName(name: String) {

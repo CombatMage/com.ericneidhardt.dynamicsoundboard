@@ -19,6 +19,20 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
+fun createPlaylistPresenter(
+		eventBus: EventBus, recyclerView: RecyclerView, soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage): PlaylistPresenter
+{
+	return PlaylistPresenter(
+			eventBus = eventBus,
+			soundsDataAccess = soundsDataAccess,
+			soundsDataStorage = soundsDataStorage
+	).apply {
+		this.adapter = PlaylistAdapter(this)
+		this.adapter?.recyclerView = recyclerView
+		this.view = recyclerView
+	}
+}
+
 class PlaylistPresenter
 (
 		override val eventBus: EventBus,
@@ -72,6 +86,9 @@ class PlaylistPresenter
 
 	override val numberOfItemsSelectedForDeletion: Int
 		get() = this.getPlayersSelectedForDeletion().size
+
+	override val itemCount: Int
+		get() = this.values.size
 
 	private fun getPlayersSelectedForDeletion(): List<MediaPlayerController>
 	{

@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer
 
 import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
 
 /**
  * File created by eric.neidhardt on 26.05.2015.
@@ -22,8 +23,6 @@ interface NavigationDrawerListPresenter {
 abstract class NavigationDrawerListBasePresenter<T: RecyclerView?> :
 		NavigationDrawerListPresenter
 {
-	private val TAG = javaClass.name
-
 	var isInSelectionMode: Boolean = false
 
 	abstract var view: T
@@ -52,9 +51,12 @@ abstract class NavigationDrawerListBasePresenter<T: RecyclerView?> :
 		this.deselectAllItemsSelectedForDeletion()
 	}
 
-	protected fun onItemSelectedForDeletion() {
-		// TODO
+	protected fun onItemSelectedForDeletion()
+	{
+		this.eventBus.post(ItemSelectedForDeletion(this.numberOfItemsSelectedForDeletion, this.itemCount))
 	}
+
+	protected abstract val itemCount: Int
 
 	protected abstract val numberOfItemsSelectedForDeletion: Int
 
