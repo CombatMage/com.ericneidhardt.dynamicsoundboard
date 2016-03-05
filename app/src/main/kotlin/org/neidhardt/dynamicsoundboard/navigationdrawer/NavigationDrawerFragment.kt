@@ -218,9 +218,9 @@ class NavigationDrawerFragmentPresenter
 
 	private fun showToolbarForDeletion()
 	{
-		this.toolbar.visibility = View.VISIBLE
 		this.appBarLayout.setExpanded(false, true)
 		this.recyclerView.isNestedScrollingEnabled = false
+		this.toolbar.visibility = View.VISIBLE
 
 		val distance = this.recyclerView.width
 		this.buttonDeleteSelected.apply {
