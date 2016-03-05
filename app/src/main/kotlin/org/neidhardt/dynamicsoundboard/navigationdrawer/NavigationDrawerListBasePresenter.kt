@@ -20,6 +20,8 @@ interface NavigationDrawerListPresenter {
 	fun onAttachedToWindow()
 
 	fun onDetachedFromWindow()
+
+	val itemCount: Int
 }
 
 abstract class NavigationDrawerListBasePresenter<T: RecyclerView?> :
@@ -58,7 +60,7 @@ abstract class NavigationDrawerListBasePresenter<T: RecyclerView?> :
 		this.eventBus.post(ItemSelectedForDeletion(this.numberOfItemsSelectedForDeletion, this.itemCount))
 	}
 
-	protected abstract val itemCount: Int
+	override abstract val itemCount: Int
 
 	protected abstract val numberOfItemsSelectedForDeletion: Int
 

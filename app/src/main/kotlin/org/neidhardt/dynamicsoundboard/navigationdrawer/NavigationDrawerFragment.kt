@@ -250,8 +250,11 @@ class NavigationDrawerFragmentPresenter
 		{
 			this.buttonDelete.id ->
 			{
+				val itemCount = this.currentPresenter?.itemCount ?: 0
+				if (itemCount == 0) return
 				this.showToolbarForDeletion()
 				this.currentPresenter?.startDeletionMode()
+				this.setActionModeSubTitle(0, itemCount)
 			}
 			this.buttonDeleteSelected.id ->
 			{
