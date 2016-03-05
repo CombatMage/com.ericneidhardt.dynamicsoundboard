@@ -2,9 +2,9 @@ package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.FragmentManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 

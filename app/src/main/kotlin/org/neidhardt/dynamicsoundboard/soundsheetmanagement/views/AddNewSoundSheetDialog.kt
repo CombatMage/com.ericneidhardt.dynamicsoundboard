@@ -2,8 +2,8 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.app.FragmentManager
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatDialog
 import android.view.View
 import android.widget.EditText

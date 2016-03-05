@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views
 
-import android.app.FragmentManager
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication

@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views
 
-import android.app.FragmentManager
+import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
 

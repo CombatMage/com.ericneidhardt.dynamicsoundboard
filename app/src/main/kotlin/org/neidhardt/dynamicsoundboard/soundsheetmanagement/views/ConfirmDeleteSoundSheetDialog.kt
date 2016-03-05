@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views
 
-import android.app.FragmentManager
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
 
@@ -30,7 +30,8 @@ class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog()
 		{
 			this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(fragmentTag))
 			val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag)
-			if (soundSheet != null) {
+			if (soundSheet != null)
+			{
 				this.soundSheetsDataStorage.removeSoundSheets(listOf(soundSheet))
 				this.soundActivity.removeSoundFragment(soundSheet)
 			}

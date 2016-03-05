@@ -29,7 +29,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService
@@ -72,7 +71,6 @@ class SoundActivity :
 
 	private var navigationDrawerLayout: DrawerLayout? = null
 	private var drawerToggle: ActionBarDrawerToggle? = null
-	private var actionMode: android.support.v7.view.ActionMode? = null
 
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
@@ -140,10 +138,10 @@ class SoundActivity :
 		if (intent.action == Intent.ACTION_VIEW && intent.data != null)
 		{
 			if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
-				AddNewSoundFromIntent.showInstance(this.fragmentManager, intent.data,
+				AddNewSoundFromIntent.showInstance(this.supportFragmentManager, intent.data,
 						this.soundSheetsDataUtil.getSuggestedName(), null)
 			else
-				AddNewSoundFromIntent.showInstance(this.fragmentManager, intent.data,
+				AddNewSoundFromIntent.showInstance(this.supportFragmentManager, intent.data,
 						this.soundSheetsDataUtil.getSuggestedName(), soundSheetsDataAccess.getSoundSheets())
 		}
 	}
@@ -299,7 +297,7 @@ class SoundActivity :
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundLayoutSettingsEvent)
 	{
-		SoundLayoutSettingsDialog.showInstance(this.fragmentManager, event.soundLayout.databaseId)
+		SoundLayoutSettingsDialog.showInstance(this.supportFragmentManager, event.soundLayout.databaseId)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -350,7 +348,7 @@ class SoundActivity :
 		}
 		else if (soundSheetFragment == null)
 		{
-			AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
+			AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName())
 		}
 		else
 		{
@@ -364,7 +362,7 @@ class SoundActivity :
 			{
 				val currentSoundSheet = this.getCurrentSoundFragment()
 				if (currentSoundSheet != null)
-					AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, currentSoundSheet.fragmentTag)
+					AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, currentSoundSheet.fragmentTag)
 			}
 		}
 	}
@@ -389,11 +387,11 @@ class SoundActivity :
 		when (item.itemId)
 		{
 			R.id.action_load_sound_sheets -> {
-				LoadLayoutDialog.showInstance(this.fragmentManager)
+				LoadLayoutDialog.showInstance(this.supportFragmentManager)
 				return true
 			}
 			R.id.action_store_sound_sheets -> {
-				StoreLayoutDialog.showInstance(this.fragmentManager)
+				StoreLayoutDialog.showInstance(this.supportFragmentManager)
 				return true
 			}
 			R.id.action_preferences -> {
@@ -407,7 +405,7 @@ class SoundActivity :
 				return true
 			}
 			R.id.action_clear_sound_sheets -> {
-				ConfirmDeleteAllSoundSheetsDialog.showInstance(this.fragmentManager)
+				ConfirmDeleteAllSoundSheetsDialog.showInstance(this.supportFragmentManager)
 				return true
 			}
 			else -> return false
@@ -418,7 +416,7 @@ class SoundActivity :
 	{
 		when (view.id)
 		{
-			R.id.action_add_sound_sheet -> AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
+			R.id.action_add_sound_sheet -> AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName())
 			else -> Logger.e(TAG, "unknown item clicked " + view)
 		}
 	}
@@ -521,7 +519,7 @@ class SoundActivity :
 
 		this.closeNavigationDrawer()
 
-		val fragmentManager = this.fragmentManager
+		val fragmentManager = this.supportFragmentManager
 		val transaction = fragmentManager.beginTransaction()
 
 		val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag) ?: getNewInstance(soundSheet)
@@ -535,13 +533,10 @@ class SoundActivity :
 
 	private fun getCurrentSoundFragment(): SoundSheetFragment?
 	{
-		val currentFragment = this.fragmentManager.findFragmentById(R.id.main_frame)
+		val currentFragment = this.supportFragmentManager.findFragmentById(R.id.main_frame)
 		if (currentFragment != null && currentFragment is SoundSheetFragment)
 			return currentFragment
 		return null
 	}
 
-	fun getNavigationDrawerFragment(): NavigationDrawerFragment {
-		return this.fragmentManager.findFragmentById(R.id.navigation_drawer_fragment) as NavigationDrawerFragment
-	}
 }

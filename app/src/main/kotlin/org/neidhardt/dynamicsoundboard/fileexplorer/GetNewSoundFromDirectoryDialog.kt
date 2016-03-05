@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.fileexplorer
 
-import android.app.FragmentManager
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
