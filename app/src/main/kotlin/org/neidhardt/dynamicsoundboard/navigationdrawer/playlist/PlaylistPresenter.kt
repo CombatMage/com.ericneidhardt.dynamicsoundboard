@@ -111,6 +111,16 @@ class PlaylistPresenter
 		}
 	}
 
+	override fun selectAllItems()
+	{
+		val selectedPlayers = this.values
+		for (player in selectedPlayers)
+		{
+			player.mediaPlayerData.isSelectedForDeletion = true
+			this.adapter?.notifyItemChanged(player)
+		}
+	}
+
 	override fun onItemClick(data: MediaPlayerController)
 	{
 		if (this.isInSelectionMode)

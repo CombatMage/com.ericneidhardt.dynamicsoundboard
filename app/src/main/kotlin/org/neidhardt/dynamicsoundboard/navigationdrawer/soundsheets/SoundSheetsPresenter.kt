@@ -105,6 +105,16 @@ open class SoundSheetsPresenter
 		}
 	}
 
+	override fun selectAllItems()
+	{
+		val selectedSoundSheets = this.values
+		for (soundSheet in selectedSoundSheets)
+		{
+			soundSheet.isSelectedForDeletion = true
+			this.adapter!!.notifyItemChanged(soundSheet)
+		}
+	}
+
 	private fun getSoundSheetsSelectedForDeletion(): List<SoundSheet>
 	{
 		val selectedSoundSheets = ArrayList<SoundSheet>()

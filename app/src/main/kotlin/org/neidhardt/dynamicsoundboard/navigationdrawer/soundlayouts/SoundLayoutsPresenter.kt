@@ -78,6 +78,16 @@ class SoundLayoutsPresenter
 		}
 	}
 
+	override fun selectAllItems()
+	{
+		val selectedSoundLayouts = this.values
+		for (soundLayout in selectedSoundLayouts)
+		{
+			soundLayout.setIsSelectedForDeletion(true)
+			this.adapter?.notifyItemChanged(soundLayout)
+		}
+	}
+
 	private fun getSoundLayoutsSelectedForDeletion(): List<SoundLayout>
 	{
 		val selectedSoundLayouts = ArrayList<SoundLayout>()

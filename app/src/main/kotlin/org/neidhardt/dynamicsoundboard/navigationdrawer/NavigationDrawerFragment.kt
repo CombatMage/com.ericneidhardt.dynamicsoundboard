@@ -266,7 +266,7 @@ class NavigationDrawerFragmentPresenter
 			}
 			this.buttonSelectAll.id ->
 			{
-				// TODO
+				this.currentPresenter?.selectAllItems()
 			}
 			this.buttonOk.id ->
 				if (this.currentList == List.SoundLayouts)
@@ -316,6 +316,7 @@ class NavigationDrawerFragmentPresenter
 		this.currentPresenter?.onAttachedToWindow()
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: ItemSelectedForDeletion)
 	{
 		this.setActionModeSubTitle(event.selectedItemCount, event.itemCount)

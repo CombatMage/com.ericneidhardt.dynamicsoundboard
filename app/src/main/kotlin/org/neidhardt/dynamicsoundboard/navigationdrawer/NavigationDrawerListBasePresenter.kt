@@ -13,6 +13,8 @@ interface NavigationDrawerListPresenter {
 
 	fun stopDeletionMode()
 
+	fun selectAllItems()
+
 	fun deleteSelectedItems()
 
 	fun onAttachedToWindow()
