@@ -41,6 +41,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
+import org.neidhardt.dynamicsoundboard.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
 class NavigationDrawerFragment : BaseFragment()
@@ -70,6 +71,8 @@ class NavigationDrawerFragment : BaseFragment()
 
 		this.presenter = NavigationDrawerFragmentPresenter(
 				eventBus = this.eventBus,
+
+				coordinatorLayout = view.findViewById(R.id.cl_navigation_drawer) as NonTouchableCoordinatorLayout,
 
 				toolbar = view.findViewById(R.id.toolbar_navigation_drawer) as Toolbar,
 				appBarLayout = view.findViewById(R.id.abl_navigation_drawer) as AppBarLayout,
@@ -132,6 +135,8 @@ class NavigationDrawerFragmentPresenter
 (
 		private val eventBus: EventBus,
 		private val fragmentManager: FragmentManager,
+
+		private val coordinatorLayout: NonTouchableCoordinatorLayout,
 
 		private val toolbar: Toolbar,
 		private val appBarLayout: AppBarLayout,
@@ -219,6 +224,7 @@ class NavigationDrawerFragmentPresenter
 	private fun showToolbarForDeletion()
 	{
 		this.appBarLayout.setExpanded(false, true)
+		this.coordinatorLayout.isScrollingEnabled = false
 		this.recyclerView.isNestedScrollingEnabled = false
 		this.toolbar.visibility = View.VISIBLE
 
@@ -238,7 +244,9 @@ class NavigationDrawerFragmentPresenter
 	{
 		this.toolbar.visibility = View.GONE
 		this.appBarLayout.setExpanded(true, true)
-		this.recyclerView.isNestedScrollingEnabled = false
+		this.coordinatorLayout.isScrollingEnabled = true
+		this.recyclerView.isNestedScrollingEnabled = true
+		this.recyclerView.scrollToPosition(0)
 
 		this.buttonDeleteSelected.visibility = View.GONE
 	}
@@ -270,6 +278,8 @@ class NavigationDrawerFragmentPresenter
 			this.buttonSelectAll.id ->
 			{
 				this.currentPresenter?.selectAllItems()
+				val itemCount = this.currentPresenter?.itemCount ?: 0
+				this.setActionModeSubTitle(itemCount, itemCount)
 			}
 			this.buttonOk.id ->
 				if (this.currentList == List.SoundLayouts)
