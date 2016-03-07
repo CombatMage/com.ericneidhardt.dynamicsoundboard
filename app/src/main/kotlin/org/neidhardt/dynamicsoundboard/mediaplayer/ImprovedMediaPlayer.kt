@@ -217,6 +217,8 @@ private class ImprovedMediaPlayer
 		if (this.pauseSound())
 		{
 			this.seekTo(0)
+			this.release()
+			this.init(SoundboardApplication.context)
 			return true
 		}
 		return false
