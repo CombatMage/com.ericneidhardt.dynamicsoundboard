@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
  */
 abstract class BaseDialog : DialogFragment()
 {
-	protected val KEY_CALLING_FRAGMENT_TAG: String = "org.neidhardt.dynamicsoundboard.views.BaseDialog.callingFragmentTag"
+	protected val KEY_CALLING_FRAGMENT_TAG: String = "KEY_CALLING_FRAGMENT_TAG"
 
 	protected var soundSheetsDataAccess: SoundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
 	protected var soundSheetsDataStorage: SoundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage()

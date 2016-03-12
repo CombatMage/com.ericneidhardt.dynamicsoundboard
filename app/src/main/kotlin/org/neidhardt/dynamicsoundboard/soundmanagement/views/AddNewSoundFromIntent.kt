@@ -146,6 +146,7 @@ class AddNewSoundFromIntent : BaseDialog(), View.OnClickListener, CompoundButton
 	}
 
 	companion object {
+
 		private val TAG = AddNewSoundFromIntent::class.java.name
 
 		private val KEY_SOUND_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.uri"
