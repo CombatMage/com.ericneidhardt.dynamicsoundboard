@@ -218,8 +218,11 @@ private class ImprovedMediaPlayer
 	{
 		if (this.pauseSound())
 		{
-			this.mediaPlayer.seekTo(0)
-			// TODO release media player
+			this.mediaPlayer.release()
+			this.mediaPlayer = VerboseMediaPlayer()
+			this.init(this.context)
+			// TODO
+			// this.mediaPlayer.seekTo(0)
 			return true
 		}
 		return false
