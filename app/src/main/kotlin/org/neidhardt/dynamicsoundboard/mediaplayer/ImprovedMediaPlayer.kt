@@ -146,7 +146,7 @@ private class ImprovedMediaPlayer
 	private fun init(context: Context)
 	{
 		if (this.mediaPlayerData.uri == null)
-			throw NullPointerException("cannot initIfRequired media player, sound uri is null")
+			throw NullPointerException("cannot init media player, sound uri is null")
 
 		this.mediaPlayer.apply {
 			this.setOnErrorListener(this@ImprovedMediaPlayer)
@@ -173,10 +173,11 @@ private class ImprovedMediaPlayer
 
 	override fun playSound(): Boolean
 	{
-		val state = this.currentState
+		var state = this.currentState
 		if (state == MediaPlayerState.INIT)
 			this.mediaPlayer.prepare()
 
+		state = this.currentState
 		if (state == MediaPlayerState.INIT
 				|| state == MediaPlayerState.IDLE
 				|| state == MediaPlayerState.ERROR
@@ -221,8 +222,6 @@ private class ImprovedMediaPlayer
 			this.mediaPlayer.release()
 			this.mediaPlayer = VerboseMediaPlayer()
 			this.init(this.context)
-			// TODO
-			// this.mediaPlayer.seekTo(0)
 			return true
 		}
 		return false
