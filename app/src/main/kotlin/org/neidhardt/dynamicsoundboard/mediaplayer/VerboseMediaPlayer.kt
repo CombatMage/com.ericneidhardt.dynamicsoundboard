@@ -24,6 +24,7 @@ class VerboseMediaPlayer : MediaPlayer(), MediaPlayer.OnPreparedListener, MediaP
 {
 
 	var currentState: MediaPlayerState = MediaPlayerState.IDLE
+	private set
 
 	private var onPreparedCallback: OnPreparedListener? = null
 	private var onErrorCallback: OnErrorListener? = null

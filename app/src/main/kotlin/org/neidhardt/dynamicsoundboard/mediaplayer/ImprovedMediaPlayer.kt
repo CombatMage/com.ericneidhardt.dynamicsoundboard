@@ -5,7 +5,6 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
@@ -63,7 +62,7 @@ private class ImprovedMediaPlayer
 	private var handler: EnhancedHandler? = null
 	private var fadeOutSchedule: KillableRunnable? = null
 
-	private val currentState = this.mediaPlayer.currentState
+	private val currentState: MediaPlayerState get() = this.mediaPlayer.currentState
 
 	override val trackDuration: Int
 		get()
@@ -173,19 +172,20 @@ private class ImprovedMediaPlayer
 		this.mediaPlayerData.updateItemInDatabaseAsync()
 		this.mediaPlayer.reset()
 
-		this.init(SoundboardApplication.context)
+		this.init(this.context)
 		this.postStateChangedEvent(true)
 	}
 
 	override fun playSound(): Boolean
 	{
-		if (this.currentState == MediaPlayerState.INIT)
+		val state = this.currentState
+		if (state == MediaPlayerState.INIT)
 			this.mediaPlayer.prepare()
 
-		if (this.currentState == MediaPlayerState.INIT
-				|| this.currentState == MediaPlayerState.IDLE
-				|| this.currentState == MediaPlayerState.ERROR
-				|| this.currentState == MediaPlayerState.DESTROYED)
+		if (state == MediaPlayerState.INIT
+				|| state == MediaPlayerState.IDLE
+				|| state == MediaPlayerState.ERROR
+				|| state == MediaPlayerState.DESTROYED)
 		{
 			Logger.e(TAG, "playSound called in invalid state for player $this")
 			return false
