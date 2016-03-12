@@ -40,9 +40,9 @@ import java.util.*
 class AddNewSoundDialog : BaseDialog, FileResultHandler
 {
 	val TAG: String = javaClass.name
-	private val KEY_SOUNDS_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAdd"
-	private val KEY_SOUNDS_LABEL = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog.soundsToAddLabels"
 
+	private val KEY_SOUNDS_URI = "KEY_SOUNDS_URI"
+	private val KEY_SOUNDS_LABEL = "KEY_SOUNDS_LABEL"
 
 	private var presenter: AddNewSoundDialogPresenter? = null
 
@@ -279,7 +279,7 @@ private class AddNewSoundDialogPresenter
 		this.add.isEnabled = true
 		this.soundsToAdd.add(data)
 		this.dialog.mainView!!.enableRecyclerViewDividers(true)
-		this.adapter.notifyItemInserted(this.soundsToAdd.size - 1)
+		this.adapter.notifyDataSetChanged()
 	}
 
 	internal fun getValues() : List<NewSoundData>
