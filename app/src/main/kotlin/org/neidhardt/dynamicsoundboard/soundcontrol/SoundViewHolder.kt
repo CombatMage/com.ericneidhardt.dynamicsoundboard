@@ -184,13 +184,19 @@ class SoundViewHolder
 			}
 			R.id.b_play -> {
 				name.clearFocus()
-				view.isSelected = !isSelected
-				if (!isSelected) {
-					this.progressTimer.startProgressUpdateTimer()
-					player.playSound()
-				} else {
-					player.fadeOutSound()
-				}
+				val success: Boolean =
+						if (!isSelected)
+						{
+							this.progressTimer.startProgressUpdateTimer()
+							player.playSound()
+						}
+						else
+						{
+							player.fadeOutSound()
+							true
+						}
+				if (success)
+					view.isSelected = !isSelected
 			}
 			R.id.b_settings -> {
 				player.pauseSound()
