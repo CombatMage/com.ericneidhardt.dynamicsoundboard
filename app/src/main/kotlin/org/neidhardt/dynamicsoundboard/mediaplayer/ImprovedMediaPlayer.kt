@@ -330,4 +330,10 @@ private class ImprovedMediaPlayer
 	{
 		this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
 	}
+
+	override fun toString(): String{
+		return "ImprovedMediaPlayer(currentState=$currentState, mediaPlayerData=$mediaPlayerData)"
+	}
+
+
 }
