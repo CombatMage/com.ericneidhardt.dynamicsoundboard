@@ -140,16 +140,7 @@ private class ImprovedMediaPlayer
 			}
 		}
 
-	init
-	{
-		this.mediaPlayer.setOnErrorListener(this)
-		this.mediaPlayer.setOnInfoListener(this)
-		this.mediaPlayer.setOnCompletionListener(this)
-
-		this.isLoopingEnabled = mediaPlayerData.isLoop
-
-		this.init(context)
-	}
+	init { this.init(context) }
 
 	@Throws(IOException::class)
 	private fun init(context: Context)
@@ -158,6 +149,10 @@ private class ImprovedMediaPlayer
 			throw NullPointerException("cannot initIfRequired media player, sound uri is null")
 
 		this.mediaPlayer.apply {
+			this.setOnErrorListener(this@ImprovedMediaPlayer)
+			this.setOnInfoListener(this@ImprovedMediaPlayer)
+			this.setOnCompletionListener(this@ImprovedMediaPlayer)
+
 			this.setAudioStreamType(AudioManager.STREAM_MUSIC)
 			this.setDataSource(context, Uri.parse(mediaPlayerData.uri))
 		}
