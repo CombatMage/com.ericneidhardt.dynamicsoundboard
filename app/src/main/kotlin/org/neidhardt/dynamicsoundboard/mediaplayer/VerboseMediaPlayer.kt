@@ -7,22 +7,23 @@ import android.net.Uri
 /**
  * File created by eric.neidhardt on 23.02.2016.
  */
-open class VerboseMediaPlayer : MediaPlayer(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener
+enum class MediaPlayerState
 {
-	enum class State
-	{
-		IDLE,
-		INIT,
-		PREPARED,
-		STARTED,
-		STOPPED,
-		PAUSED,
-		COMPLETED,
-		DESTROYED,
-		ERROR
-	}
+	IDLE,
+	INIT,
+	PREPARED,
+	STARTED,
+	STOPPED,
+	PAUSED,
+	COMPLETED,
+	DESTROYED,
+	ERROR
+}
 
-	var currentState: State = State.IDLE
+class VerboseMediaPlayer : MediaPlayer(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener
+{
+
+	var currentState: MediaPlayerState = MediaPlayerState.IDLE
 
 	private var onPreparedCallback: OnPreparedListener? = null
 	private var onErrorCallback: OnErrorListener? = null
@@ -53,56 +54,56 @@ open class VerboseMediaPlayer : MediaPlayer(), MediaPlayer.OnPreparedListener, M
 	override fun prepare()
 	{
 		super.prepare()
-		this.currentState = State.PREPARED
+		this.currentState = MediaPlayerState.PREPARED
 	}
 
 	override fun setDataSource(context: Context?, uri: Uri?)
 	{
 		super.setDataSource(context, uri)
-		this.currentState = State.INIT
+		this.currentState = MediaPlayerState.INIT
 	}
 
 	override fun start()
 	{
 		super.start()
-		this.currentState = State.STARTED
+		this.currentState = MediaPlayerState.STARTED
 	}
 
 	override fun pause()
 	{
 		super.pause()
-		this.currentState = State.PAUSED
+		this.currentState = MediaPlayerState.PAUSED
 	}
 
 	override fun stop()
 	{
 		super.stop()
-		this.currentState = State.STOPPED
+		this.currentState = MediaPlayerState.STOPPED
 	}
 
 	override fun release()
 	{
 		super.release()
-		this.currentState = State.DESTROYED
+		this.currentState = MediaPlayerState.DESTROYED
 	}
 
 	override fun onPrepared(mp: MediaPlayer?)
 	{
-		this.currentState = State.PREPARED
+		this.currentState = MediaPlayerState.PREPARED
 		this.onPreparedCallback?.onPrepared(mp)
 	}
 
 	override fun onCompletion(mp: MediaPlayer?) {
 		if (!this.isLooping)
 		{
-			this.currentState = State.COMPLETED
+			this.currentState = MediaPlayerState.COMPLETED
 			this.onComletionCallback?.onCompletion(mp)
 		}
 	}
 
 	override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean
 	{
-		this.currentState = State.ERROR
+		this.currentState = MediaPlayerState.ERROR
 		return this.onErrorCallback?.onError(mp, what, extra) ?: false
 	}
 }

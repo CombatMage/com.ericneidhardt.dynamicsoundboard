@@ -5,6 +5,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 /**
  * File created by eric.neidhardt on 10.11.2015.
  */
+
 interface MediaPlayerController
 {
 	val mediaPlayerData: MediaPlayerData

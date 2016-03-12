@@ -49,7 +49,6 @@ private class ImprovedMediaPlayer
 		override val mediaPlayerData: MediaPlayerData,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
-		VerboseMediaPlayer(),
 		MediaPlayerController,
 		MediaPlayer.OnCompletionListener,
 		MediaPlayer.OnErrorListener,
@@ -58,51 +57,56 @@ private class ImprovedMediaPlayer
 
 	private val TAG = javaClass.name
 
+	private var mediaPlayer = VerboseMediaPlayer()
+
 	private var volume: Int = 0
 	private var handler: EnhancedHandler? = null
 	private var fadeOutSchedule: KillableRunnable? = null
 
+	private val currentState = this.mediaPlayer.currentState
+
 	override val trackDuration: Int
 		get()
 		{
-			if (this.currentState == State.INIT
-					|| this.currentState == State.IDLE
-					|| this.currentState == State.ERROR
-					|| this.currentState == State.DESTROYED)
+			val state = this.currentState
+			if (state == MediaPlayerState.INIT
+					|| state == MediaPlayerState.IDLE
+					|| state == MediaPlayerState.ERROR
+					|| state == MediaPlayerState.DESTROYED)
 				return DURATION_NOT_SET
-			return this.duration
+			return this.mediaPlayer.duration
 		}
 
 	override val isPlayingSound: Boolean
 		get()
 		{
-			if (this.currentState == State.ERROR || this.currentState == State.DESTROYED)
+			if (this.currentState == MediaPlayerState.ERROR || this.currentState == MediaPlayerState.DESTROYED)
 				return false
-			return this.isPlaying
+			return this.mediaPlayer.isPlaying
 		}
 
 	override var progress: Int
 		get()
 		{
-			if (this.currentState == State.ERROR || this.currentState == State.DESTROYED)
+			if (this.currentState == MediaPlayerState.ERROR || this.currentState == MediaPlayerState.DESTROYED)
 				return 0
-			return this.currentPosition
+			return this.mediaPlayer.currentPosition
 		}
 		set(value)
 		{
-			if (this.currentState == State.INIT
-					|| this.currentState == State.IDLE
-					|| this.currentState == State.ERROR
-					|| this.currentState == State.DESTROYED)
+			if (this.currentState == MediaPlayerState.INIT
+					|| this.currentState == MediaPlayerState.IDLE
+					|| this.currentState == MediaPlayerState.ERROR
+					|| this.currentState == MediaPlayerState.DESTROYED)
 				Logger.e(TAG, "SetProgress called in invalid state for player $this")
 			else
-				this.seekTo(value)
+				this.mediaPlayer.seekTo(value)
 		}
 
 	override var isLoopingEnabled: Boolean
 		get()
 		{
-			val isLooping = this.isLooping
+			val isLooping = this.mediaPlayer.isLooping
 			if (isLooping != this.mediaPlayerData.isLoop)
 			{
 				Logger.e(TAG, "GetLooping detected mismatch between player and data for player $this")
@@ -113,11 +117,11 @@ private class ImprovedMediaPlayer
 		}
 		set(value)
 		{
-			if (this.currentState == State.ERROR || this.currentState == State.DESTROYED)
+			if (this.currentState == MediaPlayerState.ERROR || this.currentState == MediaPlayerState.DESTROYED)
 				Logger.e(TAG, "SetLooping called in invalid state for player $this")
 			else
 			{
-				this.isLooping = value
+				this.mediaPlayer.isLooping = value
 				if (this.mediaPlayerData.isLoop != value)
 				{
 					this.mediaPlayerData.isLoop = value
@@ -139,9 +143,9 @@ private class ImprovedMediaPlayer
 
 	init
 	{
-		this.setOnErrorListener(this)
-		this.setOnInfoListener(this)
-		this.setOnCompletionListener(this)
+		this.mediaPlayer.setOnErrorListener(this)
+		this.mediaPlayer.setOnInfoListener(this)
+		this.mediaPlayer.setOnCompletionListener(this)
 
 		this.isLoopingEnabled = mediaPlayerData.isLoop
 
@@ -154,8 +158,11 @@ private class ImprovedMediaPlayer
 		if (this.mediaPlayerData.uri == null)
 			throw NullPointerException("cannot initIfRequired media player, sound uri is null")
 
-		this.setAudioStreamType(AudioManager.STREAM_MUSIC)
-		this.setDataSource(context, Uri.parse(this.mediaPlayerData.uri))
+		this.mediaPlayer.apply {
+			this.setAudioStreamType(AudioManager.STREAM_MUSIC)
+			this.setDataSource(context, Uri.parse(mediaPlayerData.uri))
+		}
+
 		this.isLoopingEnabled = this.mediaPlayerData.isLoop
 		this.volume = INT_VOLUME_MAX
 	}
@@ -164,7 +171,7 @@ private class ImprovedMediaPlayer
 	{
 		this.mediaPlayerData.uri = uri
 		this.mediaPlayerData.updateItemInDatabaseAsync()
-		this.reset()
+		this.mediaPlayer.reset()
 
 		this.init(SoundboardApplication.context)
 		this.postStateChangedEvent(true)
@@ -172,13 +179,13 @@ private class ImprovedMediaPlayer
 
 	override fun playSound(): Boolean
 	{
-		if (this.currentState == State.INIT)
-			this.prepare()
+		if (this.currentState == MediaPlayerState.INIT)
+			this.mediaPlayer.prepare()
 
-		if (this.currentState == State.INIT
-				|| this.currentState == State.IDLE
-				|| this.currentState == State.ERROR
-				|| this.currentState == State.DESTROYED)
+		if (this.currentState == MediaPlayerState.INIT
+				|| this.currentState == MediaPlayerState.IDLE
+				|| this.currentState == MediaPlayerState.ERROR
+				|| this.currentState == MediaPlayerState.DESTROYED)
 		{
 			Logger.e(TAG, "playSound called in invalid state for player $this")
 			return false
@@ -187,7 +194,7 @@ private class ImprovedMediaPlayer
 		this.volume = INT_VOLUME_MAX
 		this.updateVolume(this.volume)
 
-		this.start()
+		this.mediaPlayer.start()
 
 		this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
@@ -196,17 +203,17 @@ private class ImprovedMediaPlayer
 	}
 
 	override fun pauseSound(): Boolean {
-		if (this.currentState == State.INIT
-				|| this.currentState == State.IDLE
-				|| this.currentState == State.STOPPED
-				|| this.currentState == State.ERROR
-				|| this.currentState == State.DESTROYED)
+		if (this.currentState == MediaPlayerState.INIT
+				|| this.currentState == MediaPlayerState.IDLE
+				|| this.currentState == MediaPlayerState.STOPPED
+				|| this.currentState == MediaPlayerState.ERROR
+				|| this.currentState == MediaPlayerState.DESTROYED)
 		{
 			Logger.e(TAG, "pauseSound called in invalid state for player $this")
 			return false
 		}
 
-		this.pause()
+		this.mediaPlayer.pause()
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
 		return true
@@ -216,9 +223,8 @@ private class ImprovedMediaPlayer
 	{
 		if (this.pauseSound())
 		{
-			this.seekTo(0)
-			this.release()
-			this.init(SoundboardApplication.context)
+			this.mediaPlayer.seekTo(0)
+			// TODO release media player
 			return true
 		}
 		return false
@@ -280,13 +286,13 @@ private class ImprovedMediaPlayer
 		else if (fVolume > FLOAT_VOLUME_MAX)
 			fVolume = FLOAT_VOLUME_MAX
 
-		this.setVolume(fVolume, fVolume)
+		this.mediaPlayer.setVolume(fVolume, fVolume)
 	}
 
 	override fun destroy(postStateChanged: Boolean)
 	{
 		this.fadeOutSchedule?.apply { handler?.removeCallbacks(this) }
-		this.release()
+		this.mediaPlayer.release()
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		if (postStateChanged)
 			this.postStateChangedEvent(false)
@@ -308,7 +314,7 @@ private class ImprovedMediaPlayer
 	override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean
 	{
 		Logger.e(TAG, "onError(" + mp.toString() + ") what: " + what + " extra: " + extra)
-		this.reset()
+		this.mediaPlayer.reset()
 		this.init(this.context)
 		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINDED))
 		return true
