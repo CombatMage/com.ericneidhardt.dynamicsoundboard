@@ -126,6 +126,12 @@ enum class List
 	SoundLayouts
 }
 
+enum class TabMode
+{
+	Normal,
+	Context
+}
+
 private val INDEX_SOUND_SHEETS = 0
 private val INDEX_PLAYLIST = 1
 
@@ -171,6 +177,8 @@ class NavigationDrawerFragmentPresenter
 	private var tabPlayList: TabLayout.Tab = tabLayout.createPlaylistTab()
 	private var tabSoundLayouts: TabLayout.Tab = tabLayout.createSoundLayoutsTab()
 
+	private var tabMode: TabMode = TabMode.Normal
+
 	private var currentList: List = List.SoundSheet
 	private var currentPresenter: NavigationDrawerListPresenter? = null
 
@@ -200,6 +208,7 @@ class NavigationDrawerFragmentPresenter
 
 	private fun showDefaultTabBarAndContent()
 	{
+		this.tabMode = TabMode.Normal
 		this.tabLayout.removeAllTabs()
 		this.tabSoundSheets = this.tabLayout.createSoundSheetTab()
 		this.tabPlayList = this.tabLayout.createPlaylistTab()
@@ -212,6 +221,7 @@ class NavigationDrawerFragmentPresenter
 
 	private fun showContextTabBarAndContent()
 	{
+		this.tabMode = TabMode.Context
 		this.tabLayout.removeAllTabs()
 		this.tabSoundLayouts = this.tabLayout.createSoundLayoutsTab()
 
@@ -299,31 +309,31 @@ class NavigationDrawerFragmentPresenter
 	{
 		this.currentPresenter?.onDetachedFromWindow()
 
-		when (tab)
+		if (this.tabMode == TabMode.Context)
 		{
-			this.tabSoundSheets ->
+			this.currentList = List.SoundLayouts
+			this.currentPresenter = this.presenterSoundLayouts
+			this.recyclerView.adapter = this.presenterSoundLayouts.adapter
+			this.actionModeTitle.setText(R.string.cab_title_delete_sound_layouts)
+		}
+		else if (tabMode == TabMode.Normal)
+		{
+			when (tab)
 			{
-				this.currentList = List.SoundSheet
-				this.currentPresenter = this.presenterSoundSheets
-				this.recyclerView.adapter = this.presenterSoundSheets.adapter
-				this.actionModeTitle.setText(R.string.cab_title_delete_sound_sheets)
-			}
-			this.tabPlayList ->
-			{
-				this.currentList = List.Playlist
-				this.currentPresenter = this.presenterPlaylist
-				this.recyclerView.adapter = this.presenterPlaylist.adapter
-				this.actionModeTitle.setText(R.string.cab_title_delete_play_list_sounds)
-			}
-			this.tabSoundLayouts ->
-			{
-				this.currentList = List.SoundLayouts
-				this.currentPresenter = this.presenterSoundLayouts
-				this.recyclerView.adapter = this.presenterSoundLayouts.adapter
-				this.actionModeTitle.setText(R.string.cab_title_delete_sound_layouts)
+				this.tabSoundSheets -> {
+					this.currentList = List.SoundSheet
+					this.currentPresenter = this.presenterSoundSheets
+					this.recyclerView.adapter = this.presenterSoundSheets.adapter
+					this.actionModeTitle.setText(R.string.cab_title_delete_sound_sheets)
+				}
+				this.tabPlayList -> {
+					this.currentList = List.Playlist
+					this.currentPresenter = this.presenterPlaylist
+					this.recyclerView.adapter = this.presenterPlaylist.adapter
+					this.actionModeTitle.setText(R.string.cab_title_delete_play_list_sounds)
+				}
 			}
 		}
-
 		this.currentPresenter?.onAttachedToWindow()
 	}
 
