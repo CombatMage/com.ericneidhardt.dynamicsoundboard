@@ -14,20 +14,15 @@ open class SoundSheetsAdapter
 		BaseAdapter<SoundSheet, SoundSheetViewHolder>(),
 		NavigationDrawerItemClickListener<SoundSheet>
 {
-	override fun getValues(): List<SoundSheet>
-	{
-		return this.presenter.values
-	}
+	init { this.setHasStableIds(true) }
 
-	override fun getItemViewType(position: Int): Int
-	{
-		return R.layout.view_sound_sheet_item
-	}
+	override fun getItemId(position: Int): Long = this.getValues()[position].fragmentTag.hashCode().toLong()
 
-	override fun getItemCount(): Int
-	{
-		return this.getValues().size
-	}
+	override fun getValues(): List<SoundSheet> = this.presenter.values
+
+	override fun getItemViewType(position: Int): Int = R.layout.view_sound_sheet_item
+
+	override fun getItemCount(): Int = this.getValues().size
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundSheetViewHolder
 	{

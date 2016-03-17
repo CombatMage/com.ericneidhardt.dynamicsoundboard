@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
-import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -13,13 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
+import jp.wasabeef.recyclerview.animators.LandingAnimator
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
-import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OnOpenSoundLayoutsEventListener
@@ -62,7 +61,7 @@ class NavigationDrawerFragment : BaseFragment()
 		val tabLayout = (view.findViewById(R.id.tl_tab_bar) as TabLayout)
 
 		val layoutList = (view.findViewById(R.id.rv_navigation_drawer_list) as RecyclerView).apply {
-			this.itemAnimator = DefaultItemAnimator()
+			this.itemAnimator = LandingAnimator()
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.addItemDecoration(DividerItemDecoration(this.context))
 		}
@@ -358,11 +357,9 @@ class NavigationDrawerFragmentPresenter
 	{
 		if (event.openSoundLayouts) {
 			this.showContextTabBarAndContent()
-			this.animateSoundLayoutsListAppear()
 		}
 		else {
 			this.showDefaultTabBarAndContent()
-			this.animateSoundLayoutsListAppear()
 		}
 	}
 
@@ -370,15 +367,6 @@ class NavigationDrawerFragmentPresenter
 	override fun onEvent(event: SoundLayoutSelectedEvent)
 	{
 		this.showDefaultTabBarAndContent()
-	}
-
-	private fun animateSoundLayoutsListAppear()
-	{
-		if (this.revealShadow.isAttachedToWindow)
-		{
-			val animator = AnimationUtils.createSlowCircularReveal(this.revealShadow, this.recyclerView.width, 0, 0f, (2 * this.recyclerView.height).toFloat())
-			animator?.start()
-		}
 	}
 
 	override fun onTabReselected(tab: TabLayout.Tab?) {}

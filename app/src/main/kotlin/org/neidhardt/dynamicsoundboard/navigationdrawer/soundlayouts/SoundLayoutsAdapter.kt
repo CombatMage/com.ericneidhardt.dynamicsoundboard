@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.greenrobot.eventbus.EventBus
@@ -8,6 +7,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter
 
 /**
@@ -18,24 +18,19 @@ class SoundLayoutsAdapter
 		private val eventBus: EventBus,
 		private val presenter: SoundLayoutsPresenter
 ) :
-		RecyclerView.Adapter<SoundLayoutViewHolder>(),
+		BaseAdapter<SoundLayout, SoundLayoutViewHolder>(),
 		ListAdapter<SoundLayout>,
 		NavigationDrawerItemClickListener<SoundLayout>
 {
-	fun getValues(): List<SoundLayout>
-	{
-		return this.presenter.values
-	}
+	init { this.setHasStableIds(true) }
 
-	override fun getItemCount(): Int
-	{
-		return this.getValues().size
-	}
+	override fun getItemId(position: Int): Long = this.getValues()[position].databaseId.hashCode().toLong()
 
-	override fun getItemViewType(position: Int): Int
-	{
-		return R.layout.view_sound_layout_item
-	}
+	override fun getValues(): List<SoundLayout> = this.presenter.values
+
+	override fun getItemCount(): Int = this.getValues().size
+
+	override fun getItemViewType(position: Int): Int = R.layout.view_sound_layout_item
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundLayoutViewHolder
 	{

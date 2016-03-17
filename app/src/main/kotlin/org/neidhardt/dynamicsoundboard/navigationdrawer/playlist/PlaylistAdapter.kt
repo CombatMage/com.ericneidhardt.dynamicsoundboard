@@ -17,21 +17,15 @@ class PlaylistAdapter
 		SoundProgressAdapter<PlaylistViewHolder>(),
 		NavigationDrawerItemClickListener<MediaPlayerController>
 {
+	init { this.setHasStableIds(true) }
 
-	override fun getValues(): List<MediaPlayerController>
-	{
-		return this.presenter.values
-	}
+	override fun getItemId(position: Int): Long = this.getValues()[position].mediaPlayerData.playerId.hashCode().toLong()
 
-	override fun getItemViewType(position: Int): Int
-	{
-		return R.layout.view_playlist_item
-	}
+	override fun getValues(): List<MediaPlayerController> = this.presenter.values
 
-	override fun getItemCount(): Int
-	{
-		return this.getValues().size
-	}
+	override fun getItemViewType(position: Int): Int = R.layout.view_playlist_item
+
+	override fun getItemCount(): Int = this.getValues().size
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder
 	{
