@@ -59,9 +59,7 @@ class NavigationDrawerFragment : BaseFragment()
 	{
 		val view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
 
-		val tabLayout = (view.findViewById(R.id.tl_tab_bar) as TabLayout).apply {
-			this.tabGravity = TabLayout.GRAVITY_FILL
-		}
+		val tabLayout = (view.findViewById(R.id.tl_tab_bar) as TabLayout)
 
 		val layoutList = (view.findViewById(R.id.rv_navigation_drawer_list) as RecyclerView).apply {
 			this.itemAnimator = DefaultItemAnimator()
