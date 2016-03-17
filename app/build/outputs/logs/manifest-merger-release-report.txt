@@ -84,7 +84,7 @@ MERGED from [com.android.support:support-v4:23.2.0] C:\Users\ericn\Documents\Pro
 MERGED from [com.android.support:support-vector-drawable:23.2.0] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.0\AndroidManifest.xml:7:5-20
 MERGED from [com.android.support:support-v4:23.2.0] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.0\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.2.0] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.0\AndroidManifest.xml:22:5-20
-MERGED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:39:5-43:19
+MERGED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:39:5-43:19
 MERGED from [com.android.support:support-v4:23.2.0] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.0\AndroidManifest.xml:22:5-20
 	android:label
 		ADDED from C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\src\main\AndroidManifest.xml:16:4-45
@@ -228,7 +228,7 @@ MERGED from [com.android.support:support-vector-drawable:23.2.0] C:\Users\ericn\
 MERGED from [com.android.support:support-v4:23.2.0] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.0\AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:recyclerview-v7:23.2.0] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.0\AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-v4:23.2.0] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.0\AndroidManifest.xml:20:5-43
-MERGED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:37:5-72
+MERGED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:37:5-72
 MERGED from [com.android.support:support-v4:23.2.0] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.0\AndroidManifest.xml:20:5-43
 	tools:overrideLibrary
 		ADDED from [com.android.support:appcompat-v7:23.2.0] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.0\AndroidManifest.xml:23:9-75
@@ -239,22 +239,22 @@ MERGED from [com.android.support:support-v4:23.2.0] C:\Users\ericn\Documents\Pro
 		INJECTED from C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\src\release\AndroidManifest.xml
 activity#org.acra.dialog.CrashReportDialog
-ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:40:9-217
+ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:40:9-217
 	android:excludeFromRecents
-		ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:40:19-52
+		ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:40:19-52
 	android:launchMode
-		ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:40:87-122
+		ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:40:87-122
 	android:finishOnTaskLaunch
-		ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:40:53-86
+		ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:40:53-86
 	android:theme
-		ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:40:172-215
+		ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:40:172-215
 	android:name
-		ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:40:123-171
+		ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:40:123-171
 service#org.acra.sender.SenderService
-ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:42:9-113
+ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:42:9-113
 	android:process
-		ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:42:88-111
+		ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:42:88-111
 	android:exported
-		ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:42:18-42
+		ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:42:18-42
 	android:name
-		ADDED from [ch.acra:acra:4.8.2] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.2\AndroidManifest.xml:42:43-87
+		ADDED from [ch.acra:acra:4.8.3] C:\Users\ericn\Documents\Projekte\com.ericneidhardt.dynamicsoundboard\app\build\intermediates\exploded-aar\ch.acra\acra\4.8.3\AndroidManifest.xml:42:43-87
