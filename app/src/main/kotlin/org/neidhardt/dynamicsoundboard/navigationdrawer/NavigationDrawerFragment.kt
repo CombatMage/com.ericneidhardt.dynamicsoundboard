@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
-import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -13,13 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
+import jp.wasabeef.recyclerview.animators.LandingAnimator
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
-import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OnOpenSoundLayoutsEventListener
@@ -59,12 +58,10 @@ class NavigationDrawerFragment : BaseFragment()
 	{
 		val view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
 
-		val tabLayout = (view.findViewById(R.id.tl_tab_bar) as TabLayout).apply {
-			this.tabGravity = TabLayout.GRAVITY_FILL
-		}
+		val tabLayout = (view.findViewById(R.id.tl_tab_bar) as TabLayout)
 
 		val layoutList = (view.findViewById(R.id.rv_navigation_drawer_list) as RecyclerView).apply {
-			this.itemAnimator = DefaultItemAnimator()
+			this.itemAnimator = LandingAnimator()
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.addItemDecoration(DividerItemDecoration(this.context))
 		}
@@ -128,6 +125,12 @@ enum class List
 	SoundLayouts
 }
 
+enum class TabMode
+{
+	Normal,
+	Context
+}
+
 private val INDEX_SOUND_SHEETS = 0
 private val INDEX_PLAYLIST = 1
 
@@ -173,6 +176,8 @@ class NavigationDrawerFragmentPresenter
 	private var tabPlayList: TabLayout.Tab = tabLayout.createPlaylistTab()
 	private var tabSoundLayouts: TabLayout.Tab = tabLayout.createSoundLayoutsTab()
 
+	private var tabMode: TabMode = TabMode.Normal
+
 	private var currentList: List = List.SoundSheet
 	private var currentPresenter: NavigationDrawerListPresenter? = null
 
@@ -202,6 +207,7 @@ class NavigationDrawerFragmentPresenter
 
 	private fun showDefaultTabBarAndContent()
 	{
+		this.tabMode = TabMode.Normal
 		this.tabLayout.removeAllTabs()
 		this.tabSoundSheets = this.tabLayout.createSoundSheetTab()
 		this.tabPlayList = this.tabLayout.createPlaylistTab()
@@ -214,6 +220,7 @@ class NavigationDrawerFragmentPresenter
 
 	private fun showContextTabBarAndContent()
 	{
+		this.tabMode = TabMode.Context
 		this.tabLayout.removeAllTabs()
 		this.tabSoundLayouts = this.tabLayout.createSoundLayoutsTab()
 
@@ -301,31 +308,31 @@ class NavigationDrawerFragmentPresenter
 	{
 		this.currentPresenter?.onDetachedFromWindow()
 
-		when (tab)
+		if (this.tabMode == TabMode.Context)
 		{
-			this.tabSoundSheets ->
+			this.currentList = List.SoundLayouts
+			this.currentPresenter = this.presenterSoundLayouts
+			this.recyclerView.adapter = this.presenterSoundLayouts.adapter
+			this.actionModeTitle.setText(R.string.cab_title_delete_sound_layouts)
+		}
+		else if (tabMode == TabMode.Normal)
+		{
+			when (tab)
 			{
-				this.currentList = List.SoundSheet
-				this.currentPresenter = this.presenterSoundSheets
-				this.recyclerView.adapter = this.presenterSoundSheets.adapter
-				this.actionModeTitle.setText(R.string.cab_title_delete_sound_sheets)
-			}
-			this.tabPlayList ->
-			{
-				this.currentList = List.Playlist
-				this.currentPresenter = this.presenterPlaylist
-				this.recyclerView.adapter = this.presenterPlaylist.adapter
-				this.actionModeTitle.setText(R.string.cab_title_delete_play_list_sounds)
-			}
-			this.tabSoundLayouts ->
-			{
-				this.currentList = List.SoundLayouts
-				this.currentPresenter = this.presenterSoundLayouts
-				this.recyclerView.adapter = this.presenterSoundLayouts.adapter
-				this.actionModeTitle.setText(R.string.cab_title_delete_sound_layouts)
+				this.tabSoundSheets -> {
+					this.currentList = List.SoundSheet
+					this.currentPresenter = this.presenterSoundSheets
+					this.recyclerView.adapter = this.presenterSoundSheets.adapter
+					this.actionModeTitle.setText(R.string.cab_title_delete_sound_sheets)
+				}
+				this.tabPlayList -> {
+					this.currentList = List.Playlist
+					this.currentPresenter = this.presenterPlaylist
+					this.recyclerView.adapter = this.presenterPlaylist.adapter
+					this.actionModeTitle.setText(R.string.cab_title_delete_play_list_sounds)
+				}
 			}
 		}
-
 		this.currentPresenter?.onAttachedToWindow()
 	}
 
@@ -350,11 +357,9 @@ class NavigationDrawerFragmentPresenter
 	{
 		if (event.openSoundLayouts) {
 			this.showContextTabBarAndContent()
-			this.animateSoundLayoutsListAppear()
 		}
 		else {
 			this.showDefaultTabBarAndContent()
-			this.animateSoundLayoutsListAppear()
 		}
 	}
 
@@ -362,15 +367,6 @@ class NavigationDrawerFragmentPresenter
 	override fun onEvent(event: SoundLayoutSelectedEvent)
 	{
 		this.showDefaultTabBarAndContent()
-	}
-
-	private fun animateSoundLayoutsListAppear()
-	{
-		if (this.revealShadow.isAttachedToWindow)
-		{
-			val animator = AnimationUtils.createSlowCircularReveal(this.revealShadow, this.recyclerView.width, 0, 0f, (2 * this.recyclerView.height).toFloat())
-			animator?.start()
-		}
 	}
 
 	override fun onTabReselected(tab: TabLayout.Tab?) {}

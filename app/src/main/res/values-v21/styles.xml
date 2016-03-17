@@ -3,11 +3,11 @@
 
 	<style name="Theme.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
-		<item name="android:windowTranslucentStatus">true</item> <!-- this makes the main screen to appear behind the status bar, important for material navigationdrawer style  -->
-
 		<item name="colorPrimary">@color/primary_500</item>
 		<item name="colorPrimaryDark">@color/primary_700</item>
 		<item name="colorAccent">@color/accent_200</item>
+
+		<item name="android:statusBarColor">@color/shadow_dark</item>
 
 		<item name="windowActionBar">false</item>
 		<item name="windowActionModeOverlay">true</item>

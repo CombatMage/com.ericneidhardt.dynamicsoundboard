@@ -34,6 +34,7 @@
 						android:id="@+id/tl_tab_bar"
 						android:layout_width="match_parent"
 						android:layout_height="@dimen/height_list_item"
+						app:tabGravity="fill"
 						android:background="@color/primary_200"/>
 			</LinearLayout>
 
