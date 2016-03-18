@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -12,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
-import jp.wasabeef.recyclerview.animators.LandingAnimator
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -61,7 +61,7 @@ class NavigationDrawerFragment : BaseFragment()
 		val tabLayout = (view.findViewById(R.id.tl_tab_bar) as TabLayout)
 
 		val layoutList = (view.findViewById(R.id.rv_navigation_drawer_list) as RecyclerView).apply {
-			this.itemAnimator = LandingAnimator()
+			this.itemAnimator = DefaultItemAnimator()
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.addItemDecoration(DividerItemDecoration(this.context))
 		}
