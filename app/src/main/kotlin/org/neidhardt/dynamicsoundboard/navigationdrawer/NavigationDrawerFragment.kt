@@ -63,7 +63,6 @@ class NavigationDrawerFragment : BaseFragment()
 		val layoutList = (view.findViewById(R.id.rv_navigation_drawer_list) as RecyclerView).apply {
 			this.itemAnimator = DefaultItemAnimator()
 			this.layoutManager = LinearLayoutManager(this.context)
-			this.addItemDecoration(DividerItemDecoration(this.context))
 		}
 
 		this.presenter = NavigationDrawerFragmentPresenter(

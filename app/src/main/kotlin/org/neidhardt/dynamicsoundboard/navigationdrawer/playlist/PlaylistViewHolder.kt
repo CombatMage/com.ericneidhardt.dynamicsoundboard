@@ -25,6 +25,7 @@ class PlaylistViewHolder
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
 	private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
 	private val timePosition = itemView.findViewById(R.id.sb_progress) as SeekBar
+	private val divider = itemView.findViewById(R.id.v_divider)
 
 	private var player: MediaPlayerController? = null
 
@@ -33,7 +34,7 @@ class PlaylistViewHolder
 		itemView.setOnClickListener( { view -> this.onItemClickListener.onItemClick(this.player as MediaPlayerController) })
 	}
 
-	fun bindData(player: MediaPlayerController)
+	fun bindData(player: MediaPlayerController, isLastItem: Boolean)
 	{
 		this.player = player
 
@@ -43,6 +44,7 @@ class PlaylistViewHolder
 
 		this.label.isActivated = player.mediaPlayerData.isSelectedForDeletion
 		this.itemView.isSelected = player.mediaPlayerData.isSelectedForDeletion
+		this.divider.visibility = if (isLastItem) View.INVISIBLE else View.VISIBLE
 
 		this.onProgressUpdate()
 	}

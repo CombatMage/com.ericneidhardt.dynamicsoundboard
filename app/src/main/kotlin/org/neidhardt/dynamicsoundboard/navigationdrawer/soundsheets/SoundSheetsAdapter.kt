@@ -37,7 +37,7 @@ open class SoundSheetsAdapter
 		val sounds = this.presenter.getSoundsInFragment(data.fragmentTag)
 		val soundCount = sounds.size
 
-		holder.bindData(data, soundCount)
+		holder.bindData(data, soundCount, position == this.itemCount - 1)
 	}
 
 	override fun onItemClick(data: SoundSheet)

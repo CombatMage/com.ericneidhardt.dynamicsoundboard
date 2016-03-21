@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClic
 /**
  * File created by eric.neidhardt on 10.07.2015.
  */
-public class SoundSheetViewHolder
+class SoundSheetViewHolder
 (
 		itemView: View,
 		private val onItemClickListener: NavigationDrawerItemClickListener<SoundSheet>
@@ -21,7 +21,7 @@ public class SoundSheetViewHolder
 	private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
 	private val soundCount = itemView.findViewById(R.id.tv_sound_count) as TextView
 	private val soundCountLabel = itemView.findViewById(R.id.tv_sound_count_label)
-
+	private val divider = itemView.findViewById(R.id.v_divider)
 
 	private var data: SoundSheet? = null
 
@@ -30,7 +30,7 @@ public class SoundSheetViewHolder
 			-> this.onItemClickListener.onItemClick(this.data as SoundSheet) })
 	}
 
-	public fun bindData(data: SoundSheet, soundCount: Int)
+	fun bindData(data: SoundSheet, soundCount: Int, isLastItem: Boolean)
 	{
 		this.data = data
 
@@ -43,6 +43,7 @@ public class SoundSheetViewHolder
 		this.label.isActivated = data.isSelectedForDeletion
 		this.itemView.isSelected = data.isSelectedForDeletion
 
+		this.divider.visibility = if (isLastItem) View.INVISIBLE else View.VISIBLE
 	}
 
 	private fun setSoundCount(soundCount: Int)

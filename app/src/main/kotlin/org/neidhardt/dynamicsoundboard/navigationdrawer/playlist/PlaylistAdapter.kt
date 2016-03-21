@@ -36,7 +36,7 @@ class PlaylistAdapter
 	override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int)
 	{
 		val data = this.getValues()[position]
-		holder.bindData(data)
+		holder.bindData(data, position == this.itemCount - 1)
 	}
 
 	override fun onItemClick(data: MediaPlayerController)

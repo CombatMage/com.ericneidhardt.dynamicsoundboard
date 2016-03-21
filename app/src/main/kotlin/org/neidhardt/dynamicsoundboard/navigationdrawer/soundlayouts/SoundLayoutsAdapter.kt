@@ -47,7 +47,7 @@ class SoundLayoutsAdapter
 	override fun onBindViewHolder(holder: SoundLayoutViewHolder, position: Int)
 	{
 		val data = this.getValues()[position]
-		holder.bindData(data)
+		holder.bindData(data, position == this.itemCount - 1)
 	}
 
 	override fun notifyItemChanged(data: SoundLayout)
