@@ -17,7 +17,8 @@ import java.io.IOException
 
 val PlaylistTAG = "PlaylistTAG"
 
-private val FADE_OUT_DURATION = 100
+private val RELEASE_DELAY = 10000.toLong()
+private val FADE_OUT_DURATION = 100.toLong()
 private val INT_VOLUME_MAX = 100
 private val INT_VOLUME_MIN = 0
 private val FLOAT_VOLUME_MAX = 1f
@@ -30,7 +31,7 @@ enum class PlayerAction
 	PLAY,
 	PAUSE,
 	PROGRESS,
-	UNDEFINDED
+	UNDEFINED
 }
 
 fun getNewMediaPlayerController(context: Context,
@@ -38,15 +39,15 @@ fun getNewMediaPlayerController(context: Context,
 								mediaPlayerData: MediaPlayerData,
 								soundsDataStorage: SoundsDataStorage): MediaPlayerController
 {
-	return ImprovedMediaPlayer(context, eventBus, mediaPlayerData, soundsDataStorage)
+	return ImprovedMediaPlayer(context, eventBus, soundsDataStorage, mediaPlayerData)
 }
 
 private class ImprovedMediaPlayer
 (
 		private val context: Context,
 		private val eventBus: EventBus,
-		override val mediaPlayerData: MediaPlayerData,
-		private val soundsDataStorage: SoundsDataStorage
+		private val soundsDataStorage: SoundsDataStorage,
+		override val mediaPlayerData: MediaPlayerData
 ) :
 		MediaPlayerController,
 		MediaPlayer.OnCompletionListener,
@@ -61,6 +62,8 @@ private class ImprovedMediaPlayer
 	private var volume: Int = 0
 	private var handler: EnhancedHandler? = null
 	private var fadeOutSchedule: KillableRunnable? = null
+	private var releasePlayerSchedule: KillableRunnable? = null
+	private var lastPosition = 0
 
 	private val currentState: MediaPlayerState get() = this.mediaPlayer.currentState
 
@@ -157,6 +160,7 @@ private class ImprovedMediaPlayer
 			this.setDataSource(context, Uri.parse(mediaPlayerData.uri))
 		}
 
+		this.lastPosition = 0
 		this.isLoopingEnabled = this.mediaPlayerData.isLoop
 		this.volume = INT_VOLUME_MAX
 	}
@@ -173,6 +177,8 @@ private class ImprovedMediaPlayer
 
 	override fun playSound(): Boolean
 	{
+		this.releasePlayerSchedule?.apply { handler?.removeCallbacks(this) }
+
 		var state = this.currentState
 		if (state == MediaPlayerState.INIT)
 			this.mediaPlayer.prepare()
@@ -187,6 +193,7 @@ private class ImprovedMediaPlayer
 			return false
 		}
 
+		this.progress = this.lastPosition
 		this.volume = INT_VOLUME_MAX
 		this.updateVolume(this.volume)
 
@@ -212,6 +219,21 @@ private class ImprovedMediaPlayer
 		this.mediaPlayer.pause()
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
+
+		this.releasePlayerSchedule = object : KillableRunnable // release player resources if unused for some time
+		{
+			@Volatile override var isKilled: Boolean = false
+
+			override fun run()
+			{
+				val position = progress // remember the paused position so it can reused later
+				mediaPlayer.release()
+				mediaPlayer = VerboseMediaPlayer()
+				init(context) // init sets lastPosition to 0, therefore we set the position after ini
+				lastPosition = position
+			}
+		}.apply { handler?.postDelayed(this, RELEASE_DELAY) }
+
 		return true
 	}
 
@@ -219,6 +241,7 @@ private class ImprovedMediaPlayer
 	{
 		if (this.pauseSound())
 		{
+			this.releasePlayerSchedule?.apply { handler?.removeCallbacks(this) }
 			this.mediaPlayer.release()
 			this.mediaPlayer = VerboseMediaPlayer()
 			this.init(this.context)
@@ -288,6 +311,7 @@ private class ImprovedMediaPlayer
 
 	override fun destroy(postStateChanged: Boolean)
 	{
+		this.releasePlayerSchedule?.apply { handler?.removeCallbacks(this) }
 		this.fadeOutSchedule?.apply { handler?.removeCallbacks(this) }
 		this.mediaPlayer.release()
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
@@ -313,7 +337,7 @@ private class ImprovedMediaPlayer
 		Logger.e(TAG, "onError(" + mp.toString() + ") what: " + what + " extra: " + extra)
 		this.mediaPlayer.reset()
 		this.init(this.context)
-		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINDED))
+		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINED))
 		return true
 	}
 
@@ -323,14 +347,7 @@ private class ImprovedMediaPlayer
 		return true
 	}
 
-	private fun postStateChangedEvent(isAlive: Boolean)
-	{
-		this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
-	}
+	private fun postStateChangedEvent(isAlive: Boolean): Unit = this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
 
-	override fun toString(): String{
-		return "ImprovedMediaPlayer(currentState=$currentState, mediaPlayerData=$mediaPlayerData)"
-	}
-
-
+	override fun toString(): String = "ImprovedMediaPlayer(currentState=$currentState, mediaPlayerData=$mediaPlayerData)"
 }
