@@ -9,7 +9,7 @@
 		android:fitsSystemWindows="true"
 		android:background="@color/background">
 
-	<android.support.design.widget.AppBarLayout
+	<org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout
 			android:id="@+id/abl_navigation_drawer"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
@@ -41,10 +41,9 @@
 		</android.support.design.widget.CollapsingToolbarLayout>
 
 		<include layout="@layout/toolbar_navigation_drawer"
-				android:visibility="gone"
-				tools:visibility="visible"/>
+				android:visibility="gone"/>
 
-	</android.support.design.widget.AppBarLayout>
+	</org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout>
 
 	<android.support.v7.widget.RecyclerView
 			android:id="@+id/rv_navigation_drawer_list"

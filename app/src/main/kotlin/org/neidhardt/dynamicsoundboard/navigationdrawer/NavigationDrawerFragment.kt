@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer
 
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.DefaultItemAnimator
@@ -41,7 +40,8 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.NonTouchableCoordinatorLayout
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
+import org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout
+import org.neidhardt.dynamicsoundboard.views.toolbarhelpers.State
 
 class NavigationDrawerFragment : BaseFragment()
 {
@@ -71,7 +71,7 @@ class NavigationDrawerFragment : BaseFragment()
 				coordinatorLayout = view.findViewById(R.id.cl_navigation_drawer) as NonTouchableCoordinatorLayout,
 
 				toolbar = view.findViewById(R.id.toolbar_navigation_drawer) as Toolbar,
-				appBarLayout = view.findViewById(R.id.abl_navigation_drawer) as AppBarLayout,
+				appBarLayout = view.findViewById(R.id.abl_navigation_drawer) as ImprovedAppBarLayout,
 				tabLayout = tabLayout,
 				buttonOk = view.findViewById(R.id.b_ok),
 				buttonDelete = view.findViewById(R.id.b_delete),
@@ -141,7 +141,7 @@ class NavigationDrawerFragmentPresenter
 		private val coordinatorLayout: NonTouchableCoordinatorLayout,
 
 		private val toolbar: Toolbar,
-		private val appBarLayout: AppBarLayout,
+		private val appBarLayout: ImprovedAppBarLayout,
 		private val tabLayout: TabLayout,
 		private val revealShadow: View,
 		private val buttonOk: View,
@@ -169,7 +169,8 @@ class NavigationDrawerFragmentPresenter
 		ItemSelectedForDeletionListener,
 		OnOpenSoundLayoutsEventListener,
 		TabLayout.OnTabSelectedListener,
-		OnSoundLayoutSelectedEventListener
+		OnSoundLayoutSelectedEventListener,
+		ImprovedAppBarLayout.OnStateChangeListener
 {
 	private var tabSoundSheets: TabLayout.Tab = tabLayout.createSoundSheetTab()
 	private var tabPlayList: TabLayout.Tab = tabLayout.createPlaylistTab()
@@ -186,6 +187,7 @@ class NavigationDrawerFragmentPresenter
 
 	init
 	{
+		this.appBarLayout.onStateChangeListener = this
 		this.tabLayout.setOnTabSelectedListener(this)
 		this.buttonOk.setOnClickListener(this)
 		this.buttonDelete.setOnClickListener(this)
@@ -229,16 +231,15 @@ class NavigationDrawerFragmentPresenter
 
 	private fun showToolbarForDeletion()
 	{
-		this.appBarLayout.setExpanded(false, true)
 		this.coordinatorLayout.isScrollingEnabled = false
 		this.recyclerView.isNestedScrollingEnabled = false
-		this.toolbar.visibility = View.VISIBLE
+		this.appBarLayout.setExpanded(false, true)
 
 		val distance = this.recyclerView.width
 		this.buttonDeleteSelected.apply {
 			this.visibility = View.VISIBLE
 			this.translationX = (-distance).toFloat()
-			animate()
+			this.animate()
 					.translationX(0f)
 					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
 					.setInterpolator(DecelerateInterpolator())
@@ -248,13 +249,24 @@ class NavigationDrawerFragmentPresenter
 
 	private fun hideToolbarForDeletion()
 	{
-		this.toolbar.visibility = View.GONE
 		this.appBarLayout.setExpanded(true, true)
 		this.coordinatorLayout.isScrollingEnabled = true
 		this.recyclerView.isNestedScrollingEnabled = true
 		this.recyclerView.scrollToPosition(0)
 
 		this.buttonDeleteSelected.visibility = View.GONE
+	}
+
+	override fun onStateChange(toolbarChange: State, verticalOffset: Int)
+	{
+		if (toolbarChange == State.COLLAPSED)
+		{
+			this.toolbar.visibility = View.VISIBLE
+		}
+		else if (toolbarChange == State.EXPANDING)
+		{
+			this.toolbar.visibility = View.GONE
+		}
 	}
 
 	override fun onClick(view: View)
