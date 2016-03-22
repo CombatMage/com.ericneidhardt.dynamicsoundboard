@@ -17,7 +17,7 @@ import java.io.IOException
 
 val PlaylistTAG = "PlaylistTAG"
 
-private val RELEASE_DELAY = 2000.toLong()
+private val RELEASE_DELAY = 10000.toLong()
 private val FADE_OUT_DURATION = 100.toLong()
 private val INT_VOLUME_MAX = 100
 private val INT_VOLUME_MIN = 0
@@ -63,6 +63,7 @@ private class ImprovedMediaPlayer
 	private var handler: EnhancedHandler? = null
 	private var fadeOutSchedule: KillableRunnable? = null
 	private var releasePlayerSchedule: KillableRunnable? = null
+	private var lastPosition = 0
 
 	private val currentState: MediaPlayerState get() = this.mediaPlayer.currentState
 
@@ -159,6 +160,7 @@ private class ImprovedMediaPlayer
 			this.setDataSource(context, Uri.parse(mediaPlayerData.uri))
 		}
 
+		this.lastPosition = 0
 		this.isLoopingEnabled = this.mediaPlayerData.isLoop
 		this.volume = INT_VOLUME_MAX
 	}
@@ -191,6 +193,7 @@ private class ImprovedMediaPlayer
 			return false
 		}
 
+		this.progress = this.lastPosition
 		this.volume = INT_VOLUME_MAX
 		this.updateVolume(this.volume)
 
@@ -223,9 +226,11 @@ private class ImprovedMediaPlayer
 
 			override fun run()
 			{
+				val position = progress // remember the paused position so it can reused later
 				mediaPlayer.release()
 				mediaPlayer = VerboseMediaPlayer()
-				init(context)
+				init(context) // init sets lastPosition to 0, therefore we set the position after ini
+				lastPosition = position
 			}
 		}.apply { handler?.postDelayed(this, RELEASE_DELAY) }
 
@@ -342,14 +347,7 @@ private class ImprovedMediaPlayer
 		return true
 	}
 
-	private fun postStateChangedEvent(isAlive: Boolean)
-	{
-		this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
-	}
+	private fun postStateChangedEvent(isAlive: Boolean): Unit = this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
 
-	override fun toString(): String{
-		return "ImprovedMediaPlayer(currentState=$currentState, mediaPlayerData=$mediaPlayerData)"
-	}
-
-
+	override fun toString(): String = "ImprovedMediaPlayer(currentState=$currentState, mediaPlayerData=$mediaPlayerData)"
 }
