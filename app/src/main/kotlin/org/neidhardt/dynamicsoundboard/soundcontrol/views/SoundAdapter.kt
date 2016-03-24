@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundcontrol
+package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -27,11 +27,11 @@ class SoundAdapter
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder =
 			SoundViewHolder(
-				LayoutInflater.from(parent.context).inflate(R.layout.view_sound_item, parent, false),
-				this.eventBus,
-				this.soundsDataStorage,
-				{player, position -> delete(player)},
-				this)
+					LayoutInflater.from(parent.context).inflate(R.layout.view_sound_item, parent, false),
+					this.eventBus,
+					this.soundsDataStorage,
+					{ player, position -> delete(player) },
+					this)
 
 	private fun delete(player: MediaPlayerController)
 	{

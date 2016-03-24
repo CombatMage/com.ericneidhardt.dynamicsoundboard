@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundcontrol
+package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundcontrol
+package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
 import android.os.Handler
 import android.support.v4.view.PagerAdapter
@@ -119,7 +119,8 @@ class SoundViewHolder
 		this.container.layoutParams = params;
 	}
 
-	override fun getIndexOfContentPage(): Int {return VIEWPAGER_INDEX_SOUND_CONTROLS}
+	override fun getIndexOfContentPage(): Int {return VIEWPAGER_INDEX_SOUND_CONTROLS
+	}
 
 	override fun delete()
 	{
