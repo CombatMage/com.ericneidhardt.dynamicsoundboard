@@ -82,8 +82,6 @@ class NavigationDrawerFragment : BaseFragment()
 				actionModeTitle = view.findViewById(R.id.tv_action_mode_title) as TextView,
 				actionModeSubTitle= view.findViewById(R.id.tv_action_mode_sub_title) as TextView,
 
-				revealShadow = view.findViewById(R.id.v_reveal_shadow),
-
 				fragmentManager = this.fragmentManager,
 				recyclerView = layoutList,
 
@@ -143,7 +141,6 @@ class NavigationDrawerFragmentPresenter
 		private val toolbar: Toolbar,
 		private val appBarLayout: ImprovedAppBarLayout,
 		private val tabLayout: TabLayout,
-		private val revealShadow: View,
 		private val buttonOk: View,
 		private val buttonDelete: View,
 		private val buttonDeleteSelected: View,
@@ -259,7 +256,7 @@ class NavigationDrawerFragmentPresenter
 
 	override fun onStateChange(toolbarChange: State, verticalOffset: Int)
 	{
-		if (toolbarChange == State.COLLAPSED)
+		if (toolbarChange == State.COLLAPSED && this.tabMode == TabMode.Context)
 		{
 			this.toolbar.visibility = View.VISIBLE
 		}
