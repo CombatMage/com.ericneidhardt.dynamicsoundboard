@@ -134,12 +134,11 @@ class SoundSheetFragment :
 	{
 		super.onResume()
 
-		val activity = this.baseActivity
-		activity.setSoundSheetActionsEnable(true)
-		activity.findViewById(R.id.action_add_sound).setOnClickListener({ view
-			-> AddNewSoundDialog(this.fragmentManager, this.fragmentTag) })
-		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener({ view
-			-> AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, this.fragmentTag) })
+		this.baseActivity.apply {
+			this.setSoundSheetActionsEnable(true)
+			this.findViewById(R.id.action_add_sound)?.setOnClickListener({ AddNewSoundDialog(this.supportFragmentManager, fragmentTag) })
+			this.findViewById(R.id.action_add_sound_dir)?.setOnClickListener({ AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, fragmentTag) })
+		}
 
 		this.soundPresenter!!.onAttachedToWindow()
 		this.attachScrollViewToFab()

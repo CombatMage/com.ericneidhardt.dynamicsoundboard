@@ -1,0 +1,98 @@
+<root>
+    <item name='org.acra.sender.HttpSender void send(android.content.Context, org.acra.collector.CrashReportData) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.acra.sender.HttpSender.Type FORM'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.ReportSenderFactory org.acra.sender.ReportSender create(android.content.Context, org.acra.config.ACRAConfiguration)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.acra.sender.EmailIntentSender void send(android.content.Context, org.acra.collector.CrashReportData) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.acra.sender.HttpSender.Type JSON'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.HttpSender void send(android.content.Context, org.acra.collector.CrashReportData) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.HttpSender.Method POST'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.SenderService void onHandleIntent(android.content.Intent) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.SenderService EXTRA_ACRA_CONFIG'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.HttpSenderFactory org.acra.sender.ReportSender create(android.content.Context, org.acra.config.ACRAConfiguration) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.SenderService EXTRA_REPORT_SENDER_FACTORIES'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.EmailIntentSenderFactory org.acra.sender.ReportSender create(android.content.Context, org.acra.config.ACRAConfiguration) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.acra.sender.ReportSender void send(android.content.Context, org.acra.collector.CrashReportData) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.acra.sender.ReportSender void send(android.content.Context, org.acra.collector.CrashReportData) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.acra.sender.DefaultReportSenderFactory org.acra.sender.ReportSender create(android.content.Context, org.acra.config.ACRAConfiguration)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.HttpSender.Type java.lang.String getContentType()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.acra.sender.SenderService EXTRA_APPROVE_REPORTS_FIRST'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.DefaultReportSenderFactory org.acra.sender.ReportSender create(android.content.Context, org.acra.config.ACRAConfiguration) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.HttpSenderFactory org.acra.sender.ReportSender create(android.content.Context, org.acra.config.ACRAConfiguration)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.ReportSenderFactory org.acra.sender.ReportSender create(android.content.Context, org.acra.config.ACRAConfiguration) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.acra.sender.SenderService EXTRA_ONLY_SEND_SILENT_REPORTS'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.EmailIntentSenderFactory org.acra.sender.ReportSender create(android.content.Context, org.acra.config.ACRAConfiguration)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.EmailIntentSender void send(android.content.Context, org.acra.collector.CrashReportData) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.sender.HttpSender.Method PUT'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

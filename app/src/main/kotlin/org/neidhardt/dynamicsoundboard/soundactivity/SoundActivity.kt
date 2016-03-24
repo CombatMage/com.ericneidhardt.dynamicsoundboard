@@ -160,8 +160,8 @@ class SoundActivity :
 		val toolbar = this.findViewById(R.id.toolbar) as Toolbar
 		this.setSupportActionBar(toolbar)
 
-		this.findViewById(R.id.tv_app_name).visibility = View.VISIBLE
-		this.findViewById(R.id.action_add_sound_sheet).setOnClickListener(this)
+		this.findViewById(R.id.tv_app_name)?.visibility = View.VISIBLE
+		this.findViewById(R.id.action_add_sound_sheet)?.setOnClickListener(this)
 
 		(this.findViewById(R.id.et_set_label) as ActionbarEditText).apply {
 			visibility = View.GONE
@@ -273,12 +273,12 @@ class SoundActivity :
 	fun setSoundSheetActionsEnable(enable: Boolean)
 	{
 		var viewState = if (enable) View.VISIBLE else View.GONE
-		this.findViewById(R.id.action_add_sound).visibility = viewState
-		this.findViewById(R.id.action_add_sound_dir).visibility = viewState
-		this.findViewById(R.id.et_set_label).visibility = viewState
+		this.findViewById(R.id.action_add_sound)?.visibility = viewState
+		this.findViewById(R.id.action_add_sound_dir)?.visibility = viewState
+		this.findViewById(R.id.et_set_label)?.visibility = viewState
 
 		viewState = if (!enable) View.VISIBLE else View.GONE
-		this.findViewById(R.id.tv_app_name).visibility = viewState
+		this.findViewById(R.id.tv_app_name)?.visibility = viewState
 	}
 
 	@Subscribe

@@ -1,0 +1,305 @@
+<root>
+    <item name='de.greenrobot.daogenerator.PropertyType Int'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToMany addToMany(de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder index()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.PropertyType String'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.ToManyBase void orderDesc(de.greenrobot.daogenerator.Property...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addShortProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.ToOne java.lang.String[] getResolvedKeyJavaType()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.ToOne boolean[] getResolvedKeyUseEquals()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Query de.greenrobot.daogenerator.QueryParam addEqualsParam(de.greenrobot.daogenerator.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addFloatProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoGenerator void generateAll(de.greenrobot.daogenerator.Schema, java.lang.String, java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder customType(java.lang.String, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.ToOne boolean checkUseEquals(de.greenrobot.daogenerator.PropertyType) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToMany addToMany(de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Index de.greenrobot.daogenerator.Index setName(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToMany addToMany(de.greenrobot.daogenerator.Property, de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder autoincrement()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder codeBeforeSetter(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addByteProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder javaDocField(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.List&lt;de.greenrobot.daogenerator.ContentProvider&gt; getContentProviders()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.PropertyType Byte'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToOne addToOne(de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity void implementsInterface(java.lang.String...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoGenerator java.io.File toFileForceExists(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Schema de.greenrobot.daogenerator.Entity addProtobufEntity(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder codeBeforeGetterAndSetter(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder indexDesc(java.lang.String, boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.ToManyBase void orderAsc(de.greenrobot.daogenerator.Property...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.PropertyType Float'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Schema de.greenrobot.daogenerator.Entity addEntity(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addIdProperty()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoUtil java.lang.String getPackageFromFullyQualified(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.List&lt;de.greenrobot.daogenerator.ToManyBase&gt; getToManyRelations()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Schema java.lang.String mapToDbType(de.greenrobot.daogenerator.PropertyType)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Entity addIndex(de.greenrobot.daogenerator.Index)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property getProperty()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder codeBeforeGetter(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoUtil java.lang.String getClassnameFromFullyQualified(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToMany addToMany(de.greenrobot.daogenerator.Property, de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addDateProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addIntProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.List&lt;java.lang.String&gt; getInterfacesToImplement()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToOne addToOneWithoutProperty(java.lang.String, de.greenrobot.daogenerator.Entity, java.lang.String, boolean, boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.List&lt;de.greenrobot.daogenerator.Property&gt; getPropertiesPk()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder unique()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.List&lt;de.greenrobot.daogenerator.ToManyBase&gt; getIncomingToManyRelations()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToMany addToMany(de.greenrobot.daogenerator.Property[], de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property[]) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.List&lt;de.greenrobot.daogenerator.ToOne&gt; getToOneRelations()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.PropertyType Date'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Schema java.lang.String mapToJavaTypeNotNull(de.greenrobot.daogenerator.PropertyType)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoUtil byte[] readAllBytes(java.io.InputStream) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addBooleanProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Index de.greenrobot.daogenerator.Index makeUnique()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToMany addToMany(de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToManyWithJoinEntity addToMany(de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property, de.greenrobot.daogenerator.Property) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addLongProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder primaryKey()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder primaryKeyAsc()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder javaDocSetter(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addProperty(de.greenrobot.daogenerator.PropertyType, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addDoubleProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.PropertyType Long'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder codeBeforeField(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.ToOne de.greenrobot.daogenerator.Property[] getFkProperties()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Schema java.util.List&lt;de.greenrobot.daogenerator.Entity&gt; getEntities()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addByteArrayProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoGenerator java.io.File toJavaFilename(java.io.File, java.lang.String, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.Collection&lt;java.lang.String&gt; getAdditionalImportsDao()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.PropertyType Short'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder notNull()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.List&lt;de.greenrobot.daogenerator.Index&gt; getIndexes()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.PropertyType ByteArray'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder javaDocGetter(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToMany addToMany(de.greenrobot.daogenerator.Property[], de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder columnType(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoUtil java.lang.String capFirst(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Query de.greenrobot.daogenerator.QueryParam addParam(de.greenrobot.daogenerator.Property, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.Collection&lt;java.lang.String&gt; getAdditionalImportsEntity()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder indexAsc(java.lang.String, boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToOne addToOne(de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder customType(java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToMany addToMany(de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToOne addToOneWithoutProperty(java.lang.String, de.greenrobot.daogenerator.Entity, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.List&lt;de.greenrobot.daogenerator.Property&gt; getPropertiesNonPk()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder columnName(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Entity addImport(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoUtil int copyAllBytes(java.io.InputStream, java.io.OutputStream) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoGenerator java.io.File toJavaFilename(java.io.File, java.lang.String, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ContentProvider addContentProvider()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder javaDocGetterAndSetter(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.DaoGenerator void generateAll(de.greenrobot.daogenerator.Schema, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity java.util.List&lt;de.greenrobot.daogenerator.Property&gt; getProperties()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder customType(java.lang.String, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Property.PropertyBuilder de.greenrobot.daogenerator.Property.PropertyBuilder primaryKeyDesc()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.PropertyType Double'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.ToOne ToOne(de.greenrobot.daogenerator.Schema, de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property[], boolean) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.Property.PropertyBuilder addStringProperty(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Schema java.lang.String mapToJavaTypeNullable(de.greenrobot.daogenerator.PropertyType)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.Entity de.greenrobot.daogenerator.ToManyWithJoinEntity addToMany(de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Entity, de.greenrobot.daogenerator.Property, de.greenrobot.daogenerator.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.daogenerator.PropertyType Boolean'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

@@ -1,0 +1,866 @@
+<root>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor LazyJavaClassDescriptor(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor, kotlin.reflect.jvm.internal.impl.name.FqName, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.descriptors.JavaConstructorDescriptor access$resolveConstructor(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaConstructor)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope LazyJavaClassMemberScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor java.util.Map&lt;kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor,kotlin.reflect.jvm.internal.impl.resolve.constants.ConstantValue&lt;?&gt;&gt; getAllValueArguments()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.types.KotlinType access$createTypeForMissingDependencies(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor, kotlin.reflect.jvm.internal.impl.name.FqName) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor access$resolveProperty(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaField) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaTypeParameterDescriptor LazyJavaTypeParameterDescriptor(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaTypeParameter, int, kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment getOwnerDescriptor()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.descriptors.SourceElement getSource()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor&gt; getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment LazyJavaPackageFragment(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaPackage) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.ResolvedValueParameters resolveValueParameters(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.load.java.structure.JavaValueParameter&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope kotlin.reflect.jvm.internal.impl.descriptors.ClassifierDescriptor getContributedClassifier(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getFunctionNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticScope LazyJavaStaticScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.types.KotlinType computeMethodReturnType(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations, kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getAllFieldNames()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope LazyJavaClassMemberScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor LazyJavaClassDescriptor(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor, kotlin.reflect.jvm.internal.impl.name.FqName, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.ResolvedValueParameters resolveValueParameters(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.load.java.structure.JavaValueParameter&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment kotlin.reflect.jvm.internal.impl.descriptors.SourceElement getSource()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope getMemberScope()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment java.util.List&lt;kotlin.reflect.jvm.internal.impl.load.kotlin.KotlinJvmBinaryClass&gt; getKotlinBinaryClasses$kotlin_core()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor access$resolveProperty(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaField) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt; getContributedVariables(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaTypeParameterDescriptor LazyJavaTypeParameterDescriptor(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaTypeParameter, int, kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.types.KotlinType access$createTypeForMissingDependencies(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor, kotlin.reflect.jvm.internal.impl.name.FqName) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope kotlin.reflect.jvm.internal.impl.descriptors.ClassifierDescriptor getContributedClassifier(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor LazyJavaClassDescriptor(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor, kotlin.reflect.jvm.internal.impl.name.FqName, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex kotlin.reflect.jvm.internal.impl.load.java.structure.JavaField findFieldByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.ResolvedValueParameters resolveValueParameters(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.load.java.structure.JavaValueParameter&gt;) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.storage.NullableLazyValue access$getFqName$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.descriptors.Modality getModality()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.JavaDescriptorUtilKt boolean isJavaField(kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; computeDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor getOwnerDescriptor()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.name.FqName getFqName$kotlin_core()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope void computeNonDeclaredProperties(kotlin.reflect.jvm.internal.impl.name.Name, java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection access$searchMethodsByNameWithoutBuiltinMagic(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope, kotlin.reflect.jvm.internal.impl.name.Name)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.descriptors.ClassKind getKind()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext getC()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope getUnsubstitutedMemberScope()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope LazyJavaStaticClassScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass, kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor LazyJavaClassDescriptor(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor, kotlin.reflect.jvm.internal.impl.name.FqName, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.load.java.sources.JavaSourceElement getSource()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor resolveTopLevelClass$kotlin_core(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext access$getC$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.FqName&gt; getSubPackages()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope void computeNonDeclaredProperties(kotlin.reflect.jvm.internal.impl.name.Name, java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor access$resolveProperty(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaField)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex kotlin.reflect.jvm.internal.impl.load.java.structure.JavaField findFieldByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope kotlin.reflect.jvm.internal.impl.descriptors.ClassifierDescriptor getContributedClassifier(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; getContributedDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex computeMemberIndex()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope.WhenMappings $EnumSwitchMapping$0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope.computeMemberIndex.1 kotlin.reflect.jvm.internal.impl.load.java.structure.JavaField findFieldByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndexKt java.util.Set access$getAllMemberNames(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass, kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function1)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext access$getC$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope LazyJavaStaticClassScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass, kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.name.FqName&gt; getSubPackages()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor.resolveFromJavaClassObjectType.javaClassObjectType.1 kotlin.reflect.jvm.internal.impl.types.TypeConstructor computeTypeConstructor()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope void computeNonDeclaredProperties(kotlin.reflect.jvm.internal.impl.name.Name, java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass access$getJClass$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void computeNonDeclaredProperties(kotlin.reflect.jvm.internal.impl.name.Name, java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Set access$getStaticPropertiesFromJavaSupertypes(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope, kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getAllFieldNames()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndexKt java.util.Set access$getAllMemberNames(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass, kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function1) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope void computeNonDeclaredFunctions(java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.SimpleFunctionDescriptor&gt;, kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope kotlin.reflect.jvm.internal.impl.descriptors.ClassifierDescriptor getContributedClassifier(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.Collection getMethodNames(kotlin.jvm.functions.Function1)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass access$getJClass$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex kotlin.jvm.functions.Function1&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMember,java.lang.Boolean&gt; getMemberFilter()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.Collection getAllFieldNames()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor getOwnerDescriptor()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.descriptors.JavaConstructorDescriptor access$resolveConstructor(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaConstructor) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void computeNonDeclaredProperties(kotlin.reflect.jvm.internal.impl.name.Name, java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.storage.NotNullLazyValue access$getEnumEntryIndex$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor getOwnerDescriptor()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope getUnsubstitutedInnerClassesScope()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection access$searchMethodsInSupertypesWithoutBuiltinMagic(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope, kotlin.reflect.jvm.internal.impl.name.Name) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment java.lang.String toString()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor getOwnerDescriptor()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Set access$getStaticPropertiesFromJavaSupertypes(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope, kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndexKt java.util.Set access$getAllMemberNames(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass, kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function1) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass access$getJClass$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope void computeNonDeclaredFunctions(java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.SimpleFunctionDescriptor&gt;, kotlin.reflect.jvm.internal.impl.name.Name) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection getSubPackages()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope LazyJavaPackageScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaPackage, kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getFunctionNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.List&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor LazyJavaAnnotationDescriptor(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaAnnotation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext access$getC$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.Collection findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt; getDeclaredTypeParameters()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope LazyJavaScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaTypeParameterDescriptor kotlin.reflect.jvm.internal.impl.load.java.structure.JavaTypeParameter getJavaTypeParameter()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor getOwnerDescriptor()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void computeNonDeclaredFunctions(java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.SimpleFunctionDescriptor&gt;, kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope LazyJavaClassMemberScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex computeMemberIndex()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext access$getC$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex computeMemberIndex()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope LazyJavaPackageScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaPackage, kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt; getContributedVariables(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope void computeNonDeclaredFunctions(java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.SimpleFunctionDescriptor&gt;, kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; getContributedDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection access$searchMethodsByNameWithoutBuiltinMagic(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope, kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.descriptors.ClassifierDescriptor getContributedClassifier(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX INSTANCE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex computeMemberIndex()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; computeDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Set access$getStaticPropertiesFromJavaSupertypes(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope, kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndexKt java.util.List access$getNonDeclaredMethodNames(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.List&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.descriptors.JavaConstructorDescriptor access$resolveConstructor(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaConstructor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope LazyJavaPackageScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaPackage, kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt; getContributedVariables(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope void computeNonDeclaredFunctions(java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.SimpleFunctionDescriptor&gt;, kotlin.reflect.jvm.internal.impl.name.Name) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.descriptors.ClassifierDescriptor getContributedClassifier(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; computeDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getFunctionNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope void addExtraDescriptors(java.util.Set&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt;, kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations getAnnotations()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass access$getJClass$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex ClassMemberIndex(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMember,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.Collection getMethodNames(kotlin.jvm.functions.Function1) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.storage.NotNullLazyValue access$getEnumEntryIndex$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; getContributedDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.load.java.structure.JavaAnnotation getJavaAnnotation()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.lang.String getFacadeSimpleNameForPartSimpleName(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.List&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.storage.NotNullLazyValue&lt;kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndex&gt; getMemberIndex()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope kotlin.reflect.jvm.internal.impl.load.java.structure.JavaPackage access$getJPackage$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope void computeNonDeclaredFunctions(java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.SimpleFunctionDescriptor&gt;, kotlin.reflect.jvm.internal.impl.name.Name) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope access$getUnsubstitutedMemberScope$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; computeDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getAllFieldNames()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaTypeParameterDescriptor kotlin.reflect.jvm.internal.impl.descriptors.SupertypeLoopChecker getSupertypeLoopChecker()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void computeNonDeclaredFunctions(java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.SimpleFunctionDescriptor&gt;, kotlin.reflect.jvm.internal.impl.name.Name) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass access$getJClass$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex ClassMemberIndex(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMember,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass getJClass()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass access$getJClass$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor getOwnerDescriptor()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; getContributedDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope getMemberScope()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor.resolveFromJavaClassObjectType.javaClassObjectType.1 java.util.List&lt;kotlin.reflect.jvm.internal.impl.types.TypeProjectionImpl&gt; computeArguments()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection access$searchMethodsByNameWithoutBuiltinMagic(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope, kotlin.reflect.jvm.internal.impl.name.Name) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.resolve.constants.ConstantValue access$resolveAnnotationArgument(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaAnnotationArgument) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope void addExtraDescriptors(java.util.Set&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt;, kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment kotlin.reflect.jvm.internal.impl.load.java.structure.JavaPackage access$getJPackage$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getFunctionNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.ConstructorDescriptor&gt; getConstructors()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext access$getC$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection access$searchMethodsInSupertypesWithoutBuiltinMagic(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope, kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.types.KotlinType computeMethodReturnType(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations, kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.storage.NotNullLazyValue access$getNestedClassIndex$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope access$getUnsubstitutedMemberScope$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor LazyJavaAnnotationDescriptor(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaAnnotation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt; getContributedVariables(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor&gt; getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void recordLookup(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope void addExtraDescriptors(java.util.Set&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt;, kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getFunctionNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaTypeParameterDescriptor void reportCycleError(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.ResolvedValueParameters resolveValueParameters(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.load.java.structure.JavaValueParameter&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getFunctionNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.List&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getAllFieldNames()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope.computeMemberIndex.1 kotlin.reflect.jvm.internal.impl.load.java.structure.JavaField findFieldByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.descriptors.JavaMethodDescriptor resolveMethodToFunctionDescriptor(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Set access$getStaticPropertiesFromJavaSupertypes(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope, kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor java.util.Map access$computeValueArguments(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope getUnsubstitutedMemberScope()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticScope void computeNonDeclaredProperties(kotlin.reflect.jvm.internal.impl.name.Name, java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaTypeParameterDescriptor java.util.List&lt;kotlin.reflect.jvm.internal.impl.types.KotlinType&gt; resolveUpperBounds()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.storage.NotNullLazyValue&lt;java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.ConstructorDescriptor&gt;&gt; getConstructors$kotlin_core()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.types.KotlinType computeMethodReturnType(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations, kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt; getContributedVariables(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor&gt; getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor java.lang.String toString()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope void computeNonDeclaredFunctions(java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.SimpleFunctionDescriptor&gt;, kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor&gt; getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.ClassMemberIndex java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.descriptors.ConstructorDescriptor access$createDefaultConstructor(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.types.KotlinType getType()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope getStaticScope()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope kotlin.reflect.jvm.internal.impl.load.java.structure.JavaPackage access$getJPackage$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; getContributedDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void addExtraDescriptors(java.util.Set&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt;, kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticScope void computeNonDeclaredProperties(kotlin.reflect.jvm.internal.impl.name.Name, java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.types.KotlinType computeMethodReturnType(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations, kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.types.KotlinType access$createTypeForMissingDependencies(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor, kotlin.reflect.jvm.internal.impl.name.FqName)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor kotlin.reflect.jvm.internal.impl.types.TypeConstructor getTypeConstructor()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void recordLookup(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.MemberIndexKt java.util.List access$getNonDeclaredMethodNames(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor&gt; getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt; getContributedVariables(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX kotlin.reflect.jvm.internal.impl.load.java.structure.JavaField findFieldByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor&gt; getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.FqName&gt; getSubPackages()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.List&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getClassNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getAllFieldNames()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt; getContributedDescriptors(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope void computeNonDeclaredProperties(kotlin.reflect.jvm.internal.impl.name.Name, java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment kotlin.reflect.jvm.internal.impl.load.java.structure.JavaPackage access$getJPackage$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope LazyJavaStaticClassScope(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass, kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getFunctionNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageScope java.util.Collection getPropertyNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope.computeMemberIndex.1 java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getMethodNames(kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.storage.NotNullLazyValue access$getNestedClassIndex$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaTypeParameterDescriptor LazyJavaTypeParameterDescriptor(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaTypeParameter, int, kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.lang.String toString()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.Collection findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void addExtraDescriptors(java.util.Set&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt;, kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor.resolveFromJavaClassObjectType.javaClassObjectType.1 kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope computeMemberScope()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getFunctionNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope kotlin.reflect.jvm.internal.impl.load.java.descriptors.JavaMethodDescriptor resolveMethodToFunctionDescriptor(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.storage.NullableLazyValue access$getFqName$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticClassScope java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.name.Name&gt; getFunctionNames(kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext access$getC$p(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.lang.String toString()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX java.util.List&lt;kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod&gt; findMethodsByName(kotlin.reflect.jvm.internal.impl.name.Name) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor java.util.Map access$computeValueArguments(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaAnnotationDescriptor java.lang.String toString()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassDescriptor java.util.Collection getConstructors()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void addExtraDescriptors(java.util.Set&lt;kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor&gt;, kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter, kotlin.jvm.functions.Function1&lt;? super kotlin.reflect.jvm.internal.impl.name.Name,java.lang.Boolean&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaPackageFragment LazyJavaPackageFragment(kotlin.reflect.jvm.internal.impl.load.java.lazy.LazyJavaResolverContext, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaPackage) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaStaticScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope void printScopeStructure(kotlin.reflect.jvm.internal.impl.utils.Printer) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope java.util.Collection access$searchMethodsInSupertypesWithoutBuiltinMagic(kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope, kotlin.reflect.jvm.internal.impl.name.Name)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaClassMemberScope kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.LazyJavaScope.MethodSignatureData resolveMethodSignature(kotlin.reflect.jvm.internal.impl.load.java.structure.JavaMethod, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

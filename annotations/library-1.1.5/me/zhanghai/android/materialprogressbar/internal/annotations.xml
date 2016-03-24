@@ -1,0 +1,8 @@
+<root>
+    <item name='me.zhanghai.android.materialprogressbar.internal.ThemeUtils int getColorFromAttrRes(int, android.content.Context) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.internal.ThemeUtils float getFloatFromAttrRes(int, android.content.Context) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

@@ -1,0 +1,14 @@
+<root>
+    <item name='com.devspark.robototextview.util.RobotoTypefaceUtils android.graphics.Typeface typefaceFromAttrs(android.content.Context, android.content.res.TypedArray) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='com.devspark.robototextview.util.RobotoTypefaceUtils void initView(android.widget.TextView, android.content.Context, android.util.AttributeSet) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='com.devspark.robototextview.util.RobotoTypefaceUtils void setUp(android.widget.TextView, android.graphics.Typeface) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='com.devspark.robototextview.util.RobotoTypefaceUtils void setUp(android.graphics.Paint, android.graphics.Typeface) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

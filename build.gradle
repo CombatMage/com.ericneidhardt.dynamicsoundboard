@@ -10,7 +10,6 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath 'proguard.io:proguard:5.2.1'
 		classpath "com.android.tools.build:gradle:1.5.0"
 		classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"

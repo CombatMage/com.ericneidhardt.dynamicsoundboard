@@ -1,5 +1,17 @@
 <root>
+    <item name='de.greenrobot.dao.internal.DaoConfig de.greenrobot.dao.internal.DaoConfig clone()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.internal.SqlUtils java.lang.StringBuilder appendColumn(java.lang.StringBuilder, java.lang.String, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
     <item name='de.greenrobot.dao.internal.SqlUtils java.lang.StringBuilder appendColumnsEqValue(java.lang.StringBuilder, java.lang.String, java.lang.String[]) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.internal.SqlUtils java.lang.StringBuilder appendProperty(java.lang.StringBuilder, java.lang.String, de.greenrobot.dao.Property)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.internal.SqlUtils java.lang.String toHex(byte[])'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='de.greenrobot.dao.internal.SqlUtils java.lang.String createSqlSelect(java.lang.String, java.lang.String, java.lang.String[], boolean) 2'>
@@ -33,18 +45,6 @@
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='de.greenrobot.dao.internal.SqlUtils java.lang.String createSqlUpdate(java.lang.String, java.lang.String[], java.lang.String[]) 2'>
-        <annotation name='org.jetbrains.annotations.NotNull'/>
-    </item>
-    <item name='de.greenrobot.dao.internal.DaoConfig de.greenrobot.dao.internal.DaoConfig clone()'>
-        <annotation name='org.jetbrains.annotations.NotNull'/>
-    </item>
-    <item name='de.greenrobot.dao.internal.SqlUtils java.lang.StringBuilder appendColumn(java.lang.StringBuilder, java.lang.String, java.lang.String)'>
-        <annotation name='org.jetbrains.annotations.NotNull'/>
-    </item>
-    <item name='de.greenrobot.dao.internal.SqlUtils java.lang.String toHex(byte[])'>
-        <annotation name='org.jetbrains.annotations.NotNull'/>
-    </item>
-    <item name='de.greenrobot.dao.internal.SqlUtils java.lang.StringBuilder appendProperty(java.lang.StringBuilder, java.lang.String, de.greenrobot.dao.Property)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='de.greenrobot.dao.internal.SqlUtils java.lang.String createSqlUpdate(java.lang.String, java.lang.String[], java.lang.String[]) 1'>

@@ -1,0 +1,143 @@
+<root>
+    <item name='freemarker.ext.servlet.FreemarkerServlet freemarker.ext.jsp.TaglibFactory createTaglibFactory(freemarker.template.ObjectWrapper, javax.servlet.ServletContext)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.AllHttpScopesHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet freemarker.template.TemplateModel createModel(freemarker.template.ObjectWrapper, javax.servlet.ServletContext, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet KEY_REQUEST_PARAMETERS'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet SYSTEM_PROPERTY_META_INF_TLD_SOURCES'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet freemarker.template.ObjectWrapper createDefaultObjectWrapper()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet KEY_APPLICATION'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.ServletContextHashModel ServletContextHashModel(javax.servlet.GenericServlet, freemarker.template.ObjectWrapper) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet INIT_PARAM_CLASSPATH_TLDS'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet INIT_PARAM_CONTENT_TYPE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet freemarker.cache.TemplateLoader createTemplateLoader(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.IncludePage void execute(freemarker.core.Environment, java.util.Map, freemarker.template.TemplateModel[], freemarker.template.TemplateDirectiveBody) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet SYSTEM_PROPERTY_CLASSPATH_TLDS'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.HttpRequestParametersHashModel freemarker.template.TemplateCollectionModel values()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet META_INF_TLD_LOCATION_CLEAR'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet INIT_PARAM_EXCEPTION_ON_MISSING_TEMPLATE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet java.lang.String requestUrlToTemplatePath(javax.servlet.http.HttpServletRequest) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.HttpRequestHashModel freemarker.template.TemplateCollectionModel values()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet INIT_PARAM_NO_CACHE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.HttpSessionHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet KEY_REQUEST_PRIVATE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet freemarker.ext.servlet.HttpRequestParametersHashModel createRequestParametersHashModel(javax.servlet.http.HttpServletRequest)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet KEY_APPLICATION_PRIVATE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet KEY_REQUEST'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.IncludePage void execute(freemarker.core.Environment, java.util.Map, freemarker.template.TemplateModel[], freemarker.template.TemplateDirectiveBody) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet INIT_PARAM_BUFFER_SIZE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet INIT_PARAM_TEMPLATE_PATH'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet freemarker.template.Configuration createConfiguration()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet KEY_INCLUDE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.HttpRequestHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet KEY_JSP_TAGLIBS'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet java.lang.String requestUrlToTemplatePath(javax.servlet.http.HttpServletRequest)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.HttpRequestParametersHashModel freemarker.template.TemplateCollectionModel keys()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.ServletContextHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet freemarker.cache.TemplateLoader createTemplateLoader(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet INIT_PARAM_META_INF_TLD_LOCATIONS'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet META_INF_TLD_LOCATION_CLASSPATH'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.HttpRequestParametersHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet META_INF_TLD_LOCATION_WEB_INF_PER_LIB_JARS'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.HttpRequestHashModel freemarker.template.TemplateCollectionModel keys()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet freemarker.template.TemplateModel createModel(freemarker.template.ObjectWrapper, javax.servlet.ServletContext, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.ext.servlet.FreemarkerServlet KEY_SESSION'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

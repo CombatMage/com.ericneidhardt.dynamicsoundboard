@@ -1,0 +1,116 @@
+<root>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager TAG_ERROR_DIALOG_MANAGER'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager TAG_ERROR_DIALOG'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogFragmentFactory.Support java.lang.Object createErrorFragment(org.greenrobot.eventbus.util.ThrowableFailureEvent, android.os.Bundle)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager void attachTo(android.app.Activity) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.AsyncExecutor.Builder org.greenrobot.eventbus.util.AsyncExecutor.Builder eventBus(org.greenrobot.eventbus.EventBus)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.AsyncExecutor org.greenrobot.eventbus.util.AsyncExecutor create()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogConfig int getMessageIdForThrowable(java.lang.Throwable) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogFragmentFactory java.lang.String getMessageFor(org.greenrobot.eventbus.util.ThrowableFailureEvent, android.os.Bundle) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogConfig org.greenrobot.eventbus.util.ErrorDialogConfig addMapping(java.lang.Class&lt;? extends java.lang.Throwable&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogFragmentFactory.Honeycomb java.lang.Object createErrorFragment(org.greenrobot.eventbus.util.ThrowableFailureEvent, android.os.Bundle)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogFragments android.app.Dialog createDialog(android.content.Context, android.os.Bundle, android.content.DialogInterface.OnClickListener) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager KEY_ICON_ID'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager KEY_TITLE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager KEY_EVENT_TYPE_ON_CLOSE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager KEY_FINISH_AFTER_DIALOG'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.AsyncExecutor.Builder org.greenrobot.eventbus.util.AsyncExecutor buildForActivityScope(android.app.Activity)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager void attachTo(android.app.Activity, boolean, android.os.Bundle) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager void attachTo(android.app.Activity, java.lang.Object, boolean, android.os.Bundle) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ExceptionToResourceMapping org.greenrobot.eventbus.util.ExceptionToResourceMapping addMapping(java.lang.Class&lt;? extends java.lang.Throwable&gt;, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ExceptionToResourceMapping java.lang.Integer mapThrowable(java.lang.Throwable) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager.HoneycombManagerFragment void attachTo(android.app.Activity, java.lang.Object, boolean, android.os.Bundle) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.AsyncExecutor.Builder org.greenrobot.eventbus.util.AsyncExecutor buildForScope(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogFragmentFactory T createErrorFragment(org.greenrobot.eventbus.util.ThrowableFailureEvent, android.os.Bundle)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogFragments void handleOnClick(android.content.DialogInterface, int, android.app.Activity, android.os.Bundle) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.AsyncExecutor org.greenrobot.eventbus.util.AsyncExecutor.Builder builder()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager KEY_MESSAGE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogFragmentFactory.Honeycomb android.app.Fragment createErrorFragment(org.greenrobot.eventbus.util.ThrowableFailureEvent, android.os.Bundle)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager.SupportManagerFragment void attachTo(android.app.Activity, java.lang.Object, boolean, android.os.Bundle) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogFragmentFactory.Support android.support.v4.app.Fragment createErrorFragment(org.greenrobot.eventbus.util.ThrowableFailureEvent, android.os.Bundle)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ExceptionToResourceMapping throwableToMsgIdMap'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.AsyncExecutor.Builder org.greenrobot.eventbus.util.AsyncExecutor.Builder threadPool(java.util.concurrent.Executor)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ExceptionToResourceMapping java.lang.Integer mapThrowableFlat(java.lang.Throwable) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogManager void attachTo(android.app.Activity, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.AsyncExecutor.Builder org.greenrobot.eventbus.util.AsyncExecutor.Builder failureEventType(java.lang.Class&lt;?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.ErrorDialogFragmentFactory T prepareErrorFragment(org.greenrobot.eventbus.util.ThrowableFailureEvent, boolean, android.os.Bundle) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.AsyncExecutor.Builder org.greenrobot.eventbus.util.AsyncExecutor buildForActivityScope(android.app.Activity) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.util.AsyncExecutor.Builder org.greenrobot.eventbus.util.AsyncExecutor build()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>
