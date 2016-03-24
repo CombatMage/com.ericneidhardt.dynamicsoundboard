@@ -19,13 +19,14 @@ class PlaylistAdapter
 {
 	init { this.setHasStableIds(true) }
 
-	override fun getItemId(position: Int): Long = this.getValues()[position].mediaPlayerData.playerId.hashCode().toLong()
+	override fun getItemId(position: Int): Long = this.values[position].mediaPlayerData.playerId.hashCode().toLong()
 
-	override fun getValues(): List<MediaPlayerController> = this.presenter.values
+	override val values: List<MediaPlayerController>
+		get() = this.presenter.values
 
 	override fun getItemViewType(position: Int): Int = R.layout.view_playlist_item
 
-	override fun getItemCount(): Int = this.getValues().size
+	override fun getItemCount(): Int = this.values.size
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder
 	{
@@ -35,7 +36,7 @@ class PlaylistAdapter
 
 	override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int)
 	{
-		val data = this.getValues()[position]
+		val data = this.values[position]
 		holder.bindData(data, position == this.itemCount - 1)
 	}
 

@@ -21,9 +21,10 @@ class SoundAdapter
 ) :
 		SoundProgressAdapter<SoundViewHolder>()
 {
-	override fun getValues(): List<MediaPlayerController> = this.presenter.values
+	override val values: List<MediaPlayerController>
+		get() = this.presenter.values
 
-	override fun getItemCount(): Int = this.getValues().size
+	override fun getItemCount(): Int = this.values.size
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder =
 			SoundViewHolder(
@@ -40,8 +41,7 @@ class SoundAdapter
 
 	override fun onBindViewHolder(holder: SoundViewHolder, position: Int)
 	{
-		holder.bindData(this.getValues()[position])
-		holder.showShadowForLastItem(position == this.itemCount - 1)
+		holder.bindData(this.values[position])
 		holder.setLabelToDeletionSettings(SoundboardPreferences.isOneSwipeToDeleteEnabled)
 	}
 }

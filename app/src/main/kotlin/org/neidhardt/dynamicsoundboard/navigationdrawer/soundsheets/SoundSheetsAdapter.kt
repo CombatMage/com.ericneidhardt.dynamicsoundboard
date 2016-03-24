@@ -16,13 +16,14 @@ open class SoundSheetsAdapter
 {
 	init { this.setHasStableIds(true) }
 
-	override fun getItemId(position: Int): Long = this.getValues()[position].fragmentTag.hashCode().toLong()
+	override fun getItemId(position: Int): Long = this.values[position].fragmentTag.hashCode().toLong()
 
-	override fun getValues(): List<SoundSheet> = this.presenter.values
+	override val values: List<SoundSheet>
+		get() = this.presenter.values
 
 	override fun getItemViewType(position: Int): Int = R.layout.view_sound_sheet_item
 
-	override fun getItemCount(): Int = this.getValues().size
+	override fun getItemCount(): Int = this.values.size
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundSheetViewHolder
 	{
@@ -32,7 +33,7 @@ open class SoundSheetsAdapter
 
 	override fun onBindViewHolder(holder: SoundSheetViewHolder, position: Int)
 	{
-		val data = this.getValues()[position]
+		val data = this.values[position]
 
 		val sounds = this.presenter.getSoundsInFragment(data.fragmentTag)
 		val soundCount = sounds.size

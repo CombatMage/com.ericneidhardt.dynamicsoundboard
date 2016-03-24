@@ -9,11 +9,11 @@ abstract class BaseAdapter<Type, ViewHolder : RecyclerView.ViewHolder> :
 		RecyclerView.Adapter<ViewHolder>(),
 		ListAdapter<Type>
 {
-	abstract fun getValues(): List<Type>
+	abstract val values: List<Type>
 
 	override fun notifyItemChanged(data: Type)
 	{
-		val index = this.getValues().indexOf(data)
+		val index = this.values.indexOf(data)
 		if (index == -1)
 			this.notifyDataSetChanged()
 		else

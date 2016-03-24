@@ -60,7 +60,7 @@ where T : RecyclerView.ViewHolder, T : SoundProgressViewHolder
 	private fun getPlayingItems(): List<Int>
 	{
 		val playingSounds = ArrayList<Int>()
-		val allSounds = this.getValues()
+		val allSounds = this.values
 		val count = allSounds.size
 		for (i in 0..count - 1)
 		{

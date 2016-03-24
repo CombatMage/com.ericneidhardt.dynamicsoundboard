@@ -24,11 +24,12 @@ class SoundLayoutsAdapter
 {
 	init { this.setHasStableIds(true) }
 
-	override fun getItemId(position: Int): Long = this.getValues()[position].databaseId.hashCode().toLong()
+	override fun getItemId(position: Int): Long = this.values[position].databaseId.hashCode().toLong()
 
-	override fun getValues(): List<SoundLayout> = this.presenter.values
+	override val values: List<SoundLayout>
+		get() = this.presenter.values
 
-	override fun getItemCount(): Int = this.getValues().size
+	override fun getItemCount(): Int = this.values.size
 
 	override fun getItemViewType(position: Int): Int = R.layout.view_sound_layout_item
 
@@ -46,13 +47,13 @@ class SoundLayoutsAdapter
 
 	override fun onBindViewHolder(holder: SoundLayoutViewHolder, position: Int)
 	{
-		val data = this.getValues()[position]
+		val data = this.values[position]
 		holder.bindData(data, position == this.itemCount - 1)
 	}
 
 	override fun notifyItemChanged(data: SoundLayout)
 	{
-		val index = this.getValues().indexOf(data)
+		val index = this.values.indexOf(data)
 		if (index == -1)
 			this.notifyDataSetChanged()
 		else
