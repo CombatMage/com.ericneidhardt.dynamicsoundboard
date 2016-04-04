@@ -53,7 +53,7 @@ class SoundPresenter
 		val count = players.size
 		for (i in 0..count - 1)
 		{
-			if (players[i].mediaPlayerData.playerId == playerId)
+			if (players[i].mediaPlayerData.playerId == playerId && event.isAlive)
 				this.adapter?.notifyItemChanged(i)
 		}
 	}

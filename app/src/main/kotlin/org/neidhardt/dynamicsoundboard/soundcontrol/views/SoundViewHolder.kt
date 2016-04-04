@@ -28,7 +28,6 @@ class SoundViewHolder
 		itemView: View,
 		eventBus: EventBus,
 		soundsDataStorage: SoundsDataStorage,
-		onItemDelete: (MediaPlayerController, Int) -> Unit,
 		progressTimer: SoundProgressTimer
 ) :
 		DismissibleItemViewHolder<SoundItemPagerAdapter>(itemView, SoundItemPagerAdapter()),
@@ -41,7 +40,6 @@ class SoundViewHolder
 
 	private val eventBus = eventBus
 	private val soundsDataStorage = soundsDataStorage
-	private val onItemDelete = onItemDelete
 	private val progressTimer = progressTimer
 
 	private val name = itemView.findViewById(R.id.et_name) as CustomEditText
@@ -95,17 +93,13 @@ class SoundViewHolder
 
 	override fun delete()
 	{
-		if (this.player != null)
-			this.onItemDelete(this.player as MediaPlayerController, this.layoutPosition)
-
+		this.player?.apply { soundsDataStorage.removeSounds(listOf(this)) }
 		Handler().startTimerDelayed()
 	}
 
 	override fun onProgressUpdate()
 	{
-		this.player?.apply {
-			timePosition.progress = progress
-		}
+		this.player?.apply { timePosition.progress = progress }
 	}
 
 	override fun onTextEdited(text: String)

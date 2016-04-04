@@ -31,13 +31,7 @@ class SoundAdapter
 					LayoutInflater.from(parent.context).inflate(R.layout.view_sound_item, parent, false),
 					this.eventBus,
 					this.soundsDataStorage,
-					{ player, position -> delete(player) },
 					this)
-
-	private fun delete(player: MediaPlayerController)
-	{
-		this.soundsDataStorage.removeSounds(listOf(player))
-	}
 
 	override fun onBindViewHolder(holder: SoundViewHolder, position: Int)
 	{

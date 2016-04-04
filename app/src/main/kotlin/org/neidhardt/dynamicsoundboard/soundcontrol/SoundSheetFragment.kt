@@ -240,7 +240,7 @@ class SoundSheetFragment :
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundsRemovedEvent)
 	{
-		if (this.soundAdapter?.getValues()?.size == 0)
+		if (this.soundAdapter?.values?.size == 0)
 			this.floatingActionButton?.show(true)
 	}
 

@@ -91,7 +91,7 @@ class SoundLayoutsPresenter
 	private fun getSoundLayoutsSelectedForDeletion(): List<SoundLayout>
 	{
 		val selectedSoundLayouts = ArrayList<SoundLayout>()
-		val existingSoundLayouts = this.adapter?.getValues()
+		val existingSoundLayouts = this.adapter?.values
 		for (soundLayout in existingSoundLayouts.orEmpty())
 		{
 			if (soundLayout.isSelectedForDeletion)
