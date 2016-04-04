@@ -7,7 +7,6 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.longtermtask.LongTermTask
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerComparator
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import java.io.File
 import java.util.*
@@ -73,11 +72,8 @@ class LoadSoundsFromFileListTask
 	{
 		for (file in this.filesToLoad)
 		{
-			if (file.isAudioFile)
-			{
-				val data = getMediaPlayerDataFromFile(file, this.fragmentTag)
-				this.soundsDataStorage.createSoundAndAddToManager(data)
-			}
+			val data = getMediaPlayerDataFromFile(file, this.fragmentTag)
+			this.soundsDataStorage.createSoundAndAddToManager(data)
 		}
 
 		return filesToLoad

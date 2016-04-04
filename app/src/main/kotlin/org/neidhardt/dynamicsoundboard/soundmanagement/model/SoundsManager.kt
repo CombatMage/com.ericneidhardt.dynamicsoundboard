@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
+import android.net.Uri
 import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -11,10 +12,11 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.misc.getFileForUri
+import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
-import java.io.IOException
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CopyOnWriteArraySet
@@ -291,6 +293,10 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		try
 		{
+			val file = Uri.parse(playerData.uri).getFileForUri()
+			if (file == null || !file.isAudioFile)
+				throw Exception("cannot create create media player, given file is no audio file")
+
 			val newPlayerData = MediaPlayerData()
 			newPlayerData.id = playerData.id
 			newPlayerData.isInPlaylist = true
@@ -307,7 +313,7 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 					soundsDataStorage = this
 			)
 		}
-		catch (e: IOException)
+		catch (e: Exception)
 		{
 			Logger.d(TAG, playerData.toString() + " " + e.message)
 			this.removePlaylistDataFromDatabase(playerData)
@@ -319,18 +325,22 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		try
 		{
+			val file = Uri.parse(playerData.uri).getFileForUri()
+			if (file == null || !file.isAudioFile)
+				throw Exception("cannot create create media player, given file is no audio file")
+
 			return getNewMediaPlayerController(
 					context = SoundboardApplication.context,
 					eventBus = this.eventBus,
 					mediaPlayerData = playerData,
 					soundsDataStorage = this)
 		}
-		catch (e: IOException) {
+		catch (e: Exception)
+		{
 			Logger.d(TAG, e.message)
 			this.removeSoundDataFromDatabase(playerData)
 			return null
 		}
-
 	}
 
 	override fun removeSoundDataFromDatabase(playerData: MediaPlayerData)

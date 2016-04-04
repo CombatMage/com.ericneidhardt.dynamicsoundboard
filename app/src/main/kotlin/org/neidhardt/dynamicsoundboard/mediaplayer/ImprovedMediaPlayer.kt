@@ -13,7 +13,6 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
-import java.io.IOException
 
 val PlaylistTAG = "PlaylistTAG"
 
@@ -145,7 +144,6 @@ private class ImprovedMediaPlayer
 
 	init { this.init(context) }
 
-	@Throws(IOException::class)
 	private fun init(context: Context)
 	{
 		if (this.mediaPlayerData.uri == null)

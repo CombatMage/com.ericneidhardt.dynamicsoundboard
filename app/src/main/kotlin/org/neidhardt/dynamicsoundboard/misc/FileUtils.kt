@@ -44,7 +44,7 @@ fun Uri.getFileForUri(): File?
 val File.isAudioFile: Boolean
 	get()
 	{
-		val mime = FileUtils.getMimeType(this.absolutePath) ?: return false
+		val mime = this.getMimeType ?: return false
 		if (mime.startsWith(AUDIO))
 			return true
 		for (audioMime in MIME_AUDIO_TYPES) {
@@ -52,6 +52,18 @@ val File.isAudioFile: Boolean
 				return true
 		}
 		return false
+	}
+
+val File.getMimeType: String?
+	get()
+	{
+		var type: String? = null
+		val extension = FileUtils.getFileExtension(this.absolutePath)
+		if (extension != null) {
+			val mime = MimeTypeMap.getSingleton()
+			type = mime.getMimeTypeFromExtension(extension)
+		}
+		return type
 	}
 
 val File.containsAudioFiles: Boolean
@@ -108,7 +120,7 @@ object FileUtils
 		return fileName
 	}
 
-	fun getPathUriFromGenericUri(context: Context, uri: Uri): Uri?
+	internal fun getPathUriFromGenericUri(context: Context, uri: Uri): Uri?
 	{
 		var filePathUri = uri
 		if (uri.scheme != null && uri.scheme == SCHEME_CONTENT_URI) {
@@ -122,7 +134,7 @@ object FileUtils
 		return filePathUri
 	}
 
-	fun getFileExtension(filePath: String): String?
+	internal fun getFileExtension(filePath: String): String?
 	{
 		var extension = MimeTypeMap.getFileExtensionFromUrl(filePath)
 		if (extension.isEmpty()) {
@@ -132,17 +144,6 @@ object FileUtils
 			extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length)
 		}
 		return extension
-	}
-
-	fun getMimeType(filePath: String): String?
-	{
-		var type: String? = null
-		val extension = getFileExtension(filePath)
-		if (extension != null) {
-			val mime = MimeTypeMap.getSingleton()
-			type = mime.getMimeTypeFromExtension(extension)
-		}
-		return type
 	}
 
 }

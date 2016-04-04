@@ -168,13 +168,11 @@ class AddNewSoundDialog : BaseDialog, FileResultHandler
 	{
 		for (file in files)
 		{
-			if (file.isAudioFile) {
-				val soundUri = Uri.parse(file.absolutePath)
+			val soundUri = Uri.parse(file.absolutePath)
 
-				val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
-				presenter?.addNewSound(NewSoundData(soundUri, label))
-				this.updateHeightToContent()
-			}
+			val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
+			presenter?.addNewSound(NewSoundData(soundUri, label))
+			this.updateHeightToContent()
 		}
 		this.updateHeightToContent()
 	}
