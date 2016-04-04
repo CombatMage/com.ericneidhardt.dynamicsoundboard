@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromFileListTask
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 import java.io.File
@@ -116,13 +117,11 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.OnClickLi
 				files.add(file)
 			else
 			{
-				val filesInSelectedDir = file.listFiles()
-				if (filesInSelectedDir != null) {
-					for (fileInDir in filesInSelectedDir)
-					{
-						if (!files.contains(fileInDir))
-							files.add(fileInDir)
-					}
+				val filesInSelectedDir = file.getFilesInDirectory()
+				for (fileInDir in filesInSelectedDir)
+				{
+					if (!files.contains(fileInDir))
+						files.add(fileInDir)
 				}
 			}
 		}

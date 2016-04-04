@@ -11,46 +11,65 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 09.04.2015.
  */
+private val TAG = FileUtils::class.java.name
+
+private val AUDIO = "audio"
+private val MIME_AUDIO_TYPES = arrayOf("audio/*", "application/ogg", "application/x-ogg")
+private val SCHEME_CONTENT_URI = "content"
+
+fun File.getFilesInDirectory(): MutableList<File>
+{
+	val content = this.listFiles()
+	if (content == null || content.size == 0)
+		return ArrayList()
+
+	val files = ArrayList<File>(content.size)
+	for (file in content)
+		files.add(file)
+
+	return files
+}
+
+fun Uri.getFileForUri(): File?
+{
+	val pathUri = FileUtils.getPathUriFromGenericUri(SoundboardApplication.context, this) ?: return null
+
+	val file = File(pathUri.path)
+	if (!file.exists())
+		return null
+
+	return file
+}
+
+val File.isAudioFile: Boolean
+	get()
+	{
+		val mime = FileUtils.getMimeType(this.absolutePath) ?: return false
+		if (mime.startsWith(AUDIO))
+			return true
+		for (audioMime in MIME_AUDIO_TYPES) {
+			if (mime == audioMime)
+				return true
+		}
+		return false
+	}
+
+val File.containsAudioFiles: Boolean
+	get()
+	{
+		val filesInDirectory = this.listFiles() ?: return false
+		for (file in filesInDirectory) {
+			if (file.isDirectory)
+				continue
+			if (file.isAudioFile)
+				return true
+		}
+		return false
+	}
+
 object FileUtils
 {
-	private val TAG = FileUtils::class.java.name
-
 	val MIME_AUDIO = "audio/*|application/ogg|application/x-ogg"
-
-	private val AUDIO = "audio"
-	private val MIME_AUDIO_TYPES = arrayOf("audio/*", "application/ogg", "application/x-ogg")
-	private val SCHEME_CONTENT_URI = "content"
-
-	fun getFilesInDirectory(directory: File): MutableList<File>
-	{
-		val content = directory.listFiles()
-		if (content == null || content.size == 0)
-			return ArrayList()
-
-		val files = ArrayList<File>(content.size)
-		for (file in content) {
-			if (file.isDirectory)
-				files.add(file)
-		}
-
-		for (file in content) {
-			if (!file.isDirectory)
-				files.add(file)
-		}
-
-		return files
-	}
-
-	fun getFileForUri(uri: Uri): File?
-	{
-		val pathUri = getPathUriFromGenericUri(SoundboardApplication.context, uri) ?: return null
-
-		val file = File(pathUri.path)
-		if (!file.exists())
-			return null
-
-		return file
-	}
 
 	fun stripFileTypeFromName(fileName: String?): String
 	{
@@ -89,7 +108,7 @@ object FileUtils
 		return fileName
 	}
 
-	private fun getPathUriFromGenericUri(context: Context, uri: Uri): Uri?
+	fun getPathUriFromGenericUri(context: Context, uri: Uri): Uri?
 	{
 		var filePathUri = uri
 		if (uri.scheme != null && uri.scheme == SCHEME_CONTENT_URI) {
@@ -101,30 +120,6 @@ object FileUtils
 			cursor.close()
 		}
 		return filePathUri
-	}
-
-	fun isAudioFile(file: File): Boolean
-	{
-		val mime = getMimeType(file.absolutePath) ?: return false
-		if (mime.startsWith(AUDIO))
-			return true
-		for (audioMime in MIME_AUDIO_TYPES) {
-			if (mime == audioMime)
-				return true
-		}
-		return false
-	}
-
-	fun containsAudioFiles(directory: File): Boolean
-	{
-		val filesInDirectory = directory.listFiles() ?: return false
-		for (file in filesInDirectory) {
-			if (file.isDirectory)
-				continue
-			if (isAudioFile(file))
-				return true
-		}
-		return false
 	}
 
 	fun getFileExtension(filePath: String): String?

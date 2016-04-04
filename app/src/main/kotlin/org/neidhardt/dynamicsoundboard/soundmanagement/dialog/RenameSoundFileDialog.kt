@@ -15,8 +15,8 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
-import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -99,8 +99,7 @@ private class RenameSoundFileDialogPresenter
 		else
 			this.renameAllOccurrences.visibility = View.GONE
 
-
-		val currentFile = FileUtils.getFileForUri(Uri.parse(this.playerData.uri))
+		val currentFile = Uri.parse(this.playerData.uri).getFileForUri()
 		val currentFileName = currentFile?.name
 
 		this.newName.text = this.appendFileTypeToNewPath(this.playerData.label, currentFileName)
@@ -144,7 +143,7 @@ private class RenameSoundFileDialogPresenter
 
 	private fun deliverResult(fileUriToRename: Uri, newFileLabel: String, renameAllOccurrences: Boolean)
 	{
-		val fileToRename = FileUtils.getFileForUri(fileUriToRename)
+		val fileToRename = fileUriToRename.getFileForUri()
 		if (fileToRename == null)
 		{
 			this.showErrorRenameFile()

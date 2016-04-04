@@ -13,7 +13,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.misc.FileUtils
+import org.neidhardt.dynamicsoundboard.misc.containsAudioFiles
+import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
+import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import java.io.File
 import java.util.*
@@ -21,7 +23,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 12.11.2014.
  */
-public abstract class FileExplorerDialog : BaseDialog()
+abstract class FileExplorerDialog : BaseDialog()
 {
 	private val KEY_PARENT_FILE = "org.neidhardt.dynamicsoundboard.fileexplorer.parentFile"
 
@@ -35,7 +37,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 	protected abstract fun onFileSelected(selectedFile: File)
 
-	public fun storePathToSharedPreferences(key: String, path: String)
+	fun storePathToSharedPreferences(key: String, path: String)
 	{
 		val context = SoundboardApplication.context
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -44,7 +46,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 		editor.apply()
 	}
 
-	public fun getPathFromSharedPreferences(key: String): String?
+	fun getPathFromSharedPreferences(key: String): String?
 	{
 		val context = SoundboardApplication.context
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -82,18 +84,18 @@ public abstract class FileExplorerDialog : BaseDialog()
 			this.notifyDataSetChanged()
 		}
 
-		public fun setParent(parent: File)
+		fun setParent(parent: File)
 		{
 			this.parentFile = parent
-			this.fileList = FileUtils.getFilesInDirectory(parent)
+			this.fileList = parent.getFilesInDirectory()
 			if (parent.parentFile != null)
 				this.fileList.add(0, parent.parentFile)
 		}
 
-		public fun refreshDirectory()
+		fun refreshDirectory()
 		{
 			this.parentFile?.apply {
-				fileList = FileUtils.getFilesInDirectory(this)
+				fileList = this.getFilesInDirectory()
 				if (this.parentFile != null)
 					fileList.add(0, this.parentFile)
 			}
@@ -134,7 +136,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 			itemView.setOnLongClickListener(this)
 		}
 
-		public fun bindData(file: File)
+		fun bindData(file: File)
 		{
 			this.file = file
 			if (file == adapter.parentFile!!.parentFile)
@@ -165,7 +167,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		private fun bindFile(file: File)
 		{
-			if (FileUtils.isAudioFile(file))
+			if (file.isAudioFile)
 				this.fileType.setImageResource(R.drawable.selector_ic_file_sound)
 			else
 				this.fileType.setImageResource(R.drawable.selector_ic_file)
@@ -173,7 +175,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		private fun bindDirectory(file: File)
 		{
-			if (FileUtils.containsAudioFiles(file))
+			if (file.containsAudioFiles)
 				this.fileType.setImageResource(R.drawable.selector_ic_folder_sound)
 			else
 				this.fileType.setImageResource(R.drawable.selector_ic_folder)

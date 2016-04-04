@@ -21,20 +21,11 @@ class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
 		dialog.show(manager, TAG)
 	}
 
-	override fun canSelectDirectory(): Boolean
-	{
-		return true
-	}
+	override fun canSelectDirectory(): Boolean = true
 
-	override fun canSelectFile(): Boolean
-	{
-		return true
-	}
+	override fun canSelectFile(): Boolean = true
 
-	override fun canSelectMultipleFiles(): Boolean
-	{
-		return true
-	}
+	override fun canSelectMultipleFiles(): Boolean = true
 
 	override fun returnResults()
 	{

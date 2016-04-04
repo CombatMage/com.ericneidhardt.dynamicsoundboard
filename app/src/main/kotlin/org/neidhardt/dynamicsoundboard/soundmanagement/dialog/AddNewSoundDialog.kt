@@ -26,6 +26,7 @@ import org.neidhardt.dynamicsoundboard.fileexplorer.GetNewSoundFromDirectoryDial
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
+import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
@@ -131,13 +132,13 @@ class AddNewSoundDialog : BaseDialog, FileResultHandler
 
 		val presenter = this.presenter as AddNewSoundDialogPresenter
 
-		val count = presenter.getValues().size
+		val count = presenter.values.size
 		val uris = ArrayList<String>(count)
 		val labels = ArrayList<String>(count)
 
 		for (i in 0..count - 1)
 		{
-			val data = presenter.getValues()[i]
+			val data = presenter.values[i]
 
 			labels.add(i, data.label)
 			uris.add(i, data.uri.toString())
@@ -167,11 +168,13 @@ class AddNewSoundDialog : BaseDialog, FileResultHandler
 	{
 		for (file in files)
 		{
-			val soundUri = Uri.parse(file.absolutePath)
+			if (file.isAudioFile) {
+				val soundUri = Uri.parse(file.absolutePath)
 
-			val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
-			presenter?.addNewSound(NewSoundData(soundUri, label))
-			this.updateHeightToContent()
+				val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
+				presenter?.addNewSound(NewSoundData(soundUri, label))
+				this.updateHeightToContent()
+			}
 		}
 		this.updateHeightToContent()
 	}
@@ -194,6 +197,8 @@ private class AddNewSoundDialogPresenter
 )
 {
 	private val soundsToAdd = ArrayList<NewSoundData>()
+	val values: List<NewSoundData>
+		get() = this.soundsToAdd
 
 	val adapter = NewSoundAdapter(this)
 
@@ -231,7 +236,7 @@ private class AddNewSoundDialogPresenter
 		val renamedPlayers = ArrayList<MediaPlayerData>()
 		for (i in 0..count - 1)
 		{
-			val item = this.getValues()[i]
+			val item = this.values[i]
 
 			val soundUri = item.uri
 			val soundLabel = item.label
@@ -281,11 +286,6 @@ private class AddNewSoundDialogPresenter
 		this.dialog.mainView!!.enableRecyclerViewDividers(true)
 		this.adapter.notifyDataSetChanged()
 	}
-
-	internal fun getValues() : List<NewSoundData>
-	{
-		return this.soundsToAdd
-	}
 }
 
 private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter) : RecyclerView.Adapter<NewSoundViewHolder>()
@@ -298,12 +298,12 @@ private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter)
 
 	override fun getItemCount(): Int
 	{
-		return this.presenter.getValues().size
+		return this.presenter.values.size
 	}
 
 	override fun onBindViewHolder(holder: NewSoundViewHolder, position: Int)
 	{
-		holder.bindData(this.presenter.getValues()[position])
+		holder.bindData(this.presenter.values[position])
 	}
 }
 
