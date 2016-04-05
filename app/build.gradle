@@ -1,8 +1,16 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+	}
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
-//apply from: '../jacoco.gradle'
 
 android {
 
@@ -18,8 +26,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
 		targetSdkVersion 23
-		versionCode 22400
-		versionName "2.24.0"
+		versionCode 22401
+		versionName "2.24.1"
 		resConfigs "de"
 	}
 

@@ -4,17 +4,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.view.ActionMode
-import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_base.*
+import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_toolbar_content.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -45,7 +45,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromInte
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
-import org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
 import java.util.*
@@ -67,7 +66,6 @@ class SoundActivity :
 	private val TAG = javaClass.name
 
 	var isActivityVisible = true
-	var isActionModeActive = false
 
 	private var navigationDrawerLayout: DrawerLayout? = null
 	private var drawerToggle: ActionBarDrawerToggle? = null
@@ -154,36 +152,34 @@ class SoundActivity :
 
 	private fun initToolbar()
 	{
-		val appBarLayout = this.findViewById(R.id.appBarLayout) as AppBarLayout
-		appBarLayout.setExpanded(true);
+		this.abl_main.setExpanded(true)
+		this.setSupportActionBar(this.tb_main)
 
-		val toolbar = this.findViewById(R.id.toolbar) as Toolbar
-		this.setSupportActionBar(toolbar)
+		this.tv_app_name.visibility = View.VISIBLE
+		this.action_add_sound_sheet.setOnClickListener(this)
 
-		this.findViewById(R.id.tv_app_name)?.visibility = View.VISIBLE
-		this.findViewById(R.id.action_add_sound_sheet)?.setOnClickListener(this)
+		this.et_set_label.apply {
+			this.visibility = View.GONE
+			this.onTextEditedListener = this@SoundActivity
 
-		(this.findViewById(R.id.et_set_label) as ActionbarEditText).apply {
-			visibility = View.GONE
-			onTextEditedListener = this@SoundActivity
-			getCurrentSoundFragment()?.apply {
-				soundSheetsDataAccess.getSoundSheetForFragmentTag(this.fragmentTag)?.apply {
-					text = this.label
-				}
+			val currentSoundSheet = getCurrentSoundFragment()
+			if (currentSoundSheet != null) {
+				val currentLabel = soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheet.fragmentTag)?.label
+				this.text = currentLabel
 			}
 		}
 	}
 
 	private fun initNavigationDrawer()
 	{
-		// The navigation drawer is fixed on tablets in landscape mode, therefore we need to check the Views type
-		val navigationDrawerLayout = this.findViewById(R.id.root_layout)
-		if (navigationDrawerLayout != null && navigationDrawerLayout is DrawerLayout)
+		// The navigation drawer is fixed on tablets in landscape mode, therefore the drawerLayout does not exist in this configuration
+		val navigationDrawerLayout = this.dl_main
+		if (navigationDrawerLayout != null)
 		{
 			this.navigationDrawerLayout = navigationDrawerLayout
 			this.drawerToggle = object : ActionBarDrawerToggle(this,
 					this.navigationDrawerLayout,
-					this.findViewById(R.id.toolbar) as Toolbar,
+					tb_main,
 					R.string.navigation_drawer_content_description_open,
 					R.string.navigation_drawer_content_description_close)
 			{
@@ -273,12 +269,12 @@ class SoundActivity :
 	fun setSoundSheetActionsEnable(enable: Boolean)
 	{
 		var viewState = if (enable) View.VISIBLE else View.GONE
-		this.findViewById(R.id.action_add_sound)?.visibility = viewState
-		this.findViewById(R.id.action_add_sound_dir)?.visibility = viewState
-		this.findViewById(R.id.et_set_label)?.visibility = viewState
+		this.action_add_sound.visibility = viewState
+		this.action_add_sound_dir.visibility = viewState
+		this.et_set_label.visibility = viewState
 
 		viewState = if (!enable) View.VISIBLE else View.GONE
-		this.findViewById(R.id.tv_app_name)?.visibility = viewState
+		this.tv_app_name.visibility = viewState
 	}
 
 	@Subscribe
@@ -436,19 +432,6 @@ class SoundActivity :
 		}
 	}
 
-	override fun onSupportActionModeStarted(mode: ActionMode)
-	{
-		super.onSupportActionModeStarted(mode)
-		this.isActionModeActive = true
-	}
-
-	override fun onSupportActionModeFinished(mode: ActionMode)
-	{
-		super.onSupportActionModeFinished(mode)
-		this.isActionModeActive = false
-	}
-
-	@SuppressWarnings("ResourceType") // for unknown reason, inspection demand using Gravity.START, but this would lead to warnings
 	fun closeNavigationDrawer()
 	{
 		this.navigationDrawerLayout?.apply {
@@ -528,7 +511,7 @@ class SoundActivity :
 		transaction.commit()
 		fragmentManager.executePendingTransactions()
 
-		(this.findViewById(R.id.et_set_label) as ActionbarEditText).text = soundSheet.label
+		this.et_set_label.text = soundSheet.label
 	}
 
 	private fun getCurrentSoundFragment(): SoundSheetFragment?

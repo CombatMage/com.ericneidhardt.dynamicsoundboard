@@ -2,19 +2,18 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:id="@+id/root_layout"
+		android:id="@+id/dl_main"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:fitsSystemWindows="true"
-		tools:ignore="InconsistentLayout">
+		android:fitsSystemWindows="true">
 
 	<android.support.design.widget.CoordinatorLayout
-			android:id="@+id/coordinatorLayout"
+			android:id="@+id/cl_main"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
 		<android.support.design.widget.AppBarLayout
-				android:id="@+id/appBarLayout"
+				android:id="@+id/abl_main"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content">
 
