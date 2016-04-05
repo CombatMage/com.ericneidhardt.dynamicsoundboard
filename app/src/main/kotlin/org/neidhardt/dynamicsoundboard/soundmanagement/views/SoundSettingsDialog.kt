@@ -34,7 +34,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), View.OnClickListener, Com
 
 	private var indexOfCurrentFragment = -1
 
-	override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_sound_settings_layout, null)
 
 		this.soundName = view.findViewById(R.id.et_name_file) as CustomEditText

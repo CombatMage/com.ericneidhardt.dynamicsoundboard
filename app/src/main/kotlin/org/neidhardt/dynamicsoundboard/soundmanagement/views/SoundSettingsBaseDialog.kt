@@ -23,7 +23,7 @@ abstract class SoundSettingsBaseDialog : BaseDialog()
 		}
 	}
 
-	abstract override fun onCreateDialog(savedInstanceState: Bundle): Dialog
+	abstract override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 
 	companion object {
 		private val KEY_PLAYER_ID = "org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsBaseDialog.playerId"

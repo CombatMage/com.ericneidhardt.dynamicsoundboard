@@ -47,7 +47,7 @@ class RenameSoundFileDialog : SoundSettingsBaseDialog
 		this.show(manager, TAG)
 	}
 
-	override fun onCreateDialog(savedInstanceState: Bundle): Dialog
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
 		@SuppressLint("InflateParams")
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_rename_sound_file_layout, null)
