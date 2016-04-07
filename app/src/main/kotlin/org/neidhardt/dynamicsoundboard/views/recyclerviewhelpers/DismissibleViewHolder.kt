@@ -67,16 +67,26 @@ abstract class DismissibleItemViewHolder<T : PagerAdapter>(itemView: View, pager
 	override fun onPageSelected(selectedPage: Int)
 	{
 		if (selectedPage != getIndexOfContentPage() && SoundboardPreferences.isOneSwipeToDeleteEnabled)
+		{
+			this.onDeletionPending(true)
 			this.handler.deleteItemDelayed() // delay deletion, because page is selected before scrolling has settled
+		}
+		else
+			this.onDeletionPending(false)
 	}
 
-	override fun onPageScrollStateChanged(state: Int) {}
+	override fun onPageScrollStateChanged(state: Int)
+	{
+		this.onDeletionPending(true)
+	}
 
 	override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
 	protected abstract fun getIndexOfContentPage(): Int
 
 	protected abstract fun delete()
+
+	protected abstract fun onDeletionPending(isDeletionPending: Boolean)
 
 	private fun Handler.deleteItemDelayed()
 	{

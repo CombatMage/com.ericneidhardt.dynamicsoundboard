@@ -7,7 +7,7 @@
 	<application
 			android:name=".DynamicSoundboardApplication"
 			android:allowBackup="true"
-			android:label="Dynamic Soundboard (Debug)"
+			android:label="DS (Debug)"
 			tools:replace="android:label"/>
 
 </manifest>

@@ -8,6 +8,8 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 
 interface MediaPlayerController
 {
+	var isDeletionPending: Boolean
+
 	val mediaPlayerData: MediaPlayerData
 
 	val isPlayingSound: Boolean

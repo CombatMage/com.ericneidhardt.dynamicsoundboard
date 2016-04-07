@@ -66,6 +66,8 @@ private class ImprovedMediaPlayer
 
 	private val currentState: MediaPlayerState get() = this.mediaPlayer.currentState
 
+	override var isDeletionPending: Boolean = false
+
 	override val trackDuration: Int
 		get()
 		{

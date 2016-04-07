@@ -91,6 +91,8 @@ class SoundViewHolder
 
 	override fun getIndexOfContentPage(): Int = VIEWPAGER_INDEX_SOUND_CONTROLS
 
+	override fun onDeletionPending(isDeletionPending: Boolean) { this.player?.isDeletionPending = isDeletionPending }
+
 	override fun delete()
 	{
 		this.player?.apply { soundsDataStorage.removeSounds(listOf(this)) }
