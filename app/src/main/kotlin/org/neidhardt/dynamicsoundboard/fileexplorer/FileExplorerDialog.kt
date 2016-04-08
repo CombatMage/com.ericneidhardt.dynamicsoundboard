@@ -249,7 +249,8 @@ abstract class FileExplorerDialog : BaseDialog()
 
 		private fun animateFileLogoRotate()
 		{
-			this.fileType.animate().rotationYBy(360f)
+			this.fileType.animate().withLayer()
+					.rotationYBy(360f)
 					.setDuration(resources
 					.getInteger(android.R.integer.config_mediumAnimTime)
 					.toLong())
@@ -274,7 +275,8 @@ abstract class FileExplorerDialog : BaseDialog()
 			val distance = this.selectionIndicator.width
 			this.selectionIndicator.translationX = distance.toFloat() // move selector to the right to be out of the screen
 
-			this.selectionIndicator.animate().translationX(0f)
+			this.selectionIndicator.animate().withLayer().
+					translationX(0f)
 					.setDuration(resources
 					.getInteger(android.R.integer.config_mediumAnimTime)
 					.toLong())

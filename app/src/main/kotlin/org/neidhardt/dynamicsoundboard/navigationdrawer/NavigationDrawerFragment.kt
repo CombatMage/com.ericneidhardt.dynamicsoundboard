@@ -237,6 +237,7 @@ class NavigationDrawerFragmentPresenter
 			this.visibility = View.VISIBLE
 			this.translationX = (-distance).toFloat()
 			this.animate()
+					.withLayer()
 					.translationX(0f)
 					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
 					.setInterpolator(DecelerateInterpolator())

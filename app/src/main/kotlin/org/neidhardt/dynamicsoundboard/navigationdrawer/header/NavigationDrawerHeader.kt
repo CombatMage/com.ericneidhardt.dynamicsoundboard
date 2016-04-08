@@ -87,7 +87,12 @@ class NavigationDrawerHeaderView :
 	}
 
 	override fun animateLayoutChanges() {
-		this.indicator?.animate()?.rotationXBy(180f)?.setDuration(this.resources.getInteger(android.R.integer.config_shortAnimTime).toLong())?.start()
+		this.indicator?.apply {
+			this.animate().withLayer()
+					.rotationXBy(180f)
+					.setDuration(this.resources.getInteger(android.R.integer.config_shortAnimTime).toLong())
+					.start()
+		}
 	}
 }
 

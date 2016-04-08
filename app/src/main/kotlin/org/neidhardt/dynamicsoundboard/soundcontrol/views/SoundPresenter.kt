@@ -122,7 +122,8 @@ class SoundPresenter
 				playerData.updateItemInDatabaseAsync();
 			}
 
-			this.adapter?.notifyDataSetChanged()
+			this.adapter?.notifyItemMoved(event.from, event.to)
+			//this.adapter?.notifyDataSetChanged()
 		}
 	}
 
