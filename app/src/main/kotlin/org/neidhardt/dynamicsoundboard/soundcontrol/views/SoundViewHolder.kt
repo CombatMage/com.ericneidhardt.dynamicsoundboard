@@ -101,7 +101,10 @@ class SoundViewHolder
 
 	override fun onProgressUpdate()
 	{
-		this.player?.apply { timePosition.progress = progress }
+		this.player?.apply {
+			if (!this.isDeletionPending)
+				timePosition.progress = progress
+		}
 	}
 
 	override fun onTextEdited(text: String)

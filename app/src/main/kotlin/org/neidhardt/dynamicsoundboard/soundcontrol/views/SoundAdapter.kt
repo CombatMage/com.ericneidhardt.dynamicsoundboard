@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.misc.longHash
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter
@@ -21,10 +22,17 @@ class SoundAdapter
 ) :
 		SoundProgressAdapter<SoundViewHolder>()
 {
+	init
+	{
+		this.setHasStableIds(true)
+	}
+
 	override val values: List<MediaPlayerController>
 		get() = this.presenter.values
 
 	override fun getItemCount(): Int = this.values.size
+
+	override fun getItemId(position: Int): Long = this.values[position].mediaPlayerData.playerId.longHash
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder =
 			SoundViewHolder(

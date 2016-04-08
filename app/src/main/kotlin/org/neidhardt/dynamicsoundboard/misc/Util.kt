@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.misc
 
 import android.content.Context
 import android.os.Build
+import de.greenrobot.common.hash.Murmur3A
 import org.neidhardt.dynamicsoundboard.dao.DaoMaster
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundboardDaoOpenHelper
@@ -21,3 +22,11 @@ object GreenDaoHelper{
         return daoMaster.newSession()
     }
 }
+
+val String.longHash: Long
+	get()
+	{
+		val generator = Murmur3A()
+		generator.update(this.toByteArray())
+		return generator.value
+	}
