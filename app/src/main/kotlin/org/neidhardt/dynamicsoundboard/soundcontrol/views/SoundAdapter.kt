@@ -24,7 +24,7 @@ class SoundAdapter
 {
 	init
 	{
-		this.setHasStableIds(true)
+		this.setHasStableIds(false)
 	}
 
 	override val values: List<MediaPlayerController>

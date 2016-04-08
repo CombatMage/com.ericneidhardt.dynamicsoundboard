@@ -16,6 +16,7 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.containsAudioFiles
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
+import org.neidhardt.dynamicsoundboard.misc.longHash
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import java.io.File
 import java.util.*
@@ -80,6 +81,7 @@ abstract class FileExplorerDialog : BaseDialog()
 
 		init
 		{
+			this.setHasStableIds(true)
 			this.setParent(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC))
 			this.notifyDataSetChanged()
 		}
@@ -101,6 +103,10 @@ abstract class FileExplorerDialog : BaseDialog()
 			}
 		}
 
+		override fun getItemCount(): Int = this.fileList.size
+
+		override fun getItemId(position: Int): Long = this.fileList[position].absolutePath.longHash
+
 		override fun onCreateViewHolder(parent: ViewGroup, i: Int): DirectoryEntry
 		{
 			val view = LayoutInflater.from(parent.context).inflate(R.layout.view_directory_item, parent, false)
@@ -111,11 +117,6 @@ abstract class FileExplorerDialog : BaseDialog()
 		{
 			val file = this.fileList[position]
 			directoryEntry.bindData(file)
-		}
-
-		override fun getItemCount(): Int
-		{
-			return this.fileList.size
 		}
 	}
 
