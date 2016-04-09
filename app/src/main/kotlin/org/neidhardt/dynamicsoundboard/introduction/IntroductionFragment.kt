@@ -1,17 +1,17 @@
 package org.neidhardt.dynamicsoundboard.introduction
 
-import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
 
 /**
  * File created by eric.neidhardt on 27.10.2015.
  */
 
-class IntroductionFragment : Fragment()
+class IntroductionFragment : BaseFragment()
 {
 	companion object
 	{

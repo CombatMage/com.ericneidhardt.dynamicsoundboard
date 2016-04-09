@@ -6,7 +6,6 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -53,7 +52,7 @@ import java.util.*
  * File created by eric.neidhardt on 29.09.2015.
  */
 class SoundActivity :
-		AppCompatActivity(),
+		BaseActivity(),
 		View.OnClickListener,
 		CustomEditText.OnTextEditedListener,
 		RequestPermissionHelper,
@@ -64,8 +63,6 @@ class SoundActivity :
 		OnSoundSheetsChangedEventListener
 {
 	private val TAG = javaClass.name
-
-	var isActivityVisible = true
 
 	private var navigationDrawerLayout: DrawerLayout? = null
 	private var drawerToggle: ActionBarDrawerToggle? = null
@@ -213,10 +210,7 @@ class SoundActivity :
 		super.onResume()
 
 		this.registerPauseSoundOnCallListener(this.phoneStateListener)
-
 		this.startService(Intent(this.applicationContext, NotificationService::class.java))
-
-		this.isActivityVisible = true
 		this.eventBus.postSticky(ActivityStateChangedEvent(true))
 
 		this.setSoundSheetActionsEnable(false)
@@ -235,7 +229,6 @@ class SoundActivity :
 	override fun onPause()
 	{
 		super.onPause()
-		this.isActivityVisible = false
 		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
 	}
 
@@ -445,7 +438,7 @@ class SoundActivity :
 		if (soundSheets == null || soundSheets.size == 0)
 			return
 
-		val fragmentManager = this.fragmentManager
+		val fragmentManager = this.supportFragmentManager
 		for (soundSheet in soundSheets)
 		{
 			val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag)
@@ -463,7 +456,7 @@ class SoundActivity :
 
 	fun removeSoundFragment(soundSheet: SoundSheet)
 	{
-		val fragmentManager = this.fragmentManager
+		val fragmentManager = this.supportFragmentManager
 		val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag)
 		if (fragment != null)
 		{
@@ -482,7 +475,7 @@ class SoundActivity :
 		if (this.getCurrentSoundFragment() != null)
 			return
 
-		val fragmentManager = this.fragmentManager
+		val fragmentManager = this.supportFragmentManager
 		val transaction = fragmentManager.beginTransaction()
 
 		val fragment = fragmentManager.findFragmentByTag(IntroductionFragment.TAG) ?: IntroductionFragment()
