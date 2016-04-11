@@ -220,10 +220,8 @@ private class ImprovedMediaPlayer
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
 
-		this.releasePlayerSchedule = object : KillableRunnable // release player resources if unused for some time
+		this.releasePlayerSchedule = object : KillableRunnable() // release player resources if unused for some time
 		{
-			@Volatile override var isKilled: Boolean = false
-
 			override fun run()
 			{
 				val position = progress // remember the paused position so it can reused later
@@ -263,10 +261,8 @@ private class ImprovedMediaPlayer
 		if (this.handler == null)
 			this.handler = EnhancedHandler()
 
-		this.fadeOutSchedule = object : KillableRunnable
+		this.fadeOutSchedule = object : KillableRunnable()
 		{
-			@Volatile override var isKilled: Boolean = false
-
 			override fun run()
 			{
 				if (!this.isKilled)

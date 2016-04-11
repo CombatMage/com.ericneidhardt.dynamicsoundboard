@@ -28,6 +28,7 @@ class ExoMediaPlayer
 	override val mediaPlayerData: MediaPlayerData
 ) : MediaPlayerController, ExoPlayer.Listener
 {
+	private val volumeController = VolumeController(this)
 	private val exoPlayer = ExoPlayer.Factory.newInstance(1)
 	private var audioRenderer: MediaCodecAudioTrackRenderer? = null
 
@@ -84,6 +85,12 @@ class ExoMediaPlayer
 			}
 		}
 
+	override var volume: Float = this.volumeController.maxVolume
+		set(value) {
+			field = value
+			this.exoPlayer.sendMessage(this.audioRenderer, MediaCodecAudioTrackRenderer.MSG_SET_VOLUME, value);
+		}
+
 	override fun playSound(): Boolean
 	{
 		this.exoPlayer.playWhenReady = true
@@ -103,9 +110,9 @@ class ExoMediaPlayer
 		return true
 	}
 
-	override fun fadeOutSound() {
-		// TODO
-		this.exoPlayer.playWhenReady = false
+	override fun fadeOutSound()
+	{
+		this.volumeController.fadeOutSound()
 	}
 
 	override fun setSoundUri(uri: String)
@@ -119,6 +126,7 @@ class ExoMediaPlayer
 
 	override fun destroy(postStateChanged: Boolean)
 	{
+		this.volumeController.cancelFadeOut()
 		this.exoPlayer.release()
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		if (postStateChanged)

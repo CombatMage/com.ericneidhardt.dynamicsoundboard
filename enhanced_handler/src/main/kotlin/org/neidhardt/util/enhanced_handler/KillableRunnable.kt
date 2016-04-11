@@ -3,7 +3,8 @@ package org.neidhardt.util.enhanced_handler
 /**
  * File created by eric.neidhardt on 23.11.2015.
  */
-interface KillableRunnable : Runnable
+abstract class KillableRunnable : Runnable
 {
-	var isKilled: Boolean
+	@Volatile
+	var isKilled: Boolean = false
 }
