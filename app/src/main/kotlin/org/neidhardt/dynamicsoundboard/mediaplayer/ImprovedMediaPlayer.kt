@@ -33,7 +33,7 @@ enum class PlayerAction
 	UNDEFINED
 }
 
-fun getNewMediaPlayerController(context: Context,
+fun getNewMediaPlayerControllerOld(context: Context,
 								eventBus: EventBus,
 								mediaPlayerData: MediaPlayerData,
 								soundsDataStorage: SoundsDataStorage): MediaPlayerController
