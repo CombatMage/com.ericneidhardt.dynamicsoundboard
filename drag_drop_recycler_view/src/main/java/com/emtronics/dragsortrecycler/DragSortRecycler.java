@@ -299,24 +299,11 @@ public class DragSortRecycler extends RecyclerView.ItemDecoration implements Rec
 			this.handler.removeCallbacks(this.dragResetCallback);
 
 		this.dragResetCallback = new KillableRunnable() {
-			private boolean isKilled = false;
 
 			@Override
-			public boolean isKilled() {
-				return this.isKilled;
-			}
-
-			@Override
-			public void setKilled(boolean b) {
-				this.isKilled = b;
-			}
-
-			@Override
-			public void run() {
-				if (!this.isKilled) {
-					debugLog("timeout: stop dragging");
-					stopDragging(null);
-				}
+			public void call() {
+				debugLog("timeout: stop dragging");
+				stopDragging(null);
 			}
 		};
 		this.handler.postDelayed(this.dragResetCallback, TIMEOUT_DRAG);

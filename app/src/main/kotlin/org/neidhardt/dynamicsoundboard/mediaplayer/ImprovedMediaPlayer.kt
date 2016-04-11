@@ -58,13 +58,14 @@ private class ImprovedMediaPlayer
 
 	private var mediaPlayer = VerboseMediaPlayer()
 
-	private var volume: Int = 0
 	private var handler: EnhancedHandler? = null
 	private var fadeOutSchedule: KillableRunnable? = null
 	private var releasePlayerSchedule: KillableRunnable? = null
 	private var lastPosition = 0
 
 	private val currentState: MediaPlayerState get() = this.mediaPlayer.currentState
+
+	override var volume: Float = 0f // unused
 
 	override var isDeletionPending: Boolean = false
 
@@ -162,7 +163,7 @@ private class ImprovedMediaPlayer
 
 		this.lastPosition = 0
 		this.isLoopingEnabled = this.mediaPlayerData.isLoop
-		this.volume = INT_VOLUME_MAX
+		//this.volume = INT_VOLUME_MAX
 	}
 
 	override fun setSoundUri(uri: String)
@@ -194,8 +195,8 @@ private class ImprovedMediaPlayer
 		}
 
 		this.progress = this.lastPosition
-		this.volume = INT_VOLUME_MAX
-		this.updateVolume(this.volume)
+		//this.volume = INT_VOLUME_MAX
+		//this.updateVolume(this.volume)
 
 		this.mediaPlayer.start()
 
@@ -222,7 +223,7 @@ private class ImprovedMediaPlayer
 
 		this.releasePlayerSchedule = object : KillableRunnable() // release player resources if unused for some time
 		{
-			override fun run()
+			override fun call()
 			{
 				val position = progress // remember the paused position so it can reused later
 				mediaPlayer.release()
@@ -263,10 +264,9 @@ private class ImprovedMediaPlayer
 
 		this.fadeOutSchedule = object : KillableRunnable()
 		{
-			override fun run()
+			override fun call()
 			{
-				if (!this.isKilled)
-					scheduleNexFadeOutIteration()
+				scheduleNexFadeOutIteration()
 			}
 		}.apply { handler?.postDelayed(this, delay.toLong()) }
 	}
@@ -274,13 +274,13 @@ private class ImprovedMediaPlayer
 	private fun scheduleNexFadeOutIteration()
 	{
 		updateVolume(-1)
-		if (volume == INT_VOLUME_MIN)
+		/*if (volume == INT_VOLUME_MIN)
 		{
 			updateVolume(INT_VOLUME_MAX)
 			pauseSound()
 		}
 		else
-			scheduleNextVolumeChange()
+			scheduleNextVolumeChange()*/
 	}
 
 	private fun updateVolume(change: Int)
@@ -288,10 +288,10 @@ private class ImprovedMediaPlayer
 		this.volume = this.volume + change
 
 		//ensure volume within boundaries
-		if (this.volume < INT_VOLUME_MIN)
+		/*if (this.volume < INT_VOLUME_MIN)
 			this.volume = INT_VOLUME_MIN
 		else if (this.volume > INT_VOLUME_MAX)
-			this.volume = INT_VOLUME_MAX
+			this.volume = INT_VOLUME_MAX*/
 
 		//convert to float value
 		var fVolume = 1 - (Math.log((INT_VOLUME_MAX - this.volume).toDouble()).toFloat() / Math.log(INT_VOLUME_MAX.toDouble()).toFloat())

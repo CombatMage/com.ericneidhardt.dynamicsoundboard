@@ -38,7 +38,7 @@ class VolumeController(private val mediaPlayerController: MediaPlayerController)
 		val delay = FADE_OUT_DURATION / INT_VOLUME_MAX
 		this.fadeOutSchedule = object : KillableRunnable()
 		{
-			override fun run()
+			override fun call()
 			{
 				scheduleNexFadeOutIteration()
 			}

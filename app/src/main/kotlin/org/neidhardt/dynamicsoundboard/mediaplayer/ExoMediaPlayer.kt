@@ -93,7 +93,11 @@ class ExoMediaPlayer
 
 	override fun playSound(): Boolean
 	{
+		this.volume = this.volumeController.maxVolume
 		this.exoPlayer.playWhenReady = true
+
+		this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
+		this.postStateChangedEvent(true)
 		return true
 	}
 
@@ -101,12 +105,18 @@ class ExoMediaPlayer
 	{
 		this.exoPlayer.stop()
 		this.exoPlayer.seekTo(0)
+
+		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
+		this.postStateChangedEvent(true)
 		return true
 	}
 
 	override fun pauseSound(): Boolean
 	{
 		this.exoPlayer.playWhenReady = false
+
+		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
+		this.postStateChangedEvent(true)
 		return true
 	}
 

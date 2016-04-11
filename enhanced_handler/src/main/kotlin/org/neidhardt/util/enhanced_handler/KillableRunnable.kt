@@ -7,4 +7,12 @@ abstract class KillableRunnable : Runnable
 {
 	@Volatile
 	var isKilled: Boolean = false
+
+	override fun run()
+	{
+		if (!isKilled)
+			this.call()
+	}
+
+	abstract fun call()
 }
