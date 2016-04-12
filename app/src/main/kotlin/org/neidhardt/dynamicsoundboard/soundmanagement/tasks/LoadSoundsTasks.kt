@@ -4,7 +4,7 @@ import android.net.Uri
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.longtermtask.LongTermTask
+import org.neidhardt.dynamicsoundboard.longtermtask.LoadListTask
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerComparator
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
@@ -19,7 +19,7 @@ class LoadSoundsFromDatabaseTask
 		private val daoSession: DaoSession,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
-		LongTermTask<List<MediaPlayerData>>()
+		LoadListTask<MediaPlayerData>()
 {
     override val TAG: String = javaClass.name
 
@@ -30,10 +30,11 @@ class LoadSoundsFromDatabaseTask
 		Collections.sort(mediaPlayersData, MediaPlayerComparator())
 
 		for (mediaPlayerData in mediaPlayersData)
-			this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData)
+			this.postUpdatToMainThread({ this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData) })
 
 		return mediaPlayersData
 	}
+
 }
 
 class LoadPlaylistFromDatabaseTask
@@ -41,7 +42,7 @@ class LoadPlaylistFromDatabaseTask
 		private val daoSession: DaoSession,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
-		LongTermTask<List<MediaPlayerData>>()
+		LoadListTask<MediaPlayerData>()
 {
     override val TAG: String = javaClass.name
 
@@ -52,7 +53,7 @@ class LoadPlaylistFromDatabaseTask
 		Collections.sort(mediaPlayersData, MediaPlayerComparator())
 
 		for (mediaPlayerData in mediaPlayersData)
-			this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData)
+			this.postUpdatToMainThread({ this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData) })
 		return mediaPlayersData
 	}
 }
@@ -63,7 +64,7 @@ class LoadSoundsFromFileListTask
 		private val fragmentTag: String,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
-		LongTermTask<List<File>>()
+		LoadListTask<File>()
 {
     override val TAG: String = javaClass.name
 
@@ -73,16 +74,10 @@ class LoadSoundsFromFileListTask
 		for (file in this.filesToLoad)
 		{
 			val data = getMediaPlayerDataFromFile(file, this.fragmentTag)
-			this.soundsDataStorage.createSoundAndAddToManager(data)
+			this.postUpdatToMainThread({ this.soundsDataStorage.createSoundAndAddToManager(data) })
 		}
 
 		return filesToLoad
-	}
-
-	@Throws(Exception::class)
-	override fun onSuccess(result: List<File>)
-	{
-		super.onSuccess(result)
 	}
 
 	private fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): MediaPlayerData

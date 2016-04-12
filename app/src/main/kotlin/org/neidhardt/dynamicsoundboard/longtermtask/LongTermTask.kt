@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.longtermtask
 
+import android.os.Handler
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -44,5 +45,15 @@ abstract class LongTermTask<T> : SafeAsyncTask<T>()
 		taskCounter--
 		this.eventBus.postSticky(LongTermTaskStateChangedEvent(false, taskCounter))
 		throw RuntimeException(e)
+	}
+}
+
+abstract class LoadListTask<T> : LongTermTask<List<T>>()
+{
+	private val updateHandler = Handler()
+
+	fun postUpdatToMainThread(runnable: () -> Unit)
+	{
+		this.updateHandler.post(runnable)
 	}
 }
