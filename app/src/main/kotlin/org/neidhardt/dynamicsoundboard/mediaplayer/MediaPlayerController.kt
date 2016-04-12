@@ -16,9 +16,9 @@ interface MediaPlayerController
 
 	val trackDuration: Int
 
-	var volume: Float
-
 	var progress: Int
+
+	var volume: Float
 
 	var isLoopingEnabled: Boolean
 

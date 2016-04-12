@@ -1,19 +1,5 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
-import android.content.Context
-import android.media.AudioManager
-import android.media.MediaPlayer
-import android.net.Uri
-import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.util.enhanced_handler.EnhancedHandler
-import org.neidhardt.util.enhanced_handler.KillableRunnable
-
 val PlaylistTAG = "PlaylistTAG"
 
 private val RELEASE_DELAY = 10000.toLong()
@@ -32,7 +18,7 @@ enum class PlayerAction
 	PROGRESS,
 	UNDEFINED
 }
-
+/*
 fun getNewMediaPlayerControllerOld(context: Context,
 								eventBus: EventBus,
 								mediaPlayerData: MediaPlayerData,
@@ -61,7 +47,7 @@ private class ImprovedMediaPlayer
 	private var handler: EnhancedHandler? = null
 	private var fadeOutSchedule: KillableRunnable? = null
 	private var releasePlayerSchedule: KillableRunnable? = null
-	private var lastPosition = 0
+	private var lastPosition: Long = 0
 
 	private val currentState: MediaPlayerState get() = this.mediaPlayer.currentState
 
@@ -77,8 +63,8 @@ private class ImprovedMediaPlayer
 					|| state == MediaPlayerState.IDLE
 					|| state == MediaPlayerState.ERROR
 					|| state == MediaPlayerState.DESTROYED)
-				return DURATION_NOT_SET
-			return this.mediaPlayer.duration
+				return DURATION_NOT_SET.toLong()
+			return this.mediaPlayer.duration.toLong()
 		}
 
 	override val isPlayingSound: Boolean
@@ -89,12 +75,12 @@ private class ImprovedMediaPlayer
 			return this.mediaPlayer.isPlaying
 		}
 
-	override var progress: Int
+	override var progress: Long
 		get()
 		{
 			if (this.currentState == MediaPlayerState.ERROR || this.currentState == MediaPlayerState.DESTROYED)
 				return 0
-			return this.mediaPlayer.currentPosition
+			return this.mediaPlayer.currentPosition.toLong()
 		}
 		set(value)
 		{
@@ -104,7 +90,7 @@ private class ImprovedMediaPlayer
 					|| this.currentState == MediaPlayerState.DESTROYED)
 				Logger.e(TAG, "SetProgress called in invalid state for player $this")
 			else
-				this.mediaPlayer.seekTo(value)
+				this.mediaPlayer.seekTo(value.toInt())
 		}
 
 	override var isLoopingEnabled: Boolean
@@ -346,4 +332,4 @@ private class ImprovedMediaPlayer
 	private fun postStateChangedEvent(isAlive: Boolean): Unit = this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
 
 	override fun toString(): String = "ImprovedMediaPlayer(currentState=$currentState, mediaPlayerData=$mediaPlayerData)"
-}
+}*/

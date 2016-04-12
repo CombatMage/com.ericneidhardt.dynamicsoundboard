@@ -10,6 +10,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
+import org.neidhardt.util.enhanced_handler.EnhancedHandler
+import org.neidhardt.util.enhanced_handler.KillableRunnable
 
 /**
  * File created by eric.neidhardt on 11.04.2016.
@@ -22,6 +24,9 @@ fun getNewMediaPlayerController(context: Context,
 	return ExoMediaPlayer(context, eventBus, soundsDataStorage, mediaPlayerData)
 }
 
+private val RELEASE_DELAY = 10000.toLong()
+private val PROGRESS_DIVIDER = 1000
+
 class ExoMediaPlayer
 (
 	private val context: Context,
@@ -32,22 +37,28 @@ class ExoMediaPlayer
 {
 	private val TAG = javaClass.name
 
+	private val handler = EnhancedHandler()
 	private val volumeController = VolumeController(this)
+
 	private var audioRenderer: MediaCodecAudioTrackRenderer? = null
 	private var exoPlayer = ExoPlayer.Factory.newInstance(1)
+
+	private var releasePlayerSchedule: KillableRunnable? = null
+	private var lastPosition: Int? = null
 
 	init { this.init() }
 
 	private fun init()
 	{
+		this.lastPosition = null
 		val uri = Uri.parse(this.mediaPlayerData.uri)
 
+		// TODO use ExtractorSampleSource
 		val sampleSource = FrameworkSampleSource(this.context, uri, null)
 		this.audioRenderer = MediaCodecAudioTrackRenderer(sampleSource, MediaCodecSelector.DEFAULT)
 
 		this.exoPlayer = ExoPlayer.Factory.newInstance(1)
 		this.exoPlayer.addListener(this)
-		//this.exoPlayer.prepare(audioRenderer)
 	}
 
 	override var isDeletionPending: Boolean = false
@@ -59,23 +70,23 @@ class ExoMediaPlayer
 		get()
 		{
 			if (this.exoPlayer.duration == ExoPlayer.UNKNOWN_TIME) return 0
-			return this.exoPlayer.duration.toInt()
+			return (this.exoPlayer.duration / PROGRESS_DIVIDER).toInt()
 		}
 
 	override var progress: Int
 		get()
 		{
 			if (exoPlayer.duration == ExoPlayer.UNKNOWN_TIME) return 0
-			return exoPlayer.currentPosition.toInt()
+			return (exoPlayer.currentPosition / PROGRESS_DIVIDER).toInt()
 		}
 		set(value)
 		{
-			val seekPosition: Long =
+			val seekPosition: Int =
 					if (exoPlayer.duration == ExoPlayer.UNKNOWN_TIME)
 						0
 					else
-						Math.min(Math.max(0, value), this.trackDuration).toLong()
-			exoPlayer.seekTo(seekPosition)
+						Math.min(Math.max(0, value), this.trackDuration)
+			exoPlayer.seekTo((seekPosition * 1000).toLong())
 		}
 
 	override var isLoopingEnabled: Boolean = false
@@ -100,10 +111,20 @@ class ExoMediaPlayer
 
 	override fun playSound(): Boolean
 	{
-		// TODO stop deletion timer
+		this.releasePlayerSchedule?.apply { handler.removeCallbacks(this) }
+
 		this.volume = this.volumeController.maxVolume
-		this.exoPlayer.prepare(this.audioRenderer)
+
+		if (this.exoPlayer.playbackState != ExoPlayer.STATE_READY)
+			this.exoPlayer.prepare(this.audioRenderer)
+
 		this.exoPlayer.playWhenReady = true
+
+		val lastPosition = this.lastPosition
+		if (lastPosition != null) {
+			this.progress = lastPosition
+			this.lastPosition = null
+		}
 
 		this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
@@ -112,7 +133,7 @@ class ExoMediaPlayer
 
 	override fun stopSound(): Boolean
 	{
-		// TODO stop deletion timer
+		this.releasePlayerSchedule?.apply { handler.removeCallbacks(this) }
 		this.exoPlayer.release()
 		this.init()
 
@@ -123,7 +144,18 @@ class ExoMediaPlayer
 
 	override fun pauseSound(): Boolean
 	{
-		// TODO start deletion timmer
+		this.releasePlayerSchedule = object : KillableRunnable()
+		{
+			override fun call()
+			{
+				val position = progress // remember the paused position so it can reused later
+				exoPlayer.release()
+				init() // init sets lastPosition to 0, therefore we set the position after ini
+				lastPosition = position
+			}
+		}.apply { handler.postDelayed(this, RELEASE_DELAY) }
+
+
 		this.exoPlayer.playWhenReady = false
 
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
@@ -138,7 +170,8 @@ class ExoMediaPlayer
 
 	override fun setSoundUri(uri: String)
 	{
-		// TODO stop deletion timer
+		this.releasePlayerSchedule?.apply { handler.removeCallbacks(this) }
+
 		this.mediaPlayerData.uri = uri
 		this.mediaPlayerData.updateItemInDatabaseAsync()
 
@@ -148,8 +181,9 @@ class ExoMediaPlayer
 
 	override fun destroy(postStateChanged: Boolean)
 	{
-		// TODO stop deletion timer
+		this.releasePlayerSchedule?.apply { handler.removeCallbacks(this) }
 		this.volumeController.cancelFadeOut()
+
 		this.exoPlayer.release()
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		if (postStateChanged)
