@@ -6,7 +6,9 @@ import com.google.android.exoplayer.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 
 /**
@@ -28,6 +30,8 @@ class ExoMediaPlayer
 	override val mediaPlayerData: MediaPlayerData
 ) : MediaPlayerController, ExoPlayer.Listener
 {
+	private val TAG = javaClass.name
+
 	private val volumeController = VolumeController(this)
 	private val exoPlayer = ExoPlayer.Factory.newInstance(1)
 	private var audioRenderer: MediaCodecAudioTrackRenderer? = null
@@ -47,7 +51,8 @@ class ExoMediaPlayer
 
 	override var isDeletionPending: Boolean = false
 
-	override val isPlayingSound: Boolean = exoPlayer.playWhenReady
+	override val isPlayingSound: Boolean
+			get() = exoPlayer.playWhenReady
 
 	override val trackDuration: Int
 		get()
@@ -98,7 +103,7 @@ class ExoMediaPlayer
 
 		this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
-		return true
+		return this.isPlayingSound
 	}
 
 	override fun stopSound(): Boolean
@@ -108,7 +113,7 @@ class ExoMediaPlayer
 
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
-		return true
+		return !this.isPlayingSound
 	}
 
 	override fun pauseSound(): Boolean
@@ -117,7 +122,7 @@ class ExoMediaPlayer
 
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
-		return true
+		return !this.isPlayingSound
 	}
 
 	override fun fadeOutSound()
@@ -143,19 +148,27 @@ class ExoMediaPlayer
 			this.postStateChangedEvent(false)
 	}
 
-	override fun onPlayerError(error: ExoPlaybackException?) {
-		// TODO
+	override fun onPlayerError(error: ExoPlaybackException)
+	{
+		Logger.e(TAG, "onPlayerError for $this with exception $error")
+		this.init()
+		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINED))
 	}
 
-	override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-		if (playbackState == ExoPlayer.STATE_ENDED){
-			if (this.isLoopingEnabled) {
+	override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int)
+	{
+		if (playbackState == ExoPlayer.STATE_ENDED)
+		{
+			if (this.isLoopingEnabled)
+			{
 				this.progress = 0
 				this.playSound()
 			}
 			else
 				this.onCompletion()
 		}
+
+		this.postStateChangedEvent(true)
 	}
 
 	private fun onCompletion()
@@ -165,7 +178,10 @@ class ExoMediaPlayer
 		this.eventBus.post(MediaPlayerCompletedEvent(this))
 	}
 
-	override fun onPlayWhenReadyCommitted() {}
+	override fun onPlayWhenReadyCommitted()
+	{
+		this.postStateChangedEvent(true)
+	}
 
 	private fun postStateChangedEvent(isAlive: Boolean): Unit = this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
 }
