@@ -2,7 +2,13 @@ package org.neidhardt.dynamicsoundboard.mediaplayer
 
 import android.content.Context
 import android.net.Uri
-import com.google.android.exoplayer.*
+import com.google.android.exoplayer.ExoPlaybackException
+import com.google.android.exoplayer.ExoPlayer
+import com.google.android.exoplayer.MediaCodecAudioTrackRenderer
+import com.google.android.exoplayer.MediaCodecSelector
+import com.google.android.exoplayer.extractor.ExtractorSampleSource
+import com.google.android.exoplayer.upstream.DefaultAllocator
+import com.google.android.exoplayer.upstream.DefaultUriDataSource
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
@@ -25,7 +31,12 @@ fun getNewMediaPlayerController(context: Context,
 }
 
 private val RELEASE_DELAY = 10000.toLong()
+
 private val PROGRESS_DIVIDER = 1000
+
+private val RENDER_COUNT = 1
+private val BUFFER_SEGMENT_SIZE = 64 * 1024
+private val BUFFER_SEGMENT_COUNT = 160
 
 class ExoMediaPlayer
 (
@@ -41,7 +52,7 @@ class ExoMediaPlayer
 	private val volumeController = VolumeController(this)
 
 	private var audioRenderer: MediaCodecAudioTrackRenderer? = null
-	private var exoPlayer = ExoPlayer.Factory.newInstance(1)
+	private var exoPlayer = ExoPlayer.Factory.newInstance(RENDER_COUNT)
 
 	private var releasePlayerSchedule: KillableRunnable? = null
 	private var lastPosition: Int? = null
@@ -53,8 +64,15 @@ class ExoMediaPlayer
 		this.lastPosition = null
 		val uri = Uri.parse(this.mediaPlayerData.uri)
 
-		// TODO use ExtractorSampleSource
-		val sampleSource = FrameworkSampleSource(this.context, uri, null)
+		val allocator = DefaultAllocator(BUFFER_SEGMENT_SIZE)
+		val dataSource = DefaultUriDataSource(context, TAG)
+
+		val sampleSource = ExtractorSampleSource(
+				uri,
+				dataSource,
+				allocator,
+				BUFFER_SEGMENT_SIZE * BUFFER_SEGMENT_COUNT)
+
 		this.audioRenderer = MediaCodecAudioTrackRenderer(sampleSource, MediaCodecSelector.DEFAULT)
 
 		this.exoPlayer = ExoPlayer.Factory.newInstance(1)
