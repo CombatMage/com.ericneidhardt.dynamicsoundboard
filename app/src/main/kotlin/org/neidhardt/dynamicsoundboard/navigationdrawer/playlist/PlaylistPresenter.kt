@@ -147,7 +147,7 @@ class PlaylistPresenter
 		if (nextActivePlayer.isPlayingSound)
 		{
 			this.adapter?.stopProgressUpdateTimer()
-			nextActivePlayer.pauseSound()
+			nextActivePlayer.stopSound()
 		} else
 		{
 			this.adapter?.startProgressUpdateTimer()
