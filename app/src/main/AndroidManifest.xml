@@ -13,12 +13,10 @@
 			android:allowBackup="true"
 			android:largeHeap="true"
 			android:icon="@drawable/ic_launcher"
-			android:label="DS (Debug)"
 			android:theme="@style/Theme.AppTheme">
 
 		<activity
 				android:name=".soundactivity.SoundActivity"
-				android:label="@string/app_name"
 				android:windowSoftInputMode="adjustPan"
 				android:launchMode="singleTop">
 
