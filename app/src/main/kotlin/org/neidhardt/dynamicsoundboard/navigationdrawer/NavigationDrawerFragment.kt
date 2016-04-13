@@ -268,9 +268,11 @@ class NavigationDrawerFragmentPresenter
 
 	private fun hideToolbarForDeletion()
 	{
-		this.appBarLayout.setExpanded(true, true)
 		this.coordinatorLayout.isScrollingEnabled = true
 		this.recyclerView.isNestedScrollingEnabled = true
+
+		this.appBarLayout.setExpanded(true, false)
+
 		this.recyclerView.scrollToPosition(0)
 
 		this.toolbarDeletion.visibility = View.GONE
