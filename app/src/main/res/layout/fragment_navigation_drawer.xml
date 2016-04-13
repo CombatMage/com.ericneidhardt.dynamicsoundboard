@@ -6,60 +6,64 @@
 		android:id="@+id/cl_navigation_drawer"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:fitsSystemWindows="true"
-		android:background="@color/background">
+		android:background="@color/background"
+		android:fitsSystemWindows="true">
 
-	<org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout
-			android:id="@+id/abl_navigation_drawer"
+	<android.support.design.widget.TabLayout
+			android:id="@+id/tl_navigation_drawer"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="@dimen/height_list_item"
+			android:layout_gravity="bottom"
+			app:layout_anchor="@+id/abl_navigation_drawer"
+			app:layout_anchorGravity="bottom"
+			app:tabGravity="fill"
+			android:background="@color/primary_200"/>
 
-		<android.support.design.widget.CollapsingToolbarLayout
-				android:id="@+id/collapsing_toolbar"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				app:layout_scrollFlags="scroll|exitUntilCollapsed"
-				app:contentScrim="@color/primary_700">
-
-			<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:orientation="vertical">
-
-				<org.neidhardt.dynamicsoundboard.navigationdrawer.header.NavigationDrawerHeaderView
-						android:layout_width="match_parent"
-						android:layout_height="@dimen/height_navigation_drawer_header"/>
-
-				<android.support.design.widget.TabLayout
-						android:id="@+id/tl_tab_bar"
-						android:layout_width="match_parent"
-						android:layout_height="@dimen/height_list_item"
-						app:tabGravity="fill"
-						android:background="@color/primary_200"/>
-			</LinearLayout>
-
-		</android.support.design.widget.CollapsingToolbarLayout>
-
-		<include layout="@layout/toolbar_navigation_drawer"
-				android:visibility="gone"/>
-
-	</org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout>
+	<include
+			android:id="@+id/ll_navigation_drawer_toolbar_deletion"
+			layout="@layout/toolbar_navigation_drawer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"/>
 
 	<android.support.v7.widget.RecyclerView
 			android:id="@+id/rv_navigation_drawer_list"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_marginTop="@dimen/margin_small"
+			android:layout_marginTop="@dimen/height_list_item"
 			android:overScrollMode="never"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior"
 			tools:listitem="@layout/view_sound_sheet_item"/>
 
-	<View
-			android:id="@+id/v_reveal_shadow"
+	<org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout
+			android:id="@+id/abl_navigation_drawer"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:background="@color/shadow_dark"
-			android:visibility="gone"/>
+			android:layout_height="@dimen/height_navigation_drawer_header"
+			android:fitsSystemWindows="true">
+
+		<android.support.design.widget.CollapsingToolbarLayout
+				android:id="@+id/ctl_navigation_drawer_header_container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:fitsSystemWindows="true"
+				app:contentScrim="?attr/colorPrimaryDark"
+				app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+			<org.neidhardt.dynamicsoundboard.navigationdrawer.header.NavigationDrawerHeaderView
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:fitsSystemWindows="true"
+					app:layout_collapseMode="parallax"/>
+
+			<android.support.v7.widget.Toolbar
+					android:id="@+id/toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/status_bar_padding"
+					app:layout_collapseMode="pin" />
+
+		</android.support.design.widget.CollapsingToolbarLayout>
+
+	</org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout>
 
 	<LinearLayout
 			android:layout_width="match_parent"

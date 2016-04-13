@@ -16,7 +16,8 @@ enum class State {
 	IDLE
 }
 
-class ImprovedAppBarLayout : AppBarLayout, AppBarLayout.OnOffsetChangedListener {
+class ImprovedAppBarLayout : AppBarLayout, AppBarLayout.OnOffsetChangedListener
+{
 
 	var onStateChangeListener: OnStateChangeListener? = null
 
@@ -29,7 +30,8 @@ class ImprovedAppBarLayout : AppBarLayout, AppBarLayout.OnOffsetChangedListener 
 
 	constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-	override fun onAttachedToWindow() {
+	override fun onAttachedToWindow()
+	{
 		super.onAttachedToWindow()
 		if (!(layoutParams is CoordinatorLayout.LayoutParams)
 				|| !(parent is CoordinatorLayout)) {
@@ -38,13 +40,16 @@ class ImprovedAppBarLayout : AppBarLayout, AppBarLayout.OnOffsetChangedListener 
 		addOnOffsetChangedListener(this);
 	}
 
-	override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-		if (verticalOffset == 0) {
+	override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int)
+	{
+		if (verticalOffset == 0)
+		{
 			if (state != State.EXPANDED)
 				this.onStateChangeListener?.onStateChange(State.EXPANDED, verticalOffset)
 			this.state = State.EXPANDED;
 		}
-		else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+		else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange)
+		{
 			if (this.state != State.COLLAPSED)
 				this.onStateChangeListener?.onStateChange(State.COLLAPSED, verticalOffset)
 			this.state = State.COLLAPSED;
@@ -59,7 +64,8 @@ class ImprovedAppBarLayout : AppBarLayout, AppBarLayout.OnOffsetChangedListener 
 			onStateChangeListener?.onStateChange(State.COLLAPSING, verticalOffset)
 			this.state == State.COLLAPSING
 		}
-		else {
+		else
+		{
 			onStateChangeListener?.onStateChange(State.IDLE, verticalOffset)
 			this.state == State.IDLE
 		}

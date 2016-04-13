@@ -1,12 +1,12 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer
 
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,8 +58,6 @@ class NavigationDrawerFragment : BaseFragment()
 	{
 		val view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
 
-		val tabLayout = (view.findViewById(R.id.tl_tab_bar) as TabLayout)
-
 		val layoutList = (view.findViewById(R.id.rv_navigation_drawer_list) as RecyclerView).apply {
 			this.itemAnimator = DefaultItemAnimator()
 			this.layoutManager = LinearLayoutManager(this.context)
@@ -70,9 +68,11 @@ class NavigationDrawerFragment : BaseFragment()
 
 				coordinatorLayout = view.findViewById(R.id.cl_navigation_drawer) as NonTouchableCoordinatorLayout,
 
-				toolbar = view.findViewById(R.id.toolbar_navigation_drawer) as Toolbar,
 				appBarLayout = view.findViewById(R.id.abl_navigation_drawer) as ImprovedAppBarLayout,
-				tabLayout = tabLayout,
+				toolbarContainer = view.findViewById(R.id.ctl_navigation_drawer_header_container) as ViewGroup,
+				toolbar = view.findViewById(R.id.ll_navigation_drawer_toolbar_deletion) as ViewGroup,
+				tabLayout = view.findViewById(R.id.tl_navigation_drawer) as TabLayout,
+
 				buttonOk = view.findViewById(R.id.b_ok),
 				buttonDelete = view.findViewById(R.id.b_delete),
 				buttonDeleteSelected = view.findViewById(R.id.b_delete_selected),
@@ -128,6 +128,15 @@ enum class TabMode
 	Context
 }
 
+private val SCROLL_FLAGS_NORMAL =
+		AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
+				AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
+				AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+
+private val SCROLL_FLAGS_COLLAPSED =
+		AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
+				AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+
 private val INDEX_SOUND_SHEETS = 0
 private val INDEX_PLAYLIST = 1
 
@@ -138,8 +147,9 @@ class NavigationDrawerFragmentPresenter
 
 		private val coordinatorLayout: NonTouchableCoordinatorLayout,
 
-		private val toolbar: Toolbar,
 		private val appBarLayout: ImprovedAppBarLayout,
+		private val toolbarContainer: ViewGroup,
+		private val toolbar: ViewGroup,
 		private val tabLayout: TabLayout,
 		private val buttonOk: View,
 		private val buttonDelete: View,
@@ -230,6 +240,9 @@ class NavigationDrawerFragmentPresenter
 	{
 		this.coordinatorLayout.isScrollingEnabled = false
 		this.recyclerView.isNestedScrollingEnabled = false
+
+		//(this.toolbarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags = SCROLL_FLAGS_COLLAPSED
+		//this.toolbar.visibility = View.VISIBLE
 		this.appBarLayout.setExpanded(false, true)
 
 		val distance = this.recyclerView.width
@@ -247,6 +260,9 @@ class NavigationDrawerFragmentPresenter
 
 	private fun hideToolbarForDeletion()
 	{
+		//this.toolbar.visibility = View.GONE
+		//(this.toolbarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags = SCROLL_FLAGS_NORMAL
+
 		this.appBarLayout.setExpanded(true, true)
 		this.coordinatorLayout.isScrollingEnabled = true
 		this.recyclerView.isNestedScrollingEnabled = true
@@ -257,14 +273,14 @@ class NavigationDrawerFragmentPresenter
 
 	override fun onStateChange(toolbarChange: State, verticalOffset: Int)
 	{
-		if (toolbarChange == State.COLLAPSED && this.tabMode == TabMode.Context)
+		/*if (toolbarChange == State.COLLAPSED && this.tabMode == TabMode.Context)
 		{
 			this.toolbar.visibility = View.VISIBLE
 		}
 		else if (toolbarChange == State.EXPANDING)
 		{
-			this.toolbar.visibility = View.GONE
-		}
+			this.toolbar.visibility = View.INVISIBLE
+		}*/
 	}
 
 	override fun onClick(view: View)
