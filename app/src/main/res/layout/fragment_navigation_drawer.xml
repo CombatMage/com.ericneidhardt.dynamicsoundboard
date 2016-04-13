@@ -35,7 +35,7 @@
 			app:layout_behavior="@string/appbar_scrolling_view_behavior"
 			tools:listitem="@layout/view_sound_sheet_item"/>
 
-	<org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout
+	<android.support.design.widget.AppBarLayout
 			android:id="@+id/abl_navigation_drawer"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_navigation_drawer_header"
@@ -63,7 +63,7 @@
 
 		</android.support.design.widget.CollapsingToolbarLayout>
 
-	</org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout>
+	</android.support.design.widget.AppBarLayout>
 
 	<LinearLayout
 			android:layout_width="match_parent"

@@ -40,8 +40,6 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.NonTouchableCoordinatorLayout
-import org.neidhardt.dynamicsoundboard.views.toolbarhelpers.ImprovedAppBarLayout
-import org.neidhardt.dynamicsoundboard.views.toolbarhelpers.State
 
 class NavigationDrawerFragment : BaseFragment()
 {
@@ -68,7 +66,7 @@ class NavigationDrawerFragment : BaseFragment()
 
 				coordinatorLayout = view.findViewById(R.id.cl_navigation_drawer) as NonTouchableCoordinatorLayout,
 
-				appBarLayout = view.findViewById(R.id.abl_navigation_drawer) as ImprovedAppBarLayout,
+				appBarLayout = view.findViewById(R.id.abl_navigation_drawer) as AppBarLayout,
 				toolbarDeletion = view.findViewById(R.id.v_navigation_drawer_deletion) as View,
 				tabLayout = view.findViewById(R.id.tl_navigation_drawer_list) as TabLayout,
 
@@ -127,15 +125,6 @@ enum class TabMode
 	Context
 }
 
-private val SCROLL_FLAGS_NORMAL =
-		AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
-				AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
-				AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
-
-private val SCROLL_FLAGS_COLLAPSED =
-		AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
-				AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
-
 private val INDEX_SOUND_SHEETS = 0
 private val INDEX_PLAYLIST = 1
 
@@ -146,7 +135,7 @@ class NavigationDrawerFragmentPresenter
 
 		private val coordinatorLayout: NonTouchableCoordinatorLayout,
 
-		private val appBarLayout: ImprovedAppBarLayout,
+		private val appBarLayout: AppBarLayout,
 		private val toolbarDeletion: View,
 		private val tabLayout: TabLayout,
 		private val buttonOk: View,
@@ -174,8 +163,7 @@ class NavigationDrawerFragmentPresenter
 		ItemSelectedForDeletionListener,
 		OnOpenSoundLayoutsEventListener,
 		TabLayout.OnTabSelectedListener,
-		OnSoundLayoutSelectedEventListener,
-		ImprovedAppBarLayout.OnStateChangeListener
+		OnSoundLayoutSelectedEventListener
 {
 	private var tabSoundSheets: TabLayout.Tab = tabLayout.createSoundSheetTab()
 	private var tabPlayList: TabLayout.Tab = tabLayout.createPlaylistTab()
@@ -192,7 +180,6 @@ class NavigationDrawerFragmentPresenter
 
 	init
 	{
-		this.appBarLayout.onStateChangeListener = this
 		this.tabLayout.setOnTabSelectedListener(this)
 		this.buttonOk.setOnClickListener(this)
 		this.buttonDelete.setOnClickListener(this)
@@ -277,18 +264,6 @@ class NavigationDrawerFragmentPresenter
 
 		this.toolbarDeletion.visibility = View.GONE
 		this.buttonDeleteSelected.visibility = View.GONE
-	}
-
-	override fun onStateChange(toolbarChange: State, verticalOffset: Int)
-	{
-		/*if (toolbarChange == State.COLLAPSED && this.tabMode == TabMode.Context)
-		{
-			this.toolbar.visibility = View.VISIBLE
-		}
-		else if (toolbarChange == State.EXPANDING)
-		{
-			this.toolbar.visibility = View.INVISIBLE
-		}*/
 	}
 
 	override fun onClick(view: View)
