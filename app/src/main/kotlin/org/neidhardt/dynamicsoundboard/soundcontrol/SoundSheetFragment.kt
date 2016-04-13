@@ -2,8 +2,11 @@ package org.neidhardt.dynamicsoundboard.soundcontrol
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -116,6 +119,7 @@ class SoundSheetFragment :
 			adapter = soundAdapter
 			layoutManager = LinearLayoutManager(this.context)
 			itemAnimator = soundLayoutAnimator
+			addItemDecoration(BackgroundDecoration(ContextCompat.getColor(this.context, R.color.background)))
 			addItemDecoration(DividerItemDecoration(this.context))
 			addItemDecoration(dragSortRecycler)
 			addOnItemTouchListener(dragSortRecycler)
@@ -251,3 +255,31 @@ class SoundSheetFragment :
 	override fun onEvent(event: SoundChangedEvent) {}
 }
 
+private class BackgroundDecoration(val backgroundColor: Int) : RecyclerView.ItemDecoration()
+{
+
+	private val paint = Paint().apply {
+		this.style = Paint.Style.FILL
+		this.color = backgroundColor
+	}
+
+	override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State?)
+	{
+		if (parent.adapter == null) return
+
+		val childCount = parent.adapter?.itemCount ?: 0
+		for (i in 0..childCount)
+		{
+
+			val child = parent.getChildAt(i)
+			if (child != null)
+			{
+				val left = parent.paddingLeft.toFloat()
+				val right = (parent.width - parent.paddingRight).toFloat()
+				val top = child.top.toFloat()
+				val bottom = child.bottom.toFloat()
+				canvas.drawRect(left, top, right, bottom, this.paint)
+			}
+		}
+	}
+}
