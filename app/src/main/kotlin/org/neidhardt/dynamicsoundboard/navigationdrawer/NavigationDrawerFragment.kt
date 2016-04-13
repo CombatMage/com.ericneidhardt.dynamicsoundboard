@@ -69,9 +69,8 @@ class NavigationDrawerFragment : BaseFragment()
 				coordinatorLayout = view.findViewById(R.id.cl_navigation_drawer) as NonTouchableCoordinatorLayout,
 
 				appBarLayout = view.findViewById(R.id.abl_navigation_drawer) as ImprovedAppBarLayout,
-				toolbarContainer = view.findViewById(R.id.ctl_navigation_drawer_header_container) as ViewGroup,
-				toolbar = view.findViewById(R.id.ll_navigation_drawer_toolbar_deletion) as ViewGroup,
-				tabLayout = view.findViewById(R.id.tl_navigation_drawer) as TabLayout,
+				toolbarDeletion = view.findViewById(R.id.v_navigation_drawer_deletion) as View,
+				tabLayout = view.findViewById(R.id.tl_navigation_drawer_list) as TabLayout,
 
 				buttonOk = view.findViewById(R.id.b_ok),
 				buttonDelete = view.findViewById(R.id.b_delete),
@@ -148,8 +147,7 @@ class NavigationDrawerFragmentPresenter
 		private val coordinatorLayout: NonTouchableCoordinatorLayout,
 
 		private val appBarLayout: ImprovedAppBarLayout,
-		private val toolbarContainer: ViewGroup,
-		private val toolbar: ViewGroup,
+		private val toolbarDeletion: View,
 		private val tabLayout: TabLayout,
 		private val buttonOk: View,
 		private val buttonDelete: View,
@@ -241,11 +239,21 @@ class NavigationDrawerFragmentPresenter
 		this.coordinatorLayout.isScrollingEnabled = false
 		this.recyclerView.isNestedScrollingEnabled = false
 
-		//(this.toolbarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags = SCROLL_FLAGS_COLLAPSED
-		//this.toolbar.visibility = View.VISIBLE
+		val distance = this.recyclerView.width
+
 		this.appBarLayout.setExpanded(false, true)
 
-		val distance = this.recyclerView.width
+		this.toolbarDeletion.apply {
+			this.visibility = View.VISIBLE
+			this.translationX = (-distance).toFloat()
+			this.animate()
+					.withLayer()
+					.translationX(0f)
+					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
+					.setInterpolator(DecelerateInterpolator())
+					.start()
+		}
+
 		this.buttonDeleteSelected.apply {
 			this.visibility = View.VISIBLE
 			this.translationX = (-distance).toFloat()
@@ -260,14 +268,12 @@ class NavigationDrawerFragmentPresenter
 
 	private fun hideToolbarForDeletion()
 	{
-		//this.toolbar.visibility = View.GONE
-		//(this.toolbarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags = SCROLL_FLAGS_NORMAL
-
 		this.appBarLayout.setExpanded(true, true)
 		this.coordinatorLayout.isScrollingEnabled = true
 		this.recyclerView.isNestedScrollingEnabled = true
 		this.recyclerView.scrollToPosition(0)
 
+		this.toolbarDeletion.visibility = View.GONE
 		this.buttonDeleteSelected.visibility = View.GONE
 	}
 
