@@ -89,7 +89,6 @@ dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
 	compile project(':safe_async_task')
-	compile project(':drag_drop_recycler_view')
 	compile project(':enhanced_handler')
 
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

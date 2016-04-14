@@ -1,5 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -10,11 +12,30 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import java.util.*
 
 /**
  * File created by eric.neidhardt on 02.07.2015.
  */
+fun createSoundPresenter(
+		fragmentTag: String,
+		eventBus: EventBus,
+		recyclerView: RecyclerView,
+		soundsDataAccess: SoundsDataAccess,
+		soundsDataStorage: SoundsDataStorage): SoundPresenter
+{
+	return SoundPresenter(
+			fragmentTag = fragmentTag,
+			eventBus = eventBus,
+			soundsDataAccess = soundsDataAccess
+	).apply {
+		val adapter = SoundAdapter(this, soundsDataStorage, eventBus)
+		this.adapter = adapter
+		ItemTouchHelper(ItemTouchCallback(adapter, fragmentTag, soundsDataStorage)).attachToRecyclerView(recyclerView)
+	}
+}
+
 class SoundPresenter
 (
 		private val fragmentTag: String,
@@ -43,6 +64,14 @@ class SoundPresenter
 	fun onDetachedFromWindow()
 	{
 		this.eventBus.unregister(this)
+	}
+
+	fun setProgressUpdateTimer(startTime: Boolean)
+	{
+		if (startTime)
+			this.adapter?.startProgressUpdateTimer()
+		else
+			this.adapter?.stopProgressUpdateTimer()
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -123,7 +152,6 @@ class SoundPresenter
 			}
 
 			this.adapter?.notifyItemMoved(event.from, event.to)
-			//this.adapter?.notifyDataSetChanged()
 		}
 	}
 
@@ -172,5 +200,42 @@ class SoundPresenter
 		if (index != -1)
 			this.adapter?.notifyItemChanged(index)
 	}
+}
 
+class ItemTouchCallback
+(
+		private val adapter: SoundAdapter,
+		private val fragmentTag: String,
+		private val soundsDataStorage: SoundsDataStorage
+) : ItemTouchHelper.Callback()
+{
+	override fun isLongPressDragEnabled(): Boolean = true
+
+	override fun isItemViewSwipeEnabled(): Boolean = true
+
+	override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int
+	{
+		val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+		val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+		return makeMovementFlags(dragFlags, swipeFlags)
+	}
+
+	override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean
+	{
+		val from = viewHolder.adapterPosition
+		val to = target.adapterPosition
+		if (from == RecyclerView.NO_POSITION || to == RecyclerView.NO_POSITION) return false
+		this.soundsDataStorage.moveSoundInFragment(this.fragmentTag, from, to)
+		return true
+	}
+
+	override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int)
+	{
+		val position = viewHolder.adapterPosition
+		if (position != RecyclerView.NO_POSITION)
+		{
+			val item = this.adapter.values[position]
+			this.soundsDataStorage.removeSounds(listOf(item))
+		}
+	}
 }

@@ -1,1 +1,1 @@
-include ':app', ':dao_generator', ':drag_drop_recycler_view', ':safe_async_task', ':enhanced_handler'
+include ':app', ':dao_generator', ':safe_async_task', ':enhanced_handler'

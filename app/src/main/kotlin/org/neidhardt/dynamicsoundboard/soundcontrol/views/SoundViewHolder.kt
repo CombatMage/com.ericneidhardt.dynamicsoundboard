@@ -1,10 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
 import android.os.Handler
-import android.support.v4.view.MotionEventCompat
 import android.support.v4.view.PagerAdapter
-import android.support.v7.widget.helper.ItemTouchHelper
-import android.view.MotionEvent
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
@@ -16,7 +14,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DismissibleItemViewHolder
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressTimer
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.UPDATE_INTERVAL
@@ -30,11 +27,10 @@ class SoundViewHolder
 (
 		itemView: View,
 		private val eventBus: EventBus,
-		private val itemTouchHelper: ItemTouchHelper?,
 		private val soundsDataStorage: SoundsDataStorage,
 		private val progressTimer: SoundProgressTimer
 ) :
-		DismissibleItemViewHolder<SoundItemPagerAdapter>(itemView, SoundItemPagerAdapter()),
+		RecyclerView.ViewHolder(itemView),
 		SoundProgressViewHolder,
 		View.OnClickListener,
 		CustomEditText.OnTextEditedListener,
@@ -56,12 +52,6 @@ class SoundViewHolder
 
 	init
 	{
-		this.reorder.setOnTouchListener { view, motionEvent ->
-			if (MotionEventCompat.getActionMasked(motionEvent) == MotionEvent.ACTION_DOWN)
-				itemTouchHelper?.startDrag(this)
-			false
-		}
-
 		this.name.onTextEditedListener = this
 		this.play.setOnClickListener(this)
 		this.loop.setOnClickListener(this)
@@ -74,8 +64,6 @@ class SoundViewHolder
 	fun bindData(data: MediaPlayerController)
 	{
 		this.player = data
-
-		this.showContentPage()
 
 		this.updateViewToPlayerState()
 	}
@@ -95,16 +83,6 @@ class SoundViewHolder
 
 		this.timePosition.max = player.trackDuration
 		this.timePosition.progress = player.progress
-	}
-
-	override fun getIndexOfContentPage(): Int = VIEWPAGER_INDEX_SOUND_CONTROLS
-
-	override fun onDeletionPending(isDeletionPending: Boolean) { this.player?.isDeletionPending = isDeletionPending }
-
-	override fun delete()
-	{
-		this.player?.apply { soundsDataStorage.removeSounds(listOf(this)) }
-		Handler().startTimerDelayed()
 	}
 
 	override fun onProgressUpdate()
@@ -137,8 +115,6 @@ class SoundViewHolder
 
 	override fun onClick(view: View)
 	{
-		super.onClick(view)
-
 		val player = this.player as MediaPlayerController
 
 		val isSelected = view.isSelected
