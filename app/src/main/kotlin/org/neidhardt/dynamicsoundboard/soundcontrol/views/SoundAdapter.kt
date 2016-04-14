@@ -21,10 +21,9 @@ class SoundAdapter
 ) :
 		SoundProgressAdapter<SoundViewHolder>()
 {
-	init { this.setHasStableIds(false) }
+	init { this.setHasStableIds(true) }
 
-	override val values: List<MediaPlayerController>
-		get() = this.presenter.values
+	override val values: List<MediaPlayerController> get() = this.presenter.values
 
 	override fun getItemCount(): Int = this.values.size
 

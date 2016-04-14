@@ -10,9 +10,12 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
+import org.neidhardt.util.enhanced_handler.EnhancedHandler
+import org.neidhardt.util.enhanced_handler.KillableRunnable
 import java.util.*
 
 /**
@@ -32,9 +35,11 @@ fun createSoundPresenter(
 	).apply {
 		val adapter = SoundAdapter(this, soundsDataStorage, eventBus)
 		this.adapter = adapter
-		ItemTouchHelper(ItemTouchCallback(adapter, fragmentTag, soundsDataStorage)).attachToRecyclerView(recyclerView)
+		ItemTouchHelper(ItemTouchCallback(this, fragmentTag, soundsDataStorage)).attachToRecyclerView(recyclerView)
 	}
 }
+
+private val DELETION_TIMEOUT = 2000.toLong()
 
 class SoundPresenter
 (
@@ -47,8 +52,9 @@ class SoundPresenter
 {
 	private val TAG = javaClass.name
 
-	var adapter: SoundAdapter? = null
+	private val handler = EnhancedHandler()
 
+	var adapter: SoundAdapter? = null
 	val values: MutableList<MediaPlayerController> = ArrayList()
 
 	fun onAttachedToWindow()
@@ -72,6 +78,18 @@ class SoundPresenter
 			this.adapter?.startProgressUpdateTimer()
 		else
 			this.adapter?.stopProgressUpdateTimer()
+	}
+
+	fun onItemDeletionRequested(item: MediaPlayerController)
+	{
+		this.handler.postDelayed(object : KillableRunnable(){
+
+			override fun call() {
+				// TODO reset not working
+				adapter?.notifyItemChanged(item)
+			}
+
+		}, DELETION_TIMEOUT)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -204,7 +222,7 @@ class SoundPresenter
 
 class ItemTouchCallback
 (
-		private val adapter: SoundAdapter,
+		private val presenter: SoundPresenter,
 		private val fragmentTag: String,
 		private val soundsDataStorage: SoundsDataStorage
 ) : ItemTouchHelper.Callback()
@@ -216,7 +234,7 @@ class ItemTouchCallback
 	override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int
 	{
 		val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-		val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+		val swipeFlags = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
 		return makeMovementFlags(dragFlags, swipeFlags)
 	}
 
@@ -234,8 +252,12 @@ class ItemTouchCallback
 		val position = viewHolder.adapterPosition
 		if (position != RecyclerView.NO_POSITION)
 		{
-			val item = this.adapter.values[position]
-			this.soundsDataStorage.removeSounds(listOf(item))
+			val item = this.presenter.values[position]
+			if (SoundboardPreferences.isOneSwipeToDeleteEnabled)
+				this.soundsDataStorage.removeSounds(listOf(item))
+			else
+				this.presenter.onItemDeletionRequested(item)
 		}
 	}
+
 }
