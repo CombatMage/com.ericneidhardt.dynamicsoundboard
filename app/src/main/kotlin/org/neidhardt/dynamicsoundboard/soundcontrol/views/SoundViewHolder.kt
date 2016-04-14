@@ -1,7 +1,10 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
 import android.os.Handler
+import android.support.v4.view.MotionEventCompat
 import android.support.v4.view.PagerAdapter
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
@@ -26,9 +29,10 @@ private val VIEWPAGER_INDEX_SOUND_CONTROLS = 1
 class SoundViewHolder
 (
 		itemView: View,
-		eventBus: EventBus,
-		soundsDataStorage: SoundsDataStorage,
-		progressTimer: SoundProgressTimer
+		private val eventBus: EventBus,
+		private val itemTouchHelper: ItemTouchHelper?,
+		private val soundsDataStorage: SoundsDataStorage,
+		private val progressTimer: SoundProgressTimer
 ) :
 		DismissibleItemViewHolder<SoundItemPagerAdapter>(itemView, SoundItemPagerAdapter()),
 		SoundProgressViewHolder,
@@ -38,9 +42,7 @@ class SoundViewHolder
 {
     private val TAG = javaClass.name
 
-	private val eventBus = eventBus
-	private val soundsDataStorage = soundsDataStorage
-	private val progressTimer = progressTimer
+	private val reorder = itemView.findViewById(R.id.b_reorder)
 
 	private val name = itemView.findViewById(R.id.et_name) as CustomEditText
 	private val play = itemView.findViewById(R.id.b_play)
@@ -54,6 +56,12 @@ class SoundViewHolder
 
 	init
 	{
+		this.reorder.setOnTouchListener { view, motionEvent ->
+			if (MotionEventCompat.getActionMasked(motionEvent) == MotionEvent.ACTION_DOWN)
+				itemTouchHelper?.startDrag(this)
+			false
+		}
+
 		this.name.onTextEditedListener = this
 		this.play.setOnClickListener(this)
 		this.loop.setOnClickListener(this)

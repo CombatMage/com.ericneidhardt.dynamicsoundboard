@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -27,10 +28,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundAdapter
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundDragSortRecycler
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundSheetScrollListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
@@ -117,11 +115,13 @@ class SoundSheetFragment :
 			layoutManager = LinearLayoutManager(this.context)
 			itemAnimator = soundLayoutAnimator.apply { this.supportsChangeAnimations = false }
 			addItemDecoration(DividerItemDecoration(this.context))
-			addItemDecoration(dragSortRecycler)
-			addOnItemTouchListener(dragSortRecycler)
 			addOnScrollListener(scrollListener)
 			addOnScrollListener(dragSortRecycler.scrollListener)
 		}
+		val itemTouchHelper = ItemTouchHelper(DragDropItemTouchCallback(this.soundAdapter as SoundAdapter, this.fragmentTag, this.soundsDataStorage))
+		itemTouchHelper.attachToRecyclerView(this.soundLayout)
+		soundAdapter?.itemTouchHelper = itemTouchHelper
+
 		this.soundAdapter?.recyclerView = this.soundLayout
 
 		return fragmentView
@@ -144,10 +144,10 @@ class SoundSheetFragment :
 			this.findViewById(R.id.action_add_sound_dir)?.setOnClickListener({ AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, fragmentTag) })
 		}
 
-		this.soundPresenter!!.onAttachedToWindow()
+		this.soundPresenter?.onAttachedToWindow()
 		this.attachScrollViewToFab()
 
-		this.soundAdapter!!.startProgressUpdateTimer()
+		this.soundAdapter?.startProgressUpdateTimer()
 	}
 
 	override fun onPause()

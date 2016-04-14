@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.greenrobot.eventbus.EventBus
@@ -27,6 +28,8 @@ class SoundAdapter
 		this.setHasStableIds(false)
 	}
 
+	var itemTouchHelper: ItemTouchHelper? = null
+
 	override val values: List<MediaPlayerController>
 		get() = this.presenter.values
 
@@ -36,10 +39,11 @@ class SoundAdapter
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder =
 			SoundViewHolder(
-					LayoutInflater.from(parent.context).inflate(R.layout.view_sound_item, parent, false),
-					this.eventBus,
-					this.soundsDataStorage,
-					this)
+					itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_item, parent, false),
+					eventBus = this.eventBus,
+					itemTouchHelper = this.itemTouchHelper,
+					soundsDataStorage = this.soundsDataStorage,
+					progressTimer = this)
 
 	override fun onBindViewHolder(holder: SoundViewHolder, position: Int)
 	{
