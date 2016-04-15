@@ -6,6 +6,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
@@ -222,7 +223,7 @@ private class PendingDeletionHandler
 	private val pendingDeletions = ArrayList<MediaPlayerController>()
 
 	private var snackbar: Snackbar? = null
-	private val snackbarAction = SnackbarPresenter.SnackbarAction("TODO undo", { this.restoreDeletedItems() } )
+	private val snackbarAction = SnackbarPresenter.SnackbarAction(R.string.sound_control_deletion_pending_undo, { this.restoreDeletedItems() } )
 
 	fun requestItemDeletion(item: MediaPlayerController)
 	{
@@ -237,8 +238,8 @@ private class PendingDeletionHandler
 			override fun call() { deletePendingItems() }
 		}.apply { handler.postDelayed(this, DELETION_TIMEOUT.toLong()) }
 
-		val count = this.pendingDeletions.size
-		this.snackbar = this.snackbarPresenter.makeSnackbar("$count items", DELETION_TIMEOUT, this.snackbarAction).apply { this.show() }
+		this.snackbar = this.snackbarPresenter.makeSnackbarForDeletion(this.pendingDeletions.size,
+				DELETION_TIMEOUT, this.snackbarAction).apply { this.show() }
 	}
 
 	private fun deletePendingItems()
@@ -246,6 +247,7 @@ private class PendingDeletionHandler
 		this.deletionTask?.apply { handler.removeCallbacks(this) }
 		this.soundsDataStorage.removeSounds(this.pendingDeletions)
 		this.snackbar?.dismiss()
+		this.pendingDeletions.clear()
 	}
 
 	private fun restoreDeletedItems()
@@ -255,7 +257,17 @@ private class PendingDeletionHandler
 			item.isDeletionPending = false
 			soundAdapter.notifyItemChanged(item)
 		}
+		this.pendingDeletions.clear()
 	}
+}
+
+private fun SnackbarPresenter.makeSnackbarForDeletion(count: Int, duration: Int, action: SnackbarPresenter.SnackbarAction?): Snackbar
+{
+	val message = if (count == 1)
+			this.coordinatorLayout.context.resources.getString(R.string.sound_control_deletion_pending_single)
+		else
+			this.coordinatorLayout.context.resources.getString(R.string.sound_control_deletion_pending).replace("{%s0}", count.toString())
+	return this.makeSnackbar(message, duration, action)
 }
 
 private class ItemTouchCallback

@@ -20,9 +20,9 @@ interface SnackbarPresenter
 	fun makeSnackbar(message: String, duration: Int, action: SnackbarAction?): Snackbar
 	{
 		return Snackbar.make(this.coordinatorLayout, message, duration).apply {
-			if (action != null) this.setAction(action.label, action.action)
+			if (action != null) this.setAction(action.labelId, action.action)
 		}
 	}
 
-	class SnackbarAction(val label: String, val action: ((View) -> Unit))
+	class SnackbarAction(val labelId: Int, val action: ((View) -> Unit))
 }

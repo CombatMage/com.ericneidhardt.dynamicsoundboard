@@ -53,18 +53,15 @@
 	<string name="cab_title_delete_sound_layouts">Soundlayouts zum löschen markieren</string>
 
 	<!-- sound control -->
-	sound_control_reset_player
-	<string name="sound_control_reset_player">Mediaplayer zurück setzen?</string>
-	<string name="sound_control_play_failed">{%s0} konnte nicht gestartet werden.</string>
-	<string name="sound_control_failed">{%s0} hat einen Fehler verursacht.</string>
+	<string name="sound_control_deletion_pending_single">Sound wird gelöscht</string>
+	<string name="sound_control_deletion_pending">{%s0} Sounds werden gelöscht</string>
+	<string name="sound_control_deletion_pending_undo">Rückgängig machen</string>
 	<string name="sound_control_content_description_stop">Setzt den Sound zurück</string>
 	<string name="sound_control_content_description_play">Startet oder Pausiert den Sound</string>
 	<string name="sound_control_content_description_loop">Sound wird in einer Schleife abgespielt</string>
 	<string name="sound_control_content_description_playlist">Sound wird in die Playliste aufgenommen</string>
 	<string name="sound_control_content_description_settings">Sound editieren, verschieben, umbenennen</string>
 	<string name="sound_control_content_description_reorder">Sound neusortieren</string>
-	<string name="sound_control_delete">Sound entfernen</string>
-	<string name="sound_control_delete_confirm">Sound entfernen bestätigen</string>
 
 	<!-- notification -->
 	<string name="notification_pause_sound">Sound pausieren</string>
