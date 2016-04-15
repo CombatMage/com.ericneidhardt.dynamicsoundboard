@@ -101,6 +101,7 @@ class SoundSheetFragment :
 				fragmentTag = this.fragmentTag,
 				eventBus = this.eventBus,
 				recyclerView = soundLayout,
+				snackbarPresenter = this,
 				soundsDataAccess = this.soundsDataAccess,
 				soundsDataStorage = this.soundsDataStorage)
 

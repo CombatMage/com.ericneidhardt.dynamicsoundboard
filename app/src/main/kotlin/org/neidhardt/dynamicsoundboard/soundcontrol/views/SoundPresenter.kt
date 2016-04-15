@@ -26,6 +26,7 @@ import java.util.*
 fun createSoundPresenter(
 		fragmentTag: String,
 		eventBus: EventBus,
+		snackbarPresenter: SnackbarPresenter,
 		recyclerView: RecyclerView,
 		soundsDataAccess: SoundsDataAccess,
 		soundsDataStorage: SoundsDataStorage): SoundPresenter
@@ -33,32 +34,25 @@ fun createSoundPresenter(
 	return SoundPresenter(
 			fragmentTag = fragmentTag,
 			eventBus = eventBus,
-			soundsDataAccess = soundsDataAccess,
-			soundsDataStorage = soundsDataStorage
+			soundsDataAccess = soundsDataAccess
 	).apply {
 		val adapter = SoundAdapter(this, soundsDataStorage, eventBus)
+		val deletionHandler = PendingDeletionHandler(adapter, snackbarPresenter, soundsDataStorage)
 		this.adapter = adapter
-		ItemTouchHelper(ItemTouchCallback(this, fragmentTag, soundsDataStorage)).attachToRecyclerView(recyclerView)
+		ItemTouchHelper(ItemTouchCallback(deletionHandler, this, fragmentTag, soundsDataStorage)).attachToRecyclerView(recyclerView)
 	}
 }
-
-private val DELETION_TIMEOUT = 5000.toLong()
 
 class SoundPresenter
 (
 		private val fragmentTag: String,
 		private val eventBus: EventBus,
-		private val snackbarPresenter: SnackbarPresenter,
-		private val soundsDataAccess: SoundsDataAccess,
-		private val soundsDataStorage: SoundsDataStorage
+		private val soundsDataAccess: SoundsDataAccess
 ) :
 		OnSoundsChangedEventListener,
 		MediaPlayerEventListener
 {
 	private val TAG = javaClass.name
-
-	private val handler = EnhancedHandler()
-	private val pendingDeletions: MutableMap<MediaPlayerController, KillableRunnable> = HashMap()
 
 	var adapter: SoundAdapter? = null
 	val values: MutableList<MediaPlayerController> = ArrayList()
@@ -84,31 +78,6 @@ class SoundPresenter
 			this.adapter?.startProgressUpdateTimer()
 		else
 			this.adapter?.stopProgressUpdateTimer()
-	}
-
-	fun onItemDeletionRequested(item: MediaPlayerController)
-	{
-		item.isDeletionPending = true
-		if (item.isPlayingSound) item.stopSound()
-		val pendingDeletionTask = object : KillableRunnable()
-		{
-			override fun call()
-			{
-				pendingDeletions.remove(item)
-				soundsDataStorage.removeSounds(listOf(item))
-			}
-		}
-		this.pendingDeletions[item] = pendingDeletionTask
-		this.handler.postDelayed(pendingDeletionTask, DELETION_TIMEOUT)
-	}
-
-	private fun cancelItemDeletion(item: MediaPlayerController)
-	{
-		val deletionTask = this.pendingDeletions[item]
-		this.handler.removeCallbacks(deletionTask)
-
-		item.isDeletionPending = false
-		this.adapter?.notifyItemChanged(item)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -239,25 +208,59 @@ class SoundPresenter
 	}
 }
 
+private val DELETION_TIMEOUT = 5000
+
 private class PendingDeletionHandler
 (
-	private val snackbarPresenter: SnackbarPresenter,
-	private val soundsDataStorage: SoundsDataStorage
+		private val soundAdapter: SoundAdapter,
+		private val snackbarPresenter: SnackbarPresenter,
+		private val soundsDataStorage: SoundsDataStorage
 )
 {
 	private val handler = EnhancedHandler()
-	private val pendingDeletions: MutableMap<MediaPlayerController, KillableRunnable> = HashMap()
+	private var deletionTask: KillableRunnable? = null
+	private val pendingDeletions = ArrayList<MediaPlayerController>()
 
 	private var snackbar: Snackbar? = null
+	private val snackbarAction = SnackbarPresenter.SnackbarAction("TODO undo", { this.restoreDeletedItems() } )
 
 	fun requestItemDeletion(item: MediaPlayerController)
 	{
+		this.deletionTask?.apply { handler.removeCallbacks(this) }
 
+		item.isDeletionPending = true
+		if (item.isPlayingSound) item.stopSound()
+
+		this.pendingDeletions.add(item)
+		this.deletionTask = object : KillableRunnable()
+		{
+			override fun call() { deletePendingItems() }
+		}.apply { handler.postDelayed(this, DELETION_TIMEOUT.toLong()) }
+
+		val count = this.pendingDeletions.size
+		this.snackbar = this.snackbarPresenter.makeSnackbar("$count items", DELETION_TIMEOUT, this.snackbarAction).apply { this.show() }
+	}
+
+	private fun deletePendingItems()
+	{
+		this.deletionTask?.apply { handler.removeCallbacks(this) }
+		this.soundsDataStorage.removeSounds(this.pendingDeletions)
+		this.snackbar?.dismiss()
+	}
+
+	private fun restoreDeletedItems()
+	{
+		this.deletionTask?.apply { handler.removeCallbacks(this) }
+		this.pendingDeletions.map { item ->
+			item.isDeletionPending = false
+			soundAdapter.notifyItemChanged(item)
+		}
 	}
 }
 
-class ItemTouchCallback
+private class ItemTouchCallback
 (
+		private val deletionHandler: PendingDeletionHandler,
 		private val presenter: SoundPresenter,
 		private val fragmentTag: String,
 		private val soundsDataStorage: SoundsDataStorage
@@ -292,7 +295,7 @@ class ItemTouchCallback
 			if (SoundboardPreferences.isOneSwipeToDeleteEnabled)
 				this.soundsDataStorage.removeSounds(listOf(item))
 			else
-				this.presenter.onItemDeletionRequested(item)
+				this.deletionHandler.requestItemDeletion(item)
 		}
 	}
 
