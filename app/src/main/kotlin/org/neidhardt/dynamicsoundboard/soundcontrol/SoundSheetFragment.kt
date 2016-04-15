@@ -34,6 +34,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
+import org.neidhardt.dynamicsoundboard.views.SnackbarPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
@@ -53,6 +54,7 @@ fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
 
 class SoundSheetFragment :
 		BaseFragment(),
+		SnackbarPresenter,
 		OnOpenSoundDialogEventListener,
 		OnSoundsChangedEventListener
 {
@@ -66,7 +68,10 @@ class SoundSheetFragment :
 
 	private var floatingActionButton: AddPauseFloatingActionButton? = null
 	private var soundPresenter: SoundPresenter? = null
-	private var coordinatorLayout: CoordinatorLayout? = null
+	private var mainLayout: CoordinatorLayout? = null
+
+	override val coordinatorLayout: CoordinatorLayout
+		get() = this.mainLayout as CoordinatorLayout
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -88,7 +93,7 @@ class SoundSheetFragment :
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
 
 		this.floatingActionButton = fragmentView.findViewById(R.id.fab) as AddPauseFloatingActionButton?
-		this.coordinatorLayout = fragmentView.findViewById(R.id.coordinator_layout) as CoordinatorLayout
+		this.mainLayout = fragmentView.findViewById(R.id.coordinator_layout) as CoordinatorLayout
 
 		val soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
 

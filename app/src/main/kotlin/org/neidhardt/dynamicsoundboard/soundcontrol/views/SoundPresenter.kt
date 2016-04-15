@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import org.greenrobot.eventbus.EventBus
@@ -14,6 +15,7 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
+import org.neidhardt.dynamicsoundboard.views.SnackbarPresenter
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import java.util.*
@@ -46,6 +48,7 @@ class SoundPresenter
 (
 		private val fragmentTag: String,
 		private val eventBus: EventBus,
+		private val snackbarPresenter: SnackbarPresenter,
 		private val soundsDataAccess: SoundsDataAccess,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
@@ -89,13 +92,17 @@ class SoundPresenter
 		if (item.isPlayingSound) item.stopSound()
 		val pendingDeletionTask = object : KillableRunnable()
 		{
-			override fun call() { soundsDataStorage.removeSounds(listOf(item)) }
+			override fun call()
+			{
+				pendingDeletions.remove(item)
+				soundsDataStorage.removeSounds(listOf(item))
+			}
 		}
 		this.pendingDeletions[item] = pendingDeletionTask
 		this.handler.postDelayed(pendingDeletionTask, DELETION_TIMEOUT)
 	}
 
-	fun cancelItemDeletion(item: MediaPlayerController)
+	private fun cancelItemDeletion(item: MediaPlayerController)
 	{
 		val deletionTask = this.pendingDeletions[item]
 		this.handler.removeCallbacks(deletionTask)
@@ -229,6 +236,23 @@ class SoundPresenter
 		val index = this.values.indexOf(player)
 		if (index != -1)
 			this.adapter?.notifyItemChanged(index)
+	}
+}
+
+private class PendingDeletionHandler
+(
+	private val snackbarPresenter: SnackbarPresenter,
+	private val soundsDataStorage: SoundsDataStorage
+)
+{
+	private val handler = EnhancedHandler()
+	private val pendingDeletions: MutableMap<MediaPlayerController, KillableRunnable> = HashMap()
+
+	private var snackbar: Snackbar? = null
+
+	fun requestItemDeletion(item: MediaPlayerController)
+	{
+
 	}
 }
 
