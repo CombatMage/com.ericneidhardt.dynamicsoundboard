@@ -289,6 +289,13 @@ private class ItemTouchCallback
 		return makeMovementFlags(dragFlags, swipeFlags)
 	}
 
+	override fun canDropOver(recyclerView: RecyclerView, current: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean
+	{
+		val targetPosition = target.adapterPosition
+		if (targetPosition != RecyclerView.NO_POSITION) recyclerView.scrollToPosition(targetPosition)
+		return super.canDropOver(recyclerView, current, target)
+	}
+
 	override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean
 	{
 		val from = viewHolder.adapterPosition
