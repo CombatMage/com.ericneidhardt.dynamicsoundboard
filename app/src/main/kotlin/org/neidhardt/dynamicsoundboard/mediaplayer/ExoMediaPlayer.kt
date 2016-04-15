@@ -30,6 +30,8 @@ fun getNewMediaPlayerController(context: Context,
 	return ExoMediaPlayer(context, eventBus, soundsDataStorage, mediaPlayerData)
 }
 
+val PlaylistTAG = "PlaylistTAG"
+
 private val RELEASE_DELAY = 10000.toLong()
 
 private val PROGRESS_DIVIDER = 1000
@@ -37,6 +39,14 @@ private val PROGRESS_DIVIDER = 1000
 private val RENDER_COUNT = 1
 private val BUFFER_SEGMENT_SIZE = 64 * 1024
 private val BUFFER_SEGMENT_COUNT = 160
+
+enum class PlayerAction
+{
+	PLAY,
+	PAUSE,
+	PROGRESS,
+	UNDEFINED
+}
 
 class ExoMediaPlayer
 (

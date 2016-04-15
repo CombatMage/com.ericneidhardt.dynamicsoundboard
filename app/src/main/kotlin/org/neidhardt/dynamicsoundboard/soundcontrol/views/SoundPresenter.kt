@@ -31,7 +31,8 @@ fun createSoundPresenter(
 	return SoundPresenter(
 			fragmentTag = fragmentTag,
 			eventBus = eventBus,
-			soundsDataAccess = soundsDataAccess
+			soundsDataAccess = soundsDataAccess,
+			soundsDataStorage = soundsDataStorage
 	).apply {
 		val adapter = SoundAdapter(this, soundsDataStorage, eventBus)
 		this.adapter = adapter
@@ -39,13 +40,14 @@ fun createSoundPresenter(
 	}
 }
 
-private val DELETION_TIMEOUT = 2000.toLong()
+private val DELETION_TIMEOUT = 5000.toLong()
 
 class SoundPresenter
 (
 		private val fragmentTag: String,
 		private val eventBus: EventBus,
-		private val soundsDataAccess: SoundsDataAccess
+		private val soundsDataAccess: SoundsDataAccess,
+		private val soundsDataStorage: SoundsDataStorage
 ) :
 		OnSoundsChangedEventListener,
 		MediaPlayerEventListener
@@ -53,6 +55,7 @@ class SoundPresenter
 	private val TAG = javaClass.name
 
 	private val handler = EnhancedHandler()
+	private val pendingDeletions: MutableMap<MediaPlayerController, KillableRunnable> = HashMap()
 
 	var adapter: SoundAdapter? = null
 	val values: MutableList<MediaPlayerController> = ArrayList()
@@ -82,14 +85,23 @@ class SoundPresenter
 
 	fun onItemDeletionRequested(item: MediaPlayerController)
 	{
-		this.handler.postDelayed(object : KillableRunnable(){
+		item.isDeletionPending = true
+		if (item.isPlayingSound) item.stopSound()
+		val pendingDeletionTask = object : KillableRunnable()
+		{
+			override fun call() { soundsDataStorage.removeSounds(listOf(item)) }
+		}
+		this.pendingDeletions[item] = pendingDeletionTask
+		this.handler.postDelayed(pendingDeletionTask, DELETION_TIMEOUT)
+	}
 
-			override fun call() {
-				// TODO reset not working
-				adapter?.notifyItemChanged(item)
-			}
+	fun cancelItemDeletion(item: MediaPlayerController)
+	{
+		val deletionTask = this.pendingDeletions[item]
+		this.handler.removeCallbacks(deletionTask)
 
-		}, DELETION_TIMEOUT)
+		item.isDeletionPending = false
+		this.adapter?.notifyItemChanged(item)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

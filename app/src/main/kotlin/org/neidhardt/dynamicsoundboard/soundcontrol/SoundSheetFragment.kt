@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -103,7 +102,7 @@ class SoundSheetFragment :
 		soundLayout.apply {
 			this.adapter = soundPresenter?.adapter
 			this.layoutManager = LinearLayoutManager(this.context)
-			this.itemAnimator = SlideInLeftAnimator().apply { this.supportsChangeAnimations = false }
+			//this.itemAnimator = SlideInLeftAnimator().apply { this.supportsChangeAnimations = false }
 			this.addItemDecoration(DividerItemDecoration(this.context))
 		}
 
