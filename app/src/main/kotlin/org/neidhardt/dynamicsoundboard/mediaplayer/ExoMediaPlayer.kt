@@ -62,7 +62,9 @@ class ExoMediaPlayer
 	private fun init()
 	{
 		this.lastPosition = null
-		val uri = Uri.parse(this.mediaPlayerData.uri)
+
+		val uriString = this.mediaPlayerData.uri ?: throw NullPointerException("$TAG: cannot init ExoMediaPlayer, given uri is null")
+		val uri = Uri.parse(uriString)
 
 		val allocator = DefaultAllocator(BUFFER_SEGMENT_SIZE)
 		val dataSource = DefaultUriDataSource(context, TAG)
