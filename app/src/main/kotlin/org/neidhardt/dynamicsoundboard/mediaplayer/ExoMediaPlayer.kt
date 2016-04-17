@@ -107,7 +107,13 @@ class ExoMediaPlayer
 			exoPlayer.seekTo((seekPosition * 1000).toLong())
 		}
 
-	override var isLoopingEnabled: Boolean = false
+	override var isLoopingEnabled: Boolean
+		get() = this.mediaPlayerData.isLoop
+		set(value)
+		{
+			this.mediaPlayerData.isLoop = value
+			this.mediaPlayerData.updateItemInDatabaseAsync()
+		}
 
 	override var isInPlaylist: Boolean
 		get() = this.mediaPlayerData.isInPlaylist
@@ -139,7 +145,8 @@ class ExoMediaPlayer
 		this.exoPlayer.playWhenReady = true
 
 		val lastPosition = this.lastPosition
-		if (lastPosition != null) {
+		if (lastPosition != null)
+		{
 			this.progress = lastPosition
 			this.lastPosition = null
 		}
@@ -222,7 +229,7 @@ class ExoMediaPlayer
 			if (this.isLoopingEnabled)
 			{
 				this.progress = 0
-				this.playSound()
+				this.exoPlayer.playWhenReady = true
 			}
 			else
 				this.onCompletion()
