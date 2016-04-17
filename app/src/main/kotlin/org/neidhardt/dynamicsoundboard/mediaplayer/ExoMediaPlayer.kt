@@ -113,8 +113,11 @@ class ExoMediaPlayer
 		get() = this.mediaPlayerData.isLoop
 		set(value)
 		{
-			this.mediaPlayerData.isLoop = value
-			this.mediaPlayerData.updateItemInDatabaseAsync()
+			if (value != this.mediaPlayerData.isLoop)
+			{
+				this.mediaPlayerData.isLoop = value
+				this.mediaPlayerData.updateItemInDatabaseAsync()
+			}
 		}
 
 	override var isInPlaylist: Boolean

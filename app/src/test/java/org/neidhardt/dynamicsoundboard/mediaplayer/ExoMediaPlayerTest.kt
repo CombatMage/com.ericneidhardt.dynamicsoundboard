@@ -41,7 +41,10 @@ class ExoMediaPlayerTest : BaseRobolectricTest()
 	@Test
 	fun isLoopingEnabled()
 	{
+		this.mediaPlayerData?.isLoop = false // precondition
+
 		this.unitUnderTest?.isLoopingEnabled = true
+		assert(this.mediaPlayerData?.isLoop ?: false) // verify that underlying data was changed
 		assert(this.unitUnderTest?.isLoopingEnabled ?: false)
 
 		// constructor another player from given data should not change result
