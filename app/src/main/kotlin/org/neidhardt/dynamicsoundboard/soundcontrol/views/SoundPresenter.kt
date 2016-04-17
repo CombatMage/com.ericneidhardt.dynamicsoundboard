@@ -1,5 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -318,4 +321,44 @@ private class ItemTouchCallback
 		}
 	}
 
+	override fun onChildDrawOver(canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+								 dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+		super.onChildDrawOver(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+
+		val view = viewHolder.itemView
+
+		val params = view.layoutParams as RecyclerView.LayoutParams
+		val left = recyclerView.paddingLeft
+		val right = recyclerView.width - recyclerView.paddingRight
+		val top = view.bottom + params.bottomMargin
+		val bottom = top + view.height
+
+		val paint = Paint().apply {
+			this.style = Paint.Style.FILL
+			this.color = Color.RED
+		}
+
+		canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
+	}
+
+	override fun onChildDraw(canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+							 dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean)
+	{
+		super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+
+		val view = viewHolder.itemView
+
+		val params = view.layoutParams as RecyclerView.LayoutParams
+		val left = recyclerView.paddingLeft
+		val right = recyclerView.width - recyclerView.paddingRight
+		val top = view.bottom + params.bottomMargin
+		val bottom = top + view.height
+
+		val paint = Paint().apply {
+			this.style = Paint.Style.FILL
+			this.color = Color.RED
+		}
+
+		canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
+	}
 }
