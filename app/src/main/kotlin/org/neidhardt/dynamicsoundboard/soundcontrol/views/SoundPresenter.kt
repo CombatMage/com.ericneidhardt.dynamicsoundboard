@@ -330,9 +330,9 @@ private class ItemTouchCallback
 
 	private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
 		val context = SoundboardApplication.context
-		val size = context.resources.getDimension(R.dimen.text_body)
+		val size = context.resources.getDimension(R.dimen.text_title)
 		this.textSize = size
-		this.color = ContextCompat.getColor(context, R.color.primary_500)
+		this.color = ContextCompat.getColor(context, R.color.text_header)
 		this.textAlign = Paint.Align.LEFT
 	}
 
@@ -342,33 +342,33 @@ private class ItemTouchCallback
 		super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
 		val view = viewHolder.itemView
-		val ressources = view.context.resources
+		val resources = view.context.resources
 		if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE)
 		{
 			val left = view.left.toFloat()
 			val top = view.top.toFloat()
 			val height = view.height.toFloat()
 			val width = view.width.toFloat()
+			val margin = resources.getDimension(R.dimen.margin_default)
 
-			if (dX > 0) // swiping right
+			val bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_delete)
+			val heightBitmap = (height / 2) - (bitmap.height / 2)
+			val heightText = (height / 2) - (textPaint.textSize / 2)
+
+			if (Math.abs(dX) >= width) // draw text
 			{
 				canvas.drawRect(left, top, dX, top + height, backgroundPaint)
-
-				val bitmap = BitmapFactory.decodeResource(ressources, R.drawable.ic_action_add_sound)
-				val height = (view.getHeight() / 2) - (bitmap.getHeight() / 2)
-				canvas.drawBitmap(bitmap, 96f, view.getTop().toFloat() + height, null)
+				canvas.drawText(resources.getString(R.string.sound_control_deletion_pending_single), margin, top + heightText, textPaint)
 			}
-			else
-			{ // swiping left
+			else if (dX > 0) // swiping right
+			{
+				canvas.drawRect(left, top, dX, top + height, backgroundPaint)
+				canvas.drawBitmap(bitmap, margin, top + heightBitmap, null)
+			}
+			else // swiping left
+			{
 				canvas.drawRect(width + dX, top, width, top + height, backgroundPaint)
-
-				/*paint.setColor(view.context.getResources().getColor(R.color.accent_400));
-				bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_circle_bin);
-				float height = (itemView.getHeight() / 2) - (bitmap.getHeight() / 2);
-				float bitmapWidth = bitmap.getWidth();
-
-
-				c.drawBitmap(bitmap, ((float) itemView.getRight() - bitmapWidth) - 96f, (float) itemView.getTop() + height, null);*/
+				canvas.drawBitmap(bitmap, (width - bitmap.width) - margin, top + heightBitmap, null);
 			}
 		}
 

@@ -23,12 +23,6 @@
 		<item name="android:dropDownListViewStyle">@style/ActionBar.OverflowMenu</item>
 		<item name="dropDownListViewStyle">@style/ActionBar.OverflowMenu</item>
 
-		<item name="actionModeBackground">@drawable/cab_background_top</item>
-		<item name="android:actionModeBackground">@drawable/cab_background_top</item>
-
-		<item name="actionModeSplitBackground">@drawable/cab_background_bottom_actionbar</item>
-		<item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_actionbar</item>
-
 		<item name="actionModeCloseDrawable">@drawable/ic_action_done</item>
 		<item name="android:actionModeCloseDrawable">@drawable/ic_action_done</item>
 
