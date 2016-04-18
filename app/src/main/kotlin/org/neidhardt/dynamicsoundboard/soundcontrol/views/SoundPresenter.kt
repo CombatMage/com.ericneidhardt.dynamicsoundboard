@@ -1,15 +1,17 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
@@ -321,24 +323,17 @@ private class ItemTouchCallback
 		}
 	}
 
-	override fun onChildDrawOver(canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-								 dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-		super.onChildDrawOver(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+	private val backgroundPaint = Paint().apply {
+		this.style = Paint.Style.FILL
+		this.color = ContextCompat.getColor(SoundboardApplication.context, R.color.primary_200)
+	}
 
-		val view = viewHolder.itemView
-
-		val params = view.layoutParams as RecyclerView.LayoutParams
-		val left = recyclerView.paddingLeft
-		val right = recyclerView.width - recyclerView.paddingRight
-		val top = view.bottom + params.bottomMargin
-		val bottom = top + view.height
-
-		val paint = Paint().apply {
-			this.style = Paint.Style.FILL
-			this.color = Color.RED
-		}
-
-		canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
+	private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
+		val context = SoundboardApplication.context
+		val size = context.resources.getDimension(R.dimen.text_body)
+		this.textSize = size
+		this.color = ContextCompat.getColor(context, R.color.primary_500)
+		this.textAlign = Paint.Align.LEFT
 	}
 
 	override fun onChildDraw(canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
@@ -347,18 +342,41 @@ private class ItemTouchCallback
 		super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
 		val view = viewHolder.itemView
+		val ressources = view.context.resources
+		if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE)
+		{
+			val left = view.left.toFloat()
+			val top = view.top.toFloat()
+			val height = view.height.toFloat()
+			val width = view.width.toFloat()
 
-		val params = view.layoutParams as RecyclerView.LayoutParams
-		val left = recyclerView.paddingLeft
-		val right = recyclerView.width - recyclerView.paddingRight
-		val top = view.bottom + params.bottomMargin
-		val bottom = top + view.height
+			if (dX > 0) // swiping right
+			{
+				canvas.drawRect(left, top, dX, top + height, backgroundPaint)
 
-		val paint = Paint().apply {
-			this.style = Paint.Style.FILL
-			this.color = Color.RED
+				val bitmap = BitmapFactory.decodeResource(ressources, R.drawable.ic_action_add_sound)
+				val height = (view.getHeight() / 2) - (bitmap.getHeight() / 2)
+				canvas.drawBitmap(bitmap, 96f, view.getTop().toFloat() + height, null)
+			}
+			else
+			{ // swiping left
+				canvas.drawRect(width + dX, top, width, top + height, backgroundPaint)
+
+				/*paint.setColor(view.context.getResources().getColor(R.color.accent_400));
+				bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_circle_bin);
+				float height = (itemView.getHeight() / 2) - (bitmap.getHeight() / 2);
+				float bitmapWidth = bitmap.getWidth();
+
+
+				c.drawBitmap(bitmap, ((float) itemView.getRight() - bitmapWidth) - 96f, (float) itemView.getTop() + height, null);*/
+			}
 		}
 
-		canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
+		//val bitmap = BitmapFactory.decodeResource(view.context.resources, R.drawable.ic_action_add_sound)
+		//canvas.drawBitmap(bitmap, left.toFloat(), top.toFloat() + height, Paint().apply { this.color = Color.BLUE })
+
+
+		//val baseLine = (view.height / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)
+		//canvas.drawText("Sound wird gelöscht", left.toFloat(), bottom.toFloat(), textPaint)
 	}
 }
