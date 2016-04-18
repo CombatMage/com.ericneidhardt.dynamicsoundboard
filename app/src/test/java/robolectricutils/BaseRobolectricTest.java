@@ -1,45 +1,44 @@
-package org.neidhardt.dynamicsoundboard;
+package robolectricutils;
 
 import android.os.Environment;
 import org.apache.maven.artifact.ant.shaded.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.neidhardt.robolectricutils.CustomTestRunner;
 import org.robolectric.shadows.ShadowEnvironment;
 
 import java.io.File;
 
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.Assert.assertTrue;
 
 /**
- * File created by eric.neidhardt on 18.04.2015.
+ * File created by eric.neidhardt on 16.04.2015.
  */
+@SuppressWarnings("deprecation")
 @RunWith(CustomTestRunner.class)
-public abstract class BaseTest
-{
+public abstract class BaseRobolectricTest {
 
 	@Before
 	public void setUp() throws Exception
 	{
 		ShadowEnvironment.setExternalStorageState(Environment.MEDIA_MOUNTED);
-		// nothing to be done
 	}
 
 	@After
-	public void tearDown() throws Exception
-	{
+	public void tearDown() throws Exception {
 		FileUtils.cleanDirectory(Environment.getExternalStorageDirectory());
-
 		ShadowEnvironment.setExternalStorageState(Environment.MEDIA_UNMOUNTED);
 	}
 
-	public static File createFile(String fileName) throws Exception
-	{
+	protected File createFile(String fileName) throws Exception {
 		File newFile = new File(ShadowEnvironment.getExternalStorageDirectory(), fileName);
 		if (!newFile.exists())
 			assertTrue(newFile.createNewFile());
 		return newFile;
+	}
+
+	protected File getFileFromExternalStorage(String fileName) {
+		return new File(ShadowEnvironment.getExternalStorageDirectory(), fileName);
 	}
 
 }

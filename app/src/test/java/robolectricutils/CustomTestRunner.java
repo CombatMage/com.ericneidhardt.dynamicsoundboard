@@ -1,10 +1,9 @@
-package org.neidhardt.robolectricutils;
+package robolectricutils;
 
 import org.junit.runners.model.InitializationError;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.manifest.AndroidManifest;
-import roboguice.util.BuildConfig;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -13,12 +12,10 @@ import java.util.Properties;
 /**
  * File created by eric.neidhardt on 02.04.2015.
  */
-public class CustomTestRunner extends RobolectricTestRunner
-{
-	private static final int MAX_SDK_LEVEL = 21;
+public class CustomTestRunner extends RobolectricTestRunner {
 
-	public CustomTestRunner(Class<?> aClass) throws InitializationError {
-		super(aClass);
+	public CustomTestRunner(Class<?> classInstance) throws InitializationError {
+		super(classInstance);
 	}
 
 	@Override
@@ -44,7 +41,6 @@ public class CustomTestRunner extends RobolectricTestRunner
 	@Override
 	public Config getConfig(Method method) {
 		Config config = super.getConfig(method);
-		//
 		// Fixing up the Config:
 		// SDK can not be higher than 21
 		// constants must point to a real BuildConfig class
@@ -68,14 +64,8 @@ public class CustomTestRunner extends RobolectricTestRunner
 	}
 
 	private Class<?> ensureBuildConfig(Class<?> constants) {
-		if (constants == Void.class) return BuildConfig.class;
+		//if (constants == Void.class) return BuildConfig.class;
 		return constants;
-	}
-
-	private int ensureSdkLevel(int sdkLevel) {
-		if (sdkLevel > MAX_SDK_LEVEL) return MAX_SDK_LEVEL;
-		if (sdkLevel <= 0) return MAX_SDK_LEVEL;
-		return sdkLevel;
 	}
 
 }
