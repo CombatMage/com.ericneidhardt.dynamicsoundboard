@@ -1,11 +1,8 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
-import android.os.Handler
-import android.support.v4.view.PagerAdapter
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
-import android.view.ViewGroup
 import android.widget.SeekBar
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
@@ -17,7 +14,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressTimer
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.UPDATE_INTERVAL
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
@@ -180,32 +176,4 @@ class SoundViewHolder
 		this.progressTimer.startProgressUpdateTimer()
 	}
 
-	private fun Handler.startTimerDelayed()
-	{
-		this.postDelayed({ progressTimer.startProgressUpdateTimer() }, (2 * UPDATE_INTERVAL).toLong())
-	}
-}
-
-class SoundItemPagerAdapter : PagerAdapter()
-{
-
-	override fun getCount(): Int
-	{
-		return 3 // main sound control + delete left and right
-	}
-
-	override fun isViewFromObject(view: View, `object`: Any): Boolean
-	{
-		return view == `object`
-	}
-
-	override fun instantiateItem(container: ViewGroup, position: Int): Any
-	{
-		if (position == VIEWPAGER_INDEX_SOUND_CONTROLS)
-			return container.findViewById(R.id.layout_sound_controls)
-		else if (position == VIEWPAGER_INDEX_SOUND_CONTROLS - 1)
-			return container.findViewById(R.id.layout_remove_sound_item_left)
-		else
-			return container.findViewById(R.id.layout_remove_sound_item_right)
-	}
 }
