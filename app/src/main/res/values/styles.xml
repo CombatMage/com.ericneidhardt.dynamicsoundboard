@@ -14,6 +14,9 @@
 		<item name="android:background">@null</item>
 		<item name="android:windowBackground">@null</item>
 
+		<!-- styling dialog -->
+		<item name="alertDialogTheme">@style/Theme.Dialog</item>
+
 		<!-- styling seekBar -->
 		<item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
 
@@ -35,13 +38,18 @@
 		<item name="android:background">@color/background</item>
 	</style>
 
+	<!-- Dialog -->
+	<style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+		<item name="colorAccent">@color/accent_200</item>
+	</style>
+
 	<!-- often used -->
 	<style name="ActionBarItemMargin">
 		<item name="android:layout_marginLeft">1dp</item>
 		<item name="android:layout_marginRight">1dp</item>
 	</style>
 
-	<style name="Button.Flat" parent="Theme.AppTheme">
+	<style name="Theme.Button.Flat" parent="Theme.AppTheme">
 		<item name="android:padding">@dimen/margin_small</item>
 		<item name="colorControlHighlight">@color/accent_200</item>
 		<item name="android:textSize">@dimen/text_body</item>

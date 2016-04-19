@@ -2,9 +2,10 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatDialog
+import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
@@ -25,7 +26,9 @@ class AddNewSoundSheetDialog : BaseDialog(), View.OnClickListener
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
     {
-		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_sheet, null)
+		val context = this.activity
+
+		@SuppressLint("InflateParams") val view = context.layoutInflater.inflate(R.layout.dialog_add_new_sound_sheet, null)
 
 		this.mainView = view as DialogBaseLayout
 
@@ -34,10 +37,16 @@ class AddNewSoundSheetDialog : BaseDialog(), View.OnClickListener
 		view.findViewById(R.id.b_cancel).setOnClickListener(this)
 		view.findViewById(R.id.b_ok).setOnClickListener(this)
 
-		val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
 
-		dialog.setContentView(view)
-		dialog.setTitle(R.string.dialog_add_new_sound_sheet_title)
+		//val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
+
+		val dialog = AlertDialog.Builder(context).apply {
+			this.setTitle(R.string.dialog_add_new_sound_sheet_title)
+			this.setView(view)
+			this.setPositiveButton("Ok", DialogInterface.OnClickListener { dialogInterface, i -> })
+			this.setNegativeButton("Abbrechen", DialogInterface.OnClickListener { dialogInterface, i -> })
+		}.create()
+		//dialog.setContentView(view)
 
 		return dialog
 	}
