@@ -32,7 +32,7 @@
 				android:layout_marginRight="@dimen/margin_default"
 				android:layout_marginEnd="@dimen/margin_default"
 				android:layout_centerVertical="true"
-				android:textSize="@dimen/text_sub_text"
+				android:textSize="@dimen/text_body"
 				android:textColor="@color/text_hint"
 				android:visibility="invisible"
 				app:typeface="roboto_regular"/>
@@ -46,7 +46,7 @@
 				android:layout_centerVertical="true"
 				android:layout_marginRight="@dimen/stroke"
 				android:layout_marginEnd="@dimen/stroke"
-				android:textSize="@dimen/text_sub_text"
+				android:textSize="@dimen/text_body"
 				android:textColor="@color/text_hint"
 				android:text="@string/tab_sound_sheets_sound_count_label"
 				android:visibility="invisible"
@@ -65,7 +65,7 @@
 				android:layout_centerVertical="true"
 				android:layout_alignParentLeft="true"
 				android:layout_alignParentStart="true"
-				android:textSize="@dimen/text_sub_text"
+				android:textSize="@dimen/text_body"
 				android:textColor="@color/selector_text_content_primary"
 				tools:text="@string/suggested_sound_sheet_name"
 				app:typeface="roboto_medium"/>

@@ -15,7 +15,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/margin_small"
 			android:layout_marginBottom="@dimen/margin_small"
-			android:textSize="@dimen/text_sub_text"
+			android:textSize="@dimen/text_body"
 			android:textColor="@color/text_content_secondary"
 			app:typeface="roboto_medium"/>
 
@@ -25,7 +25,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/margin_small"
 			android:inputType="textNoSuggestions"
-			android:textSize="@dimen/text_sub_text"
+			android:textSize="@dimen/text_body"
 			app:typeface="roboto_medium"/>
 
 </LinearLayout>

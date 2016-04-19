@@ -20,29 +20,12 @@
 		<!-- styling actionbar -->
 		<item name="android:dropDownListViewStyle">@style/ActionBar.OverflowMenu</item>
 		<item name="dropDownListViewStyle">@style/ActionBar.OverflowMenu</item>
-
-		<item name="actionModeCloseDrawable">@drawable/ic_action_done</item>
-		<item name="android:actionModeCloseDrawable">@drawable/ic_action_done</item>
-
-		<item name="actionModeCloseButtonStyle">@style/ContextualActionbar.CloseButton</item>
-		<item name="android:actionModeCloseButtonStyle">@style/ContextualActionbar.CloseButton</item>
 	</style>
 
 	<!-- actionbar text color -->
 	<style name="Actionbar.Color" parent="Theme.AppTheme">
 		<item name="android:textColorPrimary">@color/text_header</item>
 		<item name="android:textColorSecondary">@color/text_header</item>
-	</style>
-
-	<!-- contextual actionbar text color -->
-	<style name="ContextualActionbar.Color" parent="Theme.AppTheme">
-		<item name="android:textColorPrimary">@color/text_header</item>
-		<item name="android:textColorSecondary">@color/text_header</item>
-	</style>
-
-	<!-- contextual actionbar close button -->
-	<style name="ContextualActionbar.CloseButton" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
-		<item name="android:background">@drawable/btn_cab_done_actionbar</item>
 	</style>
 
 	<!-- overFlow menu style -->
@@ -58,5 +41,13 @@
 		<item name="android:layout_marginRight">1dp</item>
 	</style>
 
+	<style name="Button.Flat" parent="Theme.AppTheme">
+		<item name="android:padding">@dimen/margin_small</item>
+		<item name="colorControlHighlight">@color/accent_200</item>
+		<item name="android:textSize">@dimen/text_body</item>
+		<item name="android:textAllCaps">true</item>
+		<item name="typeface">roboto_medium</item>
+		<item name="android:minWidth">@dimen/width_min_button</item>
+	</style>
 
 </resources>

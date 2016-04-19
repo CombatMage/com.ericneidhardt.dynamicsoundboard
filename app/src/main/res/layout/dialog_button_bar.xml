@@ -14,14 +14,10 @@
 			android:layout_height="@dimen/height_dialog_button"
 			android:layout_marginEnd="@dimen/margin_small"
 			android:layout_marginRight="@dimen/margin_small"
-			android:padding="@dimen/margin_small"
-			android:minWidth="@dimen/width_min_button"
-			android:textSize="@dimen/text_button"
-			android:textColor="@color/selector_text_accent"
-			android:background="@drawable/selector_background_accent"
 			app:typeface="roboto_medium"
 			tools:text="@string/dialog_cancel"
-			style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+			android:theme="@style/Button.Flat"
+			style="@style/Widget.AppCompat.Button.Borderless"/>
 
 	<com.devspark.robototextview.widget.RobotoButton
 			android:id="@+id/b_ok"
@@ -29,13 +25,8 @@
 			android:layout_height="@dimen/height_dialog_button"
 			android:layout_marginEnd="@dimen/margin_small"
 			android:layout_marginRight="@dimen/margin_small"
-			android:padding="@dimen/margin_small"
-			android:minWidth="@dimen/width_min_button"
-			android:textSize="@dimen/text_button"
-			android:textColor="@color/selector_text_accent"
-			android:background="@drawable/selector_background_accent"
-			app:typeface="roboto_medium"
 			tools:text="@string/dialog_add"
-			style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+			android:theme="@style/Button.Flat"
+			style="@style/Widget.AppCompat.Button.Borderless"/>
 
 </LinearLayout>
