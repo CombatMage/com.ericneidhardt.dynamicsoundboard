@@ -53,8 +53,8 @@
 	<string name="cab_title_delete_sound_layouts">Soundlayouts zum löschen markieren</string>
 
 	<!-- sound control -->
-	<string name="sound_control_deletion_pending_single">Sound wird gelöscht</string>
-	<string name="sound_control_deletion_pending">{%s0} Sounds werden gelöscht</string>
+	<string name="sound_control_deletion_pending_single">Sound gelöscht</string>
+	<string name="sound_control_deletion_pending">{%s0} Sounds gelöscht</string>
 	<string name="sound_control_deletion_pending_undo">Rückgängig machen</string>
 	<string name="sound_control_content_description_stop">Setzt den Sound zurück</string>
 	<string name="sound_control_content_description_play">Startet oder Pausiert den Sound</string>

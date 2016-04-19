@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -42,10 +43,11 @@ fun createSoundPresenter(
 			eventBus = eventBus,
 			soundsDataAccess = soundsDataAccess
 	).apply {
-		val adapter = SoundAdapter(this, soundsDataStorage, eventBus)
-		val deletionHandler = PendingDeletionHandler(adapter, snackbarPresenter, soundsDataStorage)
+		val deletionHandler = PendingDeletionHandler(this, snackbarPresenter, soundsDataStorage)
+		val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(recyclerView.context, deletionHandler,
+				this, fragmentTag, soundsDataStorage)).apply { this.attachToRecyclerView(recyclerView) }
+		val adapter = SoundAdapter(itemTouchHelper, this, soundsDataStorage, eventBus)
 		this.adapter = adapter
-		ItemTouchHelper(ItemTouchCallback(deletionHandler, this, fragmentTag, soundsDataStorage)).attachToRecyclerView(recyclerView)
 	}
 }
 
@@ -218,7 +220,7 @@ private val DELETION_TIMEOUT = 5000
 
 private class PendingDeletionHandler
 (
-		private val soundAdapter: SoundAdapter,
+		private val soundPresenter: SoundPresenter,
 		private val snackbarPresenter: SnackbarPresenter,
 		private val soundsDataStorage: SoundsDataStorage
 )
@@ -260,7 +262,7 @@ private class PendingDeletionHandler
 		this.deletionTask?.apply { handler.removeCallbacks(this) }
 		this.pendingDeletions.map { item ->
 			item.isDeletionPending = false
-			soundAdapter.notifyItemChanged(item)
+			soundPresenter.adapter?.notifyItemChanged(item)
 		}
 		this.pendingDeletions.clear()
 	}
@@ -277,13 +279,15 @@ private fun SnackbarPresenter.makeSnackbarForDeletion(count: Int, duration: Int,
 
 private class ItemTouchCallback
 (
+		context: Context,
 		private val deletionHandler: PendingDeletionHandler,
 		private val presenter: SoundPresenter,
 		private val fragmentTag: String,
 		private val soundsDataStorage: SoundsDataStorage
 ) : ItemTouchHelper.Callback()
 {
-	override fun isLongPressDragEnabled(): Boolean = true
+
+	override fun isLongPressDragEnabled(): Boolean = false
 
 	override fun isItemViewSwipeEnabled(): Boolean = true
 
@@ -323,13 +327,14 @@ private class ItemTouchCallback
 		}
 	}
 
+	private val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_delete)
+
 	private val backgroundPaint = Paint().apply {
 		this.style = Paint.Style.FILL
 		this.color = ContextCompat.getColor(SoundboardApplication.context, R.color.primary_200)
 	}
 
 	private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
-		val context = SoundboardApplication.context
 		val size = context.resources.getDimension(R.dimen.text_title)
 		this.textSize = size
 		this.color = ContextCompat.getColor(context, R.color.text_header)
@@ -343,24 +348,23 @@ private class ItemTouchCallback
 
 		val view = viewHolder.itemView
 		val resources = view.context.resources
-		if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE)
+		val left = view.left.toFloat()
+		val top = view.top.toFloat()
+		val height = view.height.toFloat()
+		val width = view.width.toFloat()
+		val margin = resources.getDimension(R.dimen.margin_default)
+
+		val heightBitmap = (height / 2) - (bitmap.height / 2)
+		val heightText = (height / 2) - (textPaint.textSize / 2)
+
+		if (!isCurrentlyActive && actionState != ItemTouchHelper.ACTION_STATE_DRAG)
 		{
-			val left = view.left.toFloat()
-			val top = view.top.toFloat()
-			val height = view.height.toFloat()
-			val width = view.width.toFloat()
-			val margin = resources.getDimension(R.dimen.margin_default)
-
-			val bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_delete)
-			val heightBitmap = (height / 2) - (bitmap.height / 2)
-			val heightText = (height / 2) - (textPaint.textSize / 2)
-
-			if (Math.abs(dX) >= width) // draw text
-			{
-				canvas.drawRect(left, top, dX, top + height, backgroundPaint)
-				canvas.drawText(resources.getString(R.string.sound_control_deletion_pending_single), margin, top + heightText, textPaint)
-			}
-			else if (dX > 0) // swiping right
+			canvas.drawRect(left, top, width, top + height, backgroundPaint)
+			canvas.drawText(resources.getString(R.string.sound_control_deletion_pending_single), margin, top + heightText, textPaint)
+		}
+		else if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE)
+		{
+			if (dX > 0) // swiping right
 			{
 				canvas.drawRect(left, top, dX, top + height, backgroundPaint)
 				canvas.drawBitmap(bitmap, margin, top + heightBitmap, null)
@@ -371,12 +375,5 @@ private class ItemTouchCallback
 				canvas.drawBitmap(bitmap, (width - bitmap.width) - margin, top + heightBitmap, null);
 			}
 		}
-
-		//val bitmap = BitmapFactory.decodeResource(view.context.resources, R.drawable.ic_action_add_sound)
-		//canvas.drawBitmap(bitmap, left.toFloat(), top.toFloat() + height, Paint().apply { this.color = Color.BLUE })
-
-
-		//val baseLine = (view.height / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)
-		//canvas.drawText("Sound wird gelöscht", left.toFloat(), bottom.toFloat(), textPaint)
 	}
 }

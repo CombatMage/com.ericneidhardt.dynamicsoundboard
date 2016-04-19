@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.greenrobot.eventbus.EventBus
@@ -14,6 +15,7 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAd
  */
 class SoundAdapter
 (
+		private val itemTouchHelper: ItemTouchHelper,
 		private val presenter: SoundPresenter,
 		private val soundsDataStorage: SoundsDataStorage,
 		private val eventBus: EventBus
@@ -31,6 +33,7 @@ class SoundAdapter
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder =
 			SoundViewHolder(
+					itemTouchHelper = this.itemTouchHelper,
 					itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control, parent, false),
 					eventBus = this.eventBus,
 					soundsDataStorage = this.soundsDataStorage,

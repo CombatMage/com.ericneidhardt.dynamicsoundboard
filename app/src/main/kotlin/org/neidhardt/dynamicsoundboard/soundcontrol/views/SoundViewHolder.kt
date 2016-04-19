@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundcontrol.views
 import android.os.Handler
 import android.support.v4.view.PagerAdapter
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
@@ -25,6 +26,7 @@ private val VIEWPAGER_INDEX_SOUND_CONTROLS = 1
 
 class SoundViewHolder
 (
+		itemTouchHelper: ItemTouchHelper,
 		itemView: View,
 		private val eventBus: EventBus,
 		private val soundsDataStorage: SoundsDataStorage,
@@ -52,6 +54,11 @@ class SoundViewHolder
 
 	init
 	{
+		this.reorder.setOnTouchListener { view, motionEvent ->
+			itemTouchHelper.startDrag(this)
+			true
+		}
+
 		this.name.onTextEditedListener = this
 		this.play.setOnClickListener(this)
 		this.loop.setOnClickListener(this)
