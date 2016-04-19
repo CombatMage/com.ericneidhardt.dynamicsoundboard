@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -286,6 +287,7 @@ private class ItemTouchCallback
 		private val soundsDataStorage: SoundsDataStorage
 ) : ItemTouchHelper.Callback()
 {
+	private val handler = Handler()
 
 	override fun isLongPressDragEnabled(): Boolean = false
 
@@ -321,7 +323,7 @@ private class ItemTouchCallback
 		{
 			val item = this.presenter.values[position]
 			if (SoundboardPreferences.isOneSwipeToDeleteEnabled)
-				this.soundsDataStorage.removeSounds(listOf(item))
+				this.handler.postDelayed({ this.soundsDataStorage.removeSounds(listOf(item)) }, 200) // give animation some time to settle
 			else
 				this.deletionHandler.requestItemDeletion(item)
 		}
@@ -355,7 +357,7 @@ private class ItemTouchCallback
 		val margin = resources.getDimension(R.dimen.margin_default)
 
 		val heightBitmap = (height / 2) - (bitmap.height / 2)
-		val heightText = (height / 2) - (textPaint.textSize / 2)
+		val heightText = (height / 2) - (textPaint.textSize / 2) + margin
 
 		if (!isCurrentlyActive && actionState != ItemTouchHelper.ACTION_STATE_DRAG)
 		{
