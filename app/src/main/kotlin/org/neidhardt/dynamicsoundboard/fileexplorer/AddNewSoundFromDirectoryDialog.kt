@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromFileListTask
@@ -23,7 +22,6 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 {
 	protected var callingFragmentTag: String? = null
 
-	private var confirm: View? = null
 	private var directories: RecyclerView? = null
 
 	companion object
@@ -75,8 +73,6 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 
 	override fun onFileSelected(selectedFile: File)
 	{
-		this.confirm!!.isEnabled = true
-
 		val position = super.adapter.fileList.indexOf(selectedFile)
 		this.directories!!.scrollToPosition(position)
 	}
