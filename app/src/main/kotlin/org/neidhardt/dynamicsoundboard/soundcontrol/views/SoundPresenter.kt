@@ -46,7 +46,7 @@ fun createSoundPresenter(
 		val deletionHandler = PendingDeletionHandler(this, snackbarPresenter, soundsDataStorage)
 		val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(recyclerView.context, deletionHandler,
 				this, fragmentTag, soundsDataStorage)).apply { this.attachToRecyclerView(recyclerView) }
-		val adapter = SoundAdapter(itemTouchHelper, this, soundsDataStorage, eventBus)
+		val adapter = SoundAdapter(recyclerView, itemTouchHelper, this, soundsDataStorage, eventBus)
 		this.adapter = adapter
 	}
 }

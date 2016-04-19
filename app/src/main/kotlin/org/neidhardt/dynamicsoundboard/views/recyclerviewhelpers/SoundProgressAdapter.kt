@@ -8,7 +8,10 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 val UPDATE_INTERVAL: Int = 500
 
-abstract class SoundProgressAdapter<T> :
+abstract class SoundProgressAdapter<T>
+(
+		private val  recyclerView: RecyclerView
+) :
 		BaseAdapter<MediaPlayerController, T>(),
 		SoundProgressTimer,
 		Runnable
@@ -19,8 +22,6 @@ where T : RecyclerView.ViewHolder, T : SoundProgressViewHolder
 
 	private val handler: Handler = Handler()
 	private val hasTimerStarted: AtomicBoolean = AtomicBoolean(false)
-
-	var recyclerView: RecyclerView? = null
 
 	/**
 	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
@@ -47,9 +48,6 @@ where T : RecyclerView.ViewHolder, T : SoundProgressViewHolder
 		}
 		for (index in itemsWithProgressChanged)
 		{
-			if (this.recyclerView == null)
-				throw NullPointerException(TAG + ": update sound progress failed, RecyclerView is null")
-
 			val viewHolderToUpdate = this.recyclerView?.findViewHolderForAdapterPosition(index) as SoundProgressViewHolder?
 			viewHolderToUpdate?.onProgressUpdate()
 		}

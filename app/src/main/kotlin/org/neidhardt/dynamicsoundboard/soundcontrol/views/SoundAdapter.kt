@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,13 +16,14 @@ import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAd
  */
 class SoundAdapter
 (
+		recyclerView: RecyclerView,
 		private val itemTouchHelper: ItemTouchHelper,
 		private val presenter: SoundPresenter,
 		private val soundsDataStorage: SoundsDataStorage,
 		private val eventBus: EventBus
 
 ) :
-		SoundProgressAdapter<SoundViewHolder>()
+		SoundProgressAdapter<SoundViewHolder>(recyclerView)
 {
 	init { this.setHasStableIds(true) }
 

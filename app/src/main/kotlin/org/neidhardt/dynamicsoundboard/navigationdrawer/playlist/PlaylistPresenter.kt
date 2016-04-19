@@ -27,8 +27,7 @@ fun createPlaylistPresenter(
 			soundsDataAccess = soundsDataAccess,
 			soundsDataStorage = soundsDataStorage
 	).apply {
-		this.adapter = PlaylistAdapter(this)
-		this.adapter?.recyclerView = recyclerView
+		this.adapter = PlaylistAdapter(recyclerView, this)
 		this.view = recyclerView
 	}
 }

@@ -108,8 +108,6 @@ class SoundSheetFragment :
 		soundLayout.apply {
 			this.adapter = soundPresenter?.adapter
 			this.layoutManager = LinearLayoutManager(this.context)
-			// TODO
-			//this.itemAnimator = SlideInLeftAnimator().apply { this.supportsChangeAnimations = false }
 			this.addItemDecoration(DividerItemDecoration(this.context))
 		}
 
