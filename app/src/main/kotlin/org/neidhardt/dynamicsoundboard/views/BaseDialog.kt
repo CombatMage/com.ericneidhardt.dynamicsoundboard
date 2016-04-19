@@ -26,8 +26,6 @@ abstract class BaseDialog : DialogFragment()
 
 	var soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
 
-	var mainView: DialogBaseLayout? = null
-
 	val soundActivity: SoundActivity
 		get() = this.activity as SoundActivity
 }

@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
-import android.support.v7.app.AppCompatDialog
-import android.view.View
+import android.support.v7.app.AlertDialog
 import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
@@ -13,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.views.BaseDialog
 /**
  * File created by eric.neidhardt on 12.03.2015.
  */
-abstract class SoundLayoutDialog : BaseDialog(), View.OnClickListener
+abstract class SoundLayoutDialog : BaseDialog()
 {
 	protected var soundLayoutName: EditText? = null
 	protected var soundLayoutInput: TextInputLayout? = null
@@ -23,14 +22,15 @@ abstract class SoundLayoutDialog : BaseDialog(), View.OnClickListener
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(this.getLayoutId(), null)
 		this.soundLayoutName = view.findViewById(R.id.et_name_sound_layout) as EditText
 		this.soundLayoutInput = (view.findViewById(R.id.ti_name_sound_layout) as TextInputLayout).apply { hint = getHintForName() }
-		view.findViewById(R.id.b_cancel).setOnClickListener(this)
-		view.findViewById(R.id.b_ok).setOnClickListener(this)
 
-		val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
-        dialog.setTitle(this.getTitleId())
-		dialog.setContentView(view)
-
-		return dialog
+		return AlertDialog.Builder(this.activity).apply {
+			this.setTitle(getTitleId())
+			this.setView(view)
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setPositiveButton(R.string.dialog_delete, { dialogInterface, i ->
+				deliverResult()
+				dismiss() })
+		}.create()
 	}
 
     protected abstract fun getTitleId(): Int
@@ -38,18 +38,6 @@ abstract class SoundLayoutDialog : BaseDialog(), View.OnClickListener
 	protected abstract fun getLayoutId(): Int
 
 	protected abstract fun getHintForName(): String?
-
-	override fun onClick(v: View)
-	{
-		val id = v.id
-		if (id == R.id.b_cancel)
-			this.dismiss()
-		else if (id == R.id.b_ok)
-		{
-			this.deliverResult()
-			this.dismiss()
-		}
-	}
 
 	protected abstract fun deliverResult()
 }

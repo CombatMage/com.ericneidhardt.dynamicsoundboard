@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatDialog
+import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
@@ -22,7 +22,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsBaseDialog
-import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -37,8 +36,6 @@ class RenameSoundFileDialog : SoundSettingsBaseDialog
 
 	private val TAG = javaClass.name
 
-	private var presenter: RenameSoundFileDialogPresenter? = null
-
 	constructor() : super()
 
 	constructor(manager: FragmentManager, playerData: MediaPlayerData) : super()
@@ -52,11 +49,6 @@ class RenameSoundFileDialog : SoundSettingsBaseDialog
 		@SuppressLint("InflateParams")
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_rename_sound_file_layout, null)
 
-		this.mainView = view as DialogBaseLayout
-
-		val dialog = AppCompatDialog(this.activity, R.style.DialogThemeNoTitle)
-		dialog.setContentView(view)
-
 		val presenter = RenameSoundFileDialogPresenter(
 				playerData = this.player!!.mediaPlayerData,
 				soundsDataAccess = this.soundsDataAccess,
@@ -65,11 +57,14 @@ class RenameSoundFileDialog : SoundSettingsBaseDialog
 				newName = view.findViewById(R.id.tv_new_name) as TextView,
 				renameAllOccurrences = view.findViewById(R.id.cb_rename_all_occurrences) as CheckBox
 		)
-		view.findViewById(R.id.b_ok).setOnClickListener({ view -> presenter.rename() })
-		view.findViewById(R.id.b_cancel).setOnClickListener({ view -> this.dismiss() })
 
-		this.presenter = presenter
-		return dialog
+		return AlertDialog.Builder(context).apply {
+			this.setView(view)
+			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i ->
+				presenter.rename()
+			})
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+		}.create()
 	}
 }
 

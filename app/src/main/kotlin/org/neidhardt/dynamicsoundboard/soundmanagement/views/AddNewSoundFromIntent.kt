@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatDialog
+import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.CheckBox
 import android.widget.CompoundButton
@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner
 import java.util.*
 
-class AddNewSoundFromIntent : BaseDialog(), View.OnClickListener, CompoundButton.OnCheckedChangeListener
+class AddNewSoundFromIntent : BaseDialog(), CompoundButton.OnCheckedChangeListener
 {
 
 	private var soundName: EditText? = null
@@ -55,14 +55,15 @@ class AddNewSoundFromIntent : BaseDialog(), View.OnClickListener, CompoundButton
 		this.soundName = view.findViewById(R.id.et_name_file) as EditText
 		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as EditText
 
-		view.findViewById(R.id.b_cancel).setOnClickListener(this)
-		view.findViewById(R.id.b_ok).setOnClickListener(this)
-
-		val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
-		dialog.setContentView(view)
-		dialog.setTitle(R.string.dialog_add_new_sound_from_intent_title)
-
-		return dialog
+		return AlertDialog.Builder(context).apply {
+			this.setTitle(R.string.dialog_add_new_sound_from_intent_title)
+			this.setView(view)
+			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i ->
+				deliverResult()
+				dismiss()
+			})
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
+		}.create()
 	}
 
 	private fun createDialogToSelectSoundSheet(): Dialog {
@@ -75,14 +76,15 @@ class AddNewSoundFromIntent : BaseDialog(), View.OnClickListener, CompoundButton
 
 		this.addNewSoundSheet!!.setOnCheckedChangeListener(this)
 
-		view.findViewById(R.id.b_cancel).setOnClickListener(this)
-		view.findViewById(R.id.b_ok).setOnClickListener(this)
-
-		val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
-		dialog.setContentView(view)
-		dialog.setTitle(R.string.dialog_add_new_sound_from_intent_title)
-
-		return dialog
+		return AlertDialog.Builder(context).apply {
+			this.setTitle(R.string.dialog_add_new_sound_from_intent_title)
+			this.setView(view)
+			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i ->
+				deliverResult()
+				dismiss()
+			})
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
+		}.create()
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?)
@@ -107,16 +109,6 @@ class AddNewSoundFromIntent : BaseDialog(), View.OnClickListener, CompoundButton
 		} else {
 			soundSheetName!!.visibility = View.GONE
 			soundSheetSpinner!!.visibility = View.VISIBLE
-		}
-	}
-
-	override fun onClick(v: View) {
-		when (v.id) {
-			R.id.b_cancel -> this.dismiss()
-			R.id.b_ok -> {
-				this.deliverResult()
-				this.dismiss()
-			}
 		}
 	}
 

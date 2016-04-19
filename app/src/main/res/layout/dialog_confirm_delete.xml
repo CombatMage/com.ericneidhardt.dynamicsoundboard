@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
+<com.devspark.robototextview.widget.RobotoTextView
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="wrap_content"
+		android:id="@+id/tv_message"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:animateLayoutChanges="true"
-		app:has_title="false"
-		app:text_cancle_button="@string/dialog_cancel"
-		app:text_ok_button="@string/dialog_delete">
-
-		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/tv_message"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:textColor="@color/text_content_secondary"
-				android:textSize="@dimen/text_body"
-				app:typeface="roboto_medium"
-				tools:text="@string/dialog_confirm_delete_all_soundsheets_message"/>
-
-</org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>
+		android:textColor="@color/text_content_secondary"
+		android:textSize="@dimen/text_body"
+		app:typeface="roboto_medium"
+		tools:text="@string/dialog_confirm_delete_all_soundsheets_message"/>

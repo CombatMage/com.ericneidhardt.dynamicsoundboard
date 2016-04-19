@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatDialog
+import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.CheckBox
 import android.widget.CompoundButton
@@ -22,7 +22,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 23.02.2015.
  */
-class SoundSettingsDialog : SoundSettingsBaseDialog(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedChangeListener {
 
 	override var fragmentTag: String? = null
 	override var player: MediaPlayerController? = null
@@ -44,9 +44,6 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), View.OnClickListener, Com
 
 		this.addNewSoundSheet!!.setOnCheckedChangeListener(this)
 
-		view.findViewById(R.id.b_cancel).setOnClickListener(this)
-		view.findViewById(R.id.b_ok).setOnClickListener(this)
-
 		this.soundName!!.text = this.player!!.mediaPlayerData.label
 
 		this.setAvailableSoundSheets()
@@ -54,11 +51,18 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), View.OnClickListener, Com
 		this.soundSheetName!!.text = this.soundSheetsDataUtil.getSuggestedName()
 		this.soundSheetName!!.visibility = View.GONE
 
-		val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
-		dialog.setContentView(view)
-		dialog.setTitle(R.string.dialog_sound_settings_title)
-
-		return dialog
+		return AlertDialog.Builder(context).apply {
+			this.setTitle(R.string.dialog_sound_settings_title)
+			this.setView(view)
+			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i ->
+				val hasLabelChanged = player!!.mediaPlayerData.label != soundName!!.displayedText
+				deliverResult()
+				dismiss()
+				if (hasLabelChanged)
+					RenameSoundFileDialog(fragmentManager, player!!.mediaPlayerData)
+			})
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
+		}.create()
 	}
 
 	private fun setAvailableSoundSheets() {
@@ -83,19 +87,6 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), View.OnClickListener, Com
 		} else {
 			this.soundSheetName!!.visibility = View.GONE
 			this.soundSheetSpinner!!.visibility = View.VISIBLE
-		}
-	}
-
-	override fun onClick(v: View) {
-		when (v.id) {
-			R.id.b_cancel -> this.dismiss()
-			R.id.b_ok -> {
-				val hasLabelChanged = this.player!!.mediaPlayerData.label != this.soundName!!.displayedText
-				this.deliverResult()
-				this.dismiss()
-				if (hasLabelChanged)
-					RenameSoundFileDialog(this.fragmentManager, this.player!!.mediaPlayerData)
-			}
 		}
 	}
 

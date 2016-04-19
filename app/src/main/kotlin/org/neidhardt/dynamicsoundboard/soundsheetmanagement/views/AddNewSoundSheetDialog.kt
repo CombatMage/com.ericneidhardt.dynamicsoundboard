@@ -2,17 +2,14 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
-import android.view.View
 import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
-import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 
-class AddNewSoundSheetDialog : BaseDialog(), View.OnClickListener
+class AddNewSoundSheetDialog : BaseDialog()
 {
 	private var soundSheetName: EditText? = null
 	private var suggestedName: String? = null
@@ -30,35 +27,17 @@ class AddNewSoundSheetDialog : BaseDialog(), View.OnClickListener
 
 		@SuppressLint("InflateParams") val view = context.layoutInflater.inflate(R.layout.dialog_add_new_sound_sheet, null)
 
-		this.mainView = view as DialogBaseLayout
-
 		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as EditText
 
-		view.findViewById(R.id.b_cancel).setOnClickListener(this)
-		view.findViewById(R.id.b_ok).setOnClickListener(this)
-
-
-		//val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
-
-		val dialog = AlertDialog.Builder(context).apply {
+		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_add_new_sound_sheet_title)
 			this.setView(view)
-			this.setPositiveButton("Ok", DialogInterface.OnClickListener { dialogInterface, i -> })
-			this.setNegativeButton("Abbrechen", DialogInterface.OnClickListener { dialogInterface, i -> })
+			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i ->
+				deliverResult()
+				dismiss()
+			})
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
 		}.create()
-		//dialog.setContentView(view)
-
-		return dialog
-	}
-
-	override fun onClick(v: View) {
-		when (v.id) {
-			R.id.b_cancel -> this.dismiss()
-			R.id.b_ok -> {
-				this.deliverResult()
-				this.dismiss()
-			}
-		}
 	}
 
 	private fun deliverResult()

@@ -7,7 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatDialog
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -16,7 +16,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
@@ -26,11 +25,9 @@ import org.neidhardt.dynamicsoundboard.fileexplorer.GetNewSoundFromDirectoryDial
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
-import org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 import java.io.File
 import java.util.*
@@ -38,6 +35,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
+// TODO this class needs refinement
 class AddNewSoundDialog : BaseDialog, FileResultHandler
 {
 	val TAG: String = javaClass.name
@@ -69,36 +67,24 @@ class AddNewSoundDialog : BaseDialog, FileResultHandler
 			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG)
 	}
 
-	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
-	{
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound, null)
-
-		val dialog = AppCompatDialog(this.activity, R.style.DialogTheme)
-		dialog.setContentView(view)
-		dialog.setTitle(R.string.dialog_add_new_sound_title)
-
-		val heightOfControls = this.getMeasureHeight(view) + this.resources.getDimensionPixelSize(R.dimen.margin_default)
-
-		view.layoutParams.height = heightOfControls
-		this.mainView = view as DialogBaseLayout
 
 		this.presenter = AddNewSoundDialogPresenter(
 				dialog = this,
 				soundsDataStorage = this.soundsDataStorage,
-				add = view.findViewById(R.id.b_ok) as Button,
-				cancel = view.findViewById(R.id.b_cancel),
 				addAnotherSound = view.findViewById(R.id.b_add_another_sound),
 				addedSoundsLayout = view.findViewById(R.id.rv_dialog) as RecyclerView)
 
-		return dialog
-	}
-
-	private fun getMeasureHeight(view: View) : Int
-	{
-		view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-				View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-
-		return view.measuredHeight
+		return AlertDialog.Builder(context).apply {
+			this.setTitle(R.string.dialog_add_new_sound_title)
+			this.setView(view)
+			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i ->
+				presenter?.addSoundsToSoundSheet()
+				dismiss()
+			})
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+		}.create()
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?)
@@ -119,7 +105,6 @@ class AddNewSoundDialog : BaseDialog, FileResultHandler
 					val uri = Uri.parse(uris[i])
 					val label = labels[i]
 
-					this.updateHeightToContent()
 					presenter.addNewSound(NewSoundData(uri, label))
 				}
 			}
@@ -156,7 +141,6 @@ class AddNewSoundDialog : BaseDialog, FileResultHandler
 				val soundUri = data!!.data
 				val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
 				presenter?.addNewSound(NewSoundData(soundUri, label))
-				this.updateHeightToContent()
 				return
 			}
 		}
@@ -172,22 +156,13 @@ class AddNewSoundDialog : BaseDialog, FileResultHandler
 
 			val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
 			presenter?.addNewSound(NewSoundData(soundUri, label))
-			this.updateHeightToContent()
 		}
-		this.updateHeightToContent()
-	}
-
-	private fun updateHeightToContent()
-	{
-		this.mainView!!.layoutParams?.height = ViewGroup.LayoutParams.WRAP_CONTENT
 	}
 }
 
 private class AddNewSoundDialogPresenter
 (
 		private val dialog: AddNewSoundDialog,
-		private val add: Button,
-		private val cancel: View,
 		private val addAnotherSound: View,
 		private val addedSoundsLayout: RecyclerView,
 
@@ -202,10 +177,6 @@ private class AddNewSoundDialogPresenter
 
 	init
 	{
-		this.add.isEnabled = false
-
-		this.cancel.setOnClickListener({ view -> this.dialog.dismiss() })
-		this.add.setOnClickListener({ view -> this.addSoundsToSoundSheet()})
 		this.addAnotherSound.setOnClickListener({ this.addAnotherSound() })
 
 		this.addedSoundsLayout.apply {
@@ -214,11 +185,9 @@ private class AddNewSoundDialogPresenter
 			this.itemAnimator = DefaultItemAnimator()
 		}
 		this.addedSoundsLayout.adapter = adapter
-
-		this.dialog.mainView!!.enableRecyclerViewDividers(false)
 	}
 
-	private fun addSoundsToSoundSheet()
+	fun addSoundsToSoundSheet()
 	{
 		if (soundsToAdd.size > 0)
 		{
@@ -279,9 +248,7 @@ private class AddNewSoundDialogPresenter
 
 	internal fun addNewSound(data: NewSoundData)
 	{
-		this.add.isEnabled = true
 		this.soundsToAdd.add(data)
-		this.dialog.mainView!!.enableRecyclerViewDividers(true)
 		this.adapter.notifyDataSetChanged()
 	}
 }
