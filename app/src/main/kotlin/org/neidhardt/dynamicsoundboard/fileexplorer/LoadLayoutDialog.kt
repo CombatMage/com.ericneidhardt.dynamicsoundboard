@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatDialog
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -25,7 +25,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 14.11.2014.
  */
-class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
+class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 {
 	private var confirm: View? = null
 	private var directories: RecyclerView? = null
@@ -43,10 +43,6 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClick
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_load_sound_sheets, null)
-		view.findViewById(R.id.b_cancel).setOnClickListener(this)
-		this.confirm = view.findViewById(R.id.b_ok)
-		this.confirm!!.setOnClickListener(this)
-		this.confirm!!.isEnabled = false
 
 		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
 			this.addItemDecoration(DividerItemDecoration(this.context))
@@ -59,10 +55,11 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClick
 		if (previousPath != null)
 			super.adapter.setParent(File(previousPath))
 
-		val dialog = AppCompatDialog(this.activity, R.style.DialogThemeNoTitle)
-		dialog.setContentView(view)
-
-		return dialog
+		return AlertDialog.Builder(this.activity).apply {
+			this.setView(view)
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setPositiveButton(R.string.dialog_load, { dialogInterface, i -> onConfirm() })
+		}.create()
 	}
 
 	override fun onFileSelected(selectedFile: File)
@@ -78,22 +75,16 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClick
 
 	override fun canSelectFile(): Boolean = true
 
-	override fun onClick(v: View)
+	private fun onConfirm()
 	{
-		when (v.id) {
-			R.id.b_cancel -> this.dismiss()
-			R.id.b_ok ->
-			{
-				val currentDirectory = super.adapter.parentFile
-				if (currentDirectory != null)
-					this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
+		val currentDirectory = super.adapter.parentFile
+		if (currentDirectory != null)
+			this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
 
-				if (super.adapter.selectedFiles.size != 0)
-					this.loadFromFileAndDismiss(super.adapter.selectedFiles.iterator().next())
-				else
-					Toast.makeText(this.activity, R.string.dialog_load_layout_no_file_info, Toast.LENGTH_SHORT).show()
-			}
-		}
+		if (super.adapter.selectedFiles.size != 0)
+			this.loadFromFileAndDismiss(super.adapter.selectedFiles.iterator().next())
+		else
+			Toast.makeText(this.activity, R.string.dialog_load_layout_no_file_info, Toast.LENGTH_SHORT).show()
 	}
 
 	private fun loadFromFileAndDismiss(file: File)

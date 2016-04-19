@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatDialog
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -19,7 +19,7 @@ import java.util.*
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
  */
-open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.OnClickListener
+open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 {
 	protected var callingFragmentTag: String? = null
 
@@ -54,11 +54,6 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.OnClickLi
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_from_directory, null)
-		this.confirm = view.findViewById(R.id.b_ok)
-		this.confirm!!.setOnClickListener(this)
-		this.confirm!!.isEnabled = false
-
-		view.findViewById(R.id.b_cancel).setOnClickListener(this)
 
 		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
 			this.addItemDecoration(DividerItemDecoration(this.context))
@@ -71,10 +66,11 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.OnClickLi
 		if (previousPath != null)
 			super.adapter.setParent(File(previousPath))
 
-		val dialog = AppCompatDialog(this.activity, R.style.DialogThemeNoTitle)
-		dialog.setContentView(view)
-
-		return dialog
+		return AlertDialog.Builder(this.activity).apply {
+			this.setView(view)
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i -> onConfirm() })
+		}.create()
 	}
 
 	override fun onFileSelected(selectedFile: File)
@@ -91,19 +87,14 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog(), View.OnClickLi
 
 	override fun canSelectMultipleFiles(): Boolean = true
 
-	override fun onClick(v: View)
+	private fun onConfirm()
 	{
-		if (v.id == R.id.b_cancel)
-			this.dismiss()
-		else if (v.id == R.id.b_ok)
-		{
-			val currentDirectory = super.adapter.parentFile
-			if (currentDirectory != null)
-				this.storePathToSharedPreferences(TAG, currentDirectory.path)
+		val currentDirectory = super.adapter.parentFile
+		if (currentDirectory != null)
+			this.storePathToSharedPreferences(TAG, currentDirectory.path)
 
-			this.returnResults()
-			this.dismiss()
-		}
+		this.returnResults()
+		this.dismiss()
 	}
 
 	protected fun getFileListResult(): List<File>

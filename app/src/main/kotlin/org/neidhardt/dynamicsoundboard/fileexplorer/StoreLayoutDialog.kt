@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatDialog
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -34,10 +34,6 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 	{
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_store_sound_sheets, null)
 		view.findViewById(R.id.b_add).setOnClickListener(this)
-		view.findViewById(R.id.b_cancel).setOnClickListener(this)
-		this.confirm = view.findViewById(R.id.b_ok)
-		this.confirm!!.setOnClickListener(this)
-		this.confirm!!.isEnabled = false
 
 		this.inputFileName = view.findViewById(R.id.et_name_file) as EditText
 
@@ -52,10 +48,11 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 		if (previousPath != null)
 			super.adapter.setParent(File(previousPath))
 
-		val dialog = AppCompatDialog(this.activity, R.style.DialogThemeNoTitle)
-		dialog.setContentView(view)
-
-		return dialog
+		return AlertDialog.Builder(this.activity).apply {
+			this.setView(view)
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setPositiveButton(R.string.dialog_save, { dialogInterface, i -> onConfirm() })
+		}.create()
 	}
 
 	override fun canSelectDirectory(): Boolean = false
@@ -79,18 +76,19 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 				this.createFileAndSelect()
 				this.hideKeyboard()
 			}
-			R.id.b_cancel -> this.dismiss()
-			R.id.b_ok -> {
-				val currentDirectory = super.adapter.parentFile
-				if (currentDirectory != null)
-					this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
-
-				if (super.adapter.selectedFiles.size != 0)
-					this.saveDataAndDismiss()
-				else
-					Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()
-			}
 		}
+	}
+
+	private fun onConfirm()
+	{
+		val currentDirectory = super.adapter.parentFile
+		if (currentDirectory != null)
+			this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
+
+		if (super.adapter.selectedFiles.size != 0)
+			this.saveDataAndDismiss()
+		else
+			Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()
 	}
 
 	private fun hideKeyboard()
