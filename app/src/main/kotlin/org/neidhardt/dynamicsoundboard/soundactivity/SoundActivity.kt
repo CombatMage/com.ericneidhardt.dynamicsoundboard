@@ -78,6 +78,12 @@ class SoundActivity :
 	private val soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
 	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
+	val isNavigationDrawerOpen: Boolean
+		get() {
+			this.navigationDrawerLayout?.apply { return this.isDrawerOpen(Gravity.START) }
+			return false
+		}
+
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
@@ -257,6 +263,14 @@ class SoundActivity :
 		}
 
 		super.onStop()
+	}
+
+	override fun onBackPressed()
+	{
+		if (this.isNavigationDrawerOpen)
+			this.closeNavigationDrawer()
+		else
+			super.onBackPressed()
 	}
 
 	fun setSoundSheetActionsEnable(enable: Boolean)
