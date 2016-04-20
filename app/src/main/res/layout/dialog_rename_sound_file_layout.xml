@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
+<LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		app:has_title="false"
-		app:text_cancle_button="@string/dialog_cancel"
-		app:text_ok_button="@string/dialog_rename"
-		tools:background="@color/background">
+		android:padding="@dimen/padding_dialog"
+		android:orientation="vertical">
 
 	<com.devspark.robototextview.widget.RobotoTextView
 			android:layout_width="match_parent"
@@ -59,4 +57,4 @@
 				app:typeface="roboto_medium"/>
 	</LinearLayout>
 
-</org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>
+</LinearLayout>

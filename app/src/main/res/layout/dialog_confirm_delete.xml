@@ -9,5 +9,6 @@
 		android:layout_height="wrap_content"
 		android:textColor="@color/text_content_secondary"
 		android:textSize="@dimen/text_body"
+		android:padding="@dimen/padding_dialog"
 		app:typeface="roboto_medium"
 		tools:text="@string/dialog_confirm_delete_all_soundsheets_message"/>

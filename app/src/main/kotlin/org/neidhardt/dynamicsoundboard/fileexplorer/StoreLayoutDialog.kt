@@ -27,7 +27,6 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 {
 
 	private var inputFileName: EditText? = null
-	private var confirm: View? = null
 	private var directories: RecyclerView? = null
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
@@ -63,7 +62,6 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 	override fun onFileSelected(selectedFile: File)
 	{
-		this.confirm!!.isEnabled = true
 		val position = super.adapter.fileList.indexOf(selectedFile)
 		this.directories!!.scrollToPosition(position)
 	}

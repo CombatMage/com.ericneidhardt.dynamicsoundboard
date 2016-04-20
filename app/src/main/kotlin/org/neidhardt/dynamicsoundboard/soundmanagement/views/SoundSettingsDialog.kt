@@ -54,7 +54,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_sound_settings_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i ->
+			this.setPositiveButton(R.string.dialog_save, { dialogInterface, i ->
 				val hasLabelChanged = player!!.mediaPlayerData.label != soundName!!.displayedText
 				deliverResult()
 				dismiss()

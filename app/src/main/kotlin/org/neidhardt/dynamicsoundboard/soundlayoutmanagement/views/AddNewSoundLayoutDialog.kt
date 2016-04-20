@@ -31,6 +31,8 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog()
 
     override fun getTitleId(): Int = R.string.dialog_add_new_sound_layout_title
 
+	override fun getPositiveButtonId(): Int = R.string.dialog_add
+
 	override fun deliverResult()
 	{
 		var name = super.soundLayoutName?.text.toString()

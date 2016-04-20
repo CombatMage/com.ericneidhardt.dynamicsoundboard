@@ -22,6 +22,8 @@ class SoundLayoutSettingsDialog : SoundLayoutDialog()
 			this.databaseId = args.getString(KEY_DATABASE_ID)
 	}
 
+	override fun getPositiveButtonId(): Int = R.string.dialog_rename
+
 	override fun getLayoutId(): Int = R.layout.dialog_sound_layout_settings
 
 	override fun getHintForName(): String = this.soundLayoutsAccess.getSoundLayoutById(this.databaseId!!)?.label ?: ""

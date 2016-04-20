@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
+<LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:padding="@dimen/padding_dialog"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:animateLayoutChanges="true"
-		app:has_title="false"
-		app:has_recycler_view="true"
-		app:text_cancle_button="@string/dialog_cancel"
-		app:text_ok_button="@string/dialog_save">
+		android:orientation="vertical">
 
 	<com.devspark.robototextview.widget.RobotoTextView
 			android:layout_width="match_parent"
@@ -22,7 +20,8 @@
 
 	<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/margin_default">
 
 		<com.devspark.robototextview.widget.RobotoButton
 				android:id="@+id/b_add"
@@ -50,4 +49,11 @@
 				tools:text="Neuer Datei Name"/>
 
 	</RelativeLayout>
-</org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>
+
+	<android.support.v7.widget.RecyclerView
+			android:id="@+id/rv_dialog"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:overScrollMode="never"
+			tools:listitem="@layout/view_directory_item"/>
+</LinearLayout>

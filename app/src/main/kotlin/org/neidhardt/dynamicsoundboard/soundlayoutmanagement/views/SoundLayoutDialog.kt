@@ -27,11 +27,13 @@ abstract class SoundLayoutDialog : BaseDialog()
 			this.setTitle(getTitleId())
 			this.setView(view)
 			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
-			this.setPositiveButton(R.string.dialog_delete, { dialogInterface, i ->
+			this.setPositiveButton(getPositiveButtonId(), { dialogInterface, i ->
 				deliverResult()
 				dismiss() })
 		}.create()
 	}
+
+	protected abstract fun getPositiveButtonId(): Int
 
     protected abstract fun getTitleId(): Int
 

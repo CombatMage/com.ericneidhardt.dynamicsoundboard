@@ -27,7 +27,6 @@ import java.util.*
  */
 class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 {
-	private var confirm: View? = null
 	private var directories: RecyclerView? = null
 
 	companion object {
@@ -64,7 +63,6 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 
 	override fun onFileSelected(selectedFile: File)
 	{
-		this.confirm!!.isEnabled = true
 		val position = super.adapter.fileList.indexOf(selectedFile)
 		this.directories!!.scrollToPosition(position)
 	}

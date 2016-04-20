@@ -43,7 +43,7 @@ class AddNewSoundFromIntent : BaseDialog(), CompoundButton.OnCheckedChangeListen
 		}
 	}
 
-	override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		if (this.availableSoundSheetLabels == null)
 			return this.createDialogIfNoSheetsExists()
 		else

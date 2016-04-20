@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
+<LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:padding="@dimen/padding_dialog"
 		android:animateLayoutChanges="true"
-		app:has_title="false"
-		app:text_cancle_button="@string/dialog_cancel"
-		app:text_ok_button="@string/dialog_save">
+		android:orientation="vertical">
 
 	<View
 			android:layout_width="0dp"
@@ -17,9 +16,8 @@
 
 	<android.support.design.widget.TextInputLayout
 			android:id="@+id/ti_name_sound_layout"
-			android:layout_width="@dimen/width_min_dialog"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/margin_default">
+			android:layout_width="match_parent">
 
 		<com.devspark.robototextview.widget.RobotoEditText
 				android:id="@+id/et_name_sound_layout"
@@ -30,4 +28,4 @@
 
 	</android.support.design.widget.TextInputLayout>
 
-</org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>
+</LinearLayout>
