@@ -19,15 +19,15 @@
 	<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/margin_small"
 			android:layout_marginBottom="@dimen/margin_default">
 
 		<com.devspark.robototextview.widget.RobotoButton
 				android:id="@+id/b_add"
 				android:layout_width="wrap_content"
-				android:layout_height="@dimen/height_dialog_button"
+				android:layout_height="wrap_content"
 				android:layout_alignParentEnd="true"
 				android:layout_alignParentRight="true"
-				android:layout_marginTop="@dimen/margin_default"
 				android:text="@string/dialog_add"
 				android:theme="@style/Theme.Button.Flat"
 				style="@style/Widget.AppCompat.Button.Borderless"/>
@@ -36,9 +36,8 @@
 				android:id="@+id/et_name_file"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
+				android:layout_marginTop="@dimen/margin_small"
 				android:textSize="@dimen/text_body"
-				android:layout_marginTop="@dimen/margin_default"
 				android:layout_marginRight="@dimen/margin_default"
 				android:layout_marginEnd="@dimen/margin_default"
 				android:layout_toLeftOf="@id/b_add"
