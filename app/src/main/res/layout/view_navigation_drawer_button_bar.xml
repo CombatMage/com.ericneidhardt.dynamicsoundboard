@@ -28,7 +28,7 @@
 				android:gravity="center"
 				android:text="@string/navigation_drawer_delete"
 				android:textSize="@dimen/text_body"
-				android:textColor="@color/text_content_primary"
+				android:textColor="@color/text_body_primary"
 				app:typeface="roboto_medium"
 				android:clickable="true"
 				android:background="@drawable/selector_background_list_item"/>
@@ -42,7 +42,7 @@
 				android:gravity="center"
 				android:text="@string/navigation_drawer_add"
 				android:textSize="@dimen/text_body"
-				android:textColor="@color/text_content_primary"
+				android:textColor="@color/text_body_primary"
 				app:typeface="roboto_medium"
 				android:clickable="true"
 				android:background="@drawable/selector_background_list_item"/>
@@ -62,7 +62,7 @@
 				android:gravity="center"
 				android:text="@string/navigation_drawer_delete_selected"
 				android:textSize="@dimen/text_body"
-				android:textColor="@color/text_content_primary"
+				android:textColor="@color/text_body_primary"
 				app:typeface="roboto_medium"
 				android:background="@drawable/selector_background_list_item"
 				android:clickable="true"

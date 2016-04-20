@@ -24,11 +24,11 @@ object AnimationUtils
 
 		val revealAnimator = createCircularReveal(view, startX, startY, startRadius, endRadius) ?: return null
 
-		revealAnimator.setDuration(animationDuration.toLong())
+		revealAnimator.duration = animationDuration.toLong()
 
 		view.alpha = 1f
 		val fadeOut = ObjectAnimator.ofFloat(view, "alpha", 0f)
-		fadeOut.setDuration(animationDuration.toLong())
+		fadeOut.duration = animationDuration.toLong()
 
 		animatorSet.play(revealAnimator).with(fadeOut)
 		animatorSet.addListener(object : Animator.AnimatorListener {

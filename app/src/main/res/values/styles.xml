@@ -33,8 +33,8 @@
 
 	<!-- overFlow menu style -->
 	<style name="ActionBar.OverflowMenu" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
-		<item name="android:textColorPrimary">@color/text_content_primary</item>
-		<item name="android:textColorSecondary">@color/text_content_primary</item>
+		<item name="android:textColorPrimary">@color/text_body_primary</item>
+		<item name="android:textColorSecondary">@color/text_body_primary</item>
 		<item name="android:background">@color/background</item>
 	</style>
 
@@ -55,6 +55,12 @@
 		<item name="android:textSize">@dimen/text_body</item>
 		<item name="android:textAllCaps">true</item>
 		<item name="typeface">roboto_medium</item>
+	</style>
+
+	<style name="Theme.TextView.Body" parent="Theme.AppTheme">
+		<item name="typeface">roboto_medium</item>
+		<item name="android:textSize">@dimen/text_body</item>
+		<item name="android:textColor">@color/text_body_secondary</item>
 	</style>
 
 </resources>

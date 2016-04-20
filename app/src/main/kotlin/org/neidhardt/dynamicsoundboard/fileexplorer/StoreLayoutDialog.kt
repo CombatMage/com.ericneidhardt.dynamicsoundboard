@@ -160,7 +160,7 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 	{
 		private val TAG = StoreLayoutDialog::class.java.name
 
-		public fun showInstance(manager: FragmentManager)
+		fun showInstance(manager: FragmentManager)
 		{
 			val dialog = StoreLayoutDialog()
 			dialog.show(manager, TAG)

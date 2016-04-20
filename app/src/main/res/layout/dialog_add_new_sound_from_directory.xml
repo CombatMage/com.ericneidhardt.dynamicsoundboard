@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:app="http://schemas.android.com/apk/res-auto"
 			  android:orientation="vertical"
 			  android:layout_width="wrap_content"
 			  android:layout_height="wrap_content"
@@ -10,10 +9,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="@dimen/margin_default"
-			android:textColor="@color/text_content_secondary"
-			android:textSize="@dimen/text_body"
 			android:text="@string/dialog_add_new_sound_from_directory_message"
-			app:typeface="roboto_medium"/>
+			style="@style/Theme.TextView.Body"/>
 
 	<android.support.v7.widget.RecyclerView
 			android:id="@+id/rv_dialog"

@@ -25,7 +25,7 @@
 			android:layout_marginRight="@dimen/margin_default"
 			android:layout_marginEnd="@dimen/margin_default"
 			android:textSize="@dimen/text_body"
-			android:textColor="@color/text_content_primary"
+			android:textColor="@color/text_body_primary"
 			tools:text="@string/introduction_action_new_sound_sheet_title"/>
 
 	<TextView
@@ -39,7 +39,7 @@
 			android:layout_marginEnd="@dimen/margin_default"
 			android:layout_marginBottom="@dimen/margin_default"
 			android:textSize="@dimen/text_body"
-			android:textColor="@color/text_content_secondary"
+			android:textColor="@color/text_body_secondary"
 			tools:text="@string/introduction_action_new_sound_sheet_summary"/>
 
 </RelativeLayout>

@@ -2,13 +2,10 @@
 
 <com.devspark.robototextview.widget.RobotoTextView
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:id="@+id/tv_message"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:textColor="@color/text_content_secondary"
-		android:textSize="@dimen/text_body"
 		android:padding="@dimen/padding_dialog"
-		app:typeface="roboto_medium"
+		style="@style/Theme.TextView.Body"
 		tools:text="@string/dialog_confirm_delete_all_soundsheets_message"/>

@@ -35,8 +35,8 @@
 
 	<!-- overFlow menu style -->
 	<style name="ActionBar.OverflowMenu" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
-		<item name="android:textColorPrimary">@color/text_content_primary</item>
-		<item name="android:textColorSecondary">@color/text_content_primary</item>
+		<item name="android:textColorPrimary">@color/text_body_primary</item>
+		<item name="android:textColorSecondary">@color/text_body_primary</item>
 		<item name="android:background">@color/background</item>
 	</style>
 

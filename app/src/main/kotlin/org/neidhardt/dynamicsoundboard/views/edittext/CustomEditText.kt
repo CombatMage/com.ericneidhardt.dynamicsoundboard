@@ -125,7 +125,7 @@ abstract class CustomEditText :
 	}
 
 	@SuppressWarnings("unchecked")
-	protected override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>?)
+	override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>?)
 	{
 		// As we save our own instance state, ensure our children don't save
 		// and restore their state as well.
@@ -133,7 +133,7 @@ abstract class CustomEditText :
 	}
 
 	@SuppressWarnings("unchecked")
-	protected override fun dispatchRestoreInstanceState(container: SparseArray<Parcelable>?) {
+	override fun dispatchRestoreInstanceState(container: SparseArray<Parcelable>?) {
 		/** See comment in [.dispatchSaveInstanceState]  */
 		super.dispatchThawSelfOnly(container)
 	}
