@@ -21,7 +21,7 @@
 				android:layout_centerVertical="true"
 				style="@style/ActionBarItemMargin"
 				android:scaleType="centerInside"
-				android:background="@drawable/selector_background_actionbar"
+				android:background="?attr/selectableItemBackgroundBorderless"
 				android:contentDescription="@string/cab_content_description_cancel"
 				android:src="@drawable/ic_action_done"/>
 
@@ -36,7 +36,7 @@
 				android:paddingEnd="@dimen/margin_default"
 				android:layout_toLeftOf="@id/b_cancel_action_mode"
 				android:layout_toStartOf="@id/b_cancel_action_mode"
-				android:background="@drawable/selector_background_actionbar">
+				android:background="?attr/selectableItemBackgroundBorderless">
 
 			<com.devspark.robototextview.widget.RobotoTextView
 					android:id="@+id/tv_action_mode_title"
