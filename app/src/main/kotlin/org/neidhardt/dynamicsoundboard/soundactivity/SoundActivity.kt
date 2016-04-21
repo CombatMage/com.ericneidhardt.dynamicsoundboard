@@ -165,7 +165,7 @@ class SoundActivity :
 			this.visibility = View.GONE
 			this.onTextEditedListener = this@SoundActivity
 
-			val currentSoundSheet = getCurrentSoundFragment()
+			val currentSoundSheet = currentSoundFragment
 			if (currentSoundSheet != null) {
 				val currentLabel = soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheet.fragmentTag)?.label
 				this.text = currentLabel
@@ -284,7 +284,7 @@ class SoundActivity :
 		this.tv_app_name.visibility = viewState
 	}
 
-	@Subscribe
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutSelectedEvent)
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
@@ -339,7 +339,7 @@ class SoundActivity :
 	{
 		Logger.d(TAG, "onEvent: " + event)
 
-		val soundSheetFragment = this.getCurrentSoundFragment()
+		val soundSheetFragment = this.currentSoundFragment
 		val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
 
 		if (currentlyPlayingSounds.size > 0)
@@ -363,7 +363,7 @@ class SoundActivity :
 			}
 			else
 			{
-				val currentSoundSheet = this.getCurrentSoundFragment()
+				val currentSoundSheet = this.currentSoundFragment
 				if (currentSoundSheet != null)
 					AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, currentSoundSheet.fragmentTag)
 			}
@@ -426,7 +426,7 @@ class SoundActivity :
 
 	override fun onTextEdited(text: String)
 	{
-		val currentSoundSheetFragment = this.getCurrentSoundFragment()
+		val currentSoundSheetFragment = this.currentSoundFragment
 		if (currentSoundSheetFragment != null)
 		{
 			val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.fragmentTag)
@@ -486,7 +486,7 @@ class SoundActivity :
 		if (!this.isActivityVisible)
 			return
 
-		if (this.getCurrentSoundFragment() != null)
+		if (this.currentSoundFragment != null)
 			return
 
 		val fragmentManager = this.supportFragmentManager
@@ -521,12 +521,12 @@ class SoundActivity :
 		this.et_set_label.text = soundSheet.label
 	}
 
-	private fun getCurrentSoundFragment(): SoundSheetFragment?
-	{
-		val currentFragment = this.supportFragmentManager.findFragmentById(R.id.main_frame)
-		if (currentFragment != null && currentFragment is SoundSheetFragment)
-			return currentFragment
-		return null
-	}
+	private val currentSoundFragment: SoundSheetFragment?
+		get() {
+			val currentFragment = this.supportFragmentManager.findFragmentById(R.id.main_frame)
+			if (currentFragment != null && currentFragment is SoundSheetFragment)
+				return currentFragment
+			return null
+		}
 
 }
