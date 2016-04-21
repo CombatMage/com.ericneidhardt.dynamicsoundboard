@@ -19,11 +19,9 @@
 				android:layout_alignParentEnd="true"
 				android:layout_alignParentRight="true"
 				android:layout_centerVertical="true"
-				style="@style/ActionBarItemMargin"
-				android:scaleType="centerInside"
-				android:background="?attr/selectableItemBackgroundBorderless"
 				android:contentDescription="@string/cab_content_description_cancel"
-				android:src="@drawable/ic_action_done"/>
+				android:src="@drawable/ic_action_done"
+				style="@style/Theme.ImageButton.Flat.Toolbar"/>
 
 		<LinearLayout
 				android:id="@+id/ll_action_mode_title"

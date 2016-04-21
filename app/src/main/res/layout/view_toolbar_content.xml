@@ -14,11 +14,9 @@
 			android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
 			android:layout_alignParentEnd="true"
-			style="@style/ActionBarItemMargin"
-			android:scaleType="centerInside"
-			android:background="@drawable/selector_background_actionbar"
 			android:contentDescription="@string/action_add_new_sound_sheet"
-			android:src="@drawable/ic_action_new_sound_layout"/>
+			android:src="@drawable/ic_action_new_sound_layout"
+			style="@style/Theme.ImageButton.Flat.Toolbar"/>
 
 	<ImageButton
 			android:id="@+id/action_add_sound"
@@ -27,11 +25,9 @@
 			android:layout_centerVertical="true"
 			android:layout_toLeftOf="@id/action_add_sound_sheet"
 			android:layout_toStartOf="@id/action_add_sound_sheet"
-			style="@style/ActionBarItemMargin"
-			android:scaleType="centerInside"
-			android:background="@drawable/selector_background_actionbar"
 			android:contentDescription="@string/action_add_new_sound"
-			android:src="@drawable/ic_action_add_sound"/>
+			android:src="@drawable/ic_action_add_sound"
+			style="@style/Theme.ImageButton.Flat.Toolbar"/>
 
 	<ImageButton
 			android:id="@+id/action_add_sound_dir"
@@ -40,11 +36,9 @@
 			android:layout_centerVertical="true"
 			android:layout_toLeftOf="@id/action_add_sound"
 			android:layout_toStartOf="@id/action_add_sound"
-			style="@style/ActionBarItemMargin"
-			android:scaleType="centerInside"
-			android:background="@drawable/selector_background_actionbar"
 			android:contentDescription="@string/action_add_new_sound_from_dir"
-			android:src="@drawable/ic_action_add_sound_dir"/>
+			android:src="@drawable/ic_action_add_sound_dir"
+			style="@style/Theme.ImageButton.Flat.Toolbar"/>
 
 	<com.devspark.robototextview.widget.RobotoTextView
 			android:id="@+id/tv_app_name"

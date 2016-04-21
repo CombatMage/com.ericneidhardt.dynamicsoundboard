@@ -44,9 +44,11 @@
 	</style>
 
 	<!-- often used -->
-	<style name="ActionBarItemMargin">
+	<style name="Theme.ImageButton.Flat.Toolbar" parent="Theme.AppTheme">
 		<item name="android:layout_marginLeft">1dp</item>
 		<item name="android:layout_marginRight">1dp</item>
+		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+		<item name="android:scaleType">centerInside</item>
 	</style>
 
 	<style name="Theme.Button.Flat" parent="Theme.AppTheme">
