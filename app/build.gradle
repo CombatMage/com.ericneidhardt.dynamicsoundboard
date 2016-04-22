@@ -22,6 +22,17 @@ android {
 		targetCompatibility JavaVersion.VERSION_1_7
 	}
 
+	lintOptions {
+		abortOnError false
+		checkReleaseBuilds false
+		disable 'PrivateResource'
+	}
+	
+	packagingOptions {
+		exclude 'META-INF/LICENSE'
+		exclude 'META-INF/NOTICE'
+	}
+	
 	defaultConfig {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
@@ -31,11 +42,6 @@ android {
 		resConfigs "de"
 	}
 
-	packagingOptions {
-		exclude 'META-INF/LICENSE'
-		exclude 'META-INF/NOTICE'
-	}
-
 	signingConfigs {
 		release {
 			storeFile file(RELEASE_STORE_FILE)
@@ -43,12 +49,6 @@ android {
 			keyAlias RELEASE_KEY_ALIAS
 			keyPassword RELEASE_KEY_PASSWORD
 		}
-	}
-
-	lintOptions {
-		abortOnError false
-		checkReleaseBuilds false
-		disable 'PrivateResource'
 	}
 
 	applicationVariants.all { variant ->
