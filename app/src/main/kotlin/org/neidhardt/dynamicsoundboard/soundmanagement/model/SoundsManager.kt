@@ -85,11 +85,8 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		this.isInitDone = false
 
-		this.playlist.map { player-> player.destroy(false) }
-
-		val allPlayerLists = this.sounds.values
-		for (players in allPlayerLists)
-			players.map { player-> player.destroy(false) }
+		this.playlist.forEach { player-> player.destroy(false) }
+		this.sounds.values.forEach { list -> list.forEach { player-> player.destroy(false) } }
 
 		this.playlist.clear()
 		this.sounds.clear()
@@ -100,16 +97,7 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean = this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.fragmentTag)
 
-	override fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController>
-	{
-		var soundsInFragment: List<MediaPlayerController>? = this.sounds[fragmentTag]
-		if (soundsInFragment == null)
-		{
-			soundsInFragment = ArrayList<MediaPlayerController>()
-			this.sounds.put(fragmentTag, soundsInFragment)
-		}
-		return soundsInFragment
-	}
+	override fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController> = this.sounds.getOrPut(fragmentTag, { ArrayList<MediaPlayerController>() })
 
 	override fun getSoundById(fragmentTag: String, playerId: String): MediaPlayerController?
 	{
@@ -206,10 +194,8 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		val data = player.mediaPlayerData
 		val fragmentTag = data.fragmentTag
-		if (this.sounds[fragmentTag] == null)
-			this.sounds[fragmentTag] = ArrayList<MediaPlayerController>()
 
-		this.sounds[fragmentTag]?.add(player)
+		this.sounds.getOrPut(fragmentTag, { ArrayList<MediaPlayerController>() }).add(player)
 
 		data.insertItemInDatabaseAsync()
 
