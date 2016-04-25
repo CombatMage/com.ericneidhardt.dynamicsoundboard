@@ -11,9 +11,12 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.misc.FileUtils
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.misc.containsAudioFiles
+import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
+import org.neidhardt.dynamicsoundboard.misc.isAudioFile
+import org.neidhardt.dynamicsoundboard.misc.longHash
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import java.io.File
 import java.util.*
@@ -21,11 +24,11 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 12.11.2014.
  */
-public abstract class FileExplorerDialog : BaseDialog()
+abstract class FileExplorerDialog : BaseDialog()
 {
 	private val KEY_PARENT_FILE = "org.neidhardt.dynamicsoundboard.fileexplorer.parentFile"
 
-	public val adapter: DirectoryAdapter = DirectoryAdapter()
+	internal val adapter: DirectoryAdapter = DirectoryAdapter()
 
 	protected abstract fun canSelectDirectory(): Boolean
 
@@ -35,18 +38,18 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 	protected abstract fun onFileSelected(selectedFile: File)
 
-	public fun storePathToSharedPreferences(key: String, path: String)
+	fun storePathToSharedPreferences(key: String, path: String)
 	{
-		val context = DynamicSoundboardApplication.getContext()
+		val context = SoundboardApplication.context
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		val editor = preferences.edit()
 		editor.putString(key, path)
 		editor.apply()
 	}
 
-	public fun getPathFromSharedPreferences(key: String): String?
+	fun getPathFromSharedPreferences(key: String): String?
 	{
-		val context = DynamicSoundboardApplication.getContext()
+		val context = SoundboardApplication.context
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		return preferences.getString(key, null)
 	}
@@ -68,7 +71,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 		outState.putString(KEY_PARENT_FILE, this.adapter.parentFile!!.path)
 	}
 
-	public inner class DirectoryAdapter : RecyclerView.Adapter<DirectoryEntry>()
+	internal inner class DirectoryAdapter : RecyclerView.Adapter<DirectoryEntry>()
 	{
 		internal var parentFile: File? = null
 		internal var selectedEntries: MutableSet<DirectoryEntry> = HashSet()
@@ -78,24 +81,31 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		init
 		{
+			this.setHasStableIds(true)
 			this.setParent(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC))
 			this.notifyDataSetChanged()
 		}
 
-		public fun setParent(parent: File)
+		fun setParent(parent: File)
 		{
 			this.parentFile = parent
-			this.fileList = FileUtils.getFilesInDirectory(this.parentFile)
+			this.fileList = parent.getFilesInDirectory()
 			if (parent.parentFile != null)
 				this.fileList.add(0, parent.parentFile)
 		}
 
-		public fun refreshDirectory()
+		fun refreshDirectory()
 		{
-			this.fileList = FileUtils.getFilesInDirectory(this.parentFile)
-			if (this.parentFile!!.parentFile != null)
-				this.fileList.add(0, this.parentFile!!.parentFile)
+			this.parentFile?.apply {
+				fileList = this.getFilesInDirectory()
+				if (this.parentFile != null)
+					fileList.add(0, this.parentFile)
+			}
 		}
+
+		override fun getItemCount(): Int = this.fileList.size
+
+		override fun getItemId(position: Int): Long = this.fileList[position].absolutePath.longHash
 
 		override fun onCreateViewHolder(parent: ViewGroup, i: Int): DirectoryEntry
 		{
@@ -105,13 +115,8 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		override fun onBindViewHolder(directoryEntry: DirectoryEntry, position: Int)
 		{
-			val file = this.fileList.get(position)
+			val file = this.fileList[position]
 			directoryEntry.bindData(file)
-		}
-
-		override fun getItemCount(): Int
-		{
-			return this.fileList.size()
 		}
 	}
 
@@ -132,7 +137,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 			itemView.setOnLongClickListener(this)
 		}
 
-		public fun bindData(file: File)
+		fun bindData(file: File)
 		{
 			this.file = file
 			if (file == adapter.parentFile!!.parentFile)
@@ -163,7 +168,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		private fun bindFile(file: File)
 		{
-			if (FileUtils.isAudioFile(file))
+			if (file.isAudioFile)
 				this.fileType.setImageResource(R.drawable.selector_ic_file_sound)
 			else
 				this.fileType.setImageResource(R.drawable.selector_ic_file)
@@ -171,7 +176,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		private fun bindDirectory(file: File)
 		{
-			if (FileUtils.containsAudioFiles(file))
+			if (file.containsAudioFiles)
 				this.fileType.setImageResource(R.drawable.selector_ic_folder_sound)
 			else
 				this.fileType.setImageResource(R.drawable.selector_ic_folder)
@@ -186,7 +191,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		override fun onClick(v: View)
 		{
-			val file = adapter.fileList.get(this.layoutPosition)
+			val file = adapter.fileList[this.layoutPosition]
 			if (!file.isDirectory)
 				return
 			adapter.setParent(file)
@@ -195,7 +200,7 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		override fun onLongClick(v: View): Boolean
 		{
-			val file = adapter.fileList.get(this.layoutPosition)
+			val file = adapter.fileList[this.layoutPosition]
 			if (file == adapter.parentFile!!.parentFile)
 				return false
 
@@ -244,7 +249,8 @@ public abstract class FileExplorerDialog : BaseDialog()
 
 		private fun animateFileLogoRotate()
 		{
-			this.fileType.animate().rotationYBy(360f)
+			this.fileType.animate().withLayer()
+					.rotationYBy(360f)
 					.setDuration(resources
 					.getInteger(android.R.integer.config_mediumAnimTime)
 					.toLong())
@@ -269,7 +275,8 @@ public abstract class FileExplorerDialog : BaseDialog()
 			val distance = this.selectionIndicator.width
 			this.selectionIndicator.translationX = distance.toFloat() // move selector to the right to be out of the screen
 
-			this.selectionIndicator.animate().translationX(0f)
+			this.selectionIndicator.animate().withLayer().
+					translationX(0f)
 					.setDuration(resources
 					.getInteger(android.R.integer.config_mediumAnimTime)
 					.toLong())

@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:animateLayoutChanges="true"
-		app:has_title="true"
-		app:has_recycler_view="true"
-		app:text_cancle_button="@string/dialog_cancel"
-		app:text_ok_button="@string/dialog_add">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:orientation="vertical"
+			  android:layout_width="wrap_content"
+			  android:layout_height="wrap_content"
+			  android:padding="@dimen/padding_dialog"
+			  tools:background="@color/background_secondary">
 
 	<RelativeLayout
 			android:id="@+id/layout_controls"
@@ -38,10 +34,16 @@
 				android:layout_alignParentLeft="true"
 				android:layout_alignTop="@id/b_add_another_sound"
 				android:layout_alignBottom="@id/b_add_another_sound"
-				android:textColor="@color/text_content_secondary"
-				android:textSize="@dimen/text_body"
-				android:text="@string/dialog_add_new_sound_message"
-				app:typeface="roboto_medium"/>
+				style="@style/Theme.TextView.Body"
+				android:text="@string/dialog_add_new_sound_message"/>
 
 	</RelativeLayout>
-</org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>
+
+	<android.support.v7.widget.RecyclerView
+			android:id="@+id/rv_dialog"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:overScrollMode="never"
+			tools:listitem="@layout/view_add_sound_list_item"/>
+
+</LinearLayout>

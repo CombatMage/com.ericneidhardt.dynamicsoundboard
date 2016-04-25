@@ -1,41 +1,37 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import de.greenrobot.event.EventBus
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
+import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.ListAdapter
 
 /**
  * File created by eric.neidhardt on 08.03.2015.
  */
-public class SoundLayoutsAdapter
+class SoundLayoutsAdapter
 (
-		private val presenter: SoundLayoutsPresenter,
-		private val eventBus: EventBus
+		private val eventBus: EventBus,
+		private val presenter: SoundLayoutsPresenter
 ) :
-		RecyclerView.Adapter<SoundLayoutViewHolder>(),
+		BaseAdapter<SoundLayout, SoundLayoutViewHolder>(),
 		ListAdapter<SoundLayout>,
 		NavigationDrawerItemClickListener<SoundLayout>
 {
-	public fun getValues(): List<SoundLayout>
-	{
-		return this.presenter.values
-	}
+	init { this.setHasStableIds(true) }
 
-	override fun getItemCount(): Int
-	{
-		return this.getValues().size()
-	}
+	override fun getItemId(position: Int): Long = this.values[position].databaseId.hashCode().toLong()
 
-	override fun getItemViewType(position: Int): Int
-	{
-		return R.layout.view_sound_layout_item
-	}
+	override val values: List<SoundLayout>
+		get() = this.presenter.values
+
+	override fun getItemCount(): Int = this.values.size
+
+	override fun getItemViewType(position: Int): Int = R.layout.view_sound_layout_item
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundLayoutViewHolder
 	{
@@ -51,13 +47,13 @@ public class SoundLayoutsAdapter
 
 	override fun onBindViewHolder(holder: SoundLayoutViewHolder, position: Int)
 	{
-		val data = this.getValues().get(position)
-		holder.bindData(data)
+		val data = this.values[position]
+		holder.bindData(data, position == this.itemCount - 1)
 	}
 
 	override fun notifyItemChanged(data: SoundLayout)
 	{
-		val index = this.getValues().indexOf(data)
+		val index = this.values.indexOf(data)
 		if (index == -1)
 			this.notifyDataSetChanged()
 		else

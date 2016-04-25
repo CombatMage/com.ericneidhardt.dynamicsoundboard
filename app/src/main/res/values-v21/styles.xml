@@ -1,0 +1,43 @@
+<resources>
+
+
+	<style name="Theme.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+		<item name="colorPrimary">@color/primary_500</item>
+		<item name="colorPrimaryDark">@color/primary_700</item>
+		<item name="colorAccent">@color/accent_200</item>
+
+		<item name="android:statusBarColor">@color/shadow_dark</item>
+
+		<item name="windowActionBar">false</item>
+		<item name="windowActionModeOverlay">true</item>
+		<item name="android:windowNoTitle">true</item>
+
+		<item name="android:background">@null</item>
+		<item name="android:windowBackground">@null</item>
+
+		<!-- styling dialog -->
+		<item name="alertDialogTheme">@style/Theme.Dialog</item>
+
+		<!-- styling seekBar -->
+		<item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
+
+		<!-- styling actionbar -->
+		<item name="android:dropDownListViewStyle">@style/ActionBar.OverflowMenu</item>
+		<item name="dropDownListViewStyle">@style/ActionBar.OverflowMenu</item>
+	</style>
+
+	<!-- actionbar text color -->
+	<style name="Actionbar.Color" parent="Theme.AppTheme">
+		<item name="android:textColorPrimary">@color/text_header</item>
+		<item name="android:textColorSecondary">@color/text_header</item>
+	</style>
+
+	<!-- overFlow menu style -->
+	<style name="ActionBar.OverflowMenu" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+		<item name="android:textColorPrimary">@color/text_body_primary</item>
+		<item name="android:textColorSecondary">@color/text_body_primary</item>
+		<item name="android:background">@color/background</item>
+	</style>
+
+</resources>

@@ -1,0 +1,56 @@
+<root>
+    <item name='org.robolectric.internal.ShadowConstants CONSTRUCTOR_METHOD_NAME'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.ShadowConstants GET_ROBO_DATA_METHOD_NAME'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow R invokeConstructor(java.lang.Class&lt;? extends R&gt;, R, org.robolectric.util.ReflectionHelpers.ClassParameter...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.ShadowExtractor java.lang.Object extract(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow T directlyOn(T, java.lang.Class&lt;T&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow R directlyOn(T, java.lang.Class&lt;T&gt;, java.lang.String, org.robolectric.util.ReflectionHelpers.ClassParameter...) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow R directlyOn(T, java.lang.Class&lt;T&gt;, java.lang.String, org.robolectric.util.ReflectionHelpers.ClassParameter...) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow R directlyOn(java.lang.Class&lt;T&gt;, java.lang.String, org.robolectric.util.ReflectionHelpers.ClassParameter...) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.ShadowConstants ROBO_PREFIX'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow R invokeConstructor(java.lang.Class&lt;? extends R&gt;, R, org.robolectric.util.ReflectionHelpers.ClassParameter...) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow R directlyOn(java.lang.Object, java.lang.String, java.lang.String, org.robolectric.util.ReflectionHelpers.ClassParameter...) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow T newInstance(java.lang.Class&lt;T&gt;, java.lang.Class[], java.lang.Object[]) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow R directlyOn(java.lang.Object, java.lang.String, java.lang.String, org.robolectric.util.ReflectionHelpers.ClassParameter...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow T newInstance(java.lang.Class&lt;T&gt;, java.lang.Class[], java.lang.Object[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.ShadowConstants CLASS_HANDLER_DATA_FIELD_NAME'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow R directlyOn(java.lang.Class&lt;T&gt;, java.lang.String, org.robolectric.util.ReflectionHelpers.ClassParameter...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.Shadow T newInstanceOf(java.lang.Class&lt;T&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.robolectric.internal.ShadowConstants STATIC_INITIALIZER_METHOD_NAME'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

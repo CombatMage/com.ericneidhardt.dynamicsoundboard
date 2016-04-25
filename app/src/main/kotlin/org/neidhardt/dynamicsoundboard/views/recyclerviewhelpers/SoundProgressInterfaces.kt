@@ -3,14 +3,14 @@ package org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers
 /**
  * File created by eric.neidhardt on 23.03.2015.
  */
-public interface SoundProgressViewHolder
+interface SoundProgressViewHolder
 {
-	public fun onProgressUpdate()
+	fun onProgressUpdate()
 }
 
-public interface SoundProgressTimer
+interface SoundProgressTimer
 {
-	public fun startProgressUpdateTimer()
+	fun startProgressUpdateTimer()
 
-	public fun stopProgressUpdateTimer()
+	fun stopProgressUpdateTimer()
 }

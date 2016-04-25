@@ -1,72 +1,53 @@
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="horizontal"
-		tools:ignore="InconsistentLayout">
+		android:layout_height="match_parent">
 
-	<fragment
-			android:id="@+id/navigation_drawer_fragment"
-			android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
-			android:layout_width="@dimen/navigation_drawer_width"
-			android:layout_height="match_parent"
-			android:layout_gravity="start"
-			tools:layout="@layout/fragment_navigation_drawer"/>
-
-	<FrameLayout
+	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:orientation="vertical">
 
-		<LinearLayout
+		<android.support.design.widget.AppBarLayout
+				android:id="@+id/abl_main"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:orientation="vertical">
-
-			<include layout="@layout/view_status_bar_padding"/>
+				android:layout_height="wrap_content">
 
 			<include layout="@layout/toolbar"/>
 
+		</android.support.design.widget.AppBarLayout>
+
+		<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+
+			<fragment
+					android:id="@+id/navigation_drawer_fragment"
+					android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
+					android:layout_width="@dimen/navigation_drawer_width"
+					android:layout_height="match_parent"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					tools:layout="@layout/fragment_navigation_drawer"/>
+
 			<FrameLayout
 					android:layout_width="match_parent"
-					android:layout_height="match_parent">
+					android:layout_height="match_parent"
+					android:layout_toLeftOf="@id/navigation_drawer_fragment"
+					android:layout_toStartOf="@id/navigation_drawer_fragment">
 
 				<FrameLayout
 						android:id="@+id/main_frame"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
-						android:background="@color/background">
-
-					<include layout="@layout/view_introduction"/>
-
-				</FrameLayout>
-
-				<org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
-						android:id="@+id/fab_add"
-						android:layout_width="@dimen/size_floating_button"
-						android:layout_height="@dimen/size_floating_button"
-						android:layout_margin="@dimen/margin_default"
-						android:layout_gravity="end|bottom"
-						android:src="@drawable/selector_ic_fab"
-						app:layout_behavior="org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FloatingActionButtonBehaviour"
-						app:fab_colorNormal="@color/accent_200"
-						app:fab_colorPressed="@color/accent_400"
-						app:fab_shadow="true"/>
+						android:background="@color/background"/>
 
 				<include layout="@layout/progressbar"/>
 
-				<View
-						android:layout_width="@dimen/height_shadow"
-						android:layout_height="match_parent"
-						android:background="@drawable/shape_shadow_vertical"/>
-
 			</FrameLayout>
-		</LinearLayout>
 
-		<View
-				android:layout_width="@dimen/height_shadow"
-				android:layout_height="match_parent"
-				android:background="@drawable/shape_shadow_vertical"/>
-	</FrameLayout>
-</LinearLayout>
+		</RelativeLayout>
+	</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

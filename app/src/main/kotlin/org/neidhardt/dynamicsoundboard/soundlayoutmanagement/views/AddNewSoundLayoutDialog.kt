@@ -1,18 +1,18 @@
 package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views
 
-import android.app.FragmentManager
 import android.os.Bundle
-import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import android.support.v4.app.FragmentManager
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.SoundLayoutAddedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutAddedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 
 /**
  * File created by eric.neidhardt on 12.03.2015.
  */
-public class AddNewSoundLayoutDialog : SoundLayoutDialog()
+class AddNewSoundLayoutDialog : SoundLayoutDialog()
 {
 	private var suggestedName: String? = null
 
@@ -25,20 +25,18 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 			this.suggestedName = args.getString(KEY_SUGGESTED_NAME)
 	}
 
-	override fun getLayoutId(): Int
-	{
-		return R.layout.dialog_add_new_sound_layout
-	}
+	override fun getLayoutId(): Int = R.layout.dialog_add_new_sound_layout
 
-	override fun getHintForName(): String
-	{
-		return this.suggestedName ?: ""
-	}
+	override fun getHintForName(): String = this.suggestedName ?: ""
+
+    override fun getTitleId(): Int = R.string.dialog_add_new_sound_layout_title
+
+	override fun getPositiveButtonId(): Int = R.string.dialog_add
 
 	override fun deliverResult()
 	{
 		var name = super.soundLayoutName?.text.toString()
-		if (name.length() == 0)
+		if (name.length == 0)
 			name = this.getHintForName()
 
 		val layout = SoundLayout()
@@ -46,19 +44,18 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 		layout.databaseId = SoundLayoutsManager.getNewDatabaseIdForLabel(name)
 		layout.label = name
 
-		DynamicSoundboardApplication.getSoundLayoutsStorage().addSoundLayout(layout)
+        SoundboardApplication.getSoundLayoutsStorage().addSoundLayout(layout)
 
 		EventBus.getDefault().post(SoundLayoutAddedEvent(layout))
 	}
 
-	public interface OnSoundLayoutAddedEventListener
+	interface OnSoundLayoutAddedEventListener
 	{
 		/**
 		 * This is called by greenRobot EventBus in case a new SoundLayout was renamed.
 		 * @param event delivered SoundLayoutRenamedEvent
 		 */
-		@SuppressWarnings("unused")
-		public fun onEvent(event: SoundLayoutAddedEvent)
+		fun onEvent(event: SoundLayoutAddedEvent)
 	}
 
 	companion object
@@ -67,7 +64,7 @@ public class AddNewSoundLayoutDialog : SoundLayoutDialog()
 
 		private val KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundLayoutDialog.suggestedName"
 
-		public fun showInstance(manager: FragmentManager, suggestedName: String) {
+		fun showInstance(manager: FragmentManager, suggestedName: String) {
 			val dialog = AddNewSoundLayoutDialog()
 
 			val args = Bundle()

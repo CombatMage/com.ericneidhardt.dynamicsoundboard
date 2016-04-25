@@ -1,0 +1,356 @@
+<root>
+    <item name='freemarker.template.utility.DateUtil java.lang.String dateToXSString(java.util.Date, boolean, boolean, boolean, int, java.util.TimeZone, freemarker.template.utility.DateUtil.DateToISO8601CalendarFactory)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StandardCompress java.io.Writer getWriter(java.io.Writer, java.util.Map) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String leftPad(java.lang.String, int, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Collections12 EMPTY_MAP'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil char[] trim(char[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.ObjectConstructor java.lang.Object exec(java.util.List) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.lang.String dateToISO8601String(java.util.Date, boolean, boolean, boolean, int, java.util.TimeZone, freemarker.template.utility.DateUtil.DateToISO8601CalendarFactory)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String chomp(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.CaptureOutput java.io.Writer getWriter(java.io.Writer, java.util.Map) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.ToCanonical void main(java.lang.String[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.XmlEscape java.io.Writer getWriter(java.io.Writer, java.util.Map) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String[] split(java.lang.String, java.lang.String, boolean) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.NormalizeNewlines java.io.Writer getWriter(java.io.Writer, java.util.Map)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseISO8601DateTime(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DOMNodeModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.NumberUtil int toIntExact(java.lang.Number) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String URLPathEnc(java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String jsStringEnc(java.lang.String, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.CaptureOutput java.io.Writer getWriter(java.io.Writer, java.util.Map) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.ObjectWrapperWithAPISupport freemarker.template.TemplateHashModel wrapAsAPI(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.NumberUtil int getSignum(java.lang.Number) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.XmlEscape java.io.Writer getWriter(java.io.Writer, java.util.Map) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String HTMLEnc(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String[] split(java.lang.String, java.lang.String, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil boolean isXMLID(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String javaScriptStringEnc(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String rightPad(java.lang.String, int, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.OptimizerUtil java.util.List optimizeListStorage(java.util.List) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String[] split(java.lang.String, char) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseISO8601Time(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.HtmlEscape java.io.Writer getWriter(java.io.Writer, java.util.Map) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String capitalize(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseXSDateTime(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.lang.String dateToXSString(java.util.Date, boolean, boolean, boolean, int, java.util.TimeZone, freemarker.template.utility.DateUtil.DateToISO8601CalendarFactory) 6'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.JythonRuntime java.io.Writer getWriter(java.io.Writer, java.util.Map)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.CollectionUtils EMPTY_CLASS_ARRAY'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Constants EMPTY_ITERATOR'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseISO8601Date(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Execute java.lang.Object exec(java.util.List) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String FTLStringLiteralDec(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.HtmlEscape java.io.Writer getWriter(java.io.Writer, java.util.Map)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String XMLEncNA(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.NullWriter INSTANCE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String rightPad(java.lang.String, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.CollectionUtils EMPTY_CHAR_ARRAY'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.HtmlEscape java.io.Writer getWriter(java.io.Writer, java.util.Map) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.StandardCompress java.io.Writer getWriter(java.io.Writer, java.util.Map) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String jsonStringEnc(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseXSDateTime(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil boolean isTrimmableToEmpty(char[], int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseISO8601Time(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.TimeZone getTimeZone(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String leftPad(java.lang.String, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StandardCompress INSTANCE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.util.Map parseNameValuePairList(java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String ftlQuote(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String XMLEncNQG(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String XMLEncQAttr(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.JythonRuntime java.io.Writer getWriter(java.io.Writer, java.util.Map) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.NullArgumentException void check(java.lang.String, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseXSTime(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil boolean getYesNo(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Constants MINUS_ONE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Constants TRUE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil char[] trim(char[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Constants ONE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.NumberUtil boolean isIntegerBigDecimal(java.math.BigDecimal) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String FTLStringLiteralEnc(java.lang.String, char) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.UnsupportedNumberClassException UnsupportedNumberClassException(java.lang.Class) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.CollectionUtils EMPTY_OBJECT_ARRAY'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String FTLStringLiteralEnc(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String[] split(java.lang.String, java.lang.String, boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String URLEnc(java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String XMLEnc(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.UnsupportedNumberClassException java.lang.Class getUnsupportedClass()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StandardCompress java.io.Writer getWriter(java.io.Writer, java.util.Map)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseISO8601Date(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Constants FALSE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String[] split(java.lang.String, char)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseISO8601DateTime(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.NormalizeNewlines java.io.Writer getWriter(java.io.Writer, java.util.Map) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String replace(java.lang.String, java.lang.String, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String RTFEnc(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Constants EMPTY_STRING'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Constants ZERO'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String javaStringEnc(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String leftPad(java.lang.String, int, char) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.lang.String dateToISO8601String(java.util.Date, boolean, boolean, boolean, int, java.util.TimeZone, freemarker.template.utility.DateUtil.DateToISO8601CalendarFactory) 6'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String XHTMLEnc(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil boolean isTrimmableToEmpty(char[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseXSDate(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.NullArgumentException void check(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseXSTime(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil boolean matchesName(java.lang.String, java.lang.String, java.lang.String, freemarker.core.Environment) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.NormalizeNewlines java.io.Writer getWriter(java.io.Writer, java.util.Map) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.JythonRuntime java.io.Writer getWriter(java.io.Writer, java.util.Map) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.template.utility.Constants EMPTY_COLLECTION'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Constants EMPTY_HASH'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String rightPad(java.lang.String, int, char) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.util.Map parseNameValuePairList(java.lang.String, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.CaptureOutput java.io.Writer getWriter(java.io.Writer, java.util.Map)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.StringUtil java.lang.String replace(java.lang.String, java.lang.String, java.lang.String, boolean, boolean) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.Constants EMPTY_SEQUENCE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.DateUtil java.util.Date parseXSDate(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.template.utility.XmlEscape java.io.Writer getWriter(java.io.Writer, java.util.Map)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

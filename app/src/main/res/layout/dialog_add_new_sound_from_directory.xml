@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<org.neidhardt.dynamicsoundboard.views.DialogBaseLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:animateLayoutChanges="true"
-		app:has_title="false"
-		app:has_recycler_view="true"
-		app:text_cancle_button="@string/dialog_cancel"
-		app:text_ok_button="@string/dialog_add">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:orientation="vertical"
+			  android:layout_width="wrap_content"
+			  android:layout_height="wrap_content"
+			  android:padding="@dimen/padding_dialog">
 
 	<com.devspark.robototextview.widget.RobotoTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@color/text_content_secondary"
-			android:textSize="@dimen/text_body"
+			android:layout_marginBottom="@dimen/margin_default"
 			android:text="@string/dialog_add_new_sound_from_directory_message"
-			app:typeface="roboto_medium"/>
+			style="@style/Theme.TextView.Body"/>
 
-</org.neidhardt.dynamicsoundboard.views.DialogBaseLayout>
+	<android.support.v7.widget.RecyclerView
+			android:id="@+id/rv_dialog"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:overScrollMode="never"/>
+
+</LinearLayout>

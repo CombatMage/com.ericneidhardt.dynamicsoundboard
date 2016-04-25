@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="background">#ffffff</color>
-	<color name="background_secondary">#E6E6E6</color>
+	<color name="background_secondary">#fafafa</color>
 
 	<color name="primary_500">#3f51b5</color>
 	<color name="primary_700">#303f9f</color>
@@ -17,8 +17,8 @@
 	<color name="shadow_bright">#00000000</color>
 
 	<color name="text_header">#ffffff</color>
-	<color name="text_content_primary">#de000000</color>
-	<color name="text_content_secondary">#a8000000</color>
+	<color name="text_body_primary">#de000000</color>
+	<color name="text_body_secondary">#a8000000</color>
 	<color name="text_hint">#42000000</color>
 	<color name="text_accent">@color/accent_200</color>
 	<color name="text_accent_disabled">@color/accent_100</color>

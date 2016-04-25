@@ -1,0 +1,50 @@
+<root>
+    <item name='me.zhanghai.android.materialprogressbar.MaterialProgressBar MaterialProgressBar(android.content.Context, android.util.AttributeSet, int, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.BuildConfig FLAVOR'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.HorizontalProgressDrawable HorizontalProgressDrawable(android.content.Context) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.BuildConfig BUILD_TYPE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.MaterialProgressBar MaterialProgressBar(android.content.Context, android.util.AttributeSet, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.IndeterminateProgressDrawable IndeterminateProgressDrawable(android.content.Context) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.IndeterminateProgressDrawable void onDraw(android.graphics.Canvas, int, int, android.graphics.Paint) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.Interpolators.LINEAR INSTANCE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.BuildConfig VERSION_NAME'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.IndeterminateHorizontalProgressDrawable void onDraw(android.graphics.Canvas, int, int, android.graphics.Paint) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.IndeterminateHorizontalProgressDrawable IndeterminateHorizontalProgressDrawable(android.content.Context) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.MaterialProgressBar MaterialProgressBar(android.content.Context, android.util.AttributeSet) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.IndeterminateProgressDrawable void onPreparePaint(android.graphics.Paint) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.BuildConfig APPLICATION_ID'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.IndeterminateHorizontalProgressDrawable void onPreparePaint(android.graphics.Paint) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='me.zhanghai.android.materialprogressbar.MaterialProgressBar MaterialProgressBar(android.content.Context) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

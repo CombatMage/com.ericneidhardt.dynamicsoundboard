@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 
 /**
@@ -30,17 +30,17 @@ internal fun getDatabaseNamePlayList(soundLayoutsAccess: SoundLayoutsAccess): St
 	return baseName + DB_SOUNDS_PLAYLIST
 }
 
-internal fun searchInListForId(playerId: String, sounds: List<EnhancedMediaPlayer>): EnhancedMediaPlayer?
+internal fun searchInListForId(playerId: String, sounds: List<MediaPlayerController>): MediaPlayerController?
 {
 	return sounds.firstOrNull { player -> player.mediaPlayerData.playerId == playerId }
 }
 
-internal fun searchInMapForId(playerId: String, sounds: Map<String, List<EnhancedMediaPlayer>>): EnhancedMediaPlayer?
+internal fun searchInMapForId(playerId: String, sounds: Map<String, List<MediaPlayerController>>): MediaPlayerController?
 {
-	val soundSheets = sounds.keySet()
+	val soundSheets = sounds.keys
 	for (soundSheet in soundSheets)
 	{
-		val playersInSoundSheet = sounds.get(soundSheet)
+		val playersInSoundSheet = sounds[soundSheet]
 		val player = searchInListForId(playerId, playersInSoundSheet.orEmpty())
 		if (player != null)
 			return player

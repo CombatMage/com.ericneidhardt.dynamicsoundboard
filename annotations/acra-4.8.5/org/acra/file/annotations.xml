@@ -1,0 +1,32 @@
+<root>
+    <item name='org.acra.file.CrashReportPersister void store(org.acra.collector.CrashReportData, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.file.LastModifiedComparator int compare(java.lang.Object, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.file.CrashReportFileNameParser boolean isSilent(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.file.ReportLocator java.io.File[] getApprovedReports()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.file.CrashReportFileNameParser boolean isApproved(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.file.LastModifiedComparator int compare(java.io.File, java.io.File) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.file.LastModifiedComparator int compare(java.io.File, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.file.CrashReportPersister org.acra.collector.CrashReportData load(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.file.ReportLocator java.io.File[] getUnapprovedReports()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.file.LastModifiedComparator int compare(java.lang.Object, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

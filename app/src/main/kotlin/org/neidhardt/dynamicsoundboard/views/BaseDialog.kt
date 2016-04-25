@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.views
 
-import android.app.DialogFragment
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import android.support.v4.app.DialogFragment
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -13,21 +13,20 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 /**
  * File created by eric.neidhardt on 14.11.2014.
  */
-public abstract class BaseDialog : DialogFragment()
+abstract class BaseDialog : DialogFragment()
 {
-	protected var soundSheetsDataAccess: SoundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataAccess()
-	protected var soundSheetsDataStorage: SoundSheetsDataStorage = DynamicSoundboardApplication.getSoundSheetsDataStorage()
-	protected var soundSheetsDataUtil: SoundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
+	protected val KEY_CALLING_FRAGMENT_TAG: String = "KEY_CALLING_FRAGMENT_TAG"
 
-	protected var soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
-	protected var soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
+	protected var soundSheetsDataAccess: SoundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
+	protected var soundSheetsDataStorage: SoundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage()
+	protected var soundSheetsDataUtil: SoundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
-	public var soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
+	protected var soundsDataStorage: SoundsDataStorage = SoundboardApplication.getSoundsDataStorage()
+	protected var soundsDataAccess: SoundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 
-	public var mainView: DialogBaseLayout? = null
+	var soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
 
-	public fun getSoundActivity(): SoundActivity
-	{
-		return this.activity as SoundActivity
-	}
+	val soundActivity: SoundActivity
+		get() = this.activity as SoundActivity
 }
+

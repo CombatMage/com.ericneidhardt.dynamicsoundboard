@@ -1,0 +1,221 @@
+<root>
+    <item name='freemarker.cache.URLTemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateNameFormat DEFAULT_2_3_0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.template.Template getTemplate(java.lang.String, java.util.Locale, java.lang.String, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.StringTemplateLoader void closeTemplateSource(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.StringTemplateLoader void putTemplate(java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.WebappTemplateLoader void closeTemplateSource(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.FileTemplateLoader void closeTemplateSource(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.TemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.cache.TemplateNameFormat getTemplateNameFormat()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.cache.TemplateCache.MaybeMissingTemplate getTemplate(java.lang.String, java.util.Locale, java.lang.Object, java.lang.String, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.StringTemplateLoader long getLastModified(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateLookupContext freemarker.cache.TemplateLookupResult lookupWithAcquisitionStrategy(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.TemplateCache TemplateCache(freemarker.cache.TemplateLoader, freemarker.cache.CacheStorage, freemarker.template.Configuration) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache TemplateCache(freemarker.cache.TemplateLoader, freemarker.cache.CacheStorage) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateNameFormat DEFAULT_2_4_0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.ClassTemplateLoader ClassTemplateLoader(java.lang.ClassLoader, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.template.Template getTemplate(java.lang.String, java.util.Locale, java.lang.String, boolean) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache java.lang.String getFullTemplatePath(freemarker.core.Environment, java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.URLTemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateLookupStrategy freemarker.cache.TemplateLookupResult lookup(freemarker.cache.TemplateLookupContext) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.TemplateCache void removeTemplate(java.lang.String, java.util.Locale, java.lang.String, boolean) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.FileTemplateLoader long getLastModified(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.TemplateLoader void closeTemplateSource(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.TemplateLoader long getLastModified(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.WebappTemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.cache.TemplateLookupStrategy getTemplateLookupStrategy()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache void removeTemplate(java.lang.String, java.util.Locale, java.lang.Object, java.lang.String, boolean) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.WebappTemplateLoader WebappTemplateLoader(javax.servlet.ServletContext, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache TemplateCache(freemarker.cache.TemplateLoader, freemarker.cache.CacheStorage, freemarker.cache.TemplateLookupStrategy, freemarker.cache.TemplateNameFormat, freemarker.template.Configuration) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.cache.CacheStorage getCacheStorage()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.cache.TemplateCache.MaybeMissingTemplate getTemplate(java.lang.String, java.util.Locale, java.lang.Object, java.lang.String, boolean) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.URLTemplateLoader long getLastModified(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.StringTemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateLookupStrategy DEFAULT_2_3_0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateLookupContext freemarker.cache.TemplateLookupResult lookupWithAcquisitionStrategy(java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.template.Template getTemplate(java.lang.String, java.util.Locale, java.lang.String, boolean) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.WebappTemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.URLTemplateLoader void closeTemplateSource(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.FileTemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.ClassTemplateLoader ClassTemplateLoader(java.lang.Class, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.MultiTemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache void removeTemplate(java.lang.String, java.util.Locale, java.lang.String, boolean) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.StringTemplateLoader java.io.Reader getReader(java.lang.Object, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.StringTemplateLoader void putTemplate(java.lang.String, java.lang.String, long) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache._CacheAPI java.lang.String toAbsoluteName(freemarker.cache.TemplateNameFormat, java.lang.String, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache TemplateCache(freemarker.cache.TemplateLoader, freemarker.cache.CacheStorage, freemarker.cache.TemplateLookupStrategy, freemarker.cache.TemplateNameFormat, freemarker.template.Configuration) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateLookupContext freemarker.cache.TemplateLookupResult createNegativeLookupResult()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.WebappTemplateLoader WebappTemplateLoader(javax.servlet.ServletContext) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.MultiTemplateLoader MultiTemplateLoader(freemarker.cache.TemplateLoader[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.MultiTemplateLoader long getLastModified(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.StringTemplateLoader void putTemplate(java.lang.String, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.StringTemplateLoader void putTemplate(java.lang.String, java.lang.String, long) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache void removeTemplate(java.lang.String, java.util.Locale, java.lang.Object, java.lang.String, boolean) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.MultiTemplateLoader void closeTemplateSource(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.WebappTemplateLoader long getLastModified(java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache TemplateCache(freemarker.cache.TemplateLoader, freemarker.cache.CacheStorage, freemarker.cache.TemplateLookupStrategy, freemarker.cache.TemplateNameFormat, freemarker.template.Configuration) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.cache.TemplateCache.MaybeMissingTemplate getTemplate(java.lang.String, java.util.Locale, java.lang.Object, java.lang.String, boolean) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateCache freemarker.cache.TemplateCache.MaybeMissingTemplate getTemplate(java.lang.String, java.util.Locale, java.lang.Object, java.lang.String, boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='freemarker.cache.TemplateLookupContext freemarker.cache.TemplateLookupResult lookupWithLocalizedThenAcquisitionStrategy(java.lang.String, java.util.Locale) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='freemarker.cache.NullCacheStorage INSTANCE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

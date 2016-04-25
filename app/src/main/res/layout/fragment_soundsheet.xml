@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
+<android.support.design.widget.CoordinatorLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/coordinator_layout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:background="@color/background_secondary">
@@ -9,12 +11,10 @@
 	<android.support.v7.widget.RecyclerView
 			android:id="@+id/rv_sounds"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:overScrollMode="never"/>
+			android:layout_height="match_parent"
+			android:overScrollMode="never"
+			tools:listitem="@layout/view_sound_control"/>
 
-	<View
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_shadow"
-			android:background="@drawable/shape_shadow_horizontal"/>
+	<include layout="@layout/view_fab"/>
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -43,7 +43,7 @@
 				android:layout_marginRight="@dimen/margin_default"
 				android:layout_marginEnd="@dimen/margin_default"
 				app:text_size="@dimen/text_subheading"
-				app:text_color="@color/text_content_primary"/>
+				app:text_color="@color/text_body_primary"/>
 
 		<SeekBar
 				android:id="@+id/sb_progress"

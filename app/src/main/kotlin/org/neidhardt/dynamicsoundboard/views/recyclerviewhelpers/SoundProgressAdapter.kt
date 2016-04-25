@@ -2,17 +2,20 @@ package org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers
 
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
-
-import java.util.ArrayList
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
-public val UPDATE_INTERVAL: Int = 500
+val UPDATE_INTERVAL: Int = 500
 
-public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
-		BaseAdapter<EnhancedMediaPlayer, T>(),
+abstract class SoundProgressAdapter<T>
+(
+		private val  recyclerView: RecyclerView
+) :
+		BaseAdapter<MediaPlayerController, T>(),
 		SoundProgressTimer,
-		Runnable where T : SoundProgressViewHolder
+		Runnable
+where T : RecyclerView.ViewHolder, T : SoundProgressViewHolder
 {
 
 	private val TAG = javaClass.name
@@ -20,18 +23,16 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
 	private val handler: Handler = Handler()
 	private val hasTimerStarted: AtomicBoolean = AtomicBoolean(false)
 
-	var recyclerView: RecyclerView? = null
-
 	/**
 	 * Starts periodic updates of sounds loaded in the adapter. This is used to update the progress bars of running sounds.
 	 */
-	public override fun startProgressUpdateTimer()
+	override fun startProgressUpdateTimer()
 	{
 		if (!this.hasTimerStarted.getAndSet(true))
 			this.handler.postDelayed(this, UPDATE_INTERVAL.toLong())
 	}
 
-	public override fun stopProgressUpdateTimer()
+	override fun stopProgressUpdateTimer()
 	{
 		if (this.hasTimerStarted.getAndSet(false))
 			this.handler.removeCallbacks(this)
@@ -40,16 +41,13 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
 	override fun run()
 	{
 		val itemsWithProgressChanged = getPlayingItems()
-		if (itemsWithProgressChanged.size() == 0)
+		if (itemsWithProgressChanged.size == 0)
 		{
 			this.stopProgressUpdateTimer()
 			return
 		}
 		for (index in itemsWithProgressChanged)
 		{
-			if (this.recyclerView == null)
-				throw NullPointerException(TAG + ": update sound progress failed, RecyclerView is null")
-
 			val viewHolderToUpdate = this.recyclerView?.findViewHolderForAdapterPosition(index) as SoundProgressViewHolder?
 			viewHolderToUpdate?.onProgressUpdate()
 		}
@@ -60,11 +58,11 @@ public abstract class SoundProgressAdapter<T : RecyclerView.ViewHolder> :
 	private fun getPlayingItems(): List<Int>
 	{
 		val playingSounds = ArrayList<Int>()
-		val allSounds = this.getValues()
-		val count = allSounds.size()
+		val allSounds = this.values
+		val count = allSounds.size
 		for (i in 0..count - 1)
 		{
-			if (allSounds.get(i).isPlaying)
+			if (allSounds[i].isPlayingSound)
 				playingSounds.add(i)
 		}
 		return playingSounds

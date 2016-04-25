@@ -1,41 +1,58 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
+import android.support.v7.widget.RecyclerView
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
-import java.util.ArrayList
-import java.util.HashSet
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
-public open class SoundSheetsPresenter
+fun createSoundSheetPresenter(
+		eventBus: EventBus, recyclerView: RecyclerView,
+		soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage,
+		soundSheetsDataAccess: SoundSheetsDataAccess, soundSheetsDataStorage: SoundSheetsDataStorage): SoundSheetsPresenter
+{
+	return SoundSheetsPresenter(
+			eventBus = eventBus,
+			soundsDataAccess = soundsDataAccess,
+			soundsDataStorage = soundsDataStorage,
+			soundSheetsDataAccess = soundSheetsDataAccess,
+			soundSheetsDataStorage = soundSheetsDataStorage
+	).apply {
+		this.adapter = SoundSheetsAdapter(this)
+		this.view = recyclerView
+	}
+}
+
+open class SoundSheetsPresenter
 (
-		public val soundSheetsDataAccess: SoundSheetsDataAccess,
+		override val eventBus: EventBus,
+		val soundSheetsDataAccess: SoundSheetsDataAccess,
 		private val soundSheetsDataStorage: SoundSheetsDataStorage,
 		private val soundsDataAccess: SoundsDataAccess,
 		private val soundsDataStorage: SoundsDataStorage
 ) :
-		NavigationDrawerListPresenter<SoundSheets>(),
+		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<SoundSheet>,
 		OnSoundSheetsChangedEventListener,
 		OnSoundsChangedEventListener
 {
-	public var adapter: SoundSheetsAdapter? = null
+	override var view: RecyclerView? = null
 
-	public val values: MutableList<SoundSheet> = ArrayList()
-
-	override fun isEventBusSubscriber(): Boolean
-	{
-		return true
-	}
+	var adapter: SoundSheetsAdapter? = null
+	val values: MutableList<SoundSheet> = ArrayList()
 
 	override fun onAttachedToWindow()
 	{
@@ -54,16 +71,15 @@ public open class SoundSheetsPresenter
 			this.soundsDataStorage.removeSounds(soundsInFragment)
 		}
 		this.soundSheetsDataStorage.removeSoundSheets(soundSheetsToRemove)
-
-		super.onSelectedItemsDeleted()
 	}
 
-	public override fun onItemClick(data: SoundSheet)
+	override fun onItemClick(data: SoundSheet)
 	{
 		if (this.isInSelectionMode)
 		{
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			this.adapter!!.notifyItemChanged(data)
+
 			super.onItemSelectedForDeletion()
 		}
 		else
@@ -73,10 +89,11 @@ public open class SoundSheetsPresenter
 		}
 	}
 
-	override fun getNumberOfItemsSelectedForDeletion(): Int
-	{
-		return this.getSoundSheetsSelectedForDeletion().size()
-	}
+	override val numberOfItemsSelectedForDeletion: Int
+		get() = this.getSoundSheetsSelectedForDeletion().size
+
+	override val itemCount: Int
+		get() = this.values.size
 
 	override fun deselectAllItemsSelectedForDeletion()
 	{
@@ -84,6 +101,16 @@ public open class SoundSheetsPresenter
 		for (soundSheet in selectedSoundSheets)
 		{
 			soundSheet.isSelectedForDeletion = false
+			this.adapter!!.notifyItemChanged(soundSheet)
+		}
+	}
+
+	override fun selectAllItems()
+	{
+		val selectedSoundSheets = this.values
+		for (soundSheet in selectedSoundSheets)
+		{
+			soundSheet.isSelectedForDeletion = true
 			this.adapter!!.notifyItemChanged(soundSheet)
 		}
 	}
@@ -99,12 +126,13 @@ public open class SoundSheetsPresenter
 		return selectedSoundSheets
 	}
 
-	public fun getSoundsInFragment(fragmentTag: String): List<EnhancedMediaPlayer>
+	fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController>
 	{
 		return this.soundsDataAccess.getSoundsInFragment(fragmentTag)
 	}
 
-	override fun onEventMainThread(event: SoundAddedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundAddedEvent)
 	{
 		val fragmentTag = event.player.mediaPlayerData.fragmentTag
 		val changedSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag)
@@ -112,7 +140,8 @@ public open class SoundSheetsPresenter
 			this.adapter?.notifyItemChanged(changedSoundSheet)
 	}
 
-	override fun onEventMainThread(event: SoundsRemovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundsRemovedEvent)
 	{
 		val removedPlayers = event.players
 		if (event.removeAll())
@@ -136,34 +165,39 @@ public open class SoundSheetsPresenter
 		}
 	}
 
-	override fun onEventMainThread(event: SoundChangedEvent) {}
-
-	override fun onEventMainThread(event: SoundMovedEvent) {}
-
-	override fun onEventMainThread(event: SoundSheetAddedEvent)
-	{
-		this.values.add(event.soundSheet)
-		this.adapter?.notifyItemInserted(this.values.size())
-	}
-
-	override fun onEventMainThread(event: SoundSheetChangedEvent){
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundSheetChangedEvent){
 		this.adapter?.notifyItemChanged(event.soundSheet)
 	}
 
-	override fun onEventMainThread(event: SoundSheetsRemovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundSheetsRemovedEvent)
 	{
 		val soundSheetsToRemove = event.soundSheets
 		for (soundSheet in soundSheetsToRemove)
 			this.removeSoundSheet(soundSheet)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundSheetAddedEvent)
+	{
+		this.values.add(event.soundSheet)
+		this.adapter?.notifyItemInserted(this.values.size)
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	private fun removeSoundSheet(soundSheet: SoundSheet)
 	{
 		val index = this.values.indexOf(soundSheet)
 		if (index != -1) // should no happen
 		{
-			this.values.remove(index)
+            this.values.removeAt(index)
 			this.adapter?.notifyItemRemoved(index)
 		}
 	}
+
+	// unused events
+	override fun onEvent(event: SoundChangedEvent) {}
+
+	override fun onEvent(event: SoundMovedEvent) {}
 }

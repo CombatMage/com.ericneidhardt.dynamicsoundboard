@@ -1,297 +1,388 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer
 
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
-import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewPager
+import android.support.v4.app.FragmentManager
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import android.widget.TextView
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
-import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ActionModeChangeRequestedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnActionModeChangeRequestedEventListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.header.views.NavigationDrawerHeaderPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayouts
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheets
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
+import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
+import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OnOpenSoundLayoutsEventListener
+import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.createPlaylistPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.createSoundLayoutsPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.createSoundSheetPresenter
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutSelectedEventListener
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsUtil
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
+import org.neidhardt.dynamicsoundboard.views.NonTouchableCoordinatorLayout
 
-public class NavigationDrawerFragment :
-		BaseFragment(),
-		View.OnClickListener,
-		TabLayout.OnTabSelectedListener,
-		OnActionModeChangeRequestedEventListener,
-		NavigationDrawerHeaderPresenter.OnOpenSoundLayoutsEvent
+class NavigationDrawerFragment : BaseFragment()
 {
-	private val TAG = javaClass.name
-
-	private val INDEX_SOUND_SHEETS = 0
-	private val INDEX_PLAYLIST = 1
-
-	private val soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
-	private val soundSheetsDataAccess = DynamicSoundboardApplication.getSoundSheetsDataAccess()
-
-	private val soundLayoutsUtil = DynamicSoundboardApplication.getSoundLayoutsUtil()
-
 	private val eventBus = EventBus.getDefault()
-
-	private var tabBar: TabLayout? = null
-	private var tabContent: ViewPager? = null
-	private val tabContentAdapter = TabContentAdapter()
-
-	private var listContainer: ViewGroup? = null
-	private var soundLayoutList: SoundLayouts? = null
-	public var playlist: Playlist? = null
-	private var soundSheets: SoundSheets? = null
-
-	private var contextualActionContainer: View? = null
-	private var deleteSelected: View? = null
-
-	private var listObserver: ViewPagerContentObserver? = null
-
-	private var minHeightOfListContent = 0
+	private var presenter: NavigationDrawerFragmentPresenter? = null
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
 		this.retainInstance = true
-
-		this.listObserver = ViewPagerContentObserver()
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 	{
-		val fragmentView = inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
+		val view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
 
-		this.contextualActionContainer = fragmentView.findViewById(R.id.layout_contextual_controls)
-		this.listContainer = fragmentView.findViewById(R.id.layout_navigation_drawer_list_content) as ViewGroup
+		val layoutList = (view.findViewById(R.id.rv_navigation_drawer_list) as RecyclerView).apply {
+			this.itemAnimator = DefaultItemAnimator()
+			this.layoutManager = LinearLayoutManager(this.context)
+		}
 
-		this.deleteSelected = fragmentView.findViewById(R.id.b_delete_selected)
-		this.deleteSelected!!.setOnClickListener(this)
+		this.presenter = NavigationDrawerFragmentPresenter(
+				eventBus = this.eventBus,
 
-		fragmentView.findViewById(R.id.b_delete).setOnClickListener(this)
-		fragmentView.findViewById(R.id.b_ok).setOnClickListener(this)
+				coordinatorLayout = view.findViewById(R.id.cl_navigation_drawer) as NonTouchableCoordinatorLayout,
 
-		this.tabContent = fragmentView.findViewById(R.id.vp_tab_content) as ViewPager
-		this.tabContent!!.adapter = this.tabContentAdapter
+				appBarLayout = view.findViewById(R.id.abl_navigation_drawer) as AppBarLayout,
+				toolbarDeletion = view.findViewById(R.id.v_navigation_drawer_deletion) as View,
+				tabLayout = view.findViewById(R.id.tl_navigation_drawer_list) as TabLayout,
 
-		this.tabBar = fragmentView.findViewById(R.id.tl_tab_bar) as TabLayout
+				buttonOk = view.findViewById(R.id.b_ok),
+				buttonDelete = view.findViewById(R.id.b_delete),
+				buttonDeleteSelected = view.findViewById(R.id.b_delete_selected),
+				buttonCancelActionMode = view.findViewById(R.id.b_cancel_action_mode),
+				buttonSelectAll = view.findViewById(R.id.ll_action_mode_title),
 
-		this.tabBar!!.setOnTabSelectedListener(this)
-		this.tabBar!!.setupWithViewPager(this.tabContent)
+				actionModeTitle = view.findViewById(R.id.tv_action_mode_title) as TextView,
+				actionModeSubTitle= view.findViewById(R.id.tv_action_mode_sub_title) as TextView,
 
-		this.soundLayoutList = fragmentView.findViewById(R.id.layout_select_sound_layout) as SoundLayouts
-		this.playlist = fragmentView.findViewById(R.id.playlist) as Playlist
-		this.soundSheets = fragmentView.findViewById(R.id.sound_sheets) as SoundSheets
+				fragmentManager = this.fragmentManager,
+				recyclerView = layoutList,
 
-		return fragmentView
-	}
+				soundsDataAccess = SoundboardApplication.getSoundsDataAccess(),
+				soundsDataStorage = SoundboardApplication.getSoundsDataStorage(),
 
-	override fun onResume()
-	{
-		super.onResume()
+				soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil(),
+				soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage(),
+				soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess(),
 
-		this.calculateMinHeightOfListContent()
-		this.adjustViewPagerToContent()
+				soundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess(),
+				soundLayoutsStorage = SoundboardApplication.getSoundLayoutsStorage(),
+				soundLayoutsUtil = SoundboardApplication.getSoundLayoutsUtil()
 
-		this.playlist!!.adapter.registerAdapterDataObserver(this.listObserver)
-		this.soundSheets!!.adapter.registerAdapterDataObserver(this.listObserver)
-	}
+		).apply {
+			onAttachedToWindow()
+		}
 
-	/**
-	 * Calculates the minimum require height of the viewpager's content (this is the height used if the content is smaller than the
-	 * screens height). Recalculation is require every time the screen's metric changes (ie. switch from/to full immersive mode).
-	 */
-	public fun calculateMinHeightOfListContent()
-	{
-		this.minHeightOfListContent = this.contextualActionContainer!!.top - listContainer!!.top  // this is the minimal height required to fill the screen properly
+		return view
 	}
 
 	override fun onStart()
 	{
 		super.onStart()
+		this.presenter?.onAttachedToWindow()
+	}
+
+	override fun onStop() {
+		super.onStop()
+		this.presenter?.onDetachedFromWindow()
+	}
+}
+
+enum class List
+{
+	SoundSheet,
+	Playlist,
+	SoundLayouts
+}
+
+enum class TabMode
+{
+	Normal,
+	Context
+}
+
+private val INDEX_SOUND_SHEETS = 0
+private val INDEX_PLAYLIST = 1
+
+class NavigationDrawerFragmentPresenter
+(
+		private val eventBus: EventBus,
+		private val fragmentManager: FragmentManager,
+
+		private val coordinatorLayout: NonTouchableCoordinatorLayout,
+
+		private val appBarLayout: AppBarLayout,
+		private val toolbarDeletion: View,
+		private val tabLayout: TabLayout,
+		private val buttonOk: View,
+		private val buttonDelete: View,
+		private val buttonDeleteSelected: View,
+		private val buttonCancelActionMode: View,
+		private val buttonSelectAll: View,
+		private val actionModeTitle: TextView,
+		private val actionModeSubTitle: TextView,
+		private val recyclerView: RecyclerView,
+
+		private val soundLayoutsAccess: SoundLayoutsAccess,
+		private val soundLayoutsStorage: SoundLayoutsStorage,
+		private val soundLayoutsUtil: SoundLayoutsUtil,
+
+		private val soundsDataAccess: SoundsDataAccess,
+		private val soundsDataStorage: SoundsDataStorage,
+
+		private val soundSheetsDataAccess: SoundSheetsDataAccess,
+		private val soundSheetsDataStorage: SoundSheetsDataStorage,
+		private val soundSheetsDataUtil: SoundSheetsDataUtil
+
+) :
+		View.OnClickListener,
+		ItemSelectedForDeletionListener,
+		OnOpenSoundLayoutsEventListener,
+		TabLayout.OnTabSelectedListener,
+		OnSoundLayoutSelectedEventListener
+{
+	private var tabSoundSheets: TabLayout.Tab = tabLayout.createSoundSheetTab()
+	private var tabPlayList: TabLayout.Tab = tabLayout.createPlaylistTab()
+	private var tabSoundLayouts: TabLayout.Tab = tabLayout.createSoundLayoutsTab()
+
+	private var tabMode: TabMode = TabMode.Normal
+
+	private var currentList: List = List.SoundSheet
+	private var currentPresenter: NavigationDrawerListPresenter? = null
+
+	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage, soundSheetsDataAccess, soundSheetsDataStorage)
+	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
+	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView, soundLayoutsAccess, soundLayoutsStorage)
+
+	init
+	{
+		this.tabLayout.setOnTabSelectedListener(this)
+		this.buttonOk.setOnClickListener(this)
+		this.buttonDelete.setOnClickListener(this)
+		this.buttonDeleteSelected.setOnClickListener(this)
+		this.buttonCancelActionMode.setOnClickListener(this)
+		this.buttonSelectAll.setOnClickListener(this)
+	}
+
+	fun onAttachedToWindow()
+	{
+		this.showDefaultTabBarAndContent()
+
 		if (!this.eventBus.isRegistered(this))
 			this.eventBus.register(this)
 	}
 
-	override fun onStop()
+	fun onDetachedFromWindow(): Unit = this.eventBus.unregister(this)
+
+	private fun showDefaultTabBarAndContent()
 	{
-		super.onStop()
-		this.eventBus.unregister(this)
+		this.tabMode = TabMode.Normal
+		this.tabLayout.removeAllTabs()
+		this.tabSoundSheets = this.tabLayout.createSoundSheetTab()
+		this.tabPlayList = this.tabLayout.createPlaylistTab()
+
+		this.tabLayout.addTab(this.tabSoundSheets, INDEX_SOUND_SHEETS)
+		this.tabLayout.addTab(this.tabPlayList, INDEX_PLAYLIST)
+
+		this.tabSoundSheets.select()
 	}
 
-	override fun onPause()
+	private fun showContextTabBarAndContent()
 	{
-		super.onPause()
+		this.tabMode = TabMode.Context
+		this.tabLayout.removeAllTabs()
+		this.tabSoundLayouts = this.tabLayout.createSoundLayoutsTab()
 
-		this.playlist!!.adapter.unregisterAdapterDataObserver(this.listObserver)
-		this.soundSheets!!.adapter.unregisterAdapterDataObserver(this.listObserver)
+		this.tabLayout.addTab(this.tabSoundLayouts)
+		this.tabSoundLayouts.select()
 	}
 
-	override fun onClick(v: View)
+	private fun showToolbarForDeletion()
 	{
-		val id = v.id
-		if (id == R.id.b_delete)
-		{
-			if (this.soundLayoutList!!.isActive())
-				this.soundLayoutList!!.presenter.prepareItemDeletion()
-			else if (this.tabContent!!.currentItem == INDEX_PLAYLIST)
-				this.playlist!!.presenter.prepareItemDeletion()
-			else
-				this.soundSheets!!.presenter.prepareItemDeletion()
+		this.coordinatorLayout.isScrollingEnabled = false
+		this.recyclerView.isNestedScrollingEnabled = false
+
+		val distance = this.recyclerView.width
+
+		this.appBarLayout.setExpanded(false, true)
+
+		this.toolbarDeletion.apply {
+			this.visibility = View.VISIBLE
+			this.translationX = (-distance).toFloat()
+			this.animate()
+					.withLayer()
+					.translationX(0f)
+					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
+					.setInterpolator(DecelerateInterpolator())
+					.start()
 		}
-		else if (id == R.id.b_delete_selected)
-		{
-			if (this.soundLayoutList!!.isActive())
-				this.soundLayoutList!!.presenter.deleteSelectedItems()
-			else if (this.tabContent!!.currentItem == INDEX_PLAYLIST)
-				this.playlist!!.presenter.deleteSelectedItems()
-			else
-				this.soundSheets!!.presenter.deleteSelectedItems()
-		}
-		else if (id == R.id.b_ok)
-		{
-			if (this.soundLayoutList!!.isActive())
-				AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
-			else if (this.tabContent!!.currentItem == INDEX_PLAYLIST)
-				AddNewSoundDialog(this.fragmentManager, Playlist.TAG)
-			else
-				AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
-		}
-	}
 
-	private fun animateSoundLayoutsListAppear()
-	{
-		val viewToAnimate = this.activity.findViewById(R.id.v_reveal_shadow)
-		val animator = AnimationUtils.createSlowCircularReveal(viewToAnimate, this.listContainer!!.width, 0, 0f, (2 * this.listContainer!!.height).toFloat())
-
-		animator?.start()
-	}
-
-	override fun onEvent(event: OpenSoundLayoutsEvent)
-	{
-		this.soundLayoutList!!.toggleVisibility()
-		this.animateSoundLayoutsListAppear()
-		if (this.baseActivity.isActionModeActive && this.soundLayoutList!!.isActive())
-			this.soundLayoutList!!.presenter.prepareItemDeletion()
-	}
-
-	override fun onEvent(event: ActionModeChangeRequestedEvent)
-	{
-		val requestedAction = event.requestedAction
-		when (requestedAction)
-		{
-			ActionModeChangeRequestedEvent.REQUEST.START -> this.onActionModeStart()
-			ActionModeChangeRequestedEvent.REQUEST.STOPPED -> this.onActionModeFinished()
-			else -> Logger.d(TAG, event.toString())
+		this.buttonDeleteSelected.apply {
+			this.visibility = View.VISIBLE
+			this.translationX = (-distance).toFloat()
+			this.animate()
+					.withLayer()
+					.translationX(0f)
+					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
+					.setInterpolator(DecelerateInterpolator())
+					.start()
 		}
 	}
 
-	private fun onActionModeStart()
+	private fun hideToolbarForDeletion()
 	{
-		this.deleteSelected!!.visibility = View.VISIBLE
-		val distance = this.contextualActionContainer!!.width
+		this.coordinatorLayout.isScrollingEnabled = true
+		this.recyclerView.isNestedScrollingEnabled = true
 
-		this.deleteSelected!!.translationX = (-distance).toFloat()
-		this.deleteSelected!!.animate().translationX(0f).setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()).setInterpolator(DecelerateInterpolator()).start()
+		this.appBarLayout.setExpanded(true, false)
+
+		this.recyclerView.scrollToPosition(0)
+
+		this.toolbarDeletion.visibility = View.GONE
+		this.buttonDeleteSelected.visibility = View.GONE
 	}
 
-	private fun onActionModeFinished()
+	override fun onClick(view: View)
 	{
-		this.deleteSelected!!.visibility = View.GONE
-	}
-
-	override fun onTabSelected(selectedTab: TabLayout.Tab)
-	{
-		if (!this.baseActivity.isActionModeActive)
-			return
-		val position = selectedTab.position
-		if (position == INDEX_SOUND_SHEETS)
-			this.soundSheets!!.presenter.prepareItemDeletion()
-		else if (position == INDEX_PLAYLIST)
-			this.playlist!!.presenter.prepareItemDeletion()
-	}
-
-	override fun onTabReselected(p0: TabLayout.Tab?) {}
-
-	override fun onTabUnselected(p0: TabLayout.Tab?) {}
-
-	/**
-	 * This function resize the view pagers height to its content. It is necessary, because the viewpager can not
-	 * have layout parameter wrap_content.
-	 */
-	public fun adjustViewPagerToContent()
-	{
-		val resources = DynamicSoundboardApplication.getContext().resources
-		val childHeight = resources.getDimensionPixelSize(R.dimen.height_list_item)
-		val dividerHeight = resources.getDimensionPixelSize(R.dimen.stroke)
-		val padding = resources.getDimensionPixelSize(R.dimen.margin_small)
-
-		val soundSheetCount = this.soundSheetsDataAccess.getSoundSheets().size()
-		val playListCount = this.playlist!!.adapter.itemCount
-
-		val heightSoundSheetChildren = soundSheetCount * childHeight
-		val heightDividerSoundSheet = if (soundSheetCount > 1) (soundSheetCount - 1) * dividerHeight else 0
-		val heightSoundSheet = heightSoundSheetChildren + heightDividerSoundSheet + padding + this.tabBar!!.height
-
-		val heightPlayListChildren = playListCount * childHeight
-		val heightDividerPlayList = if (playListCount > 1) (playListCount - 1) * dividerHeight else 0
-		val heightPlayList = heightPlayListChildren + heightDividerPlayList + padding + this.tabBar!!.height
-
-		val largestList = Math.max(heightSoundSheet, heightPlayList)
-		if (this.minHeightOfListContent == 0)
-		// 0 means the current height was not measured, remeasure
-			this.minHeightOfListContent = this.contextualActionContainer!!.top - listContainer!!.top
-
-		this.listContainer!!.layoutParams.height = Math.max(largestList, minHeightOfListContent)
-	}
-
-	private inner class TabContentAdapter : PagerAdapter()
-	{
-		override fun getPageTitle(position: Int): CharSequence
+		val id = view.id
+		when (id)
 		{
-			if (position == INDEX_SOUND_SHEETS)
-				return resources.getString(R.string.tab_sound_sheets)
-			else
-				return resources.getString(R.string.tab_play_list)
+			this.buttonDelete.id ->
+			{
+				val itemCount = this.currentPresenter?.itemCount ?: 0
+				if (itemCount == 0) return
+				this.showToolbarForDeletion()
+				this.currentPresenter?.startDeletionMode()
+				this.setActionModeSubTitle(0, itemCount)
+			}
+			this.buttonDeleteSelected.id ->
+			{
+				this.currentPresenter?.deleteSelectedItems()
+				this.currentPresenter?.stopDeletionMode()
+				this.hideToolbarForDeletion()
+			}
+			this.buttonCancelActionMode.id ->
+			{
+				this.currentPresenter?.stopDeletionMode()
+				this.hideToolbarForDeletion()
+			}
+			this.buttonSelectAll.id ->
+			{
+				this.currentPresenter?.selectAllItems()
+				val itemCount = this.currentPresenter?.itemCount ?: 0
+				this.setActionModeSubTitle(itemCount, itemCount)
+			}
+			this.buttonOk.id ->
+				if (this.currentList == List.SoundLayouts)
+				{
+					AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
+				}
+				else if (this.currentList == List.Playlist)
+				{
+					AddNewSoundDialog(this.fragmentManager, PlaylistTAG)
+				}
+				else if (this.currentList == List.SoundSheet)
+				{
+					AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
+				}
 		}
+	}
 
-		override fun getCount(): Int
+	override fun onTabSelected(tab: TabLayout.Tab?)
+	{
+		this.currentPresenter?.onDetachedFromWindow()
+
+		if (this.tabMode == TabMode.Context)
 		{
-			return 2
+			this.currentList = List.SoundLayouts
+			this.currentPresenter = this.presenterSoundLayouts
+			this.recyclerView.adapter = this.presenterSoundLayouts.adapter
+			this.actionModeTitle.setText(R.string.cab_title_delete_sound_layouts)
 		}
-
-		override fun isViewFromObject(view: View, `object`: Any): Boolean
+		else if (tabMode == TabMode.Normal)
 		{
-			return view == `object`
-		}
-
-		override fun instantiateItem(container: ViewGroup, position: Int): Any
-		{
-			when (position) {
-				INDEX_SOUND_SHEETS -> return soundSheets as SoundSheets
-				INDEX_PLAYLIST -> return playlist as Playlist
-				else -> throw NullPointerException("instantiateItem: no view for position $position is available")
+			when (tab)
+			{
+				this.tabSoundSheets -> {
+					this.currentList = List.SoundSheet
+					this.currentPresenter = this.presenterSoundSheets
+					this.recyclerView.adapter = this.presenterSoundSheets.adapter
+					this.actionModeTitle.setText(R.string.cab_title_delete_sound_sheets)
+				}
+				this.tabPlayList -> {
+					this.currentList = List.Playlist
+					this.currentPresenter = this.presenterPlaylist
+					this.recyclerView.adapter = this.presenterPlaylist.adapter
+					this.actionModeTitle.setText(R.string.cab_title_delete_play_list_sounds)
+				}
 			}
 		}
+		this.currentPresenter?.onAttachedToWindow()
 	}
 
-	private inner class ViewPagerContentObserver : RecyclerView.AdapterDataObserver()
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: ItemSelectedForDeletion)
 	{
-		override fun onChanged()
-		{
-			super.onChanged()
-			adjustViewPagerToContent()
+		this.setActionModeSubTitle(event.selectedItemCount, event.itemCount)
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	private fun setActionModeSubTitle(count: Int, maxValue: Int)
+	{
+		var countString = Integer.toString(count)
+		if (countString.length == 1)
+			countString = " " + countString
+		countString = countString + "/" + maxValue
+		this.actionModeSubTitle.text = countString
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: OpenSoundLayoutsRequestedEvent)
+	{
+		if (event.openSoundLayouts) {
+			this.showContextTabBarAndContent()
+		}
+		else {
+			this.showDefaultTabBarAndContent()
 		}
 	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundLayoutSelectedEvent)
+	{
+		this.showDefaultTabBarAndContent()
+	}
+
+	override fun onTabReselected(tab: TabLayout.Tab?) {}
+	override fun onTabUnselected(tab: TabLayout.Tab?) {}
 }
+
+private fun TabLayout.createSoundSheetTab(): TabLayout.Tab = this.newTab().setText(R.string.tab_sound_sheets)
+
+private fun TabLayout.createPlaylistTab(): TabLayout.Tab = this.newTab().setText(R.string.tab_play_list)
+
+private fun TabLayout.createSoundLayoutsTab(): TabLayout.Tab = this.newTab().setText(R.string.navigation_drawer_select_sound_layout)

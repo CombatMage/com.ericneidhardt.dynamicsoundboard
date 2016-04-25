@@ -1,0 +1,305 @@
+<root>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setMailTo(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResDialogEmailPrompt(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResDialogEmailPrompt(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setReportType(org.acra.sender.HttpSender.Type)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setLogcatFilterByPid(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResDialogIcon(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setReportDialogClass(java.lang.Class&lt;? extends org.acra.dialog.BaseCrashReportDialog&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setMode(org.acra.ReportingInteractionMode)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setFormUriBasicAuthPassword(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setAdditionalSharedPreferences(java.lang.String[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setDropboxCollectionMinutes(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setFormUriBasicAuthLogin(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setBuildConfigClass(java.lang.Class)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResDialogTitle(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setDeleteUnapprovedReportsOnApplicationStart(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setAdditionalDropboxTags(java.lang.String[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResDialogTitle(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setDropboxCollectionMinutes(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setAdditionalDropboxTags(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setFormUriBasicAuthPassword(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setCustomReportContent(org.acra.ReportField[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setSharedPreferenceMode(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setConnectionTimeout(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setLogcatArguments(java.lang.String[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setForceCloseDialogAfterToast(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResDialogOkToast(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setReportType(org.acra.sender.HttpSender.Type)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResDialogCommentPrompt(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setSendReportsAtShutdown(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setSendReportsAtShutdown(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResNotifIcon(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setLogcatFilterByPid(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setIncludeDropboxSystemTags(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setForceCloseDialogAfterToast(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setLogcatArguments(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setExcludeMatchingSettingsKeys(java.lang.String[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setApplicationLogFileLines(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setExcludeMatchingSettingsKeys(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setDeleteOldUnsentReportsOnApplicationStart(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setAdditionalDropboxTags(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setAdditionalSharedPreferences(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfigurationFactory org.acra.config.ACRAConfiguration create(android.app.Application) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResDialogIcon(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResDialogNegativeButtonText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResNotifTitle(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setReportSenderFactoryClasses(java.lang.Class&lt;? extends org.acra.sender.ReportSenderFactory&gt;[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResNotifText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setDeleteOldUnsentReportsOnApplicationStart(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setFormUri(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setReportDialogClass(java.lang.Class&lt;? extends org.acra.dialog.BaseCrashReportDialog&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setLogcatArguments(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResDialogPositiveButtonText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResDialogPositiveButtonText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setExcludeMatchingSharedPreferencesKeys(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResNotifTickerText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ACRAConfiguration build()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setHttpHeaders(java.util.Map&lt;java.lang.String,java.lang.String&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResToastText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setFormUriBasicAuthLogin(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setFormUri(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setKeyStoreFactory(org.acra.security.KeyStoreFactory)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResNotifTickerText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setSocketTimeout(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResDialogText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setAdditionalSharedPreferences(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setSocketTimeout(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setApplicationLogFile(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResDialogText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setSharedPreferenceName(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setIncludeDropboxSystemTags(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setHttpMethod(org.acra.sender.HttpSender.Method)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setSharedPreferenceName(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResNotifIcon(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setCustomReportContent(org.acra.ReportField[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResToastText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setHttpMethod(org.acra.sender.HttpSender.Method)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration void setReportSenderFactoryClasses(java.lang.Class&lt;? extends org.acra.sender.ReportSenderFactory&gt;[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setHttpHeaders(java.util.Map&lt;java.lang.String,java.lang.String&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setDeleteUnapprovedReportsOnApplicationStart(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setConnectionTimeout(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setBuildConfigClass(java.lang.Class)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder ConfigurationBuilder(android.app.Application) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setMode(org.acra.ReportingInteractionMode)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setApplicationLogFile(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResDialogNegativeButtonText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResNotifText(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setReportingInteractionMode(org.acra.ReportingInteractionMode)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfigurationFactory org.acra.config.ACRAConfiguration create(android.app.Application)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setResDialogOkToast(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setSendReportsInDevMode(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setReportPrimerClass(java.lang.Class&lt;? extends org.acra.builder.ReportPrimer&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setExcludeMatchingSettingsKeys(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setSharedPreferenceMode(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setCustomReportContent(org.acra.ReportField[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResNotifTitle(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setApplicationLogFileLines(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setSendReportsInDevMode(boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setExcludeMatchingSharedPreferencesKeys(java.lang.String[])'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ConfigurationBuilder org.acra.config.ConfigurationBuilder setMailTo(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setExcludeMatchingSharedPreferencesKeys(java.lang.String[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.acra.config.ACRAConfiguration org.acra.config.ACRAConfiguration setResDialogCommentPrompt(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

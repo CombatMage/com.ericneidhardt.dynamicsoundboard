@@ -10,15 +10,15 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.support.v7.app.NotificationCompat
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.misc.AndroidVersion
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.misc.Util
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 
 /**
  * File created by eric.neidhardt on 04.12.2014.
  */
-public fun getNotificationIntentFilter(): IntentFilter
+fun getNotificationIntentFilter(): IntentFilter
 {
 	val filter = IntentFilter()
 	filter.addAction(ACTION_DISMISS)
@@ -28,29 +28,28 @@ public fun getNotificationIntentFilter(): IntentFilter
 	return filter
 }
 
-data
-public class PendingSoundNotification(public val notificationId: Int, public var playerId: String, public var notification: Notification)
+data class PendingSoundNotification(val notificationId: Int, var playerId: String, var notification: Notification)
 {
-	public fun isPlaylistNotification(): Boolean = this.notificationId == NOTIFICATION_ID_PLAYLIST
+	fun isPlaylistNotification(): Boolean = this.notificationId == NOTIFICATION_ID_PLAYLIST
 }
 
-public class PendingSoundNotificationBuilder
+class PendingSoundNotificationBuilder
 @JvmOverloads constructor
 (
 		context: Context,
-		player: EnhancedMediaPlayer,
-		public val notificationId: Int = player.mediaPlayerData.playerId.hashCode(),
+		player: MediaPlayerController,
+		val notificationId: Int = player.mediaPlayerData.playerId.hashCode(),
 		title: String = player.mediaPlayerData.label,
 		message: String? = null
 ) : NotificationCompat.Builder(context)
 {
-	public val playerId: String = player.mediaPlayerData.playerId
+	val playerId: String = player.mediaPlayerData.playerId
 
 	init
 	{
-		val isLollipopStyleAvailable = Util.IS_LOLLIPOP_AVAILABLE
+		val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
 		this.setActionStop(context, isLollipopStyleAvailable)
-		if (player.isPlaying)
+		if (player.isPlayingSound)
 		{
 			this.setOngoing(true)
 			this.setActionFadeOut(context, isLollipopStyleAvailable)

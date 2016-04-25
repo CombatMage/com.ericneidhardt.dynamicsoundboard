@@ -12,7 +12,7 @@ import android.graphics.Point
 internal fun getBitmapSize(rawData: ByteArray): Point {
 	val options = BitmapFactory.Options()
 	options.inJustDecodeBounds = true
-	BitmapFactory.decodeByteArray(rawData, 0, rawData.size(), options)
+	BitmapFactory.decodeByteArray(rawData, 0, rawData.size, options)
 	val imageHeight = options.outHeight
 	val imageWidth = options.outWidth
 	return Point(imageWidth, imageHeight)
@@ -46,7 +46,7 @@ internal fun getBitmap(rawData: ByteArray, scaleFactor: Int): Bitmap
 	val options = BitmapFactory.Options()
 	options.inSampleSize = scaleFactor
 	options.inJustDecodeBounds = false
-	return BitmapFactory.decodeByteArray(rawData, 0, rawData.size(), options)
+	return BitmapFactory.decodeByteArray(rawData, 0, rawData.size, options)
 }
 
 internal fun getBitmap(context: Context, drawableId: Int, scaleFactor: Int): Bitmap

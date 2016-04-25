@@ -1,63 +1,76 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.presenter.BaseViewPresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
+import org.neidhardt.dynamicsoundboard.views.presenter.ViewPresenter
 
 /**
  * File created by eric.neidhardt on 21.05.2015.
  */
-public class AddPauseFloatingActionButtonPresenter(private val soundsDataAccess: SoundsDataAccess) : BaseViewPresenter<AddPauseFloatingActionButton>(), MediaPlayerEventListener {
+class AddPauseFloatingActionButtonPresenter
+(
+		override val eventBus: EventBus,
+		private val soundsDataAccess: SoundsDataAccess
+)
+:
+		ViewPresenter<AddPauseFloatingActionButton?>,
+		MediaPlayerEventListener
+{
+	override val isEventBusSubscriber: Boolean = true
+	override var view: AddPauseFloatingActionButton? = null
 
 	var isStatePause = false
 
-	override fun isEventBusSubscriber(): Boolean {
-		return true
-	}
-
-	fun onFabClicked() {
+	fun onFabClicked()
+	{
 		this.eventBus.post(FabClickedEvent())
 	}
 
-	override fun onAttachedToWindow() {
+	override fun onAttachedToWindow()
+	{
 		super.onAttachedToWindow()
 		this.updateToMediaPlayersState()
 	}
 
-	override fun onEvent(event: MediaPlayerStateChangedEvent) {
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: MediaPlayerStateChangedEvent)
+	{
 		this.updateToMediaPlayersState()
 	}
 
-	override fun onEvent(event: MediaPlayerCompletedEvent) {
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: MediaPlayerCompletedEvent)
+	{
 		this.updateToMediaPlayersState()
 	}
 
-	private fun updateToMediaPlayersState() {
-		val currentlyPlayingSounds = this.soundsDataAccess.getCurrentlyPlayingSounds()
-		if (currentlyPlayingSounds.size() > 0)
+	private fun updateToMediaPlayersState()
+	{
+		val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
+		if (currentlyPlayingSounds.size > 0)
 			this.setPauseState(true)
 		else
 			this.setPauseState(false)
 	}
 
-	private fun setPauseState(isStatePause: Boolean) {
+	private fun setPauseState(isStatePause: Boolean)
+	{
 		if (this.isStatePause == isStatePause)
 			return
 
 		this.isStatePause = isStatePause
 
 		val button = this.view
-		if (button != null) {
+		if (button != null)
+		{
 			button.refreshDrawableState()
 			button.animateUiChanges()
 		}
-	}
-
-	public fun isStatePause(): Boolean {
-		return isStatePause
 	}
 }

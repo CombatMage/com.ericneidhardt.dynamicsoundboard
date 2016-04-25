@@ -1,0 +1,188 @@
+<root>
+    <item name='de.greenrobot.dao.AbstractDao void insertInTx(java.lang.Iterable&lt;T&gt;, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition notEq(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession de.greenrobot.dao.async.AsyncSession startAsyncSession()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition in(java.util.Collection&lt;?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession de.greenrobot.dao.AbstractDao&lt;?,?&gt; getDao(java.lang.Class&lt;? extends java.lang.Object&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition eq(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.InternalQueryDaoAccess java.util.List&lt;T&gt; loadAllAndCloseCursor(android.database.Cursor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition in(java.lang.Object...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils int executeSqlScript(android.content.Context, android.database.sqlite.SQLiteDatabase, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition notIn(java.util.Collection&lt;?&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils int executeSqlStatementsInTx(android.database.sqlite.SQLiteDatabase, java.lang.String[]) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao void insertOrReplaceInTx(java.lang.Iterable&lt;T&gt;, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition ge(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao T loadUniqueAndCloseCursor(android.database.Cursor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession void runInTx(java.lang.Runnable) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession long insertOrReplace(T) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao K getKeyVerified(T)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession long insert(T) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition like(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition in(java.util.Collection&lt;?&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao void insertInTx(java.lang.Iterable&lt;T&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao AbstractDao(de.greenrobot.dao.internal.DaoConfig) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition le(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession void delete(T) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils void vacuum(android.database.sqlite.SQLiteDatabase) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession V callInTxNoException(java.util.concurrent.Callable&lt;V&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoMaster void registerDaoClass(java.lang.Class&lt;? extends de.greenrobot.dao.AbstractDao&lt;?,?&gt;&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession de.greenrobot.dao.query.QueryBuilder&lt;T&gt; queryBuilder(java.lang.Class&lt;T&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao O loadCurrentOther(de.greenrobot.dao.AbstractDao&lt;O,?&gt;, android.database.Cursor, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession void refresh(T) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition isNotNull()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao void deleteByKey(K) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils int copyAllBytes(java.io.InputStream, java.io.OutputStream) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.InternalQueryDaoAccess de.greenrobot.dao.internal.TableStatements getStatements(de.greenrobot.dao.AbstractDao&lt;T2,?&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition lt(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession V callInTx(java.util.concurrent.Callable&lt;V&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao java.util.List&lt;T&gt; loadAllFromCursor(android.database.Cursor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao java.util.List&lt;T&gt; loadAllAndCloseCursor(android.database.Cursor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition notIn(java.lang.Object...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao de.greenrobot.dao.query.Query&lt;T&gt; queryRawCreateListArgs(java.lang.String, java.util.Collection&lt;java.lang.Object&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition notIn(java.lang.Object...) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao de.greenrobot.dao.query.QueryBuilder&lt;T&gt; queryBuilder()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoSession void update(T) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition in(java.lang.Object...)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.InternalQueryDaoAccess T loadUniqueAndCloseCursor(android.database.Cursor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao void updateInsideSynchronized(T, android.database.sqlite.SQLiteStatement, boolean) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils byte[] readAsset(android.content.Context, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils int executeSqlStatements(android.database.sqlite.SQLiteDatabase, java.lang.String[]) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils int executeSqlScript(android.content.Context, android.database.sqlite.SQLiteDatabase, java.lang.String, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils byte[] readAllBytes(java.io.InputStream) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDaoMaster daoConfigMap'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition notIn(java.util.Collection&lt;?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao AbstractDao(de.greenrobot.dao.internal.DaoConfig, de.greenrobot.dao.AbstractDaoSession) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition isNull()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao T loadUnique(android.database.Cursor) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition between(java.lang.Object, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils int executeSqlStatementsInTx(android.database.sqlite.SQLiteDatabase, java.lang.String[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.Property de.greenrobot.dao.query.WhereCondition gt(java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao config'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.DbUtils void logTableDump(android.database.sqlite.SQLiteDatabase, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.AbstractDao void insertOrReplaceInTx(java.lang.Iterable&lt;T&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='de.greenrobot.dao.InternalUnitTestDaoAccess InternalUnitTestDaoAccess(android.database.sqlite.SQLiteDatabase, java.lang.Class&lt;de.greenrobot.dao.AbstractDao&lt;T,K&gt;&gt;, de.greenrobot.dao.identityscope.IdentityScope&lt;?,?&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<!-- com.emtronics.dragsortrecycler -->
+	<!-- misc -->
 	<string name="app_name">Dynamic Soundboard</string>
 	<string name="suggested_sound_sheet_name">neue Kategorie</string>
 	<string name="suggested_sound_layout_name">neues Abenteuer</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
+
+	<!-- permissions -->
+	<string name="request_permission_title">Berechtigung erforderlich</string>
+	<string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
+	<string name="request_permission_read_storage_message">Die Berechtigung vom Dateisystem zu lesen ist erforderlich um Sounddateien zum Abspielen zu laden. Die App wird ohne diese Berechtigung beendet.</string>
+	<string name="request_permission_write_storage_message">Die Berechtigung auf das Dateisystem zu schreiben wird unter anderem benötigt um die Sound Zusammenstellung abzuspeichern. Die App wird ohne diese Berechtigung beendet.</string>
 
 	<!-- soundmanagement -->
 	<string name="music_service_loading_sound_failed">Eine Sound konnte nicht geladen werden:</string>
@@ -28,8 +34,6 @@
 	<string name="tab_play_list">Playliste</string>
 	<string name="tab_play_list_content_description_playlist">Sound wird aus der Playliste entfernt</string>
 
-	<string name="sound_layout_default">Neue Sound Kollektion</string>
-
 	<!-- toolbar -->
 	<string name="action_menu">Sound Layouts öffnen</string>
 	<string name="action_add_new_sound_sheet">Eine neue Sound Gruppe hinzufügen</string>
@@ -38,24 +42,27 @@
 	<string name="action_delete_sheet">Diese Kategorie löschen</string>
 	<string name="action_clear_sounds_in_sheet">Sounds in dieser Kategorie löschen</string>
 	<string name="action_clear_sound_sheets">Alle Kategorien löschen</string>
+	<string name="action_clear_play_list">Playliste löschen</string>
 	<string name="action_store_sound_sheets">Soundlayout exportieren</string>
 	<string name="action_load_sound_sheets">Soundlayout importieren</string>
 	<string name="action_preferences">Einstellungen</string>
 	<string name="action_about">Über</string>
 
+	<string name="cab_content_description_cancel">Beendet den Löschvorgang. Es werden keine Elemente gelöscht</string>
 	<string name="cab_title_delete_sound_sheets">Kategorien zum löschen markieren</string>
 	<string name="cab_title_delete_play_list_sounds">Sounds zum löschen markieren</string>
 	<string name="cab_title_delete_sound_layouts">Soundlayouts zum löschen markieren</string>
 
 	<!-- sound control -->
+	<string name="sound_control_deletion_pending_single">Sound gelöscht</string>
+	<string name="sound_control_deletion_pending">{%s0} Sounds gelöscht</string>
+	<string name="sound_control_deletion_pending_undo">Rückgängig machen</string>
 	<string name="sound_control_content_description_stop">Setzt den Sound zurück</string>
 	<string name="sound_control_content_description_play">Startet oder Pausiert den Sound</string>
 	<string name="sound_control_content_description_loop">Sound wird in einer Schleife abgespielt</string>
 	<string name="sound_control_content_description_playlist">Sound wird in die Playliste aufgenommen</string>
 	<string name="sound_control_content_description_settings">Sound editieren, verschieben, umbenennen</string>
 	<string name="sound_control_content_description_reorder">Sound neusortieren</string>
-	<string name="sound_control_delete">Sound entfernen</string>
-	<string name="sound_control_delete_confirm">Sound entfernen bestätigen</string>
 
 	<!-- notification -->
 	<string name="notification_pause_sound">Sound pausieren</string>
@@ -84,10 +91,6 @@
 		der App beendet</string>
 	<string name="preferences_enable_one_swipe_delete_title">Löschen ohne Bestätigung</string>
 	<string name="preferences_enable_one_swipe_delete_summary">Mit dieser Option können Sounds ohne eine zweite Bestätigung gelöscht werden.</string>
-	<string name="preferences_enable_immerse_mode_title">Fullscreen Modus aktivieren</string>
-	<string name="preferences_enable_immerse_mode_summary">Mit aktivieren Fullscreen Modus werden die Statusleiste und die
-		Navigationsleiste ausgeblendet. Mit einem Swipe vom unteren oder oberen Bildschrimrand können sie wieder eingeblendet
-		werden.</string>
 	<string name="preferences_use_system_file_browser_title">Eigenen Dateibrowser verwenden</string>
 	<string name="preferences_use_system_file_browser_summary">Wenn diese Option angeschaltet ist, wird der auf dem Telefon normalerweise installierte Dateibrowser verwendet um einzelne Dateien auszuwählen. 
 		Ansonsten wird der Browser der App verwendet (empfohlen).</string>
@@ -98,15 +101,15 @@
 	<string name="about_version_title">Version</string>
 	<string name="about_used_third_party_software_title">Verwendete Komponenten</string>
 	<string name="about_used_third_party_software_summary">
-		de.greenrobot:eventbus 2.4.0,
-		de.greenrobot:greendao 1.3.7,
-		com.fasterxml.jackson.core:jackson-databind 2.5.1,
-		com.melnykov:floatingactionbutton 1.2.0,
-		com.github.johnkil.android-robototextview:robototextview 2.3.0,
+		ch.acra:acra,
+		org.greenrobot:eventbus,
+		de.greenrobot:greendao,
+		com.fasterxml.jackson.core:jackson-databind,
+		com.github.clans:fab,
+		com.github.johnkil.android-robototextview:robototextview,
 		com.emtronics.dragsortrecycler:DragSortRecycler,
-		com.github.castorflex.smoothprogressbar:library,
-		com.google.dagger:dagger 2,
-		jp.wasabeef:recyclerview-animators:1.2.1
+		me.zhanghai.android.materialprogressbar:library,
+		jp.wasabeef:recyclerview-animators
 	</string>
 	<string name="about_used_third_party_assets_title">Verwendete Ressourcen</string>
 	<string name="about_used_third_party_assets_summary">
@@ -117,6 +120,9 @@
 	</string>
 
 	<!-- dialog -->
+	<string name="dialog_grant">Erlauben</string>
+	<string name="dialog_close">Beenden</string>
+	<string name="dialog_denial">Verweigern</string>
 	<string name="dialog_ok">OK</string>
 	<string name="dialog_delete">Löschen</string>
 	<string name="dialog_add">Hinzufügen</string>
@@ -129,6 +135,7 @@
 	<string name="dialog_confirm_delete_soundsheet_message">Soll diese Kategorie entfernt werden?</string>
 	<string name="dialog_confirm_delete_sounds_in_soundheet_message">Sollen alle Sounds in dieser Kategorie entfernt werden?</string>
 	<string name="dialog_confirm_delete_all_soundsheets_message">Sollen alle Kategorien des Soundboards entfernt werden?</string>
+	<string name="dialog_confirm_delete_play_list_message">Soll die aktuelle Playliste gelöscht werden?</string>
 
 	<string name="dialog_add_new_sound_from_directory_title">Verzeichniss auswählen</string>
 	<string name="dialog_add_new_sound_from_directory_message">Dem Soundbord werden alle Sounds in dem ausgewählten Verzeichniss hinzugefügt</string>
@@ -144,9 +151,10 @@
 	<string name="dialog_sound_settings_title">Sound editieren</string>
 	<string name="dialog_sound_settings_message">Sound umbenennen oder in eine andere Kategorie verschieben?</string>
 
-	<string name="dialog_sound_layout_settings_message">Abenteuer umbenennen</string>
+	<string name="dialog_sound_layout_settings_title">Abenteuer umbenennen</string>
 
-	<string name="dialog_add_new_sound_layout_message">Ein weitere Abenteuer anlegen</string>
+	<string name="dialog_add_new_sound_layout_title">Ein weitere Abenteuer anlegen</string>
+	<string name="dialog_add_new_sound_layout_message">Dem SoundBoard wird ein neu neues Abenteuer hinzugefügt. Du kannst zwischen den verschiedenen Abenteuern wechseln.</string>
 
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_message">Welcher Kategorie soll der Sound hinzugefügt werden, oder soll eine neue Kategorie angelegt werden?</string>
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_checkbox">Eine neue Katagorie anlegen</string>

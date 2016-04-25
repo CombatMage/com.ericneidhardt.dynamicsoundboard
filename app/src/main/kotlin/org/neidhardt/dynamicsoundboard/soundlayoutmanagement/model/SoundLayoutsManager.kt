@@ -1,10 +1,13 @@
 package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model
 
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
-import org.neidhardt.dynamicsoundboard.misc.Util
+import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutAddedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
 import java.util.*
 
 /**
@@ -12,36 +15,36 @@ import java.util.*
  */
 
 
-public class SoundLayoutsManager :
+class SoundLayoutsManager :
 		SoundLayoutsAccess,
 		SoundLayoutsStorage,
 		SoundLayoutsUtil
 {
 	companion object
 	{
-		public val DB_DEFAULT: String = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default"
+		const val DB_DEFAULT: String = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default"
 
-		private val DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts"
+		private const val DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts"
 
-		public fun getNewDatabaseIdForLabel(label: String): String
+		fun getNewDatabaseIdForLabel(label: String): String
 		{
-			return Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode())
+			return Integer.toString((label + SoundboardApplication.getRandomNumber()).hashCode())
 		}
 	}
 
-	// weak visibility for testing purpose
-	private val daoSession: DaoSession = Util.setupDatabase(DynamicSoundboardApplication.getContext(), DB_SOUND_LAYOUTS)
+	private val daoSession: DaoSession = GreenDaoHelper.setupDatabase(SoundboardApplication.context, DB_SOUND_LAYOUTS)
 	private val soundLayouts: MutableList<SoundLayout> = ArrayList()
+
+	private val eventBus = EventBus.getDefault()
 
 	init
 	{
 		this.soundLayouts.addAll(this.daoSession.soundLayoutDao.queryBuilder().list())
-		if (this.soundLayouts.size() == 0)
+		if (this.soundLayouts.size == 0)
 		{
 			val defaultLayout = this.getDefaultSoundLayout()
 			defaultLayout.isSelected = true
-			this.soundLayouts.add(defaultLayout)
-			this.daoSession.soundLayoutDao.insert(defaultLayout)
+			this.addSoundLayout(defaultLayout)
 		}
 	}
 
@@ -63,13 +66,13 @@ public class SoundLayoutsManager :
 				return soundLayout
 		}
 		// no layout is currently selected
-		val layout = this.soundLayouts.get(0)
+		val layout = this.soundLayouts[0]
 		layout.isSelected = true
 		layout.updateItemInDatabaseAsync()
 		return layout
 	}
 
-	override public fun addSoundLayout(soundLayout: SoundLayout)
+	override fun addSoundLayout(soundLayout: SoundLayout)
 	{
 		this.soundLayouts.add(soundLayout)
 		this.daoSession.soundLayoutDao.insert(soundLayout)
@@ -77,16 +80,17 @@ public class SoundLayoutsManager :
 
 	override fun getSuggestedName(): String
 	{
-		return DynamicSoundboardApplication.getContext().resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size()
+		return SoundboardApplication.context.resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size
 	}
 
 	private fun getDefaultSoundLayout(): SoundLayout
 	{
-		val layout = SoundLayout()
-		val label = DynamicSoundboardApplication.getContext().getString(R.string.sound_layout_default)
-		layout.databaseId = DB_DEFAULT
-		layout.label = label
-		layout.isSelected = true
+		val label = SoundboardApplication.context.getString(R.string.suggested_sound_layout_name)
+		val layout = SoundLayout().apply {
+			this.databaseId = DB_DEFAULT
+			this.label = label
+			this.isSelected = true
+		}
 		return layout
 	}
 
@@ -94,39 +98,39 @@ public class SoundLayoutsManager :
 	{
 		this.soundLayouts.removeAll(soundLayoutsToRemove)
 
-		if (this.soundLayouts.size() == 0)
-			this.soundLayouts.add(this.getDefaultSoundLayout())
-
-		var newSelectionRequired = false
-		for (soundLayout in this.soundLayouts)
+		var wasActiveLayoutRemoved = false
+		for (layout in soundLayoutsToRemove)
 		{
-			if (soundLayout.isSelected)
-				newSelectionRequired = true
-
-			this.daoSession.soundLayoutDao.delete(soundLayout)
+			this.daoSession.soundLayoutDao.delete(layout)
+			if (layout.isSelected) // if the current active layout was removed, we need to select another one
+				wasActiveLayoutRemoved = true
 		}
-		if (this.soundLayouts.size() == 0)
+
+		if (this.soundLayouts.size == 0) // make sure there is always at least 1 layout left
 		{
 			val defaultLayout = this.getDefaultSoundLayout()
-			defaultLayout.isSelected = true
-			this.soundLayouts.add(defaultLayout)
-			this.daoSession.soundLayoutDao.insert(defaultLayout)
-			newSelectionRequired = false
+			if (defaultLayout.isSelected)
+				wasActiveLayoutRemoved = false // no need to set a new sound layout active, because the default layout is active
+
+			this.addSoundLayout(defaultLayout)
+			this.eventBus.post(SoundLayoutAddedEvent(defaultLayout))
 		}
 
-		if (!newSelectionRequired)
+		if (wasActiveLayoutRemoved)
 		{
-			this.soundLayouts.get(0).isSelected = true
-			this.soundLayouts.get(0).updateItemInDatabaseAsync()
+			this.soundLayouts[0].isSelected = true
+			this.soundLayouts[0].updateItemInDatabaseAsync()
 		}
+
+		this.eventBus.post(SoundLayoutsRemovedEvent(soundLayoutsToRemove))
 	}
 
-	override public fun setSoundLayoutSelected(position: Int)
+	override fun setSoundLayoutSelected(position: Int)
 	{
-		val size = this.soundLayouts.size()
+		val size = this.soundLayouts.size
 		for (i in 0..size - 1)
 		{
-			val layout = this.soundLayouts.get(i)
+			val layout = this.soundLayouts[i]
 			if (layout.isSelected && i != position)
 			{
 				layout.isSelected = false
@@ -140,7 +144,7 @@ public class SoundLayoutsManager :
 		}
 	}
 
-	override public fun getSoundLayoutById(databaseId: String): SoundLayout?
+	override fun getSoundLayoutById(databaseId: String): SoundLayout?
 	{
 		for (layout in this.soundLayouts) {
 			if (layout.databaseId == databaseId)

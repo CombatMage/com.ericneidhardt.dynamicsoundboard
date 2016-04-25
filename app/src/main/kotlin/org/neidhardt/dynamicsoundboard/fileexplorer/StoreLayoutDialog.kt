@@ -2,10 +2,10 @@ package org.neidhardt.dynamicsoundboard.fileexplorer
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.app.FragmentManager
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatDialog
+import android.support.v4.app.FragmentManager
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -14,49 +14,44 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.misc.JsonPojo
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
+import org.neidhardt.dynamicsoundboard.misc.writeToFile
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
-
 import java.io.File
 import java.io.IOException
 
 /**
  * File created by eric.neidhardt on 12.11.2014.
  */
-public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
+class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
 {
 
 	private var inputFileName: EditText? = null
-	private var confirm: View? = null
 	private var directories: RecyclerView? = null
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_store_sound_sheets, null)
 		view.findViewById(R.id.b_add).setOnClickListener(this)
-		view.findViewById(R.id.b_cancel).setOnClickListener(this)
-		this.confirm = view.findViewById(R.id.b_ok)
-		this.confirm!!.setOnClickListener(this)
-		this.confirm!!.isEnabled = false
 
 		this.inputFileName = view.findViewById(R.id.et_name_file) as EditText
 
-		this.directories = view.findViewById(R.id.rv_dialog) as RecyclerView
-		this.directories!!.addItemDecoration(DividerItemDecoration())
-		this.directories!!.layoutManager = LinearLayoutManager(this.activity)
-		this.directories!!.itemAnimator = DefaultItemAnimator()
-		this.directories!!.adapter = super.adapter
+		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
+			this.addItemDecoration(DividerItemDecoration(this.context))
+			this.layoutManager = LinearLayoutManager(this.context)
+			this.itemAnimator = DefaultItemAnimator()
+		}
+		this.directories?.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
 		if (previousPath != null)
 			super.adapter.setParent(File(previousPath))
 
-		val dialog = AppCompatDialog(this.activity, R.style.DialogThemeNoTitle)
-		dialog.setContentView(view)
-
-		return dialog
+		return AlertDialog.Builder(this.activity).apply {
+			this.setView(view)
+			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setPositiveButton(R.string.dialog_save, { dialogInterface, i -> onConfirm() })
+		}.create()
 	}
 
 	override fun canSelectDirectory(): Boolean = false
@@ -67,7 +62,6 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 
 	override fun onFileSelected(selectedFile: File)
 	{
-		this.confirm!!.isEnabled = true
 		val position = super.adapter.fileList.indexOf(selectedFile)
 		this.directories!!.scrollToPosition(position)
 	}
@@ -80,18 +74,19 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 				this.createFileAndSelect()
 				this.hideKeyboard()
 			}
-			R.id.b_cancel -> this.dismiss()
-			R.id.b_ok -> {
-				val currentDirectory = super.adapter.parentFile
-				if (currentDirectory != null)
-					this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
-
-				if (super.adapter.selectedFiles.size() != 0)
-					this.saveDataAndDismiss()
-				else
-					Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()
-			}
 		}
+	}
+
+	private fun onConfirm()
+	{
+		val currentDirectory = super.adapter.parentFile
+		if (currentDirectory != null)
+			this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
+
+		if (super.adapter.selectedFiles.size != 0)
+			this.saveDataAndDismiss()
+		else
+			Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()
 	}
 
 	private fun hideKeyboard()
@@ -144,17 +139,17 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 	{
 		try
 		{
-			JsonPojo.writeToFile(
+			writeToFile(
 					super.adapter.selectedFiles.elementAt(0),
 					this.soundSheetsDataAccess.getSoundSheets(),
-					this.soundsDataAccess.getPlaylist(),
-					this.soundsDataAccess.getSounds())
+					this.soundsDataAccess.playlist,
+					this.soundsDataAccess.sounds)
 
 			this.dismiss()
 		}
 		catch (e: IOException)
 		{
-			Logger.d(TAG, e.getMessage())
+			Logger.d(TAG, e.message)
 			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_store_layout, Toast.LENGTH_SHORT).show()
 		}
 
@@ -165,7 +160,7 @@ public class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View
 	{
 		private val TAG = StoreLayoutDialog::class.java.name
 
-		public fun showInstance(manager: FragmentManager)
+		fun showInstance(manager: FragmentManager)
 		{
 			val dialog = StoreLayoutDialog()
 			dialog.show(manager, TAG)

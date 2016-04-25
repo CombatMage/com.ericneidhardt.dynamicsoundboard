@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.dao.daohelper
 
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.*
 import roboguice.util.SafeAsyncTask
 
@@ -9,8 +9,8 @@ import roboguice.util.SafeAsyncTask
  */
 public fun insertIntoDatabaseAsync(data: MediaPlayerData)
 {
-	val soundsDataUtil = DynamicSoundboardApplication.getSoundsDataUtil()
-	val soundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
+	val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
+	val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
 	val daoSession =
 			if (soundsDataUtil.isPlaylistPlayer(data))
 				soundsDataStorage.getDbPlaylist()
@@ -30,7 +30,7 @@ private class InsertPlayerAsyncTask
 	override fun call(): Void?
 	{
 		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size() == 0)
+			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size == 0)
 				dao.insert(data)
 		}
 		return null
@@ -39,8 +39,8 @@ private class InsertPlayerAsyncTask
 
 public fun updateDatabaseAsync(data: MediaPlayerData)
 {
-	val soundsDataUtil = DynamicSoundboardApplication.getSoundsDataUtil()
-	val soundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
+	val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
+	val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
 
 	val daoSession =
 			if (soundsDataUtil.isPlaylistPlayer(data))
@@ -61,7 +61,7 @@ private class UpdatePlayerAsyncTask
 	override fun call(): Void?
 	{
 		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size() != 0)
+			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size != 0)
 				dao.update(data) // do not update if item was not added before
 		}
 		return null
@@ -70,7 +70,7 @@ private class UpdatePlayerAsyncTask
 
 public fun insertIntoDatabaseAsync(data: SoundSheet)
 {
-	val soundSheetsDataStorage = DynamicSoundboardApplication.getSoundSheetsDataStorage();
+	val soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage();
 	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
 
 	InsertSoundSheetAsyncTask(data, daoSession.soundSheetDao, daoSession).execute()
@@ -86,7 +86,7 @@ private class InsertSoundSheetAsyncTask
 	override fun call(): Void?
 	{
 		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size() == 0)
+			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size == 0)
 				dao.insert(data)
 		}
 		return null
@@ -95,7 +95,7 @@ private class InsertSoundSheetAsyncTask
 
 public fun updateDatabaseAsync(data: SoundSheet)
 {
-	val soundSheetsDataStorage = DynamicSoundboardApplication.getSoundSheetsDataStorage();
+	val soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage();
 	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
 
 	UpdateSoundSheetsAsyncTask(data, daoSession.soundSheetDao, daoSession).execute()
@@ -111,7 +111,7 @@ private class UpdateSoundSheetsAsyncTask
 	override fun call(): Void?
 	{
 		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size() != 0)
+			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size != 0)
 				dao.update(data) // do not update if item was not added before
 		}
 		return null
@@ -120,7 +120,7 @@ private class UpdateSoundSheetsAsyncTask
 
 public fun updateDatabaseAsync(data: SoundLayout)
 {
-	val soundLayoutsStorage = DynamicSoundboardApplication.getSoundLayoutsStorage();
+	val soundLayoutsStorage = SoundboardApplication.getSoundLayoutsStorage();
 	val daoSession = soundLayoutsStorage.getDbSoundLayouts()
 
 	UpdateSoundLayoutAsyncTask(data, daoSession.soundLayoutDao, daoSession).execute()

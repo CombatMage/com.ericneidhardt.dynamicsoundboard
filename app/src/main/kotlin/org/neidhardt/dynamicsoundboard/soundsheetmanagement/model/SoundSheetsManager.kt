@@ -1,13 +1,13 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model
 
-import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
-import org.neidhardt.dynamicsoundboard.misc.Util
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.Playlist
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
@@ -15,12 +15,12 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAdd
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.tasks.LoadSoundSheetsTask
-import java.util.ArrayList
+import java.util.*
 
 /**
  * File created by eric.neidhardt on 06.07.2015.
  */
-public class SoundSheetsManager :
+class SoundSheetsManager :
 		SoundSheetsDataAccess,
 		SoundSheetsDataStorage,
 		SoundSheetsDataUtil
@@ -31,12 +31,13 @@ public class SoundSheetsManager :
 	private val DB_SOUND_SHEETS = "db_sound_sheets"
 
 	private var daoSession: DaoSession? = null
-	private var isInitDone: Boolean = false
 
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
-	private val eventBus: EventBus = EventBus.getDefault()
+	private val eventBus = EventBus.getDefault()
 
-	private val soundLayoutsAccess: SoundLayoutsAccess = DynamicSoundboardApplication.getSoundLayoutsAccess()
+	private var isInitDone: Boolean = false
+
+	private val soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
 
 	init
 	{
@@ -50,7 +51,7 @@ public class SoundSheetsManager :
 			this.isInitDone = true
 
 			this.soundSheets.clear()
-			this.daoSession = Util.setupDatabase(DynamicSoundboardApplication.getContext(), this.getDatabaseName())
+			this.daoSession = GreenDaoHelper.setupDatabase(SoundboardApplication.context, this.getDatabaseName())
 
 			val task = LoadSoundSheetsTask(this.getDbSoundSheets(), this)
 			task.execute()
@@ -61,6 +62,18 @@ public class SoundSheetsManager :
 			return false
 	}
 
+	override fun releaseAll()
+	{
+		this.isInitDone = false
+
+		val copyList = ArrayList<SoundSheet>(soundSheets.size)
+		copyList.addAll(soundSheets)
+
+		this.soundSheets.clear()
+
+		this.eventBus.post(SoundSheetsRemovedEvent(copyList))
+	}
+
 	private fun getDatabaseName(): String
 	{
 		val baseName = this.soundLayoutsAccess.getActiveSoundLayout().databaseId
@@ -69,7 +82,7 @@ public class SoundSheetsManager :
 		return baseName + DB_SOUND_SHEETS
 	}
 
-	override fun isPlaylistSoundSheet(fragmentTag: String): Boolean = fragmentTag.equals(Playlist.TAG)
+	override fun isPlaylistSoundSheet(fragmentTag: String): Boolean = fragmentTag.equals(PlaylistTAG)
 
 	override fun getDbSoundSheets(): DaoSession = this.daoSession as DaoSession
 
@@ -91,8 +104,8 @@ public class SoundSheetsManager :
 
 	override fun removeSoundSheets(soundSheets: List<SoundSheet>)
 	{
-		val copyList = ArrayList<SoundSheet>(soundSheets.size());
-		copyList.addAll(soundSheets); // this is done to prevent concurrent modification exception
+		val copyList = ArrayList<SoundSheet>(soundSheets.size)
+		copyList.addAll(soundSheets) // this is done to prevent concurrent modification exception
 
 		val dao = this.getDbSoundSheets().soundSheetDao
 		for (soundSheetToRemove in copyList)
@@ -100,8 +113,8 @@ public class SoundSheetsManager :
 			this.soundSheets.remove(soundSheetToRemove)
 			if (soundSheetToRemove.isSelected)
 			{
-				if (this.soundSheets.size() > 0)
-					this.setSoundSheetSelected(this.soundSheets.get(0))
+				if (this.soundSheets.size > 0)
+					this.setSoundSheetSelected(this.soundSheets[0])
 
 			}
 			if (soundSheetToRemove.id != null)
@@ -119,7 +132,7 @@ public class SoundSheetsManager :
 	override fun getSoundSheetForFragmentTag(fragmentTag: String): SoundSheet?
 	{
 		val results = this.soundSheets.filter { soundSheet -> soundSheet.fragmentTag.equals(fragmentTag) }
-		return if (results.size() > 0) results.get(0) else null
+		return if (results.size > 0) results[0] else null
 	}
 
 	override fun setSoundSheetSelected(soundSheetToSelect: SoundSheet)
@@ -144,18 +157,18 @@ public class SoundSheetsManager :
 	override fun getSelectedItem(): SoundSheet?
 	{
 		val results = this.soundSheets.filter { soundSheet -> soundSheet.isSelected }
-		return if (results.size() > 0) results.get(0) else null
+		return if (results.size > 0) results[0] else null
 	}
 
 	override fun getSuggestedName(): String
 	{
-		return DynamicSoundboardApplication.getContext()
-				.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size()
+		return SoundboardApplication.context
+				.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
 	}
 
 	override fun getNewSoundSheet(label: String): SoundSheet
 	{
-		val tag = Integer.toString((label + DynamicSoundboardApplication.getRandomNumber()).hashCode())
+		val tag = Integer.toString((label + SoundboardApplication.getRandomNumber()).hashCode())
 		return SoundSheet(null, tag, label, false)
 	}
 

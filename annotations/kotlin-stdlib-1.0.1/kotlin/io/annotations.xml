@@ -1,0 +1,551 @@
+<root>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walk(java.io.File, kotlin.io.FileWalkDirection)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileAlreadyExistsException FileAlreadyExistsException(java.io.File, java.io.File, java.lang.String, int, kotlin.jvm.internal.DefaultConstructorMarker) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walkTopDown(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ConsoleKt.stdin.2.1 int read(byte[], int, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.jvm.functions.Function2 access$getOnFail$p(kotlin.io.FileTreeWalk) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File createTempFile$default(java.lang.String, java.lang.String, java.io.File, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void appendText(java.io.File, java.lang.String, java.nio.charset.Charset) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt long copyTo(java.io.Reader, java.io.Writer, int) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean copyRecursively(java.io.File, java.io.File, boolean, kotlin.jvm.functions.Function2&lt;? super java.io.File,? super java.io.IOException,? extends kotlin.io.OnErrorAction&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File relativeToOrNull(java.io.File, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileWalkDirection TOP_DOWN'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String readText(java.io.File, java.nio.charset.Charset) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String getExtension(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ByteStreamsKt byte[] readBytes$default(java.io.InputStream, int, int, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents kotlin.io.FilePathComponents copy(java.io.File, java.util.List&lt;? extends java.io.File&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File copyTo$default(java.io.File, java.io.File, boolean, int, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.util.List&lt;java.lang.String&gt; readLines(java.io.File, java.nio.charset.Charset) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void forEachBlock(java.io.File, int, kotlin.jvm.functions.Function2&lt;? super byte[],? super java.lang.Integer,kotlin.Unit&gt;) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents kotlin.io.FilePathComponents copy$default(kotlin.io.FilePathComponents, java.io.File, java.util.List, int, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk FileTreeWalk(java.io.File, kotlin.io.FileWalkDirection) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt T useLines(java.io.File, java.nio.charset.Charset, kotlin.jvm.functions.Function1&lt;? super kotlin.sequences.Sequence&lt;java.lang.String&gt;,? extends T&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents java.io.File getRoot()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean copyRecursively$default(java.io.File, java.io.File, boolean, kotlin.jvm.functions.Function2, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk java.io.File access$getStart$p(kotlin.io.FileTreeWalk) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolveSibling(java.io.File, java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void appendBytes(java.io.File, byte[]) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walk$default(java.io.File, kotlin.io.FileWalkDirection, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String getRootName(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt byte[] readBytes(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean startsWith(java.io.File, java.io.File) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.io.FileWalkDirection access$getDirection$p(kotlin.io.FileTreeWalk)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ByteStreamsKt byte[] readBytes(java.io.InputStream, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File relativeToOrSelf(java.io.File, java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.io.FileTreeWalk maxDepth(int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FilePathComponents toComponents(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File copyTo(java.io.File, java.io.File, boolean, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ConsoleKt.stdin.2.1 int read(byte[]) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ExceptionsKt java.lang.String access$constructMessage(java.io.File, java.io.File, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.io.FileTreeWalk onEnter(kotlin.jvm.functions.Function1&lt;? super java.io.File,java.lang.Boolean&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt kotlin.sequences.Sequence&lt;java.lang.String&gt; lineSequence(java.io.BufferedReader) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt java.util.List&lt;java.lang.String&gt; readLines(java.io.Reader)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents java.util.List&lt;java.io.File&gt; component2()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File copyTo$default(java.io.File, java.io.File, boolean, int, int, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String toRelativeString(java.io.File, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walkBottomUp(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ByteStreamsKt long copyTo(java.io.InputStream, java.io.OutputStream, int) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents kotlin.io.FilePathComponents copy(java.io.File, java.util.List&lt;? extends java.io.File&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean copyRecursively(java.io.File, java.io.File, boolean, kotlin.jvm.functions.Function2&lt;? super java.io.File,? super java.io.IOException,? extends kotlin.io.OnErrorAction&gt;) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.NoSuchFileException NoSuchFileException(java.io.File, java.io.File, java.lang.String, int, kotlin.jvm.internal.DefaultConstructorMarker) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt T useLines(java.io.File, java.nio.charset.Charset, kotlin.jvm.functions.Function1&lt;? super kotlin.sequences.Sequence&lt;java.lang.String&gt;,? extends T&gt;) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File subPath(java.io.File, int, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String getNameWithoutExtension(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String readText$default(java.io.File, java.nio.charset.Charset, int, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileWalkDirection BOTTOM_UP'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean copyRecursively$default(java.io.File, java.io.File, boolean, kotlin.jvm.functions.Function2, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File relativeTo(java.io.File, java.io.File) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walk$default(java.io.File, kotlin.io.FileWalkDirection, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.io.FileTreeWalk onEnter(kotlin.jvm.functions.Function1&lt;? super java.io.File,java.lang.Boolean&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean endsWith(java.io.File, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents kotlin.io.FilePathComponents copy$default(kotlin.io.FilePathComponents, java.io.File, java.util.List, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt java.lang.String readText(java.io.Reader)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt long copyTo$default(java.io.Reader, java.io.Writer, int, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.AccessDeniedException AccessDeniedException(java.io.File, java.io.File, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents java.lang.String getRootName()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.io.FileTreeWalk onLeave(kotlin.jvm.functions.Function1&lt;? super java.io.File,kotlin.Unit&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String toRelativeString(java.io.File, java.io.File) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ByteStreamsKt long copyTo(java.io.InputStream, java.io.OutputStream, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File createTempFile(java.lang.String, java.lang.String, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.util.List readLines$default(java.io.File, java.nio.charset.Charset, int, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileSystemException FileSystemException(java.io.File, java.io.File, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File copyTo(java.io.File, java.io.File, boolean, int) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String getInvariantSeparatorsPath(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.io.FileTreeWalk onFail(kotlin.jvm.functions.Function2&lt;? super java.io.File,? super java.io.IOException,kotlin.Unit&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File relativeTo(java.io.File, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk.FileTreeWalkIterator.WhenMappings $EnumSwitchMapping$0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolve(java.io.File, java.io.File) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File createTempDir(java.lang.String, java.lang.String, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt void forEachLine(java.io.Reader, kotlin.jvm.functions.Function1&lt;? super java.lang.String,kotlin.Unit&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean endsWith(java.io.File, java.io.File) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walk(java.io.File, kotlin.io.FileWalkDirection) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean isRooted(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents kotlin.io.FilePathComponents copy$default(kotlin.io.FilePathComponents, java.io.File, java.util.List, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File getRoot(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File createTempDir$default(java.lang.String, java.lang.String, java.io.File, int, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File normalize(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolveSibling(java.io.File, java.io.File) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walkTopDown(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File normalize(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ByteStreamsKt long copyTo$default(java.io.InputStream, java.io.OutputStream, int, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File copyTo(java.io.File, java.io.File, boolean, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String readText(java.io.File, java.nio.charset.Charset)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt T useLines(java.io.Reader, kotlin.jvm.functions.Function1&lt;? super kotlin.sequences.Sequence&lt;java.lang.String&gt;,? extends T&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk java.io.File access$getStart$p(kotlin.io.FileTreeWalk)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void appendText$default(java.io.File, java.lang.String, java.nio.charset.Charset, int, java.lang.Object) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void forEachLine$default(java.io.File, java.nio.charset.Charset, kotlin.jvm.functions.Function1, int, java.lang.Object) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void writeText$default(java.io.File, java.lang.String, java.nio.charset.Charset, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ByteStreamsKt byte[] readBytes$default(java.io.InputStream, int, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File createTempFile$default(java.lang.String, java.lang.String, java.io.File, int, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolveSibling(java.io.File, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk FileTreeWalk(java.io.File, kotlin.io.FileWalkDirection, int, kotlin.jvm.internal.DefaultConstructorMarker) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents kotlin.io.FilePathComponents copy$default(kotlin.io.FilePathComponents, java.io.File, java.util.List, int, java.lang.Object) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walk(java.io.File, kotlin.io.FileWalkDirection) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents FilePathComponents(java.io.File, java.util.List&lt;? extends java.io.File&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.jvm.functions.Function1 access$getOnLeave$p(kotlin.io.FileTreeWalk) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void writeText(java.io.File, java.lang.String, java.nio.charset.Charset) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents kotlin.io.FilePathComponents copy(java.io.File, java.util.List&lt;? extends java.io.File&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk int access$getMaxDepth$p(kotlin.io.FileTreeWalk) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ByteStreamsKt long copyTo$default(java.io.InputStream, java.io.OutputStream, int, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.jvm.functions.Function1 access$getOnEnter$p(kotlin.io.FileTreeWalk) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String getExtension(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void forEachBlock(java.io.File, kotlin.jvm.functions.Function2&lt;? super byte[],? super java.lang.Integer,kotlin.Unit&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileSystemException java.io.File getFile()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk java.util.Iterator&lt;java.io.File&gt; iterator()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolve(java.io.File, java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean startsWith(java.io.File, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String getRootName(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FilePathComponents toComponents(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolveSibling(java.io.File, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.io.FileWalkDirection access$getDirection$p(kotlin.io.FileTreeWalk) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void appendText$default(java.io.File, java.lang.String, java.nio.charset.Charset, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt byte[] readBytes(java.net.URL) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.AccessDeniedException AccessDeniedException(java.io.File, java.io.File, java.lang.String, int, kotlin.jvm.internal.DefaultConstructorMarker) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ExceptionsKt java.lang.String access$constructMessage(java.io.File, java.io.File, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents java.util.List&lt;java.io.File&gt; getSegments()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt kotlin.sequences.Sequence&lt;java.lang.String&gt; lineSequence(java.io.BufferedReader)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void forEachLine$default(java.io.File, java.nio.charset.Charset, kotlin.jvm.functions.Function1, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt byte[] readBytes(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void writeText$default(java.io.File, java.lang.String, java.nio.charset.Charset, int, java.lang.Object) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ByteStreamsKt byte[] readBytes(java.io.InputStream, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.io.FileTreeWalk onFail(kotlin.jvm.functions.Function2&lt;? super java.io.File,? super java.io.IOException,kotlin.Unit&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.OnErrorAction TERMINATE'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk kotlin.io.FileTreeWalk onLeave(kotlin.jvm.functions.Function1&lt;? super java.io.File,kotlin.Unit&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk FileTreeWalk(java.io.File, kotlin.io.FileWalkDirection, int, kotlin.jvm.internal.DefaultConstructorMarker) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String readText$default(java.io.File, java.nio.charset.Charset, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walk$default(java.io.File, kotlin.io.FileWalkDirection, int, java.lang.Object)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.ByteStreamsKt kotlin.collections.ByteIterator iterator(java.io.BufferedInputStream)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt long copyTo$default(java.io.Reader, java.io.Writer, int, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolve(java.io.File, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt kotlin.io.FileTreeWalk walkBottomUp(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void writeText(java.io.File, java.lang.String, java.nio.charset.Charset) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File copyTo$default(java.io.File, java.io.File, boolean, int, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents FilePathComponents(java.io.File, java.util.List&lt;? extends java.io.File&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolveSibling(java.io.File, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileTreeWalk FileTreeWalk(java.io.File, kotlin.io.FileWalkDirection) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean startsWith(java.io.File, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean endsWith(java.io.File, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File relativeToOrSelf(java.io.File, java.io.File) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String toRelativeString(java.io.File, java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.util.List readLines$default(java.io.File, java.nio.charset.Charset, int, java.lang.Object) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File relativeToOrSelf(java.io.File, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolveSibling(java.io.File, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt java.lang.String readText(java.io.Reader) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents java.io.File subPath(int, int)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean startsWith(java.io.File, java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileSystemException FileSystemException(java.io.File, java.io.File, java.lang.String, int, kotlin.jvm.internal.DefaultConstructorMarker) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt byte[] readBytes(java.net.URL)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void forEachLine(java.io.File, java.nio.charset.Charset, kotlin.jvm.functions.Function1&lt;? super java.lang.String,kotlin.Unit&gt;) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File resolve(java.io.File, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String readText$default(java.io.File, java.nio.charset.Charset, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String getNameWithoutExtension(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean deleteRecursively(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean endsWith(java.io.File, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String getInvariantSeparatorsPath(java.io.File) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File createTempFile(java.lang.String, java.lang.String, java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File getRoot(java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.OnErrorAction SKIP'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File createTempDir$default(java.lang.String, java.lang.String, java.io.File, int, java.lang.Object) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File createTempDir(java.lang.String, java.lang.String, java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean copyRecursively$default(java.io.File, java.io.File, boolean, kotlin.jvm.functions.Function2, int, java.lang.Object) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void writeBytes(java.io.File, byte[]) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FileAlreadyExistsException FileAlreadyExistsException(java.io.File, java.io.File, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void appendText(java.io.File, java.lang.String, java.nio.charset.Charset) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt boolean copyRecursively(java.io.File, java.io.File, boolean, kotlin.jvm.functions.Function2&lt;? super java.io.File,? super java.io.IOException,? extends kotlin.io.OnErrorAction&gt;) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File relativeToOrNull(java.io.File, java.io.File) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilePathComponents java.io.File component1()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt void forEachLine(java.io.File, java.nio.charset.Charset, kotlin.jvm.functions.Function1&lt;? super java.lang.String,kotlin.Unit&gt;) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.TextStreamsKt long copyTo(java.io.Reader, java.io.Writer, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.String readText(java.io.File, java.nio.charset.Charset) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File relativeTo(java.io.File, java.io.File)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.util.List&lt;java.lang.String&gt; readLines(java.io.File, java.nio.charset.Charset)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.io.File subPath(java.io.File, int, int) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.NoSuchFileException NoSuchFileException(java.io.File, java.io.File, java.lang.String) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='kotlin.io.FilesKt java.lang.Object useLines$default(java.io.File, java.nio.charset.Charset, kotlin.jvm.functions.Function1, int, java.lang.Object) 2'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

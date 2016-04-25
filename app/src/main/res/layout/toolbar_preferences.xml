@@ -4,7 +4,7 @@
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:id="@+id/toolbar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="@dimen/abc_action_bar_default_height_material"
 		android:minHeight="?attr/actionBarSize"
 		android:background="?attr/colorPrimary"
 		app:navigationContentDescription="@string/abc_action_bar_up_description"

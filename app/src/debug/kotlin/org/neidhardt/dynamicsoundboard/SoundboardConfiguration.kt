@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard
 /**
  * File created by eric.neidhardt on 16.02.2015.
  */
-public object SoundboardConfiguration
+object SoundboardConfiguration
 {
-	public val ENABLE_LOGGING: Boolean = true
+	const val ENABLE_LOGGING: Boolean = true
 }

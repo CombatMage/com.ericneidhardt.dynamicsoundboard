@@ -1,0 +1,20 @@
+<root>
+    <item name='org.greenrobot.eventbus.meta.AbstractSubscriberInfo org.greenrobot.eventbus.SubscriberMethod createSubscriberMethod(java.lang.String, java.lang.Class&lt;?&gt;, org.greenrobot.eventbus.ThreadMode, int, boolean)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.meta.AbstractSubscriberInfo org.greenrobot.eventbus.SubscriberMethod createSubscriberMethod(java.lang.String, java.lang.Class&lt;?&gt;)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.meta.AbstractSubscriberInfo org.greenrobot.eventbus.SubscriberMethod createSubscriberMethod(java.lang.String, java.lang.Class&lt;?&gt;, org.greenrobot.eventbus.ThreadMode)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='org.greenrobot.eventbus.meta.SubscriberInfo org.greenrobot.eventbus.SubscriberMethod[] getSubscriberMethods()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+        <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
+            <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
+        </annotation>
+    </item>
+    <item name='org.greenrobot.eventbus.meta.SimpleSubscriberInfo org.greenrobot.eventbus.SubscriberMethod[] getSubscriberMethods()'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

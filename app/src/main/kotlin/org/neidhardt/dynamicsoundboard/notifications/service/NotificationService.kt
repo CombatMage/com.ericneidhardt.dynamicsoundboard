@@ -3,33 +3,37 @@ package org.neidhardt.dynamicsoundboard.notifications.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import de.greenrobot.event.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
-public class NotificationService : Service(), ActivityStateChangedEventListener
+class NotificationService : Service(), ActivityStateChangedEventListener
 {
 	private val TAG: String = javaClass.name
 
-	private val soundsDataUtil = DynamicSoundboardApplication.getSoundsDataUtil()
-	private val soundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
-	private val soundSheetsDataUtil = DynamicSoundboardApplication.getSoundSheetsDataUtil()
+	private val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
+	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
+	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
 	private val eventBus = EventBus.getDefault()
+	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private var notificationHandler: NotificationHandler? = null
-	private var isActivityVisible: Boolean = false
 
-	override fun onBind(intent: Intent): IBinder?
-	{
-		return null
-	}
+	var isActivityVisible: Boolean = false
+		private set
+
+	override fun onBind(intent: Intent): IBinder? = null
 
 	override fun onCreate()
 	{
@@ -37,7 +41,7 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 		this.notificationHandler = NotificationHandler(this, this.soundsDataAccess, this.soundsDataUtil, this.soundSheetsDataUtil)
 
 		if (!this.eventBus.isRegistered(this))
-			this.eventBus.registerSticky(this)
+			this.eventBus.register(this)
 	}
 
 	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int
@@ -51,30 +55,32 @@ public class NotificationService : Service(), ActivityStateChangedEventListener
 	{
 		Logger.d(TAG, "onDestroy")
 
+		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
+
 		this.eventBus.unregister(this)
 		this.notificationHandler!!.onServiceDestroyed()
-		this.soundsDataUtil.release()
+		this.soundsDataUtil.releaseAll()
 
 		super.onDestroy()
 	}
 
+	@Subscribe(sticky = true)
 	override fun onEvent(event: ActivityStateChangedEvent)
 	{
 		if (event.isActivityClosed)
 		{
 			this.isActivityVisible = false
-			if (this.soundsDataAccess.getCurrentlyPlayingSounds().size() == 0)
+
+			this.registerPauseSoundOnCallListener(this.phoneStateListener)
+			if (this.soundsDataAccess.currentlyPlayingSounds.size == 0)
 				this.stopSelf()
 		}
 		else if (event.isActivityResumed)
 		{
+			this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
+
 			this.isActivityVisible = true
 			this.notificationHandler!!.removeNotificationsForPausedSounds()
 		}
-	}
-
-	public fun isActivityVisible(): Boolean
-	{
-		return isActivityVisible
 	}
 }

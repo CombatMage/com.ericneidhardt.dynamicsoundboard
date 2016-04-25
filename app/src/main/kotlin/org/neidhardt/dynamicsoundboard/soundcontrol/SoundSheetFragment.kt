@@ -3,27 +3,29 @@ package org.neidhardt.dynamicsoundboard.soundcontrol
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import com.emtronics.dragsortrecycler.DragSortRecycler
-import de.greenrobot.event.EventBus
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
-import org.neidhardt.dynamicsoundboard.mediaplayer.EnhancedMediaPlayer
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
@@ -32,71 +34,55 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
+import org.neidhardt.dynamicsoundboard.views.SnackbarPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 
 /**
  * File created by eric.neidhardt on 02.07.2015.
  */
-public class SoundSheetFragment :
+private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
+
+fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
+{
+	val fragment = SoundSheetFragment()
+	val args = Bundle()
+	args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
+	fragment.arguments = args
+	return fragment
+}
+
+class SoundSheetFragment :
 		BaseFragment(),
-		DragSortRecycler.OnDragStateChangedListener,
-		DragSortRecycler.OnItemMovedListener,
+		SnackbarPresenter,
 		OnOpenSoundDialogEventListener,
 		OnSoundsChangedEventListener
 {
+	private val LOG_TAG = javaClass.name
 
-	companion object
-	{
-		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
-		private val LOG_TAG = SoundSheetFragment::class.java.name
+	var fragmentTag: String = javaClass.name
 
-		public fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
-		{
-			val fragment = SoundSheetFragment()
-			val args = Bundle()
-			args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
-			fragment.arguments = args
-			return fragment
-		}
-	}
+	private val eventBus = EventBus.getDefault()
+	private val soundsDataStorage: SoundsDataStorage = SoundboardApplication.getSoundsDataStorage()
+	private val soundsDataAccess: SoundsDataAccess = SoundboardApplication.getSoundsDataAccess()
 
-	public var fragmentTag: String = javaClass.name
-
-	private var eventBus: EventBus = EventBus.getDefault()
-
-	private var dragSortRecycler: SoundDragSortRecycler? = null
-	private var scrollListener: SoundSheetScrollListener? = null
+	private var floatingActionButton: AddPauseFloatingActionButton? = null
 	private var soundPresenter: SoundPresenter? = null
-	private var soundAdapter: SoundAdapter? = null
-	private var soundLayout: RecyclerView? = null
-	private val soundLayoutAnimator = SlideInLeftAnimator()
+	private var mainLayout: CoordinatorLayout? = null
 
-	var soundsDataStorage: SoundsDataStorage = DynamicSoundboardApplication.getSoundsDataStorage()
-	var soundsDataAccess: SoundsDataAccess = DynamicSoundboardApplication.getSoundsDataAccess()
+	override val coordinatorLayout: CoordinatorLayout
+		get() = this.mainLayout as CoordinatorLayout
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-
 		this.retainInstance = true
 		this.setHasOptionsMenu(true)
 
 		val args = this.arguments
-
 		var fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
 				?: throw NullPointerException(LOG_TAG + ": cannot create fragment, given fragmentTag is null")
-
 		this.fragmentTag = fragmentTag as String
-
-		this.soundPresenter = SoundPresenter(this.fragmentTag, this.eventBus, this.soundsDataAccess)
-		this.soundAdapter = SoundAdapter(this.soundPresenter as SoundPresenter, this.soundsDataStorage, this.eventBus)
-		this.soundPresenter!!.adapter = this.soundAdapter
-
-		this.dragSortRecycler = SoundDragSortRecycler(R.id.b_reorder)
-		this.dragSortRecycler!!.setOnItemMovedListener(this)
-		this.dragSortRecycler!!.setOnDragStateChangedListener(this)
-		this.scrollListener = SoundSheetScrollListener(this.dragSortRecycler)
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -106,18 +92,24 @@ public class SoundSheetFragment :
 
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
 
-		val soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
-		soundLayout.adapter = this.soundAdapter
-		soundLayout.layoutManager = LinearLayoutManager(this.activity)
-		soundLayout.itemAnimator = this.soundLayoutAnimator
-		soundLayout.addItemDecoration(DividerItemDecoration())
-		soundLayout.addItemDecoration(this.dragSortRecycler)
-		soundLayout.addOnItemTouchListener(this.dragSortRecycler)
-		soundLayout.addOnScrollListener(this.scrollListener)
-		soundLayout.addOnScrollListener(this.dragSortRecycler!!.scrollListener)
-		this.soundLayout = soundLayout
+		this.floatingActionButton = fragmentView.findViewById(R.id.fab) as AddPauseFloatingActionButton?
+		this.mainLayout = fragmentView.findViewById(R.id.coordinator_layout) as CoordinatorLayout
 
-		this.soundAdapter?.recyclerView = this.soundLayout
+		val soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
+
+		this.soundPresenter = createSoundPresenter(
+				fragmentTag = this.fragmentTag,
+				eventBus = this.eventBus,
+				recyclerView = soundLayout,
+				snackbarPresenter = this,
+				soundsDataAccess = this.soundsDataAccess,
+				soundsDataStorage = this.soundsDataStorage)
+
+		soundLayout.apply {
+			this.adapter = soundPresenter?.adapter
+			this.layoutManager = LinearLayoutManager(this.context)
+			this.addItemDecoration(DividerItemDecoration(this.context))
+		}
 
 		return fragmentView
 	}
@@ -133,24 +125,23 @@ public class SoundSheetFragment :
 	{
 		super.onResume()
 
-		val activity = this.baseActivity
-		activity.setSoundSheetActionsEnable(true)
-		activity.findViewById(R.id.action_add_sound).setOnClickListener({ view
-			-> AddNewSoundDialog(this.fragmentManager, this.fragmentTag) })
-		activity.findViewById(R.id.action_add_sound_dir).setOnClickListener({ view
-			-> AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, this.fragmentTag) })
+		this.baseActivity.apply {
+			this.setSoundSheetActionsEnable(true)
+			this.findViewById(R.id.action_add_sound)?.setOnClickListener({ AddNewSoundDialog(this.supportFragmentManager, fragmentTag) })
+			this.findViewById(R.id.action_add_sound_dir)?.setOnClickListener({ AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, fragmentTag) })
+		}
 
-		this.soundPresenter!!.onAttachedToWindow()
+		this.soundPresenter?.onAttachedToWindow()
 		this.attachScrollViewToFab()
 
-		this.soundAdapter!!.startProgressUpdateTimer()
+		this.soundPresenter?.setProgressUpdateTimer(true)
 	}
 
 	override fun onPause()
 	{
 		super.onPause()
 		this.soundPresenter!!.onDetachedFromWindow()
-		this.soundAdapter!!.stopProgressUpdateTimer()
+		this.soundPresenter?.setProgressUpdateTimer(false)
 	}
 
 	override fun onStop()
@@ -161,12 +152,7 @@ public class SoundSheetFragment :
 
 	private fun attachScrollViewToFab()
 	{
-		val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
-		if (fab == null || this.soundLayout == null)
-			return
-
-		fab.attachToRecyclerView(this.soundLayout)
-		fab.show(false)
+		this.floatingActionButton?.show(true)
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
@@ -177,7 +163,7 @@ public class SoundSheetFragment :
 			{
 				val soundUri = data!!.data
 				val soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
-				val playerData = EnhancedMediaPlayer.getMediaPlayerData(this.fragmentTag, soundUri, soundLabel)
+				val playerData = MediaPlayerData.getNewMediaPlayerData(this.fragmentTag, soundUri, soundLabel)
 
 				this.soundsDataStorage.createSoundAndAddToManager(playerData)
 				return
@@ -205,49 +191,28 @@ public class SoundSheetFragment :
 		}
 	}
 
-	override fun onDragStart()
-	{
-		Logger.d(LOG_TAG, "onDragStart")
-		this.soundLayout!!.itemAnimator = null // drag does not work with default animator
-		this.soundAdapter!!.stopProgressUpdateTimer()
-	}
-
-	override fun onDragStop()
-	{
-		Logger.d(LOG_TAG, "onDragStop")
-		this.soundLayout!!.invalidateItemDecorations()
-		this.soundAdapter!!.notifyDataSetChanged()
-		this.soundLayout!!.itemAnimator = this.soundLayoutAnimator // add animator for delete animation
-		this.soundAdapter!!.startProgressUpdateTimer()
-	}
-
-	override fun onItemMoved(from: Int, to: Int)
-	{
-		this.soundsDataStorage.moveSoundInFragment(fragmentTag, from, to)
-	}
-
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundRenameEvent)
 	{
 		RenameSoundFileDialog(this.fragmentManager, event.data)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundSettingsEvent)
 	{
 		SoundSettingsDialog.showInstance(this.fragmentManager, event.data)
 	}
 
-	override fun onEventMainThread(event: SoundsRemovedEvent)
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundsRemovedEvent)
 	{
-		if (this.soundAdapter!!.getValues().size() == 0)
-		{
-			val fab = this.activity.findViewById(R.id.fab_add) as AddPauseFloatingActionButton?
-			fab?.show()
-		}
+		if (this.soundPresenter?.values?.size == 0)
+			this.floatingActionButton?.show(true)
 	}
 
-	override fun onEventMainThread(event: SoundMovedEvent) {}
+	override fun onEvent(event: SoundMovedEvent) {}
 
-	override fun onEventMainThread(event: SoundAddedEvent) {}
+	override fun onEvent(event: SoundAddedEvent) {}
 
-	override fun onEventMainThread(event: SoundChangedEvent) {}
+	override fun onEvent(event: SoundChangedEvent) {}
 }

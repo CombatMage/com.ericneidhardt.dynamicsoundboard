@@ -19,7 +19,7 @@ public class SoundboardDaoOpenHelper extends DaoMaster.OpenHelper
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
-		Logger.d(TAG, "Upgrading schema from version " + oldVersion + " to " + newVersion + " by dropping all tables");
+		Logger.INSTANCE.d(TAG, "Upgrading schema from version " + oldVersion + " to " + newVersion + " by dropping all tables");
 
 		if (oldVersion <= 9)
 			SoundLayoutDao.createTable(db, false);
