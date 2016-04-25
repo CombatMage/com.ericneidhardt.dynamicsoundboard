@@ -43,21 +43,9 @@
 						android:layout_height="match_parent"
 						android:background="@color/background"/>
 
-				<View
-						android:layout_width="@dimen/height_shadow_fixed"
-						android:layout_height="match_parent"
-						android:layout_gravity="end"
-						android:rotation="180"
-						android:background="@drawable/shape_shadow_vertical"/>
-
 				<include layout="@layout/progressbar"/>
 
 			</FrameLayout>
-
-			<View
-					android:layout_width="match_parent"
-					android:layout_height="@dimen/height_shadow"
-					android:background="@drawable/shape_shadow_horizontal"/>
 
 		</RelativeLayout>
 	</LinearLayout>
