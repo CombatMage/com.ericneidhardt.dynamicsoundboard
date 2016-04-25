@@ -11,7 +11,6 @@
 
 	<dimen name="size_progressbar_thumb">8dp</dimen>
 
-	<dimen name="height_navigation_drawer_header">142dp</dimen>
 	<dimen name="height_shadow">3dp</dimen>
 	<dimen name="height_shadow_fixed">3dp</dimen>
 	<dimen name="height_title">48dp</dimen>
