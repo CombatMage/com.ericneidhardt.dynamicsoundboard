@@ -42,3 +42,24 @@ class ConfirmDeleteSoundsDialog : BaseConfirmDeleteDialog() {
 		}
 	}
 }
+
+class ConfirmDeletePlayListDialog : BaseConfirmDeleteDialog()
+{
+	override val infoTextResource: Int = R.string.dialog_confirm_delete_play_list_message
+
+	override fun delete()
+	{
+		val playlist = this.soundsDataAccess.playlist
+		this.soundsDataStorage.removeSounds(playlist)
+	}
+
+	companion object
+	{
+		private val TAG = ConfirmDeletePlayListDialog::class.java.name
+
+		fun showInstance(manager: FragmentManager) {
+			val dialog = ConfirmDeletePlayListDialog()
+			dialog.show(manager, TAG)
+		}
+	}
+}

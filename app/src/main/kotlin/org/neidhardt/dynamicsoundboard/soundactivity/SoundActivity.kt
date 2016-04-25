@@ -41,6 +41,7 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutS
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent
+import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeletePlayListDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
@@ -409,6 +410,10 @@ class SoundActivity :
 			}
 			R.id.action_clear_sound_sheets -> {
 				ConfirmDeleteAllSoundSheetsDialog.showInstance(this.supportFragmentManager)
+				return true
+			}
+			R.id.action_clear_play_list -> {
+				ConfirmDeletePlayListDialog.showInstance(this.supportFragmentManager)
 				return true
 			}
 			else -> return false

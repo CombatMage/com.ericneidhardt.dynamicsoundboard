@@ -42,6 +42,7 @@
 	<string name="action_delete_sheet">Diese Kategorie löschen</string>
 	<string name="action_clear_sounds_in_sheet">Sounds in dieser Kategorie löschen</string>
 	<string name="action_clear_sound_sheets">Alle Kategorien löschen</string>
+	<string name="action_clear_play_list">Playliste löschen</string>
 	<string name="action_store_sound_sheets">Soundlayout exportieren</string>
 	<string name="action_load_sound_sheets">Soundlayout importieren</string>
 	<string name="action_preferences">Einstellungen</string>
@@ -134,6 +135,7 @@
 	<string name="dialog_confirm_delete_soundsheet_message">Soll diese Kategorie entfernt werden?</string>
 	<string name="dialog_confirm_delete_sounds_in_soundheet_message">Sollen alle Sounds in dieser Kategorie entfernt werden?</string>
 	<string name="dialog_confirm_delete_all_soundsheets_message">Sollen alle Kategorien des Soundboards entfernt werden?</string>
+	<string name="dialog_confirm_delete_play_list_message">Soll die aktuelle Playliste gelöscht werden?</string>
 
 	<string name="dialog_add_new_sound_from_directory_title">Verzeichniss auswählen</string>
 	<string name="dialog_add_new_sound_from_directory_message">Dem Soundbord werden alle Sounds in dem ausgewählten Verzeichniss hinzugefügt</string>

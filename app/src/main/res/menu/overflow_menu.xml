@@ -18,6 +18,11 @@
 		  android:orderInCategory="1"
 		  app:showAsAction="never" />
 
+	<item android:id="@+id/action_clear_play_list"
+		  android:title="@string/action_clear_play_list"
+		  android:orderInCategory="1"
+		  app:showAsAction="never" />
+
 	<item android:id="@+id/action_load_sound_sheets"
 		  android:title="@string/action_load_sound_sheets"
 		  android:orderInCategory="1"
