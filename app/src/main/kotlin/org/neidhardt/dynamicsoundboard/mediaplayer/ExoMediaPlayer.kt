@@ -239,6 +239,7 @@ class ExoMediaPlayer
 
 	override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int)
 	{
+		Logger.d(TAG, "onPlayerStateChanged($playWhenReady, $playbackState)")
 		if (playbackState == ExoPlayer.STATE_ENDED)
 		{
 			if (this.isLoopingEnabled)
@@ -247,17 +248,13 @@ class ExoMediaPlayer
 				this.exoPlayer.playWhenReady = true
 			}
 			else
-				this.onCompletion()
+			{
+				this.stopSound()
+				this.eventBus.post(MediaPlayerCompletedEvent(this))
+			}
 		}
 
-		this.postStateChangedEvent(true)
-	}
-
-	private fun onCompletion()
-	{
-		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
-		this.postStateChangedEvent(true)
-		this.eventBus.post(MediaPlayerCompletedEvent(this))
+		this.handler.postDelayed({ this.postStateChangedEvent(true) }, 100)
 	}
 
 	override fun onPlayWhenReadyCommitted()
@@ -266,4 +263,10 @@ class ExoMediaPlayer
 	}
 
 	private fun postStateChangedEvent(isAlive: Boolean): Unit = this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
+
+	override fun toString(): String{
+		return "ExoMediaPlayer(TAG='$TAG', mediaPlayerData=$mediaPlayerData, exoPlayer=$exoPlayer, lastPosition=$lastPosition, isDeletionPending=$isDeletionPending)"
+	}
+
+
 }

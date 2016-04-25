@@ -172,7 +172,7 @@ class PlaylistPresenter
 	override fun onEvent(event: MediaPlayerStateChangedEvent)
 	{
 		val player = event.player
-		if (this.values.contains(player) && !event.isAlive)
+		if (this.values.contains(player) && !event.isAlive) // removed a destroyed media player
 		{
 			val index = this.values.indexOf(player)
 			this.values.remove(player)
