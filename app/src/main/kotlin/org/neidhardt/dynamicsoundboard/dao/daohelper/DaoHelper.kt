@@ -7,7 +7,7 @@ import roboguice.util.SafeAsyncTask
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
-public fun insertIntoDatabaseAsync(data: MediaPlayerData)
+fun insertIntoDatabaseAsync(data: MediaPlayerData)
 {
 	val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
 	val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
@@ -37,7 +37,7 @@ private class InsertPlayerAsyncTask
 	}
 }
 
-public fun updateDatabaseAsync(data: MediaPlayerData)
+fun updateDatabaseAsync(data: MediaPlayerData)
 {
 	val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
 	val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
@@ -68,7 +68,7 @@ private class UpdatePlayerAsyncTask
 	}
 }
 
-public fun insertIntoDatabaseAsync(data: SoundSheet)
+fun insertIntoDatabaseAsync(data: SoundSheet)
 {
 	val soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage();
 	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
@@ -93,7 +93,7 @@ private class InsertSoundSheetAsyncTask
 	}
 }
 
-public fun updateDatabaseAsync(data: SoundSheet)
+fun updateDatabaseAsync(data: SoundSheet)
 {
 	val soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage();
 	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
@@ -118,7 +118,7 @@ private class UpdateSoundSheetsAsyncTask
 	}
 }
 
-public fun updateDatabaseAsync(data: SoundLayout)
+fun updateDatabaseAsync(data: SoundLayout)
 {
 	val soundLayoutsStorage = SoundboardApplication.getSoundLayoutsStorage();
 	val daoSession = soundLayoutsStorage.getDbSoundLayouts()
