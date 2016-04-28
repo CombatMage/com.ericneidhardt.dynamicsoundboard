@@ -168,7 +168,7 @@ class SoundSheetsManager :
 
 	override fun getNewSoundSheet(label: String): SoundSheet
 	{
-		val tag = Integer.toString((label + SoundboardApplication.getRandomNumber()).hashCode())
+		val tag = Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
 		return SoundSheet(null, tag, label, false)
 	}
 

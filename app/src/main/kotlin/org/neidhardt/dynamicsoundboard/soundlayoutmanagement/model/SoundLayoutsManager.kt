@@ -28,7 +28,7 @@ class SoundLayoutsManager :
 
 		fun getNewDatabaseIdForLabel(label: String): String
 		{
-			return Integer.toString((label + SoundboardApplication.getRandomNumber()).hashCode())
+			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
 		}
 	}
 

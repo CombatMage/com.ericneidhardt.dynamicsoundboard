@@ -26,7 +26,7 @@ open class SoundboardApplication : Application()
 		val context: Context
 			get() = this.staticContext as Context
 
-		private val random = Random();
+		private val random = Random()
 
 		private var soundLayoutsManager: SoundLayoutsManager? = null
 		private var soundsManager: SoundsManager? = null
@@ -44,7 +44,7 @@ open class SoundboardApplication : Application()
 		fun getSoundLayoutsStorage(): SoundLayoutsStorage = this.soundLayoutsManager as SoundLayoutsStorage
 		fun getSoundLayoutsUtil(): SoundLayoutsUtil = this.soundLayoutsManager as SoundLayoutsUtil
 
-		fun getRandomNumber(): Int = random.nextInt(Integer.MAX_VALUE)
+		val randomNumber: Int get() = random.nextInt(Integer.MAX_VALUE)
 	}
 
 	override fun onCreate()
