@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model
 
+import android.content.Context
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -15,7 +16,7 @@ import java.util.*
  */
 
 
-class SoundLayoutsManager :
+class SoundLayoutsManager(private val context: Context) :
 		SoundLayoutsAccess,
 		SoundLayoutsStorage,
 		SoundLayoutsUtil
@@ -32,7 +33,7 @@ class SoundLayoutsManager :
 		}
 	}
 
-	private val daoSession: DaoSession = GreenDaoHelper.setupDatabase(SoundboardApplication.context, DB_SOUND_LAYOUTS)
+	private val daoSession: DaoSession = GreenDaoHelper.setupDatabase(this.context, DB_SOUND_LAYOUTS)
 	private val soundLayouts: MutableList<SoundLayout> = ArrayList()
 
 	private val eventBus = EventBus.getDefault()
@@ -80,12 +81,12 @@ class SoundLayoutsManager :
 
 	override fun getSuggestedName(): String
 	{
-		return SoundboardApplication.context.resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size
+		return this.context.resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size
 	}
 
 	private fun getDefaultSoundLayout(): SoundLayout
 	{
-		val label = SoundboardApplication.context.getString(R.string.suggested_sound_layout_name)
+		val label = this.context.getString(R.string.suggested_sound_layout_name)
 		val layout = SoundLayout().apply {
 			this.databaseId = DB_DEFAULT
 			this.label = label

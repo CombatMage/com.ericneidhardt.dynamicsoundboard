@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
+import android.content.Context
 import android.net.Uri
 import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
@@ -24,7 +25,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
-class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
+class SoundsManager(private val context: Context) : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 {
 	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()
@@ -49,14 +50,14 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	override fun getDbSounds(): DaoSession
 	{
 		if (this.dbSounds == null)
-			this.dbSounds = GreenDaoHelper.setupDatabase(SoundboardApplication.context, getDatabaseNameSounds(this.soundLayoutsAccess))
+			this.dbSounds = GreenDaoHelper.setupDatabase(this.context, getDatabaseNameSounds(this.soundLayoutsAccess))
 		return this.dbSounds as DaoSession
 	}
 
 	override fun getDbPlaylist(): DaoSession
 	{
 		if (this.dbPlaylist == null)
-			this.dbPlaylist = GreenDaoHelper.setupDatabase(SoundboardApplication.context, getDatabaseNamePlayList(this.soundLayoutsAccess))
+			this.dbPlaylist = GreenDaoHelper.setupDatabase(this.context, getDatabaseNamePlayList(this.soundLayoutsAccess))
 		return this.dbPlaylist as DaoSession
 	}
 
@@ -293,7 +294,7 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			newPlayerData.uri = playerData.uri
 
 			return getNewMediaPlayerController (
-					context = SoundboardApplication.context,
+					context = this.context,
 					eventBus = EventBus.getDefault(),
 					mediaPlayerData = newPlayerData,
 					soundsDataStorage = this
@@ -316,7 +317,7 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 				throw Exception("cannot create create media player, given file is no audio file")
 
 			return getNewMediaPlayerController(
-					context = SoundboardApplication.context,
+					context = this.context,
 					eventBus = this.eventBus,
 					mediaPlayerData = playerData,
 					soundsDataStorage = this)
