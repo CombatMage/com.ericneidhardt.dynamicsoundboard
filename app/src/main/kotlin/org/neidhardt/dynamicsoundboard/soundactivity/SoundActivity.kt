@@ -72,12 +72,12 @@ class SoundActivity :
 
 	private val eventBus = EventBus.getDefault()
 
-	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
-	private val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
-	private val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+	private val soundsDataUtil = SoundboardApplication.soundsDataUtil
 
-	private val soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
-	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
+	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
+	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 
 	val isNavigationDrawerOpen: Boolean
 		get() {

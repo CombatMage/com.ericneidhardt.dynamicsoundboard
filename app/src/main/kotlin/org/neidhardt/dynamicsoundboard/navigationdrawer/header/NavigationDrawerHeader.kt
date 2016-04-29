@@ -60,7 +60,7 @@ class NavigationDrawerHeaderView :
 		this.findViewById(R.id.layout_change_sound_layout).setOnClickListener(this)
 
 		if (!this.isInEditMode)
-			this.presenter = NavigationDrawerHeaderPresenter(EventBus.getDefault(), SoundboardApplication.getSoundLayoutsAccess())
+			this.presenter = NavigationDrawerHeaderPresenter(EventBus.getDefault(), SoundboardApplication.soundLayoutsAccess)
 	}
 
 	override fun onAttachedToWindow() {

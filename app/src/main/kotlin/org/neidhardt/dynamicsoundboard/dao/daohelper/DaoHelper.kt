@@ -9,8 +9,8 @@ import roboguice.util.SafeAsyncTask
  */
 fun insertIntoDatabaseAsync(data: MediaPlayerData)
 {
-	val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
-	val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
+	val soundsDataUtil = SoundboardApplication.soundsDataUtil
+	val soundsDataStorage = SoundboardApplication.soundsDataStorage
 	val daoSession =
 			if (soundsDataUtil.isPlaylistPlayer(data))
 				soundsDataStorage.getDbPlaylist()
@@ -39,8 +39,8 @@ private class InsertPlayerAsyncTask
 
 fun updateDatabaseAsync(data: MediaPlayerData)
 {
-	val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
-	val soundsDataStorage = SoundboardApplication.getSoundsDataStorage()
+	val soundsDataUtil = SoundboardApplication.soundsDataUtil
+	val soundsDataStorage = SoundboardApplication.soundsDataStorage
 
 	val daoSession =
 			if (soundsDataUtil.isPlaylistPlayer(data))
@@ -70,7 +70,7 @@ private class UpdatePlayerAsyncTask
 
 fun insertIntoDatabaseAsync(data: SoundSheet)
 {
-	val soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage();
+	val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
 	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
 
 	InsertSoundSheetAsyncTask(data, daoSession.soundSheetDao, daoSession).execute()
@@ -95,7 +95,7 @@ private class InsertSoundSheetAsyncTask
 
 fun updateDatabaseAsync(data: SoundSheet)
 {
-	val soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage();
+	val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
 	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
 
 	UpdateSoundSheetsAsyncTask(data, daoSession.soundSheetDao, daoSession).execute()
@@ -120,7 +120,7 @@ private class UpdateSoundSheetsAsyncTask
 
 fun updateDatabaseAsync(data: SoundLayout)
 {
-	val soundLayoutsStorage = SoundboardApplication.getSoundLayoutsStorage();
+	val soundLayoutsStorage = SoundboardApplication.soundLayoutsStorage
 	val daoSession = soundLayoutsStorage.getDbSoundLayouts()
 
 	UpdateSoundLayoutAsyncTask(data, daoSession.soundLayoutDao, daoSession).execute()

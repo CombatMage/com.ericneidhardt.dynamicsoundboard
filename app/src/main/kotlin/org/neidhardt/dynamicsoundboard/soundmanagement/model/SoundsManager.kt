@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
@@ -15,9 +14,11 @@ import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CopyOnWriteArraySet
@@ -25,13 +26,16 @@ import java.util.concurrent.CopyOnWriteArraySet
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
-class SoundsManager(private val context: Context) : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
+class SoundsManager
+(
+		private val context: Context,
+		private val soundLayoutsAccess: SoundLayoutsAccess,
+		private val soundSheetsDataUtil: SoundSheetsDataUtil
+) : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 {
 	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()
 
-	private val soundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
-	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
 	private var dbPlaylist: DaoSession? = null
 	private var dbSounds: DaoSession? = null

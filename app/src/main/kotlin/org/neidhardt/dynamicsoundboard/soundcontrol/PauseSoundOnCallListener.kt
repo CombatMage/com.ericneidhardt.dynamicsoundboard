@@ -13,7 +13,7 @@ import java.util.*
 class PauseSoundOnCallListener : PhoneStateListener()
 {
 	private val pauseSounds: MutableList<MediaPlayerController> = ArrayList()
-	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
 
 	override fun onCallStateChanged(state: Int, incomingNumber: String?)
 	{

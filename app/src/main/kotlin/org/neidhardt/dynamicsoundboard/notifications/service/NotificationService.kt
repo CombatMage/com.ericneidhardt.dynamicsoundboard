@@ -21,9 +21,9 @@ class NotificationService : Service(), ActivityStateChangedEventListener
 {
 	private val TAG: String = javaClass.name
 
-	private val soundsDataUtil = SoundboardApplication.getSoundsDataUtil()
-	private val soundsDataAccess = SoundboardApplication.getSoundsDataAccess()
-	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
+	private val soundsDataUtil = SoundboardApplication.soundsDataUtil
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 
 	private val eventBus = EventBus.getDefault()
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()

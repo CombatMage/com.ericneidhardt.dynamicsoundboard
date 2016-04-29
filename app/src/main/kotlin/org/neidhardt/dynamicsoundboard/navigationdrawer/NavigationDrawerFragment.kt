@@ -82,16 +82,16 @@ class NavigationDrawerFragment : BaseFragment()
 				fragmentManager = this.fragmentManager,
 				recyclerView = layoutList,
 
-				soundsDataAccess = SoundboardApplication.getSoundsDataAccess(),
-				soundsDataStorage = SoundboardApplication.getSoundsDataStorage(),
+				soundsDataAccess = SoundboardApplication.soundsDataAccess,
+				soundsDataStorage = SoundboardApplication.soundsDataStorage,
 
-				soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil(),
-				soundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage(),
-				soundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess(),
+				soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil,
+				soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage,
+				soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess,
 
-				soundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess(),
-				soundLayoutsStorage = SoundboardApplication.getSoundLayoutsStorage(),
-				soundLayoutsUtil = SoundboardApplication.getSoundLayoutsUtil()
+				soundLayoutsAccess = SoundboardApplication.soundLayoutsAccess,
+				soundLayoutsStorage = SoundboardApplication.soundLayoutsStorage,
+				soundLayoutsUtil = SoundboardApplication.soundLayoutsUtil
 
 		).apply {
 			onAttachedToWindow()

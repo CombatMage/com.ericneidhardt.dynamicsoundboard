@@ -17,14 +17,14 @@ abstract class BaseDialog : DialogFragment()
 {
 	protected val KEY_CALLING_FRAGMENT_TAG: String = "KEY_CALLING_FRAGMENT_TAG"
 
-	protected var soundSheetsDataAccess: SoundSheetsDataAccess = SoundboardApplication.getSoundSheetsDataAccess()
-	protected var soundSheetsDataStorage: SoundSheetsDataStorage = SoundboardApplication.getSoundSheetsDataStorage()
-	protected var soundSheetsDataUtil: SoundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
+	protected var soundSheetsDataAccess: SoundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
+	protected var soundSheetsDataStorage: SoundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
+	protected var soundSheetsDataUtil: SoundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 
-	protected var soundsDataStorage: SoundsDataStorage = SoundboardApplication.getSoundsDataStorage()
-	protected var soundsDataAccess: SoundsDataAccess = SoundboardApplication.getSoundsDataAccess()
+	protected var soundsDataStorage: SoundsDataStorage = SoundboardApplication.soundsDataStorage
+	protected var soundsDataAccess: SoundsDataAccess = SoundboardApplication.soundsDataAccess
 
-	var soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
+	var soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.soundLayoutsAccess
 
 	val soundActivity: SoundActivity
 		get() = this.activity as SoundActivity

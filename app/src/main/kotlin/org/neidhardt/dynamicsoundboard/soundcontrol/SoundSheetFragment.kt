@@ -63,8 +63,8 @@ class SoundSheetFragment :
 	var fragmentTag: String = javaClass.name
 
 	private val eventBus = EventBus.getDefault()
-	private val soundsDataStorage: SoundsDataStorage = SoundboardApplication.getSoundsDataStorage()
-	private val soundsDataAccess: SoundsDataAccess = SoundboardApplication.getSoundsDataAccess()
+	private val soundsDataStorage: SoundsDataStorage = SoundboardApplication.soundsDataStorage
+	private val soundsDataAccess: SoundsDataAccess = SoundboardApplication.soundsDataAccess
 
 	private var floatingActionButton: AddPauseFloatingActionButton? = null
 	private var soundPresenter: SoundPresenter? = null

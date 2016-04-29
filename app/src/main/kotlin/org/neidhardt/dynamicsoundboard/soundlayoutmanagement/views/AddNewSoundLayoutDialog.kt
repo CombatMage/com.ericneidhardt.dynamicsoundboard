@@ -44,7 +44,8 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog()
 		layout.databaseId = SoundLayoutsManager.getNewDatabaseIdForLabel(name)
 		layout.label = name
 
-        SoundboardApplication.getSoundLayoutsStorage().addSoundLayout(layout)
+
+        SoundboardApplication.soundLayoutsStorage.addSoundLayout(layout)
 
 		EventBus.getDefault().post(SoundLayoutAddedEvent(layout))
 	}
