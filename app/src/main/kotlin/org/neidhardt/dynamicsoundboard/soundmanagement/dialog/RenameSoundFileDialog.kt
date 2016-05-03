@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
@@ -31,10 +32,13 @@ import java.util.*
  */
 class RenameSoundFileDialog : SoundSettingsBaseDialog
 {
+	private val TAG = javaClass.name
+
 	override var player: MediaPlayerController? = null
 	override var fragmentTag: String? = null
 
-	private val TAG = javaClass.name
+	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
 
 	constructor() : super()
 

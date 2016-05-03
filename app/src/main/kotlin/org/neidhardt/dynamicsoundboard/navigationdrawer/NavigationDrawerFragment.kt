@@ -18,6 +18,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OnOpenSoundLayoutsEventListener
@@ -191,9 +192,7 @@ class NavigationDrawerFragmentPresenter
 	fun onAttachedToWindow()
 	{
 		this.showDefaultTabBarAndContent()
-
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.register(this)
+		this.eventBus.registerIfRequired(this)
 	}
 
 	fun onDetachedFromWindow(): Unit = this.eventBus.unregister(this)

@@ -11,6 +11,7 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
@@ -20,6 +21,9 @@ import java.util.*
 
 class AddNewSoundFromIntent : BaseDialog(), CompoundButton.OnCheckedChangeListener
 {
+	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
+	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 
 	private var soundName: EditText? = null
 	private var soundSheetName: EditText? = null

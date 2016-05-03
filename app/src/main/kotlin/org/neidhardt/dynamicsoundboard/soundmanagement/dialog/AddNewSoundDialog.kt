@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.fileexplorer.FileResultHandler
 import org.neidhardt.dynamicsoundboard.fileexplorer.GetNewSoundFromDirectoryDialog
@@ -35,13 +36,14 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
-// TODO this class needs refinement
 class AddNewSoundDialog : BaseDialog, FileResultHandler
 {
 	val TAG: String = javaClass.name
 
 	private val KEY_SOUNDS_URI = "KEY_SOUNDS_URI"
 	private val KEY_SOUNDS_LABEL = "KEY_SOUNDS_LABEL"
+
+	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
 
 	private var presenter: AddNewSoundDialogPresenter? = null
 

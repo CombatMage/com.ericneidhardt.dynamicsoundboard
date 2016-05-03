@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.widget.Toast
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -28,6 +27,11 @@ import java.util.*
 class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 {
 	private var directories: RecyclerView? = null
+
+	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
+	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
 
 	companion object {
 		private val TAG = LoadLayoutDialog::class.java.name

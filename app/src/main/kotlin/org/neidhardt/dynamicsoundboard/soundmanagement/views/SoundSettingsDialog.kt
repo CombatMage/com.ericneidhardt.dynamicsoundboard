@@ -11,6 +11,7 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog
@@ -23,6 +24,11 @@ import java.util.*
  * File created by eric.neidhardt on 23.02.2015.
  */
 class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedChangeListener {
+
+	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
+	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
+	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
 
 	override var fragmentTag: String? = null
 	override var player: MediaPlayerController? = null

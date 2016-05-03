@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer
 
 import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
 
 /**
@@ -35,8 +36,7 @@ abstract class NavigationDrawerListBasePresenter<T: RecyclerView?> :
 
 	override fun onAttachedToWindow()
 	{
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.register(this)
+		this.eventBus.registerIfRequired(this)
 	}
 
 	override fun onDetachedFromWindow()

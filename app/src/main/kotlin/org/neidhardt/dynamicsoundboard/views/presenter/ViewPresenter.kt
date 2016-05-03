@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.views.presenter
 
 import org.greenrobot.eventbus.EventBus
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 
 /**
  * File created by eric.neidhardt on 22.05.2015.
@@ -26,8 +27,8 @@ interface ViewPresenter<T>
 	 */
 	fun onAttachedToWindow()
 	{
-		if (this.isEventBusSubscriber && !this.eventBus.isRegistered(this))
-			this.eventBus.register(this)
+		if (this.isEventBusSubscriber)
+			this.eventBus.registerIfRequired(this)
 	}
 
 	/**

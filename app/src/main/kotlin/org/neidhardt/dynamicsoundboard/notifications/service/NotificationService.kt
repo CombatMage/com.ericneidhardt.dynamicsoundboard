@@ -7,6 +7,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
@@ -40,8 +41,7 @@ class NotificationService : Service(), ActivityStateChangedEventListener
 		super.onCreate()
 		this.notificationHandler = NotificationHandler(this, this.soundsDataAccess, this.soundsDataUtil, this.soundSheetsDataUtil)
 
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.register(this)
+		this.eventBus.registerIfRequired(this)
 	}
 
 	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int

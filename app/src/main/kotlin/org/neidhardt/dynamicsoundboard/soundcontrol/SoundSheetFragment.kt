@@ -20,6 +20,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
@@ -117,8 +118,7 @@ class SoundSheetFragment :
 	override fun onStart()
 	{
 		super.onStart()
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.register(this)
+		this.eventBus.registerIfRequired(this)
 	}
 
 	override fun onResume()

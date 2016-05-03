@@ -19,6 +19,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -72,8 +73,7 @@ class SoundPresenter
 		this.values.addAll(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag))
 		this.adapter!!.notifyDataSetChanged()
 
-		if (!this.eventBus.isRegistered(this))
-			this.eventBus.register(this)
+		this.eventBus.registerIfRequired(this)
 	}
 
 	fun onDetachedFromWindow()

@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.writeToFile
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
@@ -25,6 +26,8 @@ import java.io.IOException
  */
 class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
 {
+	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
 
 	private var inputFileName: EditText? = null
 	private var directories: RecyclerView? = null

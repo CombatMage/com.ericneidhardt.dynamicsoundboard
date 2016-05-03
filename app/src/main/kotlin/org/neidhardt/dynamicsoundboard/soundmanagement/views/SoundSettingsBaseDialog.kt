@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundmanagement.views
 
 import android.app.Dialog
 import android.os.Bundle
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 
@@ -10,6 +11,8 @@ import org.neidhardt.dynamicsoundboard.views.BaseDialog
  */
 abstract class SoundSettingsBaseDialog : BaseDialog()
 {
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+
 	protected abstract var fragmentTag: String?
 	protected abstract var player: MediaPlayerController?
 
