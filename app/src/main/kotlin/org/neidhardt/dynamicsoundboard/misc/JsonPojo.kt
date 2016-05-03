@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.misc
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
@@ -29,7 +30,7 @@ fun writeToFile(file: File, soundSheets: List<SoundSheet>,
 }
 
 @Throws(IOException::class)
-fun readFromFile(file: File): JsonPojo = ObjectMapper().readValues(JsonFactory().createParser(file), JsonPojo::class.java).next()
+fun readFromFile(file: File): JsonPojo = jacksonObjectMapper().readValue(file, JsonPojo::class.java)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("unused")

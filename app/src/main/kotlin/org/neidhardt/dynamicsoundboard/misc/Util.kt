@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.misc
 import android.content.Context
 import android.os.Build
 import de.greenrobot.common.hash.Murmur3A
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.dao.DaoMaster
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundboardDaoOpenHelper
@@ -32,3 +33,9 @@ val String.longHash: Long
 		generator.update(this.toByteArray())
 		return generator.value
 	}
+
+fun EventBus.registerIfRequired(any: Any)
+{
+	if (!this.isRegistered(any))
+		this.register(any)
+}

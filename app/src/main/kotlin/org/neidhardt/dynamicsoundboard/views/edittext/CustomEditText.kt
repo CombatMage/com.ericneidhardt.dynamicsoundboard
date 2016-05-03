@@ -24,8 +24,11 @@ abstract class CustomEditText :
 	abstract var onTextEditedListener: OnTextEditedListener?
 
 	var text: String?
-		get() { return this.input!!.text.toString() }
-		set(value) { this.input!!.text = SpannableStringBuilder(value) }
+		get() = this.input?.text?.toString()
+		set(value)
+		{
+			this.input?.text = if (value != null) SpannableStringBuilder(value) else null
+		}
 
 	val displayedText: String
 		get()
