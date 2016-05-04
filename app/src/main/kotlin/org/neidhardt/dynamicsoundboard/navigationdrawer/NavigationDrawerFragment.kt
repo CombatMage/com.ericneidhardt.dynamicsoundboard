@@ -126,9 +126,6 @@ enum class TabMode
 	Context
 }
 
-private val INDEX_SOUND_SHEETS = 0
-private val INDEX_PLAYLIST = 1
-
 class NavigationDrawerFragmentPresenter
 (
 		private val eventBus: EventBus,
@@ -157,7 +154,7 @@ class NavigationDrawerFragmentPresenter
 
 		private val soundSheetsDataAccess: SoundSheetsDataAccess,
 		private val soundSheetsDataStorage: SoundSheetsDataStorage,
-		private val soundSheetsDataUtil: SoundSheetsDataUtil
+
 
 ) :
 		View.OnClickListener,
@@ -166,27 +163,11 @@ class NavigationDrawerFragmentPresenter
 		TabLayout.OnTabSelectedListener,
 		OnSoundLayoutSelectedEventListener
 {
-	private var tabSoundSheets: TabLayout.Tab = tabLayout.createSoundSheetTab()
-	private var tabPlayList: TabLayout.Tab = tabLayout.createPlaylistTab()
-	private var tabSoundLayouts: TabLayout.Tab = tabLayout.createSoundLayoutsTab()
-
-	private var tabMode: TabMode = TabMode.Normal
-
-	private var currentList: List = List.SoundSheet
-	private var currentPresenter: NavigationDrawerListPresenter? = null
-
-	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage, soundSheetsDataAccess, soundSheetsDataStorage)
-	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
-	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView, soundLayoutsAccess, soundLayoutsStorage)
 
 	init
 	{
 		this.tabLayout.setOnTabSelectedListener(this)
-		this.buttonOk.setOnClickListener(this)
-		this.buttonDelete.setOnClickListener(this)
-		this.buttonDeleteSelected.setOnClickListener(this)
-		this.buttonCancelActionMode.setOnClickListener(this)
-		this.buttonSelectAll.setOnClickListener(this)
+
 	}
 
 	fun onAttachedToWindow()
@@ -199,117 +180,16 @@ class NavigationDrawerFragmentPresenter
 
 	private fun showDefaultTabBarAndContent()
 	{
-		this.tabMode = TabMode.Normal
-		this.tabLayout.removeAllTabs()
-		this.tabSoundSheets = this.tabLayout.createSoundSheetTab()
-		this.tabPlayList = this.tabLayout.createPlaylistTab()
 
-		this.tabLayout.addTab(this.tabSoundSheets, INDEX_SOUND_SHEETS)
-		this.tabLayout.addTab(this.tabPlayList, INDEX_PLAYLIST)
-
-		this.tabSoundSheets.select()
 	}
 
 	private fun showContextTabBarAndContent()
 	{
-		this.tabMode = TabMode.Context
-		this.tabLayout.removeAllTabs()
-		this.tabSoundLayouts = this.tabLayout.createSoundLayoutsTab()
 
-		this.tabLayout.addTab(this.tabSoundLayouts)
-		this.tabSoundLayouts.select()
 	}
 
-	private fun showToolbarForDeletion()
-	{
-		this.coordinatorLayout.isScrollingEnabled = false
-		this.recyclerView.isNestedScrollingEnabled = false
 
-		val distance = this.recyclerView.width
 
-		this.appBarLayout.setExpanded(false, true)
-
-		this.toolbarDeletion.apply {
-			this.visibility = View.VISIBLE
-			this.translationX = (-distance).toFloat()
-			this.animate()
-					.withLayer()
-					.translationX(0f)
-					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
-					.setInterpolator(DecelerateInterpolator())
-					.start()
-		}
-
-		this.buttonDeleteSelected.apply {
-			this.visibility = View.VISIBLE
-			this.translationX = (-distance).toFloat()
-			this.animate()
-					.withLayer()
-					.translationX(0f)
-					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
-					.setInterpolator(DecelerateInterpolator())
-					.start()
-		}
-	}
-
-	private fun hideToolbarForDeletion()
-	{
-		this.coordinatorLayout.isScrollingEnabled = true
-		this.recyclerView.isNestedScrollingEnabled = true
-
-		this.appBarLayout.setExpanded(true, false)
-
-		this.recyclerView.scrollToPosition(0)
-
-		this.toolbarDeletion.visibility = View.GONE
-		this.buttonDeleteSelected.visibility = View.GONE
-	}
-
-	override fun onClick(view: View)
-	{
-		val id = view.id
-		when (id)
-		{
-			this.buttonDelete.id ->
-			{
-				val itemCount = this.currentPresenter?.itemCount ?: 0
-				if (itemCount == 0) return
-				this.showToolbarForDeletion()
-				this.currentPresenter?.startDeletionMode()
-				this.setActionModeSubTitle(0, itemCount)
-			}
-			this.buttonDeleteSelected.id ->
-			{
-				this.currentPresenter?.deleteSelectedItems()
-				this.currentPresenter?.stopDeletionMode()
-				this.hideToolbarForDeletion()
-			}
-			this.buttonCancelActionMode.id ->
-			{
-				this.currentPresenter?.stopDeletionMode()
-				this.hideToolbarForDeletion()
-			}
-			this.buttonSelectAll.id ->
-			{
-				this.currentPresenter?.selectAllItems()
-				val itemCount = this.currentPresenter?.itemCount ?: 0
-				this.setActionModeSubTitle(itemCount, itemCount)
-			}
-			this.buttonOk.id ->
-				if (this.currentList == List.SoundLayouts)
-				{
-					AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
-				}
-				else if (this.currentList == List.Playlist)
-				{
-					AddNewSoundDialog(this.fragmentManager, PlaylistTAG)
-				}
-				else if (this.currentList == List.SoundSheet)
-				{
-					AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
-				}
-		}
-	}
 
 	override fun onTabSelected(tab: TabLayout.Tab?)
 	{
@@ -343,45 +223,7 @@ class NavigationDrawerFragmentPresenter
 		this.currentPresenter?.onAttachedToWindow()
 	}
 
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: ItemSelectedForDeletion)
-	{
-		this.setActionModeSubTitle(event.selectedItemCount, event.itemCount)
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	private fun setActionModeSubTitle(count: Int, maxValue: Int)
-	{
-		var countString = Integer.toString(count)
-		if (countString.length == 1)
-			countString = " " + countString
-		countString = countString + "/" + maxValue
-		this.actionModeSubTitle.text = countString
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: OpenSoundLayoutsRequestedEvent)
-	{
-		if (event.openSoundLayouts) {
-			this.showContextTabBarAndContent()
-		}
-		else {
-			this.showDefaultTabBarAndContent()
-		}
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutSelectedEvent)
-	{
-		this.showDefaultTabBarAndContent()
-	}
-
 	override fun onTabReselected(tab: TabLayout.Tab?) {}
 	override fun onTabUnselected(tab: TabLayout.Tab?) {}
 }
 
-private fun TabLayout.createSoundSheetTab(): TabLayout.Tab = this.newTab().setText(R.string.tab_sound_sheets)
-
-private fun TabLayout.createPlaylistTab(): TabLayout.Tab = this.newTab().setText(R.string.tab_play_list)
-
-private fun TabLayout.createSoundLayoutsTab(): TabLayout.Tab = this.newTab().setText(R.string.navigation_drawer_select_sound_layout)
