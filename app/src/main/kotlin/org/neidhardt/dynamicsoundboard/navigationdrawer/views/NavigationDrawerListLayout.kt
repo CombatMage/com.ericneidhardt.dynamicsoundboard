@@ -11,7 +11,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
-import org.neidhardt.dynamicsoundboard.navigationdrawer.List
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
@@ -37,7 +37,18 @@ import kotlin.properties.Delegates
  */
 interface NavigationDrawerListLayout
 {
-	val currentList: List
+	var currentList: List
+
+	fun onAttached()
+
+	fun onDetached()
+}
+
+enum class List
+{
+	SoundSheet,
+	Playlist,
+	SoundLayouts
 }
 
 class NavigationDrawerListPresenter(
@@ -111,6 +122,10 @@ class NavigationDrawerListPresenter(
 		this.buttonCancelActionMode.setOnClickListener(this)
 		this.buttonSelectAll.setOnClickListener(this)
 	}
+
+	override fun onAttached() { this.eventBus.registerIfRequired(this) }
+
+	override fun onDetached() { this.eventBus.unregister(this) }
 
 	private fun showToolbarForDeletion()
 	{

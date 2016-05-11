@@ -3,7 +3,6 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:id="@+id/layout_contextual_controls"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/height_list_item"
 		android:layout_alignParentBottom="true"
@@ -12,7 +11,6 @@
 		tools:layout_marginTop="@dimen/status_bar_padding">
 
 	<LinearLayout
-			android:id="@+id/layout_controls"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
@@ -20,7 +18,7 @@
 			android:background="@color/background">
 
 		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/b_delete"
+				android:id="@+id/b_view_navigation_drawer_button_bar_delete"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
@@ -34,7 +32,7 @@
 				android:background="@drawable/selector_background_list_item"/>
 
 		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/b_ok"
+				android:id="@+id/b_view_navigation_drawer_button_bar_add"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
@@ -55,7 +53,7 @@
 			android:background="@color/background">
 
 		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/b_delete_selected"
+				android:id="@+id/b_view_navigation_drawer_button_bar_delete_selected"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:padding="@dimen/margin_default"

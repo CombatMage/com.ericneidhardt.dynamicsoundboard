@@ -13,7 +13,7 @@
 			android:background="@color/primary_500">
 
 		<ImageButton
-				android:id="@+id/b_cancel_action_mode"
+				android:id="@+id/b_view_navigation_drawer_deletion_header_cancel"
 				android:layout_width="48dp"
 				android:layout_height="48dp"
 				android:layout_alignParentEnd="true"
@@ -24,7 +24,7 @@
 				style="@style/Theme.ImageButton.Flat.Toolbar"/>
 
 		<LinearLayout
-				android:id="@+id/ll_action_mode_title"
+				android:id="@+id/ll_view_navigation_drawer_deletion_header_title"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
@@ -32,12 +32,12 @@
 				android:orientation="vertical"
 				android:paddingStart="@dimen/margin_default"
 				android:paddingEnd="@dimen/margin_default"
-				android:layout_toLeftOf="@id/b_cancel_action_mode"
-				android:layout_toStartOf="@id/b_cancel_action_mode"
+				android:layout_toLeftOf="@id/b_view_navigation_drawer_deletion_header_cancel"
+				android:layout_toStartOf="@id/b_view_navigation_drawer_deletion_header_cancel"
 				android:background="?attr/selectableItemBackgroundBorderless">
 
 			<com.devspark.robototextview.widget.RobotoTextView
-					android:id="@+id/tv_action_mode_title"
+					android:id="@+id/tv_view_navigation_drawer_deletion_header_title"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:textColor="@color/text_header"
@@ -45,7 +45,7 @@
 					tools:text="@string/cab_title_delete_sound_sheets"/>
 
 			<com.devspark.robototextview.widget.RobotoTextView
-					android:id="@+id/tv_action_mode_sub_title"
+					android:id="@+id/tv_view_navigation_drawer_deletion_header_sub_title"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:textColor="@color/text_header"

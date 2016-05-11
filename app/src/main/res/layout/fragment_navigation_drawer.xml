@@ -20,8 +20,8 @@
 			android:background="@color/primary_200"/>
 
 	<include
-			android:id="@+id/v_navigation_drawer_deletion"
-			layout="@layout/toolbar_navigation_drawer"
+			android:id="@+id/view_navigation_drawer_deletion_header"
+			layout="@layout/view_navigation_drawer_deletion_header"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_list_item"
 			android:layout_marginTop="@dimen/status_bar_padding"
