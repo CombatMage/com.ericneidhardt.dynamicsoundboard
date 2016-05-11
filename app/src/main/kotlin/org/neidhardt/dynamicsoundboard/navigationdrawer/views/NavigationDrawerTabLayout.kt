@@ -52,7 +52,11 @@ class NavigationDrawerTabLayoutPresenter
 
 	private var tabMode: TabMode = TabMode.Normal
 
-	override fun onAttached() { this.eventBus.registerIfRequired(this) }
+	override fun onAttached()
+	{
+		this.eventBus.registerIfRequired(this)
+		this.showDefaultTabBar()
+	}
 
 	override fun onDetached() { this.eventBus.unregister(this) }
 

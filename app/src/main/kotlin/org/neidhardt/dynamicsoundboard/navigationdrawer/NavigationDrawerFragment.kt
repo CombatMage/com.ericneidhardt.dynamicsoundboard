@@ -83,7 +83,7 @@ class NavigationDrawerFragment : BaseFragment()
 		super.onStart()
 
 		this.tabView?.onAttached()
-		this.listView?.onDetached()
+		this.listView?.onAttached()
 	}
 
 	override fun onStop() {

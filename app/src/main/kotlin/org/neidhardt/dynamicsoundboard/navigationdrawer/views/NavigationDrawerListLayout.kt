@@ -123,7 +123,11 @@ class NavigationDrawerListPresenter(
 		this.buttonSelectAll.setOnClickListener(this)
 	}
 
-	override fun onAttached() { this.eventBus.registerIfRequired(this) }
+	override fun onAttached()
+	{
+		this.eventBus.registerIfRequired(this)
+		this.currentList = List.SoundSheet
+	}
 
 	override fun onDetached() { this.eventBus.unregister(this) }
 
