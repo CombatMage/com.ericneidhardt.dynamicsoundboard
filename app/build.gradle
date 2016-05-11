@@ -102,18 +102,18 @@ dependencies {
 	compile 'de.greenrobot:greendao:2.1.0'
 	compile 'de.greenrobot:java-common:2.3.1'
 
-	compile 'com.google.android.exoplayer:exoplayer:r1.5.7'
+	compile 'com.google.android.exoplayer:exoplayer:r1.5.8'
 
-	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
-	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.3'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
+	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.4'
 
-	compile 'com.github.clans:fab:1.6.2'
+	compile 'com.github.clans:fab:1.6.3'
 
 	compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
 
-	compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
+	compile 'me.zhanghai.android.materialprogressbar:library:1.1.6'
 
-	compile 'jp.wasabeef:recyclerview-animators:2.2.2'
+	compile 'jp.wasabeef:recyclerview-animators:2.2.3'
 
 	compile 'ch.acra:acra:4.8.5'
 
