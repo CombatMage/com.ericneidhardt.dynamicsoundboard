@@ -21,7 +21,7 @@
 
 	<include
 			android:id="@+id/view_navigation_drawer_deletion_header"
-			layout="@layout/view_navigation_drawer_deletion_header"
+			layout="@layout/layout_navigation_drawer_deletion_header"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_list_item"
 			android:layout_marginTop="@dimen/status_bar_padding"
@@ -79,7 +79,7 @@
 				android:rotation="180"/>
 
 		<include
-				layout="@layout/view_navigation_drawer_button_bar"
+				layout="@layout/layout_navigation_drawer_button_bar"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_gravity="bottom"/>

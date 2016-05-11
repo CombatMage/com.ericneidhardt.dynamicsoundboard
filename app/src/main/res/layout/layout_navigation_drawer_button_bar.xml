@@ -18,7 +18,7 @@
 			android:background="@color/background">
 
 		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/b_view_navigation_drawer_button_bar_delete"
+				android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
@@ -32,7 +32,7 @@
 				android:background="@drawable/selector_background_list_item"/>
 
 		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/b_view_navigation_drawer_button_bar_add"
+				android:id="@+id/b_layout_navigation_drawer_button_bar_add"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
@@ -53,7 +53,7 @@
 			android:background="@color/background">
 
 		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/b_view_navigation_drawer_button_bar_delete_selected"
+				android:id="@+id/b_layout_navigation_drawer_button_bar_delete_selected"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:padding="@dimen/margin_default"

@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_navigation_drawer.*
-import kotlinx.android.synthetic.main.view_navigation_drawer_button_bar.*
-import kotlinx.android.synthetic.main.view_navigation_drawer_deletion_header.*
+import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.*
+import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -41,16 +41,16 @@ class NavigationDrawerFragment : BaseFragment()
 			eventBus = this.eventBus,
 				coordinatorLayout = this.cl_navigation_drawer,
 
-				actionModeSubTitle = this.tv_view_navigation_drawer_deletion_header_sub_title,
-				actionModeTitle = this.tv_view_navigation_drawer_deletion_header_title,
+				actionModeSubTitle = this.tv_layout_navigation_drawer_deletion_header_sub_title,
+				actionModeTitle = this.tv_layout_navigation_drawer_deletion_header_title,
 				appBarLayout = this.abl_navigation_drawer,
-				toolbarDeletion = this.v_navigation_drawer_deletion,
+				toolbarDeletion = this.view_navigation_drawer_deletion_header,
 
-				buttonCancelActionMode = this.b_view_navigation_drawer_deletion_header_cancel,
-				buttonDelete = this.b_view_navigation_drawer_button_bar_delete,
-				buttonDeleteSelected = this.b_view_navigation_drawer_button_bar_delete_selected,
-				buttonOk = this.b_view_navigation_drawer_button_bar_add,
-				buttonSelectAll = this.ll_view_navigation_drawer_deletion_header_title,
+				buttonCancelActionMode = this.b_layout_navigation_drawer_deletion_header_cancel,
+				buttonDelete = this.b_layout_navigation_drawer_button_bar_delete,
+				buttonDeleteSelected = this.b_layout_navigation_drawer_button_bar_delete_selected,
+				buttonOk = this.b_layout_navigation_drawer_button_bar_add,
+				buttonSelectAll = this.ll_layout_navigation_drawer_deletion_header_title,
 
 				recyclerView = this.rv_navigation_drawer_list.apply {
 						this.itemAnimator = DefaultItemAnimator()

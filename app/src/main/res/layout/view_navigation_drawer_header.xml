@@ -15,7 +15,7 @@
 			android:src="@drawable/ic_background_navigation_drawer"/>
 
 	<RelativeLayout
-			android:id="@+id/layout_change_sound_layout"
+			android:id="@+id/rl_view_navigation_drawer_header_change_sound_layout"
 			android:layout_width="match_parent"
 			android:layout_height="56dp"
 			android:orientation="vertical"
@@ -25,7 +25,7 @@
 			android:background="@drawable/selector_background_list_item">
 
 		<ImageView
-				android:id="@+id/iv_change_sound_layout_indicator"
+				android:id="@+id/iv_view_navigation_drawer_header_change_sound_layout_indicator"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
@@ -38,7 +38,7 @@
 				android:src="@drawable/ic_drop_down"/>
 
 		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/tv_navigation_drawer_title"
+				android:id="@+id/tv_view_navigation_drawer_header_title"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="@dimen/margin_default"
@@ -50,15 +50,15 @@
 				app:typeface="roboto_medium"/>
 
 		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/tv_current_sound_layout_name"
+				android:id="@+id/tv_view_navigation_drawer_header_current_sound_layout_name"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="@dimen/margin_default"
 				android:layout_marginStart="@dimen/margin_default"
 				android:layout_marginTop="@dimen/margin_tiny"
-				android:layout_below="@id/tv_navigation_drawer_title"
-				android:layout_toLeftOf="@id/iv_change_sound_layout_indicator"
-				android:layout_toStartOf="@id/iv_change_sound_layout_indicator"
+				android:layout_below="@id/tv_view_navigation_drawer_header_title"
+				android:layout_toLeftOf="@id/iv_view_navigation_drawer_header_change_sound_layout_indicator"
+				android:layout_toStartOf="@id/iv_view_navigation_drawer_header_change_sound_layout_indicator"
 				android:layout_alignParentLeft="true"
 				android:layout_alignParentStart="true"
 				android:textSize="@dimen/text_body"
@@ -68,18 +68,18 @@
 	</RelativeLayout>
 
 	<View
-		android:id="@+id/fragment_navigation_drawer_status_bar_padding"
+			android:id="@+id/v_view_navigation_drawer_header_status_bar_padding"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/status_bar_padding"/>
 
 	<ImageView
-			android:id="@+id/iv_header_avatar"
+			android:id="@+id/iv_view_navigation_drawer_header_avatar"
 			android:layout_width="@dimen/size_avatar_navigation_drawer"
 			android:layout_height="@dimen/size_avatar_navigation_drawer"
 			android:layout_marginLeft="@dimen/margin_default"
 			android:layout_marginStart="@dimen/margin_default"
 			android:layout_marginTop="@dimen/margin_default"
-			android:layout_below="@id/fragment_navigation_drawer_status_bar_padding"
+			android:layout_below="@id/v_view_navigation_drawer_header_status_bar_padding"
 			android:contentDescription="@string/navigation_drawer_content_description_avatar"
 			android:src="@drawable/ic_launcher"/>
 

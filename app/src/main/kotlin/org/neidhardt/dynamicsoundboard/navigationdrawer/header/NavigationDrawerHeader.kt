@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import kotlinx.android.synthetic.main.view_navigation_drawer_header.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -53,11 +54,11 @@ class NavigationDrawerHeaderView :
 	}
 
 	private fun init(context: Context) {
-		LayoutInflater.from(context).inflate(R.layout.navigation_drawer_header, this, true)
-		this.currentLayoutName = this.findViewById(R.id.tv_current_sound_layout_name) as TextView
-		this.indicator = this.findViewById(R.id.iv_change_sound_layout_indicator)
+		LayoutInflater.from(context).inflate(R.layout.view_navigation_drawer_header, this, true)
+		this.currentLayoutName = this.tv_view_navigation_drawer_header_current_sound_layout_name
+		this.indicator = this.iv_view_navigation_drawer_header_change_sound_layout_indicator
 
-		this.findViewById(R.id.layout_change_sound_layout).setOnClickListener(this)
+		this.rl_view_navigation_drawer_header_change_sound_layout.setOnClickListener(this)
 
 		if (!this.isInEditMode)
 			this.presenter = NavigationDrawerHeaderPresenter(EventBus.getDefault(), SoundboardApplication.soundLayoutsAccess)
