@@ -17,9 +17,6 @@ abstract class SoundProgressAdapter<T>
 		Runnable
 where T : RecyclerView.ViewHolder, T : SoundProgressViewHolder
 {
-
-	private val TAG = javaClass.name
-
 	private val handler: Handler = Handler()
 	private val hasTimerStarted: AtomicBoolean = AtomicBoolean(false)
 
@@ -48,7 +45,7 @@ where T : RecyclerView.ViewHolder, T : SoundProgressViewHolder
 		}
 		for (index in itemsWithProgressChanged)
 		{
-			val viewHolderToUpdate = this.recyclerView?.findViewHolderForAdapterPosition(index) as SoundProgressViewHolder?
+			val viewHolderToUpdate = this.recyclerView.findViewHolderForAdapterPosition(index) as SoundProgressViewHolder?
 			viewHolderToUpdate?.onProgressUpdate()
 		}
 		this.hasTimerStarted.set(false)

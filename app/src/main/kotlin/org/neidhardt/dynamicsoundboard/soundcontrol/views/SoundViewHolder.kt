@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.widget.SeekBar
+import kotlinx.android.synthetic.main.layout_sound_control.view.*
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressTimer
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
@@ -30,23 +31,22 @@ class SoundViewHolder
 ) :
 		RecyclerView.ViewHolder(itemView),
 		SoundProgressViewHolder,
-		View.OnClickListener,
 		CustomEditText.OnTextEditedListener,
 		SeekBar.OnSeekBarChangeListener
 {
     private val TAG = javaClass.name
 
-	private val reorder = itemView.findViewById(R.id.b_reorder)
+	private val reorder = itemView.ib_layout_sound_control_reorder
 
-	private val name = itemView.findViewById(R.id.et_name) as CustomEditText
-	private val play = itemView.findViewById(R.id.b_play)
-	private val loop = itemView.findViewById(R.id.b_loop)
-	private val inPlaylist = itemView.findViewById(R.id.b_add_to_playlist)
-	private val stop = itemView.findViewById(R.id.b_stop)
-	private val settings = itemView.findViewById(R.id.b_settings)
-	private val timePosition = itemView.findViewById(R.id.sb_progress) as SeekBar
+	private val name = itemView.et_layout_sound_control_name
+	private val play = itemView.ib_layout_sound_control_play
+	private val loop = itemView.ib_layout_sound_control_loop
+	private val inPlaylist = itemView.ib_layout_sound_control_add_to_playlist
+	private val stop = itemView.ib_layout_sound_control_stop
+	private val settings = itemView.ib_layout_sound_control_settings
+	private val timePosition = itemView.sb_layout_sound_control_progress
 
-	private var player: MediaPlayerController? = null
+	private var player: MediaPlayerController by Delegates.notNull()
 
 	init
 	{
@@ -55,12 +55,44 @@ class SoundViewHolder
 			true
 		}
 
+		this.play.setOnClickListener { view ->
+			this.name.clearFocus()
+			if (!view.isSelected)
+			{
+				this.progressTimer.startProgressUpdateTimer()
+				player.playSound()
+			}
+			else
+			{
+				player.fadeOutSound()
+			}
+		}
+
+		this.loop.setOnClickListener{ view ->
+			val isSelected = view.isSelected
+			view.isSelected = !isSelected
+			this.player.isLoopingEnabled = !isSelected
+		}
+
+		this.inPlaylist.setOnClickListener { view ->
+			val isSelected = view.isSelected
+			view.isSelected = !isSelected
+			this.player.isInPlaylist = !isSelected
+			this.player.mediaPlayerData.updateItemInDatabaseAsync()
+			this.soundsDataStorage.toggleSoundInPlaylist(player.mediaPlayerData.playerId, !isSelected)
+		}
+
+		this.stop.setOnClickListener {
+			this.player.stopSound()
+			this.updateViewToPlayerState()
+		}
+
+		this.settings.setOnClickListener {
+			this.player.pauseSound()
+			this.eventBus.post(OpenSoundSettingsEvent(player.mediaPlayerData))
+		}
+
 		this.name.onTextEditedListener = this
-		this.play.setOnClickListener(this)
-		this.loop.setOnClickListener(this)
-		this.inPlaylist.setOnClickListener(this)
-		this.stop.setOnClickListener(this)
-		this.settings.setOnClickListener(this)
 		this.timePosition.setOnSeekBarChangeListener(this)
 	}
 
@@ -73,7 +105,7 @@ class SoundViewHolder
 
 	private fun updateViewToPlayerState()
 	{
-		val player = this.player as MediaPlayerController
+		val player = this.player
 		val playerData = player.mediaPlayerData
 
 		if (!this.name.hasFocus())
@@ -90,9 +122,9 @@ class SoundViewHolder
 
 	override fun onProgressUpdate()
 	{
-		this.player?.apply {
-			if (!this.isDeletionPending)
-				timePosition.progress = progress
+		this.player.let { player ->
+			if (!player.isDeletionPending)
+				this.timePosition.progress = player.progress
 		}
 	}
 
@@ -101,11 +133,8 @@ class SoundViewHolder
 		Logger.d(TAG, "onTextEdited: $text")
 
 		this.name.clearFocus()
-		if (this.player != null)
-		{
-			val playerData = this.player!!.mediaPlayerData
+		this.player.mediaPlayerData.let { playerData ->
 			val currentLabel = playerData.label
-
 			if (!currentLabel.equals(text))
 			{
 				playerData.label = text
@@ -116,53 +145,10 @@ class SoundViewHolder
 		}
 	}
 
-	override fun onClick(view: View)
-	{
-		val player = this.player as MediaPlayerController
-
-		val isSelected = view.isSelected
-		val id = view.id
-		when (id) {
-			R.id.b_stop ->
-			{
-				player.stopSound()
-				this.updateViewToPlayerState()
-			}
-			R.id.b_loop ->
-			{
-				view.isSelected = !isSelected
-				player.isLoopingEnabled = !isSelected
-			}
-			R.id.b_add_to_playlist ->
-			{
-				view.isSelected = !isSelected
-				player.isInPlaylist = !isSelected
-				player.mediaPlayerData.updateItemInDatabaseAsync()
-				soundsDataStorage.toggleSoundInPlaylist(player.mediaPlayerData.playerId, !isSelected)
-			}
-			R.id.b_play -> {
-				name.clearFocus()
-					if (!isSelected)
-					{
-						this.progressTimer.startProgressUpdateTimer()
-						player.playSound()
-					}
-					else
-					{
-						player.fadeOutSound()
-					}
-			}
-			R.id.b_settings -> {
-				player.pauseSound()
-				this.eventBus.post(OpenSoundSettingsEvent(player.mediaPlayerData))
-			}
-		}
-	}
-
 	override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean)
 	{
 		if (fromUser)
-			this.player?.progress = progress
+			this.player.progress = progress
 	}
 
 	override fun onStartTrackingTouch(seekBar: SeekBar?) {

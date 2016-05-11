@@ -36,7 +36,7 @@ class SoundAdapter
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder =
 			SoundViewHolder(
 					itemTouchHelper = this.itemTouchHelper,
-					itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control, parent, false),
+					itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_sound_control, parent, false),
 					eventBus = this.eventBus,
 					soundsDataStorage = this.soundsDataStorage,
 					progressTimer = this)
