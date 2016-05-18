@@ -13,7 +13,7 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_toolbar_content.*
+import kotlinx.android.synthetic.main.layout_toolbar_content.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

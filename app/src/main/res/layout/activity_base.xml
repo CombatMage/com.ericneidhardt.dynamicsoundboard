@@ -32,7 +32,7 @@
 					android:layout_height="match_parent"
 					android:background="@color/background"/>
 
-			<include layout="@layout/progressbar"/>
+			<include layout="@layout/layout_progressbar"/>
 
 		</FrameLayout>
 

@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.widget.SeekBar
-import kotlinx.android.synthetic.main.layout_sound_control.view.*
+import kotlinx.android.synthetic.main.view_sound_control_item.view.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -19,8 +19,6 @@ import kotlin.properties.Delegates
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
-private val VIEWPAGER_INDEX_SOUND_CONTROLS = 1
-
 class SoundViewHolder
 (
 		itemTouchHelper: ItemTouchHelper,
@@ -36,15 +34,16 @@ class SoundViewHolder
 {
     private val TAG = javaClass.name
 
-	private val reorder = itemView.ib_layout_sound_control_reorder
+	private val reorder = itemView.ib_view_sound_control_item_reorder
 
-	private val name = itemView.et_layout_sound_control_name
-	private val play = itemView.ib_layout_sound_control_play
-	private val loop = itemView.ib_layout_sound_control_loop
-	private val inPlaylist = itemView.ib_layout_sound_control_add_to_playlist
-	private val stop = itemView.ib_layout_sound_control_stop
-	private val settings = itemView.ib_layout_sound_control_settings
-	private val timePosition = itemView.sb_layout_sound_control_progress
+	private val name = itemView.et_view_sound_control_item_name
+	private val play = itemView.ib_view_sound_control_item_play
+	private val loop = itemView.ib_view_sound_control_item_loop
+	private val stop = itemView.ib_view_sound_control_item_stop
+
+	private val inPlaylist = itemView.ib_view_sound_control_item_add_to_playlist
+	private val timePosition = itemView.sb_view_sound_control_item_progress
+	private val settings = itemView.ib_view_sound_control_item_settings
 
 	private var player: MediaPlayerController by Delegates.notNull()
 

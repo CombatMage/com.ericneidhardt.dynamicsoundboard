@@ -13,7 +13,7 @@
 		app:popupTheme="@style/Theme.AppTheme"
 		app:layout_scrollFlags="scroll|enterAlways">
 
-	<include layout="@layout/view_toolbar_content"/>
+	<include layout="@layout/layout_toolbar_content"/>
 
 
 </android.support.v7.widget.Toolbar>

@@ -81,7 +81,7 @@ class SoundSheetFragment :
 		this.setHasOptionsMenu(true)
 
 		val args = this.arguments
-		var fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
+		val fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
 				?: throw NullPointerException(LOG_TAG + ": cannot create fragment, given fragmentTag is null")
 		this.fragmentTag = fragmentTag as String
 	}
@@ -93,7 +93,7 @@ class SoundSheetFragment :
 
 		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
 
-		this.floatingActionButton = fragmentView.findViewById(R.id.fab) as AddPauseFloatingActionButton?
+		this.floatingActionButton = fragmentView.findViewById(R.id.fb_layout_fab) as AddPauseFloatingActionButton?
 		this.mainLayout = fragmentView.findViewById(R.id.coordinator_layout) as CoordinatorLayout
 
 		val soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView

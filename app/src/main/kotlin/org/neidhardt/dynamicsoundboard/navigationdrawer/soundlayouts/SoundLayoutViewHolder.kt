@@ -20,18 +20,17 @@ class SoundLayoutViewHolder
 :
 		RecyclerView.ViewHolder(itemView)
 {
-	private val label: TextView = itemView.findViewById(R.id.tv_label) as TextView
-	private val selectionIndicator: ImageView = itemView.findViewById(R.id.iv_selected) as ImageView
-	private val openSettings: View = itemView.findViewById(R.id.b_settings)
+	private val label: TextView = itemView.findViewById(R.id.tv_view_sound_layout_item_name) as TextView
+	private val selectionIndicator: ImageView = itemView.findViewById(R.id.iv_view_sound_layout_item_selected) as ImageView
+	private val openSettings: View = itemView.findViewById(R.id.ib_view_sound_layout_item_settings)
 	private val divider = itemView.findViewById(R.id.v_divider)
 
 	private var data: SoundLayout? = null
 
 	init
 	{
-		itemView.findViewById(R.id.b_settings).setOnClickListener({ view -> this.onSettingsClickedListener.onItemClick(this.data as SoundLayout)})
-		itemView.setOnClickListener({ view -> this.onItemClickedListener.onItemClick(this.data as SoundLayout)})
-		this.openSettings.setOnClickListener({ view-> this.onSettingsClickedListener.onItemClick(this.data as SoundLayout )})
+		this.itemView.setOnClickListener { this.onItemClickedListener.onItemClick(this.data as SoundLayout) }
+		this.openSettings.setOnClickListener{ this.onSettingsClickedListener.onItemClick(this.data as SoundLayout )}
 	}
 
 	fun bindData(data: SoundLayout, isLastItem: Boolean)

@@ -24,7 +24,7 @@
 					app:action_title="@string/introduction_action_new_sound_sheet_title"
 					app:action_summary="@string/introduction_action_new_sound_sheet_summary"/>
 
-			<include layout="@layout/view_introduction_divider"/>
+			<include layout="@layout/layout_introduction_divider"/>
 
 			<org.neidhardt.dynamicsoundboard.introduction.views.IntroductionListItem
 					android:layout_width="match_parent"
@@ -33,7 +33,7 @@
 					app:action_title="@string/introduction_action_add_new_sound_from_dir_title"
 					app:action_summary="@string/introduction_action_add_new_sound_from_dir_summary"/>
 
-			<include layout="@layout/view_introduction_divider"/>
+			<include layout="@layout/layout_introduction_divider"/>
 
 			<org.neidhardt.dynamicsoundboard.introduction.views.IntroductionListItem
 					android:layout_width="match_parent"

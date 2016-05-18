@@ -8,7 +8,7 @@
 		android:background="@color/background">
 
 	<ImageButton
-			android:id="@+id/ib_layout_sound_control_play"
+			android:id="@+id/ib_view_sound_control_item_play"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/margin_tiny"
@@ -19,7 +19,7 @@
 			android:src="@drawable/selector_ic_play"/>
 
 	<ImageButton
-			android:id="@+id/ib_layout_sound_control_reorder"
+			android:id="@+id/ib_view_sound_control_item_reorder"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
@@ -34,14 +34,14 @@
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_toRightOf="@id/ib_layout_sound_control_play"
-			android:layout_toEndOf="@id/ib_layout_sound_control_play"
-			android:layout_toLeftOf="@id/ib_layout_sound_control_reorder"
-			android:layout_toStartOf="@id/ib_layout_sound_control_reorder"
+			android:layout_toRightOf="@id/ib_view_sound_control_item_play"
+			android:layout_toEndOf="@id/ib_view_sound_control_item_play"
+			android:layout_toLeftOf="@id/ib_view_sound_control_item_reorder"
+			android:layout_toStartOf="@id/ib_view_sound_control_item_reorder"
 			android:orientation="vertical">
 
 		<org.neidhardt.dynamicsoundboard.views.edittext.NoUnderscoreEditText
-				android:id="@+id/et_layout_sound_control_name"
+				android:id="@+id/et_view_sound_control_item_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/margin_default"
@@ -52,7 +52,7 @@
 				app:text_color="@color/text_body_primary"/>
 
 		<SeekBar
-				android:id="@+id/sb_layout_sound_control_progress"
+				android:id="@+id/sb_view_sound_control_item_progress"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="@dimen/margin_default"
@@ -68,12 +68,12 @@
 			android:layout_marginLeft="@dimen/margin_default"
 			android:layout_marginStart="@dimen/margin_default"
 			android:layout_marginBottom="@dimen/margin_tiny"
-			android:layout_toRightOf="@id/b_play"
-			android:layout_toEndOf="@id/b_play"
+			android:layout_toRightOf="@id/ib_view_sound_control_item_play"
+			android:layout_toEndOf="@id/ib_view_sound_control_item_play"
 			android:orientation="horizontal">
 
 		<ImageButton
-				android:id="@+id/ib_layout_sound_control_stop"
+				android:id="@+id/ib_view_sound_control_item_stop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:theme="@style/Theme.ImageButton.SoundControl"
@@ -81,7 +81,7 @@
 				android:src="@drawable/selector_ic_stop"/>
 
 		<ImageButton
-				android:id="@+id/ib_layout_sound_control_loop"
+				android:id="@+id/ib_view_sound_control_item_loop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:theme="@style/Theme.ImageButton.SoundControl"
@@ -89,7 +89,7 @@
 				android:src="@drawable/selector_ic_loop"/>
 
 		<ImageButton
-				android:id="@+id/ib_layout_sound_control_add_to_playlist"
+				android:id="@+id/ib_view_sound_control_item_add_to_playlist"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:theme="@style/Theme.ImageButton.SoundControl"
@@ -97,7 +97,7 @@
 				android:src="@drawable/selector_ic_playlist"/>
 
 		<ImageButton
-				android:id="@+id/ib_layout_sound_control_settings"
+				android:id="@+id/ib_view_sound_control_item_settings"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:theme="@style/Theme.ImageButton.SoundControl"

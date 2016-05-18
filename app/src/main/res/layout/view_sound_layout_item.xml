@@ -17,7 +17,7 @@
 			android:background="@drawable/selector_background_list_item">
 
 		<ImageView
-				android:id="@+id/iv_selected"
+				android:id="@+id/iv_view_sound_layout_item_selected"
 				android:layout_width="@dimen/height_list_item"
 				android:layout_height="@dimen/height_list_item"
 				android:layout_alignParentLeft="true"
@@ -28,7 +28,7 @@
 				android:src="@drawable/shape_selected_indicator"/>
 
 		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/tv_label"
+				android:id="@+id/tv_view_sound_layout_item_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="@dimen/margin_list_item_left"
@@ -45,13 +45,16 @@
 				tools:text="Sound Layout"
 				app:typeface="roboto_medium"/>
 
-		<include
-				layout="@layout/button_settings"
+		<ImageButton
+				android:id="@+id/ib_view_sound_layout_item_settings"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:theme="@style/Theme.ImageButton.SoundControl"
 				android:layout_alignParentEnd="true"
 				android:layout_alignParentRight="true"
-				android:layout_centerVertical="true"/>
+				android:layout_centerVertical="true"
+				android:contentDescription="@string/sound_control_content_description_settings"
+				android:src="@drawable/selector_ic_settings"/>
 
 	</RelativeLayout>
 

@@ -13,8 +13,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:overScrollMode="never"
-			tools:listitem="@layout/layout_sound_control"/>
+			tools:listitem="@layout/view_sound_control_item"/>
 
-	<include layout="@layout/view_fab"/>
+	<include layout="@layout/layout_fab"/>
 
 </android.support.design.widget.CoordinatorLayout>
