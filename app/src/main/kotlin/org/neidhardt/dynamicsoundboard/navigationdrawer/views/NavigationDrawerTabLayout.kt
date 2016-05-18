@@ -14,8 +14,7 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutS
 /**
  * @author eric.neidhardt on 03.05.2016.
  */
-interface NavigationDrawerTabLayout
-{
+interface NavigationDrawerTabLayout {
 	fun showDefaultTabBar()
 
 	fun showContextualTabBar()
@@ -25,8 +24,7 @@ interface NavigationDrawerTabLayout
 	fun onDetached()
 }
 
-enum class TabMode
-{
+enum class TabMode {
 	Normal,
 	Context
 }
@@ -44,24 +42,23 @@ class NavigationDrawerTabLayoutPresenter
 ) : NavigationDrawerTabLayout,
 		TabLayout.OnTabSelectedListener,
 		OnOpenSoundLayoutsEventListener,
-		OnSoundLayoutSelectedEventListener
-{
+		OnSoundLayoutSelectedEventListener {
 	private var tabSoundSheets: TabLayout.Tab = tabLayout.createSoundSheetTab()
 	private var tabPlayList: TabLayout.Tab = tabLayout.createPlaylistTab()
 	private var tabSoundLayouts: TabLayout.Tab = tabLayout.createSoundLayoutsTab()
 
 	private var tabMode: TabMode = TabMode.Normal
 
-	override fun onAttached()
-	{
+	override fun onAttached() {
 		this.eventBus.registerIfRequired(this)
 		this.showDefaultTabBar()
 	}
 
-	override fun onDetached() { this.eventBus.unregister(this) }
+	override fun onDetached() {
+		this.eventBus.unregister(this)
+	}
 
-	override fun showDefaultTabBar()
-	{
+	override fun showDefaultTabBar() {
 		this.tabMode = TabMode.Normal
 		this.tabLayout.removeAllTabs()
 		this.tabSoundSheets = this.tabLayout.createSoundSheetTab()
@@ -70,59 +67,44 @@ class NavigationDrawerTabLayoutPresenter
 		this.tabLayout.addTab(this.tabSoundSheets, INDEX_SOUND_SHEETS)
 		this.tabLayout.addTab(this.tabPlayList, INDEX_PLAYLIST)
 
-		this.tabSoundSheets.select()
+		this.onSoundSheetsSelectedCallback()
 	}
 
-	override fun showContextualTabBar()
-	{
+	override fun showContextualTabBar() {
 		this.tabMode = TabMode.Context
 		this.tabLayout.removeAllTabs()
 		this.tabSoundLayouts = this.tabLayout.createSoundLayoutsTab()
 
 		this.tabLayout.addTab(this.tabSoundLayouts)
-		this.tabSoundLayouts.select()
+		this.onSoundLayoutsSelectedCallback()
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: OpenSoundLayoutsRequestedEvent)
-	{
-		if (event.openSoundLayouts) {
+	override fun onEvent(event: OpenSoundLayoutsRequestedEvent) {
+		if (event.openSoundLayouts)
 			this.showContextualTabBar()
-		}
-		else {
+		else
 			this.showDefaultTabBar()
-		}
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutSelectedEvent)
-	{
+	override fun onEvent(event: SoundLayoutSelectedEvent) {
 		this.showDefaultTabBar()
 	}
 
-	override fun onTabSelected(tab: TabLayout.Tab?)
-	{
+	override fun onTabSelected(tab: TabLayout.Tab?) {
 		if (this.tabMode == TabMode.Context)
-		{
 			this.onSoundLayoutsSelectedCallback()
-		}
-		else if (tabMode == TabMode.Normal)
-		{
-			when (tab)
-			{
-				this.tabSoundSheets ->
-				{
-					this.onSoundSheetsSelectedCallback()
-				}
-				this.tabPlayList ->
-				{
-					this.onPlaylistSelectedCallback()
-				}
+		else if (tabMode == TabMode.Normal) {
+			when (tab) {
+				this.tabSoundSheets -> this.onSoundSheetsSelectedCallback()
+				this.tabPlayList -> this.onPlaylistSelectedCallback()
 			}
 		}
 	}
 
 	override fun onTabReselected(tab: TabLayout.Tab?) {}
+
 	override fun onTabUnselected(tab: TabLayout.Tab?) {}
 }
 

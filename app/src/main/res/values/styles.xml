@@ -54,7 +54,7 @@
 	<style name="Theme.ImageButton.SoundControl" parent="Theme.AppTheme">
 		<item name="android:padding">@dimen/padding_button</item>
 		<item name="android:scaleType">centerCrop</item>
-		<item name="android:background">@drawable/selector_background_sound_control</item>
+		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
 	</style>
 
 	<style name="Theme.Button.Flat" parent="Theme.AppTheme">
