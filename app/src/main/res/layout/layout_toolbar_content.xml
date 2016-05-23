@@ -8,7 +8,7 @@
 		tools:background="@color/primary_500">
 
 	<ImageButton
-			android:id="@+id/action_add_sound_sheet"
+			android:id="@+id/ib_layout_toolbar_content_add_sound_sheet"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
@@ -19,36 +19,36 @@
 			style="@style/Theme.ImageButton.Flat.Toolbar"/>
 
 	<ImageButton
-			android:id="@+id/action_add_sound"
+			android:id="@+id/ib_layout_toolbar_content_add_sound"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
-			android:layout_toLeftOf="@id/action_add_sound_sheet"
-			android:layout_toStartOf="@id/action_add_sound_sheet"
+			android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_sheet"
+			android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_sheet"
 			android:contentDescription="@string/action_add_new_sound"
 			android:src="@drawable/ic_action_add_sound"
 			style="@style/Theme.ImageButton.Flat.Toolbar"/>
 
 	<ImageButton
-			android:id="@+id/action_add_sound_dir"
+			android:id="@+id/ib_layout_toolbar_content_add_sound_dir"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
-			android:layout_toLeftOf="@id/action_add_sound"
-			android:layout_toStartOf="@id/action_add_sound"
+			android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound"
+			android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound"
 			android:contentDescription="@string/action_add_new_sound_from_dir"
 			android:src="@drawable/ic_action_add_sound_dir"
 			style="@style/Theme.ImageButton.Flat.Toolbar"/>
 
 	<com.devspark.robototextview.widget.RobotoTextView
-			android:id="@+id/tv_app_name"
+			android:id="@+id/tv_layout_toolbar_content_app_name"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
 			android:layout_alignParentStart="true"
 			android:layout_alignParentLeft="true"
-			android:layout_toLeftOf="@id/action_add_sound_dir"
-			android:layout_toStartOf="@id/action_add_sound_dir"
+			android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_dir"
+			android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
 			android:gravity="center_horizontal"
 			android:text="@string/app_name"
 			android:textColor="@color/text_header"
@@ -56,13 +56,13 @@
 			app:typeface="roboto_medium"/>
 
 	<org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText
-			android:id="@+id/et_set_label"
+			android:id="@+id/et_layout_toolbar_content_title"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
 			android:layout_alignParentStart="true"
 			android:layout_alignParentLeft="true"
-			android:layout_toLeftOf="@id/action_add_sound_dir"
-			android:layout_toStartOf="@id/action_add_sound_dir"/>
+			android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_dir"
+			android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"/>
 
 </RelativeLayout>

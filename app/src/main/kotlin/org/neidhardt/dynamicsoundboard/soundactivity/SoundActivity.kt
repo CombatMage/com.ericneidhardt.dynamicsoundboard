@@ -55,7 +55,6 @@ import java.util.*
  */
 class SoundActivity :
 		BaseActivity(),
-		View.OnClickListener,
 		CustomEditText.OnTextEditedListener,
 		RequestPermissionHelper,
 		OnSoundLayoutSelectedEventListener,
@@ -85,6 +84,13 @@ class SoundActivity :
 		} else null
 	}
 
+	val actionAddSound by lazy { this.ib_layout_toolbar_content_add_sound}
+	val actionAddSoundDir by lazy { this.ib_layout_toolbar_content_add_sound_dir }
+	val actionAddSoundSheet by lazy { this.ib_layout_toolbar_content_add_sound_sheet }
+
+	private val toolbarTitle by lazy { this.et_layout_toolbar_content_title }
+	private val appName by lazy { this.tv_layout_toolbar_content_app_name }
+
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private val eventBus = EventBus.getDefault()
@@ -98,6 +104,19 @@ class SoundActivity :
 
 	val isNavigationDrawerOpen: Boolean
 		get() = this.navigationDrawerLayout?.isDrawerOpen(Gravity.START) ?: false
+
+	var areSoundSheetActionsEnable: Boolean
+		get() = this.appName.visibility != View.VISIBLE
+		set(enable) {
+			(if (enable) View.VISIBLE else View.GONE).let { viewStateSoundActions ->
+				this.ib_layout_toolbar_content_add_sound.visibility = viewStateSoundActions
+				this.ib_layout_toolbar_content_add_sound_dir.visibility = viewStateSoundActions
+				this.toolbarTitle.visibility = viewStateSoundActions
+			}
+			(if (!enable) View.VISIBLE else View.GONE).let { viewStateAppTitle ->
+				this.appName.visibility = viewStateAppTitle
+			}
+		}
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -172,10 +191,12 @@ class SoundActivity :
 		this.abl_main.setExpanded(true)
 		this.setSupportActionBar(this.tb_main)
 
-		this.tv_app_name.visibility = View.VISIBLE
-		this.action_add_sound_sheet.setOnClickListener(this)
+		this.appName.visibility = View.VISIBLE
+		this.actionAddSoundSheet.setOnClickListener {
+			AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName())
+		}
 
-		this.et_set_label.let { toolbarTitle ->
+		this.toolbarTitle.let { toolbarTitle ->
 			toolbarTitle.visibility = View.GONE
 			toolbarTitle.onTextEditedListener = this
 
@@ -207,7 +228,7 @@ class SoundActivity :
 		this.startService(Intent(this.applicationContext, NotificationService::class.java))
 		this.eventBus.postSticky(ActivityStateChangedEvent(true))
 
-		this.setSoundSheetActionsEnable(false)
+		this.areSoundSheetActionsEnable = false
 
 		this.soundsDataUtil.initIfRequired()
 		if (this.soundSheetsDataUtil.initIfRequired())
@@ -261,22 +282,11 @@ class SoundActivity :
 			super.onBackPressed()
 	}
 
-	fun setSoundSheetActionsEnable(enable: Boolean)
-	{
-		var viewState = if (enable) View.VISIBLE else View.GONE
-		this.action_add_sound.visibility = viewState
-		this.action_add_sound_dir.visibility = viewState
-		this.et_set_label.visibility = viewState
-
-		viewState = if (!enable) View.VISIBLE else View.GONE
-		this.tv_app_name.visibility = viewState
-	}
-
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutSelectedEvent)
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
-		this.setSoundSheetActionsEnable(false)
+		this.areSoundSheetActionsEnable = false
 
 		this.soundSheetsDataUtil.releaseAll()
 		this.soundSheetsDataUtil.initIfRequired()
@@ -310,7 +320,7 @@ class SoundActivity :
 		this.removeSoundFragments(removedSoundSheets)
 
 		if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
-			this.setSoundSheetActionsEnable(false)
+			this.areSoundSheetActionsEnable = false
 	}
 
 	override fun onEvent(event: SoundSheetAddedEvent) {}
@@ -407,15 +417,6 @@ class SoundActivity :
 		}
 	}
 
-	override fun onClick(view: View)
-	{
-		when (view.id)
-		{
-			R.id.action_add_sound_sheet -> AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName())
-			else -> Logger.e(TAG, "unknown item clicked " + view)
-		}
-	}
-
 	override fun onTextEdited(text: String)
 	{
 		val currentSoundSheetFragment = this.currentSoundFragment
@@ -455,7 +456,7 @@ class SoundActivity :
 
 		if (this.soundSheetsDataAccess.getSoundSheets().size == 0) 
 		{
-			this.setSoundSheetActionsEnable(false)
+			this.areSoundSheetActionsEnable = false
 			this.openIntroductionFragmentIfRequired()
 		}
 	}
@@ -468,7 +469,7 @@ class SoundActivity :
 		{
 			fragmentManager.beginTransaction().remove(fragment).commit()
 			if (fragment.isVisible)
-				this.setSoundSheetActionsEnable(false)
+				this.areSoundSheetActionsEnable = false
 		}
 		fragmentManager.executePendingTransactions()
 	}
@@ -510,7 +511,7 @@ class SoundActivity :
 		transaction.commit()
 		fragmentManager.executePendingTransactions()
 
-		this.et_set_label.text = soundSheet.label
+		this.et_layout_toolbar_content_title.text = soundSheet.label
 	}
 
 	private val currentSoundFragment: SoundSheetFragment?
