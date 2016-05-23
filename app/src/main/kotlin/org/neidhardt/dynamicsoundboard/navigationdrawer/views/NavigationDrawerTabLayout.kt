@@ -49,6 +49,8 @@ class NavigationDrawerTabLayoutPresenter
 
 	private var tabMode: TabMode = TabMode.Normal
 
+	init { this.tabLayout.setOnTabSelectedListener(this) }
+
 	override fun onAttached() {
 		this.eventBus.registerIfRequired(this)
 		this.showDefaultTabBar()
