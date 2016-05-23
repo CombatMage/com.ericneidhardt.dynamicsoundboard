@@ -5,11 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_soundsheet.*
+import kotlinx.android.synthetic.main.layout_fab.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -18,6 +19,8 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
@@ -57,7 +60,8 @@ class SoundSheetFragment :
 		BaseFragment(),
 		SnackbarPresenter,
 		OnOpenSoundDialogEventListener,
-		OnSoundsChangedEventListener
+		OnSoundsChangedEventListener,
+		MediaPlayerFailedEventListener
 {
 	private val LOG_TAG = javaClass.name
 
@@ -67,12 +71,10 @@ class SoundSheetFragment :
 	private val soundsDataStorage: SoundsDataStorage = SoundboardApplication.soundsDataStorage
 	private val soundsDataAccess: SoundsDataAccess = SoundboardApplication.soundsDataAccess
 
-	private var floatingActionButton: AddPauseFloatingActionButton? = null
 	private var soundPresenter: SoundPresenter? = null
-	private var mainLayout: CoordinatorLayout? = null
 
-	override val coordinatorLayout: CoordinatorLayout
-		get() = this.mainLayout as CoordinatorLayout
+	private val floatingActionButton: AddPauseFloatingActionButton? by lazy { this.fb_layout_fab }
+	override val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -90,29 +92,27 @@ class SoundSheetFragment :
 	{
 		if (container == null)
 			return null
+		return inflater.inflate(R.layout.fragment_soundsheet, container, false)
+	}
 
-		val fragmentView = inflater.inflate(R.layout.fragment_soundsheet, container, false)
+	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 
-		this.floatingActionButton = fragmentView.findViewById(R.id.fb_layout_fab) as AddPauseFloatingActionButton?
-		this.mainLayout = fragmentView.findViewById(R.id.coordinator_layout) as CoordinatorLayout
+		this.rv_fragment_sound_sheet_sounds.let { soundList ->
+			this.soundPresenter = createSoundPresenter(
+					fragmentTag = this.fragmentTag,
+					eventBus = this.eventBus,
+					recyclerView = soundList,
+					snackbarPresenter = this,
+					soundsDataAccess = this.soundsDataAccess,
+					soundsDataStorage = this.soundsDataStorage)
 
-		val soundLayout = fragmentView.findViewById(R.id.rv_sounds) as RecyclerView
-
-		this.soundPresenter = createSoundPresenter(
-				fragmentTag = this.fragmentTag,
-				eventBus = this.eventBus,
-				recyclerView = soundLayout,
-				snackbarPresenter = this,
-				soundsDataAccess = this.soundsDataAccess,
-				soundsDataStorage = this.soundsDataStorage)
-
-		soundLayout.apply {
-			this.adapter = soundPresenter?.adapter
-			this.layoutManager = LinearLayoutManager(this.context)
-			this.addItemDecoration(DividerItemDecoration(this.context))
+			soundList.apply {
+				this.adapter = soundPresenter?.adapter
+				this.layoutManager = LinearLayoutManager(this.context)
+				this.addItemDecoration(DividerItemDecoration(this.context))
+			}
 		}
-
-		return fragmentView
 	}
 
 	override fun onStart()
@@ -210,9 +210,13 @@ class SoundSheetFragment :
 			this.floatingActionButton?.show(true)
 	}
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: MediaPlayerFailedEvent)
+	{
+		// TODO
+	}
+
 	override fun onEvent(event: SoundMovedEvent) {}
-
 	override fun onEvent(event: SoundAddedEvent) {}
-
 	override fun onEvent(event: SoundChangedEvent) {}
 }

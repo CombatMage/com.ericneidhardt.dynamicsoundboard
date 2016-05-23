@@ -150,7 +150,7 @@ class ExoMediaPlayer
 
 	override fun playSound(): Boolean
 	{
-		this.releasePlayerSchedule?.apply { handler.removeCallbacks(this) }
+		this.releasePlayerSchedule?.let { this.handler.removeCallbacks(it) }
 
 		this.volume = this.volumeController.maxVolume
 
@@ -200,6 +200,10 @@ class ExoMediaPlayer
 
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
+
+		// for testings
+		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINED))
+
 		return !this.isPlayingSound
 	}
 
@@ -210,7 +214,7 @@ class ExoMediaPlayer
 
 	override fun setSoundUri(uri: String)
 	{
-		this.releasePlayerSchedule?.apply { handler.removeCallbacks(this) }
+		this.releasePlayerSchedule?.let { this.handler.removeCallbacks(it) }
 
 		this.mediaPlayerData.uri = uri
 		this.mediaPlayerData.updateItemInDatabaseAsync()
