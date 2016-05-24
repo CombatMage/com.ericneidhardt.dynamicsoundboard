@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -23,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener
@@ -72,6 +74,7 @@ class SoundSheetFragment :
 	private val soundsDataAccess: SoundsDataAccess = SoundboardApplication.soundsDataAccess
 
 	private var soundPresenter: SoundPresenter? = null
+	private var snackbar: Snackbar? = null
 
 	private val floatingActionButton: AddPauseFloatingActionButton? by lazy { this.fb_layout_fab }
 	override val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
@@ -140,7 +143,7 @@ class SoundSheetFragment :
 	override fun onPause()
 	{
 		super.onPause()
-		this.soundPresenter!!.onDetachedFromWindow()
+		this.soundPresenter?.onDetachedFromWindow()
 		this.soundPresenter?.setProgressUpdateTimer(false)
 	}
 
@@ -213,7 +216,11 @@ class SoundSheetFragment :
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerFailedEvent)
 	{
+		this.snackbar?.dismiss()
+		val message = "MediaPlayerFailedEvent: $event"
+		Logger.e(LOG_TAG, message)
 		// TODO
+		this.snackbar = this.makeSnackbar(message, Snackbar.LENGTH_INDEFINITE, null).apply { this.show() }
 	}
 
 	override fun onEvent(event: SoundMovedEvent) {}

@@ -235,7 +235,7 @@ private class PendingDeletionHandler
 
 	fun requestItemDeletion(item: MediaPlayerController)
 	{
-		this.deletionTask?.apply { handler.removeCallbacks(this) }
+		this.deletionTask?.let { this.handler.removeCallbacks(it) }
 
 		item.isDeletionPending = true
 		if (item.isPlayingSound) item.stopSound()
@@ -244,7 +244,8 @@ private class PendingDeletionHandler
 		this.deletionTask = object : KillableRunnable()
 		{
 			override fun call() { deletePendingItems() }
-		}.apply { handler.postDelayed(this, DELETION_TIMEOUT.toLong()) }
+		}
+		this.deletionTask?.let { this.handler.postDelayed(it, DELETION_TIMEOUT.toLong()) }
 
 		this.snackbar = this.snackbarPresenter.makeSnackbarForDeletion(this.pendingDeletions.size,
 				DELETION_TIMEOUT, this.snackbarAction).apply { this.show() }
@@ -252,7 +253,7 @@ private class PendingDeletionHandler
 
 	private fun deletePendingItems()
 	{
-		this.deletionTask?.apply { handler.removeCallbacks(this) }
+		this.deletionTask?.let { this.handler.removeCallbacks(it) }
 		this.soundsDataStorage.removeSounds(this.pendingDeletions)
 		this.snackbar?.dismiss()
 		this.pendingDeletions.clear()
@@ -260,7 +261,7 @@ private class PendingDeletionHandler
 
 	private fun restoreDeletedItems()
 	{
-		this.deletionTask?.apply { handler.removeCallbacks(this) }
+		this.deletionTask?.let { this.handler.removeCallbacks(it) }
 		this.pendingDeletions.map { item ->
 			item.isDeletionPending = false
 			soundPresenter.adapter?.notifyItemChanged(item)

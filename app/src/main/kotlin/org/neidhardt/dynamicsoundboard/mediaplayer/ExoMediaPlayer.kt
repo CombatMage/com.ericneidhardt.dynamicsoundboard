@@ -18,6 +18,7 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 11.04.2016.
@@ -61,8 +62,8 @@ class ExoMediaPlayer
 	private val handler = EnhancedHandler()
 	private val volumeController = VolumeController(this)
 
+	private var exoPlayer by Delegates.notNull<ExoPlayer>()
 	private var audioRenderer: MediaCodecAudioTrackRenderer? = null
-	private var exoPlayer = ExoPlayer.Factory.newInstance(RENDER_COUNT)
 
 	private var releasePlayerSchedule: KillableRunnable? = null
 	private var lastPosition: Int? = null
@@ -85,10 +86,9 @@ class ExoMediaPlayer
 				allocator,
 				BUFFER_SEGMENT_SIZE * BUFFER_SEGMENT_COUNT)
 
+		this.exoPlayer = ExoPlayer.Factory.newInstance(RENDER_COUNT)
+		this.exoPlayer.addListener(this@ExoMediaPlayer)
 		this.audioRenderer = MediaCodecAudioTrackRenderer(sampleSource, MediaCodecSelector.DEFAULT)
-
-		this.exoPlayer = ExoPlayer.Factory.newInstance(1)
-		this.exoPlayer.addListener(this)
 	}
 
 	override var isDeletionPending: Boolean = false
@@ -173,7 +173,7 @@ class ExoMediaPlayer
 
 	override fun stopSound(): Boolean
 	{
-		this.releasePlayerSchedule?.apply { handler.removeCallbacks(this) }
+		this.releasePlayerSchedule?.let { this.handler.removeCallbacks(it) }
 		this.exoPlayer.release()
 		this.init()
 
@@ -190,19 +190,20 @@ class ExoMediaPlayer
 			{
 				val position = progress // remember the paused position so it can reused later
 				exoPlayer.release()
+
+				// TODO for debugging only
+				eventBus.post(MediaPlayerFailedEvent(this@ExoMediaPlayer, PlayerAction.UNDEFINED, "player cleared after timeout"))
+
 				init() // init sets lastPosition to 0, therefore we set the position after ini
 				lastPosition = position
 			}
-		}.apply { handler.postDelayed(this, RELEASE_DELAY) }
-
+		}
+		this.releasePlayerSchedule?.let { this.handler.postDelayed(it, RELEASE_DELAY) }
 
 		this.exoPlayer.playWhenReady = false
 
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
-
-		// for testings
-		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINED))
 
 		return !this.isPlayingSound
 	}
@@ -225,7 +226,7 @@ class ExoMediaPlayer
 
 	override fun destroy(postStateChanged: Boolean)
 	{
-		this.releasePlayerSchedule?.apply { handler.removeCallbacks(this) }
+		this.releasePlayerSchedule?.let { this.handler.removeCallbacks(it) }
 		this.volumeController.cancelFadeOut()
 
 		this.exoPlayer.release()
@@ -238,7 +239,7 @@ class ExoMediaPlayer
 	{
 		Logger.e(TAG, "onPlayerError for $this with exception $error")
 		this.init()
-		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINED))
+		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINED, error.message ?: ""))
 	}
 
 	override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int)

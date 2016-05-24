@@ -30,19 +30,21 @@ class VolumeController(private val mediaPlayerController: MediaPlayerController)
 
 	fun cancelFadeOut()
 	{
-		this.fadeOutSchedule?.apply { handler.removeCallbacks(this) }
+		this.fadeOutSchedule?.let { this.handler.removeCallbacks(it) }
 	}
 
 	private fun scheduleNextVolumeChange()
 	{
 		val delay = FADE_OUT_DURATION / INT_VOLUME_MAX
+
 		this.fadeOutSchedule = object : KillableRunnable()
 		{
 			override fun call()
 			{
 				scheduleNexFadeOutIteration()
 			}
-		}.apply { handler.postDelayed(this, delay.toLong()) }
+		}
+		this.fadeOutSchedule?.let { this.handler.postDelayed(it, delay.toLong()) }
 	}
 
 	private fun scheduleNexFadeOutIteration()

@@ -8,7 +8,10 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.PlayerAction
  */
 data class MediaPlayerCompletedEvent(val player: MediaPlayerController)
 
-data class MediaPlayerFailedEvent(val player: MediaPlayerController, val failingAction: PlayerAction)
+data class MediaPlayerFailedEvent(
+		val player: MediaPlayerController,
+		val failingAction: PlayerAction,
+		val message: String)
 
 data class MediaPlayerStateChangedEvent(val player: MediaPlayerController, val isAlive: Boolean)
 {
