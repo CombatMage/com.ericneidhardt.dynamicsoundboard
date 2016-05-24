@@ -191,9 +191,6 @@ class ExoMediaPlayer
 				val position = progress // remember the paused position so it can reused later
 				exoPlayer.release()
 
-				// TODO for debugging only
-				eventBus.post(MediaPlayerFailedEvent(this@ExoMediaPlayer, PlayerAction.UNDEFINED, "player cleared after timeout"))
-
 				init() // init sets lastPosition to 0, therefore we set the position after ini
 				lastPosition = position
 			}

@@ -16,7 +16,7 @@ class EnhancedHandler : Handler()
     {
 		if (r == null)
 		{
-			this.submittedCallbacks.map { it.isKilled = true }
+			this.submittedCallbacks.forEach { it.isKilled = true }
             this.submittedCallbacks.clear()
 			super.removeCallbacks(null)
 		}
