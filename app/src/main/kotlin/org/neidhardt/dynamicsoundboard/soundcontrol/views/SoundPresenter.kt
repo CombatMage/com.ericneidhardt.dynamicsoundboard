@@ -241,10 +241,7 @@ private class PendingDeletionHandler
 		if (item.isPlayingSound) item.stopSound()
 
 		this.pendingDeletions.add(item)
-		this.deletionTask = object : KillableRunnable()
-		{
-			override fun call() { deletePendingItems() }
-		}
+		this.deletionTask = KillableRunnable({ deletePendingItems() })
 		this.deletionTask?.let { this.handler.postDelayed(it, DELETION_TIMEOUT.toLong()) }
 
 		this.snackbar = this.snackbarPresenter.makeSnackbarForDeletion(this.pendingDeletions.size,

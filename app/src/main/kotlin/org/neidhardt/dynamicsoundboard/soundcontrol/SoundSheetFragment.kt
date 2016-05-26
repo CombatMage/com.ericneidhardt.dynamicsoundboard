@@ -24,7 +24,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener
@@ -217,9 +216,7 @@ class SoundSheetFragment :
 	override fun onEvent(event: MediaPlayerFailedEvent)
 	{
 		this.snackbar?.dismiss()
-		val message = "MediaPlayerFailedEvent: $event"
-		Logger.e(LOG_TAG, message)
-		// TODO
+		val message = "${this.coordinatorLayout.context.resources.getString(R.string.sound_control_error_during_playback)}: ${event.player.mediaPlayerData.label}"
 		this.snackbar = this.makeSnackbar(message, Snackbar.LENGTH_INDEFINITE, null).apply { this.show() }
 	}
 

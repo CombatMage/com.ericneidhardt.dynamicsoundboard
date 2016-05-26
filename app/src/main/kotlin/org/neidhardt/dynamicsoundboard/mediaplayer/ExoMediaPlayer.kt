@@ -15,6 +15,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.misc.letThis
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
@@ -184,18 +185,14 @@ class ExoMediaPlayer
 
 	override fun pauseSound(): Boolean
 	{
-		this.releasePlayerSchedule = object : KillableRunnable()
-		{
-			override fun call()
-			{
-				val position = progress // remember the paused position so it can reused later
-				exoPlayer.release()
+		this.releasePlayerSchedule = KillableRunnable({
+			val position = progress // remember the paused position so it can reused later
+			exoPlayer.release()
 
-				init() // init sets lastPosition to 0, therefore we set the position after ini
-				lastPosition = position
-			}
-		}
-		this.releasePlayerSchedule?.let { this.handler.postDelayed(it, RELEASE_DELAY) }
+			init() // init sets lastPosition to 0, therefore we set the position after ini
+			lastPosition = position
+			postStateChangedEvent(true)
+		}).letThis { this.handler.postDelayed(it, RELEASE_DELAY) }
 
 		this.exoPlayer.playWhenReady = false
 

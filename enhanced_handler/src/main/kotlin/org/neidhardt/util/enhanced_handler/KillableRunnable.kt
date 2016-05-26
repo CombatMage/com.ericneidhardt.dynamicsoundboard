@@ -3,7 +3,7 @@ package org.neidhardt.util.enhanced_handler
 /**
  * File created by eric.neidhardt on 23.11.2015.
  */
-abstract class KillableRunnable : Runnable
+class KillableRunnable(private val task: () -> Unit ) : Runnable
 {
 	var handler: EnhancedHandler? = null
 
@@ -17,10 +17,8 @@ abstract class KillableRunnable : Runnable
 					"using either post or postDelayed")
 
 		if (!isKilled)
-			this.call()
+			this.task()
 
 		this.handler?.removeCallbacks(this)
 	}
-
-	abstract fun call()
 }

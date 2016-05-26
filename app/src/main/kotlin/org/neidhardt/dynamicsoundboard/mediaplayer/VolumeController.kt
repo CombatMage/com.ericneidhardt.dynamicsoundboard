@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
+import org.neidhardt.dynamicsoundboard.misc.letThis
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 
@@ -37,14 +38,9 @@ class VolumeController(private val mediaPlayerController: MediaPlayerController)
 	{
 		val delay = FADE_OUT_DURATION / INT_VOLUME_MAX
 
-		this.fadeOutSchedule = object : KillableRunnable()
-		{
-			override fun call()
-			{
-				scheduleNexFadeOutIteration()
-			}
-		}
-		this.fadeOutSchedule?.let { this.handler.postDelayed(it, delay.toLong()) }
+		this.fadeOutSchedule = KillableRunnable({
+			scheduleNexFadeOutIteration()
+		}).letThis { this.handler.postDelayed(it, delay.toLong()) }
 	}
 
 	private fun scheduleNexFadeOutIteration()
