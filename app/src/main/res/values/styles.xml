@@ -65,6 +65,10 @@
 		<item name="typeface">roboto_medium</item>
 	</style>
 
+	<style name="Theme.EditText" parent="TextAppearance.AppCompat.Subhead">
+		<item name="typeface">roboto_regular</item>
+	</style>
+
 	<style name="Theme.TextView.Body1" parent="TextAppearance.AppCompat.Body1">
 		<item name="typeface">roboto_regular</item>
 	</style>
