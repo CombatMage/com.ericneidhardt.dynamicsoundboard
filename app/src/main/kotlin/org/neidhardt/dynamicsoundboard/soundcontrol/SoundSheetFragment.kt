@@ -196,7 +196,7 @@ class SoundSheetFragment :
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundRenameEvent)
 	{
-		RenameSoundFileDialog(this.fragmentManager, event.data)
+		RenameSoundFileDialog.show(this.fragmentManager, event.data)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

@@ -19,6 +19,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner
 import java.util.*
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 23.02.2015.
@@ -30,8 +31,8 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
 	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
 
-	override var fragmentTag: String? = null
-	override var player: MediaPlayerController? = null
+	override var fragmentTag: String by Delegates.notNull<String>()
+	override var player: MediaPlayerController by Delegates.notNull<MediaPlayerController>()
 
 	private var soundName: CustomEditText? = null
 	private var soundSheetName: CustomEditText? = null
@@ -65,7 +66,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 				deliverResult()
 				dismiss()
 				if (hasLabelChanged)
-					RenameSoundFileDialog(fragmentManager, player!!.mediaPlayerData)
+					RenameSoundFileDialog.show(fragmentManager, player!!.mediaPlayerData)
 			})
 			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
 		}.create()

@@ -174,7 +174,8 @@
 	<string name="dialog_load_layout_message">Eine gespeichtere SoundKonfiguration auswählen um diese zu laden.</string>
 	<string name="dialog_load_layout_no_file_info">Keine Datei zum Laden ausgewählt.</string>
 
-	<string name="dialog_rename_sound_file_title">Datei auch umbenennen?</string>
+	<string name="dialog_rename_sound_file_confirm">Datei auch umbenennen</string>
+	<string name="dialog_rename_sound_file_cancel">Nur in der App ändern</string>
 	<string name="dialog_rename_sound_file_message">Soll die zugehörige Musikdatei ebenfalls umbenannt werden?</string>
 	<string name="dialog_rename_sound_file_current_name">Aktueller Name:</string>
 	<string name="dialog_rename_sound_file_new_name">Neuer Name:</string>

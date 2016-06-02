@@ -13,8 +13,8 @@ abstract class SoundSettingsBaseDialog : BaseDialog()
 {
 	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
 
-	protected abstract var fragmentTag: String?
-	protected abstract var player: MediaPlayerController?
+	protected abstract var fragmentTag: String
+	protected abstract var player: MediaPlayerController
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -22,7 +22,7 @@ abstract class SoundSettingsBaseDialog : BaseDialog()
 		if (args != null) {
 			val playerId = args.getString(KEY_PLAYER_ID)
 			this.fragmentTag = args.getString(KEY_FRAGMENT_TAG)
-			this.player = this.soundsDataAccess.getSoundById(this.fragmentTag as String, playerId)
+			this.player = this.soundsDataAccess.getSoundById(this.fragmentTag, playerId) as MediaPlayerController
 		}
 	}
 

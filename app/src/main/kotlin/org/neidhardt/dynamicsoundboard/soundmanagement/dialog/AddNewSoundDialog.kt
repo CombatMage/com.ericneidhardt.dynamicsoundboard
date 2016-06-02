@@ -231,7 +231,7 @@ private class AddNewSoundDialogPresenter
 	private fun showRenameDialog(renamedMediaPlayers: List<MediaPlayerData>)
 	{
 		for (data in renamedMediaPlayers)
-			RenameSoundFileDialog(this.dialog.fragmentManager, data)
+			RenameSoundFileDialog.show(this.dialog.fragmentManager, data)
 	}
 
 	private fun addAnotherSound()
