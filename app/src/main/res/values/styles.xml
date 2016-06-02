@@ -71,10 +71,12 @@
 		<item name="android:textColor">@color/text_body_secondary</item>
 	</style>
 
-	<style name="Theme.TextView.Subtitle" parent="Theme.AppTheme">
+	<style name="Theme.TextView.Body1" parent="TextAppearance.AppCompat.Body1">
 		<item name="typeface">roboto_regular</item>
-		<item name="android:textSize">@dimen/text_subheading</item>
-		<item name="android:textColor">@color/text_body_primary</item>
+	</style>
+
+	<style name="Theme.TextView.Body2" parent="TextAppearance.AppCompat.Body2">
+		<item name="typeface">roboto_medium</item>
 	</style>
 
 </resources>
