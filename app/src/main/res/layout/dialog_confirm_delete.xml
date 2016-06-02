@@ -7,5 +7,5 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:padding="@dimen/padding_dialog"
-		style="@style/Theme.TextView.Body"
+		style="@style/Theme.TextView.Body1"
 		tools:text="@string/dialog_confirm_delete_all_soundsheets_message"/>

@@ -21,7 +21,7 @@
 			android:layout_marginTop="@dimen/margin_default"
 			android:layout_marginBottom="@dimen/margin_default"
 			android:text="@string/dialog_sound_settings_message"
-			style="@style/Theme.TextView.Body"/>
+			style="@style/Theme.TextView.Body1"/>
 
 	<CheckBox
 			android:id="@+id/cb_add_new_sound_sheet"

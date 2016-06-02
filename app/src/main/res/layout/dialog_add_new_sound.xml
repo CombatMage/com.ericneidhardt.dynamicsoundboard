@@ -34,7 +34,7 @@
 				android:layout_alignParentLeft="true"
 				android:layout_alignTop="@id/b_add_another_sound"
 				android:layout_alignBottom="@id/b_add_another_sound"
-				style="@style/Theme.TextView.Body"
+				style="@style/Theme.TextView.Body1"
 				android:text="@string/dialog_add_new_sound_message"/>
 
 	</RelativeLayout>

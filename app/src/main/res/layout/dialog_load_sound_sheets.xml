@@ -14,7 +14,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="@dimen/margin_default"
 			android:text="@string/dialog_load_layout_message"
-			style="@style/Theme.TextView.Body"/>
+			style="@style/Theme.TextView.Body1"/>
 
 	<android.support.v7.widget.RecyclerView
 			android:id="@+id/rv_dialog"

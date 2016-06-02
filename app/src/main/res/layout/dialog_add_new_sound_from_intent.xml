@@ -24,7 +24,7 @@
 		<com.devspark.robototextview.widget.RobotoTextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				style="@style/Theme.TextView.Body"
+				style="@style/Theme.TextView.Body1"
 				android:text="@string/dialog_add_new_sound_from_intent_message"/>
 
 		<android.support.design.widget.TextInputLayout

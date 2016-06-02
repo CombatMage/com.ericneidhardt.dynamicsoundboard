@@ -65,12 +65,6 @@
 		<item name="typeface">roboto_medium</item>
 	</style>
 
-	<style name="Theme.TextView.Body" parent="Theme.AppTheme">
-		<item name="typeface">roboto_medium</item>
-		<item name="android:textSize">@dimen/text_body</item>
-		<item name="android:textColor">@color/text_body_secondary</item>
-	</style>
-
 	<style name="Theme.TextView.Body1" parent="TextAppearance.AppCompat.Body1">
 		<item name="typeface">roboto_regular</item>
 	</style>
