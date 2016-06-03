@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.views
+package org.neidhardt.dynamicsoundboard.soundmanagement.dialog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -29,8 +29,8 @@ abstract class SoundSettingsBaseDialog : BaseDialog()
 	abstract override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 
 	companion object {
-		private val KEY_PLAYER_ID = "org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsBaseDialog.playerId"
-		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsBaseDialog.fragmentTag"
+		private val KEY_PLAYER_ID = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsBaseDialog.playerId"
+		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsBaseDialog.fragmentTag"
 
 		fun addArguments(dialog: SoundSettingsBaseDialog, playerId: String, fragmentTag: String) {
 			val args = Bundle()

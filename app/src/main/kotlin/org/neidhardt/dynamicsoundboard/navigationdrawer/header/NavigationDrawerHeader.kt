@@ -153,7 +153,7 @@ class NavigationDrawerHeaderPresenter
 		if (this.view == null || this.soundLayoutModel == null)
 			return
 
-		this.openSoundLayouts = false
+		this.openSoundLayouts = true
 		this.view?.animateLayoutChanges()
 		this.view?.showCurrentLayoutName(this.soundLayoutModel.getActiveSoundLayout().label)
 	}

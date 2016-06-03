@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.views
+package org.neidhardt.dynamicsoundboard.soundmanagement.dialog
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -14,7 +14,6 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner
@@ -51,7 +50,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 
 		this.addNewSoundSheet!!.setOnCheckedChangeListener(this)
 
-		this.soundName!!.text = this.player!!.mediaPlayerData.label
+		this.soundName!!.text = this.player.mediaPlayerData.label
 
 		this.setAvailableSoundSheets()
 
@@ -62,11 +61,11 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 			this.setTitle(R.string.dialog_sound_settings_title)
 			this.setView(view)
 			this.setPositiveButton(R.string.dialog_save, { dialogInterface, i ->
-				val hasLabelChanged = player!!.mediaPlayerData.label != soundName!!.displayedText
+				val hasLabelChanged = player.mediaPlayerData.label != soundName!!.displayedText
 				deliverResult()
 				dismiss()
 				if (hasLabelChanged)
-					RenameSoundFileDialog.show(fragmentManager, player!!.mediaPlayerData)
+					RenameSoundFileDialog.show(fragmentManager, player.mediaPlayerData)
 			})
 			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
 		}.create()
@@ -81,7 +80,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 			labels.add(soundSheets[i].label)
 		}
 		if (this.indexOfCurrentFragment == -1)
-			throw IllegalStateException(TAG + " Current fragment of sound " + this.player!!.mediaPlayerData + " is not found in list of sound sheets " + soundSheets)
+			throw IllegalStateException(TAG + " Current fragment of sound " + this.player.mediaPlayerData + " is not found in list of sound sheets " + soundSheets)
 
 		this.soundSheetSpinner!!.setItems(labels)
 		this.soundSheetSpinner!!.setSelectedItem(this.indexOfCurrentFragment)
@@ -105,13 +104,13 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 		val hasSoundSheetChanged = addNewSoundSheet || indexOfSelectedSoundSheet != this.indexOfCurrentFragment
 
 		if (!hasSoundSheetChanged) {
-			this.player!!.mediaPlayerData.label = soundLabel
-			this.player!!.mediaPlayerData.updateItemInDatabaseAsync()
-			EventBus.getDefault().post(SoundChangedEvent(this.player!!))
+			this.player.mediaPlayerData.label = soundLabel
+			this.player.mediaPlayerData.updateItemInDatabaseAsync()
+			EventBus.getDefault().post(SoundChangedEvent(this.player))
 		} else {
-			this.soundsDataStorage.removeSounds(listOf(this.player!!))
+			this.soundsDataStorage.removeSounds(listOf(this.player))
 
-			val uri = Uri.parse(this.player?.mediaPlayerData?.uri)
+			val uri = Uri.parse(this.player.mediaPlayerData.uri)
 
 			val mediaPlayerData: MediaPlayerData
 
@@ -135,7 +134,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 
 		fun showInstance(manager: FragmentManager, playerData: MediaPlayerData) {
 			val dialog = SoundSettingsDialog()
-			SoundSettingsBaseDialog.Companion.addArguments(dialog, playerData.playerId, playerData.fragmentTag)
+			addArguments(dialog, playerData.playerId, playerData.fragmentTag)
 			dialog.show(manager, TAG)
 		}
 	}

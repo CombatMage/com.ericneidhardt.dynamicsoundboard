@@ -23,7 +23,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEve
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsBaseDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsBaseDialog
 import java.io.File
 import java.io.IOException
 import java.util.*

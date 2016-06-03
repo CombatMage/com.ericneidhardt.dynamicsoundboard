@@ -41,8 +41,8 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayou
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeletePlayListDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundFromIntentDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeletePlayListDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
@@ -172,10 +172,10 @@ class SoundActivity :
 		if (intent.action == Intent.ACTION_VIEW && intent.data != null)
 		{
 			if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
-				AddNewSoundFromIntent.showInstance(this.supportFragmentManager, intent.data,
+				AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data,
 						this.soundSheetsDataUtil.getSuggestedName(), null)
 			else
-				AddNewSoundFromIntent.showInstance(this.supportFragmentManager, intent.data,
+				AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data,
 						this.soundSheetsDataUtil.getSuggestedName(), soundSheetsDataAccess.getSoundSheets())
 		}
 	}

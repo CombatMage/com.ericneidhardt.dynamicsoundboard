@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.views
+package org.neidhardt.dynamicsoundboard.soundmanagement.dialog
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -19,7 +19,7 @@ import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner
 import java.util.*
 
-class AddNewSoundFromIntent : BaseDialog(), CompoundButton.OnCheckedChangeListener
+class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChangeListener
 {
 	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
 	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
@@ -143,7 +143,7 @@ class AddNewSoundFromIntent : BaseDialog(), CompoundButton.OnCheckedChangeListen
 
 	companion object {
 
-		private val TAG = AddNewSoundFromIntent::class.java.name
+		private val TAG = AddNewSoundFromIntentDialog::class.java.name
 
 		private val KEY_SOUND_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.uri"
 		private val KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.suggestedName"
@@ -151,7 +151,7 @@ class AddNewSoundFromIntent : BaseDialog(), CompoundButton.OnCheckedChangeListen
 		private val KEY_AVAILABLE_SOUND_SHEET_IDS = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.availableSoundSheetIds"
 
 		fun showInstance(manager: FragmentManager, uri: Uri, suggestedName: String, availableSoundSheets: List<SoundSheet>?) {
-			val dialog = AddNewSoundFromIntent()
+			val dialog = AddNewSoundFromIntentDialog()
 
 			val args = Bundle()
 			args.putString(KEY_SOUND_URI, uri.toString())

@@ -36,8 +36,8 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDia
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.SnackbarPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton

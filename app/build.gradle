@@ -37,8 +37,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
 		targetSdkVersion 23
-		versionCode 22507
-		versionName "2.25.7"
+		versionCode 22508
+		versionName "2.25.8"
 		resConfigs "de"
 	}
 
@@ -107,7 +107,7 @@ dependencies {
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
 	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.4'
 
-	compile 'com.github.clans:fab:1.6.3'
+	compile 'com.github.clans:fab:1.6.4'
 
 	compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
 
