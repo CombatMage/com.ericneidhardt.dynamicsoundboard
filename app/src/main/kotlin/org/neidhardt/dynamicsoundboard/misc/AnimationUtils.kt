@@ -14,43 +14,6 @@ import android.view.ViewAnimationUtils
 object AnimationUtils
 {
 
-	fun createSlowCircularReveal(view: View, startX: Int, startY: Int, startRadius: Float, endRadius: Float): Animator?
-	{
-		if (!AndroidVersion.IS_LOLLIPOP_AVAILABLE)
-			return null
-
-		val animationDuration = view.resources.getInteger(android.R.integer.config_longAnimTime)
-		val animatorSet = AnimatorSet()
-
-		val revealAnimator = createCircularReveal(view, startX, startY, startRadius, endRadius) ?: return null
-
-		revealAnimator.duration = animationDuration.toLong()
-
-		view.alpha = 1f
-		val fadeOut = ObjectAnimator.ofFloat(view, "alpha", 0f)
-		fadeOut.duration = animationDuration.toLong()
-
-		animatorSet.play(revealAnimator).with(fadeOut)
-		animatorSet.addListener(object : Animator.AnimatorListener {
-			override fun onAnimationStart(animation: Animator) {
-				view.visibility = View.VISIBLE
-			}
-
-			override fun onAnimationEnd(animation: Animator) {
-				view.visibility = View.GONE
-			}
-
-			override fun onAnimationCancel(animation: Animator) {
-				view.visibility = View.GONE
-			}
-
-			override fun onAnimationRepeat(animation: Animator) {
-			}
-		})
-
-		return animatorSet
-	}
-
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	fun createCircularReveal(view: View, startX: Int, startY: Int, startRadius: Float, endRadius: Float): Animator?
 	{
