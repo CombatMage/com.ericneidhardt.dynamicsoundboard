@@ -1,14 +1,13 @@
-package org.neidhardt.dynamicsoundboard.views.edittext
+package org.neidhardt.ui_utils.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.KeyEvent
-import com.devspark.robototextview.widget.RobotoEditText
 
 /**
  * Project created by eric.neidhardt on 08.09.2014.
  */
-class EditTextBackEvent : RobotoEditText
+class EditTextBackEvent : com.devspark.robototextview.widget.RobotoEditText
 {
 	var onImeBackListener: EditTextImeBackListener? = null
 

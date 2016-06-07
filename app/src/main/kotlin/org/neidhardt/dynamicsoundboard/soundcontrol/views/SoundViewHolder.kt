@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
+import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressTimer
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder
 import kotlin.properties.Delegates

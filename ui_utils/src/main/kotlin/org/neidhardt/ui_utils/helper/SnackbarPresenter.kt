@@ -1,4 +1,4 @@
-package org.neidhardt.ui_utils
+package org.neidhardt.ui_utils.helper
 
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -12,13 +12,13 @@ interface SnackbarPresenter
 {
 	val coordinatorLayout: CoordinatorLayout
 
-	fun makeSnackbar(messageId: Int, duration: Int, action: SnackbarAction?): android.support.design.widget.Snackbar
+	fun makeSnackbar(messageId: Int, duration: Int, action: SnackbarAction?): Snackbar
 	{
 		val message = this.coordinatorLayout.context.resources.getString(messageId)
 		return this.makeSnackbar(message, duration, action)
 	}
 
-	fun makeSnackbar(message: String, duration: Int, action: SnackbarAction?): android.support.design.widget.Snackbar
+	fun makeSnackbar(message: String, duration: Int, action: SnackbarAction?): Snackbar
 	{
 		return Snackbar.make(this.coordinatorLayout, message, duration).apply {
 			if (action != null) this.setAction(action.labelId, action.action)

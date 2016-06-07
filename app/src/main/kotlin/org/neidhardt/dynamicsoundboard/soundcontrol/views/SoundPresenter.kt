@@ -24,7 +24,7 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.ui_utils.SnackbarPresenter
+import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import java.util.*

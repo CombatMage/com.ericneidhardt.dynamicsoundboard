@@ -39,7 +39,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
-import org.neidhardt.ui_utils.SnackbarPresenter
+import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
 

@@ -46,7 +46,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeletePlayL
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
-import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
+import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
 import java.util.*
 

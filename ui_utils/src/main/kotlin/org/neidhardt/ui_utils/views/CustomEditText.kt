@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.views.edittext
+package org.neidhardt.ui_utils.views
 
 import android.content.Context
 import android.os.Parcel
@@ -12,7 +12,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.TextView
-import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.ui_utils.R
 
 abstract class CustomEditText :
 		FrameLayout,
@@ -141,7 +141,7 @@ abstract class CustomEditText :
 		super.dispatchThawSelfOnly(container)
 	}
 
-	class SavedCustomEditTextState : View.BaseSavedState
+	class SavedCustomEditTextState : BaseSavedState
 	{
 		var value: String? = null
 			private set

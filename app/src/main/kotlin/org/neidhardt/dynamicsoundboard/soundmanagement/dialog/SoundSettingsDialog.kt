@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
-import org.neidhardt.dynamicsoundboard.views.edittext.CustomEditText
+import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner
 import java.util.*
 import kotlin.properties.Delegates

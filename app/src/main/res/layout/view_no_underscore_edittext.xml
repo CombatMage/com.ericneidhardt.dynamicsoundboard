@@ -7,8 +7,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-	<org.neidhardt.dynamicsoundboard.views.edittext.EditTextBackEvent
-			android:id="@+id/edittext"
+	<org.neidhardt.ui_utils.views.EditTextBackEvent
+			android:id="@+id/et_view_no_underscore_edittext"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:inputType="textNoSuggestions"
