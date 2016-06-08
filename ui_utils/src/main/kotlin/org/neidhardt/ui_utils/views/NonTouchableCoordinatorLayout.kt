@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.views
+package org.neidhardt.ui_utils.views
 
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
