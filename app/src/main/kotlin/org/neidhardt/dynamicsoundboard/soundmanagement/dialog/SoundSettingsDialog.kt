@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.ui_utils.views.CustomEditText
-import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner
+import org.neidhardt.ui_utils.views.SimpleSpinner
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -35,7 +35,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 
 	private var soundName: CustomEditText? = null
 	private var soundSheetName: CustomEditText? = null
-	private var soundSheetSpinner: CustomSpinner? = null
+	private var soundSheetSpinner: SimpleSpinner? = null
 	private var addNewSoundSheet: CheckBox? = null
 
 	private var indexOfCurrentFragment = -1
@@ -45,7 +45,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 
 		this.soundName = view.findViewById(R.id.et_name_file) as CustomEditText
 		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as CustomEditText
-		this.soundSheetSpinner = view.findViewById(R.id.s_sound_sheets) as CustomSpinner
+		this.soundSheetSpinner = view.findViewById(R.id.s_sound_sheets) as SimpleSpinner
 		this.addNewSoundSheet = view.findViewById(R.id.cb_add_new_sound_sheet) as CheckBox
 
 		this.addNewSoundSheet!!.setOnCheckedChangeListener(this)
@@ -82,8 +82,8 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 		if (this.indexOfCurrentFragment == -1)
 			throw IllegalStateException(TAG + " Current fragment of sound " + this.player.mediaPlayerData + " is not found in list of sound sheets " + soundSheets)
 
-		this.soundSheetSpinner!!.setItems(labels)
-		this.soundSheetSpinner!!.setSelectedItem(this.indexOfCurrentFragment)
+		this.soundSheetSpinner?.items = labels
+		this.soundSheetSpinner?.setSelection(this.indexOfCurrentFragment)
 	}
 
 	override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {

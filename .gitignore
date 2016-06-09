@@ -2,6 +2,7 @@
 /local.properties
 .DS_Store
 /build
+gradle.properties
 
 # Eclipse
 .classpath
@@ -17,12 +18,15 @@
 # Maven
 log/
 target/
-dao_generator/build/tmp/
+
+# Project
+app/build/jacoco/testDebug.exec
+app/build/outputs/logs/manifest-merger-debug-report.txt
+
+# Project Libs
 dao_generator/build/
 drag_drop_recycler_view/build/
-gradle.properties
 storage_helper/build/
-app/build/outputs/logs/manifest-merger-debug-report.txt
 safe_async_task/build/
-app/build/jacoco/testDebug.exec
 enhanced_handler/build/
+ui_utils/build/

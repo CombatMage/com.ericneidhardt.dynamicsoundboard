@@ -29,7 +29,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
-import org.neidhardt.dynamicsoundboard.views.NonTouchableCoordinatorLayout
+import org.neidhardt.ui_utils.views.NonTouchableCoordinatorLayout
 import kotlin.properties.Delegates
 
 /**

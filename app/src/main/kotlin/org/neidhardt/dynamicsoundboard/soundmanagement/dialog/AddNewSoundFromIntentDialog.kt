@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
-import org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner
+import org.neidhardt.ui_utils.views.SimpleSpinner
 import java.util.*
 
 class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChangeListener
@@ -27,7 +27,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 
 	private var soundName: EditText? = null
 	private var soundSheetName: EditText? = null
-	private var soundSheetSpinner: CustomSpinner? = null
+	private var soundSheetSpinner: SimpleSpinner? = null
 	private var addNewSoundSheet: CheckBox? = null
 
 	private var uri: Uri? = null
@@ -75,7 +75,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 
 		this.soundName = view.findViewById(R.id.et_name_file) as EditText
 		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as EditText
-		this.soundSheetSpinner = view.findViewById(R.id.s_sound_sheets) as CustomSpinner
+		this.soundSheetSpinner = view.findViewById(R.id.s_sound_sheets) as SimpleSpinner
 		this.addNewSoundSheet = view.findViewById(R.id.cb_add_new_sound_sheet) as CheckBox
 
 		this.addNewSoundSheet!!.setOnCheckedChangeListener(this)
@@ -101,7 +101,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		val soundSheetLabels = this.availableSoundSheetLabels
 		if (soundSheetLabels != null)
 		{
-			this.soundSheetSpinner?.setItems(soundSheetLabels)
+			this.soundSheetSpinner?.items = soundSheetLabels
 			this.soundSheetName?.visibility = View.GONE
 		}
 	}

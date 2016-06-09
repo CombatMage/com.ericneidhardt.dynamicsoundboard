@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard;
 
 import org.acra.ACRA
 import org.acra.annotation.ReportsCrashes
+import org.greenrobot.eventbus.EventBus
 
 
 @ReportsCrashes(
