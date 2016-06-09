@@ -32,16 +32,16 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEven
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
-import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
+import org.neidhardt.ui_utils.helper.SnackbarPresenter
+import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
 
 /**
  * File created by eric.neidhardt on 02.07.2015.
@@ -112,7 +112,7 @@ class SoundSheetFragment :
 			soundList.apply {
 				this.adapter = soundPresenter?.adapter
 				this.layoutManager = LinearLayoutManager(this.context)
-				this.addItemDecoration(DividerItemDecoration(this.context))
+				this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			}
 		}
 	}

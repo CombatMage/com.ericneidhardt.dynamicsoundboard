@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.readFromFile
 import org.neidhardt.dynamicsoundboard.reportError
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
+import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -48,7 +48,7 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_load_sound_sheets, null)
 
 		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
-			this.addItemDecoration(DividerItemDecoration(this.context))
+			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
 		}

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers
+package org.neidhardt.ui_utils.recyclerview.decoration
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,9 +7,9 @@ import android.graphics.Rect
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.ui_utils.R
 
-class DividerItemDecoration(val context: Context) : RecyclerView.ItemDecoration()
+class DividerItemDecoration(val context: Context, backgroundColorId: Int, dividerColorId: Int) : RecyclerView.ItemDecoration()
 {
 
 	private val heightDivider: Int
@@ -19,10 +19,10 @@ class DividerItemDecoration(val context: Context) : RecyclerView.ItemDecoration(
 
 	init
 	{
-		val colorBackground = ContextCompat.getColor(context, R.color.background)
-		val colorDivider = ContextCompat.getColor(context, R.color.divider)
+		val colorBackground = ContextCompat.getColor(context, backgroundColorId)
+		val colorDivider = ContextCompat.getColor(context, dividerColorId)
 
-		this.heightDivider = context.resources.getDimensionPixelSize(R.dimen.stroke)
+		this.heightDivider = context.resources.getDimensionPixelSize(R.dimen.size_stroke)
 
 		this.paintDivider = Paint().apply {
 			this.style = Paint.Style.FILL

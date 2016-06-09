@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromFileListTask
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
+import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
 import java.io.File
 import java.util.*
 
@@ -57,7 +57,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_from_directory, null)
 
 		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
-			this.addItemDecoration(DividerItemDecoration(this.context))
+			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
 		}

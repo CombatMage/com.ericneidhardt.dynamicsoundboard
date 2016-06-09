@@ -29,7 +29,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
+import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
 import java.io.File
 import java.util.*
 
@@ -182,7 +182,7 @@ private class AddNewSoundDialogPresenter
 		this.addAnotherSound.setOnClickListener({ this.addAnotherSound() })
 
 		this.addedSoundsLayout.apply {
-			this.addItemDecoration(DividerItemDecoration(this.context))
+			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
 		}
