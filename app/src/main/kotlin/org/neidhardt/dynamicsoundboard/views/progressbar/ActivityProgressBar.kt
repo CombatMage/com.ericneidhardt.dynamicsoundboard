@@ -10,7 +10,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent
 import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEventListener
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
+import org.neidhardt.ui_utils.utils.registerIfRequired
 import kotlin.properties.Delegates
 
 /**

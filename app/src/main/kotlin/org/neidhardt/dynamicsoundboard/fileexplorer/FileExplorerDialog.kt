@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.containsAudioFiles
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
-import org.neidhardt.dynamicsoundboard.misc.longHash
+import org.neidhardt.ui_utils.utils.longHash
 import org.neidhardt.dynamicsoundboard.views.BaseDialog
 import java.io.File
 import java.util.*

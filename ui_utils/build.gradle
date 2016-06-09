@@ -39,6 +39,7 @@ dependencies {
 
 	compile 'com.android.support:design:23.3.0'
 
+	compile 'de.greenrobot:java-common:2.3.1'
 	compile 'org.greenrobot:eventbus:3.0.0'
 
 	compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'

@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
-import org.neidhardt.dynamicsoundboard.misc.letThis
+import org.neidhardt.ui_utils.utils.letThis
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 

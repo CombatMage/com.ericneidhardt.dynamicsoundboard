@@ -101,7 +101,6 @@ dependencies {
 
 	compile 'org.greenrobot:eventbus:3.0.0'
 	compile 'de.greenrobot:greendao:2.1.0'
-	compile 'de.greenrobot:java-common:2.3.1'
 
 	compile 'com.google.android.exoplayer:exoplayer:r1.5.8'
 
