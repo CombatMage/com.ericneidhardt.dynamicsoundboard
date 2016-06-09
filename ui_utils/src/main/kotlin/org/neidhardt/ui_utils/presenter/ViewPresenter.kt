@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.views.presenter
+package org.neidhardt.ui_utils.presenter
 
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired

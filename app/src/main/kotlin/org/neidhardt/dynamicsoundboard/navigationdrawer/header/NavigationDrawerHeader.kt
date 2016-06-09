@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundL
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
-import org.neidhardt.dynamicsoundboard.views.presenter.ViewPresenter
+import org.neidhardt.ui_utils.presenter.ViewPresenter
 
 /**
  * File created by eric.neidhardt on 12.11.2015.

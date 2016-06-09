@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListen
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
-import org.neidhardt.dynamicsoundboard.views.presenter.ViewPresenter
+import org.neidhardt.ui_utils.presenter.ViewPresenter
 
 /**
  * File created by eric.neidhardt on 21.05.2015.

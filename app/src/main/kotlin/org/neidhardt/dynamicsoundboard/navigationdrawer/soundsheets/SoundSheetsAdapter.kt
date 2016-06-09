@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.BaseAdapter
+import org.neidhardt.ui_utils.recyclerview.adapter.BaseAdapter
 
 open class SoundSheetsAdapter
 (

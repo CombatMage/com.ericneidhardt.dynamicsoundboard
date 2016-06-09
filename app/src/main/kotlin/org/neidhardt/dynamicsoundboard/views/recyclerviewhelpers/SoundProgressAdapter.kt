@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.ui_utils.recyclerview.adapter.BaseAdapter
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
