@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.ui_utils.utils.longHash
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter
+import org.neidhardt.utils.longHash
 
 /**
  * File created by eric.neidhardt on 29.06.2015.

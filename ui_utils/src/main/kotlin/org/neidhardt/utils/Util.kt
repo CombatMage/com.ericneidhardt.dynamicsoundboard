@@ -1,6 +1,7 @@
 package org.neidhardt.utils
 
 import android.os.Build
+import de.greenrobot.common.hash.Murmur3A
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -14,7 +15,7 @@ object AndroidVersion
 val String.longHash: Long
 	get()
 	{
-		val generator = de.greenrobot.common.hash.Murmur3A()
+		val generator = Murmur3A()
 		generator.update(this.toByteArray())
 		return generator.value
 	}

@@ -13,7 +13,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.ui_utils.utils.registerIfRequired
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -21,6 +20,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInListForId
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInMapForId
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
+import org.neidhardt.utils.registerIfRequired
 import java.util.*
 
 /**

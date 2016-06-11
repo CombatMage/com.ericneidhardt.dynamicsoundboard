@@ -24,7 +24,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.ui_utils.utils.registerIfRequired
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
@@ -42,6 +41,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteS
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
+import org.neidhardt.utils.registerIfRequired
 
 /**
  * File created by eric.neidhardt on 02.07.2015.

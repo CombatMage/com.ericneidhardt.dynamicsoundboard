@@ -11,9 +11,9 @@ import android.net.Uri
 import android.support.v7.app.NotificationCompat
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.ui_utils.utils.AndroidVersion
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
+import org.neidhardt.utils.AndroidVersion
 
 /**
  * File created by eric.neidhardt on 04.12.2014.

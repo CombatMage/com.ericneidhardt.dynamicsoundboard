@@ -19,7 +19,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.ui_utils.utils.registerIfRequired
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -27,6 +26,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
+import org.neidhardt.utils.registerIfRequired
 import java.util.*
 
 /**

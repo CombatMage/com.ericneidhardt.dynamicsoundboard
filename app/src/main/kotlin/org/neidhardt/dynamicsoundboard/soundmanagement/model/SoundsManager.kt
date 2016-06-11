@@ -10,7 +10,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
-import org.neidhardt.ui_utils.utils.GreenDaoHelper
+import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile

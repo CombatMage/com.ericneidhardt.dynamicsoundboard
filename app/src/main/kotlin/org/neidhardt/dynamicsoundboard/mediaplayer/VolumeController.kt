@@ -1,8 +1,8 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
-import org.neidhardt.ui_utils.utils.letThis
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
+import org.neidhardt.utils.letThis
 
 /**
  * File created by eric.neidhardt on 11.04.2016.

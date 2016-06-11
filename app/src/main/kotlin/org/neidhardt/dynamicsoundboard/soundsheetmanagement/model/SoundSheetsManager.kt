@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
-import org.neidhardt.ui_utils.utils.GreenDaoHelper
+import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent

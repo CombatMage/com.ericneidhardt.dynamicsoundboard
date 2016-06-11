@@ -2,8 +2,8 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer
 
 import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.ui_utils.utils.registerIfRequired
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
+import org.neidhardt.utils.registerIfRequired
 
 /**
  * File created by eric.neidhardt on 26.05.2015.

@@ -11,7 +11,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
-import org.neidhardt.ui_utils.utils.registerIfRequired
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
@@ -30,6 +29,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.ui_utils.views.NonTouchableCoordinatorLayout
+import org.neidhardt.utils.registerIfRequired
 import kotlin.properties.Delegates
 
 /**

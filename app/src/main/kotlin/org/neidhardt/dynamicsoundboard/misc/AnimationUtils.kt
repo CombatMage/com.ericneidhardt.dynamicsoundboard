@@ -1,13 +1,11 @@
 package org.neidhardt.dynamicsoundboard.misc
 
 import android.animation.Animator
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.annotation.TargetApi
 import android.os.Build
 import android.view.View
 import android.view.ViewAnimationUtils
-import org.neidhardt.ui_utils.utils.AndroidVersion
+import org.neidhardt.utils.AndroidVersion
 
 /**
  * File created by eric.neidhardt on 31.03.2015.

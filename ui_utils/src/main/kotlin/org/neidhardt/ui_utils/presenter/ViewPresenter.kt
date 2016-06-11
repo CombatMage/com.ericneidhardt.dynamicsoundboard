@@ -1,7 +1,7 @@
 package org.neidhardt.ui_utils.presenter
 
-import org.neidhardt.utils.registerIfRequired
 import org.greenrobot.eventbus.EventBus
+import org.neidhardt.utils.registerIfRequired
 
 /**
  * File created by eric.neidhardt on 22.05.2015.
@@ -28,7 +28,7 @@ interface ViewPresenter<T>
 	fun onAttachedToWindow()
 	{
 		if (this.isEventBusSubscriber)
-			this.eventBus.rexgisterIfRequired(this)
+			this.eventBus.registerIfRequired(this)
 	}
 
 	/**

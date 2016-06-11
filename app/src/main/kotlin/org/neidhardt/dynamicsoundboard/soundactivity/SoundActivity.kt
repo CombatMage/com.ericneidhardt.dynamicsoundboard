@@ -28,7 +28,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.ui_utils.utils.registerIfRequired
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService
@@ -48,6 +47,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundShe
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
 import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
+import org.neidhardt.utils.registerIfRequired
 import java.util.*
 
 /**

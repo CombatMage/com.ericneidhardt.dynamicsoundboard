@@ -7,13 +7,13 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.ui_utils.utils.registerIfRequired
 import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
+import org.neidhardt.utils.registerIfRequired
 
 /**
  * File created by eric.neidhardt on 15.06.2015.
