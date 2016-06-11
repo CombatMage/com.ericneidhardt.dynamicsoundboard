@@ -39,7 +39,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
-import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
+import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
 import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
@@ -75,7 +75,7 @@ class SoundSheetFragment :
 
 	private val snackbarPresenter = SnackbarPresenter()
 
-	private val floatingActionButton: AddPauseFloatingActionButton? by lazy { this.fb_layout_fab }
+	private val floatingActionButton: AddPauseFloatingActionButtonView? by lazy { this.fb_layout_fab }
 	private val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
 
 	override fun onCreate(savedInstanceState: Bundle?) {

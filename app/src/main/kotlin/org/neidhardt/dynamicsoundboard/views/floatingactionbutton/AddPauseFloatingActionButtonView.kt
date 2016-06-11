@@ -21,7 +21,7 @@ import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClic
  */
 private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
 
-class AddPauseFloatingActionButton : FloatingActionButton, MediaPlayerEventListener {
+class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventListener {
 
 	private val eventBus = EventBus.getDefault()
 	private val storage by lazy {
@@ -61,7 +61,7 @@ class AddPauseFloatingActionButton : FloatingActionButton, MediaPlayerEventListe
 
 	override fun onCreateDrawableState(extraSpace: Int): IntArray {
 		val state = super.onCreateDrawableState(extraSpace + PAUSE_STATE.size)
-		if (this.presenter.state == AddPauseFloatingActionView.State.PLAY)
+		if (this.presenter.state == AddPauseFloatingAction.State.PLAY)
 			View.mergeDrawableStates(state, PAUSE_STATE)
 		return state
 	}
@@ -91,9 +91,9 @@ class AddPauseFloatingActionButton : FloatingActionButton, MediaPlayerEventListe
 	private fun setPresenterState() {
 		this.presenter.state =
 				if (this.storage.isAnySoundPlaying)
-					AddPauseFloatingActionView.State.PLAY
+					AddPauseFloatingAction.State.PLAY
 				else
-					AddPauseFloatingActionView.State.ADD
+					AddPauseFloatingAction.State.ADD
 	}
 }
 

@@ -5,23 +5,23 @@ import org.neidhardt.ui_utils.presenter.ViewPresenter
 /**
  * File created by eric.neidhardt on 21.05.2015.
  */
-interface AddPauseFloatingActionView {
+interface AddPauseFloatingAction {
 
-	var state: AddPauseFloatingActionView.State
+	var state: AddPauseFloatingAction.State
 
 	enum class State { PLAY, ADD }
 }
 
-class AddPauseFloatingActionButtonPresenter : AddPauseFloatingActionView, ViewPresenter{
+class AddPauseFloatingActionButtonPresenter : AddPauseFloatingAction, ViewPresenter{
 
-	private var fab: AddPauseFloatingActionButton? = null
+	private var fab: AddPauseFloatingActionButtonView? = null
 
-	fun init(fab: AddPauseFloatingActionButton) {
+	fun init(fab: AddPauseFloatingActionButtonView) {
 		this.fab = fab
 		this.refreshFab()
 	}
 
-	override var state = AddPauseFloatingActionView.State.ADD
+	override var state = AddPauseFloatingAction.State.ADD
 		set(value) {
 			if (value != field) {
 				field = value
