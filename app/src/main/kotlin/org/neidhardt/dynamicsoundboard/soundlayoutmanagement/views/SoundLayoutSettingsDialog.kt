@@ -51,14 +51,6 @@ class SoundLayoutSettingsDialog : SoundLayoutDialog()
 		}
 	}
 
-	interface OnSoundLayoutRenamedEventListener {
-		/**
-		 * This is called by greenRobot EventBus in case the SoundLayout was renamed.
-		 * @param event delivered SoundLayoutRenamedEvent
-		 */
-		fun onEvent(event: SoundLayoutRenamedEvent)
-	}
-
 	companion object {
 		private val TAG = SoundLayoutSettingsDialog::class.java.name
 

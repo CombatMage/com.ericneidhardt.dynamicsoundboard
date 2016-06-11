@@ -11,7 +11,6 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import java.util.*
 
 /**
@@ -38,7 +37,7 @@ class SoundLayoutsPresenter
 ) :
 		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<SoundLayout>,
-		SoundLayoutSettingsDialog.OnSoundLayoutRenamedEventListener,
+		OnSoundLayoutRenamedEventListener,
 		AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener,
 		OnSoundLayoutsChangedEventListener
 {
