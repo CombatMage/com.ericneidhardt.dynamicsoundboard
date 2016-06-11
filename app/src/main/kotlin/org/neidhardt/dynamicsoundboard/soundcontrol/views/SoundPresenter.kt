@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.os.Handler
-import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -23,9 +22,6 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.ui_utils.helper.SnackbarPresenter
-import org.neidhardt.util.enhanced_handler.EnhancedHandler
-import org.neidhardt.util.enhanced_handler.KillableRunnable
 import org.neidhardt.utils.registerIfRequired
 import java.util.*
 
@@ -35,7 +31,7 @@ import java.util.*
 fun createSoundPresenter(
 		fragmentTag: String,
 		eventBus: EventBus,
-		snackbarPresenter: SnackbarPresenter,
+		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit,
 		recyclerView: RecyclerView,
 		soundsDataAccess: SoundsDataAccess,
 		soundsDataStorage: SoundsDataStorage): SoundPresenter
@@ -45,7 +41,7 @@ fun createSoundPresenter(
 			eventBus = eventBus,
 			soundsDataAccess = soundsDataAccess
 	).apply {
-		val deletionHandler = PendingDeletionHandler(this, snackbarPresenter, soundsDataStorage)
+		val deletionHandler = PendingDeletionHandler(this, soundsDataStorage, onItemDeletionRequested)
 		val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(recyclerView.context, deletionHandler,
 				this, fragmentTag, soundsDataStorage)).apply { this.attachToRecyclerView(recyclerView) }
 		val adapter = SoundAdapter(recyclerView, itemTouchHelper, this, soundsDataStorage, eventBus)
@@ -215,65 +211,6 @@ class SoundPresenter
 		if (index != -1)
 			this.adapter?.notifyItemChanged(index)
 	}
-}
-
-private val DELETION_TIMEOUT = 5000
-
-private class PendingDeletionHandler
-(
-		private val soundPresenter: SoundPresenter,
-		private val snackbarPresenter: SnackbarPresenter,
-		private val soundsDataStorage: SoundsDataStorage
-)
-{
-	private val handler = EnhancedHandler()
-	private var deletionTask: KillableRunnable? = null
-	private val pendingDeletions = ArrayList<MediaPlayerController>()
-
-	private var snackbar: Snackbar? = null
-	private val snackbarAction = SnackbarPresenter.SnackbarAction(R.string.sound_control_deletion_pending_undo, { this.restoreDeletedItems() } )
-
-	fun requestItemDeletion(item: MediaPlayerController)
-	{
-		this.deletionTask?.let { this.handler.removeCallbacks(it) }
-
-		item.isDeletionPending = true
-		if (item.isPlayingSound) item.stopSound()
-
-		this.pendingDeletions.add(item)
-		this.deletionTask = KillableRunnable({ deletePendingItems() })
-		this.deletionTask?.let { this.handler.postDelayed(it, DELETION_TIMEOUT.toLong()) }
-
-		this.snackbar = this.snackbarPresenter.makeSnackbarForDeletion(this.pendingDeletions.size,
-				DELETION_TIMEOUT, this.snackbarAction).apply { this.show() }
-	}
-
-	private fun deletePendingItems()
-	{
-		this.deletionTask?.let { this.handler.removeCallbacks(it) }
-		this.soundsDataStorage.removeSounds(this.pendingDeletions)
-		this.snackbar?.dismiss()
-		this.pendingDeletions.clear()
-	}
-
-	private fun restoreDeletedItems()
-	{
-		this.deletionTask?.let { this.handler.removeCallbacks(it) }
-		this.pendingDeletions.map { item ->
-			item.isDeletionPending = false
-			soundPresenter.adapter?.notifyItemChanged(item)
-		}
-		this.pendingDeletions.clear()
-	}
-}
-
-private fun SnackbarPresenter.makeSnackbarForDeletion(count: Int, duration: Int, action: SnackbarPresenter.SnackbarAction?): Snackbar
-{
-	val message = if (count == 1)
-			this.coordinatorLayout.context.resources.getString(R.string.sound_control_deletion_pending_single)
-		else
-			this.coordinatorLayout.context.resources.getString(R.string.sound_control_deletion_pending).replace("{%s0}", count.toString())
-	return this.makeSnackbar(message, duration, action)
 }
 
 private class ItemTouchCallback

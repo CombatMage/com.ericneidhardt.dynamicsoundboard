@@ -1,42 +1,21 @@
 package org.neidhardt.ui_utils.presenter
 
-import org.greenrobot.eventbus.EventBus
-import org.neidhardt.utils.registerIfRequired
-
 /**
- * File created by eric.neidhardt on 22.05.2015.
+ * @author eric.neidhardt on 11.06.2016.
  */
-interface ViewPresenter<T>
-{
-	val eventBus: EventBus
+interface ViewPresenter {
+	/**
+	 * Usually overridden by implementing classes. References to required view should be passed in this method.
+	 */
+	fun init() {}
 
 	/**
-	 * @return true if this presenter should register on eventBus, else false
+	 * Notifies the presenter, that corresponding view has been attached to main window.
 	 */
-	val isEventBusSubscriber: Boolean
+	fun start() {}
 
 	/**
-	 * Retrieve reference of controlled ui component from presenter.
-	 * @return controlled ui object
+	 * Notifies the presenter, that corresponding view has been detached from main window.
 	 */
-	var view: T
-
-	/**
-	 * Notifies the presenter, that corresponding view has been attached to main window. EventBus should be registered in
-	 * this step.
-	 */
-	fun onAttachedToWindow()
-	{
-		if (this.isEventBusSubscriber)
-			this.eventBus.registerIfRequired(this)
-	}
-
-	/**
-	 * Notifies the presenter, that corresponding view has been detached from main window. EventBus should be unregistered in this step.
-	 */
-	fun onDetachedFromWindow()
-	{
-		this.eventBus.unregister(this)
-	}
-
+	fun stop() {}
 }

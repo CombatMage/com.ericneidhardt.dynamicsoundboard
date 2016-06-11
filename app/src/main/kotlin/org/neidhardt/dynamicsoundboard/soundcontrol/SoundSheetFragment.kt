@@ -28,6 +28,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
@@ -40,6 +41,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButton
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
+import org.neidhardt.ui_utils.helper.SnackbarView
 import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
 import org.neidhardt.utils.registerIfRequired
 
@@ -48,8 +50,7 @@ import org.neidhardt.utils.registerIfRequired
  */
 private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
 
-fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
-{
+fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment {
 	val fragment = SoundSheetFragment()
 	val args = Bundle()
 	args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
@@ -59,11 +60,9 @@ fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment
 
 class SoundSheetFragment :
 		BaseFragment(),
-		SnackbarPresenter,
 		OnOpenSoundDialogEventListener,
 		OnSoundsChangedEventListener,
-		MediaPlayerFailedEventListener
-{
+		MediaPlayerFailedEventListener {
 	private val LOG_TAG = javaClass.name
 
 	var fragmentTag: String = javaClass.name
@@ -73,13 +72,13 @@ class SoundSheetFragment :
 	private val soundsDataAccess: SoundsDataAccess = SoundboardApplication.soundsDataAccess
 
 	private var soundPresenter: SoundPresenter? = null
-	private var snackbar: Snackbar? = null
+
+	private val snackbarPresenter = SnackbarPresenter()
 
 	private val floatingActionButton: AddPauseFloatingActionButton? by lazy { this.fb_layout_fab }
-	override val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
+	private val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		this.retainInstance = true
 		this.setHasOptionsMenu(true)
@@ -90,8 +89,7 @@ class SoundSheetFragment :
 		this.fragmentTag = fragmentTag as String
 	}
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-	{
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		if (container == null)
 			return null
 		return inflater.inflate(R.layout.fragment_soundsheet, container, false)
@@ -100,12 +98,14 @@ class SoundSheetFragment :
 	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		this.snackbarPresenter.init(this.coordinatorLayout)
+
 		this.rv_fragment_sound_sheet_sounds.let { soundList ->
 			this.soundPresenter = createSoundPresenter(
 					fragmentTag = this.fragmentTag,
 					eventBus = this.eventBus,
 					recyclerView = soundList,
-					snackbarPresenter = this,
+					onItemDeletionRequested = { handler,time -> this.showSnackbarForRestore(handler, time) },
 					soundsDataAccess = this.soundsDataAccess,
 					soundsDataStorage = this.soundsDataStorage)
 
@@ -117,20 +117,34 @@ class SoundSheetFragment :
 		}
 	}
 
-	override fun onStart()
-	{
+	private fun showSnackbarForRestore(deletionHandler: PendingDeletionHandler, timeTillDeletion: Int) {
+		this.coordinatorLayout.context.resources.let { res ->
+			val snackbarAction = SnackbarView.SnackbarAction(
+					R.string.sound_control_deletion_pending_undo,
+					{ deletionHandler.restoreDeletedItems() })
+
+			val count = deletionHandler.countPendingDeletions
+			val message = if (count == 1)
+				res.getString(R.string.sound_control_deletion_pending_single)
+			else
+				res.getString(R.string.sound_control_deletion_pending).replace("{%s0}", count.toString())
+
+			this.snackbarPresenter.showSnackbar(message, timeTillDeletion, snackbarAction)
+		}
+	}
+
+	override fun onStart() {
 		super.onStart()
 		this.eventBus.registerIfRequired(this)
 	}
 
-	override fun onResume()
-	{
+	override fun onResume() {
 		super.onResume()
 
 		this.baseActivity.apply {
 			this.areSoundSheetActionsEnable = true
-			this.actionAddSound?.setOnClickListener{ AddNewSoundDialog(this.supportFragmentManager, fragmentTag) }
-			this.actionAddSoundDir?.setOnClickListener{ AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, fragmentTag) }
+			this.actionAddSound?.setOnClickListener { AddNewSoundDialog(this.supportFragmentManager, fragmentTag) }
+			this.actionAddSoundDir?.setOnClickListener { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, fragmentTag) }
 		}
 
 		this.soundPresenter?.onAttachedToWindow()
@@ -139,30 +153,25 @@ class SoundSheetFragment :
 		this.soundPresenter?.setProgressUpdateTimer(true)
 	}
 
-	override fun onPause()
-	{
+	override fun onPause() {
 		super.onPause()
+		this.snackbarPresenter.stop()
 		this.soundPresenter?.onDetachedFromWindow()
 		this.soundPresenter?.setProgressUpdateTimer(false)
 	}
 
-	override fun onStop()
-	{
+	override fun onStop() {
 		super.onStop()
 		this.eventBus.unregister(this)
 	}
 
-	private fun attachScrollViewToFab()
-	{
+	private fun attachScrollViewToFab() {
 		this.floatingActionButton?.show(true)
 	}
 
-	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-	{
-		if (resultCode == Activity.RESULT_OK)
-		{
-			if (requestCode == IntentRequest.GET_AUDIO_FILE)
-			{
+	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == IntentRequest.GET_AUDIO_FILE) {
 				val soundUri = data!!.data
 				val soundLabel = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
 				val playerData = MediaPlayerData.getNewMediaPlayerData(this.fragmentTag, soundUri, soundLabel)
@@ -174,18 +183,14 @@ class SoundSheetFragment :
 		super.onActivityResult(requestCode, resultCode, data)
 	}
 
-	override fun onOptionsItemSelected(item: MenuItem): Boolean
-	{
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		super.onOptionsItemSelected(item)
-		when (item.itemId)
-		{
-			R.id.action_clear_sounds_in_sheet ->
-			{
+		when (item.itemId) {
+			R.id.action_clear_sounds_in_sheet -> {
 				ConfirmDeleteSoundsDialog.showInstance(this.fragmentManager, this.fragmentTag)
 				return true
 			}
-			R.id.action_delete_sheet ->
-			{
+			R.id.action_delete_sheet -> {
 				ConfirmDeleteSoundSheetDialog.showInstance(this.fragmentManager, this.fragmentTag)
 				return true
 			}
@@ -194,33 +199,36 @@ class SoundSheetFragment :
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: OpenSoundRenameEvent)
-	{
+	override fun onEvent(event: OpenSoundRenameEvent) {
 		RenameSoundFileDialog.show(this.fragmentManager, event.data)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: OpenSoundSettingsEvent)
-	{
+	override fun onEvent(event: OpenSoundSettingsEvent) {
 		SoundSettingsDialog.showInstance(this.fragmentManager, event.data)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundsRemovedEvent)
-	{
+	override fun onEvent(event: SoundsRemovedEvent) {
 		if (this.soundPresenter?.values?.size == 0)
 			this.floatingActionButton?.show(true)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: MediaPlayerFailedEvent)
-	{
-		this.snackbar?.dismiss()
-		val message = "${this.coordinatorLayout.context.resources.getString(R.string.sound_control_error_during_playback)}: ${event.player.mediaPlayerData.label}"
-		this.snackbar = this.makeSnackbar(message, Snackbar.LENGTH_INDEFINITE, null).apply { this.show() }
+	override fun onEvent(event: MediaPlayerFailedEvent) {
+		this.coordinatorLayout.context.resources.let { res ->
+			val message = "${res.getString(R.string.sound_control_error_during_playback)}: " +
+					"${event.player.mediaPlayerData.label}"
+			this.snackbarPresenter.showSnackbar(message, Snackbar.LENGTH_INDEFINITE, null)
+		}
 	}
 
-	override fun onEvent(event: SoundMovedEvent) {}
-	override fun onEvent(event: SoundAddedEvent) {}
-	override fun onEvent(event: SoundChangedEvent) {}
+	override fun onEvent(event: SoundMovedEvent) {
+	}
+
+	override fun onEvent(event: SoundAddedEvent) {
+	}
+
+	override fun onEvent(event: SoundChangedEvent) {
+	}
 }
