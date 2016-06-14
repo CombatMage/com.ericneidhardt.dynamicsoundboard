@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
+import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
@@ -39,14 +39,14 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutSelectedEventListener
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeletePlayListDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
-import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
+import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.utils.registerIfRequired
 import java.util.*
 
@@ -123,13 +123,13 @@ class SoundActivity :
 		super.onCreate(savedInstanceState)
 		this.setContentView(R.layout.activity_base)
 
-		if (!this.requestPermissionsReadStorageIfRequired())
+		val requestedPermissions = this.requestPermissionsIfRequired()
+		if (!requestedPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE) &&
+				!requestedPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE))
 		{
 			this.soundsDataUtil.initIfRequired()
 			this.soundSheetsDataUtil.initIfRequired()
 		}
-		this.requestPermissionsWriteStorageIfRequired()
-		this.requestPermissionsReadPhoneStateIfRequired()
 
 		this.initToolbar()
 		this.openIntroductionFragmentIfRequired()
@@ -142,19 +142,17 @@ class SoundActivity :
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 		when (requestCode)
 		{
-			IntentRequest.REQUEST_PERMISSION_READ_STORAGE -> {
-				if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+			IntentRequest.REQUEST_PERMISSIONS -> {
+				if (!this.hasPermissionReadStorage) this.explainReadStoragePermission()
+				if (!this.hasPermissionWriteStorage) this.explainWriteStoragePermission()
+				if (!this.hasPermissionPhoneState) this.explainReadPhoneStatePermission()
+
+				if (this.hasPermissionWriteStorage && this.hasPermissionReadStorage)
+				{
 					this.soundsDataUtil.initIfRequired()
 					this.soundSheetsDataUtil.initIfRequired()
-				} else
-					this.finish()
+				}
 			}
-			IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE -> {
-				if (grantResults[0] != PackageManager.PERMISSION_GRANTED)
-					this.finish()
-			}
-			IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE -> {
-			} // nothing to be done
 		}
 	}
 
