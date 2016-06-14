@@ -24,44 +24,48 @@ private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
 class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventListener {
 
 	private val eventBus = EventBus.getDefault()
-	private val storage by lazy {
-		SoundboardApplication.soundsDataAccess
+
+	private var storage: SoundsDataAccess? = null
+	private var presenter: AddPauseFloatingActionButtonPresenter? = null
+
+	@SuppressWarnings("unused")
+	constructor(context: Context) : super(context) { this.init() }
+
+	@SuppressWarnings("unused")
+	constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { this.init() }
+
+	@SuppressWarnings("unused")
+	constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) { this.init() }
+
+	private fun init() {
+		if (!this.isInEditMode) {
+			this.storage = SoundboardApplication.soundsDataAccess
+			this.presenter = AddPauseFloatingActionButtonPresenter()
+		}
 	}
-	private val presenter: AddPauseFloatingActionButtonPresenter by lazy {
-		AddPauseFloatingActionButtonPresenter()
-	}
-
-	@SuppressWarnings("unused")
-	constructor(context: Context) : super(context)
-
-	@SuppressWarnings("unused")
-	constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-	@SuppressWarnings("unused")
-	constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
 	override fun onFinishInflate() {
 		super.onFinishInflate()
 		this.setOnClickListener { this.eventBus.post(FabClickedEvent()) }
-		this.presenter.init(this)
+		this.presenter?.init(this)
 	}
 
 	override fun onAttachedToWindow() {
 		super.onAttachedToWindow()
-		this.presenter.start()
+		this.presenter?.start()
 		this.eventBus.register(this)
 		this.setPresenterState()
 	}
 
 	override fun onDetachedFromWindow() {
-		this.presenter.stop()
+		this.presenter?.stop()
 		this.eventBus.unregister(this)
 		super.onDetachedFromWindow()
 	}
 
 	override fun onCreateDrawableState(extraSpace: Int): IntArray {
 		val state = super.onCreateDrawableState(extraSpace + PAUSE_STATE.size)
-		if (this.presenter.state == AddPauseFloatingAction.State.PLAY)
+		if (this.presenter?.state == AddPauseFloatingAction.State.PLAY)
 			View.mergeDrawableStates(state, PAUSE_STATE)
 		return state
 	}
@@ -89,8 +93,8 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 	}
 
 	private fun setPresenterState() {
-		this.presenter.state =
-				if (this.storage.isAnySoundPlaying)
+		this.presenter?.state =
+				if (this.storage?.isAnySoundPlaying == true)
 					AddPauseFloatingAction.State.PLAY
 				else
 					AddPauseFloatingAction.State.ADD

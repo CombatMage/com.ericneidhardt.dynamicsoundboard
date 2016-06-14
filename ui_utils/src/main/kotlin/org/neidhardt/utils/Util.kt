@@ -33,3 +33,10 @@ inline fun <T, R> T.letThis(block: (T) -> R): T {
 	block(this)
 	return this
 }
+
+inline fun <T1,T2,R>T1.letWithParam(p: T2?, block: (T1, T2) -> R?): R? {
+	return if (p != null)
+		block(this, p)
+	else
+		null
+}
