@@ -11,9 +11,9 @@ import org.neidhardt.ui_utils.presenter.ViewPresenter
  */
 interface SnackbarView {
 
-	fun showSnackbar(messageId: Int, duration: Int, action: SnackbarView.SnackbarAction?)
+	fun showSnackbar(messageId: Int, duration: Int, action: SnackbarView.SnackbarAction? = null)
 
-	fun showSnackbar(message: String, duration: Int, action: SnackbarView.SnackbarAction?)
+	fun showSnackbar(message: String, duration: Int, action: SnackbarView.SnackbarAction? = null)
 
 	fun dismissSnackbar()
 
