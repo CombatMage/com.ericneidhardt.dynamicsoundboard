@@ -1,12 +1,12 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
+import org.neidhardt.utils.EnhancedAppCompatActivity
 
 /**
 * Created by Eric.Neidhardt@GMail.com on 09.04.2016.
 */
-abstract class BaseActivity : AppCompatActivity()
+abstract class BaseActivity : EnhancedAppCompatActivity()
 {
 	private val TAG = javaClass.name
 

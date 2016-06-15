@@ -143,9 +143,9 @@ class SoundActivity :
 		when (requestCode)
 		{
 			IntentRequest.REQUEST_PERMISSIONS -> {
-				if (!this.hasPermissionReadStorage) this.explainReadStoragePermission()
-				if (!this.hasPermissionWriteStorage) this.explainWriteStoragePermission()
-				if (!this.hasPermissionPhoneState) this.explainReadPhoneStatePermission()
+				this.postAfterOnResume { if (!this.hasPermissionReadStorage) this.explainReadStoragePermission() }
+				this.postAfterOnResume { if (!this.hasPermissionWriteStorage) this.explainWriteStoragePermission() }
+				this.postAfterOnResume { if (!this.hasPermissionPhoneState) this.explainReadPhoneStatePermission() }
 
 				if (this.hasPermissionWriteStorage && this.hasPermissionReadStorage)
 				{
