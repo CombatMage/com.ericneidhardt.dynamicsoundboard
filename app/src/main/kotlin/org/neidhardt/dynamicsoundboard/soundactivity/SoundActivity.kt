@@ -474,7 +474,7 @@ class SoundActivity :
 
 	fun openIntroductionFragmentIfRequired()
 	{
-		if (!this.isActivityVisible)
+		if (!this.isActivityResumed)
 			return
 
 		if (this.currentSoundFragment != null)
@@ -492,7 +492,7 @@ class SoundActivity :
 
 	fun openSoundFragment(soundSheet: SoundSheet?)
 	{
-		if (!this.isActivityVisible)
+		if (!this.isActivityResumed)
 			return
 
 		if (soundSheet == null)

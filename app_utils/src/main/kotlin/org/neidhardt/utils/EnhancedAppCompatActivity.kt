@@ -1,5 +1,6 @@
 package org.neidhardt.utils
 
+import android.app.FragmentManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import java.util.*
@@ -9,9 +10,13 @@ import java.util.*
  */
 open class EnhancedAppCompatActivity : AppCompatActivity() {
 
+	private val TAG = javaClass.name
+
 	private var isResumed = false
 
 	private val queueOnResume = ArrayList<(activity: EnhancedAppCompatActivity) -> Unit>()
+
+	val isActivityResumed: Boolean get() = this.isResumed
 
 	fun postAfterOnResume(action: (activity: EnhancedAppCompatActivity) -> Unit) {
 		if (this.isResumed)
@@ -35,6 +40,11 @@ open class EnhancedAppCompatActivity : AppCompatActivity() {
 	override fun onPause() {
 		this.isResumed = false
 		super.onPause()
+	}
+
+	override fun getFragmentManager(): FragmentManager?
+	{
+		throw IllegalAccessException("$TAG: Do not use default getFragmentManager, user getSupportFragmentManager instead")
 	}
 }
 

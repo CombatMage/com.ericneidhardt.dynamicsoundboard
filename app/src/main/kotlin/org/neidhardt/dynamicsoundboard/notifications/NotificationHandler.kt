@@ -1,10 +1,10 @@
 package org.neidhardt.dynamicsoundboard.notifications
 
-import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.support.v4.app.NotificationManagerCompat
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.neidhardt.dynamicsoundboard.R
@@ -34,51 +34,44 @@ class NotificationHandler
 		private val soundSheetsDataUtil: SoundSheetsDataUtil
 ) :
 		SharedPreferences.OnSharedPreferenceChangeListener,
-		MediaPlayerEventListener
-{
+		MediaPlayerEventListener {
 	private val TAG = javaClass.name
 
 	private val eventBus = EventBus.getDefault()
 	private val notificationActionReceiver: BroadcastReceiver = NotificationActionReceiver()
 
-	private val notificationManager: NotificationManager = service.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-	private val notifications: MutableList<PendingSoundNotification> = ArrayList()
+	private val notificationManager = NotificationManagerCompat.from(service)
+	private val notifications = ArrayList<PendingSoundNotification>()
 
-	init
-	{
+	init {
 		this.eventBus.registerIfRequired(this)
 		SoundboardPreferences.registerSharedPreferenceChangedListener(this)
 		this.service.registerReceiver(this.notificationActionReceiver, getNotificationIntentFilter())
 	}
 
-	fun onServiceDestroyed()
-	{
+	fun onServiceDestroyed() {
 		this.eventBus.unregister(this)
 		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this)
 		this.service.unregisterReceiver(this.notificationActionReceiver)
 	}
 
-	fun dismissAllNotifications()
-	{
+	fun dismissAllNotifications() {
 		this.notifications.map { notification -> this.notificationManager.cancel(notification.notificationId) }
 		this.notifications.clear()
 	}
 
-	private fun showAllNotifications()
-	{
+	private fun showAllNotifications() {
 		var pendingPlaylistPlayer: MediaPlayerController? = null
 
 		val pendingSounds = this.soundsDataAccess.currentlyPlayingSounds
-		for (player in pendingSounds)
-		{
+		for (player in pendingSounds) {
 			if (this.soundsDataUtil.isPlaylistPlayer(player.mediaPlayerData))
 				pendingPlaylistPlayer = player // playlist sound is added as the last notification
 			else
 				this.addNotification(this.getNotificationForSound(player))
 		}
 
-		if (pendingPlaylistPlayer != null)
-		{
+		if (pendingPlaylistPlayer != null) {
 			val builder = this.getNotificationForPlaylist(pendingPlaylistPlayer)
 			this.addNotification(builder)
 		}
@@ -89,10 +82,9 @@ class NotificationHandler
 
 	private fun getNotificationForPlaylist(player: MediaPlayerController): PendingSoundNotificationBuilder
 			= PendingSoundNotificationBuilder(this.service.applicationContext, player, NOTIFICATION_ID_PLAYLIST,
-				this.service.getString(R.string.notification_playlist), player.mediaPlayerData.label)
+			this.service.getString(R.string.notification_playlist), player.mediaPlayerData.label)
 
-	private fun addNotification(notificationBuilder: PendingSoundNotificationBuilder)
-	{
+	private fun addNotification(notificationBuilder: PendingSoundNotificationBuilder) {
 		val notificationId = notificationBuilder.notificationId
 		val playerId = notificationBuilder.playerId
 
@@ -102,10 +94,8 @@ class NotificationHandler
 		this.notificationManager.notify(notification.notificationId, notification.notification)
 	}
 
-	override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String)
-	{
-		if (key == service.getString(R.string.preferences_enable_notifications_key))
-		{
+	override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+		if (key == service.getString(R.string.preferences_enable_notifications_key)) {
 			val areNotificationsEnabledEnabled = SoundboardPreferences.areNotificationsEnabled()
 			Logger.d(TAG, "onSharedPreferenceChanged $key to $areNotificationsEnabledEnabled")
 
@@ -116,16 +106,14 @@ class NotificationHandler
 		}
 	}
 
-	private fun updateOrRemovePendingNotification(playerId: String): Boolean
-	{
+	private fun updateOrRemovePendingNotification(playerId: String): Boolean {
 		val correspondingNotification = this.findNotificationForPendingPlayer(playerId) ?: return false
 
 		val notificationId = correspondingNotification.notificationId
 		val player = searchInMapForId(playerId, soundsDataAccess.sounds)
 
 		// if player stops playing and the service is still bound, we remove the notification
-		if (player == null || !player.isPlayingSound && this.service.isActivityVisible)
-		{
+		if (player == null || !player.isPlayingSound && this.service.isActivityVisible) {
 			this.removeNotificationForPlayer(playerId)
 			return true
 		}
@@ -138,8 +126,7 @@ class NotificationHandler
 		return true
 	}
 
-	private fun removeNotificationForPlayer(playerId: String)
-	{
+	private fun removeNotificationForPlayer(playerId: String) {
 		val notification = this.findNotificationForPendingPlayer(playerId)
 		if (notification != null)
 			notificationManager.cancel(notification.notificationId)
@@ -151,21 +138,16 @@ class NotificationHandler
 	private fun findPlaylistNotification(): PendingSoundNotification?
 			= this.notifications.firstOrNull { notification -> notification.isPlaylistNotification() }
 
-	fun removeNotificationsForPausedSounds()
-	{
-		for (notification in this.notifications)
-		{
+	fun removeNotificationsForPausedSounds() {
+		for (notification in this.notifications) {
 			val playerId = notification.playerId
 			val isInPlaylist = notification.isPlaylistNotification()
 
-			if (isInPlaylist)
-			{
+			if (isInPlaylist) {
 				val player = searchInListForId(playerId, soundsDataAccess.playlist)
 				if (player != null && !player.isPlayingSound)
 					this.removePlayListNotification()
-			}
-			else
-			{
+			} else {
 				val player = searchInMapForId(playerId, soundsDataAccess.sounds)
 				if (player == null || !player.isPlayingSound)
 					this.removeNotificationForPlayer(playerId)
@@ -175,8 +157,7 @@ class NotificationHandler
 
 	// Update notifications, according to player state or notification actions
 	@Subscribe(sticky = true)
-	override fun onEvent(event: MediaPlayerStateChangedEvent)
-	{
+	override fun onEvent(event: MediaPlayerStateChangedEvent) {
 		Logger.d(TAG, event.toString())
 
 		val areNotificationsEnabled = SoundboardPreferences.areNotificationsEnabled()
@@ -188,15 +169,13 @@ class NotificationHandler
 		val isAlive = event.isAlive
 
 		// update special playlist notification
-		if (this.soundSheetsDataUtil.isPlaylistSoundSheet(fragmentTag))
-		{
+		if (this.soundSheetsDataUtil.isPlaylistSoundSheet(fragmentTag)) {
 			val player = searchInListForId(playerId, soundsDataAccess.playlist)
 			if (player != null && isAlive)
 				this.handlePlaylistPlayerStateChanged(player)
 			else
 				this.removePlayListNotification()
-		}
-		else // check if there is a generic notification to update
+		} else // check if there is a generic notification to update
 		{
 			if (isAlive)
 				this.handlePlayerStateChanged(playerId)
@@ -206,64 +185,52 @@ class NotificationHandler
 	}
 
 	@Subscribe(sticky = true)
-	override fun onEvent(event: MediaPlayerCompletedEvent) {}
+	override fun onEvent(event: MediaPlayerCompletedEvent) {
+	}
 
-	private fun handlePlaylistPlayerStateChanged(player: MediaPlayerController)
-	{
+	private fun handlePlaylistPlayerStateChanged(player: MediaPlayerController) {
 		val isPendingNotification = this.updateOrRemovePendingPlaylistNotification()
 		if (!isPendingNotification)
 			addNotification(getNotificationForPlaylist(player))
 	}
 
-	fun removePlayListNotification()
-	{
+	fun removePlayListNotification() {
 		val notification = this.findPlaylistNotification()
 		if (notification != null)
 			notificationManager.cancel(notification.notificationId)
 	}
 
-	private fun updateOrRemovePendingPlaylistNotification(): Boolean
-	{
+	private fun updateOrRemovePendingPlaylistNotification(): Boolean {
 		val correspondingNotification = this.findPlaylistNotification() ?: return false
 
 		val notificationId = correspondingNotification.notificationId
-		var player = this.getPlayingSoundFromPlaylist() ?: searchInListForId(correspondingNotification.playerId, soundsDataAccess.playlist)
-
-		if (player != null)
-		{
+		this.getPlayingSoundFromPlaylist() ?: searchInListForId(correspondingNotification.playerId, soundsDataAccess.playlist)?.let { player ->
 			// if player stops playing and the service is still bound, we remove the notification
-			if (!player.isPlayingSound && this.service.isActivityVisible)
-			{
+			if (!player.isPlayingSound && this.service.isActivityVisible) {
 				this.removePlayListNotification()
 				return true
+			} else {
+				val builder = getNotificationForPlaylist(player)
+
+				correspondingNotification.playerId = player.mediaPlayerData.playerId
+				correspondingNotification.notification = builder.build()
+				this.notificationManager.notify(notificationId, correspondingNotification.notification)
 			}
-
-			val builder = getNotificationForPlaylist(player)
-
-			correspondingNotification.playerId = player.mediaPlayerData.playerId
-			correspondingNotification.notification = builder.build()
-			notificationManager.notify(notificationId, correspondingNotification.notification)
 		}
+
 		return true
 	}
 
-	private fun handlePlayerStateChanged(playerId: String)
-	{
+	private fun handlePlayerStateChanged(playerId: String) {
 		val isPendingNotification = this.updateOrRemovePendingNotification(playerId)
 		if (!isPendingNotification)
-		{
-			var player = searchInMapForId(playerId, soundsDataAccess.sounds)
-			if (player != null)
-				addNotification(getNotificationForSound(player))
-		}
+			searchInMapForId(playerId, soundsDataAccess.sounds)?.let { addNotification(getNotificationForSound(it)) }
 	}
 
 	private fun getPlayingSoundFromPlaylist(): MediaPlayerController? = soundsDataAccess.playlist.firstOrNull { player -> player.isPlayingSound }
 
-	private inner class NotificationActionReceiver : BroadcastReceiver()
-	{
-		override fun onReceive(context: Context, intent: Intent)
-		{
+	private inner class NotificationActionReceiver : BroadcastReceiver() {
+		override fun onReceive(context: Context, intent: Intent) {
 			Logger.d(TAG, "NotificationActionReceiver.onReceive " + intent)
 
 			val action = intent.action ?: return
@@ -272,8 +239,7 @@ class NotificationHandler
 			val notificationId = intent.getIntExtra(KEY_NOTIFICATION_ID, 0)
 			if (action.equals(ACTION_DISMISS))
 				this.dismissPendingMediaPlayer(notificationId)
-			else
-			{
+			else {
 				val player: MediaPlayerController?
 				if (notificationId == NOTIFICATION_ID_PLAYLIST)
 					player = searchInListForId(playerId, soundsDataAccess.playlist)
@@ -282,8 +248,7 @@ class NotificationHandler
 				if (player == null)
 					return
 
-				when (action)
-				{
+				when (action) {
 					ACTION_PAUSE -> player.pauseSound()
 					ACTION_STOP -> player.stopSound()
 					ACTION_PLAY -> player.playSound()
@@ -295,8 +260,7 @@ class NotificationHandler
 			}
 		}
 
-		private fun dismissPendingMediaPlayer(notificationId: Int)
-		{
+		private fun dismissPendingMediaPlayer(notificationId: Int) {
 			notifications.dropLastWhile { notification -> notification.notificationId == notificationId }
 
 			if (!service.isActivityVisible && notifications.size == 0)

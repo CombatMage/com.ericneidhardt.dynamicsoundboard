@@ -37,8 +37,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion 16
 		targetSdkVersion 23
-		versionCode 22508
-		versionName "2.25.8"
+		versionCode 22509
+		versionName "2.25.9"
 		resConfigs "de"
 	}
 
@@ -102,7 +102,7 @@ dependencies {
 	compile 'org.greenrobot:eventbus:3.0.0'
 	compile 'de.greenrobot:greendao:2.1.0'
 
-	compile 'com.google.android.exoplayer:exoplayer:r1.5.8'
+	compile 'com.google.android.exoplayer:exoplayer:r1.5.9'
 
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
 	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.4'
@@ -115,7 +115,7 @@ dependencies {
 
 	compile 'jp.wasabeef:recyclerview-animators:2.2.3'
 
-	compile 'ch.acra:acra:4.8.5'
+	compile 'ch.acra:acra:4.9.0'
 
 	testCompile 'junit:junit:4.12'
 	testCompile 'org.mockito:mockito-core:2.0.41-beta'

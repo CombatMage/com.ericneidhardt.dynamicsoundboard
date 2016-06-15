@@ -80,7 +80,7 @@ class NotificationService : Service(), ActivityStateChangedEventListener
 			this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
 
 			this.isActivityVisible = true
-			this.notificationHandler!!.removeNotificationsForPausedSounds()
+			this.notificationHandler?.removeNotificationsForPausedSounds()
 		}
 	}
 }
