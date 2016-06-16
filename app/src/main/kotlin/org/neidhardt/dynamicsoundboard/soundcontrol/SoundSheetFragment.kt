@@ -142,7 +142,7 @@ class SoundSheetFragment :
 		super.onResume()
 
 		this.baseActivity.apply {
-			this.areSoundSheetActionsEnable = true
+			this.isSoundSheetActionsEnable = true
 			this.actionAddSound?.setOnClickListener { AddNewSoundDialog(this.supportFragmentManager, fragmentTag) }
 			this.actionAddSoundDir?.setOnClickListener { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, fragmentTag) }
 		}

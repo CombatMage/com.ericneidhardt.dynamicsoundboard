@@ -105,7 +105,7 @@ class SoundActivity :
 	val isNavigationDrawerOpen: Boolean
 		get() = this.navigationDrawerLayout?.isDrawerOpen(Gravity.START) ?: false
 
-	var areSoundSheetActionsEnable: Boolean
+	var isSoundSheetActionsEnable: Boolean
 		get() = this.appName.visibility != View.VISIBLE
 		set(enable) {
 			(if (enable) View.VISIBLE else View.GONE).let { viewStateSoundActions ->
@@ -223,10 +223,10 @@ class SoundActivity :
 		super.onResume()
 
 		this.registerPauseSoundOnCallListener(this.phoneStateListener)
-		this.startService(Intent(this.applicationContext, NotificationService::class.java))
+		NotificationService.start(this)
 		this.eventBus.postSticky(ActivityStateChangedEvent(true))
 
-		this.areSoundSheetActionsEnable = false
+		this.isSoundSheetActionsEnable = false
 
 		this.soundsDataUtil.initIfRequired()
 		if (this.soundSheetsDataUtil.initIfRequired())
@@ -284,7 +284,7 @@ class SoundActivity :
 	override fun onEvent(event: SoundLayoutSelectedEvent)
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
-		this.areSoundSheetActionsEnable = false
+		this.isSoundSheetActionsEnable = false
 
 		this.soundSheetsDataUtil.releaseAll()
 		this.soundSheetsDataUtil.initIfRequired()
@@ -318,7 +318,7 @@ class SoundActivity :
 		this.removeSoundFragments(removedSoundSheets)
 
 		if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
-			this.areSoundSheetActionsEnable = false
+			this.isSoundSheetActionsEnable = false
 	}
 
 	override fun onEvent(event: SoundSheetAddedEvent) {}
@@ -454,7 +454,7 @@ class SoundActivity :
 
 		if (this.soundSheetsDataAccess.getSoundSheets().size == 0) 
 		{
-			this.areSoundSheetActionsEnable = false
+			this.isSoundSheetActionsEnable = false
 			this.openIntroductionFragmentIfRequired()
 		}
 	}
@@ -467,7 +467,7 @@ class SoundActivity :
 		{
 			fragmentManager.beginTransaction().remove(fragment).commit()
 			if (fragment.isVisible)
-				this.areSoundSheetActionsEnable = false
+				this.isSoundSheetActionsEnable = false
 		}
 		fragmentManager.executePendingTransactions()
 	}

@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.notifications
 
 import android.app.Service
 import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.IBinder
@@ -37,6 +38,13 @@ class NotificationService : Service(),
 		SharedPreferences.OnSharedPreferenceChangeListener,
 		MediaPlayerEventListener
 {
+	companion object {
+
+		fun start(context: Context) {
+			context.startService(Intent(context, NotificationService::class.java))
+		}
+	}
+
 	private val TAG: String = javaClass.name
 
 	private val soundsDataUtil = SoundboardApplication.soundsDataUtil

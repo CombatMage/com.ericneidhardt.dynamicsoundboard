@@ -4,6 +4,7 @@ import android.app.Notification
 import android.content.Context
 import android.content.IntentFilter
 import android.support.v7.app.NotificationCompat
+import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.notifications.NotificationConstants
 
@@ -30,6 +31,7 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			val builder = NotificationCompat.Builder(context)
 					.setContentTitle("TODO")
 					.setContentText("TODO")
+					.setSmallIcon(R.drawable.ic_action_done)
 
 			return PendingSoundNotification(-1, player.mediaPlayerData.playerId, builder.build())
 		}
@@ -39,6 +41,7 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			val builder = NotificationCompat.Builder(context)
 					.setContentTitle("TODO")
 					.setContentText("TODO")
+					.setSmallIcon(R.drawable.ic_action_done)
 
 			// this.service.getString(R.string.notification_playlist), player.mediaPlayerData.label
 			return PendingSoundNotification(-1, player.mediaPlayerData.playerId, builder.build())
