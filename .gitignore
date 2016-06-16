@@ -22,12 +22,13 @@ target/
 # Project
 app/build/jacoco/testDebug.exec
 app/build/outputs/logs/manifest-merger-debug-report.txt
+app_utils/build/
+app_mediaplayer/build/
 
 # Project Libs
 dao_generator/build/
-drag_drop_recycler_view/build/
-storage_helper/build/
 safe_async_task/build/
 enhanced_handler/build/
-ui_utils/build/
+
+# Misc
 sh.exe.stackdump

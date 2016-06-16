@@ -20,6 +20,9 @@ ext {
 	buildToolsVersion = "23.0.3"
 }
 
+project.ext.set("projectMinSdkVersion", 16)
+project.ext.set("projectTargetSdkVersion", 23)
+
 allprojects {
 	repositories {
 		jcenter()

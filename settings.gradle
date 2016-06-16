@@ -1,1 +1,1 @@
-include ':app', ':dao_generator', ':safe_async_task', ':enhanced_handler', ':app_utils'
+include ':app', ':dao_generator', ':safe_async_task', ':enhanced_handler', ':app_utils', ':app_mediaplayer'
