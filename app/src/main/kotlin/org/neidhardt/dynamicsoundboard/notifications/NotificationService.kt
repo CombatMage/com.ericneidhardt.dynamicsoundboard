@@ -1,0 +1,213 @@
+package org.neidhardt.dynamicsoundboard.notifications
+
+import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.SharedPreferences
+import android.os.IBinder
+import android.support.v4.app.NotificationManagerCompat
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
+import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.notificationsNew.INotificationHandler
+import org.neidhardt.dynamicsoundboard.notificationsNew.NotificationActionReceiver
+import org.neidhardt.dynamicsoundboard.notificationsNew.NotificationHandler
+import org.neidhardt.dynamicsoundboard.notificationsNew.PendingSoundNotification
+import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInListForId
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInMapForId
+import org.neidhardt.utils.registerIfRequired
+
+/**
+ * @author eric.neidhardt on 15.06.2016.
+ */
+class NotificationService : Service(),
+		ActivityStateChangedEventListener,
+		SharedPreferences.OnSharedPreferenceChangeListener,
+		MediaPlayerEventListener
+{
+	private val TAG: String = javaClass.name
+
+	private val soundsDataUtil = SoundboardApplication.soundsDataUtil
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
+
+	private val eventBus = EventBus.getDefault()
+	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
+	private val notificationActionReceiver: BroadcastReceiver = NotificationActionReceiver({ action, playerId, notificationId ->
+		this.onNotificationAction(action, playerId, notificationId)
+	})
+
+	private var notificationHandler: INotificationHandler? = null
+
+	var isActivityVisible: Boolean = false
+		private set
+
+	override fun onBind(intent: Intent): IBinder? = null
+
+	override fun onCreate()
+	{
+		super.onCreate()
+		this.notificationHandler = NotificationHandler(this, NotificationManagerCompat.from(this), this.soundsDataAccess, this.soundsDataUtil)
+
+		this.eventBus.registerIfRequired(this)
+		SoundboardPreferences.registerSharedPreferenceChangedListener(this)
+		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotification.getNotificationIntentFilter())
+	}
+
+	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int
+	{
+		Logger.d(TAG, "onStartCommand")
+		this.isActivityVisible = true
+		return START_STICKY
+	}
+
+	override fun onDestroy()
+	{
+		Logger.d(TAG, "onDestroy")
+
+		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
+		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this)
+		this.unregisterReceiver(this.notificationActionReceiver)
+		this.eventBus.unregister(this)
+
+		this.soundsDataUtil.releaseAll()
+
+		super.onDestroy()
+	}
+
+	private fun stopIfNotRequired() {
+		if (!this.isActivityVisible && this.notificationHandler?.pendingNotifications?.size == 0)
+			this.stopSelf()
+	}
+
+	private fun onNotificationAction(action: String, playerId: String, notificationId: Int) {
+		if (action.equals(NotificationConstants.ACTION_DISMISS))
+			this.notificationHandler?.dismissNotification(notificationId)
+		else {
+			val player: MediaPlayerController?
+			if (notificationId == NotificationConstants.NOTIFICATION_ID_PLAYLIST)
+				player = searchInListForId(playerId, soundsDataAccess.playlist)
+			else
+				player = searchInMapForId(playerId, soundsDataAccess.sounds)
+			if (player == null)
+				return
+
+			when (action) {
+				NotificationConstants.ACTION_STOP -> player.stopSound()
+				NotificationConstants.ACTION_PLAY -> player.playSound()
+				NotificationConstants.ACTION_FADE_OUT -> player.fadeOutSound()
+			}
+		}
+
+		this.stopIfNotRequired()
+	}
+
+	override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+		if (key == this.getString(R.string.preferences_enable_notifications_key)) {
+			val areNotificationsEnabledEnabled = SoundboardPreferences.areNotificationsEnabled()
+			Logger.d(TAG, "onSharedPreferenceChanged $key to $areNotificationsEnabledEnabled")
+
+			if (areNotificationsEnabledEnabled)
+				this.notificationHandler?.showNotifications()
+			else
+				this.notificationHandler?.dismissNotifications()
+
+			this.stopIfNotRequired()
+		}
+	}
+
+	@Subscribe(sticky = true)
+	override fun onEvent(event: ActivityStateChangedEvent)
+	{
+		if (event.isActivityClosed)
+		{
+			this.isActivityVisible = false
+
+			this.registerPauseSoundOnCallListener(this.phoneStateListener)
+			if (this.soundsDataAccess.currentlyPlayingSounds.size == 0)
+				this.stopSelf()
+		}
+		else if (event.isActivityResumed)
+		{
+			this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
+
+			this.isActivityVisible = true
+			this.removeNotificationForPausedSounds()
+		}
+	}
+
+	private fun removeNotificationForPausedSounds() {
+		this.notificationHandler?.let { notificationHandler ->
+
+			for (notification in notificationHandler.pendingNotifications) {
+				val playerId = notification.playerId
+				val isInPlaylist = notification.isPlaylistNotification
+
+				if (isInPlaylist) {
+					val player = searchInListForId(playerId, soundsDataAccess.playlist)
+					if (player != null && !player.isPlayingSound)
+						notificationHandler.dismissNotificationForPlaylist()
+				} else {
+					val player = searchInMapForId(playerId, soundsDataAccess.sounds)
+					if (player == null || !player.isPlayingSound)
+						notificationHandler.dismissNotificationForPlayer(playerId)
+				}
+			}
+		}
+
+		this.stopIfNotRequired()
+	}
+
+	@Subscribe(sticky = true)
+	override fun onEvent(event: MediaPlayerStateChangedEvent) {
+		Logger.d(TAG, event.toString())
+
+		val areNotificationsEnabled = SoundboardPreferences.areNotificationsEnabled()
+		if (!areNotificationsEnabled)
+			return
+
+		val playerId = event.playerId
+		val fragmentTag = event.fragmentTag
+		val isAlive = event.isAlive
+
+		// update special playlist notification
+		if (this.soundSheetsDataUtil.isPlaylistSoundSheet(fragmentTag))
+			this.handlePlaylistPlayerStateChanged(playerId, isAlive)
+		else // check if there is a generic notification to update
+			this.handlerPlayerStateChanged(playerId, isAlive)
+	}
+
+	private fun handlePlaylistPlayerStateChanged(playerId: String, isAlive: Boolean) {
+		val player = searchInListForId(playerId, soundsDataAccess.playlist)
+		if (player != null && isAlive)
+			this.notificationHandler?.onPlaylistPlayerStateChanged(player)
+		else
+			this.notificationHandler?.dismissNotificationForPlaylist()
+
+		this.stopIfNotRequired()
+	}
+
+	private fun handlerPlayerStateChanged(playerId: String, isAlive: Boolean) {
+		if (isAlive)
+			this.notificationHandler?.onGenericPlayerStateChanged(playerId)
+		else
+			this.notificationHandler?.dismissNotificationForPlayer(playerId)
+
+		this.stopIfNotRequired()
+	}
+
+	// unused
+	override fun onEvent(event: MediaPlayerCompletedEvent) {}
+}

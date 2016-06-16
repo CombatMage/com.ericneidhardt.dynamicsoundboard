@@ -5,7 +5,7 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.notifications.service.NotificationService
+import org.neidhardt.dynamicsoundboard.notifications.NotificationService
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 import java.util.*
 

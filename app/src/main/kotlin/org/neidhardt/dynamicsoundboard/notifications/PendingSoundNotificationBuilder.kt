@@ -15,25 +15,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 import org.neidhardt.utils.AndroidVersion
 
-/**
- * File created by eric.neidhardt on 04.12.2014.
- */
-fun getNotificationIntentFilter(): IntentFilter
-{
-	val filter = IntentFilter()
-	filter.addAction(ACTION_DISMISS)
-	filter.addAction(ACTION_PLAY)
-	filter.addAction(ACTION_STOP)
-	filter.addAction(ACTION_FADE_OUT)
-	return filter
-}
-
-data class PendingSoundNotification(val notificationId: Int, var playerId: String, var notification: Notification)
-{
-	fun isPlaylistNotification(): Boolean = this.notificationId == NOTIFICATION_ID_PLAYLIST
-}
-
-class PendingSoundNotificationBuilder
+class PendingSoundNotificationBuilderOld
 @JvmOverloads constructor
 (
 		context: Context,
@@ -61,7 +43,7 @@ class PendingSoundNotificationBuilder
 		}
 
 		this.setSmallIcon(R.drawable.ic_stat_pending_sounds)
-		this.setDeleteIntent(this.getPendingIntent(context, ACTION_DISMISS))
+		this.setDeleteIntent(this.getPendingIntent(context, NotificationConstants.ACTION_DISMISS))
 		this.setContentIntent(this.getOpenActivityIntent(context))
 
 		this.setContentTitle(title)
@@ -115,7 +97,7 @@ class PendingSoundNotificationBuilder
 					context.getString(R.string.notification_stop_sound)
 				else
 					""
-				, this.getPendingIntent(context, ACTION_STOP))
+				, this.getPendingIntent(context, NotificationConstants.ACTION_STOP))
 		)
 	}
 
@@ -126,7 +108,7 @@ class PendingSoundNotificationBuilder
 					context.getString(R.string.notification_play_sound)
 				else
 					""
-				, this.getPendingIntent(context, ACTION_PLAY))
+				, this.getPendingIntent(context, NotificationConstants.ACTION_PLAY))
 		)
 	}
 
@@ -137,7 +119,7 @@ class PendingSoundNotificationBuilder
 					context.getString(R.string.notification_pause_sound)
 				else
 					""
-				, this.getPendingIntent(context, ACTION_FADE_OUT))
+				, this.getPendingIntent(context, NotificationConstants.ACTION_FADE_OUT))
 		)
 	}
 
@@ -149,8 +131,8 @@ class PendingSoundNotificationBuilder
 	private fun getPendingIntent(context: Context, action: String): PendingIntent
 	{
 		val intent = Intent(action)
-		intent.putExtra(KEY_PLAYER_ID, this.playerId)
-		intent.putExtra(KEY_NOTIFICATION_ID, this.notificationId)
+		intent.putExtra(NotificationConstants.KEY_PLAYER_ID, this.playerId)
+		intent.putExtra(NotificationConstants.KEY_NOTIFICATION_ID, this.notificationId)
 		return PendingIntent.getBroadcast(context, this.getRequestCode(), intent, 0)
 	}
 
@@ -162,7 +144,7 @@ class PendingSoundNotificationBuilder
 
 	private fun getRequestCode(): Int
 	{
-		if (this.notificationId != NOTIFICATION_ID_PLAYLIST)
+		if (this.notificationId != NotificationConstants.NOTIFICATION_ID_PLAYLIST)
 			return this.notificationId
 		return Integer.toString(this.notificationId + this.playerId.hashCode()).hashCode()
 	}
