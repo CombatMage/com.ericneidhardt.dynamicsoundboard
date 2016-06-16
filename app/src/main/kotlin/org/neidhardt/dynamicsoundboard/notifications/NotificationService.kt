@@ -16,10 +16,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.notifications.INotificationHandler
-import org.neidhardt.dynamicsoundboard.notifications.NotificationActionReceiver
-import org.neidhardt.dynamicsoundboard.notifications.NotificationHandler
-import org.neidhardt.dynamicsoundboard.notifications.PendingSoundNotification
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
@@ -101,21 +97,22 @@ class NotificationService : Service(),
 	}
 
 	private fun onNotificationAction(action: String, playerId: String, notificationId: Int) {
-		if (action.equals(NotificationConstants.ACTION_DISMISS))
-			this.notificationHandler?.dismissNotification(notificationId)
-		else {
-			val player: MediaPlayerController?
-			if (notificationId == NotificationConstants.NOTIFICATION_ID_PLAYLIST)
-				player = searchInListForId(playerId, soundsDataAccess.playlist)
-			else
-				player = searchInMapForId(playerId, soundsDataAccess.sounds)
-			if (player == null)
-				return
+		val player: MediaPlayerController? =
+				if (notificationId == NotificationConstants.NOTIFICATION_ID_PLAYLIST)
+					searchInListForId(playerId, soundsDataAccess.playlist)
+				else
+					searchInMapForId(playerId, soundsDataAccess.sounds)
 
+		player?.let {
 			when (action) {
+				NotificationConstants.ACTION_DISMISS -> {
+					if (!this.isActivityVisible) player.destroy(false)
+					else {}
+				}
 				NotificationConstants.ACTION_STOP -> player.stopSound()
 				NotificationConstants.ACTION_PLAY -> player.playSound()
 				NotificationConstants.ACTION_FADE_OUT -> player.fadeOutSound()
+				else -> Logger.e(TAG, "unknown notification action received")
 			}
 		}
 

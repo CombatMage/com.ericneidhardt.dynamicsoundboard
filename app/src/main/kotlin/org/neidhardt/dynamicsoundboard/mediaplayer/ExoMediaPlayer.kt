@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
 import android.content.Context
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import com.google.android.exoplayer.ExoPlaybackException
 import com.google.android.exoplayer.ExoPlayer
@@ -96,6 +97,13 @@ class ExoMediaPlayer
 
 	override val isPlayingSound: Boolean
 		get() = exoPlayer.playWhenReady
+
+	override val albumCover: ByteArray? by lazy {
+		MediaMetadataRetriever().let {
+			it.setDataSource(context, Uri.parse(this.mediaPlayerData.uri))
+			it.embeddedPicture
+		}
+	}
 
 	override val trackDuration: Int
 		get()

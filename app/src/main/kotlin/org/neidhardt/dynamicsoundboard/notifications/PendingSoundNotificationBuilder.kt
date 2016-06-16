@@ -67,12 +67,12 @@ class PendingSoundNotificationBuilderOld
 		{
 			val size = getBitmapSize(data)
 			val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
-			return getBitmap(data, sampleSize)
+			return getBitmapFromBytes(data, sampleSize)
 		} else
 		{
 			val size = getBitmapSize(resources, R.drawable.ic_notification_large)
 			val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
-			return getBitmap(context, R.drawable.ic_notification_large, sampleSize)
+			return getBitmapFromAsset(context, R.drawable.ic_notification_large, sampleSize)
 		}
 	}
 
