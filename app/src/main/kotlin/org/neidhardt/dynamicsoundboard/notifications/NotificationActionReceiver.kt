@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.notificationsNew
+package org.neidhardt.dynamicsoundboard.notifications
 
 import android.content.BroadcastReceiver
 import android.content.Context

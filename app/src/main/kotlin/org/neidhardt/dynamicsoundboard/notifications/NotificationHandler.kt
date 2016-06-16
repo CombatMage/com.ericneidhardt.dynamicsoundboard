@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.notificationsNew
+package org.neidhardt.dynamicsoundboard.notifications
 
 import android.support.v4.app.NotificationManagerCompat
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
