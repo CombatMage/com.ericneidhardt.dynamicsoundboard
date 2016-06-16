@@ -5,6 +5,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.media.MediaMetadataRetriever
+import android.net.Uri
 import android.support.v4.app.NotificationCompat
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
@@ -58,6 +61,8 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 				notificationTitle: String): NotificationCompat.Builder
 		{
 			val playerId = player.mediaPlayerData.playerId
+			val style = android.support.v7.app.NotificationCompat.MediaStyle().apply { this.setShowActionsInCompactView(1) }// index of action play/pause
+			val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
 
 			val builder = NotificationCompat.Builder(context)
 					.setContentTitle(notificationTitle)
@@ -70,10 +75,11 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 					.setDefaultContentIntent(
 							context = context
 					)
+					.setLargeIcon(this.getLargeIcon(context, player.mediaPlayerData.uri))
+					.setStyle(style)
+					.setActionStop(context, isLollipopStyleAvailable, notificationId, playerId)
 
-			val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
-			builder.setActionStop(context, isLollipopStyleAvailable, notificationId, playerId)
-			if (player.isPlayingSound)
+			/*if (player.isPlayingSound)
 			{
 				builder.setOngoing(true)
 				builder.setActionFadeOut(context, isLollipopStyleAvailable, notificationId, playerId)
@@ -82,11 +88,32 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			{
 				builder.setOngoing(false)
 				builder.setActionPlay(context, isLollipopStyleAvailable, notificationId, playerId)
-			}
+			}*/
 
 			return builder
 		}
 
+		private fun getLargeIcon(context: Context, uri: String): Bitmap {
+			val mediaDataReceiver = MediaMetadataRetriever()
+			mediaDataReceiver.setDataSource(context, Uri.parse(uri))
+
+			val resources = context.resources
+			val requiredHeight = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
+			val requiredWidth = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_width)
+
+			val data = mediaDataReceiver.embeddedPicture
+			if (data != null)
+			{
+				val size = getBitmapSize(data)
+				val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
+				return getBitmap(data, sampleSize)
+			} else
+			{
+				val size = getBitmapSize(resources, R.drawable.ic_notification_large)
+				val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
+				return getBitmap(context, R.drawable.ic_notification_large, sampleSize)
+			}
+		}
 	}
 }
 
