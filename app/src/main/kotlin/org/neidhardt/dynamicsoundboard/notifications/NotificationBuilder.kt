@@ -10,6 +10,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
+import org.neidhardt.utils.AndroidVersion
 
 /**
  * @author eric.neidhardt on 16.06.2016.
@@ -56,7 +57,9 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 				context: Context, notificationId: Int,
 				notificationTitle: String): NotificationCompat.Builder
 		{
-			return NotificationCompat.Builder(context)
+			val playerId = player.mediaPlayerData.playerId
+
+			val builder = NotificationCompat.Builder(context)
 					.setContentTitle(notificationTitle)
 					.setDefaultSmallIcon()
 					.setDefaultDeleteIntent(
@@ -67,6 +70,21 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 					.setDefaultContentIntent(
 							context = context
 					)
+
+			val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
+			builder.setActionStop(context, isLollipopStyleAvailable, notificationId, playerId)
+			if (player.isPlayingSound)
+			{
+				builder.setOngoing(true)
+				builder.setActionFadeOut(context, isLollipopStyleAvailable, notificationId, playerId)
+			}
+			else
+			{
+				builder.setOngoing(false)
+				builder.setActionPlay(context, isLollipopStyleAvailable, notificationId, playerId)
+			}
+
+			return builder
 		}
 
 	}

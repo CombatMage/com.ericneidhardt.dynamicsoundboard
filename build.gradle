@@ -23,6 +23,8 @@ ext {
 project.ext.set("projectMinSdkVersion", 16)
 project.ext.set("projectTargetSdkVersion", 23)
 
+apply from: 'dependencies.gradle'
+
 allprojects {
 	repositories {
 		jcenter()
