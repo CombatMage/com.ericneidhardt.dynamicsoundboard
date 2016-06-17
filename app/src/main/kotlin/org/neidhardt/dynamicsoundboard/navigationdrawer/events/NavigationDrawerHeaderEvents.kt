@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.header.events
+package org.neidhardt.dynamicsoundboard.navigationdrawer.events
 
 /**
  * File created by eric.neidhardt on 11.11.2015.
