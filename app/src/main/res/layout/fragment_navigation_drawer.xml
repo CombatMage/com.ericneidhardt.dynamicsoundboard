@@ -53,8 +53,8 @@
 					app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 				<include
-						layout="@layout/view_navigation_drawer_header"
-						android:id="@+id/view_navigation_drawer_header"
+						layout="@layout/layout_navigation_drawer_header"
+						android:id="@+id/layout_navigation_drawer_header"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:fitsSystemWindows="true"
@@ -84,6 +84,7 @@
 
 			<include
 					layout="@layout/layout_navigation_drawer_button_bar"
+					android:id="@+id/layout_navigation_drawer_button_bar"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_gravity="bottom"/>

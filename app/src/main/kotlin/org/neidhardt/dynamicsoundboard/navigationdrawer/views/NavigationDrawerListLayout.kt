@@ -17,6 +17,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDe
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.createPlaylistPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.createSoundLayoutsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.createSoundSheetPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsUtil
@@ -57,9 +58,7 @@ class NavigationDrawerListPresenter(
 		private val appBarLayout: AppBarLayout,
 		private val toolbarDeletion: View,
 		private val recyclerView: RecyclerView,
-		private val buttonOk: View,
-		private val buttonDelete: View,
-		private val buttonDeleteSelected: View,
+		private val buttonBarVM: NavigationDrawerButtonBarVM,
 		private val buttonCancelActionMode: View,
 		private val buttonSelectAll: View,
 		private val soundsDataAccess: SoundsDataAccess,
@@ -116,9 +115,10 @@ class NavigationDrawerListPresenter(
 
 	init
 	{
-		this.buttonOk.setOnClickListener(this)
-		this.buttonDelete.setOnClickListener(this)
-		this.buttonDeleteSelected.setOnClickListener(this)
+		this.buttonBarVM.onAddClicked = { this.add() }
+		this.buttonBarVM.onDeleteClicked = { this.prepareDeletion() }
+		this.buttonBarVM.onDeleteSelectedClicked = { this.deleteSelected()}
+
 		this.buttonCancelActionMode.setOnClickListener(this)
 		this.buttonSelectAll.setOnClickListener(this)
 	}
@@ -151,7 +151,9 @@ class NavigationDrawerListPresenter(
 					.start()
 		}
 
-		this.buttonDeleteSelected.apply {
+		this.buttonBarVM.enableDeleteSelected = true
+
+		/*this.buttonDeleteSelected.apply {
 			this.visibility = View.VISIBLE
 			this.translationX = (-distance).toFloat()
 			this.animate()
@@ -160,7 +162,7 @@ class NavigationDrawerListPresenter(
 					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
 					.setInterpolator(DecelerateInterpolator())
 					.start()
-		}
+		}*/
 	}
 
 	private fun hideToolbarForDeletion()
@@ -173,7 +175,36 @@ class NavigationDrawerListPresenter(
 		this.recyclerView.scrollToPosition(0)
 
 		this.toolbarDeletion.visibility = View.GONE
-		this.buttonDeleteSelected.visibility = View.GONE
+		this.buttonBarVM.enableDeleteSelected = false
+	}
+
+	private fun add() {
+		if (this.currentList == List.SoundLayouts)
+		{
+			AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
+		}
+		else if (this.currentList == List.Playlist)
+		{
+			AddNewSoundDialog(this.fragmentManager, PlaylistTAG)
+		}
+		else if (this.currentList == List.SoundSheet)
+		{
+			AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
+		}
+	}
+
+	private fun prepareDeletion() {
+		val itemCount = this.currentPresenter?.itemCount ?: 0
+		if (itemCount == 0) return
+		this.showToolbarForDeletion()
+		this.currentPresenter?.startDeletionMode()
+		this.setActionModeSubTitle(0, itemCount)
+	}
+
+	private fun deleteSelected() {
+		this.currentPresenter?.deleteSelectedItems()
+		this.currentPresenter?.stopDeletionMode()
+		this.hideToolbarForDeletion()
 	}
 
 	override fun onClick(view: View)
@@ -181,20 +212,6 @@ class NavigationDrawerListPresenter(
 		val id = view.id
 		when (id)
 		{
-			this.buttonDelete.id ->
-			{
-				val itemCount = this.currentPresenter?.itemCount ?: 0
-				if (itemCount == 0) return
-				this.showToolbarForDeletion()
-				this.currentPresenter?.startDeletionMode()
-				this.setActionModeSubTitle(0, itemCount)
-			}
-			this.buttonDeleteSelected.id ->
-			{
-				this.currentPresenter?.deleteSelectedItems()
-				this.currentPresenter?.stopDeletionMode()
-				this.hideToolbarForDeletion()
-			}
 			this.buttonCancelActionMode.id ->
 			{
 				this.currentPresenter?.stopDeletionMode()
@@ -206,19 +223,6 @@ class NavigationDrawerListPresenter(
 				val itemCount = this.currentPresenter?.itemCount ?: 0
 				this.setActionModeSubTitle(itemCount, itemCount)
 			}
-			this.buttonOk.id ->
-				if (this.currentList == List.SoundLayouts)
-				{
-					AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
-				}
-				else if (this.currentList == List.Playlist)
-				{
-					AddNewSoundDialog(this.fragmentManager, PlaylistTAG)
-				}
-				else if (this.currentList == List.SoundSheet)
-				{
-					AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
-				}
 		}
 	}
 

@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundLayoutsR
 */
 private val ANIMATION_TIME_ARROW: Long = 400
 
-class NavigationDrawerHeaderViewModel(
+class NavigationDrawerHeaderVM(
 		private val eventBus: EventBus,
 		title: String?
 ) : BaseObservable() {

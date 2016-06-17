@@ -1,69 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<layout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="match_parent"
-		android:layout_height="@dimen/height_list_item"
-		android:layout_alignParentBottom="true"
-		android:orientation="horizontal"
-		android:background="@color/background"
-		tools:layout_marginTop="@dimen/status_bar_padding">
+		xmlns:tools="http://schemas.android.com/tools">
 
-	<LinearLayout
+	<data>
+		<import type="android.view.View"/>
+
+		<variable
+				name="viewModel"
+				type="org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM"/>
+	</data>
+
+	<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
+			android:layout_height="@dimen/height_list_item"
 			android:orientation="horizontal"
-			android:background="@color/background">
+			android:background="@color/background"
+			tools:layout_marginTop="@dimen/status_bar_padding">
 
-		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:padding="@dimen/margin_default"
-				android:gravity="center"
-				android:text="@string/navigation_drawer_delete"
-				android:textSize="@dimen/text_body"
-				android:textColor="@color/text_body_primary"
-				app:typeface="roboto_medium"
-				android:clickable="true"
-				android:background="@drawable/selector_background_list_item"/>
-
-		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/b_layout_navigation_drawer_button_bar_add"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:padding="@dimen/margin_default"
-				android:gravity="center"
-				android:text="@string/navigation_drawer_add"
-				android:textSize="@dimen/text_body"
-				android:textColor="@color/text_body_primary"
-				app:typeface="roboto_medium"
-				android:clickable="true"
-				android:background="@drawable/selector_background_list_item"/>
-	</LinearLayout>
-
-	<FrameLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:background="@color/background">
-
-		<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/b_layout_navigation_drawer_button_bar_delete_selected"
+		<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:padding="@dimen/margin_default"
-				android:gravity="center"
-				android:text="@string/navigation_drawer_delete_selected"
-				android:textSize="@dimen/text_body"
-				android:textColor="@color/text_body_primary"
-				app:typeface="roboto_medium"
-				android:background="@drawable/selector_background_list_item"
-				android:clickable="true"
-				android:visibility="gone"/>
-	</FrameLayout>
-</RelativeLayout>
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:orientation="horizontal"
+				android:background="@color/background">
+
+			<com.devspark.robototextview.widget.RobotoTextView
+					android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:padding="@dimen/margin_default"
+					android:gravity="center"
+					android:text="@string/navigation_drawer_delete"
+					android:textSize="@dimen/text_body"
+					android:textColor="@color/text_body_primary"
+					app:typeface="roboto_medium"
+					android:clickable="true"
+					android:background="@drawable/selector_background_list_item"
+					android:onClick="@{(view) -> viewModel.onDeleteClicked()}"/>
+
+			<com.devspark.robototextview.widget.RobotoTextView
+					android:id="@+id/b_layout_navigation_drawer_button_bar_add"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:padding="@dimen/margin_default"
+					android:gravity="center"
+					android:text="@string/navigation_drawer_add"
+					android:textSize="@dimen/text_body"
+					android:textColor="@color/text_body_primary"
+					app:typeface="roboto_medium"
+					android:clickable="true"
+					android:background="@drawable/selector_background_list_item"
+					android:onClick="@{(view) -> viewModel.onAddClicked()}"/>
+		</LinearLayout>
+
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:background="@color/background">
+
+			<com.devspark.robototextview.widget.RobotoTextView
+					android:id="@+id/b_layout_navigation_drawer_button_bar_delete_selected"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:padding="@dimen/margin_default"
+					android:gravity="center"
+					android:text="@string/navigation_drawer_delete_selected"
+					android:textSize="@dimen/text_body"
+					android:textColor="@color/text_body_primary"
+					app:typeface="roboto_medium"
+					android:background="@drawable/selector_background_list_item"
+					android:clickable="true"
+					tools:visibility="gone"
+					android:onClick="@{(view) -> viewModel.onDeleteSelectedClicked()}"
+					android:visibility="@{viewModel.enableDeleteSelected ? View.VISIBLE : View.GONE}"/>
+		</FrameLayout>
+	</RelativeLayout>
+</layout>

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.header
+package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
 
 import org.greenrobot.eventbus.EventBus
 import org.junit.Before
@@ -7,22 +7,21 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundLayoutsRequestedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerHeaderViewModel
 import robolectricutils.BaseRobolectricTest
 import kotlin.properties.Delegates
 
 /**
  * @author eric.neidhardt on 17.06.2016.
  */
-class NavigationDrawerHeaderViewModelTest : BaseRobolectricTest() {
+class NavigationDrawerHeaderVMTest : BaseRobolectricTest() {
 
 	@Mock private var eventBus: EventBus? = null
-	private var unitUnderTest by Delegates.notNull<NavigationDrawerHeaderViewModel>()
+	private var unitUnderTest by Delegates.notNull<NavigationDrawerHeaderVM>()
 
 	@Before
 	override fun setUp() {
 		MockitoAnnotations.initMocks(this)
-		this.unitUnderTest = NavigationDrawerHeaderViewModel(this.eventBus!!, null)
+		this.unitUnderTest = NavigationDrawerHeaderVM(this.eventBus!!, null)
 	}
 
 	@Test

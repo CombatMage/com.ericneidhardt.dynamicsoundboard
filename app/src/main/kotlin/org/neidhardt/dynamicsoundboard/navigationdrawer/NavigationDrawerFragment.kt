@@ -16,7 +16,8 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
-import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerHeaderViewModel
+import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
+import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerHeaderVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
@@ -36,7 +37,8 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 	private var tabView: NavigationDrawerTabLayout? = null
 	private var listView: NavigationDrawerListLayout? = null
 
-	private val headerView = NavigationDrawerHeaderViewModel(this.eventBus, this.soundLayoutAccess.getActiveSoundLayout().label)
+	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutAccess.getActiveSoundLayout().label)
+	private val buttonBarVM = NavigationDrawerButtonBarVM()
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -46,7 +48,8 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater, R.layout.fragment_navigation_drawer, container, false)
-		binding.viewNavigationDrawerHeader.viewModel = this.headerView
+		binding.layoutNavigationDrawerHeader.viewModel = this.headerVM
+		binding.layoutNavigationDrawerButtonBar.viewModel = this.buttonBarVM
 		return binding.root
 	}
 
@@ -64,9 +67,7 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 				toolbarDeletion = this.view_navigation_drawer_deletion_header,
 
 				buttonCancelActionMode = this.b_layout_navigation_drawer_deletion_header_cancel,
-				buttonDelete = this.b_layout_navigation_drawer_button_bar_delete,
-				buttonDeleteSelected = this.b_layout_navigation_drawer_button_bar_delete_selected,
-				buttonOk = this.b_layout_navigation_drawer_button_bar_add,
+				buttonBarVM = this.buttonBarVM,
 				buttonSelectAll = this.ll_layout_navigation_drawer_deletion_header_title,
 
 				recyclerView = this.rv_navigation_drawer_list.apply {
@@ -115,18 +116,18 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutsRemovedEvent) {
-		this.headerView.title = this.soundLayoutAccess.getActiveSoundLayout().label
+		this.headerVM.title = this.soundLayoutAccess.getActiveSoundLayout().label
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutRenamedEvent) {
-		this.headerView.title = this.soundLayoutAccess.getActiveSoundLayout().label
+		this.headerVM.title = this.soundLayoutAccess.getActiveSoundLayout().label
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutSelectedEvent) {
-		this.headerView.title = this.soundLayoutAccess.getActiveSoundLayout().label
-		this.headerView.openSoundLayouts = true
+		this.headerVM.title = this.soundLayoutAccess.getActiveSoundLayout().label
+		this.headerVM.openSoundLayouts = true
 	}
 }
 
