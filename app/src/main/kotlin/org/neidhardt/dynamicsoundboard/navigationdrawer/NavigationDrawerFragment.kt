@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -12,6 +13,8 @@ import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
+import org.neidhardt.dynamicsoundboard.navigationdrawer.header.NavigationDrawerHeaderViewModel
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
@@ -24,14 +27,19 @@ class NavigationDrawerFragment : BaseFragment()
 	private var tabView: NavigationDrawerTabLayout? = null
 	private var listView: NavigationDrawerListLayout? = null
 
+	private val headerView = NavigationDrawerHeaderViewModel()
+
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
 		this.retainInstance = true
 	}
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-			= inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		val binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater, R.layout.fragment_navigation_drawer, container, false)
+		binding.viewNavigationDrawerHeader.header = this.headerView
+		return binding.root
+	}
 
 	override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
 	{
@@ -76,6 +84,7 @@ class NavigationDrawerFragment : BaseFragment()
 				onSoundSheetsSelectedCallback = { this.listView?.currentList = List.SoundSheet },
 				onSoundLayoutsSelectedCallback = { this.listView?.currentList = List.SoundLayouts }
 		)
+
 	}
 
 	override fun onStart()
