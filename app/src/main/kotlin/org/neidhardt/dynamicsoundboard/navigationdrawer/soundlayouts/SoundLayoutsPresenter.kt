@@ -37,9 +37,8 @@ class SoundLayoutsPresenter
 ) :
 		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<SoundLayout>,
-		OnSoundLayoutRenamedEventListener,
-		AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener,
-		OnSoundLayoutsChangedEventListener
+		OnSoundLayoutsChangedEventListener,
+		AddNewSoundLayoutDialog.OnSoundLayoutAddedEventListener
 {
 	override var view: RecyclerView? = null
 
@@ -115,13 +114,6 @@ class SoundLayoutsPresenter
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutRenamedEvent)
-	{
-		val renamedLayout = event.renamedSoundLayout
-		this.adapter?.notifyItemChanged(renamedLayout)
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutAddedEvent)
 	{
 		val newLayout = event.data
@@ -133,8 +125,7 @@ class SoundLayoutsPresenter
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutsRemovedEvent)
-	{
+	override fun onEvent(event: SoundLayoutsRemovedEvent) {
 		val layoutsToRemove = event.soundLayouts
 		for (layout in layoutsToRemove)
 			this.removeLayout(layout)
@@ -142,6 +133,14 @@ class SoundLayoutsPresenter
 		val soundLayout = this.soundLayoutsAccess.getActiveSoundLayout()
 		this.adapter?.notifyItemChanged(soundLayout)
 	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundLayoutRenamedEvent) {
+		val renamedLayout = event.renamedSoundLayout
+		this.adapter?.notifyItemChanged(renamedLayout)
+	}
+
+	override fun onEvent(event: SoundLayoutSelectedEvent) {}
 
 	private fun removeLayout(soundSheet: SoundLayout)
 	{
@@ -152,4 +151,6 @@ class SoundLayoutsPresenter
 			this.adapter?.notifyItemRemoved(index)
 		}
 	}
+
+
 }

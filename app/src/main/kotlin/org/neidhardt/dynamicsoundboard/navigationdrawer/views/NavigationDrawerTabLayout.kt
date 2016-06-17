@@ -7,8 +7,10 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OnOpenSoundLayoutsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutSelectedEventListener
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutsChangedEventListener
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
 import org.neidhardt.utils.registerIfRequired
 
 /**
@@ -42,7 +44,8 @@ class NavigationDrawerTabLayoutPresenter
 ) : NavigationDrawerTabLayout,
 		TabLayout.OnTabSelectedListener,
 		OnOpenSoundLayoutsEventListener,
-		OnSoundLayoutSelectedEventListener {
+		OnSoundLayoutsChangedEventListener {
+
 	private var tabSoundSheets: TabLayout.Tab = tabLayout.createSoundSheetTab()
 	private var tabPlayList: TabLayout.Tab = tabLayout.createPlaylistTab()
 	private var tabSoundLayouts: TabLayout.Tab = tabLayout.createSoundLayoutsTab()
@@ -108,6 +111,10 @@ class NavigationDrawerTabLayoutPresenter
 	override fun onTabReselected(tab: TabLayout.Tab?) {}
 
 	override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+	override fun onEvent(event: SoundLayoutsRemovedEvent) {}
+
+	override fun onEvent(event: SoundLayoutRenamedEvent) {}
 }
 
 private fun TabLayout.createSoundSheetTab(): TabLayout.Tab = this.newTab().setText(R.string.tab_sound_sheets)

@@ -9,17 +9,13 @@ interface OnSoundLayoutsChangedEventListener {
 	 * @param event delivered SoundLayoutsRemovedEvent
 	 */
 	fun onEvent(event: SoundLayoutsRemovedEvent)
-}
 
-interface OnSoundLayoutSelectedEventListener {
 	/**
 	 * This is called by greenRobot EventBus in case a new SoundLayout was selected.
 	 * @param event delivered SoundLayoutRenamedEvent
 	 */
 	fun onEvent(event: SoundLayoutSelectedEvent)
-}
 
-interface OnSoundLayoutRenamedEventListener {
 	/**
 	 * This is called by greenRobot EventBus in case the SoundLayout was renamed.
 	 * @param event delivered SoundLayoutRenamedEvent

@@ -36,8 +36,10 @@ import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.*
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutSelectedEventListener
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutsChangedEventListener
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeletePlayListDialog
@@ -57,7 +59,7 @@ class SoundActivity :
 		BaseActivity(),
 		CustomEditText.OnTextEditedListener,
 		RequestPermissionHelper,
-		OnSoundLayoutSelectedEventListener,
+		OnSoundLayoutsChangedEventListener,
 		OnOpenSoundLayoutSettingsEventListener,
 		OnSoundSheetOpenEventListener,
 		OnSoundSheetsInitEventLisenter,
@@ -320,6 +322,10 @@ class SoundActivity :
 		if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
 			this.isSoundSheetActionsEnable = false
 	}
+
+	override fun onEvent(event: SoundLayoutsRemovedEvent) {}
+
+	override fun onEvent(event: SoundLayoutRenamedEvent) {}
 
 	override fun onEvent(event: SoundSheetAddedEvent) {}
 

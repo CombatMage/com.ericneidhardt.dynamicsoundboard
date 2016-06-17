@@ -1,29 +1,66 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.header
 
+import android.animation.Animator
 import android.animation.ValueAnimator
 import android.databinding.BaseObservable
-import android.databinding.Bindable
-import android.view.View
+import org.greenrobot.eventbus.EventBus
+import org.neidhardt.dynamicsoundboard.navigationdrawer.header.events.OpenSoundLayoutsRequestedEvent
 
 /**
 * Created by Eric.Neidhardt@GMail.com on 17.06.2016.
 */
-class NavigationDrawerHeaderViewModel : BaseObservable() {
+private val ANIMATION_TIME_ARROW: Long = 400
 
-	var title: String? = null
+class NavigationDrawerHeaderViewModel(
+		private val eventBus: EventBus,
+		title: String?
+) : BaseObservable() {
 
-	@Bindable
+	var title: String? = title
+		set(value) {
+			field = value
+			this.notifyChange()
+		}
+
 	var indicatorRotation: Int = 0
 		set(value) {
 			field = value
 			this.notifyChange()
 		}
 
-	fun onChangeLayoutClicked(view: View) {
-		val animator = ValueAnimator.ofInt(0, 180)
-		animator.duration = 10000
-		animator.addUpdateListener { this.indicatorRotation = animator.animatedValue as Int }
-		animator.start()
+	var openSoundLayouts = true
+		set(value) {
+			field = value
+			this.indicatorRotation = if (value) 0 else 180
+		}
 
+	fun onChangeLayoutClicked() {
+
+		this.eventBus.post(OpenSoundLayoutsRequestedEvent(!openSoundLayouts))
+
+		val animator =
+				if (this.openSoundLayouts)
+					ValueAnimator.ofInt(0, 180)
+				else
+					ValueAnimator.ofInt(180, 0)
+
+		animator.let {
+			it.duration = ANIMATION_TIME_ARROW
+			it.addUpdateListener { this.indicatorRotation = it.animatedValue as Int }
+			it.addListener(object : Animator.AnimatorListener {
+
+				override fun onAnimationEnd(animation: Animator?) {
+					openSoundLayouts = !openSoundLayouts
+				}
+
+				override fun onAnimationCancel(animation: Animator?) {
+					openSoundLayouts = !openSoundLayouts
+				}
+
+				override fun onAnimationRepeat(animation: Animator?) {}
+				override fun onAnimationStart(animation: Animator?) {}
+			})
+			it.start()
+		}
 	}
 }

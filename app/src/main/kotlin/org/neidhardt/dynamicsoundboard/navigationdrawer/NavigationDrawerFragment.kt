@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.fragment_navigation_drawer.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
@@ -19,15 +21,22 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutsChangedEventListener
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
+import org.neidhardt.utils.registerIfRequired
 
-class NavigationDrawerFragment : BaseFragment()
+class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListener
 {
 	private val eventBus = EventBus.getDefault()
+
+	private val soundLayoutAccess = SoundboardApplication.soundLayoutsAccess
 
 	private var tabView: NavigationDrawerTabLayout? = null
 	private var listView: NavigationDrawerListLayout? = null
 
-	private val headerView = NavigationDrawerHeaderViewModel()
+	private val headerView = NavigationDrawerHeaderViewModel(this.eventBus, this.soundLayoutAccess.getActiveSoundLayout().label)
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -91,14 +100,33 @@ class NavigationDrawerFragment : BaseFragment()
 	{
 		super.onStart()
 
+		this.eventBus.registerIfRequired(this)
 		this.tabView?.onAttached()
 		this.listView?.onAttached()
 	}
 
 	override fun onStop() {
 		super.onStop()
+
+		this.eventBus.unregister(this)
 		this.tabView?.onDetached()
 		this.listView?.onDetached()
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundLayoutsRemovedEvent) {
+		this.headerView.title = this.soundLayoutAccess.getActiveSoundLayout().label
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundLayoutRenamedEvent) {
+		this.headerView.title = this.soundLayoutAccess.getActiveSoundLayout().label
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: SoundLayoutSelectedEvent) {
+		this.headerView.title = this.soundLayoutAccess.getActiveSoundLayout().label
+		this.headerView.openSoundLayouts = true
 	}
 }
 
