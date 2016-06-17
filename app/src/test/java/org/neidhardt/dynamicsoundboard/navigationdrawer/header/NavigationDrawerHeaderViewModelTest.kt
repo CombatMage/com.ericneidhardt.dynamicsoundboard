@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.header
 
-import android.view.View
 import org.greenrobot.eventbus.EventBus
 import org.junit.Before
 import org.junit.Test
@@ -53,8 +52,9 @@ class NavigationDrawerHeaderViewModelTest : BaseRobolectricTest() {
 
 	@Test
 	fun onChangeLayoutClicked() {
-		this.unitUnderTest.onChangeLayoutClicked(Mockito.mock(View::class.java))
-		Mockito.verify(this.eventBus, Mockito.times(1))?.post(OpenSoundLayoutsRequestedEvent(Mockito.anyBoolean()))
+		val willOpenSoundLayout = this.unitUnderTest.openSoundLayouts
+		this.unitUnderTest.onChangeLayoutClicked()
+		Mockito.verify(this.eventBus, Mockito.times(1))?.post(OpenSoundLayoutsRequestedEvent(willOpenSoundLayout))
 	}
 
 }

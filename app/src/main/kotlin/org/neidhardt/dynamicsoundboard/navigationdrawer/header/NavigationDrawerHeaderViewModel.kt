@@ -36,7 +36,7 @@ class NavigationDrawerHeaderViewModel(
 
 	fun onChangeLayoutClicked() {
 
-		this.eventBus.post(OpenSoundLayoutsRequestedEvent(!openSoundLayouts))
+		this.eventBus.post(OpenSoundLayoutsRequestedEvent(openSoundLayouts))
 
 		val animator =
 				if (this.openSoundLayouts)

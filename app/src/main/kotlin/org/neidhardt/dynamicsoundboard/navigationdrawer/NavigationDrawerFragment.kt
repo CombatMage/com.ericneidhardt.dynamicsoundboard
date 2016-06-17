@@ -46,7 +46,7 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater, R.layout.fragment_navigation_drawer, container, false)
-		binding.viewNavigationDrawerHeader.header = this.headerView
+		binding.viewNavigationDrawerHeader.viewModel = this.headerView
 		return binding.root
 	}
 
