@@ -77,7 +77,8 @@
 					android:clickable="true"
 					tools:visibility="gone"
 					android:onClick="@{(view) -> viewModel.onDeleteSelectedClicked()}"
-					android:visibility="@{viewModel.enableDeleteSelected ? View.VISIBLE : View.GONE}"/>
+					android:visibility="@{viewModel.enableDeleteSelected ? View.VISIBLE : View.GONE}"
+					android:translationX="@{viewModel.deleteSelectedTranslationX}"/>
 		</FrameLayout>
 	</RelativeLayout>
 </layout>

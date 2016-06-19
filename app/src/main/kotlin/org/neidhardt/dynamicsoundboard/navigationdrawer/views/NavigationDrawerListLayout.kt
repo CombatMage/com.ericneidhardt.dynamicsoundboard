@@ -152,17 +152,6 @@ class NavigationDrawerListPresenter(
 		}
 
 		this.buttonBarVM.enableDeleteSelected = true
-
-		/*this.buttonDeleteSelected.apply {
-			this.visibility = View.VISIBLE
-			this.translationX = (-distance).toFloat()
-			this.animate()
-					.withLayer()
-					.translationX(0f)
-					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
-					.setInterpolator(DecelerateInterpolator())
-					.start()
-		}*/
 	}
 
 	private fun hideToolbarForDeletion()
