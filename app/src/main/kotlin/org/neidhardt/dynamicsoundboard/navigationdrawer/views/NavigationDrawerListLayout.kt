@@ -159,7 +159,7 @@ class NavigationDrawerListPresenter(
 		this.coordinatorLayout.isScrollingEnabled = true
 		this.recyclerView.isNestedScrollingEnabled = true
 
-		this.appBarLayout.setExpanded(true, false)
+		this.appBarLayout.setExpanded(true, true)
 
 		this.recyclerView.scrollToPosition(0)
 

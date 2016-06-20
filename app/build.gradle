@@ -19,7 +19,7 @@ android {
 
 	dataBinding {
 		enabled = true
-		version = "2.1.+"
+		version = "2.0.0"
 	}
 
 	compileOptions {
@@ -74,7 +74,7 @@ android {
 		release {
 			signingConfig signingConfigs.release
 			minifyEnabled false
-			shrinkResources true
+			shrinkResources false
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 		}
 		debug {
