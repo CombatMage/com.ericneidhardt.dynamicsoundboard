@@ -24,7 +24,8 @@
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
 				android:orientation="horizontal"
-				android:background="@color/background">
+				android:background="@color/background"
+				app:animateVisibleFade="@{!viewModel.enableDeleteSelected}">
 
 			<com.devspark.robototextview.widget.RobotoTextView
 					android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
@@ -78,7 +79,7 @@
 					tools:visibility="gone"
 					android:onClick="@{(view) -> viewModel.onDeleteSelectedClicked()}"
 					android:visibility="@{viewModel.enableDeleteSelected ? View.VISIBLE : View.GONE}"
-					android:translationX="@{viewModel.deleteSelectedTranslationX}"/>
+					app:animateVisibleSlide="@{viewModel.enableDeleteSelected}"/>
 		</FrameLayout>
 	</RelativeLayout>
 </layout>

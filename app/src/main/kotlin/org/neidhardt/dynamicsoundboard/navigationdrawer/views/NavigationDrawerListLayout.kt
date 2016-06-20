@@ -168,17 +168,10 @@ class NavigationDrawerListPresenter(
 	}
 
 	private fun add() {
-		if (this.currentList == List.SoundLayouts)
-		{
-			AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
-		}
-		else if (this.currentList == List.Playlist)
-		{
-			AddNewSoundDialog(this.fragmentManager, PlaylistTAG)
-		}
-		else if (this.currentList == List.SoundSheet)
-		{
-			AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
+		when (this.currentList) {
+			List.SoundLayouts -> AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
+			List.Playlist -> AddNewSoundDialog(this.fragmentManager, PlaylistTAG)
+			List.SoundSheet -> AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
 		}
 	}
 

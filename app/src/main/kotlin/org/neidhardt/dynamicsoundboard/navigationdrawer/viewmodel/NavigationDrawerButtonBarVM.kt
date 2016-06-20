@@ -1,38 +1,73 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
 
 import android.animation.Animator
-import android.animation.ValueAnimator
+import android.animation.AnimatorListenerAdapter
 import android.databinding.BaseObservable
-import android.view.animation.DecelerateInterpolator
+import android.databinding.BindingAdapter
+import android.view.View
 
 /**
- * Created by Eric.Neidhardt@GMail.com on 17.06.2016.
- */
-private val ANIMATION_TIME_BUTTON: Long = 400
-private val INTERPOLATOR = DecelerateInterpolator()
+* @author Eric.Neidhardt@GMail.com on 17.06.2016.
+*/
+//private val INTERPOLATOR = FastOutSlowInInterpolator()
 
 class NavigationDrawerButtonBarVM : BaseObservable() {
 
-	var deleteSelectedTranslationX: Float = 0f
-		set(value) {
-			field = value
-			this.notifyChange()
+	companion object {
+		@BindingAdapter("animateVisibleSlide")
+		@JvmStatic
+		fun slideView(view: View, visible: Boolean) {
+			view.animate().cancel();
+			if (visible) {
+				view.visibility = View.VISIBLE;
+				view.translationX = -1 * view.width.toFloat()
+				view.animate().withLayer().translationX(0f).setListener(object : AnimatorListenerAdapter() {
+					override fun onAnimationEnd(animation: Animator) {
+						view.translationX = 0f
+					}
+				})
+			}
+			else {
+				view.visibility = View.VISIBLE;
+				view.translationX = 0f
+				view.animate().withLayer().translationX(-1 * view.width.toFloat()).setListener(object : AnimatorListenerAdapter() {
+					override fun onAnimationEnd(animation: Animator) {
+						view.visibility = View.GONE;
+					}
+				})
+			}
 		}
+
+		@BindingAdapter("animateVisibleFade")
+		@JvmStatic
+		fun fadeView(view: View, visible: Boolean) {
+			view.animate().cancel();
+			if (visible) {
+				view.visibility = View.VISIBLE;
+				view.alpha = 0f
+				view.animate().withLayer().alpha(1f).setListener(object : AnimatorListenerAdapter() {
+					override fun onAnimationEnd(animation: Animator) {
+						view.alpha = 1f
+					}
+				})
+			}
+			else {
+				view.visibility = View.VISIBLE;
+				view.alpha = 1f
+				view.animate().withLayer().translationX(0f).setListener(object : AnimatorListenerAdapter() {
+					override fun onAnimationEnd(animation: Animator) {
+						view.alpha = 0f
+						view.visibility = View.GONE;
+					}
+				})
+			}
+		}
+	}
 
 	var enableDeleteSelected: Boolean = false
 		set(value) {
 			field = value
 			this.notifyChange()
-
-			if (value == true) {
-
-				ValueAnimator.ofFloat(-width, 0).let {
-					it.duration = ANIMATION_TIME_BUTTON
-					it.addUpdateListener { this.deleteSelectedTranslationX = it.animatedValue as Float })
-					it.interpolator = INTERPOLATOR
-					it.start()
-				}
-			}
 		}
 
 	var onDeleteClicked: () -> Unit = {}
