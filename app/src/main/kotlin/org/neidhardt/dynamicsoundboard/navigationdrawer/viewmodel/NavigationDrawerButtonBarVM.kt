@@ -1,66 +1,11 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.databinding.BaseObservable
-import android.databinding.BindingAdapter
-import android.view.View
 
 /**
 * @author Eric.Neidhardt@GMail.com on 17.06.2016.
 */
 class NavigationDrawerButtonBarVM : BaseObservable() {
-
-	companion object {
-		@BindingAdapter("animateVisibleSlide")
-		@JvmStatic
-		fun slideView(view: View, visible: Boolean) {
-			view.animate().cancel();
-			if (visible) {
-				view.visibility = View.VISIBLE;
-				view.translationX = -1 * view.width.toFloat()
-				view.animate().withLayer().translationX(0f).setListener(object : AnimatorListenerAdapter() {
-					override fun onAnimationEnd(animation: Animator) {
-						view.translationX = 0f
-					}
-				})
-			}
-			else {
-				view.visibility = View.VISIBLE;
-				view.translationX = 0f
-				view.animate().withLayer().translationX(-1 * view.width.toFloat()).setListener(object : AnimatorListenerAdapter() {
-					override fun onAnimationEnd(animation: Animator) {
-						view.visibility = View.GONE;
-					}
-				})
-			}
-		}
-
-		@BindingAdapter("animateVisibleFade")
-		@JvmStatic
-		fun fadeView(view: View, visible: Boolean) {
-			view.animate().cancel();
-			if (visible) {
-				view.visibility = View.VISIBLE;
-				view.alpha = 0f
-				view.animate().withLayer().alpha(1f).setDuration(400).setListener(object : AnimatorListenerAdapter() {
-					override fun onAnimationEnd(animation: Animator) {
-						view.alpha = 1f
-					}
-				})
-			}
-			else {
-				view.visibility = View.VISIBLE;
-				view.alpha = 1f
-				view.animate().withLayer().alpha(0f).setListener(object : AnimatorListenerAdapter() {
-					override fun onAnimationEnd(animation: Animator) {
-						view.alpha = 0f
-						view.visibility = View.GONE;
-					}
-				})
-			}
-		}
-	}
 
 	var enableDeleteSelected: Boolean = false
 		set(value) {
