@@ -9,8 +9,6 @@ import android.view.View
 /**
 * @author Eric.Neidhardt@GMail.com on 17.06.2016.
 */
-//private val INTERPOLATOR = FastOutSlowInInterpolator()
-
 class NavigationDrawerButtonBarVM : BaseObservable() {
 
 	companion object {
@@ -45,7 +43,7 @@ class NavigationDrawerButtonBarVM : BaseObservable() {
 			if (visible) {
 				view.visibility = View.VISIBLE;
 				view.alpha = 0f
-				view.animate().withLayer().alpha(1f).setListener(object : AnimatorListenerAdapter() {
+				view.animate().withLayer().alpha(1f).setDuration(400).setListener(object : AnimatorListenerAdapter() {
 					override fun onAnimationEnd(animation: Animator) {
 						view.alpha = 1f
 					}
@@ -54,7 +52,7 @@ class NavigationDrawerButtonBarVM : BaseObservable() {
 			else {
 				view.visibility = View.VISIBLE;
 				view.alpha = 1f
-				view.animate().withLayer().translationX(0f).setListener(object : AnimatorListenerAdapter() {
+				view.animate().withLayer().alpha(0f).setListener(object : AnimatorListenerAdapter() {
 					override fun onAnimationEnd(animation: Animator) {
 						view.alpha = 0f
 						view.visibility = View.GONE;
