@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.views
+package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.support.v4.app.DialogFragment
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity

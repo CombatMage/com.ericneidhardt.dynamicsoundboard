@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel;
+package org.neidhardt.dynamicsoundboard.views.binding_adapter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

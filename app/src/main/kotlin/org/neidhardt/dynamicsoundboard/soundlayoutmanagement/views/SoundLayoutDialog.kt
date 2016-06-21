@@ -7,7 +7,7 @@ import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AlertDialog
 import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.views.BaseDialog
+import org.neidhardt.dynamicsoundboard.soundactivity.BaseDialog
 
 /**
  * File created by eric.neidhardt on 12.03.2015.

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.soundactivity.BaseDialog
 
 /**
  * File created by eric.neidhardt on 16.02.2015.
