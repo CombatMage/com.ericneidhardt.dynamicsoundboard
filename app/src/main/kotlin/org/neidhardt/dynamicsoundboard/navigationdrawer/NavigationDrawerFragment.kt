@@ -127,7 +127,7 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutSelectedEvent) {
 		this.headerVM.title = this.soundLayoutAccess.getActiveSoundLayout().label
-		this.headerVM.openSoundLayouts = true
+		this.headerVM.isOpenSoundLayoutRequested = true
 	}
 }
 
