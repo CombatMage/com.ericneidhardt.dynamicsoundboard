@@ -18,14 +18,14 @@ class NavigationDrawerHeaderVM(
 			this.notifyChange()
 		}
 
-	var isOpenSoundLayoutRequested = true
+	var isSoundLayoutOpen = false
 		set(value) {
 			field = value
 			this.notifyChange()
 		}
 
 	fun onChangeLayoutClicked() {
-		this.eventBus.post(OpenSoundLayoutsRequestedEvent(isOpenSoundLayoutRequested))
-		this.isOpenSoundLayoutRequested = !this.isOpenSoundLayoutRequested
+		this.eventBus.post(OpenSoundLayoutsRequestedEvent(!isSoundLayoutOpen))
+		this.isSoundLayoutOpen = !this.isSoundLayoutOpen
 	}
 }

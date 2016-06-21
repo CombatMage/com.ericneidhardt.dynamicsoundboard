@@ -13,9 +13,9 @@ public class NavigationDrawerButtonBarAdapter {
 	@BindingAdapter("animateVisibleRotateX")
 	public static void rotateXView(final View view, Boolean rotateUp) {
 		view.animate().cancel();
-		if (!rotateUp) {
+		if (rotateUp) {
 			view.setRotationX(0f);
-			view.animate().withLayer().rotationX(1f).setListener(new AnimatorListenerAdapter() {
+			view.animate().withLayer().rotationX(180f).setListener(new AnimatorListenerAdapter() {
 				@Override
 				public void onAnimationEnd(Animator animation) {
 					view.setRotationX(180f);

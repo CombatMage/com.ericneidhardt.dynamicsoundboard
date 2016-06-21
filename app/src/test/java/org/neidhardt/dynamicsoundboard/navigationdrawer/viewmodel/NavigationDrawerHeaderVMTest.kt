@@ -37,16 +37,16 @@ class NavigationDrawerHeaderVMTest : BaseRobolectricTest() {
 
 	@Test
 	fun setAndGetOpenSoundLayouts() {
-		this.unitUnderTest.isOpenSoundLayoutRequested = true
-		assert(this.unitUnderTest.isOpenSoundLayoutRequested == true)
+		this.unitUnderTest.isSoundLayoutOpen = true
+		assert(this.unitUnderTest.isSoundLayoutOpen == true)
 
-		this.unitUnderTest.isOpenSoundLayoutRequested = false
-		assert(this.unitUnderTest.isOpenSoundLayoutRequested == false)
+		this.unitUnderTest.isSoundLayoutOpen = false
+		assert(this.unitUnderTest.isSoundLayoutOpen == false)
 	}
 
 	@Test
 	fun onChangeLayoutClicked() {
-		val willOpenSoundLayout = this.unitUnderTest.isOpenSoundLayoutRequested
+		val willOpenSoundLayout = this.unitUnderTest.isSoundLayoutOpen
 		this.unitUnderTest.onChangeLayoutClicked()
 		Mockito.verify(this.eventBus, Mockito.times(1))?.post(OpenSoundLayoutsRequestedEvent(willOpenSoundLayout))
 	}
