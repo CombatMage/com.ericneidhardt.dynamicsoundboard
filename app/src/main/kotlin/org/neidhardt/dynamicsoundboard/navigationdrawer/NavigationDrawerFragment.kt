@@ -25,7 +25,9 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayou
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
+import org.neidhardt.utils.letThis
 import org.neidhardt.utils.registerIfRequired
+import kotlin.properties.Delegates
 
 class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListener
 {
@@ -36,6 +38,7 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 	private var tabView: NavigationDrawerTabLayout? = null
 	private var listView: NavigationDrawerListLayout? = null
 
+	private var binding by Delegates.notNull<FragmentNavigationDrawerBinding>()
 	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutAccess.getActiveSoundLayout().label)
 	private val buttonBarVM = NavigationDrawerButtonBarVM()
 
@@ -46,10 +49,11 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		val binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater, R.layout.fragment_navigation_drawer, container, false)
-		binding.layoutNavigationDrawerHeader.viewModel = this.headerVM
-		binding.layoutNavigationDrawerButtonBar.viewModel = this.buttonBarVM
-		return binding.root
+		this.binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater, R.layout.fragment_navigation_drawer, container, false).letThis {
+			it.layoutNavigationDrawerHeader.viewModel = this.headerVM
+			it.layoutNavigationDrawerButtonBar.viewModel = this.buttonBarVM
+		}
+		return this.binding.root
 	}
 
 	override fun onViewCreated(view: View?, savedInstanceState: Bundle?)

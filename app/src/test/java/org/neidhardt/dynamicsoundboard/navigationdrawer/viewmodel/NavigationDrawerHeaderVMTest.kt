@@ -46,7 +46,7 @@ class NavigationDrawerHeaderVMTest : BaseRobolectricTest() {
 
 	@Test
 	fun onChangeLayoutClicked() {
-		val willOpenSoundLayout = this.unitUnderTest.isSoundLayoutOpen
+		val willOpenSoundLayout = !this.unitUnderTest.isSoundLayoutOpen
 		this.unitUnderTest.onChangeLayoutClicked()
 		Mockito.verify(this.eventBus, Mockito.times(1))?.post(OpenSoundLayoutsRequestedEvent(willOpenSoundLayout))
 	}
