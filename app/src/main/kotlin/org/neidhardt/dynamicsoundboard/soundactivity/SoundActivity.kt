@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.Manifest
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.media.AudioManager
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
@@ -13,13 +14,14 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.layout_toolbar_content.*
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
+import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog
@@ -35,12 +37,14 @@ import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
+import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundcontrol.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutsChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeletePlayListDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
@@ -49,8 +53,10 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundShe
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
 import org.neidhardt.ui_utils.views.CustomEditText
+import org.neidhardt.utils.letThis
 import org.neidhardt.utils.registerIfRequired
 import java.util.*
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 29.09.2015.
@@ -86,10 +92,6 @@ class SoundActivity :
 		} else null
 	}
 
-	val actionAddSound by lazy { this.ib_layout_toolbar_content_add_sound}
-	val actionAddSoundDir by lazy { this.ib_layout_toolbar_content_add_sound_dir }
-	val actionAddSoundSheet by lazy { this.ib_layout_toolbar_content_add_sound_sheet }
-
 	private val toolbarTitle by lazy { this.et_layout_toolbar_content_title }
 	private val appName by lazy { this.tv_layout_toolbar_content_app_name }
 
@@ -104,26 +106,22 @@ class SoundActivity :
 	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
 	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 
-	val isNavigationDrawerOpen: Boolean
-		get() = this.navigationDrawerLayout?.isDrawerOpen(Gravity.START) ?: false
+	private var binding by Delegates.notNull<ActivityBaseBinding>()
 
-	var isSoundSheetActionsEnable: Boolean
-		get() = this.appName.visibility != View.VISIBLE
-		set(enable) {
-			(if (enable) View.VISIBLE else View.GONE).let { viewStateSoundActions ->
-				this.ib_layout_toolbar_content_add_sound.visibility = viewStateSoundActions
-				this.ib_layout_toolbar_content_add_sound_dir.visibility = viewStateSoundActions
-				this.toolbarTitle.visibility = viewStateSoundActions
-			}
-			(if (!enable) View.VISIBLE else View.GONE).let { viewStateAppTitle ->
-				this.appName.visibility = viewStateAppTitle
-			}
-		}
+	val toolbarVM = ToolbarVM().letThis {
+		it.onAddSoundSheetClicked = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName()) }
+		it.onAddSoundClicked = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog(this.supportFragmentManager, it) } }
+		it.onAddSoundFromDirectoryClicked = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
+	}
+
+	val isNavigationDrawerOpen: Boolean get() = this.navigationDrawerLayout?.isDrawerOpen(Gravity.START) ?: false
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		this.setContentView(R.layout.activity_base)
+		this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(this, R.layout.activity_base).letThis {
+			it.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
+		}
 
 		val requestedPermissions = this.requestPermissionsIfRequired()
 		if (!requestedPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE) &&
@@ -188,13 +186,10 @@ class SoundActivity :
 
 	private fun initToolbar()
 	{
-		this.abl_main.setExpanded(true)
+		this.binding.ablMain.setExpanded(true)
 		this.setSupportActionBar(this.tb_main)
 
 		this.appName.visibility = View.VISIBLE
-		this.actionAddSoundSheet.setOnClickListener {
-			AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName())
-		}
 
 		this.toolbarTitle.let { toolbarTitle ->
 			toolbarTitle.visibility = View.GONE
@@ -228,7 +223,7 @@ class SoundActivity :
 		NotificationService.start(this)
 		this.eventBus.postSticky(ActivityStateChangedEvent(true))
 
-		this.isSoundSheetActionsEnable = false
+		this.toolbarVM.isSoundSheetActionsEnable = false
 
 		this.soundsDataUtil.initIfRequired()
 		if (this.soundSheetsDataUtil.initIfRequired())
@@ -286,7 +281,7 @@ class SoundActivity :
 	override fun onEvent(event: SoundLayoutSelectedEvent)
 	{
 		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
-		this.isSoundSheetActionsEnable = false
+		this.toolbarVM.isSoundSheetActionsEnable = false
 
 		this.soundSheetsDataUtil.releaseAll()
 		this.soundSheetsDataUtil.initIfRequired()
@@ -320,7 +315,7 @@ class SoundActivity :
 		this.removeSoundFragments(removedSoundSheets)
 
 		if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
-			this.isSoundSheetActionsEnable = false
+			this.toolbarVM.isSoundSheetActionsEnable = false
 	}
 
 	override fun onEvent(event: SoundLayoutsRemovedEvent) {}
@@ -460,7 +455,7 @@ class SoundActivity :
 
 		if (this.soundSheetsDataAccess.getSoundSheets().size == 0) 
 		{
-			this.isSoundSheetActionsEnable = false
+			this.toolbarVM.isSoundSheetActionsEnable = false
 			this.openIntroductionFragmentIfRequired()
 		}
 	}
@@ -473,7 +468,7 @@ class SoundActivity :
 		{
 			fragmentManager.beginTransaction().remove(fragment).commit()
 			if (fragment.isVisible)
-				this.isSoundSheetActionsEnable = false
+				this.toolbarVM.isSoundSheetActionsEnable = false
 		}
 		fragmentManager.executePendingTransactions()
 	}

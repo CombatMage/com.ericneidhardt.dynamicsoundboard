@@ -4,7 +4,6 @@
 		xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<org.neidhardt.ui_utils.views.NonTouchableCoordinatorLayout
-
 			android:id="@+id/cl_navigation_drawer"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"

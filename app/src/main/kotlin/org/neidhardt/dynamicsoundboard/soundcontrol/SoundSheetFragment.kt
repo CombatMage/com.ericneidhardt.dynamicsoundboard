@@ -19,7 +19,6 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
-import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
@@ -31,7 +30,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEven
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsDialog
@@ -141,11 +139,7 @@ class SoundSheetFragment :
 	override fun onResume() {
 		super.onResume()
 
-		this.baseActivity.apply {
-			this.isSoundSheetActionsEnable = true
-			this.actionAddSound?.setOnClickListener { AddNewSoundDialog(this.supportFragmentManager, fragmentTag) }
-			this.actionAddSoundDir?.setOnClickListener { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, fragmentTag) }
-		}
+		this.baseActivity.let { it.toolbarVM.isSoundSheetActionsEnable = true }
 
 		this.soundPresenter?.onAttachedToWindow()
 		this.attachScrollViewToFab()

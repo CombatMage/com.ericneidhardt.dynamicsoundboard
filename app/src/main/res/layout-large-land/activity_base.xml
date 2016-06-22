@@ -1,52 +1,58 @@
-<android.support.design.widget.CoordinatorLayout
+<layout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:fitsSystemWindows="true">
+		>
 
-	<LinearLayout
+	<android.support.design.widget.CoordinatorLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:orientation="vertical">
+			android:fitsSystemWindows="true">
 
-		<android.support.design.widget.AppBarLayout
-				android:id="@+id/abl_main"
+		<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
+				android:layout_height="match_parent"
+				android:orientation="vertical">
 
-			<include layout="@layout/toolbar"/>
-
-		</android.support.design.widget.AppBarLayout>
-		
-		<RelativeLayout
-				android:layout_width="match_parent"
-				android:layout_height="match_parent">
-
-			<fragment
-					android:id="@+id/navigation_drawer_fragment"
-					android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
-					android:layout_width="@dimen/navigation_drawer_width"
-					android:layout_height="match_parent"
-					tools:layout="@layout/fragment_navigation_drawer"/>
-
-			<FrameLayout
+			<android.support.design.widget.AppBarLayout
+					android:id="@+id/abl_main"
 					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:layout_toRightOf="@id/navigation_drawer_fragment"
-					android:layout_toEndOf="@id/navigation_drawer_fragment">
+					android:layout_height="wrap_content">
+
+				<include
+						android:id="@+id/layout_toolbar"
+						layout="@layout/layout_toolbar"/>
+
+			</android.support.design.widget.AppBarLayout>
+
+			<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+
+				<fragment
+						android:id="@+id/navigation_drawer_fragment"
+						android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
+						android:layout_width="@dimen/navigation_drawer_width"
+						android:layout_height="match_parent"
+						tools:layout="@layout/fragment_navigation_drawer"/>
 
 				<FrameLayout
-						android:id="@+id/main_frame"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
-						android:background="@color/background"/>
+						android:layout_toRightOf="@id/navigation_drawer_fragment"
+						android:layout_toEndOf="@id/navigation_drawer_fragment">
 
-				<include layout="@layout/layout_progressbar"/>
+					<FrameLayout
+							android:id="@+id/main_frame"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:background="@color/background"/>
 
-			</FrameLayout>
+					<include layout="@layout/layout_progressbar"/>
 
-		</RelativeLayout>
-	</LinearLayout>
+				</FrameLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+			</RelativeLayout>
+		</LinearLayout>
+
+	</android.support.design.widget.CoordinatorLayout>
+</layout>
