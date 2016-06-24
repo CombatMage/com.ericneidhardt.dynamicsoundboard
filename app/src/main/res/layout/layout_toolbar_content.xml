@@ -80,7 +80,9 @@
 				android:layout_alignParentLeft="true"
 				android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_dir"
 				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
-				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"/>
+				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
+				app:text="@{viewModel.title}"
+				app:onTextEditedListener="@{viewModel.onTextEditedListener}"/>
 
 	</RelativeLayout>
 </layout>

@@ -62,7 +62,6 @@ import kotlin.properties.Delegates
  */
 class SoundActivity :
 		BaseActivity(),
-		CustomEditText.OnTextEditedListener,
 		RequestPermissionHelper,
 		OnSoundLayoutsChangedEventListener,
 		OnOpenSoundLayoutSettingsEventListener,
@@ -84,11 +83,11 @@ class SoundActivity :
 	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 
 	private var binding by Delegates.notNull<ActivityBaseBinding>()
-	private val toolbar by lazy { binding.layoutToolbar.tbMain }
+	private val toolbar by lazy { this.binding.layoutToolbar.tbMain }
 	private val toolbarTitle by lazy { this.et_layout_toolbar_content_title }
-	private val appName by lazy { this.tv_layout_toolbar_content_app_name }
 
 	val toolbarVM = ToolbarVM().letThis {
+		it.onTitleChanged = { text -> this.setNewSoundSheetTitle(text) }
 		it.onAddSoundSheetClicked = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName()) }
 		it.onAddSoundClicked = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog(this.supportFragmentManager, it) } }
 		it.onAddSoundFromDirectoryClicked = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
@@ -188,17 +187,10 @@ class SoundActivity :
 
 		this.setSupportActionBar(this.toolbar)
 
-		this.appName.visibility = View.VISIBLE
-
-		this.toolbarTitle.let { toolbarTitle ->
-			toolbarTitle.visibility = View.GONE
-			toolbarTitle.onTextEditedListener = this
-
-			val currentSoundSheet = this.currentSoundFragment
-			if (currentSoundSheet != null) {
-				val currentLabel = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheet.fragmentTag)?.label
-				toolbarTitle.text = currentLabel
-			}
+		val currentSoundSheet = this.currentSoundFragment
+		if (currentSoundSheet != null) {
+			val currentLabel = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheet.fragmentTag)?.label
+			this.toolbarVM.title = currentLabel
 		}
 	}
 
@@ -317,14 +309,6 @@ class SoundActivity :
 			this.toolbarVM.isSoundSheetActionsEnable = false
 	}
 
-	override fun onEvent(event: SoundLayoutsRemovedEvent) {}
-
-	override fun onEvent(event: SoundLayoutRenamedEvent) {}
-
-	override fun onEvent(event: SoundSheetAddedEvent) {}
-
-	override fun onEvent(event: SoundSheetChangedEvent) {}
-
 	/**
 	 * This is called by greenRobot EventBus in case a the floating action button was clicked
 	 * @param event delivered FabClickedEvent
@@ -415,7 +399,7 @@ class SoundActivity :
 		}
 	}
 
-	override fun onTextEdited(text: String)
+	fun setNewSoundSheetTitle(text: String)
 	{
 		val currentSoundSheetFragment = this.currentSoundFragment
 		if (currentSoundSheetFragment != null)
@@ -509,7 +493,7 @@ class SoundActivity :
 		transaction.commit()
 		fragmentManager.executePendingTransactions()
 
-		this.et_layout_toolbar_content_title.text = soundSheet.label
+		this.toolbarTitle.text = soundSheet.label
 	}
 
 	private val currentSoundFragment: SoundSheetFragment?
@@ -520,4 +504,9 @@ class SoundActivity :
 			return null
 		}
 
+	// unused
+	override fun onEvent(event: SoundLayoutsRemovedEvent) {}
+	override fun onEvent(event: SoundLayoutRenamedEvent) {}
+	override fun onEvent(event: SoundSheetAddedEvent) {}
+	override fun onEvent(event: SoundSheetChangedEvent) {}
 }
