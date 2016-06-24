@@ -14,7 +14,6 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.layout_toolbar_content.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -73,28 +72,6 @@ class SoundActivity :
 {
 	private val TAG = javaClass.name
 
-	private val navigationDrawerLayout: DrawerLayout? by lazy { this.dl_main } // this view does not exists in tablet layout
-	private val drawerToggle: ActionBarDrawerToggle? by lazy {
-		if (this.navigationDrawerLayout != null) {
-			object : ActionBarDrawerToggle(
-					this,
-					this.navigationDrawerLayout,
-					tb_main,
-					R.string.navigation_drawer_content_description_open,
-					R.string.navigation_drawer_content_description_close)
-			{
-				// override onDrawerSlide and pass 0 to super disable arrow animation
-				override fun onDrawerSlide(drawerView: View, slideOffset: Float) { super.onDrawerSlide(drawerView, 0f) }
-			}.apply {
-				this@SoundActivity.navigationDrawerLayout?.addDrawerListener(this)
-				this.isDrawerIndicatorEnabled = true
-			}
-		} else null
-	}
-
-	private val toolbarTitle by lazy { this.et_layout_toolbar_content_title }
-	private val appName by lazy { this.tv_layout_toolbar_content_app_name }
-
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private val eventBus = EventBus.getDefault()
@@ -107,6 +84,9 @@ class SoundActivity :
 	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 
 	private var binding by Delegates.notNull<ActivityBaseBinding>()
+	private val toolbar by lazy { binding.layoutToolbar.tbMain }
+	private val toolbarTitle by lazy { this.et_layout_toolbar_content_title }
+	private val appName by lazy { this.tv_layout_toolbar_content_app_name }
 
 	val toolbarVM = ToolbarVM().letThis {
 		it.onAddSoundSheetClicked = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName()) }
@@ -114,7 +94,25 @@ class SoundActivity :
 		it.onAddSoundFromDirectoryClicked = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
 	}
 
-	val isNavigationDrawerOpen: Boolean get() = this.navigationDrawerLayout?.isDrawerOpen(Gravity.START) ?: false
+	private val navigationDrawerLayout: DrawerLayout? by lazy { this.dl_main } // this view does not exists in tablet layout
+	private val drawerToggle: ActionBarDrawerToggle? by lazy {
+		if (this.navigationDrawerLayout != null) {
+			object : ActionBarDrawerToggle(
+					this,
+					this.navigationDrawerLayout,
+					this.toolbar,
+					R.string.navigation_drawer_content_description_open,
+					R.string.navigation_drawer_content_description_close)
+			{
+				// override onDrawerSlide and pass 0 to super disable arrow animation
+				override fun onDrawerSlide(drawerView: View, slideOffset: Float) { super.onDrawerSlide(drawerView, 0f) }
+			}.apply {
+				this@SoundActivity.navigationDrawerLayout?.addDrawerListener(this)
+				this.isDrawerIndicatorEnabled = true
+			}
+		} else null
+	}
+	private val isNavigationDrawerOpen: Boolean get() = this.navigationDrawerLayout?.isDrawerOpen(Gravity.START) ?: false
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -187,7 +185,8 @@ class SoundActivity :
 	private fun initToolbar()
 	{
 		this.binding.ablMain.setExpanded(true)
-		this.setSupportActionBar(this.tb_main)
+
+		this.setSupportActionBar(this.toolbar)
 
 		this.appName.visibility = View.VISIBLE
 
