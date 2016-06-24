@@ -14,12 +14,13 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListen
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.events.FabClickedEvent
 
 /**
  * File created by Eric Neidhardt on 12.11.2014.
  */
 private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
+
+class FabClickedEvent()
 
 class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventListener {
 
@@ -98,6 +99,10 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 					AddPauseFloatingAction.State.PLAY
 				else
 					AddPauseFloatingAction.State.ADD
+	}
+
+	interface FabEventListener {
+		fun onFabClickedEvent(event: FabClickedEvent)
 	}
 }
 

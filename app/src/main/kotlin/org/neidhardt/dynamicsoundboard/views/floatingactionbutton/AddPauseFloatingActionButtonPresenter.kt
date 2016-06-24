@@ -12,7 +12,7 @@ interface AddPauseFloatingAction {
 	enum class State { PLAY, ADD }
 }
 
-class AddPauseFloatingActionButtonPresenter : AddPauseFloatingAction, ViewPresenter{
+class AddPauseFloatingActionButtonPresenter : AddPauseFloatingAction, ViewPresenter {
 
 	private var fab: AddPauseFloatingActionButtonView? = null
 

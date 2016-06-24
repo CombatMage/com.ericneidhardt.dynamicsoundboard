@@ -103,10 +103,6 @@ dependencies {
 
 	compile rootProject.ext.libraries.kotlin
 
-	compile 'com.android.support:support-v4:23.4.0'
-	compile 'com.android.support:support-v13:23.4.0'
-	compile 'com.android.support:recyclerview-v7:23.4.0'
-
 	compile rootProject.ext.libraries.supportV4
 	compile rootProject.ext.libraries.supportV13
 	compile rootProject.ext.libraries.supportRecyclerView
