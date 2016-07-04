@@ -16,6 +16,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
+import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerHeaderVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
@@ -41,6 +42,7 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 	private var binding by Delegates.notNull<FragmentNavigationDrawerBinding>()
 	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutAccess.getActiveSoundLayout().label)
 	private val buttonBarVM = NavigationDrawerButtonBarVM()
+	private val deletionViewVM = NavigationDrawerDeletionViewVM()
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -52,6 +54,7 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 		this.binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater, R.layout.fragment_navigation_drawer, container, false).letThis {
 			it.layoutNavigationDrawerHeader.viewModel = this.headerVM
 			it.layoutNavigationDrawerButtonBar.viewModel = this.buttonBarVM
+			it.layoutNavigationDrawerDeletionHeader.viewModel = this.deletionViewVM
 		}
 		return this.binding.root
 	}
@@ -63,21 +66,13 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 		this.listView = NavigationDrawerListPresenter(
 			eventBus = this.eventBus,
 				coordinatorLayout = this.cl_navigation_drawer,
-
-				actionModeSubTitle = this.tv_layout_navigation_drawer_deletion_header_sub_title,
-				actionModeTitle = this.tv_layout_navigation_drawer_deletion_header_title,
+				deletionViewVM = this.deletionViewVM,
 				appBarLayout = this.abl_navigation_drawer,
-				toolbarDeletion = this.view_navigation_drawer_deletion_header,
-
-				buttonCancelActionMode = this.b_layout_navigation_drawer_deletion_header_cancel,
 				buttonBarVM = this.buttonBarVM,
-				buttonSelectAll = this.ll_layout_navigation_drawer_deletion_header_title,
-
 				recyclerView = this.rv_navigation_drawer_list.apply {
 						this.itemAnimator = DefaultItemAnimator()
 						this.layoutManager = LinearLayoutManager(this.context)
 				},
-
 				fragmentManager = this.fragmentManager,
 
 				soundLayoutsAccess = SoundboardApplication.soundLayoutsAccess,

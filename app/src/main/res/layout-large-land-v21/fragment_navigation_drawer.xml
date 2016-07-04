@@ -20,7 +20,7 @@
 				android:background="@color/primary_200"/>
 
 		<include
-				android:id="@+id/view_navigation_drawer_deletion_header"
+				android:id="@+id/layout_navigation_drawer_deletion_header"
 				layout="@layout/layout_navigation_drawer_deletion_header"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_list_item"

@@ -1,24 +1,38 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
 
 import android.databinding.BaseObservable
+import android.databinding.Bindable
 
 /**
  * @author eric.neidhardt on 24.06.2016.
  */
 class NavigationDrawerDeletionViewVM : BaseObservable() {
 
-	var title: String? = null
-	set(value) {
-		field = value
-		this.notifyChange()
-	}
+	var isEnable: Boolean = false
+		set(value) {
+			field = value
+			this.notifyChange()
+		}
+		@Bindable
+		get
 
-	val subTitle: String
+	var title: String? = null
+		set(value) {
+			field = value
+			this.notifyChange()
+		}
+		@Bindable
+		get
+
+	val subTitle: String = ""
+		@Bindable
 		get() {
 			var countString = Integer.toString(this.selectionCount)
 			if (countString.length == 1)
 				countString = " " + countString
 			countString = countString + "/" + this.maxCount
+
+			field = countString
 			return countString
 		}
 
@@ -34,7 +48,15 @@ class NavigationDrawerDeletionViewVM : BaseObservable() {
 			this.notifyChange()
 		}
 
-	fun onDoneClicked() {
+	var onDoneClicked: () -> Unit = {}
 
+	fun onDoneClicked() {
+		this.onDoneClicked()
+	}
+
+	var onSelectAllClicked: () -> Unit = {}
+
+	fun onSelectAllClicked() {
+		this.onSelectAllClicked()
 	}
 }
