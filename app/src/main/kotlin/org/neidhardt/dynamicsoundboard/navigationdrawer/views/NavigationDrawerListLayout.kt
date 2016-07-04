@@ -50,16 +50,13 @@ enum class List {
 
 class NavigationDrawerListPresenter(
 		private val eventBus: EventBus,
+		private val fragmentManager: FragmentManager,
+
 		private val coordinatorLayout: NonTouchableCoordinatorLayout,
 		private val appBarLayout: AppBarLayout,
 		private val recyclerView: RecyclerView,
-
 		private val deletionViewVM: NavigationDrawerDeletionViewVM,
 		private val buttonBarVM: NavigationDrawerButtonBarVM,
-
-
-		//private val buttonCancelActionMode: View,
-		//private val buttonSelectAll: View,
 
 		private val soundsDataAccess: SoundsDataAccess,
 		private val soundsDataStorage: SoundsDataStorage,
@@ -67,9 +64,6 @@ class NavigationDrawerListPresenter(
 		private val soundSheetsDataStorage: SoundSheetsDataStorage,
 		private val soundLayoutsAccess: SoundLayoutsAccess,
 		private val soundLayoutsStorage: SoundLayoutsStorage,
-		//private val actionModeTitle: TextView,
-		//private val actionModeSubTitle: TextView,
-		private val fragmentManager: FragmentManager,
 		private val soundLayoutsUtil: SoundLayoutsUtil,
 		private val soundSheetsDataUtil: SoundSheetsDataUtil
 ) :
@@ -141,21 +135,9 @@ class NavigationDrawerListPresenter(
 		this.coordinatorLayout.isScrollingEnabled = false
 		this.recyclerView.isNestedScrollingEnabled = false
 
-		val distance = this.recyclerView.width
-
 		this.appBarLayout.setExpanded(false, true)
 
 		this.deletionViewVM.isEnable = true
-		/*this.toolbarDeletion.apply {
-			this.visibility = View.VISIBLE
-			this.translationX = (-distance).toFloat()
-			this.animate()
-					.withLayer()
-					.translationX(0f)
-					.setDuration(this.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
-					.setInterpolator(DecelerateInterpolator())
-					.start()
-		}*/
 
 		this.buttonBarVM.enableDeleteSelected = true
 	}
