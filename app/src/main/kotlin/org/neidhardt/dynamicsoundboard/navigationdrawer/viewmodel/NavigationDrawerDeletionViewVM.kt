@@ -48,15 +48,15 @@ class NavigationDrawerDeletionViewVM : BaseObservable() {
 			this.notifyChange()
 		}
 
-	var onDoneClicked: () -> Unit = {}
+	var doneClickedCallback: () -> Unit = {}
 
 	fun onDoneClicked() {
-		this.onDoneClicked()
+		this.doneClickedCallback()
 	}
 
-	var onSelectAllClicked: () -> Unit = {}
+	var selectAllClickedCallback: () -> Unit = {}
 
 	fun onSelectAllClicked() {
-		this.onSelectAllClicked()
+		this.selectAllClickedCallback()
 	}
 }

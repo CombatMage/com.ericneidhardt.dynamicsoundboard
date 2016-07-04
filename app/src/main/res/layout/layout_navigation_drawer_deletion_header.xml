@@ -17,8 +17,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_list_item"
 			android:background="@color/primary_500"
-			android:visibility="@{viewModel.enable ? View.VISIBLE : View.GONE}"
-			app:animateVisibleSlide="@{viewModel.enable}">
+			android:visibility="@{viewModel.enable ? View.VISIBLE : View.GONE}">
 
 		<RelativeLayout
 				android:layout_width="match_parent"

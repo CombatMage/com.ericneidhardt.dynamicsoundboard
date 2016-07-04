@@ -15,23 +15,23 @@ class NavigationDrawerButtonBarVM : BaseObservable() {
 			this.notifyChange()
 		}
 
-	var onDeleteClicked: () -> Unit = {}
+	var deleteClickedCallback: () -> Unit = {}
 
 	fun onDeleteClicked() {
-		this.onDeleteClicked.invoke()
+		this.deleteClickedCallback()
 	}
 
 
-	var onAddClicked: () -> Unit = {}
+	var addClickedCallback: () -> Unit = {}
 
 	fun onAddClicked() {
-		this.onAddClicked.invoke()
+		this.addClickedCallback.invoke()
 	}
 
 
-	var onDeleteSelectedClicked: () -> Unit = {}
+	var deleteSelectedClickedCallback: () -> Unit = {}
 
 	fun onDeleteSelectedClicked() {
-		this.onDeleteSelectedClicked.invoke()
+		this.deleteSelectedClickedCallback.invoke()
 	}
 }

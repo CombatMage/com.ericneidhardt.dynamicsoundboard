@@ -10,11 +10,11 @@ import org.neidhardt.ui_utils.views.CustomEditText
  */
 class ToolbarVM : BaseObservable() {
 
-	fun onAddSoundSheetClicked() = this.onAddSoundSheetClicked.invoke()
+	fun onAddSoundSheetClicked() = this.addSoundSheetClickedCallback.invoke()
 
-	fun onAddSoundClicked() = this.onAddSoundClicked.invoke()
+	fun onAddSoundClicked() = this.addSoundClickedCallback.invoke()
 
-	fun onAddSoundFromDirectoryClicked() = this.onAddSoundFromDirectoryClicked.invoke()
+	fun onAddSoundFromDirectoryClicked() = this.addSoundFromDirectoryClickedCallback.invoke()
 
 	val onTextEditedListener = object : CustomEditText.OnTextEditedListener {
 		override fun onTextEdited(text: String) {
@@ -43,19 +43,19 @@ class ToolbarVM : BaseObservable() {
 
 	var onTitleChanged: (String) -> Unit = {}
 
-	var onAddSoundSheetClicked: () -> Unit = {}
+	var addSoundSheetClickedCallback: () -> Unit = {}
 		set(value) {
 			field = value
 			this.notifyChange()
 		}
 
-	var onAddSoundClicked: () -> Unit = {}
+	var addSoundClickedCallback: () -> Unit = {}
 		set(value) {
 			field = value
 			this.notifyChange()
 		}
 
-	var onAddSoundFromDirectoryClicked: () -> Unit = {}
+	var addSoundFromDirectoryClickedCallback: () -> Unit = {}
 		set(value) {
 			field = value
 			this.notifyChange()

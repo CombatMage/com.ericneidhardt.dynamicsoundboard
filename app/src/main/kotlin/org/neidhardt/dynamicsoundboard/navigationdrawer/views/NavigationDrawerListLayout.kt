@@ -106,16 +106,16 @@ class NavigationDrawerListPresenter(
 		}
 
 	init {
-		this.buttonBarVM.onAddClicked = { this.add() }
-		this.buttonBarVM.onDeleteClicked = { this.prepareDeletion() }
-		this.buttonBarVM.onDeleteSelectedClicked = { this.deleteSelected() }
+		this.buttonBarVM.addClickedCallback = { this.add() }
+		this.buttonBarVM.deleteClickedCallback = { this.prepareDeletion() }
+		this.buttonBarVM.deleteSelectedClickedCallback = { this.deleteSelected() }
 
-		this.deletionViewVM.onDoneClicked = {
+		this.deletionViewVM.doneClickedCallback = {
 			this.currentPresenter?.stopDeletionMode()
 			this.hideToolbarForDeletion()
 		}
 
-		this.deletionViewVM.onSelectAllClicked = {
+		this.deletionViewVM.selectAllClickedCallback = {
 			this.currentPresenter?.selectAllItems()
 			val itemCount = this.currentPresenter?.itemCount ?: 0
 			this.setActionModeSubTitle(itemCount, itemCount)

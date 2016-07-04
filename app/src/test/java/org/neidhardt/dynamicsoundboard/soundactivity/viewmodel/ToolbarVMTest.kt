@@ -32,8 +32,8 @@ class ToolbarVMTest : BaseRobolectricTest() {
 	fun setOnAddSoundSheetClicked() {
 		var success = false
 		val callback = { success = true }
-		this.unitUnderTest.onAddSoundSheetClicked = callback
-		assert(this.unitUnderTest.onAddSoundSheetClicked == callback)
+		this.unitUnderTest.addSoundSheetClickedCallback = callback
+		assert(this.unitUnderTest.addSoundSheetClickedCallback == callback)
 
 		this.unitUnderTest.onAddSoundSheetClicked()
 		assert(success)
@@ -43,8 +43,8 @@ class ToolbarVMTest : BaseRobolectricTest() {
 	fun setOnAddSoundClicked() {
 		var success = false
 		val callback = { success = true }
-		this.unitUnderTest.onAddSoundClicked = callback
-		assert(this.unitUnderTest.onAddSoundClicked == callback)
+		this.unitUnderTest.addSoundClickedCallback = callback
+		assert(this.unitUnderTest.addSoundClickedCallback == callback)
 
 		this.unitUnderTest.onAddSoundClicked()
 		assert(success)
@@ -54,8 +54,8 @@ class ToolbarVMTest : BaseRobolectricTest() {
 	fun setOnAddSoundFromDirectoryClicked() {
 		var success = false
 		val callback = { success = true }
-		this.unitUnderTest.onAddSoundFromDirectoryClicked = callback
-		assert(this.unitUnderTest.onAddSoundFromDirectoryClicked == callback)
+		this.unitUnderTest.addSoundFromDirectoryClickedCallback = callback
+		assert(this.unitUnderTest.addSoundFromDirectoryClickedCallback == callback)
 
 		this.unitUnderTest.onAddSoundFromDirectoryClicked()
 		assert(success)

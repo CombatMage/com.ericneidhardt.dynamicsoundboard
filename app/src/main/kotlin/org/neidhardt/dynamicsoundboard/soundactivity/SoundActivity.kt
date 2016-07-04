@@ -84,9 +84,9 @@ class SoundActivity :
 
 	val toolbarVM = ToolbarVM().letThis {
 		it.onTitleChanged = { text -> this.setNewSoundSheetTitle(text) }
-		it.onAddSoundSheetClicked = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName()) }
-		it.onAddSoundClicked = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog(this.supportFragmentManager, it) } }
-		it.onAddSoundFromDirectoryClicked = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
+		it.addSoundSheetClickedCallback = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName()) }
+		it.addSoundClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog(this.supportFragmentManager, it) } }
+		it.addSoundFromDirectoryClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
 	}
 
 	private val navigationDrawerLayout: DrawerLayout? by lazy { this.dl_main } // this view does not exists in tablet layout
