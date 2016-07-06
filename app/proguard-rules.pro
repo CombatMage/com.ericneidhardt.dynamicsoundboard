@@ -20,6 +20,7 @@
 -dontobfuscate
 -optimizations !code/allocation/variable
 -dontoptimize #there is currently a problem with proguad and kotlin, when using this flag
+
 -keep class org.neidhardt.dynamicsoundboard.** { *; }
 
 #jackson and pojos

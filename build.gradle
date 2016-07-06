@@ -4,7 +4,6 @@ apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
 	repositories {
-		flatDir { dirs 'proguard' }
 		jcenter()
 		mavenCentral()
 	}
@@ -15,9 +14,9 @@ buildscript {
 }
 
 ext {
-	kotlin_version = '1.0.2-1'
-	compileSdkVersion = 23
-	buildToolsVersion = "23.0.3"
+	kotlin_version = '1.0.3'
+	compileSdkVersion = 24
+	buildToolsVersion = "24.0.0"
 }
 
 project.ext.set("projectMinSdkVersion", 16)
@@ -30,4 +29,8 @@ allprojects {
 		jcenter()
 		mavenCentral()
 	}
+}
+
+task clean(type: Delete) {
+	delete rootProject.buildDir
 }

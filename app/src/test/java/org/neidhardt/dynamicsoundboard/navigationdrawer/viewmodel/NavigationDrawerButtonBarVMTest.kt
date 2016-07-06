@@ -32,8 +32,8 @@ class NavigationDrawerButtonBarVMTest : BaseRobolectricTest() {
 	fun setOnDeleteClicked() {
 		var success = false
 		val callback = { success = true }
-		this.unitUnderTest.onDeleteClicked = callback
-		assert(this.unitUnderTest.onDeleteClicked == callback)
+		this.unitUnderTest.deleteClickedCallback = callback
+		assert(this.unitUnderTest.deleteClickedCallback == callback)
 
 		this.unitUnderTest.onDeleteClicked()
 		assert(success)
@@ -43,8 +43,8 @@ class NavigationDrawerButtonBarVMTest : BaseRobolectricTest() {
 	fun setOnAddClicked() {
 		var success = false
 		val callback = { success = true }
-		this.unitUnderTest.onAddClicked = callback
-		assert(this.unitUnderTest.onAddClicked == callback)
+		this.unitUnderTest.addClickedCallback = callback
+		assert(this.unitUnderTest.addClickedCallback == callback)
 
 		this.unitUnderTest.onAddClicked()
 		assert(success)
@@ -54,8 +54,8 @@ class NavigationDrawerButtonBarVMTest : BaseRobolectricTest() {
 	fun setOnDeleteSelectedClicked() {
 		var success = false
 		val callback = { success = true }
-		this.unitUnderTest.onDeleteSelectedClicked = callback
-		assert(this.unitUnderTest.onDeleteSelectedClicked == callback)
+		this.unitUnderTest.deleteSelectedClickedCallback = callback
+		assert(this.unitUnderTest.deleteSelectedClickedCallback == callback)
 
 		this.unitUnderTest.onDeleteSelectedClicked()
 		assert(success)

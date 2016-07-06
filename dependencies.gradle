@@ -1,12 +1,15 @@
 ext.versions = [
 
-		supportLibs : '23.4.0',
+		supportLibs : '24.0.0',
 
 		eventBus          : '3.0.0',
 		greendao          : '2.1.0',
 		greenRobotCommons : '2.3.1',
 
 		exoplayer   : 'r1.5.9',
+
+		jackson   : '2.8.0',
+		robotoTextView : '2.5.0'
 ]
 
 ext.libraries = [
@@ -23,5 +26,10 @@ ext.libraries = [
 		eventBus            : "org.greenrobot:eventbus:$versions.eventBus",
 		greendao            : "de.greenrobot:greendao:$versions.greendao",
 
-		exoplayer : "com.google.android.exoplayer:exoplayer:$versions.exoplayer"
+		exoplayer           : "com.google.android.exoplayer:exoplayer:$versions.exoplayer",
+
+		jacksonDatabind     : "com.fasterxml.jackson.core:jackson-databind:$versions.jackson",
+		jacksonKotlin       : "com.fasterxml.jackson.module:jackson-module-kotlin:$versions.jackson",
+
+		robotoTextView      : "com.github.johnkil.android-robototextview:robototextview:$versions.robotoTextView",
 ]

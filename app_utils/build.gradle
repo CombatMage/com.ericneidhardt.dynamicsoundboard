@@ -42,7 +42,7 @@ dependencies {
 	compile rootProject.ext.libraries.greenRobotCommons
 	compile rootProject.ext.libraries.eventBus
 
-	compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
+	compile rootProject.ext.libraries.robotoTextView
 
 	testCompile 'junit:junit:4.12'
 }
