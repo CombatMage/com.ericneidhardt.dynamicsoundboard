@@ -8,7 +8,7 @@ import android.view.View;
 /**
  * @author Eric.Neidhardt@GMail.com on 20.06.2016.
  */
-public class NavigationDrawerButtonBarAdapter {
+public class ViewModelBindingAdapter {
 
 	@BindingAdapter("animateVisibleRotateX")
 	public static void rotateXView(final View view, Boolean rotateUp) {

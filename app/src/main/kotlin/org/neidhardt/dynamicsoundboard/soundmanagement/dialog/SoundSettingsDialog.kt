@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.CheckBox
 import android.widget.CompoundButton
+import kotlinx.android.synthetic.main.dialog_sound_settings_layout.view.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -17,6 +18,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.ui_utils.views.SimpleSpinner
+import org.neidhardt.utils.letThis
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -43,19 +45,19 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_sound_settings_layout, null)
 
-		this.soundName = view.findViewById(R.id.et_name_file) as CustomEditText
-		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as CustomEditText
-		this.soundSheetSpinner = view.findViewById(R.id.s_sound_sheets) as SimpleSpinner
-		this.addNewSoundSheet = view.findViewById(R.id.cb_add_new_sound_sheet) as CheckBox
-
-		this.addNewSoundSheet!!.setOnCheckedChangeListener(this)
-
-		this.soundName!!.text = this.player.mediaPlayerData.label
-
-		this.setAvailableSoundSheets()
-
-		this.soundSheetName!!.text = this.soundSheetsDataUtil.getSuggestedName()
-		this.soundSheetName!!.visibility = View.GONE
+		this.soundName = view.et_name_file.letThis {
+			it.text = this.player.mediaPlayerData.label
+		}
+		this.soundSheetName = view.et_name_new_sound_sheet.letThis {
+			it.text = this.soundSheetsDataUtil.getSuggestedName()
+			it.visibility = View.GONE
+		}
+		this.soundSheetSpinner = view.s_sound_sheets?.letThis {
+			this.setAvailableSoundSheets(it)
+		}
+		this.addNewSoundSheet = view.cb_add_new_sound_sheet.letThis {
+			it.setOnCheckedChangeListener(this)
+		}
 
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_sound_settings_title)
@@ -71,7 +73,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 		}.create()
 	}
 
-	private fun setAvailableSoundSheets() {
+	private fun setAvailableSoundSheets(spinner: SimpleSpinner) {
 		val soundSheets = this.soundSheetsDataAccess.getSoundSheets()
 		val labels = ArrayList<String>()
 		for (i in soundSheets.indices) {
@@ -82,8 +84,8 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 		if (this.indexOfCurrentFragment == -1)
 			throw IllegalStateException(TAG + " Current fragment of sound " + this.player.mediaPlayerData + " is not found in list of sound sheets " + soundSheets)
 
-		this.soundSheetSpinner?.items = labels
-		this.soundSheetSpinner?.setSelection(this.indexOfCurrentFragment)
+		spinner.items = labels
+		spinner.setSelection(this.indexOfCurrentFragment)
 	}
 
 	override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
@@ -122,8 +124,11 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 
 				val fragmentTag = soundSheet.fragmentTag
 				mediaPlayerData = MediaPlayerData.getNewMediaPlayerData(fragmentTag, uri, soundLabel)
-			} else
-				mediaPlayerData = MediaPlayerData.getNewMediaPlayerData(this.fragmentTag, uri, soundLabel)
+			} else {
+				val fragmentTag = this.soundSheetsDataAccess.
+						getSoundSheets()[indexOfSelectedSoundSheet].fragmentTag
+				mediaPlayerData = MediaPlayerData.getNewMediaPlayerData(fragmentTag, uri, soundLabel)
+			}
 
 			this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData)
 		}
