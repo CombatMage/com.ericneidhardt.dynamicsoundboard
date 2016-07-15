@@ -6,6 +6,7 @@
 	<string name="suggested_sound_sheet_name">neue Kategorie</string>
 	<string name="suggested_sound_layout_name">neues Abenteuer</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
+	<string name="toast_close_app_on_back_press">Zum Beenden erneut drücken</string>
 
 	<!-- permissions -->
 	<string name="request_permission_title">Berechtigung erforderlich</string>

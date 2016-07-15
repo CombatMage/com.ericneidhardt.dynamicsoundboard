@@ -7,6 +7,8 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -92,23 +94,19 @@ class SoundActivity :
 	private val navigationDrawerLayout: DrawerLayout? by lazy { this.dl_main } // this view does not exists in tablet layout
 	private val drawerToggle: ActionBarDrawerToggle? by lazy {
 		if (this.navigationDrawerLayout != null) {
-			object : ActionBarDrawerToggle(
+			NoAnimationDrawerToggle(
 					this,
 					this.navigationDrawerLayout,
-					this.toolbar,
-					R.string.navigation_drawer_content_description_open,
-					R.string.navigation_drawer_content_description_close) {
-				// override onDrawerSlide and pass 0 to super disable arrow animation
-				override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-					super.onDrawerSlide(drawerView, 0f)
-				}
-			}.apply {
-				this@SoundActivity.navigationDrawerLayout?.addDrawerListener(this)
-				this.isDrawerIndicatorEnabled = true
+					this.toolbar
+			).letThis{
+				this.navigationDrawerLayout?.addDrawerListener(it)
+				it.isDrawerIndicatorEnabled = true
 			}
 		} else null
 	}
 	private val isNavigationDrawerOpen: Boolean get() = this.navigationDrawerLayout?.isDrawerOpen(Gravity.START) ?: false
+
+	private var closeAppOnBackPress = false
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -198,6 +196,7 @@ class SoundActivity :
 		NotificationService.start(this)
 		this.eventBus.postSticky(ActivityStateChangedEvent(true))
 
+		this.closeAppOnBackPress = false
 		this.toolbarVM.isSoundSheetActionsEnable = false
 
 		this.soundsDataUtil.initIfRequired()
@@ -242,8 +241,15 @@ class SoundActivity :
 	override fun onBackPressed() {
 		if (this.isNavigationDrawerOpen)
 			this.closeNavigationDrawer()
-		else
-			super.onBackPressed()
+		else {
+			val backStackSize = this.supportFragmentManager.backStackEntryCount
+			if (backStackSize == 0 && !this.closeAppOnBackPress) {
+				this.closeAppOnBackPress = true
+				Toast.makeText(this, R.string.toast_close_app_on_back_press, Toast.LENGTH_SHORT).show()
+			}
+			else
+				super.onBackPressed()
+		}
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -447,5 +453,23 @@ class SoundActivity :
 				return currentFragment
 			return null
 		}
+}
 
+private class NoAnimationDrawerToggle(
+		activity: AppCompatActivity,
+		drawerLayout: DrawerLayout?,
+		toolbar: Toolbar
+		)
+: ActionBarDrawerToggle(
+		activity,
+		drawerLayout,
+		toolbar,
+		R.string.navigation_drawer_content_description_open,
+		R.string.navigation_drawer_content_description_close
+)
+{
+	// override onDrawerSlide and pass 0 to super disable arrow animation
+	override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+		super.onDrawerSlide(drawerView, 0f)
+	}
 }
