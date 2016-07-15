@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import kotlinx.android.synthetic.main.dialog_sound_settings_layout.view.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
@@ -25,7 +24,7 @@ import kotlin.properties.Delegates
 /**
  * File created by eric.neidhardt on 23.02.2015.
  */
-class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedChangeListener {
+class SoundSettingsDialog : SoundSettingsBaseDialog() {
 
 	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
@@ -56,7 +55,10 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 			this.setAvailableSoundSheets(it)
 		}
 		this.addNewSoundSheet = view.cb_add_new_sound_sheet.letThis {
-			it.setOnCheckedChangeListener(this)
+			it.setOnCheckedChangeListener { view,isChecked ->
+				this.soundSheetSpinner?.visibility = if (isChecked) View.GONE else View.VISIBLE
+				this.soundSheetName?.visibility = if (isChecked) View.VISIBLE else View.GONE
+			}
 		}
 
 		return AlertDialog.Builder(context).apply {
@@ -86,16 +88,6 @@ class SoundSettingsDialog : SoundSettingsBaseDialog(), CompoundButton.OnCheckedC
 
 		spinner.items = labels
 		spinner.setSelection(this.indexOfCurrentFragment)
-	}
-
-	override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-		if (isChecked) {
-			this.soundSheetSpinner!!.visibility = View.GONE
-			this.soundSheetName!!.visibility = View.VISIBLE
-		} else {
-			this.soundSheetName!!.visibility = View.GONE
-			this.soundSheetSpinner!!.visibility = View.VISIBLE
-		}
 	}
 
 	private fun deliverResult() {
