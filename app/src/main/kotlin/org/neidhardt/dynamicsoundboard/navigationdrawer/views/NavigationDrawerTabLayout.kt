@@ -52,7 +52,7 @@ class NavigationDrawerTabLayoutPresenter
 
 	private var tabMode: TabMode = TabMode.Normal
 
-	init { this.tabLayout.setOnTabSelectedListener(this) }
+	init { this.tabLayout.addOnTabSelectedListener(this) }
 
 	override fun onAttached() {
 		this.eventBus.registerIfRequired(this)

@@ -42,8 +42,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion project.projectMinSdkVersion
 		targetSdkVersion project.projectTargetSdkVersion
-		versionCode 22701
-		versionName "2.27.1"
+		versionCode 22702
+		versionName "2.27.2"
 		resConfigs "de"
 	}
 
@@ -119,7 +119,7 @@ dependencies {
 	compile rootProject.ext.libraries.robotoTextView
 
 	compile 'com.github.clans:fab:1.6.4'
-	compile 'me.zhanghai.android.materialprogressbar:library:1.1.6'
+	compile 'me.zhanghai.android.materialprogressbar:library:1.1.7'
 	compile 'jp.wasabeef:recyclerview-animators:2.2.3'
 	compile 'ch.acra:acra:4.9.0'
 	testCompile 'junit:junit:4.12'
