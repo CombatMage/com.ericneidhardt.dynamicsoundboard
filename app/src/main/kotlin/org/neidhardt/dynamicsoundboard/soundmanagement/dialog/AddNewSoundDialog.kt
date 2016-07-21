@@ -27,8 +27,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundactivity.BaseDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
 import java.io.File
 import java.util.*
@@ -36,10 +36,8 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
-class AddNewSoundDialog : BaseDialog, FileResultHandler
+class AddNewSoundDialog : BaseDialog(), FileResultHandler
 {
-	val TAG: String = javaClass.name
-
 	private val KEY_SOUNDS_URI = "KEY_SOUNDS_URI"
 	private val KEY_SOUNDS_LABEL = "KEY_SOUNDS_LABEL"
 
@@ -49,21 +47,23 @@ class AddNewSoundDialog : BaseDialog, FileResultHandler
 
 	internal var callingFragmentTag = ""
 
-	constructor() : super() {}
+	companion object {
+		val TAG: String = AddNewSoundDialog::class.java.name
 
-	constructor(manager: FragmentManager, callingFragmentTag: String) : super()
-	{
-		val args = Bundle()
-		args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
-		this.arguments = args
-
-		this.show(manager, TAG)
+		fun show(fragmentManager: FragmentManager, callingFragmentTag: String) {
+			val args = Bundle().apply {
+				this.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+			}
+			val dialog = AddNewSoundDialog().apply {
+				this.arguments = args
+			}
+			dialog.show(fragmentManager, TAG)
+		}
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-
 		val args = this.arguments
 		if (args != null)
 			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG)
@@ -244,7 +244,7 @@ private class AddNewSoundDialogPresenter
 		}
 		else
 		{
-			GetNewSoundFromDirectoryDialog(this.dialog.fragmentManager, this.dialog.TAG);
+			GetNewSoundFromDirectoryDialog(this.dialog.fragmentManager, AddNewSoundDialog.TAG)
 		}
 	}
 
@@ -274,10 +274,8 @@ private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter)
 	}
 }
 
-private class NewSoundData(uri: Uri, label: String)
+private class NewSoundData(var uri: Uri, var label: String)
 {
-	var uri: Uri = uri
-	var label: String = label
 	var wasSoundRenamed = false
 }
 

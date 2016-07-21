@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.soundactivity.BaseDialog
 
 /**
  * File created by eric.neidhardt on 22.10.2015.
@@ -88,7 +87,7 @@ class ExplainPermissionDialog : BaseDialog() {
 			dialogBuilder.setNegativeButton(R.string.dialog_denial, null)
 		}
 
-		return dialogBuilder.create();
+		return dialogBuilder.create()
 	}
 
 	private fun requestPermission() {
