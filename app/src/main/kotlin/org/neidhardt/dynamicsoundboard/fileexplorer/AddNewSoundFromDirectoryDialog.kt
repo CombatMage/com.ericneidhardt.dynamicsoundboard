@@ -36,7 +36,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 			val dialog = AddNewSoundFromDirectoryDialog()
 
 			val args = Bundle()
-			args.putString(dialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+			args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
 			dialog.arguments = args
 
 			dialog.show(manager, TAG)

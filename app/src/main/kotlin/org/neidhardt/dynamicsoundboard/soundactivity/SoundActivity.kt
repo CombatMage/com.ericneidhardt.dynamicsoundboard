@@ -87,7 +87,7 @@ class SoundActivity :
 	val toolbarVM = ToolbarVM().letThis {
 		it.onTitleChanged = { text -> this.setNewSoundSheetTitle(text) }
 		it.addSoundSheetClickedCallback = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName()) }
-		it.addSoundClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog(this.supportFragmentManager, it) } }
+		it.addSoundClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog.show(this.supportFragmentManager, it) } }
 		it.addSoundFromDirectoryClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
 	}
 

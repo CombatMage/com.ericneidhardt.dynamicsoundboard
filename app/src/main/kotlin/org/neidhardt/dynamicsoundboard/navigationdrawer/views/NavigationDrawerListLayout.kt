@@ -58,12 +58,13 @@ class NavigationDrawerListPresenter(
 		private val deletionViewVM: NavigationDrawerDeletionViewVM,
 		private val buttonBarVM: NavigationDrawerButtonBarVM,
 
-		private val soundsDataAccess: SoundsDataAccess,
-		private val soundsDataStorage: SoundsDataStorage,
-		private val soundSheetsDataAccess: SoundSheetsDataAccess,
-		private val soundSheetsDataStorage: SoundSheetsDataStorage,
-		private val soundLayoutsAccess: SoundLayoutsAccess,
-		private val soundLayoutsStorage: SoundLayoutsStorage,
+		soundsDataAccess: SoundsDataAccess,
+		soundsDataStorage: SoundsDataStorage,
+		soundSheetsDataAccess: SoundSheetsDataAccess,
+		soundSheetsDataStorage: SoundSheetsDataStorage,
+		soundLayoutsAccess: SoundLayoutsAccess,
+		soundLayoutsStorage: SoundLayoutsStorage,
+
 		private val soundLayoutsUtil: SoundLayoutsUtil,
 		private val soundSheetsDataUtil: SoundSheetsDataUtil
 ) :
@@ -157,7 +158,7 @@ class NavigationDrawerListPresenter(
 	private fun add() {
 		when (this.currentList) {
 			List.SoundLayouts -> AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
-			List.Playlist -> AddNewSoundDialog(this.fragmentManager, PlaylistTAG)
+			List.Playlist -> AddNewSoundDialog.show(this.fragmentManager, PlaylistTAG)
 			List.SoundSheet -> AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
 		}
 	}
