@@ -42,8 +42,7 @@ open class EnhancedAppCompatActivity : AppCompatActivity() {
 		super.onPause()
 	}
 
-	override fun getFragmentManager(): FragmentManager?
-	{
+	override fun getFragmentManager(): FragmentManager? {
 		throw IllegalAccessException("$TAG: Do not use default getFragmentManager, use getSupportFragmentManager instead")
 	}
 }

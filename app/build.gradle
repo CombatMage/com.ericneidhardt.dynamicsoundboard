@@ -42,8 +42,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion project.projectMinSdkVersion
 		targetSdkVersion project.projectTargetSdkVersion
-		versionCode 22702
-		versionName "2.27.2"
+		versionCode 22703
+		versionName "2.27.3"
 		resConfigs "de"
 	}
 
@@ -120,7 +120,9 @@ dependencies {
 
 	compile 'com.github.clans:fab:1.6.4'
 	compile 'me.zhanghai.android.materialprogressbar:library:1.1.7'
-	compile 'jp.wasabeef:recyclerview-animators:2.2.3'
+
+	compile rootProject.ext.libraries.recyclerViewAnimator
+
 	compile 'ch.acra:acra:4.9.0'
 	testCompile 'junit:junit:4.12'
 	testCompile 'org.mockito:mockito-core:2.0.41-beta'
