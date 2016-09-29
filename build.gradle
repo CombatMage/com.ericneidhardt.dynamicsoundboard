@@ -16,7 +16,7 @@ buildscript {
 ext {
 	kotlin_version = '1.0.4'
 	compileSdkVersion = 24
-	buildToolsVersion = "24.0.1"
+	buildToolsVersion = "24.0.2"
 }
 
 project.ext.set("projectMinSdkVersion", 16)
