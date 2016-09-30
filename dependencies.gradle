@@ -11,7 +11,9 @@ ext.versions = [
 		jackson   : '2.8.3',
 		robotoTextView : '2.5.1',
 
-		recyclerViewAnimator : '2.2.4'
+		recyclerViewAnimator : '2.2.4',
+		
+		acra              : '4.9.0'
 ]
 
 ext.libraries = [
@@ -35,5 +37,7 @@ ext.libraries = [
 
 		robotoTextView       : "com.github.johnkil.android-robototextview:robototextview:$versions.robotoTextView",
 
-		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:$versions.recyclerViewAnimator"
+		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:$versions.recyclerViewAnimator",
+		
+		acra                 : "ch.acra:acra:$versions.acra"
 ]

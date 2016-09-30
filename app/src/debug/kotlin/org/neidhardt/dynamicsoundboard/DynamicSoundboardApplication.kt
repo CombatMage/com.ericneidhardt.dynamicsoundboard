@@ -5,7 +5,7 @@ import org.acra.annotation.ReportsCrashes
 
 
 @ReportsCrashes(
-	mailTo = "eric@neidhardt-erkner.de"
+	mailTo = "eric.neidhardt@gmail.com"
 )
 class DynamicSoundboardApplication : SoundboardApplication()
 {

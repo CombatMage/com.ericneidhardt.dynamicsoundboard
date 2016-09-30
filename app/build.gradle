@@ -123,7 +123,8 @@ dependencies {
 
 	compile rootProject.ext.libraries.recyclerViewAnimator
 
-	compile 'ch.acra:acra:4.9.0'
+	compile rootProject.ext.libraries.acra
+	
 	testCompile 'junit:junit:4.12'
 	testCompile 'org.mockito:mockito-core:2.0.41-beta'
 	testCompile 'org.robolectric:shadows-support-v4:3.0'
