@@ -6,7 +6,7 @@ ext.versions = [
 		greendao          : '2.1.0',
 		greenRobotCommons : '2.3.1',
 
-		exoplayer   : 'r1.5.9',
+		exoplayer   : 'r2.0.1',
 
 		jackson   : '2.8.3',
 		robotoTextView : '2.5.1',
