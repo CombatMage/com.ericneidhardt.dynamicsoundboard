@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.views.progressbar
 
 import android.content.Context
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
@@ -53,6 +54,7 @@ class ActivityProgressBarPresenter
 ) : LongTermTaskStateChangedEventListener
 {
 	private val TAG = javaClass.name
+	private val handler = Handler()
 
 	private var lastReceivedEvent: LongTermTaskStateChangedEvent? = null
 
@@ -79,7 +81,11 @@ class ActivityProgressBarPresenter
 	private fun showProgressBar(showProgressBar: Boolean)
 	{
 		Logger.d(TAG, "showProgressBar() " + showProgressBar)
-		this.view.let { it.visibility = if (showProgressBar) View.VISIBLE else View.GONE }
+		if (showProgressBar)
+			this.view.visibility = View.VISIBLE
+		else {
+			this.handler.postDelayed({ this.view.visibility = View.GONE}, 1000)
+		}
 	}
 
 }
