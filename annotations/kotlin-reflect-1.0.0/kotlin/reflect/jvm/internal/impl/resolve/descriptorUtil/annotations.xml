@@ -32,7 +32,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt kotlin.reflect.jvm.internal.impl.descriptors.ModuleDescriptor getModule(kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt.hasDefaultValue.handler.1 boolean beforeChildren(kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt.hasDefaultValue.enhancedHandler.1 boolean beforeChildren(kotlin.reflect.jvm.internal.impl.descriptors.ValueParameterDescriptor) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.AnnotationsForResolveKt boolean hasExactAnnotation(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
@@ -56,7 +56,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt.firstOverridden.1 java.lang.Iterable&lt;kotlin.reflect.jvm.internal.impl.descriptors.CallableMemberDescriptor&gt; getNeighbors(kotlin.reflect.jvm.internal.impl.descriptors.CallableMemberDescriptor)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt.hasDefaultValue.handler.1 java.lang.Boolean result()'>
+    <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt.hasDefaultValue.enhancedHandler.1 java.lang.Boolean result()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt kotlin.reflect.jvm.internal.impl.builtins.KotlinBuiltIns getBuiltIns(kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor) 0'>
@@ -83,7 +83,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor getClassValueDescriptor(kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt.hasDefaultValue.handler.1 boolean beforeChildren(java.lang.Object) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt.hasDefaultValue.enhancedHandler.1 boolean beforeChildren(java.lang.Object) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor getClassValueTypeDescriptor(kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor) 0'>
@@ -131,7 +131,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt kotlin.reflect.jvm.internal.impl.descriptors.ModuleDescriptor getModule(kotlin.reflect.jvm.internal.impl.descriptors.DeclarationDescriptor) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt.hasDefaultValue.handler.1 java.lang.Object result()'>
+    <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.DescriptorUtilsKt.hasDefaultValue.enhancedHandler.1 java.lang.Object result()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.resolve.descriptorUtil.AnnotationsForResolveKt boolean hasNoInferAnnotation(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
