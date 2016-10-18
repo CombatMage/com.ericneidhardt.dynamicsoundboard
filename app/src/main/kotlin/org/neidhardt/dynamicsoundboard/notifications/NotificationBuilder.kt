@@ -17,6 +17,7 @@ import org.neidhardt.utils.AndroidVersion
  * @author eric.neidhardt on 16.06.2016.
  */
 class PendingSoundNotification(val notificationId: Int, var playerId: String, var notification: Notification) {
+
 	val isPlaylistNotification: Boolean = this.notificationId == NotificationConstants.NOTIFICATION_ID_PLAYLIST
 
 	companion object {
@@ -55,21 +56,20 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 				player: MediaPlayerController,
 				context: Context, notificationId: Int,
 				notificationTitle: String): NotificationCompat.Builder {
+					
 			val playerId = player.mediaPlayerData.playerId
 			val style = android.support.v7.app.NotificationCompat.MediaStyle().apply { this.setShowActionsInCompactView(1) }// index of action play/pause
 			val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
 
 			val builder = android.support.v7.app.NotificationCompat.Builder(context)
 					.setContentTitle(notificationTitle)
-					.setDefaultSmallIcon()
-					.setDefaultDeleteIntent(
+					.setSmallIcon(R.drawable.ic_stat_pending_sounds)
+					.setDismissPlayerIntent(
 							context = context,
 							notificationId = notificationId,
 							playerId = player.mediaPlayerData.playerId
 					)
-					.setDefaultContentIntent(
-							context = context
-					)
+					.setContentIntent(getOpenActivityIntent(context))
 					.setLargeIcon(this.getLargeIcon(context, player))
 					.setStyle(style)
 					.setActionStop(context, isLollipopStyleAvailable, notificationId, playerId)
@@ -157,14 +157,8 @@ private fun NotificationCompat.Builder.setActionFadeOut(context: Context, isLoll
 private fun buildAction(iconId: Int, label: String, intent: PendingIntent): NotificationCompat.Action =
 		NotificationCompat.Action.Builder(iconId, label, intent).build()
 
-private fun NotificationCompat.Builder.setDefaultSmallIcon(): NotificationCompat.Builder =
-		this.setSmallIcon(R.drawable.ic_stat_pending_sounds)
-
-private fun NotificationCompat.Builder.setDefaultDeleteIntent(context: Context, notificationId: Int, playerId: String): NotificationCompat.Builder =
+private fun NotificationCompat.Builder.setDismissPlayerIntent(context: Context, notificationId: Int, playerId: String): NotificationCompat.Builder =
 		this.setDeleteIntent(getPendingIntent(context, NotificationConstants.ACTION_DISMISS, notificationId, playerId))
-
-private fun NotificationCompat.Builder.setDefaultContentIntent(context: Context): NotificationCompat.Builder =
-		this.setContentIntent(getOpenActivityIntent(context))
 
 private fun getPendingIntent(context: Context, action: String, notificationId: Int, playerId: String): PendingIntent {
 	val intent = Intent(action)
