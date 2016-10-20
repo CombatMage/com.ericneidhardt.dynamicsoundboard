@@ -1,6 +1,6 @@
 ext.versions = [
 
-		supportLibs : '24.2.1',
+		supportLibs : '25.0.0',
 
 		eventBus          : '3.0.0',
 		greendao          : '2.1.0',
