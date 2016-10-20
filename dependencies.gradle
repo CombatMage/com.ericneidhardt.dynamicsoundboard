@@ -8,7 +8,7 @@ ext.versions = [
 
 		exoplayer   : 'r2.0.3',
 
-		jackson   : '2.8.3',
+		jackson   : '2.8.4',
 		robotoTextView : '2.5.1',
 
 		recyclerViewAnimator : '2.2.4',
