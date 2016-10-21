@@ -5,11 +5,9 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.longtermtask.LoadListTask
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerComparator
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import java.io.File
-import java.util.*
 
 /**
  * File created by eric.neidhardt on 10.04.2015.
@@ -27,7 +25,7 @@ class LoadSoundsFromDatabaseTask
 	override fun call(): List<MediaPlayerData>
 	{
 		val mediaPlayersData = this.daoSession.mediaPlayerDataDao.queryBuilder().list()
-		Collections.sort(mediaPlayersData, MediaPlayerComparator())
+		mediaPlayersData.sortBy { player -> player.sortOrder}
 
 		for (mediaPlayerData in mediaPlayersData)
 			this.postUpdatToMainThread({ this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData) })
@@ -50,8 +48,7 @@ class LoadPlaylistFromDatabaseTask
 	override fun call(): List<MediaPlayerData>
 	{
 		var mediaPlayersData = this.daoSession.mediaPlayerDataDao.queryBuilder().list()
-		Collections.sort(mediaPlayersData, MediaPlayerComparator())
-
+		mediaPlayersData.sortBy { player -> player.sortOrder}
 		for (mediaPlayerData in mediaPlayersData)
 			this.postUpdatToMainThread({ this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData) })
 		return mediaPlayersData

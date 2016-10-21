@@ -1,15 +1,21 @@
 package org.neidhardt.dynamicsoundboard.notifications;
 
+import java.util.*
+
 /**
  * File created by eric.neidhardt on 15.12.2014.
  */
-val NOTIFICATION_ID_PLAYLIST: Int = "org.neidhardt.dynamicsoundboard.notifications.NOTIFICATION_ID_PLAYLIST".hashCode() // must be a random, unique id
+object NotificationConstants {
+	val appUUID = UUID.randomUUID().toString()
 
-val KEY_PLAYER_ID: String = "org.neidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_PLAYER_ID"
-val KEY_NOTIFICATION_ID: String = "org.neidhardt.dynamicsoundboard.notification.SoundPlayingNotification.KEY_NOTIFICATION_ID"
+	val NOTIFICATION_ID_PLAYLIST: Int = (appUUID + "NOTIFICATION_ID_PLAYLIST").hashCode()
 
-val ACTION_DISMISS: String = "org.neidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_DISMISS"
-val ACTION_PLAY: String = "org.neidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_PLAY"
-val ACTION_PAUSE: String = "org.neidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_PAUSE"
-val ACTION_STOP: String = "org.neidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_STOP"
-val ACTION_FADE_OUT: String = "org.neidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_FADE_OUT"
+	val KEY_PLAYER_ID: String = "KEY_PLAYER_ID"
+	val KEY_NOTIFICATION_ID: String = "KEY_NOTIFICATION_ID"
+
+	val ACTION_DISMISS: String = appUUID + "ACTION_DISMISS"
+	val ACTION_PLAY: String = appUUID + "ACTION_PLAY"
+	val ACTION_STOP: String = appUUID + "ACTION_STOP"
+	val ACTION_FADE_OUT: String = appUUID + "org.neidhardt.dynamicsoundboard.notification.SoundPlayingNotification.ACTION_FADE_OUT"
+}
+

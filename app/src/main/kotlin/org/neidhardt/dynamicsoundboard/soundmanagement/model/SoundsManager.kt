@@ -1,9 +1,9 @@
 package org.neidhardt.dynamicsoundboard.soundmanagement.model
 
+import android.content.Context
 import android.net.Uri
 import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
@@ -14,9 +14,11 @@ import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CopyOnWriteArraySet
@@ -24,13 +26,16 @@ import java.util.concurrent.CopyOnWriteArraySet
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
-class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
+class SoundsManager
+(
+		private val context: Context,
+		private val soundLayoutsAccess: SoundLayoutsAccess,
+		private val soundSheetsDataUtil: SoundSheetsDataUtil
+) : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 {
 	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()
 
-	private val soundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
-	private val soundSheetsDataUtil = SoundboardApplication.getSoundSheetsDataUtil()
 
 	private var dbPlaylist: DaoSession? = null
 	private var dbSounds: DaoSession? = null
@@ -49,14 +54,14 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	override fun getDbSounds(): DaoSession
 	{
 		if (this.dbSounds == null)
-			this.dbSounds = GreenDaoHelper.setupDatabase(SoundboardApplication.context, getDatabaseNameSounds(this.soundLayoutsAccess))
+			this.dbSounds = GreenDaoHelper.setupDatabase(this.context, getDatabaseNameSounds(this.soundLayoutsAccess))
 		return this.dbSounds as DaoSession
 	}
 
 	override fun getDbPlaylist(): DaoSession
 	{
 		if (this.dbPlaylist == null)
-			this.dbPlaylist = GreenDaoHelper.setupDatabase(SoundboardApplication.context, getDatabaseNamePlayList(this.soundLayoutsAccess))
+			this.dbPlaylist = GreenDaoHelper.setupDatabase(this.context, getDatabaseNamePlayList(this.soundLayoutsAccess))
 		return this.dbPlaylist as DaoSession
 	}
 
@@ -85,11 +90,8 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		this.isInitDone = false
 
-		this.playlist.map { player-> player.destroy(false) }
-
-		val allPlayerLists = this.sounds.values
-		for (players in allPlayerLists)
-			players.map { player-> player.destroy(false) }
+		this.playlist.forEach { player-> player.destroy(false) }
+		this.sounds.values.forEach { list -> list.forEach { player-> player.destroy(false) } }
 
 		this.playlist.clear()
 		this.sounds.clear()
@@ -100,16 +102,7 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 
 	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean = this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.fragmentTag)
 
-	override fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController>
-	{
-		var soundsInFragment: List<MediaPlayerController>? = this.sounds[fragmentTag]
-		if (soundsInFragment == null)
-		{
-			soundsInFragment = ArrayList<MediaPlayerController>()
-			this.sounds.put(fragmentTag, soundsInFragment)
-		}
-		return soundsInFragment
-	}
+	override fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController> = this.sounds.getOrPut(fragmentTag, { ArrayList<MediaPlayerController>() })
 
 	override fun getSoundById(fragmentTag: String, playerId: String): MediaPlayerController?
 	{
@@ -206,10 +199,8 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 	{
 		val data = player.mediaPlayerData
 		val fragmentTag = data.fragmentTag
-		if (this.sounds[fragmentTag] == null)
-			this.sounds[fragmentTag] = ArrayList<MediaPlayerController>()
 
-		this.sounds[fragmentTag]?.add(player)
+		this.sounds.getOrPut(fragmentTag, { ArrayList<MediaPlayerController>() }).add(player)
 
 		data.insertItemInDatabaseAsync()
 
@@ -307,7 +298,7 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 			newPlayerData.uri = playerData.uri
 
 			return getNewMediaPlayerController (
-					context = SoundboardApplication.context,
+					context = this.context,
 					eventBus = EventBus.getDefault(),
 					mediaPlayerData = newPlayerData,
 					soundsDataStorage = this
@@ -330,7 +321,7 @@ class SoundsManager : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 				throw Exception("cannot create create media player, given file is no audio file")
 
 			return getNewMediaPlayerController(
-					context = SoundboardApplication.context,
+					context = this.context,
 					eventBus = this.eventBus,
 					mediaPlayerData = playerData,
 					soundsDataStorage = this)

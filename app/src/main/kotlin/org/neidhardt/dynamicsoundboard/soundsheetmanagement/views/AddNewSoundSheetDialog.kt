@@ -7,10 +7,14 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.views.BaseDialog
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.soundactivity.BaseDialog
 
 class AddNewSoundSheetDialog : BaseDialog()
 {
+	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
+	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
+
 	private var soundSheetName: EditText? = null
 	private var suggestedName: String? = null
 

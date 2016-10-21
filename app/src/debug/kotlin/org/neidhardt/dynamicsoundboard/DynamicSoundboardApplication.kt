@@ -5,13 +5,14 @@ import org.acra.annotation.ReportsCrashes
 
 
 @ReportsCrashes(
-	mailTo = "eric@neidhardt-erkner.de"
+	mailTo = "eric.neidhardt@gmail.com"
 )
 class DynamicSoundboardApplication : SoundboardApplication()
 {
 	override fun onCreate()
 	{
 		super.onCreate()
+		//EventBus.builder().throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus()
 		ACRA.init(this)
 	}
 }

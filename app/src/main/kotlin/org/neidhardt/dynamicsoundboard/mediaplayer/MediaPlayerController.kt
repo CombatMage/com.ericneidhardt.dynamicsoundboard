@@ -10,6 +10,8 @@ interface MediaPlayerController
 {
 	var isDeletionPending: Boolean
 
+	val albumCover: ByteArray?
+
 	val mediaPlayerData: MediaPlayerData
 
 	val isPlayingSound: Boolean

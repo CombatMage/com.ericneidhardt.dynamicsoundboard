@@ -23,8 +23,7 @@
 				android:id="@+id/et_name_sound_layout"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:textSize="@dimen/text_body"
-				app:typeface="roboto_medium"/>
+				style="@style/Theme.EditText"/>
 
 	</android.support.design.widget.TextInputLayout>
 

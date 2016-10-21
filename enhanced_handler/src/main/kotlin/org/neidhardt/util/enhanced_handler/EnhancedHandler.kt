@@ -8,13 +8,15 @@ import java.util.*
  */
 class EnhancedHandler : Handler()
 {
-	val submittedCallbacks: MutableSet<KillableRunnable> = HashSet()
+	private val submittedCallbacks: MutableSet<KillableRunnable> = HashSet()
+	val pendingCallbacks: Set<KillableRunnable>
+		get() = this.submittedCallbacks
 
 	fun removeCallbacks(r: KillableRunnable?)
     {
 		if (r == null)
 		{
-			this.submittedCallbacks.map { it.isKilled = true }
+			this.submittedCallbacks.forEach { it.isKilled = true }
             this.submittedCallbacks.clear()
 			super.removeCallbacks(null)
 		}
@@ -28,6 +30,8 @@ class EnhancedHandler : Handler()
 
 	fun post(r: KillableRunnable): Boolean
 	{
+		r.handler = this
+
 		val wasSubmitted = super.post(r)
 		if (wasSubmitted)
 			this.submittedCallbacks.add(r)
@@ -36,6 +40,8 @@ class EnhancedHandler : Handler()
 
 	fun postDelayed(r: KillableRunnable, delayMillis: Long): Boolean
 	{
+		r.handler = this
+
 		val wasSubmitted = super.postDelayed(r, delayMillis)
 		if (wasSubmitted)
 			this.submittedCallbacks.add(r)

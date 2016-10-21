@@ -41,7 +41,7 @@ internal fun getSampleFactor(width: Int, height: Int, requiredWidth: Int, requir
 	return inSampleSize
 }
 
-internal fun getBitmap(rawData: ByteArray, scaleFactor: Int): Bitmap
+internal fun getBitmapFromBytes(rawData: ByteArray, scaleFactor: Int): Bitmap
 {
 	val options = BitmapFactory.Options()
 	options.inSampleSize = scaleFactor
@@ -49,7 +49,7 @@ internal fun getBitmap(rawData: ByteArray, scaleFactor: Int): Bitmap
 	return BitmapFactory.decodeByteArray(rawData, 0, rawData.size, options)
 }
 
-internal fun getBitmap(context: Context, drawableId: Int, scaleFactor: Int): Bitmap
+internal fun getBitmapFromAsset(context: Context, drawableId: Int, scaleFactor: Int): Bitmap
 {
 	val options = BitmapFactory.Options()
 	options.inSampleSize = scaleFactor

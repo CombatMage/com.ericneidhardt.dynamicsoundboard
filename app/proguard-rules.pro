@@ -21,15 +21,11 @@
 -optimizations !code/allocation/variable
 -dontoptimize #there is currently a problem with proguad and kotlin, when using this flag
 
+-keep class org.neidhardt.dynamicsoundboard.** { *; }
+
 #jackson and pojos
 -dontwarn com.fasterxml.jackson.databind.**
 -keep class com.fasterxml.jackson.** { *; }
--keep class org.neidhardt.dynamicsoundboard.misc.JsonPojo { *; }
-
-#greenDAO
--keep public class org.neidhardt.dynamicsoundboard.dao.** {
-	public static <fields>;
-}
 
 #greenrobot EventBus
 -keepclassmembers class ** {

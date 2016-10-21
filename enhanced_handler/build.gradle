@@ -16,8 +16,8 @@ android {
 	buildToolsVersion rootProject.ext.buildToolsVersion
 
 	defaultConfig {
-		minSdkVersion 8
-		targetSdkVersion 23
+		minSdkVersion project.projectMinSdkVersion
+		targetSdkVersion project.projectTargetSdkVersion
 		versionCode 1
 		versionName "1.0"
 	}
@@ -34,6 +34,5 @@ android {
 
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
-
-	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+	compile rootProject.ext.libraries.kotlin
 }

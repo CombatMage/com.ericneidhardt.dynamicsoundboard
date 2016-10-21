@@ -10,8 +10,10 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.dialog_rename_sound_file_layout.view.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
@@ -21,27 +23,34 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEve
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.soundmanagement.views.SoundSettingsBaseDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsBaseDialog
 import java.io.File
 import java.io.IOException
 import java.util.*
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 06.07.2015.
  */
-class RenameSoundFileDialog : SoundSettingsBaseDialog
+class RenameSoundFileDialog() : SoundSettingsBaseDialog()
 {
-	override var player: MediaPlayerController? = null
-	override var fragmentTag: String? = null
+	override var player: MediaPlayerController by Delegates.notNull<MediaPlayerController>()
+	override var fragmentTag: String by Delegates.notNull<String>()
 
-	private val TAG = javaClass.name
+	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
 
-	constructor() : super()
-
-	constructor(manager: FragmentManager, playerData: MediaPlayerData) : super()
+	companion object
 	{
-		SoundSettingsBaseDialog.addArguments(this, playerData.playerId, playerData.fragmentTag)
-		this.show(manager, TAG)
+		private val TAG = RenameSoundFileDialog::class.java.name
+
+		fun show(manager: FragmentManager, playerData: MediaPlayerData)
+		{
+			RenameSoundFileDialog().let { dialog ->
+				SoundSettingsBaseDialog.addArguments(dialog, playerData.playerId, playerData.fragmentTag)
+				dialog.show(manager, TAG)
+			}
+		}
 	}
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
@@ -50,20 +59,21 @@ class RenameSoundFileDialog : SoundSettingsBaseDialog
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_rename_sound_file_layout, null)
 
 		val presenter = RenameSoundFileDialogPresenter(
-				playerData = this.player!!.mediaPlayerData,
+				playerData = this.player.mediaPlayerData,
 				soundsDataAccess = this.soundsDataAccess,
 				soundsDataStorage = this.soundsDataStorage,
 				dialog = this,
-				newName = view.findViewById(R.id.tv_new_name) as TextView,
-				renameAllOccurrences = view.findViewById(R.id.cb_rename_all_occurrences) as CheckBox
+				newName = view.tv_dialog_rename_sound_file_layout_new_name,
+				currentName = view.tv_dialog_rename_sound_file_layout_current_name,
+				renameAllOccurrences = view.cb_dialog_rename_sound_file_layout_rename_all
 		)
 
 		return AlertDialog.Builder(context).apply {
 			this.setView(view)
-			this.setPositiveButton(R.string.dialog_rename, { dialogInterface, i ->
+			this.setPositiveButton(R.string.dialog_rename_sound_file_confirm, { dialogInterface, i ->
 				presenter.rename()
 			})
-			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setNegativeButton(R.string.dialog_rename_sound_file_cancel, { dialogInterface, i -> dismiss() })
 		}.create()
 	}
 }
@@ -75,6 +85,7 @@ private class RenameSoundFileDialogPresenter
 		private val soundsDataStorage: SoundsDataStorage,
 		private val dialog: RenameSoundFileDialog,
 		private val newName : TextView,
+		private val currentName : TextView,
 		private val renameAllOccurrences: CheckBox
 )
 {
@@ -98,6 +109,7 @@ private class RenameSoundFileDialogPresenter
 		val currentFileName = currentFile?.name
 
 		this.newName.text = this.appendFileTypeToNewPath(this.playerData.label, currentFileName)
+		this.currentName.text = currentFileName
 	}
 
 	private fun getPlayersWithMatchingUri(uri: String): List<MediaPlayerController>

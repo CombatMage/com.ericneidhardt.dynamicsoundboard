@@ -9,9 +9,10 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromFileListTask
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.DividerItemDecoration
+import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
 import java.io.File
 import java.util.*
 
@@ -20,6 +21,8 @@ import java.util.*
  */
 open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 {
+	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+
 	protected var callingFragmentTag: String? = null
 
 	private var directories: RecyclerView? = null
@@ -33,7 +36,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 			val dialog = AddNewSoundFromDirectoryDialog()
 
 			val args = Bundle()
-			args.putString(dialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+			args.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
 			dialog.arguments = args
 
 			dialog.show(manager, TAG)
@@ -54,7 +57,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_from_directory, null)
 
 		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
-			this.addItemDecoration(DividerItemDecoration(this.context))
+			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
 		}

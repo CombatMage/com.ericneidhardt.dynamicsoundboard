@@ -17,8 +17,7 @@ private val AUDIO = "audio"
 private val MIME_AUDIO_TYPES = arrayOf("audio/*", "application/ogg", "application/x-ogg")
 private val SCHEME_CONTENT_URI = "content"
 
-fun File.getFilesInDirectory(): MutableList<File>
-{
+fun File.getFilesInDirectory(): MutableList<File> {
 	val content = this.listFiles()
 	if (content == null || content.size == 0)
 		return ArrayList()
@@ -30,8 +29,7 @@ fun File.getFilesInDirectory(): MutableList<File>
 	return files
 }
 
-fun Uri.getFileForUri(): File?
-{
+fun Uri.getFileForUri(): File? {
 	val pathUri = FileUtils.getPathUriFromGenericUri(SoundboardApplication.context, this) ?: return null
 
 	val file = File(pathUri.path)
@@ -42,8 +40,7 @@ fun Uri.getFileForUri(): File?
 }
 
 val File.isAudioFile: Boolean
-	get()
-	{
+	get() {
 		val mime = this.getMimeType ?: return false
 		if (mime.startsWith(AUDIO))
 			return true
@@ -55,8 +52,7 @@ val File.isAudioFile: Boolean
 	}
 
 val File.getMimeType: String?
-	get()
-	{
+	get() {
 		var type: String? = null
 		val extension = FileUtils.getFileExtension(this.absolutePath)
 		if (extension != null) {
@@ -67,8 +63,7 @@ val File.getMimeType: String?
 	}
 
 val File.containsAudioFiles: Boolean
-	get()
-	{
+	get() {
 		val filesInDirectory = this.listFiles() ?: return false
 		for (file in filesInDirectory) {
 			if (file.isDirectory)
@@ -79,12 +74,10 @@ val File.containsAudioFiles: Boolean
 		return false
 	}
 
-object FileUtils
-{
+object FileUtils {
 	val MIME_AUDIO = "audio/*|application/ogg|application/x-ogg"
 
-	fun stripFileTypeFromName(fileName: String?): String
-	{
+	fun stripFileTypeFromName(fileName: String?): String {
 		if (fileName == null)
 			throw NullPointerException(TAG + ": cannot create new file name, either old name or new name is null")
 
@@ -98,8 +91,7 @@ object FileUtils
 			return segments[0]
 	}
 
-	fun getFileNameFromUri(context: Context, uriString: String): String
-	{
+	fun getFileNameFromUri(context: Context, uriString: String): String {
 		return getFileNameFromUri(context, Uri.parse(uriString))
 	}
 
@@ -107,35 +99,33 @@ object FileUtils
 		var fileName: String = "" // default fileName
 		var filePathUri = uri
 		if (uri.scheme != null && uri.scheme == SCHEME_CONTENT_URI) {
-			val cursor = context.contentResolver.query(uri, null, null, null, null)
-			if (cursor.moveToFirst()) {
-				val column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
-				filePathUri = Uri.parse(cursor.getString(column_index))
-				fileName = filePathUri.lastPathSegment
+			context.contentResolver.query(uri, null, null, null, null).use { cursor ->
+				if (cursor.moveToFirst()) {
+					val column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+					filePathUri = Uri.parse(cursor.getString(column_index))
+					fileName = filePathUri.lastPathSegment
+				}
 			}
-			cursor.close()
 		} else
 			fileName = filePathUri.lastPathSegment
 
 		return fileName
 	}
 
-	internal fun getPathUriFromGenericUri(context: Context, uri: Uri): Uri?
-	{
+	internal fun getPathUriFromGenericUri(context: Context, uri: Uri): Uri? {
 		var filePathUri = uri
 		if (uri.scheme != null && uri.scheme == SCHEME_CONTENT_URI) {
-			val cursor = context.contentResolver.query(uri, null, null, null, null)
-			if (cursor.moveToFirst()) {
-				val column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
-				filePathUri = Uri.parse(cursor.getString(column_index))
+			context.contentResolver.query(uri, null, null, null, null).use { cursor ->
+				if (cursor.moveToFirst()) {
+					val column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+					filePathUri = Uri.parse(cursor.getString(column_index))
+				}
 			}
-			cursor.close()
 		}
 		return filePathUri
 	}
 
-	internal fun getFileExtension(filePath: String): String?
-	{
+	internal fun getFileExtension(filePath: String): String? {
 		var extension = MimeTypeMap.getFileExtensionFromUrl(filePath)
 		if (extension.isEmpty()) {
 			val uri = Uri.parse(filePath)

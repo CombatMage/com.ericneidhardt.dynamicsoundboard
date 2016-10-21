@@ -1,6 +1,6 @@
 <resources>
 
-	<dimen name="status_bar_padding">0dp</dimen> <!-- for material style navigation drawer -->
+	<dimen name="status_bar_padding">0dp</dimen>
 
 	<dimen name="size_avatar_navigation_drawer">70dp</dimen>
 	
@@ -11,7 +11,7 @@
 
 	<dimen name="size_progressbar_thumb">8dp</dimen>
 
-	<dimen name="height_navigation_drawer_header">142dp</dimen>
+	<dimen name="height_navigation_drawer_header">144dp</dimen>
 	<dimen name="height_shadow">3dp</dimen>
 	<dimen name="height_shadow_fixed">3dp</dimen>
 	<dimen name="height_title">48dp</dimen>
@@ -19,6 +19,8 @@
 	<dimen name="height_list_item">56dp</dimen>
 	<dimen name="height_list_item_large">72dp</dimen>
 	<dimen name="height_list_item_xlarge">122dp</dimen>
+
+	<dimen name="width_navigation_drawer_landscape">320dp</dimen>
 
 	<dimen name="margin_large">20dp</dimen>
 	<dimen name="margin_default">16dp</dimen>

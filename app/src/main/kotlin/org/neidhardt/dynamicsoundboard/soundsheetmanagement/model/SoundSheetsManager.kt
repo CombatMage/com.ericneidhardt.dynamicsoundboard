@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model
 
+import android.content.Context
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -20,7 +21,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 06.07.2015.
  */
-class SoundSheetsManager :
+class SoundSheetsManager(private val context: Context, private val soundLayoutsAccess: SoundLayoutsAccess) :
 		SoundSheetsDataAccess,
 		SoundSheetsDataStorage,
 		SoundSheetsDataUtil
@@ -37,12 +38,7 @@ class SoundSheetsManager :
 
 	private var isInitDone: Boolean = false
 
-	private val soundLayoutsAccess: SoundLayoutsAccess = SoundboardApplication.getSoundLayoutsAccess()
-
-	init
-	{
-		this.initIfRequired()
-	}
+	init { this.initIfRequired() }
 
 	override fun initIfRequired(): Boolean
 	{
@@ -51,7 +47,7 @@ class SoundSheetsManager :
 			this.isInitDone = true
 
 			this.soundSheets.clear()
-			this.daoSession = GreenDaoHelper.setupDatabase(SoundboardApplication.context, this.getDatabaseName())
+			this.daoSession = GreenDaoHelper.setupDatabase(this.context, this.getDatabaseName())
 
 			val task = LoadSoundSheetsTask(this.getDbSoundSheets(), this)
 			task.execute()
@@ -160,15 +156,11 @@ class SoundSheetsManager :
 		return if (results.size > 0) results[0] else null
 	}
 
-	override fun getSuggestedName(): String
-	{
-		return SoundboardApplication.context
-				.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
-	}
+	override fun getSuggestedName(): String = this.context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
 
 	override fun getNewSoundSheet(label: String): SoundSheet
 	{
-		val tag = Integer.toString((label + SoundboardApplication.getRandomNumber()).hashCode())
+		val tag = Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
 		return SoundSheet(null, tag, label, false)
 	}
 

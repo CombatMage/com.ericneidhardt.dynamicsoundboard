@@ -14,7 +14,7 @@
 			android:text="@string/dialog_add_new_sound_sheet_message"
 			android:focusable="true"
 			android:focusableInTouchMode="true"
-			style="@style/Theme.TextView.Body"/>
+			style="@style/Theme.TextView.Body1"/>
 
 	<android.support.design.widget.TextInputLayout
 			android:layout_width="match_parent"
@@ -25,9 +25,8 @@
 				android:id="@+id/et_name_new_sound_sheet"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:textSize="@dimen/text_body"
 				android:hint="@string/suggested_sound_sheet_name"
-				app:typeface="roboto_medium"/>
+				style="@style/Theme.EditText"/>
 
 	</android.support.design.widget.TextInputLayout>
 

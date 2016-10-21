@@ -3,16 +3,22 @@ package org.neidhardt.util.enhanced_handler
 /**
  * File created by eric.neidhardt on 23.11.2015.
  */
-abstract class KillableRunnable : Runnable
+class KillableRunnable(private val task: () -> Unit ) : Runnable
 {
+	var handler: EnhancedHandler? = null
+
 	@Volatile
 	var isKilled: Boolean = false
 
 	override fun run()
 	{
-		if (!isKilled)
-			this.call()
-	}
+		if (this.handler == null)
+			throw UnsupportedOperationException("KillableRunnable should be post on EnhancedHandler " +
+					"using either post or postDelayed")
 
-	abstract fun call()
+		if (!isKilled)
+			this.task()
+
+		this.handler?.removeCallbacks(this)
+	}
 }

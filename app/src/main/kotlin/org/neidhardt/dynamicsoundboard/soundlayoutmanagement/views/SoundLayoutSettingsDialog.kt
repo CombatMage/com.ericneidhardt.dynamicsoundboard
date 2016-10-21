@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 
 /**
@@ -11,6 +12,8 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutR
  */
 class SoundLayoutSettingsDialog : SoundLayoutDialog()
 {
+	private val soundLayoutsAccess = SoundboardApplication.soundLayoutsAccess
+
 	private var databaseId: String? = null
 
 	override fun onCreate(savedInstanceState: Bundle?)
@@ -46,14 +49,6 @@ class SoundLayoutSettingsDialog : SoundLayoutDialog()
 				EventBus.getDefault().post(SoundLayoutRenamedEvent(layout))
 			}
 		}
-	}
-
-	interface OnSoundLayoutRenamedEventListener {
-		/**
-		 * This is called by greenRobot EventBus in case the SoundLayout was renamed.
-		 * @param event delivered SoundLayoutRenamedEvent
-		 */
-		fun onEvent(event: SoundLayoutRenamedEvent)
 	}
 
 	companion object {

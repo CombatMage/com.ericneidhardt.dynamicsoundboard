@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
 
 /**
@@ -10,6 +11,11 @@ import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
  */
 class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog()
 {
+	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
+	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
+	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+
 	private var fragmentTag: String? = null
 
 	override fun onCreate(savedInstanceState: Bundle?)
@@ -42,7 +48,7 @@ class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog()
 	{
 		private val TAG = ConfirmDeleteSoundSheetDialog::class.java.name
 
-		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.views.ConfirmDeleteSoundsDialog.fragmentTag"
+		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog.fragmentTag"
 
 		fun showInstance(manager: FragmentManager, fragmentTag: String)
 		{

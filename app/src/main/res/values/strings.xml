@@ -6,7 +6,8 @@
 	<string name="suggested_sound_sheet_name">neue Kategorie</string>
 	<string name="suggested_sound_layout_name">neues Abenteuer</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
-
+	<string name="toast_close_app_on_back_press">Zum Beenden erneut drücken</string>
+	
 	<!-- permissions -->
 	<string name="request_permission_title">Berechtigung erforderlich</string>
 	<string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
@@ -63,6 +64,7 @@
 	<string name="sound_control_content_description_playlist">Sound wird in die Playliste aufgenommen</string>
 	<string name="sound_control_content_description_settings">Sound editieren, verschieben, umbenennen</string>
 	<string name="sound_control_content_description_reorder">Sound neusortieren</string>
+	<string name="sound_control_error_during_playback">Wiedergabe Fehler</string>
 
 	<!-- notification -->
 	<string name="notification_pause_sound">Sound pausieren</string>
@@ -174,7 +176,8 @@
 	<string name="dialog_load_layout_message">Eine gespeichtere SoundKonfiguration auswählen um diese zu laden.</string>
 	<string name="dialog_load_layout_no_file_info">Keine Datei zum Laden ausgewählt.</string>
 
-	<string name="dialog_rename_sound_file_title">Datei auch umbenennen?</string>
+	<string name="dialog_rename_sound_file_confirm">Datei auch umbenennen</string>
+	<string name="dialog_rename_sound_file_cancel">Nur in der App ändern</string>
 	<string name="dialog_rename_sound_file_message">Soll die zugehörige Musikdatei ebenfalls umbenannt werden?</string>
 	<string name="dialog_rename_sound_file_current_name">Aktueller Name:</string>
 	<string name="dialog_rename_sound_file_new_name">Neuer Name:</string>

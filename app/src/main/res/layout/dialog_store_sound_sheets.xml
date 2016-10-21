@@ -14,7 +14,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/dialog_store_layout_message"
-			style="@style/Theme.TextView.Body"/>
+			style="@style/Theme.TextView.Body1"/>
 
 	<RelativeLayout
 			android:layout_width="match_parent"
@@ -37,12 +37,11 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/margin_small"
-				android:textSize="@dimen/text_body"
 				android:layout_marginRight="@dimen/margin_default"
 				android:layout_marginEnd="@dimen/margin_default"
 				android:layout_toLeftOf="@id/b_add"
 				android:layout_toStartOf="@id/b_add"
-				app:typeface="roboto_medium"
+				style="@style/Theme.EditText"
 				tools:text="Neuer Datei Name"/>
 
 	</RelativeLayout>

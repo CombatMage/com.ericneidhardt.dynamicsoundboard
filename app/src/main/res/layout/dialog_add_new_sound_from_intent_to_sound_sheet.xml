@@ -16,14 +16,13 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="@dimen/margin_default"
-			android:textSize="@dimen/text_body"
-			app:typeface="roboto_medium"/>
+			style="@style/Theme.EditText"/>
 
 	<com.devspark.robototextview.widget.RobotoTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_message"
-			style="@style/Theme.TextView.Body"/>
+			style="@style/Theme.TextView.Body1"/>
 
 	<CheckBox
 			android:id="@+id/cb_add_new_sound_sheet"
@@ -31,6 +30,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/margin_default"
 			android:layout_marginBottom="@dimen/margin_default"
+			style="@style/Base.TextAppearance.AppCompat.Body1"
 			android:textColor="@color/text_body_secondary"
 			android:textSize="@dimen/text_body"
 			android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_checkbox"
@@ -41,7 +41,7 @@
 			android:layout_height="wrap_content"
 			android:animateLayoutChanges="true">
 
-		<org.neidhardt.dynamicsoundboard.views.spinner.CustomSpinner
+		<org.neidhardt.ui_utils.views.SimpleSpinner
 				android:id="@+id/s_sound_sheets"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_input_field"
@@ -55,9 +55,8 @@
 					android:id="@+id/et_name_new_sound_sheet"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:textSize="@dimen/text_body"
-					android:hint="@string/suggested_sound_sheet_name"
-					app:typeface="roboto_medium"/>
+					style="@style/Theme.EditText"
+					android:hint="@string/suggested_sound_sheet_name"/>
 
 		</android.support.design.widget.TextInputLayout>
 	</FrameLayout>
