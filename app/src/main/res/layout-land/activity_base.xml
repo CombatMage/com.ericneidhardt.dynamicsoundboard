@@ -43,7 +43,7 @@
 		</android.support.design.widget.CoordinatorLayout>
 
 		<android.support.design.widget.NavigationView
-				android:layout_width="match_parent"
+				android:layout_width="@dimen/width_navigation_drawer_landscape"
 				android:layout_height="match_parent"
 				android:layout_gravity="start">
 

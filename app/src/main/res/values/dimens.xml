@@ -20,6 +20,8 @@
 	<dimen name="height_list_item_large">72dp</dimen>
 	<dimen name="height_list_item_xlarge">122dp</dimen>
 
+	<dimen name="width_navigation_drawer_landscape">320dp</dimen>
+
 	<dimen name="margin_large">20dp</dimen>
 	<dimen name="margin_default">16dp</dimen>
 	<dimen name="margin_small">8dp</dimen>

@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 
@@ -66,7 +65,7 @@ class ItemTouchCallback
 
 	private val backgroundPaint = Paint().apply {
 		this.style = Paint.Style.FILL
-		this.color = ContextCompat.getColor(SoundboardApplication.context, R.color.primary_200)
+		this.color = ContextCompat.getColor(context, R.color.primary_200)
 	}
 
 	private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
