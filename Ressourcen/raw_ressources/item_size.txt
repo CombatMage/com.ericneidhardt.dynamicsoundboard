@@ -7,5 +7,5 @@ color: accent (ff4081)
 color grey: a8000000 (54% schwarz)
 
 Notification:
-32dp mit optischer größe 24dp
+32dp ohne padding
 color: #FFFFFF Enabled: 80% opacity
