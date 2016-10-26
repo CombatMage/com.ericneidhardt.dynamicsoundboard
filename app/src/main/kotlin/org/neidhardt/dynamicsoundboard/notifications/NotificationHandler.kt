@@ -2,11 +2,11 @@ package org.neidhardt.dynamicsoundboard.notifications
 
 import android.support.v4.app.NotificationManagerCompat
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.notifications.NotificationService
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInListForId
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInMapForId
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess
 import java.util.*
 
 /**
@@ -35,7 +35,8 @@ class NotificationHandler(
 		private val service: NotificationService,
 		private val notificationManager: NotificationManagerCompat,
 		private val soundsDataAccess: SoundsDataAccess,
-		private val soundsDataUtil: SoundsDataUtil
+		private val soundsDataUtil: SoundsDataUtil,
+		private val soundSheetsDataAccess: SoundSheetsDataAccess
 ) : INotificationHandler {
 
 	private val notifications = ArrayList<PendingSoundNotification>()
@@ -66,8 +67,11 @@ class NotificationHandler(
 		for (player in pendingSounds) {
 			if (this.soundsDataUtil.isPlaylistPlayer(player.mediaPlayerData))
 				pendingPlaylistPlayer = player // playlist sound is added as the last notification
-			else
-				this.addNotification(PendingSoundNotification.getNotificationForPlayer(player, this.service))
+			else {
+				val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(player.mediaPlayerData.fragmentTag)
+						?: throw IllegalStateException("Sound sheet should not be null in this situation")
+				this.addNotification(PendingSoundNotification.getNotificationForPlayer(player, soundSheet, this.service))
+			}
 		}
 
 		if (pendingPlaylistPlayer != null) {
@@ -92,8 +96,10 @@ class NotificationHandler(
 	override fun onGenericPlayerStateChanged(playerId: String) {
 		val correspondingNotification = this.findNotificationForPendingPlayer(playerId)
 		if (correspondingNotification == null) {
-			searchInMapForId(playerId, soundsDataAccess.sounds)?.let {
-				addNotification(PendingSoundNotification.getNotificationForPlayer(it, this.service))
+			searchInMapForId(playerId, soundsDataAccess.sounds)?.let { player ->
+				val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(player.mediaPlayerData.fragmentTag)
+						?: throw IllegalStateException("Sound sheet should not be null in this situation")
+				addNotification(PendingSoundNotification.getNotificationForPlayer(player, soundSheet, this.service))
 			}
 		} else
 			this.updateOrRemovePendingNotification(correspondingNotification, playerId)
@@ -107,7 +113,9 @@ class NotificationHandler(
 		if (player == null || !player.isPlayingSound && this.service.isActivityVisible)
 			this.dismissNotificationForPlayer(playerId)
 		else {
-			val updateNotification = PendingSoundNotification.getNotificationForPlayer(player, this.service).notification
+			val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(player.mediaPlayerData.fragmentTag)
+					?: throw IllegalStateException("Sound sheet should not be null in this situation")
+			val updateNotification = PendingSoundNotification.getNotificationForPlayer(player, soundSheet, this.service).notification
 
 			notification.notification = updateNotification
 			notificationManager.notify(notificationId, notification.notification)

@@ -45,6 +45,7 @@ class NotificationService : Service(),
 
 	private val soundsDataUtil = SoundboardApplication.soundsDataUtil
 	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
 	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 
 	private val eventBus = EventBus.getDefault()
@@ -63,7 +64,7 @@ class NotificationService : Service(),
 	override fun onCreate()
 	{
 		super.onCreate()
-		this.notificationHandler = NotificationHandler(this, NotificationManagerCompat.from(this), this.soundsDataAccess, this.soundsDataUtil)
+		this.notificationHandler = NotificationHandler(this, NotificationManagerCompat.from(this), this.soundsDataAccess, this.soundsDataUtil, this.soundSheetsDataAccess)
 
 		this.eventBus.registerIfRequired(this)
 		SoundboardPreferences.registerSharedPreferenceChangedListener(this)

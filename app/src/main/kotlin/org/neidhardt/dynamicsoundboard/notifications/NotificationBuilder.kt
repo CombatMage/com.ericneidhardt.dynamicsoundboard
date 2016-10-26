@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.support.v4.app.NotificationCompat
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
@@ -30,39 +31,57 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			return filter
 		}
 
-		fun getNotificationForPlayer(player: MediaPlayerController, context: Context): PendingSoundNotification {
-
-			val notificationId = player.mediaPlayerData.playerId.hashCode()
-			val notificationTitle = player.mediaPlayerData.label
-
-			val builder = this.getDefaultNotification(context = context, player = player, notificationId = notificationId, notificationTitle = notificationTitle)
+		private fun getNotification(
+				player: MediaPlayerController,
+				soundSheet: SoundSheet?,
+				context: Context,
+				isPlaylistNotification: Boolean
+		): PendingSoundNotification {
+			val notificationId =
+					if (isPlaylistNotification)
+						NotificationConstants.NOTIFICATION_ID_PLAYLIST
+					else
+						player.mediaPlayerData.playerId.hashCode()
+			val builder = this.getDefaultNotification(
+					context = context,
+					player = player,
+					soundSheet = soundSheet,
+					notificationId = notificationId,
+					isPlaylistNotification = isPlaylistNotification)
 
 			return PendingSoundNotification(notificationId, player.mediaPlayerData.playerId, builder.build())
 		}
 
-		fun getNotificationForPlaylist(player: MediaPlayerController, context: Context): PendingSoundNotification {
+		fun getNotificationForPlayer(player: MediaPlayerController, soundSheet: SoundSheet, context: Context): PendingSoundNotification
+				= getNotification(player, soundSheet, context, false)
 
-			val notificationId = NotificationConstants.NOTIFICATION_ID_PLAYLIST
-			val notificationTitle = context.resources.getString(R.string.notification_playlist)
-			val notificationText = player.mediaPlayerData.label
-
-			val builder = this.getDefaultNotification(context = context, player = player, notificationId = notificationId, notificationTitle = notificationTitle)
-			builder.setContentText(notificationText)
-
-			return PendingSoundNotification(notificationId, player.mediaPlayerData.playerId, builder.build())
-		}
+		fun getNotificationForPlaylist(player: MediaPlayerController, context: Context): PendingSoundNotification
+				= getNotification(player, null, context, true)
 
 		private fun getDefaultNotification(
 				player: MediaPlayerController,
-				context: Context, notificationId: Int,
-				notificationTitle: String): NotificationCompat.Builder {
-					
+				context: Context,
+				soundSheet: SoundSheet?,
+				notificationId: Int,
+				isPlaylistNotification: Boolean
+		): NotificationCompat.Builder {
+
+			val playerName = player.mediaPlayerData.label
+			val soundSheetName =
+					if (isPlaylistNotification)
+						context.resources.getString(R.string.notification_playlist)
+					else
+						soundSheet?.label
+
 			val playerId = player.mediaPlayerData.playerId
-			val style = android.support.v7.app.NotificationCompat.MediaStyle().apply { this.setShowActionsInCompactView(1) }// index of action play/pause
+			val style = android.support.v7.app.NotificationCompat.MediaStyle().apply {
+				this.setShowActionsInCompactView(0, 1)
+			}
 			val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
 
 			val builder = android.support.v7.app.NotificationCompat.Builder(context)
-					.setContentTitle(notificationTitle)
+					.setContentTitle(playerName)
+					.setContentText(soundSheetName)
 					.setSmallIcon(R.drawable.ic_stat_pending_sounds)
 					.setDismissPlayerIntent(
 							context = context,

@@ -19,7 +19,7 @@ ext {
 	buildToolsVersion = "25.0.0"
 }
 
-project.ext.set("projectMinSdkVersion", 16)
+project.ext.set("projectMinSdkVersion", 21)
 project.ext.set("projectTargetSdkVersion", 25)
 
 apply from: 'dependencies.gradle'
