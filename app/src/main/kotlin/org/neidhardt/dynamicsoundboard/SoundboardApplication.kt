@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard;
+package org.neidhardt.dynamicsoundboard
 
 import android.app.Application
 import android.content.Context

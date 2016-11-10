@@ -153,7 +153,7 @@ class SoundActivity :
 			return
 
 		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-			if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
+			if (this.soundSheetsDataAccess.getSoundSheets().isEmpty())
 				AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data,
 						this.soundSheetsDataUtil.getSuggestedName(), null)
 			else
@@ -284,7 +284,7 @@ class SoundActivity :
 		val removedSoundSheets = event.soundSheets
 		this.removeSoundFragments(removedSoundSheets)
 
-		if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
+		if (this.soundSheetsDataAccess.getSoundSheets().isEmpty())
 			this.toolbarVM.isSoundSheetActionsEnable = false
 	}
 
@@ -293,7 +293,7 @@ class SoundActivity :
 		val soundSheetFragment = this.currentSoundFragment
 		val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
 
-		if (currentlyPlayingSounds.size > 0) {
+		if (currentlyPlayingSounds.isNotEmpty()) {
 			val copyCurrentlyPlayingSounds = ArrayList<MediaPlayerController>(currentlyPlayingSounds.size)
 			copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds)
 			for (sound in copyCurrentlyPlayingSounds)
@@ -380,7 +380,7 @@ class SoundActivity :
 	}
 
 	fun removeSoundFragments(soundSheets: List<SoundSheet>?) {
-		if (soundSheets == null || soundSheets.size == 0)
+		if (soundSheets == null || soundSheets.isEmpty())
 			return
 
 		val fragmentManager = this.supportFragmentManager
@@ -391,7 +391,7 @@ class SoundActivity :
 		}
 		fragmentManager.executePendingTransactions()
 
-		if (this.soundSheetsDataAccess.getSoundSheets().size == 0) {
+		if (this.soundSheetsDataAccess.getSoundSheets().isEmpty()) {
 			this.toolbarVM.isSoundSheetActionsEnable = false
 			this.openIntroductionFragmentIfRequired()
 		}

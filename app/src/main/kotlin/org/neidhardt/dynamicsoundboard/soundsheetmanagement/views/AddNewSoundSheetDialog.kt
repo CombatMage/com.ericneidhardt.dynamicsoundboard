@@ -47,7 +47,7 @@ class AddNewSoundSheetDialog : BaseDialog()
 	private fun deliverResult()
     {
 		var label = this.soundSheetName!!.text.toString()
-		if (label.length == 0)
+		if (label.isEmpty())
 			label = this.suggestedName ?: ""
 
 		val soundSheet = this.soundSheetsDataUtil.getNewSoundSheet(label)
