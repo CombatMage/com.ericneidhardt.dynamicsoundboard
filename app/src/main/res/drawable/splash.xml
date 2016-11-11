@@ -3,14 +3,6 @@
 
     <item android:drawable="@drawable/ic_splash_background"/>
 
-    <!--
-    <item>
-        <bitmap
-            android:src="@drawable/ic_splash_foreground"
-            android:gravity="right|end"/>
-    </item>
-    -->
-
     <item>
         <bitmap
             android:gravity="center"
