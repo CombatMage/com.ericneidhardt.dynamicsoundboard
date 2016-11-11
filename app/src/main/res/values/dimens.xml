@@ -1,6 +1,5 @@
 <resources>
-
-	<dimen name="status_bar_padding">0dp</dimen>
+	<dimen name="status_bar_padding">24dp</dimen>
 
 	<dimen name="size_avatar_navigation_drawer">70dp</dimen>
 	
@@ -11,8 +10,7 @@
 
 	<dimen name="size_progressbar_thumb">8dp</dimen>
 
-	<dimen name="height_navigation_drawer_header">144dp</dimen>
-	<dimen name="height_shadow">3dp</dimen>
+	<dimen name="height_navigation_drawer_header">166dp</dimen>
 	<dimen name="height_shadow_fixed">3dp</dimen>
 	<dimen name="height_title">48dp</dimen>
 	<dimen name="height_input_field">44dp</dimen>
