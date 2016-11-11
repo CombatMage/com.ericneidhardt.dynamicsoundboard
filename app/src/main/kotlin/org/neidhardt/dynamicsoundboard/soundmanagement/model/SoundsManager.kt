@@ -219,7 +219,7 @@ class SoundsManager
 
 	override fun removeSounds(soundsToRemove: List<MediaPlayerController>)
 	{
-		if (soundsToRemove.size > 0)
+		if (soundsToRemove.isNotEmpty())
 		{
 			val copyList = ArrayList<MediaPlayerController>(soundsToRemove.size)
 			copyList.addAll(soundsToRemove) // this is done to prevent concurrent modification exception

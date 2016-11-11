@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 
 /**

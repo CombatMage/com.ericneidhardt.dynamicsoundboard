@@ -8,7 +8,7 @@ import android.support.v7.app.AlertDialog
 import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.soundactivity.BaseDialog
+import org.neidhardt.dynamicsoundboard.base.BaseDialog
 
 class AddNewSoundSheetDialog : BaseDialog()
 {
@@ -47,7 +47,7 @@ class AddNewSoundSheetDialog : BaseDialog()
 	private fun deliverResult()
     {
 		var label = this.soundSheetName!!.text.toString()
-		if (label.length == 0)
+		if (label.isEmpty())
 			label = this.suggestedName ?: ""
 
 		val soundSheet = this.soundSheetsDataUtil.getNewSoundSheet(label)

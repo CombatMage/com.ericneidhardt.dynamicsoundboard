@@ -38,13 +38,9 @@ internal fun searchInListForId(playerId: String, sounds: List<MediaPlayerControl
 internal fun searchInMapForId(playerId: String, sounds: Map<String, List<MediaPlayerController>>): MediaPlayerController?
 {
 	val soundSheets = sounds.keys
-	for (soundSheet in soundSheets)
-	{
-		val playersInSoundSheet = sounds[soundSheet]
-		val player = searchInListForId(playerId, playersInSoundSheet.orEmpty())
-		if (player != null)
-			return player
-	}
-	return null
+	return soundSheets
+			.map { sounds[it] }
+			.map { searchInListForId(playerId, it.orEmpty()) }
+			.firstOrNull { it != null }
 }
 

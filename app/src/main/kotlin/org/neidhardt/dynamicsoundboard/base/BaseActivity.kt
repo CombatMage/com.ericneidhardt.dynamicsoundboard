@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundactivity
+package org.neidhardt.dynamicsoundboard.base
 
 import org.neidhardt.utils.EnhancedAppCompatActivity
 

@@ -55,7 +55,7 @@
 						layout="@layout/layout_navigation_drawer_header"
 						android:id="@+id/layout_navigation_drawer_header"
 						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
+						android:layout_height="@dimen/height_navigation_drawer_header"
 						android:fitsSystemWindows="true"
 						app:layout_collapseMode="parallax"/>
 

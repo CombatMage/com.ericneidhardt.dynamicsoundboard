@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_navigation_drawer.*
-import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -21,7 +20,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDraw
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
-import org.neidhardt.dynamicsoundboard.soundactivity.BaseFragment
+import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutsChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent

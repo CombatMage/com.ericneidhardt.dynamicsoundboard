@@ -72,19 +72,6 @@
 	<string name="notification_play_sound">Sound abspielen</string>
 	<string name="notification_playlist">Playliste</string>
 
-	<!-- introduction -->
-	<string name="introduction_action_icon">Icon der beschriebenen Aktion</string>
-	<string name="introduction_action_new_sound_sheet_title">@string/action_add_new_sound_sheet</string>
-	<string name="introduction_action_new_sound_sheet_summary">Erstellt eine neue Kategorie für Sounds. Du kannst der
-		Kategorie einen namen geben und ihr verschiedene Sounds zuordnen. Über das Menü links kann zwischen den verschiedenen
-		Kategrien gewechselt werden.</string>
-	<string name="introduction_action_add_new_sound_from_dir_title">@string/action_add_new_sound_from_dir</string>
-	<string name="introduction_action_add_new_sound_from_dir_summary">Hiermit kaönnen mehrere Sounds aus einem Verzeichniss der aktuellen
-		Kategorie hinzugefügt werden. Wähle dazu ein Verzeichniss das geladen werden soll.</string>
-	<string name="introduction_action_add_new_sound_title">@string/action_add_new_sound</string>
-	<string name="introduction_action_add_new_sound_summary">Hiermit kannst du einen oder mehrere Sounds auswählen um diese der aktuellen Kategorie
-		hinzuzufügen. Für jeden geladenen Sound kannst du einen den angezeigten Namen einstellen.</string>
-
 	<!-- preferences & about -->
 	<string name="preferences">Einstellungen</string>
 	<string name="preferences_enable_notifications_title">Benachrichtigungen aktivieren</string>

@@ -21,12 +21,12 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.base.BaseActivity
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog
-import org.neidhardt.dynamicsoundboard.introduction.IntroductionFragment
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
@@ -122,7 +122,6 @@ class SoundActivity :
 		}
 
 		this.initToolbar()
-		this.openIntroductionFragmentIfRequired()
 
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
 	}
@@ -153,7 +152,7 @@ class SoundActivity :
 			return
 
 		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-			if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
+			if (this.soundSheetsDataAccess.getSoundSheets().isEmpty())
 				AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data,
 						this.soundSheetsDataUtil.getSuggestedName(), null)
 			else
@@ -225,12 +224,11 @@ class SoundActivity :
 		if (this.isFinishing) {
 			// we remove all loaded sounds, which have no corresponding SoundSheet
 			val fragmentsWithLoadedSounds = this.soundsDataAccess.sounds.keys
-			val fragmentsWithLoadedSoundsToRemove = HashSet<String>()
+			val fragmentsWithLoadedSoundsToRemove = fragmentsWithLoadedSounds.filter {
+						// no sound sheet exists, this pending sound can safely be deleted
+						this.soundSheetsDataAccess.getSoundSheetForFragmentTag(it) == null
+					}
 
-			for (fragmentTag in fragmentsWithLoadedSounds) {
-				if (this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag) == null) // no sound sheet exists
-					fragmentsWithLoadedSoundsToRemove.add(fragmentTag)
-			}
 			for (fragmentTag in fragmentsWithLoadedSoundsToRemove)
 				this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(fragmentTag))
 		}
@@ -284,7 +282,7 @@ class SoundActivity :
 		val removedSoundSheets = event.soundSheets
 		this.removeSoundFragments(removedSoundSheets)
 
-		if (this.soundSheetsDataAccess.getSoundSheets().size == 0)
+		if (this.soundSheetsDataAccess.getSoundSheets().isEmpty())
 			this.toolbarVM.isSoundSheetActionsEnable = false
 	}
 
@@ -293,7 +291,7 @@ class SoundActivity :
 		val soundSheetFragment = this.currentSoundFragment
 		val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
 
-		if (currentlyPlayingSounds.size > 0) {
+		if (currentlyPlayingSounds.isNotEmpty()) {
 			val copyCurrentlyPlayingSounds = ArrayList<MediaPlayerController>(currentlyPlayingSounds.size)
 			copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds)
 			for (sound in copyCurrentlyPlayingSounds)
@@ -379,22 +377,17 @@ class SoundActivity :
 		}
 	}
 
-	fun removeSoundFragments(soundSheets: List<SoundSheet>?) {
-		if (soundSheets == null || soundSheets.size == 0)
-			return
+	fun removeSoundFragments(soundSheets: List<SoundSheet>) {
+		this.supportFragmentManager.let { fragmentManager ->
+			soundSheets
+					.mapNotNull { fragmentManager.findFragmentByTag(it.fragmentTag) }
+					.forEach { fragmentManager.beginTransaction().remove(it).commit() }
 
-		val fragmentManager = this.supportFragmentManager
-		for (soundSheet in soundSheets) {
-			val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag)
-			if (fragment != null)
-				fragmentManager.beginTransaction().remove(fragment).commit()
+			fragmentManager.executePendingTransactions()
 		}
-		fragmentManager.executePendingTransactions()
 
-		if (this.soundSheetsDataAccess.getSoundSheets().size == 0) {
+		if (this.soundSheetsDataAccess.getSoundSheets().isEmpty())
 			this.toolbarVM.isSoundSheetActionsEnable = false
-			this.openIntroductionFragmentIfRequired()
-		}
 	}
 
 	fun removeSoundFragment(soundSheet: SoundSheet) {
@@ -405,23 +398,6 @@ class SoundActivity :
 			if (fragment.isVisible)
 				this.toolbarVM.isSoundSheetActionsEnable = false
 		}
-		fragmentManager.executePendingTransactions()
-	}
-
-	fun openIntroductionFragmentIfRequired() {
-		if (!this.isActivityResumed)
-			return
-
-		if (this.currentSoundFragment != null)
-			return
-
-		val fragmentManager = this.supportFragmentManager
-		val transaction = fragmentManager.beginTransaction()
-
-		val fragment = fragmentManager.findFragmentByTag(IntroductionFragment.TAG) ?: IntroductionFragment()
-		transaction.replace(R.id.main_frame, fragment, IntroductionFragment.TAG)
-
-		transaction.commit()
 		fragmentManager.executePendingTransactions()
 	}
 
