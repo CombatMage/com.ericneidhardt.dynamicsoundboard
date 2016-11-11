@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.soundactivity.BaseDialog
+import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.ui_utils.views.SimpleSpinner
 import java.util.*
 

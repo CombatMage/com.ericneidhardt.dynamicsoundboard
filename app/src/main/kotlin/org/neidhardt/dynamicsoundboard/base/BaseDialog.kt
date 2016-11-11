@@ -1,6 +1,7 @@
-package org.neidhardt.dynamicsoundboard.soundactivity
+package org.neidhardt.dynamicsoundboard.base
 
 import android.support.v4.app.DialogFragment
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 
 /**
  * File created by eric.neidhardt on 14.11.2014.

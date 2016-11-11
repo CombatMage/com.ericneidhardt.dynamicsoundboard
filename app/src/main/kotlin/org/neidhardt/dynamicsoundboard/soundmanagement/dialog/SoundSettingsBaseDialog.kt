@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.soundactivity.BaseDialog
+import org.neidhardt.dynamicsoundboard.base.BaseDialog
 
 /**
  * File created by eric.neidhardt on 12.04.2015.
