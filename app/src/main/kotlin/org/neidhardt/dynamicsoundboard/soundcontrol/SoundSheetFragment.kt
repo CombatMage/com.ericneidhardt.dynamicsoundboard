@@ -47,6 +47,7 @@ import org.neidhardt.utils.registerIfRequired
  * File created by eric.neidhardt on 02.07.2015.
  */
 private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
+private val KEY_STATE_RECYCLER_VIEW = KEY_FRAGMENT_TAG + "_recycler_view_state"
 
 fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment {
 	val fragment = SoundSheetFragment()
@@ -61,9 +62,10 @@ class SoundSheetFragment :
 		OnOpenSoundDialogEventListener,
 		OnSoundsChangedEventListener,
 		MediaPlayerFailedEventListener {
+
 	private val LOG_TAG = javaClass.name
 
-	var fragmentTag: String = javaClass.name
+	override var fragmentTag: String = javaClass.name
 
 	private val eventBus = EventBus.getDefault()
 	private val soundsDataStorage: SoundsDataStorage = SoundboardApplication.soundsDataStorage
@@ -150,18 +152,14 @@ class SoundSheetFragment :
 	override fun onRestoreState(savedInstanceState: Bundle) {
 		super.onRestoreState(savedInstanceState)
 		this.rv_fragment_sound_sheet_sounds?.layoutManager?.onRestoreInstanceState(
-				savedInstanceState.getParcelable("myState"))
+				savedInstanceState.getParcelable(KEY_STATE_RECYCLER_VIEW))
 	}
 
 	override fun onSaveState(outState: Bundle) {
 		super.onSaveState(outState)
 		this.rv_fragment_sound_sheet_sounds?.layoutManager?.let { layoutManager ->
-			outState.putParcelable("myState", layoutManager.onSaveInstanceState())
+			outState.putParcelable(KEY_STATE_RECYCLER_VIEW, layoutManager.onSaveInstanceState())
 		}
-	}
-
-	override fun onFirstTimeLaunched() {
-		super.onFirstTimeLaunched()
 	}
 
 	override fun onPause() {

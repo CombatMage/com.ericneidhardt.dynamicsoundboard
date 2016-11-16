@@ -29,8 +29,10 @@ import org.neidhardt.utils.letThis
 import org.neidhardt.utils.registerIfRequired
 import kotlin.properties.Delegates
 
-class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListener
-{
+class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListener {
+
+	override var fragmentTag: String = javaClass.name
+
 	private val eventBus = EventBus.getDefault()
 
 	private val soundLayoutAccess = SoundboardApplication.soundLayoutsAccess
@@ -43,14 +45,14 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 	private val buttonBarVM = NavigationDrawerButtonBarVM()
 	private val deletionViewVM = NavigationDrawerDeletionViewVM()
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		this.retainInstance = true
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		this.binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater, R.layout.fragment_navigation_drawer, container, false).letThis {
+		this.binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater,
+				R.layout.fragment_navigation_drawer, container, false).letThis {
 			it.layoutNavigationDrawerHeader.viewModel = this.headerVM
 			it.layoutNavigationDrawerButtonBar.viewModel = this.buttonBarVM
 			it.layoutNavigationDrawerDeletionHeader.viewModel = this.deletionViewVM
@@ -58,8 +60,7 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 		return this.binding.root
 	}
 
-	override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
-	{
+	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
 		this.listView = NavigationDrawerListPresenter(

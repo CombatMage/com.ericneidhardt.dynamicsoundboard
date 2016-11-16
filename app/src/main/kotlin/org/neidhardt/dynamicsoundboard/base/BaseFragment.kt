@@ -7,6 +7,8 @@ import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 
 abstract class BaseFragment : Fragment() {
 
+	abstract var fragmentTag: String
+
 	val baseActivity: SoundActivity get() = this.activity as SoundActivity
 
 	init {
@@ -33,14 +35,13 @@ abstract class BaseFragment : Fragment() {
 			this.savedState = this.saveState()
 		if (this.savedState != null) {
 			val b = this.arguments
-			b.putBundle("internalSavedViewState8954201239547", savedState)
+			b.putBundle("internalSavedViewState_${this.fragmentTag}", savedState)
 		}
 	}
 
-
 	private fun restoreStateFromArguments(): Boolean {
 		val b = this.arguments
-		this.savedState = b.getBundle("internalSavedViewState8954201239547")
+		this.savedState = b.getBundle("internalSavedViewState_${this.fragmentTag}")
 		this.savedState?.let { state ->
 			this.onRestoreState(state)
 			return true
