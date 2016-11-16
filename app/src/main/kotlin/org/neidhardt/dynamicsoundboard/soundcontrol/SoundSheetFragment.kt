@@ -147,6 +147,23 @@ class SoundSheetFragment :
 		this.soundPresenter?.setProgressUpdateTimer(true)
 	}
 
+	override fun onRestoreState(savedInstanceState: Bundle) {
+		super.onRestoreState(savedInstanceState)
+		this.rv_fragment_sound_sheet_sounds?.layoutManager?.onRestoreInstanceState(
+				savedInstanceState.getParcelable("myState"))
+	}
+
+	override fun onSaveState(outState: Bundle) {
+		super.onSaveState(outState)
+		this.rv_fragment_sound_sheet_sounds?.layoutManager?.let { layoutManager ->
+			outState.putParcelable("myState", layoutManager.onSaveInstanceState())
+		}
+	}
+
+	override fun onFirstTimeLaunched() {
+		super.onFirstTimeLaunched()
+	}
+
 	override fun onPause() {
 		super.onPause()
 		this.snackbarPresenter.stop()
@@ -212,7 +229,7 @@ class SoundSheetFragment :
 	override fun onEvent(event: MediaPlayerFailedEvent) {
 		this.coordinatorLayout.context.resources.let { res ->
 			val message = "${res.getString(R.string.sound_control_error_during_playback)}: " +
-					"${event.player.mediaPlayerData.label}"
+					event.player.mediaPlayerData.label
 			this.snackbarPresenter.showSnackbar(message, Snackbar.LENGTH_INDEFINITE, null)
 		}
 	}
