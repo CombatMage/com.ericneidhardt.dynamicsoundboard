@@ -58,7 +58,7 @@ class SoundPresenter
 	{
 		this.values.clear()
 		this.values.addAll(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag))
-		this.adapter!!.notifyDataSetChanged()
+		this.adapter?.notifyDataSetChanged()
 
 		this.eventBus.registerIfRequired(this)
 	}
@@ -100,7 +100,7 @@ class SoundPresenter
 	override fun onEvent(event: SoundAddedEvent)
 	{
 		val newPlayer = event.player
-		if (newPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
+		if (newPlayer.mediaPlayerData.fragmentTag == this.fragmentTag)
 		{
 			val count = this.values.size
 			val positionToInsert = newPlayer.mediaPlayerData.sortOrder
@@ -138,19 +138,19 @@ class SoundPresenter
 	override fun onEvent(event: SoundMovedEvent)
 	{
 		val movedPlayer = event.player
-		if (movedPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
+		if (movedPlayer.mediaPlayerData.fragmentTag == this.fragmentTag)
 		{
 			this.values.removeAt(event.from)
 			this.values.add(event.to, movedPlayer)
 
-			val start = Math.min(event.from, event.to); // we need to update all sound after the moved one
-			val end = Math.max(event.from, event.to);
+			val start = Math.min(event.from, event.to) // we need to update all sound after the moved one
+			val end = Math.max(event.from, event.to)
 
 			for (i in start..end)
 			{
 				val playerData = this.values[i].mediaPlayerData
-				playerData.sortOrder = i;
-				playerData.updateItemInDatabaseAsync();
+				playerData.sortOrder = i
+				playerData.updateItemInDatabaseAsync()
 			}
 
 			this.adapter?.notifyItemMoved(event.from, event.to)
@@ -178,7 +178,8 @@ class SoundPresenter
 			this.values.remove(player)
 			this.adapter?.notifyItemRemoved(index)
 
-			this.updateSortOrdersAfter(index - 1) // -1 to ensure item at index (which was index + 1 before) is also updated
+			// -1 to ensure item at index (which was index + 1 before) is also updated
+			this.updateSortOrdersAfter(index - 1)
 		}
 	}
 
@@ -189,8 +190,8 @@ class SoundPresenter
 		{
 			val playerData = this.values[i].mediaPlayerData
 			val sortOrder = playerData.sortOrder
-			playerData.sortOrder = sortOrder - 1;
-			playerData.updateItemInDatabaseAsync();
+			playerData.sortOrder = sortOrder - 1
+			playerData.updateItemInDatabaseAsync()
 		}
 	}
 
