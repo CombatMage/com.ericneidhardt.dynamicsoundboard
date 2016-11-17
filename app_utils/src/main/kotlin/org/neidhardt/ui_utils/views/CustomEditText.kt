@@ -14,25 +14,23 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import org.neidhardt.ui_utils.R
 
-abstract class CustomEditText :
-		FrameLayout,
+abstract class CustomEditText(context: Context, attrs: AttributeSet) :
+		FrameLayout(context, attrs),
 		TextView.OnEditorActionListener,
 		EditTextBackEvent.EditTextImeBackListener,
 		View.OnFocusChangeListener
 {
-	abstract var input: EditTextBackEvent?
+	abstract var input: EditTextBackEvent
 	abstract var onTextEditedListener: OnTextEditedListener?
 
 	var text: String?
-		get() = this.input?.text?.toString()
-		set(value)
-		{
-			this.input?.text = if (value != null) SpannableStringBuilder(value) else null
+		get() = this.input.text?.toString()
+		set(value) {
+			this.input.text = if (value != null) SpannableStringBuilder(value) else null
 		}
 
 	val displayedText: String
-		get()
-		{
+		get() {
 			val userInput = this.text!!.toString()
 			if (!userInput.isEmpty())
 				return userInput
@@ -40,96 +38,69 @@ abstract class CustomEditText :
 		}
 
 	var hint: CharSequence?
-		get()
-		{
-			return this.input!!.hint
+		get() = this.input.hint
+		set(value) {
+			this.input.hint = value
 		}
-		set(value)
-		{
-			this.input!!.hint = value
-		}
-
-	constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-	{
-		this.inflateLayout(context)
-		this.initTextListeners()
-		this.setValuesAttributeSet(context, attrs)
-	}
 
 	abstract fun inflateLayout(context: Context)
 
-	fun initTextListeners()
-	{
-		this.input?.apply {
-			onFocusChangeListener = this@CustomEditText
-			onImeBackListener = this@CustomEditText
-			setOnEditorActionListener(this@CustomEditText)
+	fun initTextListeners() {
+		this.input.apply {
+			this.onFocusChangeListener = this@CustomEditText
+			this.onImeBackListener = this@CustomEditText
+			this.setOnEditorActionListener(this@CustomEditText)
 		}
 	}
 
-	fun setValuesAttributeSet(context: Context, attrs: AttributeSet)
-	{
+	fun setValuesAttributeSet(context: Context, attrs: AttributeSet) {
 		val array = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText, 0, 0)
 		val size = array.getDimension(R.styleable.CustomEditText_text_size, 0f)
 		if (array.hasValue(R.styleable.CustomEditText_text_size))
-			this.input!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
+			this.input.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
 
 		val color = array.getColor(R.styleable.CustomEditText_text_color, 0)
 		if (array.hasValue(R.styleable.CustomEditText_text_color))
-			this.input!!.setTextColor(color)
+			this.input.setTextColor(color)
 
 		array.recycle()
 	}
 
-	override fun hasFocus(): Boolean
-	{
-		return this.input!!.hasFocus()
-	}
+	override fun hasFocus(): Boolean = this.input.hasFocus()
 
-	override fun clearFocus()
-	{
-		this.input!!.clearFocus()
-	}
+	override fun clearFocus(): Unit = this.input.clearFocus()
 
-	override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent?): Boolean
-	{
+	override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent?): Boolean {
 		if (actionId == EditorInfo.IME_ACTION_DONE)
-		{
-			this.onTextEditedListener?.onTextEdited(this.input!!.text.toString())
-		}
+			this.onTextEditedListener?.onTextEdited(this.input.text.toString())
 		return false
 	}
 
-	override fun onImeBack(ctrl: EditTextBackEvent, text: String)
-	{
-		this.onTextEditedListener?.onTextEdited(this.input!!.text.toString())
+	override fun onImeBack(ctrl: EditTextBackEvent, text: String) {
+		this.onTextEditedListener?.onTextEdited(this.input.text.toString())
 	}
 
-	override fun onFocusChange(v: View, hasFocus: Boolean)
-	{
+	override fun onFocusChange(v: View, hasFocus: Boolean) {
 		if (!hasFocus)
-			this.onTextEditedListener?.onTextEdited(this.input!!.text.toString())
+			this.onTextEditedListener?.onTextEdited(this.input.text.toString())
 			this.onFocusChangeListener?.onFocusChange(this, hasFocus)
 	}
 
-	override fun onSaveInstanceState(): Parcelable
-	{
+	override fun onSaveInstanceState(): Parcelable {
 		val superState = super.onSaveInstanceState()
-		return SavedCustomEditTextState(superState, this.input!!.text.toString())
+		return SavedCustomEditTextState(superState, this.input.text.toString())
 	}
 
-	override fun onRestoreInstanceState(state: Parcelable?)
-	{
+	override fun onRestoreInstanceState(state: Parcelable?) {
 		val savedState = state as SavedCustomEditTextState?
 		super.onRestoreInstanceState(savedState?.superState)
 
 		if (savedState?.value != null)
-			this.input!!.setText(savedState?.value)
+			this.input.setText(savedState?.value)
 	}
 
 	@SuppressWarnings("unchecked")
-	override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>?)
-	{
+	override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>?) {
 		// As we save our own instance state, ensure our children don't save
 		// and restore their state as well.
 		super.dispatchFreezeSelfOnly(container)
@@ -180,6 +151,12 @@ abstract class CustomEditText :
 	interface OnTextEditedListener
 	{
 		fun onTextEdited(text: String)
+	}
+
+	init {
+		this.inflateLayout(context)
+		this.initTextListeners()
+		this.setValuesAttributeSet(context, attrs)
 	}
 
 }
