@@ -8,7 +8,7 @@
 		android:layout_height="match_parent">
 
 	<org.neidhardt.ui_utils.views.EditTextBackEvent
-			android:id="@+id/edittext"
+			android:id="@+id/et_view_actionbar_edittext"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center_horizontal"
@@ -23,7 +23,7 @@
 			app:typeface="roboto_medium"/>
 
 	<View
-			android:id="@+id/v_divider"
+			android:id="@+id/v_view_actionbar_edittext_divider"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/stroke"
 			android:background="@color/accent_200"/>

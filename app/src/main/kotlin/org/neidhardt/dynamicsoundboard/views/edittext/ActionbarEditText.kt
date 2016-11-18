@@ -9,10 +9,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import kotlinx.android.synthetic.main.view_actionbar_edittext.view.*
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.ui_utils.views.EditTextBackEvent
-import kotlin.properties.Delegates
 
 
 class ActionbarEditText(context: Context, attrs: AttributeSet) :
@@ -20,7 +20,11 @@ class ActionbarEditText(context: Context, attrs: AttributeSet) :
 		TextView.OnEditorActionListener,
 		EditTextBackEvent.EditTextImeBackListener
 {
-	override var input: EditTextBackEvent by Delegates.notNull<EditTextBackEvent>()
+	private var inputField: EditTextBackEvent? = null
+	override var input: EditTextBackEvent
+			get() = inputField as EditTextBackEvent
+			set(value) { this.inputField = value }
+
 	override var onTextEditedListener: CustomEditText.OnTextEditedListener? = null
 
 	private var divider: View? = null
@@ -30,8 +34,9 @@ class ActionbarEditText(context: Context, attrs: AttributeSet) :
 	override fun inflateLayout(context: Context) {
 		LayoutInflater.from(context).inflate(R.layout.view_actionbar_edittext, this, true)
 
-		this.input = this.findViewById(R.id.edittext) as EditTextBackEvent
-		this.divider = this.findViewById(R.id.v_divider)
+		val edittext = this.et_view_actionbar_edittext
+		this.input = edittext
+		this.divider = this.v_view_actionbar_edittext_divider
 
 		this.disableEditText()
 		this.input.setOnClickListener {

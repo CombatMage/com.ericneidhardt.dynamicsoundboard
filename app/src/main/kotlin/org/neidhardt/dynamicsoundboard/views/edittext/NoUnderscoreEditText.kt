@@ -12,7 +12,11 @@ import kotlin.properties.Delegates
 
 class NoUnderscoreEditText(context: Context, attrs: AttributeSet) : CustomEditText(context, attrs) {
 
-	override var input: EditTextBackEvent by Delegates.notNull<EditTextBackEvent>()
+	private var inputField: EditTextBackEvent? = null
+	override var input: EditTextBackEvent
+		get() = inputField as EditTextBackEvent
+		set(value) { this.inputField = value }
+
 	override var onTextEditedListener: OnTextEditedListener? = null
 
 	override fun inflateLayout(context: Context) {
