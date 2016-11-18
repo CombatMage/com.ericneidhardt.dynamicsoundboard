@@ -8,7 +8,6 @@ import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder
 
 /**
  * File created by eric.neidhardt on 16.07.2015.
@@ -19,7 +18,7 @@ class PlaylistViewHolder
 		private val onItemClickListener: NavigationDrawerItemClickListener<MediaPlayerController>
 ) :
 		RecyclerView.ViewHolder(itemView),
-		SoundProgressViewHolder
+		MediaPlayerController.OnProgressChangedEventListener
 {
 
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
@@ -29,13 +28,13 @@ class PlaylistViewHolder
 
 	private var player: MediaPlayerController? = null
 
-	init
-	{
-		itemView.setOnClickListener( { view -> this.onItemClickListener.onItemClick(this.player as MediaPlayerController) })
+	init {
+		itemView.setOnClickListener( { view ->
+			this.onItemClickListener.onItemClick(this.player as MediaPlayerController)
+		})
 	}
 
-	fun bindData(player: MediaPlayerController, isLastItem: Boolean)
-	{
+	fun bindData(player: MediaPlayerController, isLastItem: Boolean) {
 		this.player = player
 
 		this.timePosition.max = player.trackDuration
@@ -46,11 +45,10 @@ class PlaylistViewHolder
 		this.itemView.isSelected = player.mediaPlayerData.isSelectedForDeletion
 		this.divider.visibility = if (isLastItem) View.INVISIBLE else View.VISIBLE
 
-		this.onProgressUpdate()
+		this.onProgressChanged(player.progress)
 	}
 
-	override fun onProgressUpdate()
-	{
+	override fun onProgressChanged(progress: Int) {
 		this.player?.apply {
 			if (isPlayingSound)
 			{
@@ -61,5 +59,4 @@ class PlaylistViewHolder
 				timePosition.visibility = View.INVISIBLE
 		}
 	}
-
 }

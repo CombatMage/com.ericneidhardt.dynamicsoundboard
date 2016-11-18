@@ -12,7 +12,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.ui_utils.views.CustomEditText
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressTimer
 import kotlin.properties.Delegates
 
 /**
@@ -45,8 +44,7 @@ class SoundViewHolder
 
 	private var player: MediaPlayerController by Delegates.notNull()
 
-	init
-	{
+	init {
 		this.reorder.setOnTouchListener { view, motionEvent ->
 			itemTouchHelper.startDrag(this)
 			true
@@ -55,13 +53,9 @@ class SoundViewHolder
 		this.play.setOnClickListener { view ->
 			this.name.clearFocus()
 			if (!view.isSelected)
-			{
 				player.playSound()
-			}
 			else
-			{
 				player.fadeOutSound()
-			}
 		}
 
 		this.loop.setOnClickListener{ view ->
@@ -100,8 +94,7 @@ class SoundViewHolder
 		this.updateViewToPlayerState()
 	}
 
-	private fun updateViewToPlayerState()
-	{
+	private fun updateViewToPlayerState() {
 		val player = this.player
 		val playerData = player.mediaPlayerData
 
@@ -122,8 +115,7 @@ class SoundViewHolder
 			this.timePosition.progress = progress
 	}
 
-	override fun onTextEdited(text: String)
-	{
+	override fun onTextEdited(text: String) {
 		Logger.d(TAG, "onTextEdited: $text")
 
 		this.name.clearFocus()
@@ -139,19 +131,13 @@ class SoundViewHolder
 		}
 	}
 
-	override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean)
-	{
+	override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
 		if (fromUser)
 			this.player.progress = progress
 	}
 
-	override fun onStartTrackingTouch(seekBar: SeekBar?) {
-		Logger.d(TAG, "onStartTrackingTouch")
-	}
+	override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-	override fun onStopTrackingTouch(seekBar: SeekBar)
-	{
-		Logger.d(TAG, "onStopTrackingTouch")
-	}
+	override fun onStopTrackingTouch(seekBar: SeekBar) {}
 
 }

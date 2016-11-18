@@ -27,7 +27,7 @@ fun createPlaylistPresenter(
 			soundsDataAccess = soundsDataAccess,
 			soundsDataStorage = soundsDataStorage
 	).apply {
-		this.adapter = PlaylistAdapter(recyclerView, this)
+		this.adapter = PlaylistAdapter(this)
 		this.view = recyclerView
 	}
 }
@@ -61,12 +61,6 @@ class PlaylistPresenter
 		this.values.addAll(playlist)
 
 		this.adapter?.notifyDataSetChanged()
-		this.adapter?.startProgressUpdateTimer()
-	}
-
-	override fun onDetachedFromWindow()
-	{
-		this.adapter?.stopProgressUpdateTimer()
 	}
 
 	override fun deleteSelectedItems()
@@ -144,14 +138,9 @@ class PlaylistPresenter
 		}
 
 		if (nextActivePlayer.isPlayingSound)
-		{
-			this.adapter?.stopProgressUpdateTimer()
 			nextActivePlayer.stopSound()
-		} else
-		{
-			this.adapter?.startProgressUpdateTimer()
+		else
 			nextActivePlayer.playSound()
-		}
 		this.adapter?.notifyDataSetChanged()
 	}
 
@@ -165,7 +154,6 @@ class PlaylistPresenter
 		this.values.addAll(playlist)
 
 		this.adapter?.notifyDataSetChanged()
-		this.adapter?.startProgressUpdateTimer()
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

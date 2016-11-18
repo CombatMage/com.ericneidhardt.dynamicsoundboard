@@ -1,22 +1,20 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressAdapter
+import org.neidhardt.ui_utils.recyclerview.adapter.BaseAdapter
 
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
 class PlaylistAdapter
 (
-		recyclerView: RecyclerView,
 		private val presenter: PlaylistPresenter
 ) :
-		SoundProgressAdapter<PlaylistViewHolder>(recyclerView),
+		BaseAdapter<MediaPlayerController, PlaylistViewHolder>(),
 		NavigationDrawerItemClickListener<MediaPlayerController>
 {
 	init { this.setHasStableIds(true) }
