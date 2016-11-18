@@ -12,6 +12,7 @@ import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.ui_utils.views.EditTextBackEvent
+import kotlin.properties.Delegates
 
 
 class ActionbarEditText(context: Context, attrs: AttributeSet) :
@@ -19,59 +20,53 @@ class ActionbarEditText(context: Context, attrs: AttributeSet) :
 		TextView.OnEditorActionListener,
 		EditTextBackEvent.EditTextImeBackListener
 {
-	override var input: EditTextBackEvent? = null
+	override var input: EditTextBackEvent by Delegates.notNull<EditTextBackEvent>()
 	override var onTextEditedListener: CustomEditText.OnTextEditedListener? = null
 
 	private var divider: View? = null
 	private var editTextKeyListener: KeyListener? = null
 	private var initialText: String? = null
 
-	override fun inflateLayout(context: Context)
-	{
+	override fun inflateLayout(context: Context) {
 		LayoutInflater.from(context).inflate(R.layout.view_actionbar_edittext, this, true)
 
 		this.input = this.findViewById(R.id.edittext) as EditTextBackEvent
 		this.divider = this.findViewById(R.id.v_divider)
 
 		this.disableEditText()
-		this.input?.setOnClickListener {
+		this.input.setOnClickListener {
 			this.enableEditText()
-			this.initialText = this.input?.text.toString()
+			this.initialText = this.input.text.toString()
 		}
 	}
 
-	override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent?): Boolean
-	{
-		if (actionId == EditorInfo.IME_ACTION_DONE)
-		{
-			this.onTextEditedListener?.onTextEdited(this.input?.text?.toString() ?: "")
+	override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent?): Boolean {
+		if (actionId == EditorInfo.IME_ACTION_DONE) {
+			this.onTextEditedListener?.onTextEdited(this.input.text?.toString() ?: "")
 			this.disableEditText()
 		}
 		return false
 	}
 
-	override fun onImeBack(ctrl: EditTextBackEvent, text: String)
-	{
+	override fun onImeBack(ctrl: EditTextBackEvent, text: String) {
 		if (this.initialText != null)
-			this.input!!.setText(this.initialText)
+			this.input.setText(this.initialText)
 		this.disableEditText()
 	}
 
-	private fun disableEditText()
-	{
+	private fun disableEditText() {
 		this.divider?.visibility = View.INVISIBLE
 
-		this.editTextKeyListener = this.input!!.keyListener
-		this.input!!.isCursorVisible = false
-		this.input!!.keyListener = null
+		this.editTextKeyListener = this.input.keyListener
+		this.input.isCursorVisible = false
+		this.input.keyListener = null
 	}
 
-	private fun enableEditText()
-	{
+	private fun enableEditText() {
 		this.divider?.visibility = View.VISIBLE
 
-		this.input!!.keyListener = this.editTextKeyListener
-		this.input!!.isCursorVisible = true
+		this.input.keyListener = this.editTextKeyListener
+		this.input.isCursorVisible = true
 		val lManager = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 		lManager.showSoftInput(this.input, 0)
 	}
