@@ -39,7 +39,7 @@ where T : RecyclerView.ViewHolder, T : SoundProgressViewHolder
 	override fun run()
 	{
 		val itemsWithProgressChanged = getPlayingItems()
-		if (itemsWithProgressChanged.size == 0)
+		if (itemsWithProgressChanged.isEmpty())
 		{
 			this.stopProgressUpdateTimer()
 			return

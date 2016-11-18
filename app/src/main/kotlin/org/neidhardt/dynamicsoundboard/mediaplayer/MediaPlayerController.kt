@@ -37,4 +37,10 @@ interface MediaPlayerController
 	fun setSoundUri(uri: String)
 
 	fun destroy(postStateChanged: Boolean)
+
+	var onProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener?
+
+	interface OnProgressChangedEventListener {
+		fun onProgressChanged(progress: Int)
+	}
 }

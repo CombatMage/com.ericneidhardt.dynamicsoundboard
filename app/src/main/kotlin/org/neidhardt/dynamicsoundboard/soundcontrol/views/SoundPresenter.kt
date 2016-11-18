@@ -35,7 +35,7 @@ fun createSoundPresenter(
 		val deletionHandler = PendingDeletionHandler(this, soundsDataStorage, onItemDeletionRequested)
 		val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(recyclerView.context, deletionHandler,
 				this, fragmentTag, soundsDataStorage)).apply { this.attachToRecyclerView(recyclerView) }
-		val adapter = SoundAdapter(recyclerView, itemTouchHelper, this, soundsDataStorage, eventBus)
+		val adapter = SoundAdapter(itemTouchHelper, this, soundsDataStorage, eventBus)
 		this.adapter = adapter
 	}
 }
@@ -66,14 +66,6 @@ class SoundPresenter
 	fun onDetachedFromWindow()
 	{
 		this.eventBus.unregister(this)
-	}
-
-	fun setProgressUpdateTimer(startTime: Boolean)
-	{
-		if (startTime)
-			this.adapter?.startProgressUpdateTimer()
-		else
-			this.adapter?.stopProgressUpdateTimer()
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

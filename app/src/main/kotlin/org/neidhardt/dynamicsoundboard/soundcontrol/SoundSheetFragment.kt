@@ -145,8 +145,6 @@ class SoundSheetFragment :
 
 		this.soundPresenter?.onAttachedToWindow()
 		this.attachScrollViewToFab()
-
-		this.soundPresenter?.setProgressUpdateTimer(true)
 	}
 
 	override fun onRestoreState(savedInstanceState: Bundle) {
@@ -166,7 +164,6 @@ class SoundSheetFragment :
 		super.onPause()
 		this.snackbarPresenter.stop()
 		this.soundPresenter?.onDetachedFromWindow()
-		this.soundPresenter?.setProgressUpdateTimer(false)
 	}
 
 	override fun onStop() {

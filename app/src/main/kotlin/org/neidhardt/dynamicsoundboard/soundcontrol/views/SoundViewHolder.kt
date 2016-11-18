@@ -13,7 +13,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEven
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressTimer
-import org.neidhardt.dynamicsoundboard.views.recyclerviewhelpers.SoundProgressViewHolder
 import kotlin.properties.Delegates
 
 /**
@@ -24,11 +23,10 @@ class SoundViewHolder
 		itemTouchHelper: ItemTouchHelper,
 		itemView: View,
 		private val eventBus: EventBus,
-		private val soundsDataStorage: SoundsDataStorage,
-		private val progressTimer: SoundProgressTimer
+		private val soundsDataStorage: SoundsDataStorage
 ) :
 		RecyclerView.ViewHolder(itemView),
-		SoundProgressViewHolder,
+		MediaPlayerController.OnProgressChangedEventListener,
 		CustomEditText.OnTextEditedListener,
 		SeekBar.OnSeekBarChangeListener
 {
@@ -58,7 +56,6 @@ class SoundViewHolder
 			this.name.clearFocus()
 			if (!view.isSelected)
 			{
-				this.progressTimer.startProgressUpdateTimer()
 				player.playSound()
 			}
 			else
@@ -98,6 +95,7 @@ class SoundViewHolder
 	fun bindData(data: MediaPlayerController)
 	{
 		this.player = data
+		data.onProgressChangedEventListener = this
 
 		this.updateViewToPlayerState()
 	}
@@ -119,12 +117,9 @@ class SoundViewHolder
 		this.timePosition.progress = player.progress
 	}
 
-	override fun onProgressUpdate()
-	{
-		this.player.let { player ->
-			if (!player.isDeletionPending)
-				this.timePosition.progress = player.progress
-		}
+	override fun onProgressChanged(progress: Int) {
+		if (!this.player.isDeletionPending)
+			this.timePosition.progress = progress
 	}
 
 	override fun onTextEdited(text: String)
@@ -134,7 +129,7 @@ class SoundViewHolder
 		this.name.clearFocus()
 		this.player.mediaPlayerData.let { playerData ->
 			val currentLabel = playerData.label
-			if (!currentLabel.equals(text))
+			if (currentLabel != text)
 			{
 				playerData.label = text
 				playerData.updateItemInDatabaseAsync()
@@ -152,13 +147,11 @@ class SoundViewHolder
 
 	override fun onStartTrackingTouch(seekBar: SeekBar?) {
 		Logger.d(TAG, "onStartTrackingTouch")
-		this.progressTimer.stopProgressUpdateTimer()
 	}
 
 	override fun onStopTrackingTouch(seekBar: SeekBar)
 	{
 		Logger.d(TAG, "onStopTrackingTouch")
-		this.progressTimer.startProgressUpdateTimer()
 	}
 
 }
