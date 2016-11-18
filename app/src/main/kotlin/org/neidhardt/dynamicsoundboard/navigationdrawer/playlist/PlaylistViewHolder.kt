@@ -36,6 +36,7 @@ class PlaylistViewHolder
 
 	fun bindData(player: MediaPlayerController, isLastItem: Boolean) {
 		this.player = player
+		player.onProgressChangedEventListener = this
 
 		this.timePosition.max = player.trackDuration
 		this.label.text = player.mediaPlayerData.label
