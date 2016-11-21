@@ -103,6 +103,10 @@ dependencies {
 
 	compile rootProject.ext.libraries.kotlin
 
+	compile rootProject.ext.libraries.rxAndroid
+	compile rootProject.ext.libraries.rxKotlin
+	compile rootProject.ext.libraries.rxJava
+
 	compile rootProject.ext.libraries.supportV4
 	compile rootProject.ext.libraries.supportV13
 	compile rootProject.ext.libraries.supportRecyclerView
