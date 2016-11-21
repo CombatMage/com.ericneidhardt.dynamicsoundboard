@@ -43,14 +43,18 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 			this.input.hint = value
 		}
 
+	init {
+		this.inflateLayout(context)
+		this.initTextListeners()
+		this.setValuesAttributeSet(context, attrs)
+	}
+
 	abstract fun inflateLayout(context: Context)
 
 	fun initTextListeners() {
-		this.input.apply {
-			this.onFocusChangeListener = this@CustomEditText
-			this.onImeBackListener = this@CustomEditText
-			this.setOnEditorActionListener(this@CustomEditText)
-		}
+		this.input.onFocusChangeListener = this
+		this.input.onImeBackListener = this
+		this.input.setOnEditorActionListener(this)
 	}
 
 	fun setValuesAttributeSet(context: Context, attrs: AttributeSet) {
@@ -135,6 +139,7 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 
 		companion object
 		{
+			@Suppress("unused")
 			val CREATOR: Parcelable.Creator<SavedCustomEditTextState> = object : Parcelable.Creator<SavedCustomEditTextState>
 			{
 				override fun createFromParcel(`in`: Parcel): SavedCustomEditTextState {
@@ -152,11 +157,4 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 	{
 		fun onTextEdited(text: String)
 	}
-
-	init {
-		this.inflateLayout(context)
-		this.initTextListeners()
-		this.setValuesAttributeSet(context, attrs)
-	}
-
 }
