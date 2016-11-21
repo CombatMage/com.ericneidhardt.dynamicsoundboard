@@ -1,6 +1,9 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
+import android.support.annotation.CheckResult
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
+import org.neidhardt.ui_utils.views.CustomEditText
+import rx.Observable
 
 /**
  * File created by eric.neidhardt on 10.11.2015.
@@ -42,5 +45,18 @@ interface MediaPlayerController
 
 	interface OnProgressChangedEventListener {
 		fun onProgressChanged(progress: Int)
+	}
+}
+
+object RxMediaPlayerController {
+	@CheckResult
+	fun plays(player: MediaPlayerController): Observable<Int> {
+		return Observable.create({ subscriber ->
+			player.onProgressChangedEventListener = object : MediaPlayerController.OnProgressChangedEventListener {
+				override fun onProgressChanged(progress: Int) {
+					subscriber.onNext(progress)
+				}
+			}
+		})
 	}
 }

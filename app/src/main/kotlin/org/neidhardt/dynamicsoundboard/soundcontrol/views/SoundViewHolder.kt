@@ -7,6 +7,7 @@ import android.widget.SeekBar
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.RxMediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
@@ -86,10 +87,14 @@ class SoundViewHolder
 		this.timePosition.setOnSeekBarChangeListener(this)
 	}
 
-	fun bindData(data: MediaPlayerController)
+	fun bindData(player: MediaPlayerController)
 	{
-		this.player = data
-		data.onProgressChangedEventListener = this
+		this.player = player
+		//data.onProgressChangedEventListener = this
+
+		RxMediaPlayerController.plays(player).subscribe { progress ->
+			this.timePosition.progress = progress
+		}
 
 		this.updateViewToPlayerState()
 	}
