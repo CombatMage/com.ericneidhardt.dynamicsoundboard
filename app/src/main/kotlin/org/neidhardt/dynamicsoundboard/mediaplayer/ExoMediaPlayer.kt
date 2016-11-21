@@ -22,7 +22,6 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import org.neidhardt.utils.letThis
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.properties.Delegates
 
 /**
@@ -68,6 +67,7 @@ class ExoMediaPlayer
 	private val handler = Handler()
 
 	private val volumeController = VolumeController(this)
+	private val progressMonitor = ProgressMonitor(this)
 
 	private var exoPlayer by Delegates.notNull<SimpleExoPlayer>()
 	private var audioSource: MediaSource? = null
@@ -75,26 +75,9 @@ class ExoMediaPlayer
 	private var releasePlayerSchedule: KillableRunnable? = null
 	private var lastPosition: Int? = null
 
-	override var onProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener? = null
-
-	private val hasTimerStarted: AtomicBoolean = AtomicBoolean(false)
-
-	private val triggerProgressChanged: Runnable = Runnable {
-		val progress = this.progress
-		this.onProgressChangedEventListener?.onProgressChanged(progress)
-		this.hasTimerStarted.set(false)
-		this.startProgressUpdateTimer()
-	}
-
-	private fun startProgressUpdateTimer() {
-		if (!this.hasTimerStarted.getAndSet(true))
-			this.handler.postDelayed(this.triggerProgressChanged, UPDATE_INTERVAL)
-	}
-
-	private fun stopProgressUpdateTimer() {
-		if (this.hasTimerStarted.getAndSet(false))
-			this.handler.removeCallbacks(this.triggerProgressChanged)
-	}
+	override var onProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener?
+		get() = this.progressMonitor.onProgressChangedEventListener
+		set(value) { this.progressMonitor.onProgressChangedEventListener = value }
 
 	init { this.init() }
 
@@ -186,7 +169,7 @@ class ExoMediaPlayer
 
 		this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
-		this.startProgressUpdateTimer()
+		this.progressMonitor.startProgressUpdateTimer()
 		return this.isPlayingSound
 	}
 
@@ -197,7 +180,7 @@ class ExoMediaPlayer
 
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
-		this.stopProgressUpdateTimer()
+		this.progressMonitor.stopProgressUpdateTimer()
 
 		return !this.isPlayingSound
 	}
@@ -216,7 +199,7 @@ class ExoMediaPlayer
 
 		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
-		this.stopProgressUpdateTimer()
+		this.progressMonitor.stopProgressUpdateTimer()
 
 		return !this.isPlayingSound
 	}
@@ -233,7 +216,7 @@ class ExoMediaPlayer
 
 		this.init()
 		this.postStateChangedEvent(true)
-		this.stopProgressUpdateTimer()
+		this.progressMonitor.stopProgressUpdateTimer()
 	}
 
 	override fun destroy(postStateChanged: Boolean) {
@@ -245,14 +228,14 @@ class ExoMediaPlayer
 		if (postStateChanged)
 			this.postStateChangedEvent(false)
 
-		this.stopProgressUpdateTimer()
+		this.progressMonitor.stopProgressUpdateTimer()
 	}
 
 	override fun onPlayerError(error: ExoPlaybackException) {
 		Logger.e(TAG, "onPlayerError for $this with exception $error")
 		this.init()
 		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINED, error.message ?: ""))
-		this.stopProgressUpdateTimer()
+		this.progressMonitor.stopProgressUpdateTimer()
 	}
 
 	override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
@@ -265,7 +248,7 @@ class ExoMediaPlayer
 			else {
 				this.stopSound()
 				this.eventBus.post(MediaPlayerCompletedEvent(this))
-				this.stopProgressUpdateTimer()
+				this.progressMonitor.stopProgressUpdateTimer()
 			}
 		}
 
