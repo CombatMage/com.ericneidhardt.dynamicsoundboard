@@ -75,7 +75,7 @@ class ExoMediaPlayer
 	private var releasePlayerSchedule: KillableRunnable? = null
 	private var lastPosition: Int? = null
 
-	override var onProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener?
+	override var mOnProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener?
 		get() = this.progressMonitor.onProgressChangedEventListener
 		set(value) { this.progressMonitor.onProgressChangedEventListener = value }
 

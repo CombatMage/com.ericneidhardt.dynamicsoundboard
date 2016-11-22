@@ -41,22 +41,17 @@ interface MediaPlayerController
 
 	fun destroy(postStateChanged: Boolean)
 
-	var onProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener?
+	var mOnProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener?
 
 	interface OnProgressChangedEventListener {
-		fun onProgressChanged(progress: Int)
+		fun onProgressChanged(progress: Int, trackDuration: Int)
 	}
-}
 
-object RxMediaPlayerController {
-	@CheckResult
-	fun plays(player: MediaPlayerController): Observable<Int> {
-		return Observable.create({ subscriber ->
-			player.onProgressChangedEventListener = object : MediaPlayerController.OnProgressChangedEventListener {
-				override fun onProgressChanged(progress: Int) {
-					subscriber.onNext(progress)
-				}
+	fun setOnProgressChangedEventListener(listener: (progress: Int, trackDuration: Int) -> Unit) {
+		this.mOnProgressChangedEventListener = object : OnProgressChangedEventListener {
+			override fun onProgressChanged(progress: Int, trackDuration: Int) {
+				listener.invoke(progress, trackDuration)
 			}
-		})
+		}
 	}
 }

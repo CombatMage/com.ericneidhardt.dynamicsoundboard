@@ -3,18 +3,14 @@ package org.neidhardt.dynamicsoundboard.soundcontrol.views
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
-import com.jakewharton.rxbinding.widget.RxSeekBar
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.mediaplayer.RxMediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.ui_utils.views.CustomEditText
-import org.neidhardt.ui_utils.views.RxCustomEditText
+import org.neidhardt.dynamicsoundboard.views.viewextensions.setOnUserChangesListener
 import rx.Subscription
-import rx.subscriptions.CompositeSubscription
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
@@ -28,8 +24,6 @@ class SoundViewHolder
 ) :
 		RecyclerView.ViewHolder(itemView)
 {
-	private val subscriptions = CompositeSubscription()
-
 	private val reorder = itemView.ib_view_sound_control_item_reorder
 
 	private val name = itemView.et_view_sound_control_item_name
@@ -41,7 +35,6 @@ class SoundViewHolder
 	private val timePosition = itemView.sb_view_sound_control_item_progress
 	private val settings = itemView.ib_view_sound_control_item_settings
 
-	private var playerSubscription: Subscription? = null
 	private var player: MediaPlayerController? = null
 
 	init {
@@ -89,33 +82,30 @@ class SoundViewHolder
 			}
 		}
 
-		this.name.setOnTextEditedListener {
-		}
-
-		this.subscriptions.addAll(
-			RxSeekBar.userChanges(this.timePosition).subscribe { progress ->
-				this.player?.progress = progress
-			},
-
-			RxCustomEditText.changesText(this.name).subscribe { newName ->
-				this.name.clearFocus()
-				this.player?.mediaPlayerData?.let { playerData ->
-					val currentLabel = playerData.label
-					if (currentLabel != newName) {
-						playerData.label = newName
-						playerData.updateItemInDatabaseAsync()
-						this.eventBus.post(OpenSoundRenameEvent(playerData))
-					}
+		this.name.setOnTextEditedListener { newName ->
+			this.name.clearFocus()
+			this.player?.mediaPlayerData?.let { playerData ->
+				val currentLabel = playerData.label
+				if (currentLabel != newName) {
+					playerData.label = newName
+					playerData.updateItemInDatabaseAsync()
+					this.eventBus.post(OpenSoundRenameEvent(playerData))
 				}
 			}
-		)
+		}
+
+		this.timePosition.setOnUserChangesListener { progress ->
+			this.player?.progress = progress
+		}
 	}
 
 	fun bindData(player: MediaPlayerController) {
 		this.player = player
-		this.playerSubscription?.unsubscribe()
-		this.playerSubscription = RxMediaPlayerController.plays(player).subscribe { progress ->
-			this.timePosition.progress = progress }
+
+		player.setOnProgressChangedEventListener { progress, trackDuration ->
+			this.timePosition.max = player.trackDuration
+			this.timePosition.progress = progress
+		}
 		this.updateViewToPlayerState()
 	}
 
@@ -130,7 +120,6 @@ class SoundViewHolder
 			this.play.isSelected = isPlaying
 			this.loop.isSelected = playerData.isLoop
 			this.inPlaylist.isSelected = playerData.isInPlaylist
-
 			this.timePosition.max = player.trackDuration
 			this.timePosition.progress = player.progress
 		}

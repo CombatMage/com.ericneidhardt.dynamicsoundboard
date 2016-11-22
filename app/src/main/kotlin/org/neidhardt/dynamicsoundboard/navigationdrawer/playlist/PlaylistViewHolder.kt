@@ -17,8 +17,7 @@ class PlaylistViewHolder
 		itemView: View,
 		private val onItemClickListener: NavigationDrawerItemClickListener<MediaPlayerController>
 ) :
-		RecyclerView.ViewHolder(itemView),
-		MediaPlayerController.OnProgressChangedEventListener
+		RecyclerView.ViewHolder(itemView)
 {
 
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
@@ -36,8 +35,8 @@ class PlaylistViewHolder
 
 	fun bindData(player: MediaPlayerController, isLastItem: Boolean) {
 		this.player = player
-		player.onProgressChangedEventListener = this
 
+		this.timePosition.visibility = if (player.isPlayingSound) View.VISIBLE else View.INVISIBLE
 		this.timePosition.max = player.trackDuration
 		this.label.text = player.mediaPlayerData.label
 		this.selectionIndicator.visibility = if (player.isPlayingSound) View.VISIBLE else View.INVISIBLE
@@ -46,15 +45,11 @@ class PlaylistViewHolder
 		this.itemView.isSelected = player.mediaPlayerData.isSelectedForDeletion
 		this.divider.visibility = if (isLastItem) View.INVISIBLE else View.VISIBLE
 
-		this.onProgressChanged(player.progress)
-	}
-
-	override fun onProgressChanged(progress: Int) {
-		this.player?.apply {
-			if (isPlayingSound)
-			{
-				timePosition.progress = progress
-				timePosition.visibility = View.VISIBLE
+		player.setOnProgressChangedEventListener { progress, trackDuration ->
+			if (player.isPlayingSound) {
+				this.timePosition.max = player.trackDuration
+				this.timePosition.progress = progress
+				this.timePosition.visibility = View.VISIBLE
 			}
 			else
 				timePosition.visibility = View.INVISIBLE
