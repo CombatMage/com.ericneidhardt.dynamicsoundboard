@@ -3,6 +3,7 @@ package org.neidhardt.ui_utils.views
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import android.support.annotation.CheckResult
 import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.util.SparseArray
@@ -13,6 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.TextView
 import org.neidhardt.ui_utils.R
+import rx.Observable
 
 abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		FrameLayout(context, attrs),
@@ -159,4 +161,18 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		this.setValuesAttributeSet(context, attrs)
 	}
 
+}
+
+object RxCustomEditText {
+
+	@CheckResult
+	fun changesText(view: CustomEditText): Observable<String> {
+		return Observable.create({ subscriber ->
+			view.onTextEditedListener = object : CustomEditText.OnTextEditedListener {
+				override fun onTextEdited(text: String) {
+					subscriber.onNext(text)
+				}
+			}
+		})
+	}
 }

@@ -13,8 +13,7 @@ import org.neidhardt.utils.longHash
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
-class SoundAdapter
-(
+class SoundAdapter (
 		private val itemTouchHelper: ItemTouchHelper,
 		private val presenter: SoundPresenter,
 		private val soundsDataStorage: SoundsDataStorage,
@@ -31,15 +30,15 @@ class SoundAdapter
 
 	override fun getItemId(position: Int): Long = this.values[position].mediaPlayerData.playerId.longHash
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder =
-			SoundViewHolder(
-					itemTouchHelper = this.itemTouchHelper,
-					itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control_item, parent, false),
-					eventBus = this.eventBus,
-					soundsDataStorage = this.soundsDataStorage)
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder {
+		return SoundViewHolder(
+				itemTouchHelper = this.itemTouchHelper,
+				itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control_item, parent, false),
+				eventBus = this.eventBus,
+				soundsDataStorage = this.soundsDataStorage)
+	}
 
-	override fun onBindViewHolder(holder: SoundViewHolder, position: Int)
-	{
+	override fun onBindViewHolder(holder: SoundViewHolder, position: Int) {
 		holder.bindData(this.values[position])
 	}
 }
