@@ -3,6 +3,7 @@ package org.neidhardt.ui_utils.views
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import android.support.annotation.CheckResult
 import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.util.SparseArray
@@ -13,6 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.TextView
 import org.neidhardt.ui_utils.R
+import rx.Observable
 
 abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		FrameLayout(context, attrs),
@@ -21,7 +23,19 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		View.OnFocusChangeListener
 {
 	abstract var input: EditTextBackEvent
-	abstract var onTextEditedListener: OnTextEditedListener?
+	protected abstract var mOnTextEditedListener: OnTextEditedListener?
+
+	fun setOnTextEditedListener(listener: (String) -> Unit) {
+		this.mOnTextEditedListener = object : CustomEditText.OnTextEditedListener {
+			override fun onTextEdited(text: String) {
+				listener(text)
+			}
+		}
+	}
+
+	fun setOnTextEditedListener(listener: OnTextEditedListener?) {
+		this.mOnTextEditedListener = listener
+	}
 
 	var text: String?
 		get() = this.input.text?.toString()
@@ -76,17 +90,17 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 
 	override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent?): Boolean {
 		if (actionId == EditorInfo.IME_ACTION_DONE)
-			this.onTextEditedListener?.onTextEdited(this.input.text.toString())
+			this.mOnTextEditedListener?.onTextEdited(this.input.text.toString())
 		return false
 	}
 
 	override fun onImeBack(ctrl: EditTextBackEvent, text: String) {
-		this.onTextEditedListener?.onTextEdited(this.input.text.toString())
+		this.mOnTextEditedListener?.onTextEdited(this.input.text.toString())
 	}
 
 	override fun onFocusChange(v: View, hasFocus: Boolean) {
 		if (!hasFocus)
-			this.onTextEditedListener?.onTextEdited(this.input.text.toString())
+			this.mOnTextEditedListener?.onTextEdited(this.input.text.toString())
 			this.onFocusChangeListener?.onFocusChange(this, hasFocus)
 	}
 
@@ -116,29 +130,24 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		super.dispatchThawSelfOnly(container)
 	}
 
-	class SavedCustomEditTextState : BaseSavedState
-	{
+	class SavedCustomEditTextState : BaseSavedState {
 		var value: String? = null
 			private set
 
-		constructor(superState: Parcelable, value: String) : super(superState)
-		{
+		constructor(superState: Parcelable, value: String) : super(superState) {
 			this.value = value
 		}
 
-		private constructor(superState: Parcel) : super(superState)
-		{
+		private constructor(superState: Parcel) : super(superState) {
 			this.value = superState.readString()
 		}
 
-		override fun writeToParcel(destination: Parcel, flags: Int)
-		{
+		override fun writeToParcel(destination: Parcel, flags: Int) {
 			super.writeToParcel(destination, flags)
 			destination.writeString(this.value)
 		}
-
-		companion object
-		{
+		
+		companion object {
 			@Suppress("unused")
 			val CREATOR: Parcelable.Creator<SavedCustomEditTextState> = object : Parcelable.Creator<SavedCustomEditTextState>
 			{
@@ -153,8 +162,7 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		}
 	}
 
-	interface OnTextEditedListener
-	{
+	interface OnTextEditedListener {
 		fun onTextEdited(text: String)
 	}
 }

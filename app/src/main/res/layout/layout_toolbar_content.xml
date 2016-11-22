@@ -22,7 +22,6 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
-				android:layout_alignParentRight="true"
 				android:layout_alignParentEnd="true"
 				android:contentDescription="@string/action_add_new_sound_sheet"
 				android:src="@drawable/ic_action_new_sound_layout"
@@ -34,7 +33,6 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
-				android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_sheet"
 				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_sheet"
 				android:contentDescription="@string/action_add_new_sound"
 				android:src="@drawable/ic_action_add_sound"
@@ -47,7 +45,6 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
-				android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound"
 				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound"
 				android:contentDescription="@string/action_add_new_sound_from_dir"
 				android:src="@drawable/ic_action_add_sound_dir"
@@ -61,8 +58,6 @@
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_alignParentStart="true"
-				android:layout_alignParentLeft="true"
-				android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_dir"
 				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
 				android:gravity="center_horizontal"
 				android:text="@string/app_name"
@@ -77,12 +72,10 @@
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_alignParentStart="true"
-				android:layout_alignParentLeft="true"
-				android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_dir"
 				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
 				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
 				app:text="@{viewModel.title}"
-				app:onTextEditedListener="@{viewModel.onTextEditedListener}"/>
+				app:setOnTextEditedListener="@{viewModel.onTextEditedListener}"/>
 
 	</RelativeLayout>
 </layout>

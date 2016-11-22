@@ -16,7 +16,7 @@ class NoUnderscoreEditText(context: Context, attrs: AttributeSet) : CustomEditTe
 		get() = inputField as EditTextBackEvent
 		set(value) { this.inputField = value }
 
-	override var onTextEditedListener: OnTextEditedListener? = null
+	override var mOnTextEditedListener: OnTextEditedListener? = null
 
 	override fun inflateLayout(context: Context) {
 		LayoutInflater.from(context).inflate(R.layout.view_no_underscore_edittext, this, true)
