@@ -47,7 +47,7 @@ class LoadPlaylistFromDatabaseTask
 	@Throws(Exception::class)
 	override fun call(): List<MediaPlayerData>
 	{
-		var mediaPlayersData = this.daoSession.mediaPlayerDataDao.queryBuilder().list()
+		val mediaPlayersData = this.daoSession.mediaPlayerDataDao.queryBuilder().list()
 		mediaPlayersData.sortBy { player -> player.sortOrder}
 		for (mediaPlayerData in mediaPlayersData)
 			this.postUpdatToMainThread({ this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData) })
@@ -68,11 +68,9 @@ class LoadSoundsFromFileListTask
 	@Throws(Exception::class)
 	override fun call(): List<File>
 	{
-		for (file in this.filesToLoad)
-		{
-			val data = getMediaPlayerDataFromFile(file, this.fragmentTag)
-			this.postUpdatToMainThread({ this.soundsDataStorage.createSoundAndAddToManager(data) })
-		}
+		this.filesToLoad
+				.map { getMediaPlayerDataFromFile(it, this.fragmentTag) }
+				.forEach { this.postUpdatToMainThread({ this.soundsDataStorage.createSoundAndAddToManager(it) }) }
 
 		return filesToLoad
 	}

@@ -26,8 +26,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 /**
  * File created by eric.neidhardt on 15.06.2015.
  */
-class SoundsManager
-(
+class SoundsManager (
 		private val context: Context,
 		private val soundLayoutsAccess: SoundLayoutsAccess,
 		private val soundSheetsDataUtil: SoundSheetsDataUtil
@@ -46,27 +45,21 @@ class SoundsManager
 	override val playlist: MutableList<MediaPlayerController> = CopyOnWriteArrayList()
 	override val currentlyPlayingSounds: MutableSet<MediaPlayerController> = CopyOnWriteArraySet()
 
-	init
-	{
-		this.initIfRequired()
-	}
+	init { this.initIfRequired() }
 
-	override fun getDbSounds(): DaoSession
-	{
+	override fun getDbSounds(): DaoSession {
 		if (this.dbSounds == null)
 			this.dbSounds = GreenDaoHelper.setupDatabase(this.context, getDatabaseNameSounds(this.soundLayoutsAccess))
 		return this.dbSounds as DaoSession
 	}
 
-	override fun getDbPlaylist(): DaoSession
-	{
+	override fun getDbPlaylist(): DaoSession {
 		if (this.dbPlaylist == null)
 			this.dbPlaylist = GreenDaoHelper.setupDatabase(this.context, getDatabaseNamePlayList(this.soundLayoutsAccess))
 		return this.dbPlaylist as DaoSession
 	}
 
-	override fun initIfRequired()
-	{
+	override fun initIfRequired() {
 		if (!this.isInitDone)
 		{
 			this.isInitDone = true
@@ -86,8 +79,7 @@ class SoundsManager
 		}
 	}
 
-	override fun releaseAll()
-	{
+	override fun releaseAll() {
 		this.isInitDone = false
 
 		this.playlist.forEach { player-> player.destroy(false) }
@@ -104,16 +96,14 @@ class SoundsManager
 
 	override fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController> = this.sounds.getOrPut(fragmentTag, { ArrayList<MediaPlayerController>() })
 
-	override fun getSoundById(fragmentTag: String, playerId: String): MediaPlayerController?
-	{
+	override fun getSoundById(fragmentTag: String, playerId: String): MediaPlayerController? {
 		if (this.soundSheetsDataUtil.isPlaylistSoundSheet(fragmentTag))
 			return searchInListForId(playerId, playlist)
 		else
 			return searchInListForId(playerId, this.sounds[fragmentTag].orEmpty())
 	}
 
-	override fun createSoundAndAddToManager(data: MediaPlayerData)
-	{
+	override fun createSoundAndAddToManager(data: MediaPlayerData) {
 		if (this.getSoundById(data.fragmentTag, data.playerId) != null)
 		{
 			Logger.d(TAG, "player: $data is already loaded")
@@ -129,17 +119,14 @@ class SoundsManager
 			this.addSoundToSounds(player)
 	}
 
-	override fun createPlaylistSoundAndAddToManager(data: MediaPlayerData)
-	{
-		if (this.getSoundById(data.fragmentTag, data.playerId) != null)
-		{
+	override fun createPlaylistSoundAndAddToManager(data: MediaPlayerData) {
+		if (this.getSoundById(data.fragmentTag, data.playerId) != null) {
 			Logger.d(TAG, "player: $data is already loaded")
 			return
 		}
 
 		val player = this.createPlaylistSound(data)
-		if (player == null)
-		{
+		if (player == null) {
 			this.removePlaylistDataFromDatabase(data)
 			this.eventBus.post(CreatingPlayerFailedEvent(data))
 		}
@@ -147,23 +134,19 @@ class SoundsManager
 			this.addSoundToPlayList(player)
 	}
 
-	override fun toggleSoundInPlaylist(playerId: String, addToPlaylist: Boolean)
-	{
+	override fun toggleSoundInPlaylist(playerId: String, addToPlaylist: Boolean) {
 		val player = searchInMapForId(playerId, this.sounds)
 		val playerInPlaylist = searchInListForId(playerId, playlist)
 
-		if (addToPlaylist)
-		{
+		if (addToPlaylist) {
 			if (playerInPlaylist != null)
 				return
 
-			if (player != null)
-			{
+			if (player != null) {
 				player.isInPlaylist = true
 
 				val playerForPlaylist = createPlaylistSound(player.mediaPlayerData)
-				if (playerForPlaylist == null)
-				{
+				if (playerForPlaylist == null) {
 					this.removePlaylistDataFromDatabase(player.mediaPlayerData)
 					this.eventBus.post(CreatingPlayerFailedEvent(player.mediaPlayerData))
 				}
@@ -171,8 +154,7 @@ class SoundsManager
 					this.addSoundToPlayList(playerForPlaylist)
 			}
 		}
-		else
-		{
+		else {
 			if (playerInPlaylist == null)
 				return
 
@@ -185,8 +167,7 @@ class SoundsManager
 		}
 	}
 
-	private fun addSoundToPlayList(player: MediaPlayerController)
-	{
+	private fun addSoundToPlayList(player: MediaPlayerController) {
 		this.playlist.add(player)
 
 		val data = player.mediaPlayerData
@@ -195,8 +176,7 @@ class SoundsManager
 		this.eventBus.post(PlaylistChangedEvent())
 	}
 
-	private fun addSoundToSounds(player: MediaPlayerController)
-	{
+	private fun addSoundToSounds(player: MediaPlayerController) {
 		val data = player.mediaPlayerData
 		val fragmentTag = data.fragmentTag
 
@@ -207,20 +187,16 @@ class SoundsManager
 		this.eventBus.post(SoundAddedEvent(player))
 	}
 
-	override fun addSoundToCurrentlyPlayingSounds(soundToAdd: MediaPlayerController)
-	{
+	override fun addSoundToCurrentlyPlayingSounds(soundToAdd: MediaPlayerController) {
 		this.currentlyPlayingSounds.add(soundToAdd)
 	}
 
-	override fun removeSoundFromCurrentlyPlayingSounds(soundToRemove: MediaPlayerController)
-	{
+	override fun removeSoundFromCurrentlyPlayingSounds(soundToRemove: MediaPlayerController) {
 		this.currentlyPlayingSounds.remove(soundToRemove)
 	}
 
-	override fun removeSounds(soundsToRemove: List<MediaPlayerController>)
-	{
-		if (soundsToRemove.isNotEmpty())
-		{
+	override fun removeSounds(soundsToRemove: List<MediaPlayerController>) {
+		if (soundsToRemove.isNotEmpty()) {
 			val copyList = ArrayList<MediaPlayerController>(soundsToRemove.size)
 			copyList.addAll(soundsToRemove) // this is done to prevent concurrent modification exception
 
@@ -229,11 +205,8 @@ class SoundsManager
 				val data = playerToRemove.mediaPlayerData
 				this.sounds[data.fragmentTag]?.remove(playerToRemove)
 
-				if (data.isInPlaylist)
-				{
-					val correspondingPlayerInPlaylist = searchInListForId(data.playerId, this.playlist)
-					if (correspondingPlayerInPlaylist != null)
-					{
+				if (data.isInPlaylist) {
+					searchInListForId(data.playerId, this.playlist)?.let { correspondingPlayerInPlaylist ->
 						this.playlist.remove(correspondingPlayerInPlaylist)
 
 						this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao,
@@ -248,14 +221,12 @@ class SoundsManager
 		}
 	}
 
-	override fun removeSoundsFromPlaylist(soundsToRemove: List<MediaPlayerController>)
-	{
+	override fun removeSoundsFromPlaylist(soundsToRemove: List<MediaPlayerController>) {
 		soundsToRemove.map { player -> this.toggleSoundInPlaylist(player.mediaPlayerData.playerId, false) }
 		this.eventBus.post(SoundsRemovedEvent(soundsToRemove))
 	}
 
-	override fun moveSoundInFragment(fragmentTag: String, from: Int, to: Int)
-	{
+	override fun moveSoundInFragment(fragmentTag: String, from: Int, to: Int) {
 		val soundsInFragment = this.sounds[fragmentTag]
 		if (soundsInFragment != null)
 		{
@@ -280,10 +251,8 @@ class SoundsManager
 		}
 	}
 
-	private fun createPlaylistSound(playerData: MediaPlayerData): MediaPlayerController?
-	{
-		try
-		{
+	private fun createPlaylistSound(playerData: MediaPlayerData): MediaPlayerController? {
+		try {
 			val file = Uri.parse(playerData.uri).getFileForUri()
 			if (file == null || !file.isAudioFile)
 				throw Exception("cannot create create media player, given file is no audio file")
@@ -304,18 +273,15 @@ class SoundsManager
 					soundsDataStorage = this
 			)
 		}
-		catch (e: Exception)
-		{
+		catch (e: Exception) {
 			Logger.d(TAG, playerData.toString() + " " + e.message)
 			this.removePlaylistDataFromDatabase(playerData)
 			return null
 		}
 	}
 
-	private fun createSound(playerData: MediaPlayerData): MediaPlayerController?
-	{
-		try
-		{
+	private fun createSound(playerData: MediaPlayerData): MediaPlayerController? {
+		try {
 			val file = Uri.parse(playerData.uri).getFileForUri()
 			if (file == null || !file.isAudioFile)
 				throw Exception("cannot create create media player, given file is no audio file")
@@ -326,26 +292,22 @@ class SoundsManager
 					mediaPlayerData = playerData,
 					soundsDataStorage = this)
 		}
-		catch (e: Exception)
-		{
+		catch (e: Exception) {
 			Logger.d(TAG, e.message)
 			this.removeSoundDataFromDatabase(playerData)
 			return null
 		}
 	}
 
-	override fun removeSoundDataFromDatabase(playerData: MediaPlayerData)
-	{
+	override fun removeSoundDataFromDatabase(playerData: MediaPlayerData) {
 		this.removePlayerDataFromDatabase(this.getDbSounds().mediaPlayerDataDao, playerData)
 	}
 
-	override fun removePlaylistDataFromDatabase(playerData: MediaPlayerData)
-	{
+	override fun removePlaylistDataFromDatabase(playerData: MediaPlayerData) {
 		this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao, playerData)
 	}
 
-	private fun removePlayerDataFromDatabase(dao: MediaPlayerDataDao, playerData: MediaPlayerData)
-	{
+	private fun removePlayerDataFromDatabase(dao: MediaPlayerDataDao, playerData: MediaPlayerData) {
 		if (playerData.id != null)
 			dao.delete(playerData)
 		else {
@@ -353,5 +315,4 @@ class SoundsManager
 			dao.deleteInTx(playersInDatabase)
 		}
 	}
-
 }
