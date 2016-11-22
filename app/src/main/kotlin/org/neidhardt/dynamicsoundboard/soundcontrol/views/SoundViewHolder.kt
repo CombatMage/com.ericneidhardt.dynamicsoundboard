@@ -11,6 +11,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.RxMediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
+import org.neidhardt.ui_utils.views.CustomEditText
 import org.neidhardt.ui_utils.views.RxCustomEditText
 import rx.Subscription
 import rx.subscriptions.CompositeSubscription
@@ -86,6 +87,9 @@ class SoundViewHolder
 				player.pauseSound()
 				this.eventBus.post(OpenSoundSettingsEvent(player.mediaPlayerData))
 			}
+		}
+
+		this.name.setOnTextEditedListener {
 		}
 
 		this.subscriptions.addAll(

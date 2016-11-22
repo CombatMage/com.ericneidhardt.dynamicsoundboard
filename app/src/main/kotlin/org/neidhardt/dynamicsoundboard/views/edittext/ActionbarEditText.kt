@@ -25,7 +25,7 @@ class ActionbarEditText(context: Context, attrs: AttributeSet) :
 			get() = inputField as EditTextBackEvent
 			set(value) { this.inputField = value }
 
-	override var onTextEditedListener: CustomEditText.OnTextEditedListener? = null
+	override var mOnTextEditedListener: CustomEditText.OnTextEditedListener? = null
 
 	private var divider: View? = null
 	private var editTextKeyListener: KeyListener? = null
@@ -47,7 +47,7 @@ class ActionbarEditText(context: Context, attrs: AttributeSet) :
 
 	override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent?): Boolean {
 		if (actionId == EditorInfo.IME_ACTION_DONE) {
-			this.onTextEditedListener?.onTextEdited(this.input.text?.toString() ?: "")
+			this.mOnTextEditedListener?.onTextEdited(this.input.text?.toString() ?: "")
 			this.disableEditText()
 		}
 		return false

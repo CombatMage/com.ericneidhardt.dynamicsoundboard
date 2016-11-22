@@ -23,7 +23,19 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		View.OnFocusChangeListener
 {
 	abstract var input: EditTextBackEvent
-	abstract var onTextEditedListener: OnTextEditedListener?
+	protected abstract var mOnTextEditedListener: OnTextEditedListener?
+
+	fun setOnTextEditedListener(listener: (String) -> Unit) {
+		this.mOnTextEditedListener = object : CustomEditText.OnTextEditedListener {
+			override fun onTextEdited(text: String) {
+				listener(text)
+			}
+		}
+	}
+
+	fun setOnTextEditedListener(listener: OnTextEditedListener?) {
+		this.mOnTextEditedListener = listener
+	}
 
 	var text: String?
 		get() = this.input.text?.toString()
@@ -74,17 +86,17 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 
 	override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent?): Boolean {
 		if (actionId == EditorInfo.IME_ACTION_DONE)
-			this.onTextEditedListener?.onTextEdited(this.input.text.toString())
+			this.mOnTextEditedListener?.onTextEdited(this.input.text.toString())
 		return false
 	}
 
 	override fun onImeBack(ctrl: EditTextBackEvent, text: String) {
-		this.onTextEditedListener?.onTextEdited(this.input.text.toString())
+		this.mOnTextEditedListener?.onTextEdited(this.input.text.toString())
 	}
 
 	override fun onFocusChange(v: View, hasFocus: Boolean) {
 		if (!hasFocus)
-			this.onTextEditedListener?.onTextEdited(this.input.text.toString())
+			this.mOnTextEditedListener?.onTextEdited(this.input.text.toString())
 			this.onFocusChangeListener?.onFocusChange(this, hasFocus)
 	}
 
@@ -164,11 +176,9 @@ object RxCustomEditText {
 	@CheckResult
 	fun changesText(view: CustomEditText): Observable<String> {
 		return Observable.create({ subscriber ->
-			view.onTextEditedListener = object : CustomEditText.OnTextEditedListener {
-				override fun onTextEdited(text: String) {
-					subscriber.onNext(text)
-				}
-			}
+			view.setOnTextEditedListener({
+				subscriber.onNext(it)
+			})
 		})
 	}
 }
