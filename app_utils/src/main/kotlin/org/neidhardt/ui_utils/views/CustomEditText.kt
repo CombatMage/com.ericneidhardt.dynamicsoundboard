@@ -114,29 +114,26 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		super.dispatchThawSelfOnly(container)
 	}
 
-	class SavedCustomEditTextState : BaseSavedState
-	{
+	class SavedCustomEditTextState : BaseSavedState {
 		var value: String? = null
 			private set
 
-		constructor(superState: Parcelable, value: String) : super(superState)
-		{
+		constructor(superState: Parcelable, value: String) : super(superState) {
 			this.value = value
 		}
 
-		private constructor(superState: Parcel) : super(superState)
-		{
+		private constructor(superState: Parcel) : super(superState) {
 			this.value = superState.readString()
 		}
 
-		override fun writeToParcel(destination: Parcel, flags: Int)
-		{
+		override fun writeToParcel(destination: Parcel, flags: Int) {
 			super.writeToParcel(destination, flags)
 			destination.writeString(this.value)
 		}
 
-		companion object
-		{
+		companion object {
+
+			@Suppress("unused")
 			val CREATOR: Parcelable.Creator<SavedCustomEditTextState> = object : Parcelable.Creator<SavedCustomEditTextState>
 			{
 				override fun createFromParcel(`in`: Parcel): SavedCustomEditTextState {
@@ -150,8 +147,7 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		}
 	}
 
-	interface OnTextEditedListener
-	{
+	interface OnTextEditedListener {
 		fun onTextEdited(text: String)
 	}
 
