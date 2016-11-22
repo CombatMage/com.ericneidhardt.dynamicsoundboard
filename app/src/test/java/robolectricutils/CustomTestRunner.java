@@ -1,6 +1,7 @@
 package robolectricutils;
 
 import org.junit.runners.model.InitializationError;
+import org.neidhardt.dynamicsoundboard.BuildConfig;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.manifest.AndroidManifest;
@@ -12,6 +13,7 @@ import java.util.Properties;
 /**
  * File created by eric.neidhardt on 02.04.2015.
  */
+@SuppressWarnings("WeakerAccess") // required for test runner
 public class CustomTestRunner extends RobolectricTestRunner {
 
 	public CustomTestRunner(Class<?> classInstance) throws InitializationError {
@@ -52,9 +54,12 @@ public class CustomTestRunner extends RobolectricTestRunner {
 						config.manifest(),
 						config.qualifiers(),
 						config.packageName(),
+						config.abiSplit(),
 						config.resourceDir(),
 						config.assetDir(),
+						config.buildDir(),
 						config.shadows(),
+						config.instrumentedPackages(),
 						config.application(),
 						config.libraries(),
 						ensureBuildConfig(config.constants())
@@ -64,7 +69,7 @@ public class CustomTestRunner extends RobolectricTestRunner {
 	}
 
 	private Class<?> ensureBuildConfig(Class<?> constants) {
-		//if (constants == Void.class) return BuildConfig.class;
+		if (constants == Void.class) return BuildConfig.class;
 		return constants;
 	}
 
