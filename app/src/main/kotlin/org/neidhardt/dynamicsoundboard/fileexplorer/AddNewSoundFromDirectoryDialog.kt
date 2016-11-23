@@ -10,9 +10,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromFileListTask
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.loadSounds
 import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
+import rx.android.schedulers.AndroidSchedulers
 import java.io.File
 import java.util.*
 
@@ -54,7 +56,8 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
-		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_from_directory, null)
+		@SuppressLint("InflateParams")
+		val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_from_directory, null)
 
 		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
 			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
@@ -101,6 +104,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 		val files = ArrayList<File>()
 		val adapter = super.adapter
 
+		// merge all files to single list, remove duplicates
 		for (file in adapter.selectedFiles)
 		{
 			if (!file.isDirectory && !files.contains(file))
@@ -108,11 +112,9 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 			else
 			{
 				val filesInSelectedDir = file.getFilesInDirectory()
-				for (fileInDir in filesInSelectedDir)
-				{
-					if (!files.contains(fileInDir))
-						files.add(fileInDir)
-				}
+				filesInSelectedDir
+						.filterNot { files.contains(it) }
+						.forEach { files.add(it) }
 			}
 		}
 
@@ -125,8 +127,23 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 		if (fragmentToAddSounds != null)
 		{
 			val result = this.getFileListResult()
-			val task = LoadSoundsFromFileListTask(result, fragmentToAddSounds, this.soundsDataStorage)
-			task.execute()
+			if (result.isEmpty())
+				return
+
+			SoundboardApplication.taskCounter += 1
+			result.loadSounds(fragmentToAddSounds)
+					.flatMapIterable { it -> it }
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe ({ mediaPlayerData ->
+						Logger.d(TAG, "Loaded: $mediaPlayerData")
+						this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData)
+					}, { onError ->
+						Logger.e(TAG, "Error while loading sounds: ${onError.message}")
+						SoundboardApplication.taskCounter -= 1
+					}, {
+						Logger.d(TAG, "Loading sounds completed")
+						SoundboardApplication.taskCounter -= 1
+					})
 		}
 	}
 }
