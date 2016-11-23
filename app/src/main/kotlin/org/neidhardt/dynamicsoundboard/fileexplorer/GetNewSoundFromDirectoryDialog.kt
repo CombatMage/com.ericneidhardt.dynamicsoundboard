@@ -6,12 +6,11 @@ import android.support.v4.app.FragmentManager
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
  */
-class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
-{
+class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog() {
+
 	private val TAG = javaClass.name
 
-	constructor(manager: FragmentManager, callingFragmentTag: String) : this()
-	{
+	constructor(manager: FragmentManager, callingFragmentTag: String) : this() {
 		val dialog = GetNewSoundFromDirectoryDialog()
 
 		val args = Bundle()
@@ -27,14 +26,12 @@ class GetNewSoundFromDirectoryDialog() : AddNewSoundFromDirectoryDialog()
 
 	override fun canSelectMultipleFiles(): Boolean = true
 
-	override fun returnResults()
-	{
-		val fileList = super.getFileListResult();
+	override fun returnResults() {
+		val fileList = super.getFileListResult()
 
 		val callingFragment = this.fragmentManager.findFragmentByTag(super.callingFragmentTag)
-		if (callingFragment != null && callingFragment is FileResultHandler)
-		{
-			callingFragment.onFileResultsAvailable(fileList)
+		if (callingFragment != null && callingFragment is FileResultHandler) {
+			callingFragment.onFileResultsAvailable(fileList.toList())
 		}
 
 		this.dismiss()

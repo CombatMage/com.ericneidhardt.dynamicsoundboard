@@ -99,23 +99,18 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 		this.dismiss()
 	}
 
-	protected fun getFileListResult(): List<File>
+	protected fun getFileListResult(): Collection<File>
 	{
-		val files = ArrayList<File>()
+		val files = HashSet<File>()
 		val adapter = super.adapter
 
 		// merge all files to single list, remove duplicates
 		for (file in adapter.selectedFiles)
 		{
-			if (!file.isDirectory && !files.contains(file))
+			if (!file.isDirectory)
 				files.add(file)
 			else
-			{
-				val filesInSelectedDir = file.getFilesInDirectory()
-				filesInSelectedDir
-						.filterNot { files.contains(it) }
-						.forEach { files.add(it) }
-			}
+				file.getFilesInDirectory().forEach { files.add(it) }
 		}
 
 		return files

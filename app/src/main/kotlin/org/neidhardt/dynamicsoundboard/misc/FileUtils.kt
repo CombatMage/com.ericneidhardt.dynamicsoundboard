@@ -19,7 +19,7 @@ private val SCHEME_CONTENT_URI = "content"
 
 fun File.getFilesInDirectory(): MutableList<File> {
 	val content = this.listFiles()
-	if (content == null || content.size == 0)
+	if (content == null || content.isEmpty())
 		return ArrayList()
 
 	val files = ArrayList<File>(content.size)
