@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard
 
 import android.app.Application
 import android.content.Context
+import android.support.multidex.MultiDexApplication
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
@@ -19,7 +20,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsMan
 import java.util.*
 
 
-open class SoundboardApplication : Application()
+open class SoundboardApplication : MultiDexApplication()
 {
 
 	companion object
