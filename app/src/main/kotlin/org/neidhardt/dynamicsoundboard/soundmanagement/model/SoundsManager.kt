@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
@@ -16,9 +17,10 @@ import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadPlaylistFromDatabaseTask
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.LoadSoundsFromDatabaseTask
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.loadPlaylistFromDatabase
+import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.loadSoundsFromDatabase
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
+import rx.android.schedulers.AndroidSchedulers
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CopyOnWriteArraySet
@@ -34,7 +36,6 @@ class SoundsManager (
 {
 	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()
-
 
 	private var dbPlaylist: DaoSession? = null
 	private var dbSounds: DaoSession? = null
@@ -60,8 +61,7 @@ class SoundsManager (
 	}
 
 	override fun initIfRequired() {
-		if (!this.isInitDone)
-		{
+		if (!this.isInitDone) {
 			this.isInitDone = true
 
 			this.sounds.clear()
@@ -74,8 +74,39 @@ class SoundsManager (
 			this.dbSounds = null
 			this.dbSounds = this.getDbSounds()
 
-			LoadSoundsFromDatabaseTask(this.dbSounds as DaoSession, this).execute()
-			LoadPlaylistFromDatabaseTask(this.dbPlaylist as DaoSession, this).execute()
+			this.dbSounds?.let { dbSounds ->
+				SoundboardApplication.taskCounter += 1
+				dbSounds.loadSoundsFromDatabase()
+						.flatMapIterable { it -> it }
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe ({ mediaPlayerData ->
+							Logger.d(TAG, "Loaded: $mediaPlayerData")
+							createSoundAndAddToManager(mediaPlayerData)
+						}, { onError ->
+							Logger.e(TAG, "Error while loading sounds: ${onError.message}")
+							SoundboardApplication.taskCounter -= 1
+						}, {
+							Logger.d(TAG, "Loading sounds completed")
+							SoundboardApplication.taskCounter -= 1
+						})
+			}
+
+			this.dbPlaylist?.let { dbPlaylist ->
+				SoundboardApplication.taskCounter += 1
+				dbPlaylist.loadPlaylistFromDatabase()
+						.flatMapIterable { it -> it }
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe ( { mediaPlayerData ->
+							Logger.d(TAG, "Loaded: $mediaPlayerData")
+							createPlaylistSoundAndAddToManager(mediaPlayerData)
+						}, { onError ->
+							Logger.e(TAG, "Error while loading playlist: ${onError.message}")
+							SoundboardApplication.taskCounter -= 1
+						}, {
+							Logger.d(TAG, "Loading playlist completed")
+							SoundboardApplication.taskCounter -= 1
+						} )
+			}
 		}
 	}
 

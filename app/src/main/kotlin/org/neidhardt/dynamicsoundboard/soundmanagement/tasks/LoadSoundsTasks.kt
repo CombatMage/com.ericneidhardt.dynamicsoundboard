@@ -7,54 +7,14 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.longtermtask.LoadListTask
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
+import rx.Observable
+import rx.schedulers.Schedulers
 import java.io.File
+import java.util.concurrent.Callable
 
 /**
  * File created by eric.neidhardt on 10.04.2015.
  */
-class LoadSoundsFromDatabaseTask
-(
-		private val daoSession: DaoSession,
-		private val soundsDataStorage: SoundsDataStorage
-) :
-		LoadListTask<MediaPlayerData>()
-{
-    override val TAG: String = javaClass.name
-
-    @Throws(Exception::class)
-	override fun call(): List<MediaPlayerData>
-	{
-		val mediaPlayersData = this.daoSession.mediaPlayerDataDao.queryBuilder().list()
-		mediaPlayersData.sortBy { player -> player.sortOrder}
-
-		for (mediaPlayerData in mediaPlayersData)
-			this.postUpdatToMainThread({ this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData) })
-
-		return mediaPlayersData
-	}
-
-}
-
-class LoadPlaylistFromDatabaseTask
-(
-		private val daoSession: DaoSession,
-		private val soundsDataStorage: SoundsDataStorage
-) :
-		LoadListTask<MediaPlayerData>()
-{
-    override val TAG: String = javaClass.name
-
-	@Throws(Exception::class)
-	override fun call(): List<MediaPlayerData>
-	{
-		val mediaPlayersData = this.daoSession.mediaPlayerDataDao.queryBuilder().list()
-		mediaPlayersData.sortBy { player -> player.sortOrder}
-		for (mediaPlayerData in mediaPlayersData)
-			this.postUpdatToMainThread({ this.soundsDataStorage.createPlaylistSoundAndAddToManager(mediaPlayerData) })
-		return mediaPlayersData
-	}
-}
-
 class LoadSoundsFromFileListTask
 (
 		private val filesToLoad: List<File>,
@@ -70,7 +30,7 @@ class LoadSoundsFromFileListTask
 	{
 		this.filesToLoad
 				.map { getMediaPlayerDataFromFile(it, this.fragmentTag) }
-				.forEach { this.postUpdatToMainThread({ this.soundsDataStorage.createSoundAndAddToManager(it) }) }
+				.forEach { this.postUpdateToMainThread({ this.soundsDataStorage.createSoundAndAddToManager(it) }) }
 
 		return filesToLoad
 	}

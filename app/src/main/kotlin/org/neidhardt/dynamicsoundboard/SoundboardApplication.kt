@@ -2,6 +2,9 @@ package org.neidhardt.dynamicsoundboard
 
 import android.app.Application
 import android.content.Context
+import org.greenrobot.eventbus.EventBus
+import org.neidhardt.dynamicsoundboard.longtermtask.LongTermTask
+import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
@@ -27,6 +30,7 @@ open class SoundboardApplication : Application()
 			get() = this.staticContext as Context
 
 		private val random = Random()
+		private val eventBus: EventBus by lazy { EventBus.getDefault() }
 
 		private val soundLayoutsManager: SoundLayoutsManager by lazy { SoundLayoutsManager(this.context) }
 		private val soundsManager: SoundsManager by lazy { SoundsManager(this.context, this.soundLayoutsAccess, this.soundSheetsDataUtil) }
@@ -45,6 +49,12 @@ open class SoundboardApplication : Application()
 		val soundLayoutsUtil: SoundLayoutsUtil get() = this.soundLayoutsManager
 
 		val randomNumber: Int get() = this.random.nextInt(Integer.MAX_VALUE)
+
+		var taskCounter = 0
+			set(value) {
+				field = value
+				this.eventBus.postSticky(LongTermTaskStateChangedEvent(value > 0, value))
+			}
 	}
 
 	override fun onCreate()

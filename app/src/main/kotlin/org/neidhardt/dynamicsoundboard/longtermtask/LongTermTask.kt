@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.longtermtask
 
 import android.os.Handler
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import roboguice.util.SafeAsyncTask
 
@@ -16,44 +16,31 @@ abstract class LongTermTask<T> : SafeAsyncTask<T>()
 
 	private val eventBus = EventBus.getDefault()
 
-	companion object
-	{
-		private var taskCounter: Int = 0
-	}
-
 	@Throws(Exception::class)
-	override fun onPreExecute()
-	{
+	override fun onPreExecute() {
 		super.onPreExecute()
-		taskCounter++
-		this.eventBus.postSticky(LongTermTaskStateChangedEvent(true, taskCounter))
+		SoundboardApplication.taskCounter += 1
 	}
 
 	@Throws(Exception::class)
-	override fun onSuccess(result: T)
-	{
+	override fun onSuccess(result: T) {
 		super.onSuccess(result)
-		taskCounter--
-		this.eventBus.postSticky(LongTermTaskStateChangedEvent(false, taskCounter))
+		SoundboardApplication.taskCounter -= 1
 	}
 
 	@Throws(RuntimeException::class)
-	override fun onException(e: Exception)
-	{
+	override fun onException(e: Exception) {
 		super.onException(e)
 		Logger.e(TAG, e.message)
-		taskCounter--
-		this.eventBus.postSticky(LongTermTaskStateChangedEvent(false, taskCounter))
+		SoundboardApplication.taskCounter -= 1
 		throw RuntimeException(e)
 	}
 }
 
-abstract class LoadListTask<T> : LongTermTask<List<T>>()
-{
+abstract class LoadListTask<T> : LongTermTask<List<T>>() {
 	private val updateHandler = Handler()
 
-	fun postUpdatToMainThread(runnable: () -> Unit)
-	{
+	fun postUpdateToMainThread(runnable: () -> Unit) {
 		this.updateHandler.post(runnable)
 	}
 }
