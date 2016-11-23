@@ -36,11 +36,3 @@ abstract class LongTermTask<T> : SafeAsyncTask<T>()
 		throw RuntimeException(e)
 	}
 }
-
-abstract class LoadListTask<T> : LongTermTask<List<T>>() {
-	private val updateHandler = Handler()
-
-	fun postUpdateToMainThread(runnable: () -> Unit) {
-		this.updateHandler.post(runnable)
-	}
-}

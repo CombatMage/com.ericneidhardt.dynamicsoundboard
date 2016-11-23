@@ -82,8 +82,8 @@ class SoundsManager (
 						.subscribe ({ mediaPlayerData ->
 							Logger.d(TAG, "Loaded: $mediaPlayerData")
 							createSoundAndAddToManager(mediaPlayerData)
-						}, { onError ->
-							Logger.e(TAG, "Error while loading sounds: ${onError.message}")
+						}, { error ->
+							Logger.e(TAG, "Error while loading sounds: ${error.message}")
 							SoundboardApplication.taskCounter -= 1
 						}, {
 							Logger.d(TAG, "Loading sounds completed")
@@ -99,8 +99,8 @@ class SoundsManager (
 						.subscribe ( { mediaPlayerData ->
 							Logger.d(TAG, "Loaded: $mediaPlayerData")
 							createPlaylistSoundAndAddToManager(mediaPlayerData)
-						}, { onError ->
-							Logger.e(TAG, "Error while loading playlist: ${onError.message}")
+						}, { error ->
+							Logger.e(TAG, "Error while loading playlist: ${error.message}")
 							SoundboardApplication.taskCounter -= 1
 						}, {
 							Logger.d(TAG, "Loading playlist completed")
