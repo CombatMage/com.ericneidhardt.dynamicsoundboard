@@ -169,10 +169,7 @@ class SoundsManager (
 		val player = searchInMapForId(playerId, this.sounds)
 		val playerInPlaylist = searchInListForId(playerId, playlist)
 
-		if (addToPlaylist) {
-			if (playerInPlaylist != null)
-				return
-
+		if (addToPlaylist && playerInPlaylist == null) {
 			if (player != null) {
 				player.isInPlaylist = true
 
@@ -185,10 +182,8 @@ class SoundsManager (
 					this.addSoundToPlayList(playerForPlaylist)
 			}
 		}
-		else {
-			if (playerInPlaylist == null)
-				return
 
+		if (!addToPlaylist && playerInPlaylist != null) {
 			player?.isInPlaylist = false
 
 			this.playlist.remove(playerInPlaylist)
