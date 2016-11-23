@@ -19,6 +19,7 @@ import kotlin.properties.Delegates
  * File created by eric.neidhardt on 22.05.2015.
  */
 class ActivityProgressBarView : MaterialProgressBar {
+
 	private var presenter: ActivityProgressBarPresenter by Delegates.notNull()
 
 	constructor(context: Context) : super(context)
