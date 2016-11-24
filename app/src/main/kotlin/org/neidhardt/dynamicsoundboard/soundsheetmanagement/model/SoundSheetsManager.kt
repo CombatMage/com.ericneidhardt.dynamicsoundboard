@@ -51,7 +51,7 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsA
 			this.daoSession = GreenDaoHelper.setupDatabase(this.context, this.getDatabaseName())
 
 			this.daoSession?.let { dbSoundSheets ->
-				SoundboardApplication.taskCounter += 1
+				SoundboardApplication.taskCounter.value += 1
 				dbSoundSheets.loadSoundSheets()
 						.flatMapIterable { it -> it }
 						.observeOn(AndroidSchedulers.mainThread())
@@ -60,10 +60,10 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsA
 							this.addSoundSheetToManager(soundSheet)
 						}, { error ->
 							Logger.e(TAG, "Error while loading sound sheets: ${error.message}")
-							SoundboardApplication.taskCounter -= 1
+							SoundboardApplication.taskCounter.value -= 1
 						}, {
 							Logger.d(TAG, "Loading sound sheets completed")
-							SoundboardApplication.taskCounter -= 1
+							SoundboardApplication.taskCounter.value -= 1
 						} )
 			}
 			return true

@@ -125,7 +125,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 			if (result.isEmpty())
 				return
 
-			SoundboardApplication.taskCounter += 1
+			SoundboardApplication.taskCounter.value += 1
 			result.loadSounds(fragmentToAddSounds)
 					.flatMapIterable { it -> it }
 					.observeOn(AndroidSchedulers.mainThread())
@@ -134,10 +134,10 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 						this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData)
 					}, { onError ->
 						Logger.e(TAG, "Error while loading sounds: ${onError.message}")
-						SoundboardApplication.taskCounter -= 1
+						SoundboardApplication.taskCounter.value -= 1
 					}, {
 						Logger.d(TAG, "Loading sounds completed")
-						SoundboardApplication.taskCounter -= 1
+						SoundboardApplication.taskCounter.value -= 1
 					})
 		}
 	}

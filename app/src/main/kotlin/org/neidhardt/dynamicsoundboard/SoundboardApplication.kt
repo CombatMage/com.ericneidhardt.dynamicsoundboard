@@ -1,10 +1,8 @@
 package org.neidhardt.dynamicsoundboard
 
-import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDexApplication
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
@@ -17,6 +15,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsManager
+import org.neidhardt.utils.ValueHolder
 import java.util.*
 
 
@@ -50,11 +49,7 @@ open class SoundboardApplication : MultiDexApplication()
 
 		val randomNumber: Int get() = this.random.nextInt(Integer.MAX_VALUE)
 
-		var taskCounter = 0
-			set(value) {
-				field = value
-				this.eventBus.postSticky(LongTermTaskStateChangedEvent(value > 0, value))
-			}
+		val taskCounter: ValueHolder<Int> by lazy { ValueHolder(0) }
 	}
 
 	override fun onCreate()

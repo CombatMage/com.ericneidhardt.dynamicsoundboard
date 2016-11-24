@@ -5,14 +5,11 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEvent
-import org.neidhardt.dynamicsoundboard.longtermtask.events.LongTermTaskStateChangedEventListener
-import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.utils.registerIfRequired
+import org.neidhardt.utils.RxValueHolder
+import org.neidhardt.utils.ValueHolder
+import rx.Subscription
+import rx.android.schedulers.AndroidSchedulers
 import kotlin.properties.Delegates
 
 /**
@@ -30,7 +27,7 @@ class ActivityProgressBarView : MaterialProgressBar {
 
 	override fun onFinishInflate() {
 		super.onFinishInflate()
-		this.presenter = ActivityProgressBarPresenter(EventBus.getDefault(), this)
+		this.presenter = ActivityProgressBarPresenter(SoundboardApplication.taskCounter, this)
 	}
 
 	override fun onAttachedToWindow() {
@@ -45,29 +42,23 @@ class ActivityProgressBarView : MaterialProgressBar {
 }
 
 class ActivityProgressBarPresenter(
-		private val eventBus: EventBus,
+		private val taskCounter: ValueHolder<Int>,
 		private val view: ActivityProgressBarView
-
-) : LongTermTaskStateChangedEventListener {
-
-	private val TAG = javaClass.name
+) {
 	private val handler = Handler()
 
-	private val nrOngoingTasks: Int get() = SoundboardApplication.taskCounter
+	private var subscription: Subscription? = null
 
 	fun onAttached() {
-		this.showProgressBar(this.nrOngoingTasks > 0)
-		this.eventBus.registerIfRequired(this)
+		this.showProgressBar(this.taskCounter.value > 0)
+
+		this.subscription = this.taskCounter.changes()
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { newValue -> this.showProgressBar(newValue > 0) }
 	}
 
 	fun onDetached() {
-		this.eventBus.unregister(this)
-	}
-
-	@Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: LongTermTaskStateChangedEvent) {
-		Logger.d(TAG, "onEvent() " + event)
-		this.showProgressBar(this.nrOngoingTasks > 0)
+		this.subscription?.unsubscribe()
 	}
 
 	private fun showProgressBar(showProgressBar: Boolean) {

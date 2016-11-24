@@ -37,6 +37,10 @@ dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 	compile rootProject.ext.libraries.kotlin
 
+	compile rootProject.ext.libraries.rxAndroid
+	compile rootProject.ext.libraries.rxKotlin
+	compile rootProject.ext.libraries.rxJava
+
 	compile rootProject.ext.libraries.supportDesign
 
 	compile rootProject.ext.libraries.greenRobotCommons

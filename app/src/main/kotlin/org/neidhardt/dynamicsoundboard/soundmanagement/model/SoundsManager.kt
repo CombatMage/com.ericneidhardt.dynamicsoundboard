@@ -75,7 +75,7 @@ class SoundsManager (
 			this.dbSounds = this.getDbSounds()
 
 			this.dbSounds?.let { dbSounds ->
-				SoundboardApplication.taskCounter += 1
+				SoundboardApplication.taskCounter.value += 1
 				dbSounds.loadSoundsFromDatabase()
 						.flatMapIterable { it -> it }
 						.observeOn(AndroidSchedulers.mainThread())
@@ -84,15 +84,15 @@ class SoundsManager (
 							createSoundAndAddToManager(mediaPlayerData)
 						}, { error ->
 							Logger.e(TAG, "Error while loading sounds: ${error.message}")
-							SoundboardApplication.taskCounter -= 1
+							SoundboardApplication.taskCounter.value -= 1
 						}, {
 							Logger.d(TAG, "Loading sounds completed")
-							SoundboardApplication.taskCounter -= 1
+							SoundboardApplication.taskCounter.value -= 1
 						})
 			}
 
 			this.dbPlaylist?.let { dbPlaylist ->
-				SoundboardApplication.taskCounter += 1
+				SoundboardApplication.taskCounter.value += 1
 				dbPlaylist.loadPlaylistFromDatabase()
 						.flatMapIterable { it -> it }
 						.observeOn(AndroidSchedulers.mainThread())
@@ -101,10 +101,10 @@ class SoundsManager (
 							createPlaylistSoundAndAddToManager(mediaPlayerData)
 						}, { error ->
 							Logger.e(TAG, "Error while loading playlist: ${error.message}")
-							SoundboardApplication.taskCounter -= 1
+							SoundboardApplication.taskCounter.value -= 1
 						}, {
 							Logger.d(TAG, "Loading playlist completed")
-							SoundboardApplication.taskCounter -= 1
+							SoundboardApplication.taskCounter.value -= 1
 						} )
 			}
 		}
