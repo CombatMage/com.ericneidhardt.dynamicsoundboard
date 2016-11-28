@@ -1,7 +1,6 @@
-package robolectricutils;
+package com.sevenval.testutils;
 
 import org.junit.runners.model.InitializationError;
-import org.neidhardt.dynamicsoundboard.BuildConfig;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.manifest.AndroidManifest;
@@ -9,6 +8,7 @@ import org.robolectric.manifest.AndroidManifest;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Properties;
+
 
 /**
  * File created by eric.neidhardt on 02.04.2015.
@@ -51,19 +51,19 @@ public class CustomTestRunner extends RobolectricTestRunner {
 		config = new Config.Implementation
 				(
 						sdks,
-						config.manifest(),
-						config.qualifiers(),
-						config.packageName(),
-						config.abiSplit(),
-						config.resourceDir(),
-						config.assetDir(),
-						config.buildDir(),
-						config.shadows(),
-						config.instrumentedPackages(),
-						config.application(),
-						config.libraries(),
-						ensureBuildConfig(config.constants())
-				);
+		config.manifest(),
+		config.qualifiers(),
+		config.packageName(),
+		config.abiSplit(),
+		config.resourceDir(),
+		config.assetDir(),
+		config.buildDir(),
+		config.shadows(),
+		config.instrumentedPackages(),
+		config.application(),
+		config.libraries(),
+		ensureBuildConfig(config.constants())
+		);
 
 		return config;
 	}
@@ -72,6 +72,5 @@ public class CustomTestRunner extends RobolectricTestRunner {
 		if (constants == Void.class) return BuildConfig.class;
 		return constants;
 	}
-
 }
 

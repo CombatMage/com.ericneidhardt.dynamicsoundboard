@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
 import android.content.Context
+import com.sevenval.testutils.BaseRobolectricTest
 import org.greenrobot.eventbus.EventBus
 import org.junit.Before
 import org.junit.Test
@@ -9,7 +10,6 @@ import org.mockito.MockitoAnnotations
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.robolectric.RuntimeEnvironment
-import robolectricutils.BaseRobolectricTest
 
 /**
 * Created by Eric.Neidhardt@GMail.com on 17.04.2016.
@@ -24,7 +24,7 @@ class ExoMediaPlayerTest : BaseRobolectricTest()
 	private var unitUnderTest: MediaPlayerController? = null
 
 	@Before
-	override fun setUp()
+	fun setUp()
 	{
 		MockitoAnnotations.initMocks(this)
 

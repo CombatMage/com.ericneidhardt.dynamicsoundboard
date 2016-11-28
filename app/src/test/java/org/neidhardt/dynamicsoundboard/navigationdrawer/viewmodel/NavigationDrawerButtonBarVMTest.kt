@@ -1,11 +1,11 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
 
+import com.sevenval.testutils.BaseRobolectricTest
 import org.greenrobot.eventbus.EventBus
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import robolectricutils.BaseRobolectricTest
 import kotlin.properties.Delegates
 
 /**
@@ -17,7 +17,7 @@ class NavigationDrawerButtonBarVMTest : BaseRobolectricTest() {
 	private var unitUnderTest by Delegates.notNull<NavigationDrawerButtonBarVM>()
 
 	@Before
-	override fun setUp() {
+	fun setUp() {
 		MockitoAnnotations.initMocks(this)
 		this.unitUnderTest = NavigationDrawerButtonBarVM()
 	}
