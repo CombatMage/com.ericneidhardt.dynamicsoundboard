@@ -41,7 +41,7 @@ import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloati
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
 import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
-import org.neidhardt.utils.registerIfRequired
+import org.neidhardt.eventbus_utils.registerIfRequired
 
 /**
  * File created by eric.neidhardt on 02.07.2015.

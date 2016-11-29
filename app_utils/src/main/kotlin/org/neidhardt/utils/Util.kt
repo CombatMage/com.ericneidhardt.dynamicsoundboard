@@ -20,12 +20,6 @@ val String.longHash: Long
 		return generator.value
 	}
 
-fun EventBus.registerIfRequired(any: Any)
-{
-	if (!this.isRegistered(any))
-		this.register(any)
-}
-
 /**
  * Calls the specified function [block] with `this` value as its argument and returns `this`
  */

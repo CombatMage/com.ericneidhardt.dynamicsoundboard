@@ -24,7 +24,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallList
 import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInListForId
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInMapForId
-import org.neidhardt.utils.registerIfRequired
+import org.neidhardt.eventbus_utils.registerIfRequired
 
 /**
  * @author eric.neidhardt on 15.06.2016.

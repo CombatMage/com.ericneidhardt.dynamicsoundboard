@@ -52,7 +52,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteA
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.utils.letThis
-import org.neidhardt.utils.registerIfRequired
+import org.neidhardt.eventbus_utils.registerIfRequired
 import java.util.*
 import kotlin.properties.Delegates
 

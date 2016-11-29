@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.utils.registerIfRequired
+import org.neidhardt.eventbus_utils.registerIfRequired
 import java.util.*
 
 /**

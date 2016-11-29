@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayou
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
-import org.neidhardt.utils.registerIfRequired
+import org.neidhardt.eventbus_utils.registerIfRequired
 
 /**
  * @author eric.neidhardt on 03.05.2016.

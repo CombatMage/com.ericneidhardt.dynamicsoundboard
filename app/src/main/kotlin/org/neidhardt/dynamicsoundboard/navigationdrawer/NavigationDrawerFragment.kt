@@ -26,7 +26,7 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutR
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
 import org.neidhardt.utils.letThis
-import org.neidhardt.utils.registerIfRequired
+import org.neidhardt.eventbus_utils.registerIfRequired
 import kotlin.properties.Delegates
 
 class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListener {

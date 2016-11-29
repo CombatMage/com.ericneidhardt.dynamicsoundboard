@@ -105,6 +105,9 @@ dependencies {
 	compile project(':safe_async_task')
 	compile project(':enhanced_handler')
 	compile project(':app_utils')
+	compile project(':eventbus_utils')
+
+	testCompile project(':test_utils')
 
 	compile rootProject.ext.libraries.kotlin
 
@@ -120,7 +123,6 @@ dependencies {
 	compile rootProject.ext.libraries.supportAppCompat
 	compile rootProject.ext.libraries.supportDesign
 
-	compile rootProject.ext.libraries.eventBus
 	compile rootProject.ext.libraries.greendao
 
 	compile rootProject.ext.libraries.exoplayer
@@ -135,6 +137,4 @@ dependencies {
 	compile rootProject.ext.libraries.recyclerViewAnimator
 
 	compile rootProject.ext.libraries.acra
-	
-	testCompile project(':test_utils')
 }
