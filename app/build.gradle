@@ -112,7 +112,7 @@ dependencies {
 	compile rootProject.ext.libraries.rxKotlin
 	compile rootProject.ext.libraries.rxJava
 
-	compile 'com.android.support:multidex:1.0.1'
+	compile rootProject.ext.libraries.multidex
 
 	compile rootProject.ext.libraries.supportV4
 	compile rootProject.ext.libraries.supportV13
@@ -129,8 +129,8 @@ dependencies {
 
 	compile rootProject.ext.libraries.robotoTextView
 
-	compile 'com.github.clans:fab:1.6.4'
-	compile 'me.zhanghai.android.materialprogressbar:library:1.1.7'
+	compile rootProject.ext.libraries.floatingActionButton
+	compile rootProject.ext.libraries.materialProgressBar
 
 	compile rootProject.ext.libraries.recyclerViewAnimator
 
