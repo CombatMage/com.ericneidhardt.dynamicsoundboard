@@ -7,12 +7,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.support.v4.app.NotificationCompat
+import org.neidhardt.android_utils.AndroidVersion
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
-import org.neidhardt.utils.AndroidVersion
 
 /**
  * @author eric.neidhardt on 16.06.2016.

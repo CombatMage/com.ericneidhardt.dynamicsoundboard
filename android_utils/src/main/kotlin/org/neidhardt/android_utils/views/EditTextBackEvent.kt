@@ -1,4 +1,4 @@
-package org.neidhardt.ui_utils.views
+package org.neidhardt.android_utils.views
 
 import android.content.Context
 import android.util.AttributeSet

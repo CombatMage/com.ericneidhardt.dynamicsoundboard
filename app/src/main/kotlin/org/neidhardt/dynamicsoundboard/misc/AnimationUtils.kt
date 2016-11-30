@@ -5,7 +5,7 @@ import android.annotation.TargetApi
 import android.os.Build
 import android.view.View
 import android.view.ViewAnimationUtils
-import org.neidhardt.utils.AndroidVersion
+import org.neidhardt.android_utils.AndroidVersion
 
 /**
  * File created by eric.neidhardt on 31.03.2015.

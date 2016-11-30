@@ -11,8 +11,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.view_actionbar_edittext.view.*
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.ui_utils.views.CustomEditText
-import org.neidhardt.ui_utils.views.EditTextBackEvent
+import org.neidhardt.android_utils.views.CustomEditText
+import org.neidhardt.android_utils.views.EditTextBackEvent
 
 
 class ActionbarEditText(context: Context, attrs: AttributeSet) :

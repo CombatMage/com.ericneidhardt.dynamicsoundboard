@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.mediaplayer
 
 import android.support.annotation.CheckResult
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.ui_utils.views.CustomEditText
+import org.neidhardt.android_utils.views.CustomEditText
 import rx.Observable
 
 /**

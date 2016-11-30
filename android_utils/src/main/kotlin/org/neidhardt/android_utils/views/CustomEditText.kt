@@ -1,4 +1,4 @@
-package org.neidhardt.ui_utils.views
+package org.neidhardt.android_utils.views
 
 import android.content.Context
 import android.os.Parcel
@@ -12,7 +12,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.TextView
-import org.neidhardt.ui_utils.R
+import org.neidhardt.android_utils.R
 
 abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		FrameLayout(context, attrs),
@@ -24,7 +24,7 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 	protected abstract var mOnTextEditedListener: OnTextEditedListener?
 
 	fun setOnTextEditedListener(listener: (String) -> Unit) {
-		this.mOnTextEditedListener = object : CustomEditText.OnTextEditedListener {
+		this.mOnTextEditedListener = object : OnTextEditedListener {
 			override fun onTextEdited(text: String) {
 				listener(text)
 			}

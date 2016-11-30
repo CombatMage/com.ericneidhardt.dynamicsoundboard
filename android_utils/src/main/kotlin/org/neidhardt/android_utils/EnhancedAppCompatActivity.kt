@@ -1,4 +1,4 @@
-package org.neidhardt.utils
+package org.neidhardt.android_utils
 
 import android.app.FragmentManager
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import java.util.*
 
 /**
- * @author eric.neidhardt on 15.06.2016.
+ * Project created by Eric Neidhardt on 30.08.2014.
  */
 open class EnhancedAppCompatActivity : AppCompatActivity() {
 
@@ -47,11 +47,11 @@ open class EnhancedAppCompatActivity : AppCompatActivity() {
 	}
 }
 
-private fun <T>ArrayList<T>.push(item: T) {
+private fun <T> ArrayList<T>.push(item: T) {
 	this.add(0, item)
 }
 
-private fun <T>ArrayList<T>.pop(): T {
+private fun <T> ArrayList<T>.pop(): T {
 	if (this.isEmpty()) throw UnsupportedOperationException("Cannot pop item from queue, because queue is empty")
 	return this.removeAt(this.size - 1)
 }

@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
-import org.neidhardt.ui_utils.views.SimpleSpinner
+import org.neidhardt.android_utils.views.SimpleSpinner
 import java.util.*
 
 class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChangeListener

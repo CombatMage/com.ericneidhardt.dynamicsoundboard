@@ -7,11 +7,6 @@ import org.greenrobot.eventbus.EventBus
 /**
  * Project created by Eric Neidhardt on 30.08.2014.
  */
-object AndroidVersion
-{
-	val IS_LOLLIPOP_AVAILABLE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-}
-
 val String.longHash: Long
 	get()
 	{

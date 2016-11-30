@@ -106,6 +106,7 @@ dependencies {
 	compile project(':enhanced_handler')
 	compile project(':app_utils')
 	compile project(':eventbus_utils')
+	compile project(':android_utils')
 
 	testCompile project(':test_utils')
 

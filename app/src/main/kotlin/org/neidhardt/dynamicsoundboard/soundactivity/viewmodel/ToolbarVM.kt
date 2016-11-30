@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundactivity.viewmodel
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import org.neidhardt.dynamicsoundboard.BR
-import org.neidhardt.ui_utils.views.CustomEditText
+import org.neidhardt.android_utils.views.CustomEditText
 
 /**
  * @author eric.neidhardt on 21.06.2016.

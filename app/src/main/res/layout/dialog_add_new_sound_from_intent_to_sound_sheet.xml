@@ -41,7 +41,7 @@
 			android:layout_height="wrap_content"
 			android:animateLayoutChanges="true">
 
-		<org.neidhardt.ui_utils.views.SimpleSpinner
+		<org.neidhardt.android_utils.views.SimpleSpinner
 				android:id="@+id/s_sound_sheets"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_input_field"
