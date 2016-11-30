@@ -43,5 +43,5 @@ dependencies {
 
 	compile rootProject.ext.libraries.greenRobotCommons
 
-	testCompile 'junit:junit:4.12'
+	testCompile project(':test_utils')
 }

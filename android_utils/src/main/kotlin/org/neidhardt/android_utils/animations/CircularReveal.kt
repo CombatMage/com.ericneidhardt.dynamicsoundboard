@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.misc
+package org.neidhardt.android_utils.animations
 
 import android.animation.Animator
 import android.annotation.TargetApi
@@ -8,14 +8,13 @@ import android.view.ViewAnimationUtils
 import org.neidhardt.android_utils.AndroidVersion
 
 /**
- * File created by eric.neidhardt on 31.03.2015.
+ * Created by eric.neidhardt on 30.11.2016.
  */
-object AnimationUtils
-{
+object AnimationUtils {
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	fun createCircularReveal(view: View, startX: Int, startY: Int, startRadius: Float, endRadius: Float): Animator?
-	{
+	fun createCircularReveal(view: View, startX: Int, startY: Int, startRadius: Float, endRadius: Float): Animator? {
+
 		if (AndroidVersion.IS_LOLLIPOP_AVAILABLE) {
 			return ViewAnimationUtils.createCircularReveal(view,
 					startX,
@@ -25,5 +24,4 @@ object AnimationUtils
 		}
 		else return null
 	}
-
 }
