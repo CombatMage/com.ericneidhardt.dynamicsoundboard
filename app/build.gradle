@@ -126,7 +126,10 @@ dependencies {
 
 	compile rootProject.ext.libraries.greendao
 
+	compile rootProject.ext.libraries.greenRobotCommons
+
 	compile rootProject.ext.libraries.exoplayer
+
 	compile rootProject.ext.libraries.jacksonDatabind
 	compile rootProject.ext.libraries.jacksonKotlin
 

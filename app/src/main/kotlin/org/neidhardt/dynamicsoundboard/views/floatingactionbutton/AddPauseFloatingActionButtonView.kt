@@ -7,12 +7,12 @@ import com.github.clans.fab.FloatingActionButton
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.neidhardt.android_utils.animations.AnimationUtils
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.misc.AnimationUtils
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 
 /**
@@ -77,7 +77,7 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 					width,
 					height,
 					0f,
-					(height * 2).toFloat())?.apply { start() }
+					(height * 2).toFloat())?.start()
 		}
 	}
 
@@ -88,8 +88,7 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: MediaPlayerCompletedEvent)
-	{
+	override fun onEvent(event: MediaPlayerCompletedEvent) {
 		this.setPresenterState()
 	}
 
@@ -106,5 +105,4 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 	}
 }
 
-private val SoundsDataAccess.isAnySoundPlaying: Boolean
-	get() = this.currentlyPlayingSounds.size > 0
+private val SoundsDataAccess.isAnySoundPlaying: Boolean get() = this.currentlyPlayingSounds.isNotEmpty()

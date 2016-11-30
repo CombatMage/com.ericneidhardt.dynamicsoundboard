@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dao.daohelper
+package org.neidhardt.dynamicsoundboard.daohelper
 
 import android.content.Context
 import android.support.annotation.CheckResult
@@ -15,7 +15,7 @@ object GreenDaoHelper {
 	fun setupDatabase(context: Context, dbName: String): DaoSession {
 		val helper = SoundboardDaoOpenHelper(context, dbName, null)
 		val db = helper.writableDatabase
-		val daoMaster = org.neidhardt.dynamicsoundboard.dao.DaoMaster(db)
+		val daoMaster = DaoMaster(db)
 		return daoMaster.newSession()
 	}
 }

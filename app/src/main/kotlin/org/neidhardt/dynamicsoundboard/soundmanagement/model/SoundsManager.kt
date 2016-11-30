@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
-import org.neidhardt.dynamicsoundboard.dao.daohelper.GreenDaoHelper
+import org.neidhardt.dynamicsoundboard.daohelper.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
@@ -228,8 +228,7 @@ class SoundsManager (
 			val copyList = ArrayList<MediaPlayerController>(soundsToRemove.size)
 			copyList.addAll(soundsToRemove) // this is done to prevent concurrent modification exception
 
-			for (playerToRemove in copyList)
-			{
+			for (playerToRemove in copyList) {
 				val data = playerToRemove.mediaPlayerData
 				this.sounds[data.fragmentTag]?.remove(playerToRemove)
 
@@ -256,8 +255,7 @@ class SoundsManager (
 
 	override fun moveSoundInFragment(fragmentTag: String, from: Int, to: Int) {
 		val soundsInFragment = this.sounds[fragmentTag]
-		if (soundsInFragment != null)
-		{
+		if (soundsInFragment != null) {
 			val size = soundsInFragment.size
 			var indexFrom = from
 			var indexTo = to
