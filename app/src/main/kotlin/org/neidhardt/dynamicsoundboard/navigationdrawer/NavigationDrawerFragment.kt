@@ -108,6 +108,7 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 		super.onStop()
 
 		this.eventBus.unregister(this)
+		this.headerVM.isSoundLayoutOpen = false
 		this.tabView?.onDetached()
 		this.listView?.onDetached()
 	}
