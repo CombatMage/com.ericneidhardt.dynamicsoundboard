@@ -48,9 +48,9 @@ class SoundLayoutsManager(private val context: Context) :
 	override fun getSoundLayouts(): List<SoundLayout> = this.soundLayouts
 
 	override fun getActiveSoundLayout(): SoundLayout {
-		this.soundLayouts
-				.filter { it.isSelected }
-				.forEach { return it }
+		this.soundLayouts.filter { it.isSelected }.firstOrNull()?.let { activeLayout ->
+			return activeLayout
+		}
 
 		// no layout is currently selected
 		val layout = this.soundLayouts[0]
