@@ -88,7 +88,7 @@ public class SoundLayout {
 
 	public void updateItemInDatabaseAsync()
 	{
-		DaoHelperKt.updateDatabaseAsync(this);
+		DaoHelperKt.updateAsync(this).subscribe();
 	}
     // KEEP METHODS END
 

@@ -148,12 +148,12 @@ public class MediaPlayerData {
 
 	public void insertItemInDatabaseAsync()
 	{
-		DaoHelperKt.insertIntoDatabaseAsync(this);
+        DaoHelperKt.insertAsync(this).subscribe();
 	}
 
     public void updateItemInDatabaseAsync()
 	{
-		DaoHelperKt.updateDatabaseAsync(this);
+        DaoHelperKt.updateAsync(this).subscribe();
     }
 
     public boolean getIsSelectedForDeletion() {

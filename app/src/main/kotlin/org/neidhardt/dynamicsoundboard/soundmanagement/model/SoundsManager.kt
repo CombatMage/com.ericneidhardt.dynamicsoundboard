@@ -8,10 +8,10 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.DaoSession
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
+import org.neidhardt.dynamicsoundboard.dao.daohelper.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
-import org.neidhardt.dynamicsoundboard.misc.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
@@ -123,9 +123,11 @@ class SoundsManager (
 		this.eventBus.post(SoundsRemovedEvent())
 	}
 
-	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean = this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.fragmentTag)
+	override fun isPlaylistPlayer(playerData: MediaPlayerData): Boolean =
+			this.soundSheetsDataUtil.isPlaylistSoundSheet(playerData.fragmentTag)
 
-	override fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController> = this.sounds.getOrPut(fragmentTag, { ArrayList<MediaPlayerController>() })
+	override fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController> =
+			this.sounds.getOrPut(fragmentTag, { ArrayList<MediaPlayerController>() })
 
 	override fun getSoundById(fragmentTag: String, playerId: String): MediaPlayerController? {
 		if (this.soundSheetsDataUtil.isPlaylistSoundSheet(fragmentTag))

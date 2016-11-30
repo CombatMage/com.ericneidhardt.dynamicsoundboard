@@ -10,19 +10,17 @@ import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 import java.util.*
 
 
-class PauseSoundOnCallListener : PhoneStateListener()
-{
+class PauseSoundOnCallListener : PhoneStateListener() {
+
 	private val pauseSounds: MutableList<MediaPlayerController> = ArrayList()
 	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
 
-	override fun onCallStateChanged(state: Int, incomingNumber: String?)
-	{
+	override fun onCallStateChanged(state: Int, incomingNumber: String?) {
 		super.onCallStateChanged(state, incomingNumber)
 
-		if (state == TelephonyManager.CALL_STATE_RINGING)
-		{
+		if (state == TelephonyManager.CALL_STATE_RINGING) {
 			val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
-			if (currentlyPlayingSounds.size > 0) {
+			if (currentlyPlayingSounds.isNotEmpty()) {
 				val copyCurrentlyPlayingSounds = ArrayList<MediaPlayerController>(currentlyPlayingSounds.size) // copy to prevent concurrent modification exception
 				copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds)
 
@@ -44,8 +42,7 @@ class PauseSoundOnCallListener : PhoneStateListener()
 	}
 }
 
-fun SoundActivity.registerPauseSoundOnCallListener(listener: PauseSoundOnCallListener)
-{
+fun SoundActivity.registerPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
     val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
 }
@@ -56,14 +53,12 @@ fun SoundActivity.unregisterPauseSoundOnCallListener(listener: PauseSoundOnCallL
     manager.listen(listener, PhoneStateListener.LISTEN_NONE)
 }
 
-fun NotificationService.registerPauseSoundOnCallListener(listener: PauseSoundOnCallListener)
-{
+fun NotificationService.registerPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
     val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
 }
 
-fun NotificationService.unregisterPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
-    listener.clearReferences()
+fun NotificationService.unregisterPauseSoundOnCallListener(listener: PauseSoundOnCallListener) { listener.clearReferences()
     val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     manager.listen(listener, PhoneStateListener.LISTEN_NONE)
 }

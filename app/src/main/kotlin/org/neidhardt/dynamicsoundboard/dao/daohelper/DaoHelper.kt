@@ -1,143 +1,115 @@
 package org.neidhardt.dynamicsoundboard.dao.daohelper
 
+import android.content.Context
+import android.support.annotation.CheckResult
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.*
-import roboguice.util.SafeAsyncTask
+import org.neidhardt.dynamicsoundboard.misc.Logger
+import rx.Observable
+import rx.schedulers.Schedulers
 
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
-fun insertIntoDatabaseAsync(data: MediaPlayerData)
-{
+object GreenDaoHelper {
+	fun setupDatabase(context: Context, dbName: String): DaoSession {
+		val helper = SoundboardDaoOpenHelper(context, dbName, null)
+		val db = helper.writableDatabase
+		val daoMaster = org.neidhardt.dynamicsoundboard.dao.DaoMaster(db)
+		return daoMaster.newSession()
+	}
+}
+
+@CheckResult
+fun MediaPlayerData.insertAsync(): Observable<Unit> {
 	val soundsDataUtil = SoundboardApplication.soundsDataUtil
 	val soundsDataStorage = SoundboardApplication.soundsDataStorage
-	val daoSession =
-			if (soundsDataUtil.isPlaylistPlayer(data))
+	val db =
+			if (soundsDataUtil.isPlaylistPlayer(this))
 				soundsDataStorage.getDbPlaylist()
 			else
 				soundsDataStorage.getDbSounds()
 
-	InsertPlayerAsyncTask(data, daoSession.mediaPlayerDataDao, daoSession).execute()
-}
+	return Observable.fromCallable {
+		db.runInTx {
+			val isInDatabase = db.mediaPlayerDataDao.queryBuilder()
+					.where(MediaPlayerDataDao.Properties.PlayerId.eq(this.playerId))
+					.list()
+					.isNotEmpty()
 
-private class InsertPlayerAsyncTask
-(
-		private val data: MediaPlayerData,
-		private val dao: MediaPlayerDataDao,
-		private val daoSession: DaoSession
-) : SafeAsyncTask<Void>()
-{
-	override fun call(): Void?
-	{
-		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size == 0)
-				dao.insert(data)
+			if (!isInDatabase)
+				db.mediaPlayerDataDao.insert(this)
 		}
-		return null
-	}
+	}.doOnError { error -> Logger.e(this.toString(), error.toString()) }.subscribeOn(Schedulers.computation())
 }
 
-fun updateDatabaseAsync(data: MediaPlayerData)
-{
+@CheckResult
+fun MediaPlayerData.updateAsync(): Observable<Unit> {
 	val soundsDataUtil = SoundboardApplication.soundsDataUtil
 	val soundsDataStorage = SoundboardApplication.soundsDataStorage
-
-	val daoSession =
-			if (soundsDataUtil.isPlaylistPlayer(data))
+	val db =
+			if (soundsDataUtil.isPlaylistPlayer(this))
 				soundsDataStorage.getDbPlaylist()
 			else
 				soundsDataStorage.getDbSounds()
 
-	UpdatePlayerAsyncTask(data, daoSession.mediaPlayerDataDao, daoSession).execute()
-}
+	return Observable.fromCallable {
+		db.runInTx {
+			val isInDatabase = db.mediaPlayerDataDao.queryBuilder()
+					.where(MediaPlayerDataDao.Properties.PlayerId.eq(this.playerId))
+					.list()
+					.isNotEmpty()
 
-private class UpdatePlayerAsyncTask
-(
-		private val data: MediaPlayerData,
-		private val dao: MediaPlayerDataDao,
-		private val daoSession: DaoSession
-) : SafeAsyncTask<Void>()
-{
-	override fun call(): Void?
-	{
-		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(MediaPlayerDataDao.Properties.PlayerId.eq(data.playerId)).list().size != 0)
-				dao.update(data) // do not update if item was not added before
+			if (isInDatabase)
+				db.mediaPlayerDataDao.update(this) // do not update if item was not added before
 		}
-		return null
-	}
+	}.doOnError { error -> Logger.e(this.toString(), error.toString()) }.subscribeOn(Schedulers.computation())
 }
 
-fun insertIntoDatabaseAsync(data: SoundSheet)
-{
+@CheckResult
+fun SoundSheet.insertAsync(): Observable<Unit> {
 	val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
-	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
+	val db = soundSheetsDataStorage.getDbSoundSheets()
 
-	InsertSoundSheetAsyncTask(data, daoSession.soundSheetDao, daoSession).execute()
+	return Observable.fromCallable {
+		val isInDatabase = db.soundSheetDao.queryBuilder()
+				.where(SoundSheetDao.Properties.FragmentTag.eq(this.fragmentTag))
+				.list()
+				.isNotEmpty()
+
+		if (!isInDatabase)
+			db.insert(this)
+	}.doOnError { error -> Logger.e(this.toString(), error.toString()) }.subscribeOn(Schedulers.computation())
 }
 
-private class InsertSoundSheetAsyncTask
-(
-		private val data: SoundSheet,
-		private val dao: SoundSheetDao,
-		private val daoSession: DaoSession
-) : SafeAsyncTask<Void>()
-{
-	override fun call(): Void?
-	{
-		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size == 0)
-				dao.insert(data)
-		}
-		return null
-	}
-}
-
-fun updateDatabaseAsync(data: SoundSheet)
-{
+@CheckResult
+fun SoundSheet.updateAsync(): Observable<Unit> {
 	val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
-	val daoSession = soundSheetsDataStorage.getDbSoundSheets()
+	val db = soundSheetsDataStorage.getDbSoundSheets()
 
-	UpdateSoundSheetsAsyncTask(data, daoSession.soundSheetDao, daoSession).execute()
+	return Observable.fromCallable {
+		val isInDatabase = db.soundSheetDao.queryBuilder()
+				.where(SoundSheetDao.Properties.FragmentTag.eq(this.fragmentTag))
+				.list()
+				.isNotEmpty()
+
+		if (isInDatabase)
+			db.update(this)
+	}.doOnError { error -> Logger.e(this.toString(), error.toString()) }.subscribeOn(Schedulers.computation())
 }
 
-private class UpdateSoundSheetsAsyncTask
-(
-		private val data: SoundSheet,
-		private val dao: SoundSheetDao,
-		private val daoSession: DaoSession
-) : SafeAsyncTask<Void>()
-{
-	override fun call(): Void?
-	{
-		this.daoSession.runInTx {
-			if (dao.queryBuilder().where(SoundSheetDao.Properties.FragmentTag.eq(data.fragmentTag)).list().size != 0)
-				dao.update(data) // do not update if item was not added before
-		}
-		return null
-	}
-}
-
-fun updateDatabaseAsync(data: SoundLayout)
-{
+@CheckResult
+fun SoundLayout.updateAsync(): Observable<Unit> {
 	val soundLayoutsStorage = SoundboardApplication.soundLayoutsStorage
-	val daoSession = soundLayoutsStorage.getDbSoundLayouts()
+	val db = soundLayoutsStorage.getDbSoundLayouts()
 
-	UpdateSoundLayoutAsyncTask(data, daoSession.soundLayoutDao, daoSession).execute()
-}
+	return Observable.fromCallable {
+		val isInDatabase = db.soundLayoutDao.queryBuilder()
+				.where(SoundLayoutDao.Properties.DatabaseId.eq(this.databaseId))
+				.list()
+				.isNotEmpty()
 
-private class UpdateSoundLayoutAsyncTask
-(
-		private val data: SoundLayout,
-		private val dao: SoundLayoutDao,
-		private val daoSession: DaoSession
-) : SafeAsyncTask<Void>()
-{
-	override fun call(): Void?
-	{
-		this.daoSession.runInTx {
-			dao.update(data) // do not update if item was not added before
-		}
-		return null
-	}
+		if (isInDatabase)
+			db.update(this)
+	}.doOnError { error -> Logger.e(this.toString(), error.toString()) }.subscribeOn(Schedulers.computation())
 }

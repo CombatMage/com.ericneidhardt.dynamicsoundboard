@@ -2,6 +2,7 @@ package org.neidhardt.eventbus_utils
 
 import com.sevenval.testutils.BaseRobolectricTest
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -13,13 +14,20 @@ class EventBusExtensionsKtTest : BaseRobolectricTest() {
 	@Test
 	fun registerIfRequired() {
 
-		val unitUnderTest = EventBus.getDefault()
-		val testReceiver = object {}
+		val bus = EventBus.getDefault()
+		val testReceiver = TestReceiver()
 
-		unitUnderTest.register(testReceiver)
-		assertTrue(unitUnderTest.isRegistered(testReceiver))
+		bus.register(testReceiver)
+		assertTrue(bus.isRegistered(testReceiver))
 
-		unitUnderTest.registerIfRequired(testReceiver) // this will throw already registered exception if registerIfRequired is not working
+		bus.registerIfRequired(testReceiver) // this will throw already registered exception if registerIfRequired is not working
+	}
+
+	private class TestReceiver {
+		@Subscribe
+		fun onReceive() {
+			throw IllegalStateException("should not be called by this test")
+		}
 	}
 
 }
