@@ -41,7 +41,5 @@ dependencies {
 	compile rootProject.ext.libraries.rxKotlin
 	compile rootProject.ext.libraries.rxJava
 
-	compile rootProject.ext.libraries.greenRobotCommons
-
 	testCompile project(':test_utils')
 }

@@ -6,7 +6,7 @@ package org.neidhardt.dynamicsoundboard.dao;
 
 import android.net.Uri;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
-import org.neidhardt.dynamicsoundboard.dao.daohelper.DaoHelperKt;
+import org.neidhardt.dynamicsoundboard.daohelper.DaoHelperKt;
 // KEEP INCLUDES END
 /**
  * Entity mapped to table "MEDIA_PLAYER_DATA".
