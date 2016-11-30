@@ -40,7 +40,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteS
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
-import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
+import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.eventbus_utils.registerIfRequired
 
 /**

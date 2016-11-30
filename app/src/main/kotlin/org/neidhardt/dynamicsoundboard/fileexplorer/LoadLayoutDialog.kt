@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.readFromFile
 import org.neidhardt.dynamicsoundboard.reportError
-import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
+import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import java.io.File
 import java.io.IOException
 import java.util.*

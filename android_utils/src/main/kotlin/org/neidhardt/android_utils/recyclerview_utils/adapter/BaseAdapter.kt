@@ -1,4 +1,4 @@
-package org.neidhardt.ui_utils.recyclerview.adapter
+package org.neidhardt.android_utils.recyclerview_utils.adapter
 
 import android.support.v7.widget.RecyclerView
 
@@ -7,12 +7,11 @@ import android.support.v7.widget.RecyclerView
  */
 abstract class BaseAdapter<Type, ViewHolder : RecyclerView.ViewHolder> :
 		RecyclerView.Adapter<ViewHolder>(),
-		ListAdapter<Type>
-{
+		ListAdapter<Type> {
+
 	abstract val values: List<Type>
 
-	override fun notifyItemChanged(data: Type)
-	{
+	override fun notifyItemChanged(data: Type) {
 		val index = this.values.indexOf(data)
 		if (index == -1)
 			this.notifyDataSetChanged()

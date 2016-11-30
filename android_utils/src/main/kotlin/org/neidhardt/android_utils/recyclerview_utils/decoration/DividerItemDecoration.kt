@@ -1,4 +1,4 @@
-package org.neidhardt.ui_utils.recyclerview.decoration
+package org.neidhardt.android_utils.recyclerview_utils.decoration
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,18 +7,16 @@ import android.graphics.Rect
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import org.neidhardt.ui_utils.R
+import org.neidhardt.android_utils.R
 
-class DividerItemDecoration(val context: Context, backgroundColorId: Int, dividerColorId: Int) : RecyclerView.ItemDecoration()
-{
+class DividerItemDecoration(val context: Context, backgroundColorId: Int, dividerColorId: Int) : RecyclerView.ItemDecoration() {
 
 	private val heightDivider: Int
 
 	private val paintDivider: Paint
 	private val paintBackground: Paint
 
-	init
-	{
+	init {
 		val colorBackground = ContextCompat.getColor(context, backgroundColorId)
 		val colorDivider = ContextCompat.getColor(context, dividerColorId)
 
@@ -35,8 +33,7 @@ class DividerItemDecoration(val context: Context, backgroundColorId: Int, divide
 		}
 	}
 
-	override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State?)
-	{
+	override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
 		if (parent.adapter == null)
 			return
 
@@ -44,8 +41,7 @@ class DividerItemDecoration(val context: Context, backgroundColorId: Int, divide
 		if (childCount == 0)
 			return
 
-		for (i in 0..childCount - 1 - 1) // do not draw divider after last item
-		{
+		for (i in 0..childCount - 1 - 1) { // do not draw divider after last item
 			val child = parent.getChildAt(i) ?: continue
 
 			val params = child.layoutParams as RecyclerView.LayoutParams
@@ -59,18 +55,15 @@ class DividerItemDecoration(val context: Context, backgroundColorId: Int, divide
 		}
 	}
 
-	private fun drawDividerBackground(canvas: Canvas, left: Int, top: Int, right: Int, bottom: Int)
-	{
+	private fun drawDividerBackground(canvas: Canvas, left: Int, top: Int, right: Int, bottom: Int) {
 		canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), this.paintDivider)
 	}
 
-	private fun drawDivider(canvas: Canvas, left: Int, top: Int, right: Int, bottom: Int)
-	{
+	private fun drawDivider(canvas: Canvas, left: Int, top: Int, right: Int, bottom: Int) {
 		canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), this.paintBackground)
 	}
 
-	override fun getItemOffsets(outRect: Rect, childView: View, parent: RecyclerView, state: RecyclerView.State?)
-	{
+	override fun getItemOffsets(outRect: Rect, childView: View, parent: RecyclerView, state: RecyclerView.State?) {
 		val topOffset = 0
 		val bottomOffset = this.heightDivider
 		val rightOffset = 0

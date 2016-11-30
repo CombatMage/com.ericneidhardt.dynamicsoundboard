@@ -29,7 +29,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
+import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import java.io.File
 import java.util.*
 

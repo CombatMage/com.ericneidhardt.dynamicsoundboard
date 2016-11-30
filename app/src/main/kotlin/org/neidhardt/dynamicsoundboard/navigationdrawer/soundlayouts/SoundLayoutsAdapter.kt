@@ -7,8 +7,8 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
-import org.neidhardt.ui_utils.recyclerview.adapter.BaseAdapter
-import org.neidhardt.ui_utils.recyclerview.adapter.ListAdapter
+import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
+import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
 
 /**
  * File created by eric.neidhardt on 08.03.2015.

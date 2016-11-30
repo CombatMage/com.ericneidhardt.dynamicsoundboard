@@ -17,7 +17,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.writeToFile
-import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
+import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import java.io.File
 import java.io.IOException
 

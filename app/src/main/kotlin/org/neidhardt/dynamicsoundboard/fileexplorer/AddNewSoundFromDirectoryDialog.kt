@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.loadSounds
-import org.neidhardt.ui_utils.recyclerview.decoration.DividerItemDecoration
+import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import rx.android.schedulers.AndroidSchedulers
 import java.io.File
 import java.util.*

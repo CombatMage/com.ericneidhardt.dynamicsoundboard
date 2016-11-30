@@ -1,8 +1,6 @@
 package org.neidhardt.utils
 
-import android.os.Build
 import de.greenrobot.common.hash.Murmur3A
-import org.greenrobot.eventbus.EventBus
 
 /**
  * Project created by Eric Neidhardt on 30.08.2014.
