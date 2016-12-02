@@ -3,7 +3,6 @@ ext.versions = [
 		supportLibs : '25.0.0',
 
 		eventBus          : '3.0.0',
-		greendao          : '2.1.0',
 		greenRobotCommons : '2.3.1',
 
 		exoplayer   : 'r2.0.3',
@@ -32,7 +31,7 @@ ext.libraries = [
 
 		greenRobotCommons    : "de.greenrobot:java-common:$versions.greenRobotCommons",
 		eventBus             : "org.greenrobot:eventbus:$versions.eventBus",
-		greendao             : "de.greenrobot:greendao:$versions.greendao",
+		greendao             : "org.greenrobot:greendao:3.2.0",
 
 		exoplayer            : "com.google.android.exoplayer:exoplayer:$versions.exoplayer",
 

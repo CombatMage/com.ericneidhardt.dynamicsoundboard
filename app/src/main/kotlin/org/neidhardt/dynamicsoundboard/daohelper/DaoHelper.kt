@@ -13,7 +13,7 @@ import rx.schedulers.Schedulers
  */
 object GreenDaoHelper {
 	fun setupDatabase(context: Context, dbName: String): DaoSession {
-		val helper = SoundboardDaoOpenHelper(context, dbName, null)
+		val helper = SoundboardDaoOpenHelper(context, dbName)
 		val db = helper.writableDatabase
 		val daoMaster = DaoMaster(db)
 		return daoMaster.newSession()

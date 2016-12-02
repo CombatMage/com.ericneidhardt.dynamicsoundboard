@@ -5,9 +5,11 @@ buildscript {
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+		classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'
 	}
 }
 
+apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
