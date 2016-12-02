@@ -9,6 +9,7 @@ buildscript {
 	}
 }
 
+// for unkown reason greendao needs to be on first position
 apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'

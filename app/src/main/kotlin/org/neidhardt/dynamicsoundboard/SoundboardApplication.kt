@@ -19,17 +19,14 @@ import org.neidhardt.utils.ValueHolder
 import java.util.*
 
 
-open class SoundboardApplication : MultiDexApplication()
-{
+open class SoundboardApplication : MultiDexApplication() {
 
-	companion object
-	{
+	companion object {
+
 		private var staticContext: Context? = null
-		val context: Context
-			get() = this.staticContext as Context
+		val context: Context get() = this.staticContext as Context
 
 		private val random = Random()
-		private val eventBus: EventBus by lazy { EventBus.getDefault() }
 
 		private val soundLayoutsManager: SoundLayoutsManager by lazy { SoundLayoutsManager(this.context) }
 		private val soundsManager: SoundsManager by lazy { SoundsManager(this.context, this.soundLayoutsAccess, this.soundSheetsDataUtil) }
@@ -52,8 +49,7 @@ open class SoundboardApplication : MultiDexApplication()
 		val taskCounter: ValueHolder<Int> by lazy { ValueHolder(0) }
 	}
 
-	override fun onCreate()
-	{
+	override fun onCreate() {
 		super.onCreate()
 		staticContext = this.applicationContext
 	}
