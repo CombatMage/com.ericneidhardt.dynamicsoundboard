@@ -8,8 +8,8 @@ import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.*
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.activeLayout
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog
 import java.util.*
 
@@ -17,12 +17,11 @@ import java.util.*
  * File created by eric.neidhardt on 17.07.2015.
  */
 fun createSoundLayoutsPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView, soundLayoutsAccess: SoundLayoutsAccess, soundLayoutsStorage: SoundLayoutsStorage): SoundLayoutsPresenter
+		eventBus: EventBus, recyclerView: RecyclerView, soundLayoutsManager: ISoundLayoutManager): SoundLayoutsPresenter
 {
 	return SoundLayoutsPresenter(
 			eventBus = eventBus,
-			soundLayoutsAccess = soundLayoutsAccess,
-			soundLayoutsStorage = soundLayoutsStorage
+			soundLayoutsManager = soundLayoutsManager
 	).apply {
 		this.adapter = SoundLayoutsAdapter(eventBus, this)
 		this.view = recyclerView
@@ -32,8 +31,7 @@ fun createSoundLayoutsPresenter(
 class SoundLayoutsPresenter
 (
 		override val eventBus: EventBus,
-		private val soundLayoutsAccess: SoundLayoutsAccess,
-		private val soundLayoutsStorage: SoundLayoutsStorage
+		private val soundLayoutsManager: ISoundLayoutManager
 ) :
 		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<SoundLayout>,
@@ -49,7 +47,7 @@ class SoundLayoutsPresenter
 	{
 		super.onAttachedToWindow()
 		this.values.clear()
-		this.values.addAll(this.soundLayoutsAccess.getSoundLayouts())
+		this.values.addAll(this.soundLayoutsManager.soundLayouts)
 		this.adapter?.notifyDataSetChanged()
 	}
 
@@ -57,7 +55,7 @@ class SoundLayoutsPresenter
 	{
 		val soundLayoutsToRemove = this.getSoundLayoutsSelectedForDeletion()
 
-		this.soundLayoutsStorage.removeSoundLayouts(soundLayoutsToRemove)
+		this.soundLayoutsManager.removeSoundLayouts(soundLayoutsToRemove)
 	}
 
 	override val numberOfItemsSelectedForDeletion: Int
@@ -107,7 +105,7 @@ class SoundLayoutsPresenter
 		}
 		else
 		{
-			this.soundLayoutsAccess.setSoundLayoutSelected(this.values.indexOf(data))
+			this.soundLayoutsManager.setSoundLayoutSelected(data)
 			this.eventBus.post(SoundLayoutSelectedEvent(data))
 		}
 		this.adapter?.notifyDataSetChanged()
@@ -130,7 +128,7 @@ class SoundLayoutsPresenter
 		for (layout in layoutsToRemove)
 			this.removeLayout(layout)
 
-		val soundLayout = this.soundLayoutsAccess.getActiveSoundLayout()
+		val soundLayout = this.soundLayoutsManager.soundLayouts.activeLayout
 		this.adapter?.notifyItemChanged(soundLayout)
 	}
 

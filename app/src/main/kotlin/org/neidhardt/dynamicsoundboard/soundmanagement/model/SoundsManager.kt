@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.loadPlaylistFromDatabase
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.loadSoundsFromDatabase
@@ -30,7 +30,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  */
 class SoundsManager (
 		private val context: Context,
-		private val soundLayoutsAccess: SoundLayoutsAccess,
+		private val soundLayoutsManager: ISoundLayoutManager,
 		private val soundSheetsDataUtil: SoundSheetsDataUtil
 ) : SoundsDataAccess, SoundsDataStorage, SoundsDataUtil
 {
@@ -50,13 +50,13 @@ class SoundsManager (
 
 	override fun getDbSounds(): DaoSession {
 		if (this.dbSounds == null)
-			this.dbSounds = GreenDaoHelper.setupDatabase(this.context, getDatabaseNameSounds(this.soundLayoutsAccess))
+			this.dbSounds = GreenDaoHelper.setupDatabase(this.context, getDatabaseNameSounds(this.soundLayoutsManager))
 		return this.dbSounds as DaoSession
 	}
 
 	override fun getDbPlaylist(): DaoSession {
 		if (this.dbPlaylist == null)
-			this.dbPlaylist = GreenDaoHelper.setupDatabase(this.context, getDatabaseNamePlayList(this.soundLayoutsAccess))
+			this.dbPlaylist = GreenDaoHelper.setupDatabase(this.context, getDatabaseNamePlayList(this.soundLayoutsManager))
 		return this.dbPlaylist as DaoSession
 	}
 

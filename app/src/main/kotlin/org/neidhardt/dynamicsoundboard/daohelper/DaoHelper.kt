@@ -97,19 +97,3 @@ fun SoundSheet.updateAsync(): Observable<Unit> {
 			db.update(this)
 	}.doOnError { error -> Logger.e(this.toString(), error.toString()) }.subscribeOn(Schedulers.computation())
 }
-
-@CheckResult
-fun SoundLayout.updateAsync(): Observable<Unit> {
-	val soundLayoutsStorage = SoundboardApplication.soundLayoutsStorage
-	val db = soundLayoutsStorage.getDbSoundLayouts()
-
-	return Observable.fromCallable {
-		val isInDatabase = db.soundLayoutDao.queryBuilder()
-				.where(SoundLayoutDao.Properties.DatabaseId.eq(this.databaseId))
-				.list()
-				.isNotEmpty()
-
-		if (isInDatabase)
-			db.update(this)
-	}.doOnError { error -> Logger.e(this.toString(), error.toString()) }.subscribeOn(Schedulers.computation())
-}

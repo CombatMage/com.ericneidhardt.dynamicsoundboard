@@ -10,8 +10,9 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
 import org.neidhardt.dynamicsoundboard.daohelper.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsManager
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.NewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.activeLayout
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent
@@ -23,7 +24,7 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 06.07.2015.
  */
-class SoundSheetsManager(private val context: Context, private val soundLayoutsAccess: SoundLayoutsAccess) :
+class SoundSheetsManager(private val context: Context, private val soundLayoutsManager: ISoundLayoutManager) :
 		SoundSheetsDataAccess,
 		SoundSheetsDataStorage,
 		SoundSheetsDataUtil
@@ -84,8 +85,8 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsA
 	}
 
 	private fun getDatabaseName(): String {
-		val baseName = this.soundLayoutsAccess.getActiveSoundLayout().databaseId
-		if (baseName == SoundLayoutsManager.DB_DEFAULT)
+		val baseName = this.soundLayoutsManager.soundLayouts.activeLayout.databaseId
+		if (baseName == NewSoundLayoutManager.DB_DEFAULT)
 			return DB_SOUND_SHEETS_DEFAULT
 		return baseName + DB_SOUND_SHEETS
 	}

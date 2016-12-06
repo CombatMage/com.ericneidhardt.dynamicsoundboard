@@ -16,9 +16,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.createSound
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.createSoundSheetPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsAccess
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsStorage
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutsUtil
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
@@ -28,6 +25,7 @@ import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDat
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
 import org.neidhardt.eventbus_utils.registerIfRequired
 import kotlin.properties.Delegates
 
@@ -62,10 +60,8 @@ class NavigationDrawerListPresenter(
 		soundsDataStorage: SoundsDataStorage,
 		soundSheetsDataAccess: SoundSheetsDataAccess,
 		soundSheetsDataStorage: SoundSheetsDataStorage,
-		soundLayoutsAccess: SoundLayoutsAccess,
-		soundLayoutsStorage: SoundLayoutsStorage,
 
-		private val soundLayoutsUtil: SoundLayoutsUtil,
+		private val soundLayoutsManager: ISoundLayoutManager,
 		private val soundSheetsDataUtil: SoundSheetsDataUtil
 ) :
 		NavigationDrawerListLayout,
@@ -75,7 +71,7 @@ class NavigationDrawerListPresenter(
 
 	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage, soundSheetsDataAccess, soundSheetsDataStorage)
 	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
-	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView, soundLayoutsAccess, soundLayoutsStorage)
+	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView, soundLayoutsManager)
 
 	private var currentListBacking by Delegates.notNull<List>()
 	override var currentList: List
@@ -157,7 +153,7 @@ class NavigationDrawerListPresenter(
 
 	private fun add() {
 		when (this.currentList) {
-			List.SoundLayouts -> AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsUtil.getSuggestedName())
+			List.SoundLayouts -> AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsManager.getSuggestedName())
 			List.Playlist -> AddNewSoundDialog.show(this.fragmentManager, PlaylistTAG)
 			List.SoundSheet -> AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
 		}

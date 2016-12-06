@@ -25,6 +25,7 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayou
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.activeLayout
 import org.neidhardt.utils.letThis
 import org.neidhardt.eventbus_utils.registerIfRequired
 import kotlin.properties.Delegates
@@ -35,13 +36,13 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 
 	private val eventBus = EventBus.getDefault()
 
-	private val soundLayoutAccess = SoundboardApplication.soundLayoutsAccess
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private var tabView: NavigationDrawerTabLayout? = null
 	private var listView: NavigationDrawerListLayout? = null
 
 	private var binding by Delegates.notNull<FragmentNavigationDrawerBinding>()
-	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutAccess.getActiveSoundLayout().label)
+	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutManager.soundLayouts.activeLayout.label)
 	private val buttonBarVM = NavigationDrawerButtonBarVM()
 	private val deletionViewVM = NavigationDrawerDeletionViewVM()
 
@@ -75,9 +76,7 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 				},
 				fragmentManager = this.fragmentManager,
 
-				soundLayoutsAccess = SoundboardApplication.soundLayoutsAccess,
-				soundLayoutsStorage = SoundboardApplication.soundLayoutsStorage,
-				soundLayoutsUtil = SoundboardApplication.soundLayoutsUtil,
+				soundLayoutsManager = SoundboardApplication.soundLayoutManager,
 				soundsDataAccess = SoundboardApplication.soundsDataAccess,
 				soundsDataStorage = SoundboardApplication.soundsDataStorage,
 				soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess,
@@ -115,17 +114,17 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutsRemovedEvent) {
-		this.headerVM.title = this.soundLayoutAccess.getActiveSoundLayout().label
+		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutRenamedEvent) {
-		this.headerVM.title = this.soundLayoutAccess.getActiveSoundLayout().label
+		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutSelectedEvent) {
-		this.headerVM.title = this.soundLayoutAccess.getActiveSoundLayout().label
+		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
 		this.headerVM.isSoundLayoutOpen = false
 	}
 }
