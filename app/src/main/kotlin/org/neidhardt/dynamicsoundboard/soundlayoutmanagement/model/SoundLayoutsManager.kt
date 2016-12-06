@@ -15,14 +15,11 @@ import java.util.*
  * File created by eric.neidhardt on 09.03.2015.
  */
 class SoundLayoutsManager(private val context: Context) :
-		SoundLayoutsAccess,
-		SoundLayoutsStorage,
-		SoundLayoutsUtil
+		ISoundLayoutManager
 {
 	companion object {
 		const val DB_DEFAULT: String = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default"
-
-		private const val DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts"
+		const val DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts"
 
 		fun getNewDatabaseIdForLabel(label: String): String {
 			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
