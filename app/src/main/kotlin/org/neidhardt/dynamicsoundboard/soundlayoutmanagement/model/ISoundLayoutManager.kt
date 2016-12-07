@@ -1,17 +1,18 @@
 package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model
 
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
+import rx.Observable
 
 /**
- * Created by eric.neidhardt on 06.12.2016.
+ * Created by eric.neidhardt@gmail.com on 06.12.2016.
  */
 interface ISoundLayoutManager {
 
 	val soundLayouts: List<SoundLayout>
 
-	fun addSoundLayout(soundLayout: SoundLayout)
+	fun addSoundLayout(soundLayout: SoundLayout): Observable<SoundLayout>
 
-	fun updateSoundLayout(update: () -> SoundLayout): SoundLayout
+	fun updateSoundLayout(update: () -> SoundLayout): Observable<SoundLayout>
 
 	fun setSoundLayoutSelected(soundLayout: SoundLayout)
 

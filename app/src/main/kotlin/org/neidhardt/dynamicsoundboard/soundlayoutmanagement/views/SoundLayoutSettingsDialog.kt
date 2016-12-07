@@ -7,23 +7,47 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.findById
+import rx.subscriptions.CompositeSubscription
 
 /**
  * File created by eric.neidhardt on 12.03.2015.
  */
-class SoundLayoutSettingsDialog : SoundLayoutDialog()
-{
+class SoundLayoutSettingsDialog : SoundLayoutDialog() {
+
 	private val soundLayoutsManager = SoundboardApplication.soundLayoutManager
+	private val subscriptions = CompositeSubscription()
 
 	private var databaseId: String? = null
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		val args = this.arguments
 		if (args != null)
 			this.databaseId = args.getString(KEY_DATABASE_ID)
+	}
+
+	override fun onDestroy() {
+		super.onDestroy()
+		this.subscriptions.unsubscribe()
+	}
+
+	override fun deliverResult() {
+		if (this.databaseId != null) {
+			var name = super.soundLayoutName?.text.toString()
+			if (name.isEmpty())
+				name = this.getHintForName()
+
+			val existingItem = this.soundLayoutsManager.soundLayouts.findById(this.databaseId!!) ?: return
+
+			this.subscriptions.add(
+					this.soundLayoutsManager.updateSoundLayout {
+						existingItem.apply { this.label = name }
+					}.subscribe ({ updatedItem ->
+						EventBus.getDefault().post(SoundLayoutRenamedEvent(updatedItem))
+					})
+			)
+		}
 	}
 
 	override fun getPositiveButtonId(): Int = R.string.dialog_rename
@@ -32,23 +56,7 @@ class SoundLayoutSettingsDialog : SoundLayoutDialog()
 
 	override fun getHintForName(): String = this.soundLayoutsManager.soundLayouts.findById(this.databaseId!!)?.label ?: ""
 
-    override fun getTitleId(): Int = R.string.dialog_sound_layout_settings_title
-
-	override fun deliverResult()
-	{
-		if (this.databaseId != null)
-		{
-			var name = super.soundLayoutName?.text.toString()
-			if (name.isEmpty())
-				name = this.getHintForName()
-
-			val layout = this.soundLayoutsManager.soundLayouts.findById(this.databaseId!!) ?: return
-			val updatedLayout = this.soundLayoutsManager.updateSoundLayout {
-				layout.apply { this.label = name }
-			}
-			EventBus.getDefault().post(SoundLayoutRenamedEvent(updatedLayout))
-		}
-	}
+	override fun getTitleId(): Int = R.string.dialog_sound_layout_settings_title
 
 	companion object {
 		private val TAG = SoundLayoutSettingsDialog::class.java.name

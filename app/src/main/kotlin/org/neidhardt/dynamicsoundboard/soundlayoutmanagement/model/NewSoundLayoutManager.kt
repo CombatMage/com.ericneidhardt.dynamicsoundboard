@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model
 
 import android.content.Context
+import android.support.annotation.CheckResult
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -11,6 +12,7 @@ import org.neidhardt.dynamicsoundboard.daohelper.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutAddedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
+import org.neidhardt.utils.letThis
 import rx.Observable
 import rx.schedulers.Schedulers
 import java.util.*
@@ -32,15 +34,26 @@ class NewSoundLayoutManager(private val context: Context) : ISoundLayoutManager 
 		this.soundLayouts.addAll(this.daoSession.soundLayoutDao.queryBuilder().list())
 	}
 
-	override fun addSoundLayout(soundLayout: SoundLayout) {
-		this.soundLayouts.add(soundLayout)
-		this.daoSession.soundLayoutDao.insert(soundLayout)
+	override fun addSoundLayout(soundLayout: SoundLayout): Observable<SoundLayout> {
+		return Observable.fromCallable{
+			soundLayout.letThis { item ->
+				this.soundLayouts.add(item)
+				this.daoSession.soundLayoutDao.insert(item)
+			}
+		}.doOnError { error -> Logger.e(this.toString(), error.toString()) }
+		.subscribeOn(Schedulers.computation())
 	}
 
-	override fun updateSoundLayout(update: () -> SoundLayout): SoundLayout {
-		return update.invoke().apply {
-			this.updateItemInDatabaseAsync()
-		}
+	@CheckResult
+	override fun updateSoundLayout(update: () -> SoundLayout): Observable<SoundLayout> {
+		return Observable.fromCallable {
+				update.invoke().letThis { item ->
+					val isInDatabase = this.daoSession.soundLayoutDao.isSoundLayoutInDatabase(item)
+					if (isInDatabase)
+						this.daoSession.soundLayoutDao.update(item)
+				}
+			}.doOnError { error -> Logger.e(this.toString(), error.toString()) }
+			.subscribeOn(Schedulers.computation())
 	}
 
 	override fun removeSoundLayouts(soundLayouts: List<SoundLayout>) {
@@ -91,11 +104,7 @@ class NewSoundLayoutManager(private val context: Context) : ISoundLayoutManager 
 	private fun SoundLayout.updateItemInDatabaseAsync() {
 		val db = daoSession
 		Observable.fromCallable {
-			val isInDatabase = db.soundLayoutDao.queryBuilder()
-					.where(SoundLayoutDao.Properties.DatabaseId.eq(this.databaseId))
-					.list()
-					.isNotEmpty()
-
+			val isInDatabase = db.soundLayoutDao.isSoundLayoutInDatabase(this)
 			if (isInDatabase)
 				db.update(this)
 		}.doOnError { error ->
@@ -104,4 +113,11 @@ class NewSoundLayoutManager(private val context: Context) : ISoundLayoutManager 
 		.subscribeOn(Schedulers.computation())
 		.subscribe()
 	}
+}
+
+private fun SoundLayoutDao.isSoundLayoutInDatabase(soundLayout: SoundLayout): Boolean {
+	return this.queryBuilder()
+			.where(SoundLayoutDao.Properties.DatabaseId.eq(soundLayout.databaseId))
+			.list()
+			.isNotEmpty()
 }

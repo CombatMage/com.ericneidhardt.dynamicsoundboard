@@ -3,32 +3,27 @@
 .DS_Store
 /build
 gradle.properties
-
 # Eclipse
 .classpath
 .project
 .settings/
-
-
 # Intellij
 .idea/
 *.iml
 *.iws
-
 # Maven
 log/
 target/
-
 # Project
 app/build/jacoco/testDebug.exec
 app/build/outputs/logs/manifest-merger-debug-report.txt
-app_utils/build/
-
+app/build/kotlin/
+app/build/cache/
 # Project Libs
 dao_generator/build/
 safe_async_task/build/
 enhanced_handler/build/
-
+app_utils/build/
 # Misc
 sh.exe.stackdump
-app/build/kotlin/
+/app/build/cache/greendao-candidates.list
