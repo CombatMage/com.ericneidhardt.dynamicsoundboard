@@ -101,6 +101,10 @@ kapt {
 	generateStubs = true
 }
 
+greendao {
+	schemaVersion 15
+}
+
 dependencies {
 	kapt "com.android.databinding:compiler:$android.dataBinding.version"
 

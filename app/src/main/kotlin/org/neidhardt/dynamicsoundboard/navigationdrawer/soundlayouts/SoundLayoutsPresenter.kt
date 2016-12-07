@@ -69,7 +69,7 @@ class SoundLayoutsPresenter
 		val selectedSoundLayouts = this.getSoundLayoutsSelectedForDeletion()
 		for (soundLayout in selectedSoundLayouts)
 		{
-			soundLayout.setIsSelectedForDeletion(false)
+			soundLayout.isSelectedForDeletion = false
 			this.adapter?.notifyItemChanged(soundLayout)
 		}
 	}
@@ -79,20 +79,15 @@ class SoundLayoutsPresenter
 		val selectedSoundLayouts = this.values
 		for (soundLayout in selectedSoundLayouts)
 		{
-			soundLayout.setIsSelectedForDeletion(true)
+			soundLayout.isSelectedForDeletion = true
 			this.adapter?.notifyItemChanged(soundLayout)
 		}
 	}
 
 	private fun getSoundLayoutsSelectedForDeletion(): List<SoundLayout>
 	{
-		val selectedSoundLayouts = ArrayList<SoundLayout>()
 		val existingSoundLayouts = this.adapter?.values
-		for (soundLayout in existingSoundLayouts.orEmpty())
-		{
-			if (soundLayout.isSelectedForDeletion)
-				selectedSoundLayouts.add(soundLayout)
-		}
+		val selectedSoundLayouts = existingSoundLayouts.orEmpty().filter { it.isSelectedForDeletion }
 		return selectedSoundLayouts
 	}
 
@@ -100,7 +95,7 @@ class SoundLayoutsPresenter
 	{
 		if (this.isInSelectionMode)
 		{
-			data.setIsSelectedForDeletion(!data.isSelectedForDeletion)
+			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			super.onItemSelectedForDeletion()
 		}
 		else

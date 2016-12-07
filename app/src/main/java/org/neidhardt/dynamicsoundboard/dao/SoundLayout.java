@@ -1,28 +1,26 @@
 package org.neidhardt.dynamicsoundboard.dao;
 
 import org.greenrobot.greendao.annotation.*;
-import org.neidhardt.dynamicsoundboard.daohelper.DaoHelperKt;
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.NewSoundLayoutManager;
 
-/**
- * Entity mapped to table "SOUND_LAYOUT".
- */
 @Entity
 public class SoundLayout {
 
-    @Id
-    private Long id;
+	@Id
+	public Long id;
 
-    @NotNull
-    private String label;
+	@NotNull
+	@Index(unique = true)
+	public String databaseId;
 
-    @NotNull
-    @Unique
-    private String databaseId;
-    private boolean isSelected;
+	@NotNull
+	public String label;
 
-    @Transient
-    private boolean isSelectedForDeletion;
+	@NotNull
+	public boolean isSelected;
+
+	@Transient
+	public boolean isSelectedForDeletion;
 
     @Generated(hash = 1712563922)
     public SoundLayout() {
@@ -32,61 +30,49 @@ public class SoundLayout {
         this.id = id;
     }
 
-    @Generated(hash = 311490126)
-    public SoundLayout(Long id, @NotNull String label, @NotNull String databaseId,
-            boolean isSelected) {
-        this.id = id;
-        this.label = label;
-        this.databaseId = databaseId;
-        this.isSelected = isSelected;
-    }
+    @Generated(hash = 953469533)
+	public SoundLayout(Long id, @NotNull String databaseId, @NotNull String label,
+									boolean isSelected) {
+					this.id = id;
+					this.databaseId = databaseId;
+					this.label = label;
+					this.isSelected = isSelected;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public boolean isDefaultLayout()
+	{
+		return this.databaseId.equals(NewSoundLayoutManager.DB_DEFAULT);
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+					return this.id;
+	}
 
-    @NotNull
-    public String getLabel() {
-        return label;
-    }
+	public void setId(Long id) {
+					this.id = id;
+	}
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setLabel(@NotNull String label) {
-        this.label = label;
-    }
+	public String getDatabaseId() {
+					return this.databaseId;
+	}
 
-    @NotNull
-    public String getDatabaseId() {
-        return databaseId;
-    }
+	public void setDatabaseId(String databaseId) {
+					this.databaseId = databaseId;
+	}
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setDatabaseId(@NotNull String databaseId) {
-        this.databaseId = databaseId;
-    }
+	public String getLabel() {
+					return this.label;
+	}
 
-    public boolean getIsSelected() {
-        return isSelected;
-    }
+	public void setLabel(String label) {
+					this.label = label;
+	}
 
-    public void setIsSelected(boolean isSelected) {
-        this.isSelected = isSelected;
-    }
+	public boolean getIsSelected() {
+					return this.isSelected;
+	}
 
-    public boolean isDefaultLayout()
-    {
-        return this.databaseId.equals(NewSoundLayoutManager.DB_DEFAULT);
-    }
-
-    public boolean isSelectedForDeletion() {
-        return isSelectedForDeletion;
-    }
-
-    public void setIsSelectedForDeletion(boolean isSelectedForDeletion) {
-        this.isSelectedForDeletion = isSelectedForDeletion;
-    }
+	public void setIsSelected(boolean isSelected) {
+					this.isSelected = isSelected;
+	}
 }
