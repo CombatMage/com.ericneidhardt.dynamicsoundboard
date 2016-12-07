@@ -20,7 +20,7 @@ import java.util.*
 /**
  * Created by eric.neidhardt on 06.12.2016.
  */
-class NewSoundLayoutManager(private val context: Context) : ISoundLayoutManager {
+class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 
 	private val daoSession: DaoSession = GreenDaoHelper.setupDatabase(this.context, DB_SOUND_LAYOUTS)
 	private val eventBus: EventBus = EventBus.getDefault()

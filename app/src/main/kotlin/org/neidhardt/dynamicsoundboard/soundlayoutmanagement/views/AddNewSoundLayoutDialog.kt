@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutAddedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.NewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager
 
 /**
  * File created by eric.neidhardt on 12.03.2015.
@@ -41,7 +41,7 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog()
 
 		val layout = SoundLayout().apply {
 			this.isSelected = false
-			this.databaseId = NewSoundLayoutManager.getNewDatabaseIdForLabel(name)
+			this.databaseId = SoundLayoutManager.getNewDatabaseIdForLabel(name)
 			this.label = name
 		}
 		SoundboardApplication.soundLayoutManager.addSoundLayout(layout)

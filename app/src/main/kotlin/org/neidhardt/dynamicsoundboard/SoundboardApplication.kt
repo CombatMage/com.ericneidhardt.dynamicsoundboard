@@ -24,7 +24,7 @@ open class SoundboardApplication : MultiDexApplication() {
 
 		private val random = Random()
 
-		private val mSoundLayoutsManager: NewSoundLayoutManager by lazy { NewSoundLayoutManager(this.context) }
+		private val mSoundLayoutsManager: SoundLayoutManager by lazy { SoundLayoutManager(this.context) }
 		private val soundsManager: SoundsManager by lazy { SoundsManager(this.context, this.soundLayoutManager, this.soundSheetsDataUtil) }
 		private val soundSheetsManager: SoundSheetsManager by lazy { SoundSheetsManager(this.context, this.soundLayoutManager) }
 

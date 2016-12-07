@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.daohelper.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.NewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.activeLayout
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent
@@ -86,7 +86,7 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsM
 
 	private fun getDatabaseName(): String {
 		val baseName = this.soundLayoutsManager.soundLayouts.activeLayout.databaseId
-		if (baseName == NewSoundLayoutManager.DB_DEFAULT)
+		if (baseName == SoundLayoutManager.DB_DEFAULT)
 			return DB_SOUND_SHEETS_DEFAULT
 		return baseName + DB_SOUND_SHEETS
 	}
