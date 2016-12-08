@@ -34,6 +34,7 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 		this.soundLayouts.addAll(this.daoSession.soundLayoutDao.queryBuilder().list())
 	}
 
+	@CheckResult
 	override fun addSoundLayout(soundLayout: SoundLayout): Observable<SoundLayout> {
 		return Observable.fromCallable{
 			soundLayout.letThis { item ->
@@ -52,11 +53,21 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 					if (isInDatabase)
 						this.daoSession.soundLayoutDao.update(item)
 				}
-			}.doOnError { error -> Logger.e(this.toString(), error.toString()) }
+			}
+			.doOnError { error -> Logger.e(this.toString(), error.toString()) }
 			.subscribeOn(Schedulers.computation())
 	}
 
-	override fun removeSoundLayouts(soundLayouts: List<SoundLayout>) {
+	@CheckResult
+	override fun removeSoundLayouts(soundLayouts: List<SoundLayout>): Observable<List<SoundLayout>> {
+		return Observable.fromCallable {
+				soundLayouts.letThis { items->
+
+				}
+			}
+			.doOnError { error -> Logger.e(this.toString(), error.toString()) }
+			.subscribeOn(Schedulers.computation())
+
 		this.soundLayouts.removeAll(soundLayouts)
 		this.daoSession.runInTx {
 			soundLayouts.forEach { this.daoSession.soundLayoutDao.delete(it) }

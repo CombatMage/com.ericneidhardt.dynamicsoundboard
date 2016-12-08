@@ -16,7 +16,7 @@ interface ISoundLayoutManager {
 
 	fun setSoundLayoutSelected(soundLayout: SoundLayout)
 
-	fun removeSoundLayouts(soundLayouts: List<SoundLayout>)
+	fun removeSoundLayouts(soundLayouts: List<SoundLayout>): Observable<List<SoundLayout>>
 
 	fun getSuggestedName(): String
 }
