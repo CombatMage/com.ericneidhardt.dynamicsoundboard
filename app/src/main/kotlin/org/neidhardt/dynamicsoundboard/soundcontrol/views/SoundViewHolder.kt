@@ -10,7 +10,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.viewextensions.setOnUserChangesListener
-import rx.Subscription
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
@@ -60,7 +59,7 @@ class SoundViewHolder
 		}
 
 		this.loop.setOnClickListener {
-			val toggleState = this.loop.isSelected
+			val toggleState = !this.loop.isSelected
 			this.loop.isSelected = toggleState
 			this.player?.isLoopingEnabled = toggleState
 		}
