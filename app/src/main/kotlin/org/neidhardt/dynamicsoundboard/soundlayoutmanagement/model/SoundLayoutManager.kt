@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutA
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
 import org.neidhardt.utils.letThis
 import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.util.*
 
@@ -36,7 +37,7 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 
 	@CheckResult
 	override fun addSoundLayout(soundLayout: SoundLayout): Observable<SoundLayout> {
-		return Observable.fromCallable{
+		return Observable.fromCallable {
 			soundLayout.letThis { item ->
 				this.soundLayouts.add(item)
 				this.daoSession.soundLayoutDao.insert(item)
@@ -53,37 +54,43 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 					if (isInDatabase)
 						this.daoSession.soundLayoutDao.update(item)
 				}
-			}
-			.doOnError { error -> Logger.e(this.toString(), error.toString()) }
+			}.doOnError { error -> Logger.e(this.toString(), error.toString()) }
 			.subscribeOn(Schedulers.computation())
 	}
 
 	@CheckResult
-	override fun removeSoundLayouts(soundLayouts: List<SoundLayout>): Observable<List<SoundLayout>> {
-		return Observable.fromCallable {
-				soundLayouts.letThis { items->
+	override fun removeSoundLayouts(toRemove: List<SoundLayout>): Observable<List<SoundLayout>> {
 
-				}
+		this.soundLayouts.removeAll(toRemove)
+		return Observable.just(toRemove)
+
+		/*return Observable.fromCallable {
+				val items = toRemove
+					/*this.soundLayouts.removeAll(items)
+					this.daoSession.runInTx {
+						items.forEach { this.daoSession.soundLayoutDao.delete(it) }
+					}*/
+
+					/*
+					// check if this can be done in doOnCompleted
+					if (this.soundLayouts.size == 0) {
+						val defaultLayout = this.getDefaultSoundLayout()
+						this.soundLayouts.add(defaultLayout)
+						this.daoSession.soundLayoutDao.insert(defaultLayout)
+						this.eventBus.post(SoundLayoutAddedEvent(defaultLayout))
+					}
+					else if (this.soundLayouts.selectedLayout == null) {
+						this.soundLayouts[0].isSelected = true
+						this.soundLayouts[0].updateItemInDatabase(this.daoSession.soundLayoutDao)
+					}*/
+
+				toRemove
+			}.doOnError { error ->
+				val thread = Thread.currentThread().name
+				Logger.e(this.toString(), error.toString())
 			}
-			.doOnError { error -> Logger.e(this.toString(), error.toString()) }
 			.subscribeOn(Schedulers.computation())
-
-		this.soundLayouts.removeAll(soundLayouts)
-		this.daoSession.runInTx {
-			soundLayouts.forEach { this.daoSession.soundLayoutDao.delete(it) }
-		}
-		if (this.soundLayouts.size == 0) {
-			val defaultLayout = this.getDefaultSoundLayout()
-			this.soundLayouts.add(defaultLayout)
-			this.daoSession.soundLayoutDao.insert(defaultLayout)
-			this.eventBus.post(SoundLayoutAddedEvent(defaultLayout))
-		}
-		else if (this.soundLayouts.selectedLayout == null) {
-			this.soundLayouts[0].isSelected = true
-			this.soundLayouts[0].updateItemInDatabaseAsync()
-		}
-
-		this.eventBus.post(SoundLayoutsRemovedEvent(soundLayouts))
+			*/
 	}
 
 	override fun setSoundLayoutSelected(soundLayout: SoundLayout) {
@@ -93,8 +100,10 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 		}
 	}
 
-	override fun getSuggestedName(): String
-		= this.context.resources.getString(R.string.suggested_sound_layout_name) + this.soundLayouts.size
+	override fun getSuggestedName(): String {
+		val count = this.soundLayouts.size
+		return this.context.resources.getString(R.string.suggested_sound_layout_name) + count
+	}
 
 	private fun getDefaultSoundLayout(): SoundLayout =
 			SoundLayout().apply {
@@ -110,6 +119,12 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 		fun getNewDatabaseIdForLabel(label: String): String {
 			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
 		}
+	}
+
+	private fun SoundLayout.updateItemInDatabase(soundLayoutDao: SoundLayoutDao) {
+		val isInDatabase = soundLayoutDao.isSoundLayoutInDatabase(this)
+		if (isInDatabase)
+			soundLayoutDao.update(this)
 	}
 
 	private fun SoundLayout.updateItemInDatabaseAsync() {

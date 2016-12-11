@@ -126,6 +126,9 @@ class NavigationDrawerListPresenter(
 
 	override fun onDetached() {
 		this.eventBus.unregister(this)
+		this.presenterSoundSheets.onDetachedFromWindow()
+		this.presenterPlaylist.onDetachedFromWindow()
+		this.presenterSoundLayouts.onDetachedFromWindow()
 	}
 
 	private fun showToolbarForDeletion() {
@@ -169,7 +172,6 @@ class NavigationDrawerListPresenter(
 
 	private fun deleteSelected() {
 		this.currentPresenter?.deleteSelectedItems()
-		this.currentPresenter?.stopDeletionMode()
 		this.hideToolbarForDeletion()
 	}
 

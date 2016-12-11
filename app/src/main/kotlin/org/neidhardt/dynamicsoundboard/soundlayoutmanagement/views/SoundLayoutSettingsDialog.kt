@@ -7,6 +7,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.findById
+import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
 
 /**
@@ -43,8 +44,15 @@ class SoundLayoutSettingsDialog : SoundLayoutDialog() {
 			this.subscriptions.add(
 					this.soundLayoutsManager.updateSoundLayout {
 						existingItem.apply { this.label = name }
-					}.subscribe ({ updatedItem ->
+					}
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe( { updatedItem ->
 						EventBus.getDefault().post(SoundLayoutRenamedEvent(updatedItem))
+					}, { error ->
+// TODO may show toast
+						this.dismiss()
+					}, {
+						this.dismiss()
 					})
 			)
 		}

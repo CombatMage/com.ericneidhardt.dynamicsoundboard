@@ -102,7 +102,7 @@ class ExoMediaPlayer
 
 	override val albumCover: ByteArray? by lazy {
 		MediaMetadataRetriever().let {
-			it.setDataSource(context, Uri.parse(this.mediaPlayerData.uri))
+			it.setDataSource(this.context, Uri.parse(this.mediaPlayerData.uri))
 			it.embeddedPicture
 		}
 	}
@@ -240,7 +240,7 @@ class ExoMediaPlayer
 
 	override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
 		Logger.d(TAG, "onPlayerStateChanged($playWhenReady, $playbackState)")
-		if (playbackState == ExoPlayer.STATE_ENDED) {
+			if (playbackState == ExoPlayer.STATE_ENDED) {
 			if (this.isLoopingEnabled) {
 				this.progress = 0
 				this.exoPlayer.playWhenReady = true

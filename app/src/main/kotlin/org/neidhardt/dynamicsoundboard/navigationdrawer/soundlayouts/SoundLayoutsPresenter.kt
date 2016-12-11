@@ -5,12 +5,15 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.activeLayout
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog
+import rx.android.schedulers.AndroidSchedulers
+import rx.subscriptions.CompositeSubscription
 import java.util.*
 
 /**
@@ -43,6 +46,8 @@ class SoundLayoutsPresenter
 	var adapter: SoundLayoutsAdapter? = null
 	var values: MutableList<SoundLayout> = ArrayList()
 
+	private val subscriptions = CompositeSubscription()
+
 	override fun onAttachedToWindow()
 	{
 		super.onAttachedToWindow()
@@ -51,11 +56,37 @@ class SoundLayoutsPresenter
 		this.adapter?.notifyDataSetChanged()
 	}
 
-	override fun deleteSelectedItems()
-	{
+	override fun deleteSelectedItems() {
 		val soundLayoutsToRemove = this.getSoundLayoutsSelectedForDeletion()
 
-		this.soundLayoutsManager.removeSoundLayouts(soundLayoutsToRemove)
+		this.subscriptions.add(this.soundLayoutsManager
+				.removeSoundLayouts(soundLayoutsToRemove)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { items ->
+					this.eventBus.post(SoundLayoutsRemovedEvent(items))
+				}
+		)
+
+		/*
+		this.subscriptions.add(this.soundLayoutsManager
+				.removeSoundLayouts(soundLayoutsToRemove)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe( { items ->
+					// TODO remove
+					Logger.d("test", "test")// TODO remove
+					this.eventBus.post(SoundLayoutsRemovedEvent(items))
+				}, { error ->
+					// TODO may show error
+					this.stopDeletionMode()
+				}, {
+					this.stopDeletionMode()
+				} )
+		)*/
+	}
+
+	override fun onDetachedFromWindow() {
+		super.onDetachedFromWindow()
+		this.subscriptions.unsubscribe()
 	}
 
 	override val numberOfItemsSelectedForDeletion: Int
@@ -120,8 +151,14 @@ class SoundLayoutsPresenter
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutsRemovedEvent) {
 		val layoutsToRemove = event.soundLayouts
-		for (layout in layoutsToRemove)
-			this.removeLayout(layout)
+		for (layout in layoutsToRemove) {
+			val index = this.values.indexOf(layout)
+			if (index != -1) // should no happen
+			{
+				this.values.removeAt(index)
+				this.adapter?.notifyItemRemoved(index)
+			}
+		}
 
 		val soundLayout = this.soundLayoutsManager.soundLayouts.activeLayout
 		this.adapter?.notifyItemChanged(soundLayout)
@@ -134,16 +171,4 @@ class SoundLayoutsPresenter
 	}
 
 	override fun onEvent(event: SoundLayoutSelectedEvent) {}
-
-	private fun removeLayout(soundSheet: SoundLayout)
-	{
-		val index = this.values.indexOf(soundSheet)
-		if (index != -1) // should no happen
-		{
-			this.values.removeAt(index)
-			this.adapter?.notifyItemRemoved(index)
-		}
-	}
-
-
 }

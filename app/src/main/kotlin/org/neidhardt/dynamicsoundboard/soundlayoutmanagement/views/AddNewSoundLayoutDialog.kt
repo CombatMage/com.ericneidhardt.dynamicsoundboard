@@ -8,6 +8,8 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutAddedEvent
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager
+import rx.android.schedulers.AndroidSchedulers
+import rx.subscriptions.CompositeSubscription
 
 /**
  * File created by eric.neidhardt on 12.03.2015.
@@ -15,6 +17,8 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutMa
 class AddNewSoundLayoutDialog : SoundLayoutDialog()
 {
 	private var suggestedName: String? = null
+
+	private val subscriptions = CompositeSubscription()
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -24,14 +28,6 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog()
 		if (args != null)
 			this.suggestedName = args.getString(KEY_SUGGESTED_NAME)
 	}
-
-	override fun getLayoutId(): Int = R.layout.dialog_add_new_sound_layout
-
-	override fun getHintForName(): String = this.suggestedName ?: ""
-
-    override fun getTitleId(): Int = R.string.dialog_add_new_sound_layout_title
-
-	override fun getPositiveButtonId(): Int = R.string.dialog_add
 
 	override fun deliverResult()
 	{
@@ -44,10 +40,32 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog()
 			this.databaseId = SoundLayoutManager.getNewDatabaseIdForLabel(name)
 			this.label = name
 		}
-		SoundboardApplication.soundLayoutManager.addSoundLayout(layout)
-
-		EventBus.getDefault().post(SoundLayoutAddedEvent(layout))
+		this.subscriptions.add(
+				SoundboardApplication.soundLayoutManager.addSoundLayout(layout)
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe( { layout ->
+							EventBus.getDefault().post(SoundLayoutAddedEvent(layout))
+						}, { error ->
+							// TODO may show toast
+							this.dismiss()
+						}, {
+							this.dismiss()
+						})
+		)
 	}
+
+	override fun onDestroy() {
+		super.onDestroy()
+		this.subscriptions.unsubscribe()
+	}
+
+	override fun getLayoutId(): Int = R.layout.dialog_add_new_sound_layout
+
+	override fun getHintForName(): String = this.suggestedName ?: ""
+
+    override fun getTitleId(): Int = R.string.dialog_add_new_sound_layout_title
+
+	override fun getPositiveButtonId(): Int = R.string.dialog_add
 
 	interface OnSoundLayoutAddedEventListener
 	{
