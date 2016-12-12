@@ -69,8 +69,6 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 			}
 		}.doOnError { error -> Logger.e(this.toString(), error.toString()) }
 		.doOnCompleted {
-			val thread = Thread.currentThread().name
-			// TODO check thread
 			if (this.soundLayouts.size == 0) {
 				val defaultLayout = this.getDefaultSoundLayout()
 				this.soundLayouts.add(defaultLayout)

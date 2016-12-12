@@ -5,7 +5,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.*
@@ -15,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLa
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
 import java.util.*
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 17.07.2015.
@@ -46,11 +46,11 @@ class SoundLayoutsPresenter
 	var adapter: SoundLayoutsAdapter? = null
 	var values: MutableList<SoundLayout> = ArrayList()
 
-	private val subscriptions = CompositeSubscription()
+	private var subscriptions by Delegates.notNull<CompositeSubscription>()
 
-	override fun onAttachedToWindow()
-	{
+	override fun onAttachedToWindow() {
 		super.onAttachedToWindow()
+		this.subscriptions = CompositeSubscription()
 		this.values.clear()
 		this.values.addAll(this.soundLayoutsManager.soundLayouts)
 		this.adapter?.notifyDataSetChanged()
@@ -59,8 +59,7 @@ class SoundLayoutsPresenter
 	override fun deleteSelectedItems() {
 		val soundLayoutsToRemove = this.getSoundLayoutsSelectedForDeletion()
 
-		//this.subscriptions.add(
-				this.soundLayoutsManager
+		this.subscriptions.add(this.soundLayoutsManager
 				.removeSoundLayouts(soundLayoutsToRemove)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe( { items ->
@@ -71,7 +70,7 @@ class SoundLayoutsPresenter
 				}, {
 					this.stopDeletionMode()
 				} )
-		//)
+		)
 	}
 
 	override fun onDetachedFromWindow() {

@@ -33,7 +33,7 @@ import kotlin.properties.Delegates
  * @author eric.neidhardt on 03.05.2016.
  */
 interface NavigationDrawerListLayout {
-	var currentList: List
+	var currentList: List?
 
 	fun onAttached()
 
@@ -73,10 +73,11 @@ class NavigationDrawerListPresenter(
 	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
 	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView, soundLayoutsManager)
 
-	private var currentListBacking by Delegates.notNull<List>()
-	override var currentList: List
+	private var currentListBacking: List? = null
+	override var currentList: List?
 		get() = this.currentListBacking
 		set(value) {
+			if (value == this.currentListBacking) return
 			this.currentPresenter?.onDetachedFromWindow()
 			val res = this.recyclerView.context.resources
 			when (value) {
