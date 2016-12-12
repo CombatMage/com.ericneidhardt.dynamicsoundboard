@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views
 
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
+import android.widget.Toast
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -46,7 +47,7 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog()
 						.subscribe( { layout ->
 							EventBus.getDefault().post(SoundLayoutAddedEvent(layout))
 						}, { error ->
-							// TODO may show toast
+							Toast.makeText(this.activity, R.string.sound_layouts_toast_add_error, Toast.LENGTH_SHORT).show()
 							this.dismiss()
 						}, {
 							this.dismiss()

@@ -171,4 +171,8 @@
 	<string name="dialog_rename_sound_file_all_occurrences_message">Sollen alle geladenen Sounds die diese Datei benutzen auch umbenannt werden? ({%s0} Sounds)</string>
 	<string name="dialog_rename_sound_toast_file_not_found">Die Sounddatei konnte leider nicht umbenannt werden</string>
 	<string name="dialog_rename_sound_toast_player_not_updated">Die Änderung konnte nicht für alle Sounds übernommen werden. Ein paar Sounds mussten leider entfernt werden.</string>
+
+	<string name="sound_layouts_toast_add_error">Layout konnte nicht gespeichert werden</string>
+	<string name="sound_layouts_toast_remove_error">Layouts konnten nicht gelöscht werden</string>
+	<string name="sound_layouts_toast_change_error">Änderung konnten nicht gespeichert werden</string>
 </resources>

@@ -1,9 +1,11 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
 import android.support.v7.widget.RecyclerView
+import android.widget.Toast
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
@@ -65,7 +67,7 @@ class SoundLayoutsPresenter
 				.subscribe( { items ->
 					this.eventBus.post(SoundLayoutsRemovedEvent(items))
 				}, { error ->
-					// TODO may show error
+					Toast.makeText(this.view?.context, R.string.sound_layouts_toast_remove_error, Toast.LENGTH_SHORT).show()
 					this.stopDeletionMode()
 				}, {
 					this.stopDeletionMode()
