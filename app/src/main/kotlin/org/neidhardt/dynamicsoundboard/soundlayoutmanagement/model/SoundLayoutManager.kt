@@ -59,38 +59,27 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 	}
 
 	@CheckResult
-	override fun removeSoundLayouts(toRemove: List<SoundLayout>): Observable<List<SoundLayout>> {
+	override fun removeSoundLayouts(soundLayouts: List<SoundLayout>): Observable<List<SoundLayout>> {
+		return Observable.fromCallable {
+			soundLayouts.letThis { items ->
+				this.soundLayouts.removeAll(soundLayouts)
+				this.daoSession.runInTx {
+					items.forEach { this.daoSession.soundLayoutDao.delete(it) }
+				}
 
-		this.soundLayouts.removeAll(toRemove)
-		return Observable.just(toRemove)
-
-		/*return Observable.fromCallable {
-				val items = toRemove
-					/*this.soundLayouts.removeAll(items)
-					this.daoSession.runInTx {
-						items.forEach { this.daoSession.soundLayoutDao.delete(it) }
-					}*/
-
-					/*
-					// check if this can be done in doOnCompleted
-					if (this.soundLayouts.size == 0) {
-						val defaultLayout = this.getDefaultSoundLayout()
-						this.soundLayouts.add(defaultLayout)
-						this.daoSession.soundLayoutDao.insert(defaultLayout)
-						this.eventBus.post(SoundLayoutAddedEvent(defaultLayout))
-					}
-					else if (this.soundLayouts.selectedLayout == null) {
-						this.soundLayouts[0].isSelected = true
-						this.soundLayouts[0].updateItemInDatabase(this.daoSession.soundLayoutDao)
-					}*/
-
-				toRemove
-			}.doOnError { error ->
-				val thread = Thread.currentThread().name
-				Logger.e(this.toString(), error.toString())
+				if (this.soundLayouts.size == 0) {
+					val defaultLayout = this.getDefaultSoundLayout()
+					this.soundLayouts.add(defaultLayout)
+					this.daoSession.soundLayoutDao.insert(defaultLayout)
+					this.eventBus.post(SoundLayoutAddedEvent(defaultLayout))
+				}
+				else if (this.soundLayouts.selectedLayout == null) {
+					this.soundLayouts[0].isSelected = true
+					this.soundLayouts[0].updateItemInDatabase(this.daoSession.soundLayoutDao)
+				}
 			}
-			.subscribeOn(Schedulers.computation())
-			*/
+		}.doOnError { error -> Logger.e(this.toString(), error.toString()) }
+		.subscribeOn(Schedulers.computation())
 	}
 
 	override fun setSoundLayoutSelected(soundLayout: SoundLayout) {

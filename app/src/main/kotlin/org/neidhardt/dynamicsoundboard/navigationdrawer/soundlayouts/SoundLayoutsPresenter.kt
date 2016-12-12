@@ -59,21 +59,11 @@ class SoundLayoutsPresenter
 	override fun deleteSelectedItems() {
 		val soundLayoutsToRemove = this.getSoundLayoutsSelectedForDeletion()
 
-		this.subscriptions.add(this.soundLayoutsManager
-				.removeSoundLayouts(soundLayoutsToRemove)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { items ->
-					this.eventBus.post(SoundLayoutsRemovedEvent(items))
-				}
-		)
-
-		/*
-		this.subscriptions.add(this.soundLayoutsManager
+		//this.subscriptions.add(
+				this.soundLayoutsManager
 				.removeSoundLayouts(soundLayoutsToRemove)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe( { items ->
-					// TODO remove
-					Logger.d("test", "test")// TODO remove
 					this.eventBus.post(SoundLayoutsRemovedEvent(items))
 				}, { error ->
 					// TODO may show error
@@ -81,7 +71,7 @@ class SoundLayoutsPresenter
 				}, {
 					this.stopDeletionMode()
 				} )
-		)*/
+		//)
 	}
 
 	override fun onDetachedFromWindow() {
@@ -95,18 +85,15 @@ class SoundLayoutsPresenter
 	override val itemCount: Int
 		get() = this.values.size
 
-	override fun deselectAllItemsSelectedForDeletion()
-	{
+	override fun deselectAllItemsSelectedForDeletion() {
 		val selectedSoundLayouts = this.getSoundLayoutsSelectedForDeletion()
-		for (soundLayout in selectedSoundLayouts)
-		{
+		for (soundLayout in selectedSoundLayouts) {
 			soundLayout.isSelectedForDeletion = false
 			this.adapter?.notifyItemChanged(soundLayout)
 		}
 	}
 
-	override fun selectAllItems()
-	{
+	override fun selectAllItems() {
 		val selectedSoundLayouts = this.values
 		for (soundLayout in selectedSoundLayouts)
 		{
@@ -115,22 +102,18 @@ class SoundLayoutsPresenter
 		}
 	}
 
-	private fun getSoundLayoutsSelectedForDeletion(): List<SoundLayout>
-	{
+	private fun getSoundLayoutsSelectedForDeletion(): List<SoundLayout> {
 		val existingSoundLayouts = this.adapter?.values
 		val selectedSoundLayouts = existingSoundLayouts.orEmpty().filter { it.isSelectedForDeletion }
 		return selectedSoundLayouts
 	}
 
-	override fun onItemClick(data: SoundLayout)
-	{
-		if (this.isInSelectionMode)
-		{
+	override fun onItemClick(data: SoundLayout) {
+		if (this.isInSelectionMode) {
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			super.onItemSelectedForDeletion()
 		}
-		else
-		{
+		else {
 			this.soundLayoutsManager.setSoundLayoutSelected(data)
 			this.eventBus.post(SoundLayoutSelectedEvent(data))
 		}
@@ -138,11 +121,9 @@ class SoundLayoutsPresenter
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutAddedEvent)
-	{
+	override fun onEvent(event: SoundLayoutAddedEvent) {
 		val newLayout = event.data
-		if (!this.values.contains(newLayout))
-		{
+		if (!this.values.contains(newLayout)) {
 			this.values.add(newLayout)
 			this.adapter?.notifyItemInserted(this.values.size - 1)
 		}
