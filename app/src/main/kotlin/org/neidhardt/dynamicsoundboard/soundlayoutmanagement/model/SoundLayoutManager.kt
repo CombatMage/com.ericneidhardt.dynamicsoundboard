@@ -66,19 +66,22 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 				this.daoSession.runInTx {
 					items.forEach { this.daoSession.soundLayoutDao.delete(it) }
 				}
-
-				if (this.soundLayouts.size == 0) {
-					val defaultLayout = this.getDefaultSoundLayout()
-					this.soundLayouts.add(defaultLayout)
-					this.daoSession.soundLayoutDao.insert(defaultLayout)
-					this.eventBus.post(SoundLayoutAddedEvent(defaultLayout))
-				}
-				else if (this.soundLayouts.selectedLayout == null) {
-					this.soundLayouts[0].isSelected = true
-					this.soundLayouts[0].updateItemInDatabase(this.daoSession.soundLayoutDao)
-				}
 			}
 		}.doOnError { error -> Logger.e(this.toString(), error.toString()) }
+		.doOnCompleted {
+			val thread = Thread.currentThread().name
+			// TODO check thread
+			if (this.soundLayouts.size == 0) {
+				val defaultLayout = this.getDefaultSoundLayout()
+				this.soundLayouts.add(defaultLayout)
+				this.daoSession.soundLayoutDao.insert(defaultLayout)
+				this.eventBus.post(SoundLayoutAddedEvent(defaultLayout))
+			}
+			else if (this.soundLayouts.selectedLayout == null) {
+				this.soundLayouts[0].isSelected = true
+				this.soundLayouts[0].updateItemInDatabase(this.daoSession.soundLayoutDao)
+			}
+		}
 		.subscribeOn(Schedulers.computation())
 	}
 
