@@ -137,8 +137,7 @@ dependencies {
 
 	compile rootProject.ext.libraries.exoplayer
 
-	compile rootProject.ext.libraries.jacksonDatabind
-	compile rootProject.ext.libraries.jacksonKotlin
+	compile rootProject.ext.libraries.gson
 
 	compile rootProject.ext.libraries.robotoTextView
 

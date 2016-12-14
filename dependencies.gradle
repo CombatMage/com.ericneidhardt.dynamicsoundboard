@@ -7,7 +7,6 @@ ext.versions = [
 
 		exoplayer   : 'r2.0.3',
 
-		jackson   : '2.8.4',
 		robotoTextView : '2.5.1',
 
 		recyclerViewAnimator : '2.2.4',
@@ -35,8 +34,7 @@ ext.libraries = [
 
 		exoplayer            : "com.google.android.exoplayer:exoplayer:$versions.exoplayer",
 
-		jacksonDatabind      : "com.fasterxml.jackson.core:jackson-databind:$versions.jackson",
-		jacksonKotlin        : "com.fasterxml.jackson.module:jackson-module-kotlin:$versions.jackson",
+		gson                 : "com.google.code.gson:gson:2.4",
 
 		robotoTextView       : "com.github.johnkil.android-robototextview:robototextview:$versions.robotoTextView",
 

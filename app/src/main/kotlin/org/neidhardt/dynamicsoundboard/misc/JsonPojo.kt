@@ -1,9 +1,6 @@
 package org.neidhardt.dynamicsoundboard.misc
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.core.JsonFactory
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.google.gson.Gson
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
@@ -14,54 +11,29 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 14.11.2014.
  */
+private val converter: Gson by lazy { Gson() }
+
 @Throws(IOException::class)
 fun writeToFile(file: File, soundSheets: List<SoundSheet>,
-		playlist: List<MediaPlayerController>, sounds: Map<String, List<MediaPlayerController>>)
-{
-	val mapper = ObjectMapper()
+		playlist: List<MediaPlayerController>, sounds: Map<String, List<MediaPlayerController>>) {
 
 	val pojo = JsonPojo()
-
 	pojo.soundSheets = soundSheets
-	pojo.addPlayList(playlist)
-	pojo.addSounds(sounds)
-
-	mapper.writeValue(file, pojo)
+	pojo.playList = playlist.map { it.mediaPlayerData }
+	pojo.sounds = HashMap<String, List<MediaPlayerData>>(sounds.size).apply {
+		for (key in sounds.keys) {
+			val soundsPerSoundSheet = ArrayList<MediaPlayerData>()
+			for (player in sounds[key].orEmpty())
+				soundsPerSoundSheet.add(player.mediaPlayerData)
+			this.put(key, soundsPerSoundSheet)
+		}
+	}
+	val json = converter.toJson(pojo)
+	file.writeText(json)
 }
 
 @Throws(IOException::class)
-fun readFromFile(file: File): JsonPojo = jacksonObjectMapper().readValue(file, JsonPojo::class.java)
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-@SuppressWarnings("unused")
-class JsonPojo
-{
-	var soundSheets: List<SoundSheet> = ArrayList()
-
-	var playList: MutableList<MediaPlayerData> = ArrayList()
-		private set
-
-	var sounds: MutableMap<String, List<MediaPlayerData>> = HashMap()
-        private set
-
-	fun addPlayList(playlist: List<MediaPlayerController>)
-	{
-		this.playList = ArrayList<MediaPlayerData>(playlist.size).apply {
-			for (player in playlist)
-				this.add(player.mediaPlayerData)
-		}
-	}
-
-	fun addSounds(sounds: Map<String, List<MediaPlayerController>>)
-	{
-		this.sounds = HashMap<String, List<MediaPlayerData>>(sounds.size).apply {
-			for (key in sounds.keys)
-			{
-				val soundsPerSoundSheet = ArrayList<MediaPlayerData>()
-				for (player in sounds[key].orEmpty())
-					soundsPerSoundSheet.add(player.mediaPlayerData)
-				this.put(key, soundsPerSoundSheet)
-			}
-		}
-	}
+fun readFromFile(file: File): JsonPojo {
+	val json = file.readText()
+	return converter.fromJson(json, JsonPojo::class.java)
 }
