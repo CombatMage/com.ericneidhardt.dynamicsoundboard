@@ -72,12 +72,14 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 	}
 
 	fun animateUiChanges() {
-		this.post {
-			AnimationUtils.createCircularReveal(this,
-					width,
-					height,
-					0f,
-					(height * 2).toFloat())?.start()
+		if (this.isAttachedToWindow) {
+			this.post {
+				AnimationUtils.createCircularReveal(this,
+						width,
+						height,
+						0f,
+						(height * 2).toFloat())?.start()
+			}
 		}
 	}
 

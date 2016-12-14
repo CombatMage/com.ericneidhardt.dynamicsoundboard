@@ -14,7 +14,6 @@ object AnimationUtils {
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	fun createCircularReveal(view: View, startX: Int, startY: Int, startRadius: Float, endRadius: Float): Animator? {
-
 		if (AndroidVersion.IS_LOLLIPOP_AVAILABLE) {
 			return ViewAnimationUtils.createCircularReveal(view,
 					startX,
