@@ -10,9 +10,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheetDao
 import org.neidhardt.dynamicsoundboard.daohelper.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.activeLayout
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.*
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OpenSoundSheetEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetAddedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.SoundSheetChangedEvent
@@ -39,18 +37,10 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsM
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
 	private val eventBus = EventBus.getDefault()
 
-	private var isInitDone: Boolean = false
-
-	init { this.initIfRequired() }
-
-	override fun initIfRequired(): Boolean {
-		if (!this.isInitDone)
-		{
-			this.isInitDone = true
-
+	init {
+		RxSoundLayoutManager.selectsLayout(this.soundLayoutsManager).subscribe { selectedLayout ->
 			this.soundSheets.clear()
 			this.daoSession = GreenDaoHelper.setupDatabase(this.context, this.getDatabaseName())
-
 			this.daoSession?.let { dbSoundSheets ->
 				SoundboardApplication.taskCounter.value += 1
 				dbSoundSheets.loadSoundSheets()
@@ -67,15 +57,10 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsM
 							SoundboardApplication.taskCounter.value -= 1
 						} )
 			}
-			return true
 		}
-		else
-			return false
 	}
 
 	override fun releaseAll() {
-		this.isInitDone = false
-
 		val copyList = ArrayList<SoundSheet>(soundSheets.size)
 		copyList.addAll(soundSheets)
 

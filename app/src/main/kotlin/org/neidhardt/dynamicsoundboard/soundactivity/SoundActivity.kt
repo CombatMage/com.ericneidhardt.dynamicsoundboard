@@ -118,7 +118,6 @@ class SoundActivity :
 		if (!requestedPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE) &&
 				!requestedPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 			this.soundsDataUtil.initIfRequired()
-			this.soundSheetsDataUtil.initIfRequired()
 		}
 
 		this.initToolbar()
@@ -136,7 +135,6 @@ class SoundActivity :
 
 				if (this.hasPermissionWriteStorage && this.hasPermissionReadStorage) {
 					this.soundsDataUtil.initIfRequired()
-					this.soundSheetsDataUtil.initIfRequired()
 				}
 			}
 		}
@@ -199,8 +197,10 @@ class SoundActivity :
 		this.toolbarVM.isSoundSheetActionsEnable = false
 
 		this.soundsDataUtil.initIfRequired()
-		if (this.soundSheetsDataUtil.initIfRequired())
-			this.onSoundSheetsInit()
+
+		// TODO subscribe on ini event
+		//if (this.soundSheetsDataUtil.initIfRequired())
+		//	this.onSoundSheetsInit()
 	}
 
 	private fun onSoundSheetsInit() {
@@ -256,7 +256,6 @@ class SoundActivity :
 		this.toolbarVM.isSoundSheetActionsEnable = false
 
 		this.soundSheetsDataUtil.releaseAll()
-		this.soundSheetsDataUtil.initIfRequired()
 
 		this.soundsDataUtil.releaseAll()
 		this.soundsDataUtil.initIfRequired()

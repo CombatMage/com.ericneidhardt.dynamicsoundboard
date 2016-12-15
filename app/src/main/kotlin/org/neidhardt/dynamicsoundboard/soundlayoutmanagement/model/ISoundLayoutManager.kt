@@ -10,6 +10,10 @@ interface ISoundLayoutManager {
 
 	val soundLayouts: List<SoundLayout>
 
+	var onSoundLayoutSelectedListener: ((SoundLayout) -> Unit)?
+
+	var onSoundLayoutsChangedListener: ((List<SoundLayout>) -> Unit)?
+
 	fun addSoundLayout(soundLayout: SoundLayout): Observable<SoundLayout>
 
 	fun updateSoundLayout(update: () -> SoundLayout): Observable<SoundLayout>

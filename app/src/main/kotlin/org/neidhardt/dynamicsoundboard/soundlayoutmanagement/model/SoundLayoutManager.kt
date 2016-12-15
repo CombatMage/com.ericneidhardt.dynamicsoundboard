@@ -11,10 +11,10 @@ import org.neidhardt.dynamicsoundboard.dao.SoundLayoutDao
 import org.neidhardt.dynamicsoundboard.daohelper.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutAddedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
+import org.neidhardt.utils.ValueHolder
 import org.neidhardt.utils.letThis
 import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
+import rx.lang.kotlin.subscriber
 import rx.schedulers.Schedulers
 import java.util.*
 
@@ -26,6 +26,9 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 	private val daoSession: DaoSession = GreenDaoHelper.setupDatabase(this.context, DB_SOUND_LAYOUTS)
 	private val eventBus: EventBus = EventBus.getDefault()
 
+	override var onSoundLayoutSelectedListener: ((SoundLayout) -> Unit)? = null
+	override var onSoundLayoutsChangedListener: ((List<SoundLayout>) -> Unit)? = null
+
 	override val soundLayouts: MutableList<SoundLayout> = ArrayList()
 
 	init {
@@ -33,6 +36,7 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 		if (count == 0.toLong())
 			this.daoSession.soundLayoutDao.insert(this.getDefaultSoundLayout())
 		this.soundLayouts.addAll(this.daoSession.soundLayoutDao.queryBuilder().list())
+		this.onSoundLayoutSelectedListener?.invoke(this.soundLayouts.first { it.isSelected })
 	}
 
 	@CheckResult
@@ -74,10 +78,12 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 				this.soundLayouts.add(defaultLayout)
 				this.daoSession.soundLayoutDao.insert(defaultLayout)
 				this.eventBus.post(SoundLayoutAddedEvent(defaultLayout))
+				this.onSoundLayoutSelectedListener?.invoke(this.soundLayouts[0])
 			}
 			else if (this.soundLayouts.selectedLayout == null) {
 				this.soundLayouts[0].isSelected = true
 				this.soundLayouts[0].updateItemInDatabase(this.daoSession.soundLayoutDao)
+				this.onSoundLayoutSelectedListener?.invoke(this.soundLayouts[0])
 			}
 		}
 		.subscribeOn(Schedulers.computation())
@@ -88,6 +94,7 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 			layoutInList.isSelected = layoutInList == soundLayout
 			layoutInList.updateItemInDatabaseAsync()
 		}
+		this.onSoundLayoutSelectedListener?.invoke(soundLayout)
 	}
 
 	override fun getSuggestedName(): String {
@@ -136,4 +143,24 @@ private fun SoundLayoutDao.isSoundLayoutInDatabase(soundLayout: SoundLayout): Bo
 			.where(SoundLayoutDao.Properties.DatabaseId.eq(soundLayout.databaseId))
 			.list()
 			.isNotEmpty()
+}
+
+object RxSoundLayoutManager {
+	fun changes(manager: ISoundLayoutManager): Observable<List<SoundLayout>> {
+		return Observable.create{ subscriber ->
+			manager.onSoundLayoutsChangedListener = { layouts: List<SoundLayout> ->
+				subscriber.onNext(layouts)
+			}
+		}
+	}
+
+	fun selectsLayout(manager: ISoundLayoutManager): Observable<SoundLayout> {
+		return Observable.create { subscriber ->
+			val selectedSoundLayout = manager.soundLayouts.first { it.isSelected }
+			subscriber.onNext(selectedSoundLayout)
+			manager.onSoundLayoutSelectedListener = { layout ->
+				subscriber.onNext(layout)
+			}
+		}
+	}
 }

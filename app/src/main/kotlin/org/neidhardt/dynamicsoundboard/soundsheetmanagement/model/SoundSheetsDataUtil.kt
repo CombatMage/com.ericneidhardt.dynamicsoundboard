@@ -5,14 +5,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 /**
  * File created by eric.neidhardt on 02.06.2015.
  */
-interface SoundSheetsDataUtil
-{
-	/**
-	 * Starts async task to retrieve sound sheets from database. If `SoundSheetsDataUtil` was initialized before,
-	 * the corresponding events are fired, but no database transaction is performed.
-	 * @return true if init was required and async handling has started, else false.
-	 */
-	fun initIfRequired(): Boolean
+interface SoundSheetsDataUtil {
 
 	/**
 	 * Release all existing `SoundSheet` and set state to not init.
