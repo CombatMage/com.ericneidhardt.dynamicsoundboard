@@ -9,24 +9,22 @@ import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
+import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 
-class AddNewSoundSheetDialog : BaseDialog()
-{
-	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
-	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
+class AddNewSoundSheetDialog : BaseDialog() {
+
+	private val manager = SoundboardApplication.newSoundSheetManager
 
 	private var soundSheetName: EditText? = null
 	private var suggestedName: String? = null
 
-	override fun onCreate(savedInstanceState: Bundle?)
-    {
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-
-		this.suggestedName = this.arguments?.getString(KEY_SUGGESTED_NAME)
+		this.suggestedName = this.manager.suggestedName
 	}
 
-	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
-    {
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		val context = this.activity
 
 		@SuppressLint("InflateParams") val view = context.layoutInflater.inflate(R.layout.dialog_add_new_sound_sheet, null)
@@ -50,24 +48,20 @@ class AddNewSoundSheetDialog : BaseDialog()
 		if (label.isEmpty())
 			label = this.suggestedName ?: ""
 
-		val soundSheet = this.soundSheetsDataUtil.getNewSoundSheet(label)
-		soundSheet.isSelected = true
-		this.soundSheetsDataStorage.addSoundSheetToManager(soundSheet)
+		val soundSheet = NewSoundSheet().apply {
+			this.label = label
+			this.fragmentTag = NewSoundSheetManager.getNewFragmentTagForLabel(label)
+		}
+		this.manager.add(soundSheet)
+		this.manager.setSelected(soundSheet)
 	}
 
 	companion object
     {
 		private val TAG = AddNewSoundSheetDialog::class.java.name
 
-		private val KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog.suggestedName"
-
-		fun showInstance(manager: FragmentManager, suggestedName: String) {
+		fun showInstance(manager: FragmentManager) {
 			val dialog = AddNewSoundSheetDialog()
-
-			val args = Bundle()
-			args.putString(KEY_SUGGESTED_NAME, suggestedName)
-			dialog.arguments = args
-
 			dialog.show(manager, TAG)
 		}
 	}

@@ -1,5 +1,8 @@
 package org.neidhardt.dynamicsoundboard.manager
 
+import android.content.Context
+import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import rx.Observable
 import rx.lang.kotlin.add
@@ -8,7 +11,13 @@ import java.util.*
 /**
  * Created by eric.neidhardt@gmail.com on 19.12.2016.
  */
-class NewSoundSheetManager {
+class NewSoundSheetManager(private val context: Context) {
+
+	companion object {
+		fun getNewFragmentTagForLabel(label: String): String {
+			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
+		}
+	}
 
 	internal var onSoundSheetsChangedListener = ArrayList<((List<NewSoundSheet>) -> Unit)>()
 
@@ -46,6 +55,8 @@ class NewSoundSheetManager {
 		if (!this.soundSheets.contains(soundSheet)) throw IllegalArgumentException("given layout not found in dataset")
 		this.invokeListeners()
 	}
+
+	val suggestedName: String get() = this.context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
 
 	private fun invokeListeners() {
 		this.onSoundSheetsChangedListener.forEach { it.invoke(this.soundSheets) }

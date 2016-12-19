@@ -44,7 +44,7 @@ open class SoundboardApplication : MultiDexApplication() {
 
 
 		val storage by lazy { AppDataStorage(this.context) }
-		val newSoundSheetManager by lazy { NewSoundSheetManager() }
+		val newSoundSheetManager by lazy { NewSoundSheetManager(this.context) }
 		val newSoundManager by lazy { NewSoundManager() }
 		val newSoundLayoutManager by lazy {
 			NewSoundLayoutManager(this.context, this.storage, this.newSoundSheetManager, this.newSoundManager) }

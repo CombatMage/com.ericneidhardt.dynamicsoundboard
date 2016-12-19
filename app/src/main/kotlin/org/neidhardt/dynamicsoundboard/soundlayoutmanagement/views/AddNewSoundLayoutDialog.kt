@@ -23,7 +23,7 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog() {
 
 		val args = this.arguments
 		if (args != null)
-			this.suggestedName = args.getString(KEY_SUGGESTED_NAME)
+			this.suggestedName = this.getHintForName()
 	}
 
 	override fun deliverResult() {
@@ -57,15 +57,8 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog() {
 	{
 		private val TAG = AddNewSoundLayoutDialog::class.java.name
 
-		private val KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.dialog.AddNewSoundLayoutDialog.suggestedName"
-
-		fun showInstance(manager: FragmentManager, suggestedName: String) {
+		fun showInstance(manager: FragmentManager) {
 			val dialog = AddNewSoundLayoutDialog()
-
-			val args = Bundle()
-			args.putString(KEY_SUGGESTED_NAME, suggestedName)
-			dialog.arguments = args
-
 			dialog.show(manager, TAG)
 		}
 	}

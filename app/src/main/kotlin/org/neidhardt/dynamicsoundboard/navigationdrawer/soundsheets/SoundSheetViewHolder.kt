@@ -7,6 +7,7 @@ import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 
 /**
  * File created by eric.neidhardt on 10.07.2015.
@@ -14,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClic
 class SoundSheetViewHolder
 (
 		itemView: View,
-		private val onItemClickListener: NavigationDrawerItemClickListener<SoundSheet>
+		private val onItemClickListener: NavigationDrawerItemClickListener<NewSoundSheet>
 ) : RecyclerView.ViewHolder(itemView)
 {
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
@@ -23,14 +24,14 @@ class SoundSheetViewHolder
 	private val soundCountLabel = itemView.findViewById(R.id.tv_sound_count_label)
 	private val divider = itemView.findViewById(R.id.v_divider)
 
-	private var data: SoundSheet? = null
+	private var data: NewSoundSheet? = null
 
 	init {
 		itemView.setOnClickListener({ view
-			-> this.onItemClickListener.onItemClick(this.data as SoundSheet) })
+			-> this.onItemClickListener.onItemClick(this.data as NewSoundSheet) })
 	}
 
-	fun bindData(data: SoundSheet, soundCount: Int, isLastItem: Boolean)
+	fun bindData(data: NewSoundSheet, soundCount: Int, isLastItem: Boolean)
 	{
 		this.data = data
 

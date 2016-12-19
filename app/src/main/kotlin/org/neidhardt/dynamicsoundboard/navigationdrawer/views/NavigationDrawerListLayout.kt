@@ -58,8 +58,6 @@ class NavigationDrawerListPresenter(
 
 		soundsDataAccess: SoundsDataAccess,
 		soundsDataStorage: SoundsDataStorage,
-		soundSheetsDataAccess: SoundSheetsDataAccess,
-		soundSheetsDataStorage: SoundSheetsDataStorage,
 
 		private val soundLayoutsManager: ISoundLayoutManager,
 		private val soundSheetsDataUtil: SoundSheetsDataUtil
@@ -69,7 +67,7 @@ class NavigationDrawerListPresenter(
 
 	private var currentPresenter: NavigationDrawerListPresenter? = null
 
-	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage, soundSheetsDataAccess, soundSheetsDataStorage)
+	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
 	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
 	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView, soundLayoutsManager)
 
@@ -157,9 +155,9 @@ class NavigationDrawerListPresenter(
 
 	private fun add() {
 		when (this.currentList) {
-			List.SoundLayouts -> AddNewSoundLayoutDialog.showInstance(this.fragmentManager, this.soundLayoutsManager.getSuggestedName())
+			List.SoundLayouts -> AddNewSoundLayoutDialog.showInstance(this.fragmentManager)
 			List.Playlist -> AddNewSoundDialog.show(this.fragmentManager, PlaylistTAG)
-			List.SoundSheet -> AddNewSoundSheetDialog.showInstance(this.fragmentManager, this.soundSheetsDataUtil.getSuggestedName())
+			List.SoundSheet -> AddNewSoundSheetDialog.showInstance(this.fragmentManager)
 		}
 	}
 

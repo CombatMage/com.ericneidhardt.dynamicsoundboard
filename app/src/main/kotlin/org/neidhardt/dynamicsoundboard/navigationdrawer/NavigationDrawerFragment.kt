@@ -78,8 +78,6 @@ class NavigationDrawerFragment : BaseFragment() {
 				soundLayoutsManager = SoundboardApplication.soundLayoutManager,
 				soundsDataAccess = SoundboardApplication.soundsDataAccess,
 				soundsDataStorage = SoundboardApplication.soundsDataStorage,
-				soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess,
-				soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage,
 				soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
 		)
 

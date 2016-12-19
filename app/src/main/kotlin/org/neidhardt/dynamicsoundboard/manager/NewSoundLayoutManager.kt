@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager
@@ -17,6 +18,12 @@ class NewSoundLayoutManager(
 		private val storage: AppDataStorage,
 		private val newSoundSheetManager: NewSoundSheetManager,
 		private val newSoundManager: NewSoundManager) {
+
+	companion object {
+		fun getNewDatabaseIdForLabel(label: String): String {
+			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
+		}
+	}
 
 	internal var onSoundLayoutsChangedListener = ArrayList<((List<NewSoundLayout>) -> Unit)>()
 

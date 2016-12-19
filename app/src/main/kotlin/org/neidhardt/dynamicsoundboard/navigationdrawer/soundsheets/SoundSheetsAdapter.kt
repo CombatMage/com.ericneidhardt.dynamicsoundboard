@@ -6,19 +6,20 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 
 open class SoundSheetsAdapter
 (
 		private val presenter: SoundSheetsPresenter
 ) :
-		BaseAdapter<SoundSheet, SoundSheetViewHolder>(),
-		NavigationDrawerItemClickListener<SoundSheet>
+		BaseAdapter<NewSoundSheet, SoundSheetViewHolder>(),
+		NavigationDrawerItemClickListener<NewSoundSheet>
 {
 	init { this.setHasStableIds(true) }
 
 	override fun getItemId(position: Int): Long = this.values[position].fragmentTag.hashCode().toLong()
 
-	override val values: List<SoundSheet>
+	override val values: List<NewSoundSheet>
 		get() = this.presenter.values
 
 	override fun getItemViewType(position: Int): Int = R.layout.view_sound_sheet_item
@@ -41,7 +42,7 @@ open class SoundSheetsAdapter
 		holder.bindData(data, soundCount, position == this.itemCount - 1)
 	}
 
-	override fun onItemClick(data: SoundSheet)
+	override fun onItemClick(data: NewSoundSheet)
 	{
 		this.presenter.onItemClick(data)
 	}
