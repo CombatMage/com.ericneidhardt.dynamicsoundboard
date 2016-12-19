@@ -37,9 +37,12 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsM
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
 	private val eventBus = EventBus.getDefault()
 
+	override var isInitDone: Boolean = false
 	override var onSoundSheetsLoadedListener: ((List<SoundSheet>) -> Unit)? = null
 
 	override fun init() {
+		if (this.isInitDone) return
+
 		this.soundSheets.clear()
 		this.daoSession = GreenDaoHelper.setupDatabase(this.context, this.getDatabaseName())
 		this.daoSession?.let { dbSoundSheets ->
@@ -53,21 +56,22 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsM
 					}, { error ->
 						Logger.e(TAG, "Error while loading sound sheets: ${error.message}")
 						SoundboardApplication.taskCounter.value -= 1
+						this.isInitDone = true
 						this.onSoundSheetsLoadedListener?.invoke(this.soundSheets)
 					}, {
 						Logger.d(TAG, "Loading sound sheets completed")
 						SoundboardApplication.taskCounter.value -= 1
+						this.isInitDone = true
 						this.onSoundSheetsLoadedListener?.invoke(this.soundSheets)
 					} )
 		}
 	}
 
 	override fun releaseAll() {
+		this.isInitDone = false
 		val copyList = ArrayList<SoundSheet>(soundSheets.size)
 		copyList.addAll(soundSheets)
-
 		this.soundSheets.clear()
-
 		this.eventBus.post(SoundSheetsRemovedEvent(copyList))
 	}
 

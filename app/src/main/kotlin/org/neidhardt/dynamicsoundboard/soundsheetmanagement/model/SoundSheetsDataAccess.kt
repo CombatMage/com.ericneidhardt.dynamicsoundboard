@@ -8,6 +8,8 @@ import rx.Observable
  */
 interface SoundSheetsDataAccess {
 
+	var isInitDone: Boolean
+
 	var onSoundSheetsLoadedListener: ((List<SoundSheet>) -> Unit)?
 
 	fun init()
@@ -39,6 +41,8 @@ interface SoundSheetsDataAccess {
 object RxSoundSheetManager {
 	fun loadSoundSheets(manager: SoundSheetsDataAccess) : Observable<List<SoundSheet>> {
 		return Observable.create { subscriber ->
+			if (manager.isInitDone)
+				subscriber.onNext(manager.getSoundSheets())
 			manager.onSoundSheetsLoadedListener = { soundSheet ->
 				subscriber.onNext(soundSheet)
 			}
