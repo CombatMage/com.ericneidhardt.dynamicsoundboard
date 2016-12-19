@@ -36,23 +36,29 @@ import org.neidhardt.dynamicsoundboard.notifications.NotificationService
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
+import org.neidhardt.dynamicsoundboard.reportError
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundcontrol.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutsChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.RxSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeletePlayListDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.RxSoundSheetManager
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.utils.letThis
 import org.neidhardt.eventbus_utils.registerIfRequired
+import rx.android.schedulers.AndroidSchedulers
+import rx.lang.kotlin.toSingletonObservable
+import rx.subscriptions.CompositeSubscription
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -63,7 +69,6 @@ class SoundActivity :
 		BaseActivity(),
 		RequestPermissionHelper,
 		AddPauseFloatingActionButtonView.FabEventListener,
-		OnSoundLayoutsChangedEventListener,
 		OnOpenSoundLayoutSettingsEventListener,
 		OnSoundSheetOpenEventListener,
 		OnSoundSheetsInitEventLisenter,
@@ -72,6 +77,9 @@ class SoundActivity :
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private val eventBus = EventBus.getDefault()
+	private val subscriptions = CompositeSubscription()
+
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
 	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
@@ -121,8 +129,36 @@ class SoundActivity :
 		}
 
 		this.initToolbar()
-
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
+
+		this.subscriptions.add(RxSoundLayoutManager.loadSoundSheets(this.soundLayoutManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { soundLayouts ->
+					this.soundSheetsDataAccess.init()
+					this.soundsDataUtil.initIfRequired()
+				}
+		)
+
+		this.subscriptions.add(RxSoundLayoutManager.selectsLayout(this.soundLayoutManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { selectedLayout ->
+					this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
+					this.toolbarVM.isSoundSheetActionsEnable = false
+
+					this.soundSheetsDataUtil.releaseAll()
+					this.soundsDataUtil.releaseAll()
+
+					this.soundSheetsDataAccess.init()
+					this.soundsDataUtil.initIfRequired()
+				})
+
+		this.subscriptions.add(RxSoundSheetManager.loadSoundSheets(this.soundSheetsDataAccess)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { soundSheets ->
+					this.handleIntent(this.intent)
+					this.openSoundFragment(this.soundSheetsDataAccess.getSelectedItem())
+				}
+		)
 	}
 
 	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -196,13 +232,14 @@ class SoundActivity :
 		this.closeAppOnBackPress = false
 		this.toolbarVM.isSoundSheetActionsEnable = false
 
-		this.soundsDataUtil.initIfRequired()
+		//this.soundsDataUtil.initIfRequired()
 
 		// TODO subscribe on ini event
 		//if (this.soundSheetsDataUtil.initIfRequired())
 		//	this.onSoundSheetsInit()
 	}
 
+	// TODO remove
 	private fun onSoundSheetsInit() {
 		this.handleIntent(this.intent) // sound sheets have been loaded, check if there is pending intent to handle
 		this.openSoundFragment(this.soundSheetsDataAccess.getSelectedItem())
@@ -220,6 +257,7 @@ class SoundActivity :
 
 	override fun onStop() {
 		this.eventBus.unregister(this)
+		this.subscriptions.unsubscribe()
 
 		if (this.isFinishing) {
 			// we remove all loaded sounds, which have no corresponding SoundSheet
@@ -251,17 +289,6 @@ class SoundActivity :
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutSelectedEvent) {
-		this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
-		this.toolbarVM.isSoundSheetActionsEnable = false
-
-		this.soundSheetsDataUtil.releaseAll()
-
-		this.soundsDataUtil.releaseAll()
-		this.soundsDataUtil.initIfRequired()
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundLayoutSettingsEvent) {
 		SoundLayoutSettingsDialog.showInstance(this.supportFragmentManager, event.soundLayout.databaseId)
 	}
@@ -271,9 +298,10 @@ class SoundActivity :
 		this.openSoundFragment(event.soundSheetToOpen)
 	}
 
+	// TODO remove
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundSheetsInitEvent) {
-		this.onSoundSheetsInit()
+		//this.onSoundSheetsInit()
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

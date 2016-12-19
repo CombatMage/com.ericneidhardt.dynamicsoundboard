@@ -9,10 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_navigation_drawer.*
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
@@ -20,22 +19,19 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDraw
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
-import org.neidhardt.dynamicsoundboard.base.BaseFragment
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutsChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
+import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.RxSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.activeLayout
 import org.neidhardt.utils.letThis
-import org.neidhardt.eventbus_utils.registerIfRequired
+import rx.android.schedulers.AndroidSchedulers
+import rx.subscriptions.CompositeSubscription
 import kotlin.properties.Delegates
 
-class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListener {
+class NavigationDrawerFragment : BaseFragment() {
 
 	override var fragmentTag: String = javaClass.name
 
 	private val eventBus = EventBus.getDefault()
-
+	private val subscriptions = CompositeSubscription()
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private var tabView: NavigationDrawerTabLayout? = null
@@ -98,34 +94,30 @@ class NavigationDrawerFragment : BaseFragment(), OnSoundLayoutsChangedEventListe
 	{
 		super.onStart()
 
-		this.eventBus.registerIfRequired(this)
 		this.tabView?.onAttached()
 		this.listView?.onAttached()
+
+		this.subscriptions.add(RxSoundLayoutManager.selectsLayout(this.soundLayoutManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { selectedLayout ->
+					this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
+					this.headerVM.isSoundLayoutOpen = false
+				})
+
+		this.subscriptions.add(RxSoundLayoutManager.changesLayoutList(this.soundLayoutManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { layouts ->
+					this.headerVM.title = layouts.firstOrNull { it.isSelected }?.label
+				})
 	}
 
 	override fun onStop() {
 		super.onStop()
 
-		this.eventBus.unregister(this)
+		this.subscriptions.unsubscribe()
 		this.headerVM.isSoundLayoutOpen = false
 		this.tabView?.onDetached()
 		this.listView?.onDetached()
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutsRemovedEvent) {
-		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutRenamedEvent) {
-		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutSelectedEvent) {
-		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
-		this.headerVM.isSoundLayoutOpen = false
 	}
 }
 

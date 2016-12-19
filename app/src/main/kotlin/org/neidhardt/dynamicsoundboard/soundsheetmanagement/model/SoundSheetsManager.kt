@@ -37,26 +37,28 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsM
 	private val soundSheets: MutableList<SoundSheet> = ArrayList()
 	private val eventBus = EventBus.getDefault()
 
-	init {
-		RxSoundLayoutManager.selectsLayout(this.soundLayoutsManager).subscribe { selectedLayout ->
-			this.soundSheets.clear()
-			this.daoSession = GreenDaoHelper.setupDatabase(this.context, this.getDatabaseName())
-			this.daoSession?.let { dbSoundSheets ->
-				SoundboardApplication.taskCounter.value += 1
-				dbSoundSheets.loadSoundSheets()
-						.flatMapIterable { it -> it }
-						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe( { soundSheet ->
-							Logger.d(TAG, "Loaded: $soundSheet")
-							this.addSoundSheetToManager(soundSheet)
-						}, { error ->
-							Logger.e(TAG, "Error while loading sound sheets: ${error.message}")
-							SoundboardApplication.taskCounter.value -= 1
-						}, {
-							Logger.d(TAG, "Loading sound sheets completed")
-							SoundboardApplication.taskCounter.value -= 1
-						} )
-			}
+	override var onSoundSheetsLoadedListener: ((List<SoundSheet>) -> Unit)? = null
+
+	override fun init() {
+		this.soundSheets.clear()
+		this.daoSession = GreenDaoHelper.setupDatabase(this.context, this.getDatabaseName())
+		this.daoSession?.let { dbSoundSheets ->
+			SoundboardApplication.taskCounter.value += 1
+			dbSoundSheets.loadSoundSheets()
+					.flatMapIterable { it -> it }
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe( { soundSheet ->
+						Logger.d(TAG, "Loaded: $soundSheet")
+						this.addSoundSheetToManager(soundSheet)
+					}, { error ->
+						Logger.e(TAG, "Error while loading sound sheets: ${error.message}")
+						SoundboardApplication.taskCounter.value -= 1
+						this.onSoundSheetsLoadedListener?.invoke(this.soundSheets)
+					}, {
+						Logger.d(TAG, "Loading sound sheets completed")
+						SoundboardApplication.taskCounter.value -= 1
+						this.onSoundSheetsLoadedListener?.invoke(this.soundSheets)
+					} )
 		}
 	}
 

@@ -123,7 +123,6 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 		this.soundsDataStorage.removeSounds(playersToRemove)
 		this.soundSheetsDataStorage.removeSoundSheets(oldCurrentSoundSheet)
 
-
 		for (soundSheet in newSoundSheets)
 			this.soundSheetsDataStorage.addSoundSheetToManager(soundSheet)
 	}

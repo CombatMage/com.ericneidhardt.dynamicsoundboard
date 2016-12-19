@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedE
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
+import org.neidhardt.eventbus_utils.registerIfRequired
 import java.util.*
 
 /**
@@ -53,7 +54,7 @@ class PlaylistPresenter
 
 	override fun onAttachedToWindow()
 	{
-		super.onAttachedToWindow()
+		this.eventBus.registerIfRequired(this)
 		this.values.clear()
 
 		val playlist = this.soundsDataAccess.playlist
@@ -61,6 +62,10 @@ class PlaylistPresenter
 		this.values.addAll(playlist)
 
 		this.adapter?.notifyDataSetChanged()
+	}
+
+	override fun onDetachedFromWindow() {
+		this.eventBus.unregister(this)
 	}
 
 	override fun deleteSelectedItems()

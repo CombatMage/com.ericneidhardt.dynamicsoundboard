@@ -11,10 +11,8 @@ import org.neidhardt.dynamicsoundboard.dao.SoundLayoutDao
 import org.neidhardt.dynamicsoundboard.daohelper.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutAddedEvent
-import org.neidhardt.utils.ValueHolder
 import org.neidhardt.utils.letThis
 import rx.Observable
-import rx.lang.kotlin.subscriber
 import rx.schedulers.Schedulers
 import java.util.*
 
@@ -28,7 +26,10 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 
 	override var onSoundLayoutSelectedListener: ((SoundLayout) -> Unit)? = null
 	override var onSoundLayoutsChangedListener: ((List<SoundLayout>) -> Unit)? = null
+	override var onSoundLayoutIsChangedListener: ((SoundLayout) -> Unit)? = null
+	override var onSoundLayoutsLoadedListener: ((List<SoundLayout>) -> Unit)? = null
 
+	override var isInitDone: Boolean = false
 	override val soundLayouts: MutableList<SoundLayout> = ArrayList()
 
 	init {
@@ -36,6 +37,10 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 		if (count == 0.toLong())
 			this.daoSession.soundLayoutDao.insert(this.getDefaultSoundLayout())
 		this.soundLayouts.addAll(this.daoSession.soundLayoutDao.queryBuilder().list())
+		this.isInitDone = true
+
+		this.onSoundLayoutsLoadedListener?.invoke(this.soundLayouts)
+		this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
 		this.onSoundLayoutSelectedListener?.invoke(this.soundLayouts.first { it.isSelected })
 	}
 
@@ -45,6 +50,7 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 			soundLayout.letThis { item ->
 				this.soundLayouts.add(item)
 				this.daoSession.soundLayoutDao.insert(item)
+				this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
 			}
 		}.doOnError { error -> Logger.e(this.toString(), error.toString()) }
 		.subscribeOn(Schedulers.computation())
@@ -57,6 +63,7 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 					val isInDatabase = this.daoSession.soundLayoutDao.isSoundLayoutInDatabase(item)
 					if (isInDatabase)
 						this.daoSession.soundLayoutDao.update(item)
+					this.onSoundLayoutIsChangedListener?.invoke(item)
 				}
 			}.doOnError { error -> Logger.e(this.toString(), error.toString()) }
 			.subscribeOn(Schedulers.computation())
@@ -85,6 +92,7 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 				this.soundLayouts[0].updateItemInDatabase(this.daoSession.soundLayoutDao)
 				this.onSoundLayoutSelectedListener?.invoke(this.soundLayouts[0])
 			}
+			this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
 		}
 		.subscribeOn(Schedulers.computation())
 	}
@@ -109,15 +117,6 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 				this.isSelected = true
 			}
 
-	companion object {
-		const val DB_DEFAULT: String = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default"
-		const val DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts"
-
-		fun getNewDatabaseIdForLabel(label: String): String {
-			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
-		}
-	}
-
 	private fun SoundLayout.updateItemInDatabase(soundLayoutDao: SoundLayoutDao) {
 		val isInDatabase = soundLayoutDao.isSoundLayoutInDatabase(this)
 		if (isInDatabase)
@@ -136,6 +135,15 @@ class SoundLayoutManager(private val context: Context) : ISoundLayoutManager {
 		.subscribeOn(Schedulers.computation())
 		.subscribe()
 	}
+
+	companion object {
+		const val DB_DEFAULT: String = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_default"
+		const val DB_SOUND_LAYOUTS = "org.neidhardt.dynamicsoundboard.soundlayouts.SoundLayoutsManagerFragment.db_sound_layouts"
+
+		fun getNewDatabaseIdForLabel(label: String): String {
+			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
+		}
+	}
 }
 
 private fun SoundLayoutDao.isSoundLayoutInDatabase(soundLayout: SoundLayout): Boolean {
@@ -145,22 +153,4 @@ private fun SoundLayoutDao.isSoundLayoutInDatabase(soundLayout: SoundLayout): Bo
 			.isNotEmpty()
 }
 
-object RxSoundLayoutManager {
-	fun changes(manager: ISoundLayoutManager): Observable<List<SoundLayout>> {
-		return Observable.create{ subscriber ->
-			manager.onSoundLayoutsChangedListener = { layouts: List<SoundLayout> ->
-				subscriber.onNext(layouts)
-			}
-		}
-	}
 
-	fun selectsLayout(manager: ISoundLayoutManager): Observable<SoundLayout> {
-		return Observable.create { subscriber ->
-			val selectedSoundLayout = manager.soundLayouts.first { it.isSelected }
-			subscriber.onNext(selectedSoundLayout)
-			manager.onSoundLayoutSelectedListener = { layout ->
-				subscriber.onNext(layout)
-			}
-		}
-	}
-}

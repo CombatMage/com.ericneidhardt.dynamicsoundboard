@@ -9,6 +9,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClic
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
+import org.neidhardt.utils.longHash
 
 /**
  * File created by eric.neidhardt on 08.03.2015.
@@ -24,10 +25,9 @@ class SoundLayoutsAdapter
 {
 	init { this.setHasStableIds(true) }
 
-	override fun getItemId(position: Int): Long = this.values[position].databaseId.hashCode().toLong()
+	override fun getItemId(position: Int): Long = this.values[position].databaseId.longHash
 
-	override val values: List<SoundLayout>
-		get() = this.presenter.values
+	override val values: List<SoundLayout> get() = this.presenter.values
 
 	override fun getItemCount(): Int = this.values.size
 

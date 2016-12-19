@@ -17,7 +17,7 @@ class DynamicSoundboardApplication : SoundboardApplication()
 	}
 }
 
-fun SoundboardApplication.Companion.reportError(error: Exception)
+fun SoundboardApplication.Companion.reportError(error: Throwable)
 {
 	ACRA.getErrorReporter().handleException(error)
 }

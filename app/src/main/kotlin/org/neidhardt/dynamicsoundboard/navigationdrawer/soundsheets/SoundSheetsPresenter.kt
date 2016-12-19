@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
+import org.neidhardt.eventbus_utils.registerIfRequired
 import java.util.*
 
 /**
@@ -56,10 +57,15 @@ open class SoundSheetsPresenter
 
 	override fun onAttachedToWindow()
 	{
-		super.onAttachedToWindow()
+		this.eventBus.registerIfRequired(this)
+		val items = this.soundSheetsDataAccess.getSoundSheets()
 		this.values.clear()
-		this.values.addAll(this.soundSheetsDataAccess.getSoundSheets())
+		this.values.addAll(items)
 		this.adapter?.notifyDataSetChanged()
+	}
+
+	override fun onDetachedFromWindow() {
+		this.eventBus.unregister(this)
 	}
 
 	override fun deleteSelectedItems()
@@ -181,8 +187,10 @@ open class SoundSheetsPresenter
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundSheetAddedEvent)
 	{
-		this.values.add(event.soundSheet)
-		this.adapter?.notifyItemInserted(this.values.size)
+		if (!this.values.contains(event.soundSheet)) {
+			this.values.add(event.soundSheet)
+			this.adapter?.notifyItemInserted(this.values.size)
+		}
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

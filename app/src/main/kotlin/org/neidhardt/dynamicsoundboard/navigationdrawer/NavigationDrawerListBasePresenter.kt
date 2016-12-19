@@ -26,37 +26,24 @@ interface NavigationDrawerListPresenter {
 }
 
 abstract class NavigationDrawerListBasePresenter<T: RecyclerView?> :
-		NavigationDrawerListPresenter
-{
+		NavigationDrawerListPresenter {
+
 	var isInSelectionMode: Boolean = false
 
 	abstract var view: T
 
 	abstract val eventBus: EventBus
 
-	override fun onAttachedToWindow()
-	{
-		this.eventBus.registerIfRequired(this)
-	}
-
-	override fun onDetachedFromWindow()
-	{
-		this.eventBus.unregister(this)
-	}
-
-	override fun startDeletionMode()
-	{
+	override fun startDeletionMode() {
 		this.isInSelectionMode = true
 	}
 
-	override fun stopDeletionMode()
-	{
+	override fun stopDeletionMode() {
 		this.isInSelectionMode = false
 		this.deselectAllItemsSelectedForDeletion()
 	}
 
-	protected fun onItemSelectedForDeletion()
-	{
+	protected fun onItemSelectedForDeletion() {
 		this.eventBus.post(ItemSelectedForDeletion(this.numberOfItemsSelectedForDeletion, this.itemCount))
 	}
 

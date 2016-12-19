@@ -1,12 +1,16 @@
 package org.neidhardt.dynamicsoundboard.soundsheetmanagement.model
 
 import org.neidhardt.dynamicsoundboard.dao.SoundSheet
+import rx.Observable
 
 /**
  * File created by eric.neidhardt on 27.05.2015.
  */
-interface SoundSheetsDataAccess
-{
+interface SoundSheetsDataAccess {
+
+	var onSoundSheetsLoadedListener: ((List<SoundSheet>) -> Unit)?
+
+	fun init()
 
 	/**
 	 * Retrieve all SoundSheets in the sound board.
@@ -30,4 +34,14 @@ interface SoundSheetsDataAccess
 	 * @return SoundSheet or null
 	 */
 	fun getSoundSheetForFragmentTag(fragmentTag: String): SoundSheet?
+}
+
+object RxSoundSheetManager {
+	fun loadSoundSheets(manager: SoundSheetsDataAccess) : Observable<List<SoundSheet>> {
+		return Observable.create { subscriber ->
+			manager.onSoundSheetsLoadedListener = { soundSheet ->
+				subscriber.onNext(soundSheet)
+			}
+		}
+	}
 }

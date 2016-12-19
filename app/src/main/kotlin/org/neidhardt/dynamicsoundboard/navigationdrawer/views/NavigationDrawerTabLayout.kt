@@ -92,6 +92,7 @@ class NavigationDrawerTabLayoutPresenter
 			this.showDefaultTabBar()
 	}
 
+	// TODO subscribe on
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: SoundLayoutSelectedEvent) {
 		this.showDefaultTabBar()
@@ -111,10 +112,6 @@ class NavigationDrawerTabLayoutPresenter
 	override fun onTabReselected(tab: TabLayout.Tab?) {}
 
 	override fun onTabUnselected(tab: TabLayout.Tab?) {}
-
-	override fun onEvent(event: SoundLayoutsRemovedEvent) {}
-
-	override fun onEvent(event: SoundLayoutRenamedEvent) {}
 }
 
 private fun TabLayout.createSoundSheetTab(): TabLayout.Tab = this.newTab().setText(R.string.tab_sound_sheets)

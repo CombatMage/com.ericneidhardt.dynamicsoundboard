@@ -68,15 +68,6 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog()
 
 	override fun getPositiveButtonId(): Int = R.string.dialog_add
 
-	interface OnSoundLayoutAddedEventListener
-	{
-		/**
-		 * This is called by greenRobot EventBus in case a new SoundLayout was renamed.
-		 * @param event delivered SoundLayoutRenamedEvent
-		 */
-		fun onEvent(event: SoundLayoutAddedEvent)
-	}
-
 	companion object
 	{
 		private val TAG = AddNewSoundLayoutDialog::class.java.name
