@@ -41,6 +41,8 @@ import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloati
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.eventbus_utils.registerIfRequired
 
 /**
@@ -49,7 +51,7 @@ import org.neidhardt.eventbus_utils.registerIfRequired
 private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
 private val KEY_STATE_RECYCLER_VIEW = KEY_FRAGMENT_TAG + "_recycler_view_state"
 
-fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment {
+fun getNewInstance(soundSheet: NewSoundSheet): SoundSheetFragment {
 	val fragment = SoundSheetFragment()
 	val args = Bundle()
 	args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)

@@ -27,12 +27,16 @@ import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog
+import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
@@ -70,27 +74,23 @@ class SoundActivity :
 		RequestPermissionHelper,
 		AddPauseFloatingActionButtonView.FabEventListener,
 		OnOpenSoundLayoutSettingsEventListener,
-		OnSoundSheetOpenEventListener,
-		OnSoundSheetsInitEventLisenter,
 		OnSoundSheetsChangedEventListener {
 
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private val eventBus = EventBus.getDefault()
-	private val subscriptions = CompositeSubscription()
+	private var subscriptions = CompositeSubscription()
 
 	private val storage = SoundboardApplication.storage
+	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
 	private val soundLayoutManager = SoundboardApplication.newSoundLayoutManager
 
 	private var binding by Delegates.notNull<ActivityBaseBinding>()
 	private val toolbar by lazy { this.binding.layoutToolbar.tbMain }
-	private val toolbarTitle by lazy { this.et_layout_toolbar_content_title }
 
 	val toolbarVM = ToolbarVM().letThis {
 		it.onTitleChanged = { text -> this.setNewSoundSheetTitle(text) }
-		it.addSoundSheetClickedCallback = {
-			// TODO AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName())
-		}
+		it.addSoundSheetClickedCallback = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager) }
 		it.addSoundClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog.show(this.supportFragmentManager, it) } }
 		it.addSoundFromDirectoryClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
 	}
@@ -117,10 +117,16 @@ class SoundActivity :
 		this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(this, R.layout.activity_base).letThis {
 			it.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
 		}
+		this.binding.ablMain.setExpanded(true)
+		this.setSupportActionBar(this.toolbar)
 
 		this.requestPermissionsIfRequired()
-		this.initToolbar()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
+	}
+
+	override fun onPostCreate(savedInstanceState: Bundle?) {
+		super.onPostCreate(savedInstanceState)
+		this.drawerToggle?.syncState()
 	}
 
 	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -158,28 +164,31 @@ class SoundActivity :
 		return true
 	}
 
-	private fun initToolbar() {
-		this.binding.ablMain.setExpanded(true)
-
-		this.setSupportActionBar(this.toolbar)
-
-		val currentSoundSheet = this.currentSoundFragment
-		if (currentSoundSheet != null) {
-
-
-			//val currentLabel = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheet.fragmentTag)?.label
-			//this.toolbarVM.title = currentLabel
-		}
-	}
-
-	override fun onPostCreate(savedInstanceState: Bundle?) {
-		super.onPostCreate(savedInstanceState)
-		this.drawerToggle?.syncState()
-	}
-
 	override fun onStart() {
 		super.onStart()
 		this.eventBus.registerIfRequired(this)
+
+		this.setStateForSoundSheets()
+		this.subscriptions = CompositeSubscription()
+
+		this.subscriptions.add(RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { soundSheets -> this.setStateForSoundSheets() })
+	}
+
+	private fun setStateForSoundSheets() {
+		val soundSheets = this.soundSheetManager.soundSheets
+		val selectedSoundSheet = soundSheets.selectedSoundSheet
+		this.toolbarVM.title = selectedSoundSheet?.label ?: this.getString(R.string.app_name)
+		this.toolbarVM.isSoundSheetActionsEnable = selectedSoundSheet != null
+
+		if (selectedSoundSheet != null) {
+			val currentFragment = this.currentSoundFragment
+			if (currentFragment == null)
+				this.openSoundFragment(selectedSoundSheet)
+			else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag)
+				this.openSoundFragment(selectedSoundSheet)
+		}
 	}
 
 	override fun onResume() {
@@ -232,26 +241,6 @@ class SoundActivity :
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundLayoutSettingsEvent) {
 		SoundLayoutSettingsDialog.showInstance(this.supportFragmentManager, event.soundLayout.databaseId)
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: OpenSoundSheetEvent) {
-		this.openSoundFragment(event.soundSheetToOpen)
-	}
-
-	// TODO remove
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundSheetsInitEvent) {
-		//this.onSoundSheetsInit()
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundSheetsRemovedEvent) {
-		/*val removedSoundSheets = event.soundSheets
-		this.removeSoundFragments(removedSoundSheets)
-
-		if (this.soundSheetsDataAccess.getSoundSheets().isEmpty())
-			this.toolbarVM.isSoundSheetActionsEnable = false*/
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -327,15 +316,10 @@ class SoundActivity :
 	}
 
 	fun setNewSoundSheetTitle(text: String) {
-		val currentSoundSheetFragment = this.currentSoundFragment
-		if (currentSoundSheetFragment != null) {
-
-			/*val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(currentSoundSheetFragment.fragmentTag)
-			if (soundSheet != null) {
-				soundSheet.label = text
-				soundSheet.updateItemInDatabaseAsync()
-				this.eventBus.post(SoundSheetChangedEvent(soundSheet))
-			}*/
+		val selectedSoundSheet = this.soundSheetManager.soundSheets.selectedSoundSheet
+		if (selectedSoundSheet != null) {
+			selectedSoundSheet.label = text
+			this.soundSheetManager.notifyHasChanged(selectedSoundSheet)
 		}
 	}
 
@@ -354,9 +338,6 @@ class SoundActivity :
 
 			fragmentManager.executePendingTransactions()
 		}
-
-		/*if (this.soundSheetsDataAccess.getSoundSheets().isEmpty())
-			this.toolbarVM.isSoundSheetActionsEnable = false*/
 	}
 
 	fun removeSoundFragment(soundSheet: SoundSheet) {
@@ -370,7 +351,7 @@ class SoundActivity :
 		fragmentManager.executePendingTransactions()
 	}
 
-	fun openSoundFragment(soundSheet: SoundSheet?) {
+	fun openSoundFragment(soundSheet: NewSoundSheet?) {
 		if (!this.isActivityResumed)
 			return
 
@@ -387,8 +368,6 @@ class SoundActivity :
 
 		transaction.commit()
 		fragmentManager.executePendingTransactions()
-
-		this.toolbarTitle.text = soundSheet.label
 	}
 
 	private val currentSoundFragment: SoundSheetFragment?
