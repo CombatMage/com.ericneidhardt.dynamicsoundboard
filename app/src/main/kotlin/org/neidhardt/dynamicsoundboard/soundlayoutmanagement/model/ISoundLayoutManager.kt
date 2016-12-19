@@ -43,7 +43,7 @@ fun List<SoundLayout>.findById(databaseId: String): SoundLayout?
 	= this.firstOrNull { it.databaseId == databaseId }
 
 object RxSoundLayoutManager {
-	fun loadSoundSheets(manager: ISoundLayoutManager) : Observable<List<SoundLayout>> {
+	fun loadSoundLayouts(manager: ISoundLayoutManager) : Observable<List<SoundLayout>> {
 		return Observable.create { subscriber ->
 			if (manager.isInitDone)
 				subscriber.onNext(manager.soundLayouts)

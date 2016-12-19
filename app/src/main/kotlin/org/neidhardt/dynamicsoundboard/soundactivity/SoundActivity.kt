@@ -131,9 +131,12 @@ class SoundActivity :
 		this.initToolbar()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
 
-		this.subscriptions.add(RxSoundLayoutManager.loadSoundSheets(this.soundLayoutManager)
+		this.subscriptions.add(RxSoundLayoutManager.loadSoundLayouts(this.soundLayoutManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { soundLayouts ->
+					this.removeSoundFragments(this.soundSheetsDataAccess.getSoundSheets())
+					this.toolbarVM.isSoundSheetActionsEnable = false
+
 					this.soundSheetsDataAccess.initIfRequired()
 					this.soundsDataUtil.initIfRequired()
 				}
@@ -232,7 +235,7 @@ class SoundActivity :
 		this.closeAppOnBackPress = false
 		this.toolbarVM.isSoundSheetActionsEnable = false
 
-		//this.soundsDataUtil.initIfRequired()
+		this.soundsDataUtil.initIfRequired()
 
 		// TODO subscribe on ini event
 		//if (this.soundSheetsDataUtil.initIfRequired())
