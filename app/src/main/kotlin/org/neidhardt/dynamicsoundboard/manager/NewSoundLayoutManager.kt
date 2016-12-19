@@ -6,6 +6,7 @@ import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager
 import rx.Observable
+import rx.lang.kotlin.add
 import java.util.*
 
 /**
@@ -17,11 +18,11 @@ class NewSoundLayoutManager(
 		private val newSoundSheetManager: NewSoundSheetManager,
 		private val newSoundManager: NewSoundManager) {
 
+	internal var onSoundLayoutsChangedListener = ArrayList<((List<NewSoundLayout>) -> Unit)>()
+
 	internal var mSoundLayouts: MutableList<NewSoundLayout>? = null
 
 	val soundLayouts: List<NewSoundLayout> get() = this.mSoundLayouts as List<NewSoundLayout>
-
-	var onSoundLayoutsChangedListener: ((List<NewSoundLayout>) -> Unit)? = null
 
 	@Synchronized
 	fun initIfRequired() {
@@ -33,7 +34,7 @@ class NewSoundLayoutManager(
 				if (this.mSoundLayouts?.isEmpty() == true)
 					this.mSoundLayouts?.add(this.getDefaultSoundLayout())
 
-				this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
+				this.invokeListeners()
 			}
 		}
 	}
@@ -47,7 +48,7 @@ class NewSoundLayoutManager(
 				mSoundLayouts.add(this.getDefaultSoundLayout())
 			else if (mSoundLayouts.selectedLayout == null)
 				mSoundLayouts[0].isSelected = true
-			this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
+			this.invokeListeners()
 		}
 	}
 
@@ -55,7 +56,7 @@ class NewSoundLayoutManager(
 		if (this.mSoundLayouts == null) throw IllegalStateException("sound layout init not done")
 
 		this.mSoundLayouts?.add(soundLayout)
-		this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
+		this.invokeListeners()
 	}
 
 	fun setSelected(soundLayout: NewSoundLayout) {
@@ -63,13 +64,17 @@ class NewSoundLayoutManager(
 		if (!this.soundLayouts.contains(soundLayout)) throw IllegalArgumentException("given layout not found in dataset")
 
 		this.soundLayouts.forEach { it.isSelected = it == soundLayout }
-		this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
+		this.invokeListeners()
 	}
 
 	fun notifyHasChanged(soundLayout: NewSoundLayout) {
 		if (this.mSoundLayouts == null) throw IllegalStateException("sound layout init not done")
 		if (!this.soundLayouts.contains(soundLayout)) throw IllegalArgumentException("given layout not found in dataset")
-		this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
+		this.invokeListeners()
+	}
+
+	private fun invokeListeners() {
+		this.onSoundLayoutsChangedListener.forEach { it.invoke(this.soundLayouts) }
 	}
 
 	fun getSuggestedName(): String {
@@ -88,10 +93,14 @@ class NewSoundLayoutManager(
 object RxNewSoundLayoutManager {
 	fun soundLayoutsChanged(manager: NewSoundLayoutManager): Observable<List<NewSoundLayout>> {
 		return Observable.create { subscriber ->
-			manager.mSoundLayouts?.let { subscriber.onNext(it) }
-			manager.onSoundLayoutsChangedListener = {
+			val listener: (List<NewSoundLayout>) -> Unit = {
 				subscriber.onNext(it)
 			}
+			subscriber.add {
+				manager.onSoundLayoutsChangedListener.remove(listener)
+			}
+			manager.mSoundLayouts?.let { subscriber.onNext(it) }
+			manager.onSoundLayoutsChangedListener.add(listener)
 		}
 	}
 }

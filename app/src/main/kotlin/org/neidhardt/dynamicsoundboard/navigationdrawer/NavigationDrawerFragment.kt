@@ -13,13 +13,14 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
+import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.manager.activeLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerHeaderVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.RxSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.activeLayout
 import org.neidhardt.utils.letThis
 import rx.android.schedulers.AndroidSchedulers
@@ -31,8 +32,10 @@ class NavigationDrawerFragment : BaseFragment() {
 	override var fragmentTag: String = javaClass.name
 
 	private val eventBus = EventBus.getDefault()
-	private val subscriptions = CompositeSubscription()
+	private var subscriptions = CompositeSubscription()
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
+
+	private val newSoundLayoutManager = SoundboardApplication.newSoundLayoutManager
 
 	private var tabView: NavigationDrawerTabLayout? = null
 	private var listView: NavigationDrawerListLayout? = null
@@ -94,20 +97,17 @@ class NavigationDrawerFragment : BaseFragment() {
 	{
 		super.onStart()
 
+		this.subscriptions = CompositeSubscription()
+
 		this.tabView?.onAttached()
 		this.listView?.onAttached()
 
-		this.subscriptions.add(RxSoundLayoutManager.selectsLayout(this.soundLayoutManager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { selectedLayout ->
-					this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
-					this.headerVM.isSoundLayoutOpen = false
-				})
-
-		this.subscriptions.add(RxSoundLayoutManager.changesLayoutList(this.soundLayoutManager)
+		this.headerVM.title = this.newSoundLayoutManager.soundLayouts.activeLayout.label
+		this.subscriptions.add(RxNewSoundLayoutManager.soundLayoutsChanged(this.newSoundLayoutManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { layouts ->
-					this.headerVM.title = layouts.firstOrNull { it.isSelected }?.label
+					val selectedLayout = layouts.activeLayout
+					this.headerVM.title = selectedLayout.label
 				})
 	}
 
