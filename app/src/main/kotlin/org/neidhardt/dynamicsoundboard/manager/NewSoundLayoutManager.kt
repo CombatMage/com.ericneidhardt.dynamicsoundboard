@@ -34,6 +34,7 @@ class NewSoundLayoutManager(
 				if (this.mSoundLayouts?.isEmpty() == true)
 					this.mSoundLayouts?.add(this.getDefaultSoundLayout())
 
+				this.setSoundSheetsForActiveLayout()
 				this.invokeListeners()
 			}
 		}
@@ -44,10 +45,15 @@ class NewSoundLayoutManager(
 
 		this.mSoundLayouts?.let { mSoundLayouts ->
 			mSoundLayouts.removeAll(soundLayouts)
-			if (mSoundLayouts.isEmpty() == true)
+			if (mSoundLayouts.isEmpty() == true) {
 				mSoundLayouts.add(this.getDefaultSoundLayout())
-			else if (mSoundLayouts.selectedLayout == null)
+				this.setSoundSheetsForActiveLayout()
+			}
+			else if (mSoundLayouts.selectedLayout == null) {
 				mSoundLayouts[0].isSelected = true
+				this.setSoundSheetsForActiveLayout()
+			}
+
 			this.invokeListeners()
 		}
 	}
@@ -64,6 +70,7 @@ class NewSoundLayoutManager(
 		if (!this.soundLayouts.contains(soundLayout)) throw IllegalArgumentException("given layout not found in dataset")
 
 		this.soundLayouts.forEach { it.isSelected = it == soundLayout }
+		this.setSoundSheetsForActiveLayout()
 		this.invokeListeners()
 	}
 
@@ -88,6 +95,13 @@ class NewSoundLayoutManager(
 				this.label = context.resources.getString(R.string.suggested_sound_layout_name)
 				this.isSelected = true
 			}
+
+	private fun setSoundSheetsForActiveLayout() {
+		val activeLayout = this.soundLayouts.activeLayout
+		if (activeLayout.soundSheets == null)
+			activeLayout.soundSheets = ArrayList()
+		this.newSoundSheetManager.set(activeLayout.soundSheets)
+	}
 }
 
 object RxNewSoundLayoutManager {
