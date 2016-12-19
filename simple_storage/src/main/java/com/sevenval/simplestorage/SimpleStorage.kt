@@ -20,7 +20,7 @@ open class SimpleStorage<T>(context: Context, private val classOfT: Class<T>) {
 	val storageKey = "SimpleStorage_${classOfT.name}"
 
 	@CheckResult
-	fun save(data: T): Observable<T?> {
+	fun save(data: T): Observable<T> {
 		return Observable.fromCallable {
 			data.letThis { item ->
 				this.cachedData = data

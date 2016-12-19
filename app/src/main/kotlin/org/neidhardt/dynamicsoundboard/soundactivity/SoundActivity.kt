@@ -79,6 +79,7 @@ class SoundActivity :
 	private val eventBus = EventBus.getDefault()
 	private val subscriptions = CompositeSubscription()
 
+	private val storage = SoundboardApplication.storage
 	private val soundLayoutManager = SoundboardApplication.newSoundLayoutManager
 
 	private var binding by Delegates.notNull<ActivityBaseBinding>()
@@ -195,6 +196,8 @@ class SoundActivity :
 	override fun onPause() {
 		super.onPause()
 		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
+
+		this.storage.save(this.soundLayoutManager.soundLayouts).subscribe()
 	}
 
 	override fun onUserLeaveHint() {
