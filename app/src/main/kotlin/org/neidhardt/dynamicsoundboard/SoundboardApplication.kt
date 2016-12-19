@@ -2,6 +2,10 @@ package org.neidhardt.dynamicsoundboard
 
 import android.content.Context
 import android.support.multidex.MultiDexApplication
+import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
@@ -38,6 +42,13 @@ open class SoundboardApplication : MultiDexApplication() {
 
 		val soundLayoutManager: ISoundLayoutManager get() = this.mSoundLayoutsManager
 
+
+		val storage by lazy { AppDataStorage(this.context) }
+		val newSoundSheetManager by lazy { NewSoundSheetManager() }
+		val newSoundManager by lazy { NewSoundManager() }
+		val newSoundLayoutManager by lazy {
+			NewSoundLayoutManager(this.context, this.storage, this.newSoundSheetManager, this.newSoundManager) }
+
 		val randomNumber: Int get() = this.random.nextInt(Integer.MAX_VALUE)
 
 		val taskCounter: ValueHolder<Int> by lazy { ValueHolder(0) }
@@ -46,5 +57,7 @@ open class SoundboardApplication : MultiDexApplication() {
 	override fun onCreate() {
 		super.onCreate()
 		staticContext = this.applicationContext
+
+		newSoundLayoutManager.initIfRequired()
 	}
 }

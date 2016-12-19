@@ -9,6 +9,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClic
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.utils.longHash
 
 /**
@@ -19,15 +20,15 @@ class SoundLayoutsAdapter
 		private val eventBus: EventBus,
 		private val presenter: SoundLayoutsPresenter
 ) :
-		BaseAdapter<SoundLayout, SoundLayoutViewHolder>(),
-		ListAdapter<SoundLayout>,
-		NavigationDrawerItemClickListener<SoundLayout>
+		BaseAdapter<NewSoundLayout, SoundLayoutViewHolder>(),
+		ListAdapter<NewSoundLayout>,
+		NavigationDrawerItemClickListener<NewSoundLayout>
 {
 	init { this.setHasStableIds(true) }
 
 	override fun getItemId(position: Int): Long = this.values[position].databaseId.longHash
 
-	override val values: List<SoundLayout> get() = this.presenter.values
+	override val values: List<NewSoundLayout> get() = this.presenter.values
 
 	override fun getItemCount(): Int = this.values.size
 
@@ -36,11 +37,11 @@ class SoundLayoutsAdapter
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundLayoutViewHolder
 	{
 		val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-		return SoundLayoutViewHolder(view, this, object: NavigationDrawerItemClickListener<SoundLayout>
+		return SoundLayoutViewHolder(view, this, object: NavigationDrawerItemClickListener<NewSoundLayout>
 		{
-			override fun onItemClick(data: SoundLayout)
+			override fun onItemClick(data: NewSoundLayout)
 			{
-				eventBus.post(OpenSoundLayoutSettingsEvent(data))
+				//eventBus.post(OpenSoundLayoutSettingsEvent(data))
 			}
 		})
 	}
@@ -51,7 +52,7 @@ class SoundLayoutsAdapter
 		holder.bindData(data, position == this.itemCount - 1)
 	}
 
-	override fun notifyItemChanged(data: SoundLayout)
+	override fun notifyItemChanged(data: NewSoundLayout)
 	{
 		val index = this.values.indexOf(data)
 		if (index == -1)
@@ -60,7 +61,7 @@ class SoundLayoutsAdapter
 			this.notifyItemChanged(index)
 	}
 
-	override fun onItemClick(data: SoundLayout)
+	override fun onItemClick(data: NewSoundLayout)
 	{
 		this.presenter.onItemClick(data)
 	}

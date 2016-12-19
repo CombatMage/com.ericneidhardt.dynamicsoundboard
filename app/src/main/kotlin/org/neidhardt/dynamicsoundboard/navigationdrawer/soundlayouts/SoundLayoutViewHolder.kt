@@ -7,6 +7,7 @@ import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 
 /**
  * File created by eric.neidhardt on 17.07.2015.
@@ -14,8 +15,8 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClic
 class SoundLayoutViewHolder
 (
 		itemView: View,
-		private val onItemClickedListener: NavigationDrawerItemClickListener<SoundLayout>,
-		private val onSettingsClickedListener: NavigationDrawerItemClickListener<SoundLayout>
+		private val onItemClickedListener: NavigationDrawerItemClickListener<NewSoundLayout>,
+		private val onSettingsClickedListener: NavigationDrawerItemClickListener<NewSoundLayout>
 )
 :
 		RecyclerView.ViewHolder(itemView)
@@ -25,16 +26,14 @@ class SoundLayoutViewHolder
 	private val openSettings: View = itemView.findViewById(R.id.ib_view_sound_layout_item_settings)
 	private val divider = itemView.findViewById(R.id.v_divider)
 
-	private var data: SoundLayout? = null
+	private var data: NewSoundLayout? = null
 
-	init
-	{
-		this.itemView.setOnClickListener { this.onItemClickedListener.onItemClick(this.data as SoundLayout) }
-		this.openSettings.setOnClickListener{ this.onSettingsClickedListener.onItemClick(this.data as SoundLayout )}
+	init {
+		this.itemView.setOnClickListener { this.onItemClickedListener.onItemClick(this.data as NewSoundLayout) }
+		this.openSettings.setOnClickListener{ this.onSettingsClickedListener.onItemClick(this.data as NewSoundLayout )}
 	}
 
-	fun bindData(data: SoundLayout, isLastItem: Boolean)
-	{
+	fun bindData(data: NewSoundLayout, isLastItem: Boolean) {
 		this.data = data
 
 		this.label.text = data.label
