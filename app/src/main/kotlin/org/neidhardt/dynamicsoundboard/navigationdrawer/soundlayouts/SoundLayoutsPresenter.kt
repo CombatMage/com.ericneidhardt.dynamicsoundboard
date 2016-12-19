@@ -48,6 +48,7 @@ class SoundLayoutsPresenter
 	private var subscriptions = CompositeSubscription()
 
 	override fun onAttachedToWindow() {
+		this.adapter?.notifyDataSetChanged()
 		this.subscriptions = CompositeSubscription()
 		this.subscriptions.add(RxNewSoundLayoutManager.soundLayoutsChanged(this.manager)
 				.observeOn(AndroidSchedulers.mainThread())

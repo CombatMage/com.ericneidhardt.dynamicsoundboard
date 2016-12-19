@@ -2,7 +2,6 @@ package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager
@@ -31,7 +30,7 @@ class NewSoundLayoutManager(
 			this.storage.get().subscribe { appData ->
 				this.mSoundLayouts = ArrayList()
 				appData?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
-				if (this.mSoundLayouts?.isEmpty() == false)
+				if (this.mSoundLayouts?.isEmpty() == true)
 					this.mSoundLayouts?.add(this.getDefaultSoundLayout())
 
 				this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
@@ -44,7 +43,7 @@ class NewSoundLayoutManager(
 
 		this.mSoundLayouts?.let { mSoundLayouts ->
 			mSoundLayouts.removeAll(soundLayouts)
-			if (mSoundLayouts.isEmpty() == false)
+			if (mSoundLayouts.isEmpty() == true)
 				mSoundLayouts.add(this.getDefaultSoundLayout())
 			else if (mSoundLayouts.selectedLayout == null)
 				mSoundLayouts[0].isSelected = true
@@ -61,16 +60,27 @@ class NewSoundLayoutManager(
 
 	fun setSelected(soundLayout: NewSoundLayout) {
 		if (this.mSoundLayouts == null) throw IllegalStateException("sound layout init not done")
-		if (this.soundLayouts.contains(soundLayout)) throw IllegalArgumentException("given layout not found in dataset")
+		if (!this.soundLayouts.contains(soundLayout)) throw IllegalArgumentException("given layout not found in dataset")
 
-		this.soundLayouts.forEach { it.isSelected = soundLayout == soundLayout }
+		this.soundLayouts.forEach { it.isSelected = it == soundLayout }
 		this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
+	}
+
+	fun notifyHasChanged(soundLayout: NewSoundLayout) {
+		if (this.mSoundLayouts == null) throw IllegalStateException("sound layout init not done")
+		if (!this.soundLayouts.contains(soundLayout)) throw IllegalArgumentException("given layout not found in dataset")
+		this.onSoundLayoutsChangedListener?.invoke(this.soundLayouts)
+	}
+
+	fun getSuggestedName(): String {
+		val count = this.mSoundLayouts?.size ?: 0
+		return this.context.resources.getString(R.string.suggested_sound_layout_name) + count
 	}
 
 	private fun getDefaultSoundLayout(): NewSoundLayout =
 			NewSoundLayout().apply {
 				this.databaseId = SoundLayoutManager.DB_DEFAULT
-				this.label = context.getString(R.string.suggested_sound_layout_name)
+				this.label = context.resources.getString(R.string.suggested_sound_layout_name)
 				this.isSelected = true
 			}
 }

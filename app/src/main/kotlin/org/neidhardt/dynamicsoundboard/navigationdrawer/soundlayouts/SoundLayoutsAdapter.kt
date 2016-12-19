@@ -41,7 +41,7 @@ class SoundLayoutsAdapter
 		{
 			override fun onItemClick(data: NewSoundLayout)
 			{
-				//eventBus.post(OpenSoundLayoutSettingsEvent(data))
+				eventBus.post(OpenSoundLayoutSettingsEvent(data))
 			}
 		})
 	}
