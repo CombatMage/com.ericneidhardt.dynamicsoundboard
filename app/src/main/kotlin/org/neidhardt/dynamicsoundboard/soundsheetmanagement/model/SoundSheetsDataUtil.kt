@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 interface SoundSheetsDataUtil {
 
 	/**
-	 * Release all existing `SoundSheet` and set state to not init.
+	 * Release all existing `SoundSheet` and set state to not initIfRequired.
 	 */
 	fun releaseAll()
 

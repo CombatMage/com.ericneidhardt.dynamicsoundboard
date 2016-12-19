@@ -12,7 +12,7 @@ interface SoundSheetsDataAccess {
 
 	var onSoundSheetsLoadedListener: ((List<SoundSheet>) -> Unit)?
 
-	fun init()
+	fun initIfRequired()
 
 	/**
 	 * Retrieve all SoundSheets in the sound board.

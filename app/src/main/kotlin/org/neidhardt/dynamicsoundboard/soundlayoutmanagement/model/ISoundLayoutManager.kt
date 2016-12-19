@@ -72,8 +72,8 @@ object RxSoundLayoutManager {
 
 	fun selectsLayout(manager: ISoundLayoutManager): Observable<SoundLayout> {
 		return Observable.create { subscriber ->
-			val selectedSoundLayout = manager.soundLayouts.first { it.isSelected }
-			subscriber.onNext(selectedSoundLayout)
+			//val selectedSoundLayout = manager.soundLayouts.first { it.isSelected }
+			//subscriber.onNext(selectedSoundLayout)
 			manager.onSoundLayoutSelectedListener = { layout ->
 				subscriber.onNext(layout)
 			}

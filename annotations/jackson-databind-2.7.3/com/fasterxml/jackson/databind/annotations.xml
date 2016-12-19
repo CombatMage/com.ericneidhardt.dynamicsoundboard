@@ -890,7 +890,7 @@
     <item name='com.fasterxml.jackson.databind.ObjectMapper com.fasterxml.jackson.databind.JsonNode readTree(java.io.File)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.SequenceWriter com.fasterxml.jackson.databind.SequenceWriter init(boolean)'>
+    <item name='com.fasterxml.jackson.databind.SequenceWriter com.fasterxml.jackson.databind.SequenceWriter initIfRequired(boolean)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.DeserializationFeature ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT'>

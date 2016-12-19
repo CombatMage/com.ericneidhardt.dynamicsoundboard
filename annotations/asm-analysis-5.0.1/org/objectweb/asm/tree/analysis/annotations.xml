@@ -173,7 +173,7 @@
     <item name='org.objectweb.asm.tree.analysis.BasicVerifier org.objectweb.asm.tree.analysis.Value unaryOperation(org.objectweb.asm.tree.AbstractInsnNode, org.objectweb.asm.tree.analysis.Value) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='org.objectweb.asm.tree.analysis.Frame org.objectweb.asm.tree.analysis.Frame init(org.objectweb.asm.tree.analysis.Frame)'>
+    <item name='org.objectweb.asm.tree.analysis.Frame org.objectweb.asm.tree.analysis.Frame initIfRequired(org.objectweb.asm.tree.analysis.Frame)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='org.objectweb.asm.tree.analysis.BasicInterpreter org.objectweb.asm.tree.analysis.Value ternaryOperation(org.objectweb.asm.tree.AbstractInsnNode, org.objectweb.asm.tree.analysis.Value, org.objectweb.asm.tree.analysis.Value, org.objectweb.asm.tree.analysis.Value) 1'>
@@ -314,7 +314,7 @@
     <item name='org.objectweb.asm.tree.analysis.SourceInterpreter org.objectweb.asm.tree.analysis.SourceValue ternaryOperation(org.objectweb.asm.tree.AbstractInsnNode, org.objectweb.asm.tree.analysis.SourceValue, org.objectweb.asm.tree.analysis.SourceValue, org.objectweb.asm.tree.analysis.SourceValue)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='org.objectweb.asm.tree.analysis.Frame org.objectweb.asm.tree.analysis.Frame init(org.objectweb.asm.tree.analysis.Frame) 0'>
+    <item name='org.objectweb.asm.tree.analysis.Frame org.objectweb.asm.tree.analysis.Frame initIfRequired(org.objectweb.asm.tree.analysis.Frame) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='org.objectweb.asm.tree.analysis.Interpreter org.objectweb.asm.tree.analysis.Value binaryOperation(org.objectweb.asm.tree.AbstractInsnNode, org.objectweb.asm.tree.analysis.Value, org.objectweb.asm.tree.analysis.Value) 2'>

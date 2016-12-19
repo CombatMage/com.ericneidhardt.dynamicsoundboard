@@ -134,7 +134,7 @@ class SoundActivity :
 		this.subscriptions.add(RxSoundLayoutManager.loadSoundSheets(this.soundLayoutManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { soundLayouts ->
-					this.soundSheetsDataAccess.init()
+					this.soundSheetsDataAccess.initIfRequired()
 					this.soundsDataUtil.initIfRequired()
 				}
 		)
@@ -148,7 +148,7 @@ class SoundActivity :
 					this.soundSheetsDataUtil.releaseAll()
 					this.soundsDataUtil.releaseAll()
 
-					this.soundSheetsDataAccess.init()
+					this.soundSheetsDataAccess.initIfRequired()
 					this.soundsDataUtil.initIfRequired()
 				})
 

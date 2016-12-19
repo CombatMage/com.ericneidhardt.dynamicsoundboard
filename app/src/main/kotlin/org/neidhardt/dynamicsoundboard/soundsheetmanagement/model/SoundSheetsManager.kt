@@ -40,7 +40,7 @@ class SoundSheetsManager(private val context: Context, private val soundLayoutsM
 	override var isInitDone: Boolean = false
 	override var onSoundSheetsLoadedListener: ((List<SoundSheet>) -> Unit)? = null
 
-	override fun init() {
+	override fun initIfRequired() {
 		if (this.isInitDone) return
 
 		this.soundSheets.clear()

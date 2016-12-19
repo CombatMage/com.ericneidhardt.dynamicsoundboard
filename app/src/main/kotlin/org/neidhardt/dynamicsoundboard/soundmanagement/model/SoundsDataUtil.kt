@@ -14,7 +14,7 @@ interface SoundsDataUtil
 	fun initIfRequired()
 
 	/**
-	 * Release all existing `EnhancedMediaPlayer` loaded in sounds and playlist and set state to not init.
+	 * Release all existing `EnhancedMediaPlayer` loaded in sounds and playlist and set state to not initIfRequired.
 	 */
 	fun releaseAll()
 

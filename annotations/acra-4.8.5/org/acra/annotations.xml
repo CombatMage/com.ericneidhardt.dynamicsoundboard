@@ -23,7 +23,7 @@
     <item name='org.acra.ReportField APPLICATION_LOG'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='org.acra.ACRA void init(android.app.Application) 0'>
+    <item name='org.acra.ACRA void initIfRequired(android.app.Application) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='org.acra.ReportField DROPBOX'>
@@ -134,7 +134,7 @@
     <item name='org.acra.ReportField STACK_TRACE'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='org.acra.ACRA void init(android.app.Application, org.acra.config.ACRAConfiguration) 0'>
+    <item name='org.acra.ACRA void initIfRequired(android.app.Application, org.acra.config.ACRAConfiguration) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='org.acra.ReportField ANDROID_VERSION'>
@@ -146,7 +146,7 @@
     <item name='org.acra.ReportField USER_COMMENT'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='org.acra.ACRA void init(android.app.Application, org.acra.config.ACRAConfiguration, boolean) 0'>
+    <item name='org.acra.ACRA void initIfRequired(android.app.Application, org.acra.config.ACRAConfiguration, boolean) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='org.acra.ReportField TOTAL_MEM_SIZE'>

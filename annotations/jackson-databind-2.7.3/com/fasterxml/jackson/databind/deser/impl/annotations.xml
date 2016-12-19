@@ -317,7 +317,7 @@
     <item name='com.fasterxml.jackson.databind.deser.impl.MethodProperty com.fasterxml.jackson.databind.deser.SettableBeanProperty withValueDeserializer(com.fasterxml.jackson.databind.JsonDeserializer)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.deser.impl.BeanPropertyMap void init(java.util.Collection&lt;com.fasterxml.jackson.databind.deser.SettableBeanProperty&gt;) 0'>
+    <item name='com.fasterxml.jackson.databind.deser.impl.BeanPropertyMap void initIfRequired(java.util.Collection&lt;com.fasterxml.jackson.databind.deser.SettableBeanProperty&gt;) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.deser.impl.FieldProperty FieldProperty(com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition, com.fasterxml.jackson.databind.JavaType, com.fasterxml.jackson.databind.jsontype.TypeDeserializer, com.fasterxml.jackson.databind.util.Annotations, com.fasterxml.jackson.databind.introspect.AnnotatedField) 0'>
