@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard
 
 import android.content.Context
 import android.support.multidex.MultiDexApplication
+import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
@@ -45,9 +46,14 @@ open class SoundboardApplication : MultiDexApplication() {
 
 		val storage by lazy { AppDataStorage(this.context) }
 		val newSoundSheetManager by lazy { NewSoundSheetManager(this.context) }
-		val newSoundManager by lazy { NewSoundManager() }
+		val newSoundManager by lazy { NewSoundManager(this.context) }
+		val newPlaylistManager by lazy { NewPlaylistManager(this.context) }
 		val newSoundLayoutManager by lazy {
-			NewSoundLayoutManager(this.context, this.storage, this.newSoundSheetManager, this.newSoundManager) }
+			NewSoundLayoutManager(this.context,
+					this.storage,
+					this.newSoundSheetManager,
+					this.newPlaylistManager,
+					this.newSoundManager) }
 
 		val randomNumber: Int get() = this.random.nextInt(Integer.MAX_VALUE)
 

@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.mediaplayer
 import android.support.annotation.CheckResult
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.android_utils.views.CustomEditText
+import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import rx.Observable
 
 /**
@@ -15,7 +16,7 @@ interface MediaPlayerController
 
 	val albumCover: ByteArray?
 
-	val mediaPlayerData: MediaPlayerData
+	val mediaPlayerData: NewMediaPlayerData
 
 	val isPlayingSound: Boolean
 

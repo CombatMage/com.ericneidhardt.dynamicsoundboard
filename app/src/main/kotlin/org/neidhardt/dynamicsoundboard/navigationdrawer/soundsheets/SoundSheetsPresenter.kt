@@ -75,12 +75,12 @@ open class SoundSheetsPresenter
 
 	override fun deleteSelectedItems() {
 		val soundSheetsToRemove = this.getSoundSheetsSelectedForDeletion()
-		for (soundSheet in soundSheetsToRemove)
-		{
+		for (soundSheet in soundSheetsToRemove) {
 			val soundsInFragment = this.soundsDataAccess.getSoundsInFragment(soundSheet.fragmentTag)
 			this.soundsDataStorage.removeSounds(soundsInFragment)
 		}
 		this.manager.remove(soundSheetsToRemove)
+		this.stopDeletionMode()
 	}
 
 	override fun onItemClick(data: NewSoundSheet) {

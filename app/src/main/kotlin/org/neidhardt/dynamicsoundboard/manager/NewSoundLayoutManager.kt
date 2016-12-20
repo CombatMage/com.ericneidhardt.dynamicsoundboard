@@ -17,6 +17,7 @@ class NewSoundLayoutManager(
 		private val context: Context,
 		private val storage: AppDataStorage,
 		private val newSoundSheetManager: NewSoundSheetManager,
+		private val newPlaylistManager: NewPlaylistManager,
 		private val newSoundManager: NewSoundManager) {
 
 	companion object {
@@ -108,6 +109,10 @@ class NewSoundLayoutManager(
 		if (activeLayout.soundSheets == null)
 			activeLayout.soundSheets = ArrayList()
 		this.newSoundSheetManager.set(activeLayout.soundSheets)
+
+		if (activeLayout.playList == null)
+			activeLayout.playList = ArrayList()
+		this.newPlaylistManager.set(activeLayout.playList)
 	}
 }
 

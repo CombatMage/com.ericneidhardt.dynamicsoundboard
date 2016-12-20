@@ -57,7 +57,7 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog()
 	{
 		@SuppressLint("InflateParams")
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_rename_sound_file_layout, null)
-
+/*
 		val presenter = RenameSoundFileDialogPresenter(
 				playerData = this.player.mediaPlayerData,
 				soundsDataAccess = this.soundsDataAccess,
@@ -68,6 +68,7 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog()
 				renameAllOccurrences = view.cb_dialog_rename_sound_file_layout_rename_all
 		)
 
+
 		return AlertDialog.Builder(context).apply {
 			this.setView(view)
 			this.setPositiveButton(R.string.dialog_rename_sound_file_confirm, { dialogInterface, i ->
@@ -75,6 +76,8 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog()
 			})
 			this.setNegativeButton(R.string.dialog_rename_sound_file_cancel, { dialogInterface, i -> dismiss() })
 		}.create()
+		*/
+		return AlertDialog.Builder(context).create()
 	}
 }
 
@@ -181,7 +184,6 @@ private class RenameSoundFileDialogPresenter
 			if (renameAllOccurrences)
 			{
 				player.mediaPlayerData.label = newFileLabel
-				player.mediaPlayerData.updateItemInDatabaseAsync()
 			}
 
 			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)

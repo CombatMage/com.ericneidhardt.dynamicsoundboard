@@ -146,7 +146,7 @@ class SoundsManager (
 		if (player == null)
 		{
 			this.removeSoundDataFromDatabase(data)
-			this.eventBus.post(CreatingPlayerFailedEvent(data))
+//			this.eventBus.post(CreatingPlayerFailedEvent(data))
 		}
 		else
 			this.addSoundToSounds(player)
@@ -161,7 +161,7 @@ class SoundsManager (
 		val player = this.createPlaylistSound(data)
 		if (player == null) {
 			this.removePlaylistDataFromDatabase(data)
-			this.eventBus.post(CreatingPlayerFailedEvent(data))
+			// this.eventBus.post(CreatingPlayerFailedEvent(data))
 		}
 		else
 			this.addSoundToPlayList(player)
@@ -175,13 +175,14 @@ class SoundsManager (
 			if (player != null) {
 				player.isInPlaylist = true
 
-				val playerForPlaylist = createPlaylistSound(player.mediaPlayerData)
+				/*val playerForPlaylist = createPlaylistSound(player.mediaPlayerData)
 				if (playerForPlaylist == null) {
 					this.removePlaylistDataFromDatabase(player.mediaPlayerData)
-					this.eventBus.post(CreatingPlayerFailedEvent(player.mediaPlayerData))
+//					this.eventBus.post(CreatingPlayerFailedEvent(player.mediaPlayerData))
 				}
 				else
 					this.addSoundToPlayList(playerForPlaylist)
+					*/
 			}
 		}
 
@@ -190,7 +191,7 @@ class SoundsManager (
 
 			this.playlist.remove(playerInPlaylist)
 
-			this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao, playerInPlaylist.mediaPlayerData)
+			//this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao, playerInPlaylist.mediaPlayerData)
 			playerInPlaylist.destroy(true)
 		}
 	}
@@ -199,7 +200,7 @@ class SoundsManager (
 		this.playlist.add(player)
 
 		val data = player.mediaPlayerData
-		data.insertItemInDatabaseAsync()
+		//data.insertItemInDatabaseAsync()
 
 		this.eventBus.post(PlaylistChangedEvent())
 	}
@@ -210,7 +211,7 @@ class SoundsManager (
 
 		this.sounds.getOrPut(fragmentTag, { ArrayList<MediaPlayerController>() }).add(player)
 
-		data.insertItemInDatabaseAsync()
+		//data.insertItemInDatabaseAsync()
 
 		this.eventBus.post(SoundAddedEvent(player))
 	}
@@ -236,12 +237,12 @@ class SoundsManager (
 					searchInListForId(data.playerId, this.playlist)?.let { correspondingPlayerInPlaylist ->
 						this.playlist.remove(correspondingPlayerInPlaylist)
 
-						this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao,
-								correspondingPlayerInPlaylist.mediaPlayerData)
+					//	this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao,
+					//			correspondingPlayerInPlaylist.mediaPlayerData)
 						correspondingPlayerInPlaylist.destroy(true)
 					}
 				}
-				this.removePlayerDataFromDatabase(this.getDbSounds().mediaPlayerDataDao, playerToRemove.mediaPlayerData)
+				//this.removePlayerDataFromDatabase(this.getDbSounds().mediaPlayerDataDao, playerToRemove.mediaPlayerData)
 				playerToRemove.destroy(true)
 			}
 			this.eventBus.post(SoundsRemovedEvent(copyList))
@@ -292,12 +293,14 @@ class SoundsManager (
 			newPlayerData.label = playerData.label
 			newPlayerData.uri = playerData.uri
 
+			return null
+			/*
 			return getNewMediaPlayerController (
 					context = this.context,
 					eventBus = EventBus.getDefault(),
 					mediaPlayerData = newPlayerData,
 					soundsDataStorage = this
-			)
+			)*/
 		}
 		catch (e: Exception) {
 			Logger.d(TAG, playerData.toString() + " " + e.message)
@@ -312,11 +315,13 @@ class SoundsManager (
 			if (file == null || !file.isAudioFile)
 				throw Exception("cannot create create media player, given file is no audio file")
 
+			return null
+			/*
 			return getNewMediaPlayerController(
 					context = this.context,
 					eventBus = this.eventBus,
 					mediaPlayerData = playerData,
-					soundsDataStorage = this)
+					soundsDataStorage = this)*/
 		}
 		catch (e: Exception) {
 			Logger.d(TAG, e.message)

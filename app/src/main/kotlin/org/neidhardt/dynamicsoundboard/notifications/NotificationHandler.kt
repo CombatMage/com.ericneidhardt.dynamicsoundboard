@@ -65,13 +65,13 @@ class NotificationHandler(
 
 		val pendingSounds = this.soundsDataAccess.currentlyPlayingSounds
 		for (player in pendingSounds) {
-			if (this.soundsDataUtil.isPlaylistPlayer(player.mediaPlayerData))
+			/*if (this.soundsDataUtil.isPlaylistPlayer(player.mediaPlayerData))
 				pendingPlaylistPlayer = player // playlist sound is added as the last notification
 			else {
 				val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(player.mediaPlayerData.fragmentTag)
 						?: throw IllegalStateException("Sound sheet should not be null in this situation")
 				this.addNotification(PendingSoundNotification.getNotificationForPlayer(player, soundSheet, this.service))
-			}
+			}*/
 		}
 
 		if (pendingPlaylistPlayer != null) {

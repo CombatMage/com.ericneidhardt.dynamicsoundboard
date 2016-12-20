@@ -68,8 +68,8 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 				val hasLabelChanged = player.mediaPlayerData.label != soundName!!.displayedText
 				deliverResult()
 				dismiss()
-				if (hasLabelChanged)
-					RenameSoundFileDialog.show(fragmentManager, player.mediaPlayerData)
+				//if (hasLabelChanged)
+					//RenameSoundFileDialog.show(fragmentManager, player.mediaPlayerData)
 			})
 			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
 		}.create()
@@ -99,7 +99,6 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 
 		if (!hasSoundSheetChanged) {
 			this.player.mediaPlayerData.label = soundLabel
-			this.player.mediaPlayerData.updateItemInDatabaseAsync()
 			EventBus.getDefault().post(SoundChangedEvent(this.player))
 		} else {
 			this.soundsDataStorage.removeSounds(listOf(this.player))

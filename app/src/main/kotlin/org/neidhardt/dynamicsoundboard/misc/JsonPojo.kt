@@ -19,7 +19,8 @@ fun writeToFile(file: File, soundSheets: List<SoundSheet>,
 
 	val pojo = JsonPojo()
 	pojo.soundSheets = soundSheets
-	pojo.playList = playlist.map { it.mediaPlayerData }
+	// TODO
+	/*pojo.playList = playlist.map { it.mediaPlayerData }
 	pojo.sounds = HashMap<String, List<MediaPlayerData>>(sounds.size).apply {
 		for (key in sounds.keys) {
 			val soundsPerSoundSheet = ArrayList<MediaPlayerData>()
@@ -27,7 +28,7 @@ fun writeToFile(file: File, soundSheets: List<SoundSheet>,
 				soundsPerSoundSheet.add(player.mediaPlayerData)
 			this.put(key, soundsPerSoundSheet)
 		}
-	}
+	}*/
 	val json = converter.toJson(pojo)
 	file.writeText(json)
 }

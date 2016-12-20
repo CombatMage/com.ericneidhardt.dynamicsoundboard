@@ -68,7 +68,7 @@ class NavigationDrawerListPresenter(
 	private var currentPresenter: NavigationDrawerListPresenter? = null
 
 	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
-	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
+	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView, soundsDataStorage)
 	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView, soundLayoutsManager)
 
 	private var currentListBacking: List? = null

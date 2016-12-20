@@ -4,28 +4,27 @@ import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.OnPlaylistChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.eventbus_utils.registerIfRequired
-import java.util.*
+import rx.android.schedulers.AndroidSchedulers
+import rx.subscriptions.CompositeSubscription
 
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
 fun createPlaylistPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView, soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage): PlaylistPresenter
+		eventBus: EventBus, recyclerView: RecyclerView, soundsDataStorage: SoundsDataStorage): PlaylistPresenter
 {
 	return PlaylistPresenter(
 			eventBus = eventBus,
-			soundsDataAccess = soundsDataAccess,
 			soundsDataStorage = soundsDataStorage
 	).apply {
 		this.adapter = PlaylistAdapter(this)
@@ -36,50 +35,42 @@ fun createPlaylistPresenter(
 class PlaylistPresenter
 (
 		override val eventBus: EventBus,
-		val soundsDataStorage: SoundsDataStorage,
-		private val soundsDataAccess: SoundsDataAccess
+		val soundsDataStorage: SoundsDataStorage
 
 ) :
 		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<MediaPlayerController>,
-		OnPlaylistChangedEventListener,
 		MediaPlayerEventListener
 {
 	override var view: RecyclerView? = null
 
+	private val manager = SoundboardApplication.newPlaylistManager
+
+	private var subscriptions = CompositeSubscription()
 	var adapter: PlaylistAdapter? = null
-	val values: MutableList<MediaPlayerController> = ArrayList()
+	val values: List<MediaPlayerController> get() = this.manager.playlist
 
 	private var currentItemIndex: Int? = null
 
-	override fun onAttachedToWindow()
-	{
+	override fun onAttachedToWindow() {
 		this.eventBus.registerIfRequired(this)
-		this.values.clear()
-
-		val playlist = this.soundsDataAccess.playlist
-		this.setPlaylistSortOrder(playlist)
-		this.values.addAll(playlist)
 
 		this.adapter?.notifyDataSetChanged()
+		this.subscriptions = CompositeSubscription()
+		this.subscriptions.add(RxNewPlaylistManager.playlistChanges(this.manager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { this.adapter?.notifyDataSetChanged() })
 	}
 
 	override fun onDetachedFromWindow() {
 		this.eventBus.unregister(this)
+		this.subscriptions.unsubscribe()
 	}
 
-	override fun deleteSelectedItems()
-	{
+	override fun deleteSelectedItems() {
 		val playersToRemove = this.getPlayersSelectedForDeletion()
-
-		for (player in playersToRemove)
-		{
-			val index = this.values.indexOf(player)
-			this.values.remove(player)
-			this.adapter?.notifyItemRemoved(index)
-
-		}
-		this.soundsDataStorage.removeSoundsFromPlaylist(playersToRemove)
+		this.manager.remove(playersToRemove)
+		this.stopDeletionMode()
 	}
 
 	override val numberOfItemsSelectedForDeletion: Int
@@ -88,41 +79,30 @@ class PlaylistPresenter
 	override val itemCount: Int
 		get() = this.values.size
 
-	private fun getPlayersSelectedForDeletion(): List<MediaPlayerController>
-	{
-		val selectedItems = ArrayList<MediaPlayerController>()
+	private fun getPlayersSelectedForDeletion(): List<MediaPlayerController> {
 		val existingItems = this.values
-		for (player in existingItems) {
-			if (player.mediaPlayerData.isSelectedForDeletion)
-				selectedItems.add(player)
-		}
+		val selectedItems = existingItems.filter { it.mediaPlayerData.isSelectedForDeletion }
 		return selectedItems
 	}
 
-	override fun deselectAllItemsSelectedForDeletion()
-	{
+	override fun deselectAllItemsSelectedForDeletion() {
 		val selectedPlayers = this.getPlayersSelectedForDeletion()
 		for (player in selectedPlayers)
-		{
 			player.mediaPlayerData.isSelectedForDeletion = false
-			this.adapter?.notifyItemChanged(player)
-		}
+
+		this.adapter?.notifyDataSetChanged()
 	}
 
-	override fun selectAllItems()
-	{
+	override fun selectAllItems() {
 		val selectedPlayers = this.values
-		for (player in selectedPlayers)
-		{
+		for (player in selectedPlayers) {
 			player.mediaPlayerData.isSelectedForDeletion = true
-			this.adapter?.notifyItemChanged(player)
 		}
+		this.adapter?.notifyDataSetChanged()
 	}
 
-	override fun onItemClick(data: MediaPlayerController)
-	{
-		if (this.isInSelectionMode)
-		{
+	override fun onItemClick(data: MediaPlayerController) {
+		if (this.isInSelectionMode) {
 			data.mediaPlayerData.isSelectedForDeletion = !data.mediaPlayerData.isSelectedForDeletion
 			this.adapter?.notifyItemChanged(data)
 			super.onItemSelectedForDeletion()
@@ -130,34 +110,19 @@ class PlaylistPresenter
 			this.startOrStopPlayList(data)
 	}
 
-	fun startOrStopPlayList(nextActivePlayer: MediaPlayerController)
-	{
+	fun startOrStopPlayList(nextActivePlayer: MediaPlayerController) {
 		if (!this.values.contains(nextActivePlayer))
 			throw IllegalStateException("next active player $nextActivePlayer is not in playlist")
 
 		this.currentItemIndex = this.values.indexOf(nextActivePlayer)
-		for (player in this.values)
-		{
-			if (player != nextActivePlayer && player.isPlayingSound)
-				player.stopSound()
-		}
+		this.values
+				.filter { it != nextActivePlayer && it.isPlayingSound }
+				.forEach { it.stopSound() }
 
 		if (nextActivePlayer.isPlayingSound)
 			nextActivePlayer.stopSound()
 		else
 			nextActivePlayer.playSound()
-		this.adapter?.notifyDataSetChanged()
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: PlaylistChangedEvent)
-	{
-		this.values.clear()
-
-		val playlist = this.soundsDataAccess.playlist
-		this.setPlaylistSortOrder(playlist)
-		this.values.addAll(playlist)
-
 		this.adapter?.notifyDataSetChanged()
 	}
 
@@ -168,10 +133,7 @@ class PlaylistPresenter
 		if (this.values.contains(player) && !event.isAlive) // removed a destroyed media player
 		{
 			val index = this.values.indexOf(player)
-			this.values.remove(player)
-
-			this.setPlaylistSortOrder(this.values)
-
+			this.manager.remove(listOf(player))
 			this.adapter?.notifyItemRemoved(index)
 		}
 		else
@@ -197,13 +159,4 @@ class PlaylistPresenter
 		}
 	}
 
-	private fun setPlaylistSortOrder(playlist: List<MediaPlayerController>)
-	{
-		val count = playlist.size
-		for (i in 0..count - 1)
-		{
-			playlist[i].mediaPlayerData.sortOrder = i
-			playlist[i].mediaPlayerData.updateItemInDatabaseAsync()
-		}
-	}
 }

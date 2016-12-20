@@ -69,7 +69,6 @@ class SoundViewHolder
 				val toggleState = !this.inPlaylist.isSelected
 				this.inPlaylist.isSelected = toggleState
 				this.player?.isInPlaylist = toggleState
-				this.player?.mediaPlayerData?.updateItemInDatabaseAsync()
 				this.soundsDataStorage.toggleSoundInPlaylist(player.mediaPlayerData.playerId, toggleState)
 			}
 		}
@@ -77,7 +76,7 @@ class SoundViewHolder
 		this.settings.setOnClickListener {
 			this.player?.let { player ->
 				player.pauseSound()
-				this.eventBus.post(OpenSoundSettingsEvent(player.mediaPlayerData))
+				//this.eventBus.post(OpenSoundSettingsEvent(player.mediaPlayerData))
 			}
 		}
 
@@ -87,8 +86,7 @@ class SoundViewHolder
 				val currentLabel = playerData.label
 				if (currentLabel != newName) {
 					playerData.label = newName
-					playerData.updateItemInDatabaseAsync()
-					this.eventBus.post(OpenSoundRenameEvent(playerData))
+					//this.eventBus.post(OpenSoundRenameEvent(playerData))
 				}
 			}
 		}

@@ -99,7 +99,6 @@ class SoundPresenter
 			if (positionToInsert == null)
 			{
 				newPlayer.mediaPlayerData.sortOrder = count
-				newPlayer.mediaPlayerData.updateItemInDatabaseAsync()
 				this.insertPlayer(count, newPlayer) // append to end of list
 			}
 			else
@@ -142,7 +141,6 @@ class SoundPresenter
 			{
 				val playerData = this.values[i].mediaPlayerData
 				playerData.sortOrder = i
-				playerData.updateItemInDatabaseAsync()
 			}
 
 			this.adapter?.notifyItemMoved(event.from, event.to)
@@ -183,7 +181,6 @@ class SoundPresenter
 			val playerData = this.values[i].mediaPlayerData
 			val sortOrder = playerData.sortOrder
 			playerData.sortOrder = sortOrder - 1
-			playerData.updateItemInDatabaseAsync()
 		}
 	}
 

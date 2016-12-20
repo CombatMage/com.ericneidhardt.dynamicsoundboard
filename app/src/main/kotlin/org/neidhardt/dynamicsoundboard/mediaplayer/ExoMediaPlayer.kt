@@ -14,10 +14,13 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
@@ -29,10 +32,10 @@ import kotlin.properties.Delegates
  */
 fun getNewMediaPlayerController(context: Context,
 								eventBus: EventBus,
-								mediaPlayerData: MediaPlayerData,
-								soundsDataStorage: SoundsDataStorage): MediaPlayerController
+								mediaPlayerData: NewMediaPlayerData,
+								manager: NewSoundManager): MediaPlayerController
 {
-	return ExoMediaPlayer(context, eventBus, soundsDataStorage, mediaPlayerData)
+	return ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
 }
 
 val PlaylistTAG = "PlaylistTAG"
@@ -55,8 +58,8 @@ class ExoMediaPlayer
 (
 	private val context: Context,
 	private val eventBus: EventBus,
-	private val soundsDataStorage: SoundsDataStorage,
-	override val mediaPlayerData: MediaPlayerData
+	private val manager: NewSoundManager,
+	override val mediaPlayerData: NewMediaPlayerData
 ) : MediaPlayerController, ExoPlayer.EventListener
 {
 	private val TAG = javaClass.name
@@ -132,7 +135,6 @@ class ExoMediaPlayer
 		set(value) {
 			if (value != this.mediaPlayerData.isLoop) {
 				this.mediaPlayerData.isLoop = value
-				this.mediaPlayerData.updateItemInDatabaseAsync()
 			}
 		}
 
@@ -141,7 +143,6 @@ class ExoMediaPlayer
 		set(value) {
 			if (value != this.mediaPlayerData.isInPlaylist) {
 				this.mediaPlayerData.isInPlaylist = value
-				this.mediaPlayerData.updateItemInDatabaseAsync()
 			}
 		}
 
@@ -167,7 +168,7 @@ class ExoMediaPlayer
 		else
 			this.lastPosition = null
 
-		this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
+		this.manager.addSoundToCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
 		this.progressMonitor.startProgressUpdateTimer()
 		return this.isPlayingSound
@@ -178,7 +179,7 @@ class ExoMediaPlayer
 		this.exoPlayer.release()
 		this.init()
 
-		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
+		this.manager.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
 		this.progressMonitor.stopProgressUpdateTimer()
 
@@ -197,7 +198,7 @@ class ExoMediaPlayer
 
 		this.exoPlayer.playWhenReady = false
 
-		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
+		this.manager.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
 		this.progressMonitor.stopProgressUpdateTimer()
 
@@ -212,7 +213,6 @@ class ExoMediaPlayer
 		this.releasePlayerSchedule?.let { this.enhancedHandler.removeCallbacks(it) }
 
 		this.mediaPlayerData.uri = uri
-		this.mediaPlayerData.updateItemInDatabaseAsync()
 
 		this.init()
 		this.postStateChangedEvent(true)
@@ -224,7 +224,7 @@ class ExoMediaPlayer
 		this.volumeController.cancelFadeOut()
 
 		this.exoPlayer.release()
-		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
+		this.manager.removeSoundFromCurrentlyPlayingSounds(this)
 		if (postStateChanged)
 			this.postStateChangedEvent(false)
 
