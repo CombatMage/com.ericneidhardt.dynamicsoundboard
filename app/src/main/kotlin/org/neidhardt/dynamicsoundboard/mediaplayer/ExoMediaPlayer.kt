@@ -15,6 +15,7 @@ import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
@@ -33,7 +34,7 @@ import kotlin.properties.Delegates
 fun getNewMediaPlayerController(context: Context,
 								eventBus: EventBus,
 								mediaPlayerData: NewMediaPlayerData,
-								manager: NewSoundManager): MediaPlayerController
+								manager: NewSoundLayoutManager): MediaPlayerController
 {
 	return ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
 }
@@ -58,7 +59,7 @@ class ExoMediaPlayer
 (
 	private val context: Context,
 	private val eventBus: EventBus,
-	private val manager: NewSoundManager,
+	private val manager: NewSoundLayoutManager,
 	override val mediaPlayerData: NewMediaPlayerData
 ) : MediaPlayerController, ExoPlayer.EventListener
 {

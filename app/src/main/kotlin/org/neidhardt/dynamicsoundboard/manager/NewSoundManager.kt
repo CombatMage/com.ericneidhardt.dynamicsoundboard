@@ -3,9 +3,7 @@ package org.neidhardt.dynamicsoundboard.manager
 import android.content.Context
 import android.net.Uri
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -45,7 +43,7 @@ open class NewSoundManager(private val context: Context) {
 					context = this.context,
 					eventBus = EventBus.getDefault(),
 					mediaPlayerData = playerData,
-					manager = this
+					manager = SoundboardApplication.newSoundLayoutManager
 			)
 		}
 		catch (e: Exception) {
@@ -53,15 +51,6 @@ open class NewSoundManager(private val context: Context) {
 			return null
 		}
 	}
-
-	fun removeSoundFromCurrentlyPlayingSounds(player: MediaPlayerController) {
-		// TODO
-	}
-
-	fun addSoundToCurrentlyPlayingSounds(player: MediaPlayerController) {
-		// TODO
-	}
-
 }
 
 fun List<MediaPlayerController>.findById(playerId: String): MediaPlayerController? {

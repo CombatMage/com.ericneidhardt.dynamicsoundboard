@@ -10,10 +10,13 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.animations.AnimationUtils
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
+import rx.android.schedulers.AndroidSchedulers
+import rx.subscriptions.CompositeSubscription
 
 /**
  * File created by Eric Neidhardt on 12.11.2014.
@@ -26,7 +29,8 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 
 	private val eventBus = EventBus.getDefault()
 
-	private var storage: SoundsDataAccess? = null
+	private var subscriptions = CompositeSubscription()
+	private var manager: NewSoundLayoutManager? = null
 	private var presenter: AddPauseFloatingActionButtonPresenter? = null
 
 	@SuppressWarnings("unused")
@@ -40,7 +44,7 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 
 	private fun init() {
 		if (!this.isInEditMode) {
-			this.storage = SoundboardApplication.soundsDataAccess
+			this.manager = SoundboardApplication.newSoundLayoutManager
 			this.presenter = AddPauseFloatingActionButtonPresenter()
 		}
 	}
@@ -53,14 +57,19 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 
 	override fun onAttachedToWindow() {
 		super.onAttachedToWindow()
+		this.subscriptions = CompositeSubscription()
+
 		this.presenter?.start()
-		this.eventBus.register(this)
 		this.setPresenterState()
+		this.subscriptions.add(RxNewSoundLayoutManager.changesPlayingSounds(this.manager!!)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { this.setPresenterState() }
+		)
 	}
 
 	override fun onDetachedFromWindow() {
 		this.presenter?.stop()
-		this.eventBus.unregister(this)
+		this.subscriptions.unsubscribe()
 		super.onDetachedFromWindow()
 	}
 
@@ -84,8 +93,7 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: MediaPlayerStateChangedEvent)
-	{
+	override fun onEvent(event: MediaPlayerStateChangedEvent) {
 		this.setPresenterState()
 	}
 
@@ -96,7 +104,7 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 
 	private fun setPresenterState() {
 		this.presenter?.state =
-				if (this.storage?.isAnySoundPlaying == true)
+				if (this.manager?.isAnySoundPlaying == true)
 					AddPauseFloatingAction.State.PLAY
 				else
 					AddPauseFloatingAction.State.ADD
@@ -107,4 +115,4 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 	}
 }
 
-private val SoundsDataAccess.isAnySoundPlaying: Boolean get() = this.currentlyPlayingSounds.isNotEmpty()
+private val NewSoundLayoutManager.isAnySoundPlaying: Boolean get() = this.currentlyPlayingSounds.isNotEmpty()

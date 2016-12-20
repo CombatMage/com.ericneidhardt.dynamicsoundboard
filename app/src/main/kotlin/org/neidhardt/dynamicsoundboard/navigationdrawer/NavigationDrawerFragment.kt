@@ -101,7 +101,7 @@ class NavigationDrawerFragment : BaseFragment() {
 		this.listView?.onAttached()
 
 		this.headerVM.title = this.newSoundLayoutManager.soundLayouts.activeLayout.label
-		this.subscriptions.add(RxNewSoundLayoutManager.soundLayoutsChanged(this.newSoundLayoutManager)
+		this.subscriptions.add(RxNewSoundLayoutManager.soundLayoutsChanges(this.newSoundLayoutManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { layouts ->
 					val selectedLayout = layouts.activeLayout

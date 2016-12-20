@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
-import android.Manifest
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.media.AudioManager
@@ -15,10 +14,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_base.*
-import kotlinx.android.synthetic.main.layout_toolbar_content.*
+import kotlinx.android.synthetic.main.layout_fab.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.neidhardt.android_utils.misc.getCopyList
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseActivity
@@ -30,7 +30,6 @@ import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEventListener
@@ -40,30 +39,22 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
-import org.neidhardt.dynamicsoundboard.reportError
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundcontrol.*
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutsChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.RxSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeletePlayListDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.RxSoundSheetManager
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
-import org.neidhardt.utils.letThis
 import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.utils.letThis
 import rx.android.schedulers.AndroidSchedulers
-import rx.lang.kotlin.toSingletonObservable
 import rx.subscriptions.CompositeSubscription
-import java.util.*
 import kotlin.properties.Delegates
 
 /**
@@ -120,6 +111,8 @@ class SoundActivity :
 		this.binding.ablMain.setExpanded(true)
 		this.setSupportActionBar(this.toolbar)
 
+		this.fb_layout_fab
+
 		this.requestPermissionsIfRequired()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
 	}
@@ -174,6 +167,10 @@ class SoundActivity :
 		this.subscriptions.add(RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { soundSheets -> this.setStateForSoundSheets() })
+
+		this.subscriptions.add(RxNewSoundLayoutManager.changesPlayingSounds(this.soundLayoutManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { playingSounds ->  })
 	}
 
 	private fun setStateForSoundSheets() {
@@ -245,27 +242,24 @@ class SoundActivity :
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onFabClickedEvent(event: FabClickedEvent) {
-		/*val soundSheetFragment = this.currentSoundFragment
-		val currentlyPlayingSounds = this.soundsDataAccess.currentlyPlayingSounds
-
+		val currentlyPlayingSounds = this.soundLayoutManager.currentlyPlayingSounds
+		val currentSoundSheet = this.currentSoundFragment
 		if (currentlyPlayingSounds.isNotEmpty()) {
-			val copyCurrentlyPlayingSounds = ArrayList<MediaPlayerController>(currentlyPlayingSounds.size)
-			copyCurrentlyPlayingSounds.addAll(currentlyPlayingSounds)
+			val copyCurrentlyPlayingSounds = currentlyPlayingSounds.getCopyList()
 			for (sound in copyCurrentlyPlayingSounds)
 				sound.pauseSound()
-		} else if (soundSheetFragment == null) {
-			AddNewSoundSheetDialog.showInstance(this.supportFragmentManager, this.soundSheetsDataUtil.getSuggestedName())
+		}
+		else if (currentSoundSheet == null) {
+			AddNewSoundSheetDialog.showInstance(this.supportFragmentManager)
 		} else {
 			if (SoundboardPreferences.useSystemBrowserForFiles()) {
 				val intent = Intent(Intent.ACTION_GET_CONTENT)
 				intent.type = FileUtils.MIME_AUDIO
-				soundSheetFragment.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
+				currentSoundSheet.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
 			} else {
-				val currentSoundSheet = this.currentSoundFragment
-				if (currentSoundSheet != null)
-					AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, currentSoundSheet.fragmentTag)
+				AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, currentSoundSheet.fragmentTag)
 			}
-		}*/
+		}
 	}
 
 	/**
