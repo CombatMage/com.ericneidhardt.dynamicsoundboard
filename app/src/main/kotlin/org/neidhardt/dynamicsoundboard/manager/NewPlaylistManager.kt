@@ -1,10 +1,15 @@
 package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
+import android.net.Uri
 import org.greenrobot.eventbus.EventBus
+import org.neidhardt.android_utils.misc.getCopyList
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.misc.getFileForUri
+import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import rx.Observable
@@ -15,7 +20,7 @@ import java.util.*
 /**
  * Created by eric.neidhardt@gmail.com on 19.12.2016.
  */
-class NewPlaylistManager(private val context: Context) : NewSoundManager(context) {
+class NewPlaylistManager(private val context: Context) {
 
 	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()
@@ -28,13 +33,12 @@ class NewPlaylistManager(private val context: Context) : NewSoundManager(context
 	val playlist: List<MediaPlayerController> get() = this.mMediaPlayers as List<MediaPlayerController>
 
 	fun set(mediaPlayerData: MutableList<NewMediaPlayerData>) {
-		this.mMediaPlayers?.forEach {
-			it.destroy(false)
-		}
+		this.mMediaPlayers?.forEach { it.destroy(false) }
 		this.mMediaPlayersData = mediaPlayerData
 		this.mMediaPlayers = ArrayList()
 		// copy list to prevent concurrent modification exception
-		val copyList = ArrayList<NewMediaPlayerData>().apply { this.addAll(mediaPlayerData) }
+		val copyList = mediaPlayerData.getCopyList()
+		SoundboardApplication.taskCounter.value += 1
 		Observable.just(copyList)
 				.flatMapIterable { it -> it }
 				.observeOn(AndroidSchedulers.mainThread())
@@ -68,7 +72,7 @@ class NewPlaylistManager(private val context: Context) : NewSoundManager(context
 		if (this.playlist.containsPlayerWithId(playerData.playerId))
 			return
 
-		val player = super.createPlaylistSound(playerData)
+		val player = MediaPlayerFactory.createPlayer(this.context, this.eventBus, playerData)
 		if (player == null) {
 			this.mMediaPlayersData?.remove(playerData)
 			this.eventBus.post(CreatingPlayerFailedEvent(playerData))

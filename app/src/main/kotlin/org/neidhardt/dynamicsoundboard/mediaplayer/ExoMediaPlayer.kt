@@ -13,6 +13,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
@@ -21,6 +22,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.misc.getFileForUri
+import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
@@ -31,13 +34,38 @@ import kotlin.properties.Delegates
 /**
  * File created by eric.neidhardt on 11.04.2016.
  */
-fun getNewMediaPlayerController(context: Context,
-								eventBus: EventBus,
-								mediaPlayerData: NewMediaPlayerData,
-								manager: NewSoundLayoutManager): MediaPlayerController
-{
-	return ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
+object MediaPlayerFactory {
+
+	private val TAG = javaClass.name
+
+	fun createPlayer(context: Context, eventBus: EventBus, playerData: NewMediaPlayerData) : MediaPlayerController? {
+		try {
+			val file = Uri.parse(playerData.uri).getFileForUri()
+			if (file == null || !file.isAudioFile)
+				throw Exception("cannot create create media player, given file is no audio file")
+
+			return getNewMediaPlayerController (
+					context = context,
+					eventBus = eventBus,
+					mediaPlayerData = playerData,
+					manager = SoundboardApplication.newSoundLayoutManager
+			)
+		}
+		catch (e: Exception) {
+			Logger.d(TAG, playerData.toString() + " " + e.message)
+			return null
+		}
+	}
+
+	fun getNewMediaPlayerController(context: Context,
+									eventBus: EventBus,
+									mediaPlayerData: NewMediaPlayerData,
+									manager: NewSoundLayoutManager): MediaPlayerController {
+		return ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
+	}
+
 }
+
 
 val PlaylistTAG = "PlaylistTAG"
 
