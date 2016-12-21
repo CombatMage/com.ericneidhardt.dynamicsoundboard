@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
+import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
@@ -13,7 +14,7 @@ private val DELETION_TIMEOUT = 5000
 
 class PendingDeletionHandler (
 		private val soundPresenter: SoundPresenter,
-		private val soundsDataStorage: SoundsDataStorage,
+		private val manager: NewSoundManager,
 		private val onItemDeletionRequested: (deletionHandler: PendingDeletionHandler, timeTillDeletion: Int) -> Unit
 ) {
 	private val handler = EnhancedHandler()
@@ -39,7 +40,7 @@ class PendingDeletionHandler (
 	private fun deletePendingItems()
 	{
 		this.deletionTask?.let { this.handler.removeCallbacks(it) }
-		this.soundsDataStorage.removeSounds(this.pendingDeletions)
+		this.manager.remove(this.soundPresenter.soundSheet, this.pendingDeletions)
 		this.pendingDeletions.clear()
 	}
 

@@ -8,6 +8,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
+import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.utils.longHash
 
 /**
@@ -16,7 +17,7 @@ import org.neidhardt.utils.longHash
 class SoundAdapter (
 		private val itemTouchHelper: ItemTouchHelper,
 		private val presenter: SoundPresenter,
-		private val soundsDataStorage: SoundsDataStorage,
+		private val manager: NewSoundManager,
 		private val eventBus: EventBus
 
 ) :
@@ -35,7 +36,7 @@ class SoundAdapter (
 				itemTouchHelper = this.itemTouchHelper,
 				itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control_item, parent, false),
 				eventBus = this.eventBus,
-				soundsDataStorage = this.soundsDataStorage)
+				manager = this.manager)
 	}
 
 	override fun onBindViewHolder(holder: SoundViewHolder, position: Int) {

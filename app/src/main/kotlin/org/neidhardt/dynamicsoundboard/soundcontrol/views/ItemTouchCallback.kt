@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 
@@ -21,7 +22,7 @@ class ItemTouchCallback
 		private val deletionHandler: PendingDeletionHandler,
 		private val presenter: SoundPresenter,
 		private val fragmentTag: String,
-		private val soundsDataStorage: SoundsDataStorage
+		private val manager: NewSoundManager
 ) : ItemTouchHelper.Callback() {
 
 	private val handler = Handler()
@@ -46,7 +47,8 @@ class ItemTouchCallback
 		val from = viewHolder.adapterPosition
 		val to = target.adapterPosition
 		if (from == RecyclerView.NO_POSITION || to == RecyclerView.NO_POSITION) return false
-		this.soundsDataStorage.moveSoundInFragment(this.fragmentTag, from, to)
+		// TODO
+		//this.soundsDataStorage.moveSoundInFragment(this.fragmentTag, from, to)
 		return true
 	}
 
@@ -54,9 +56,11 @@ class ItemTouchCallback
 		val position = viewHolder.adapterPosition
 		if (position != RecyclerView.NO_POSITION) {
 			val item = this.presenter.values[position]
-			if (SoundboardPreferences.isOneSwipeToDeleteEnabled)
-				this.handler.postDelayed({ this.soundsDataStorage.removeSounds(listOf(item)) }, 200) // give animation some time to settle
-			else
+
+			// TODO
+			//if (SoundboardPreferences.isOneSwipeToDeleteEnabled)
+			//	this.handler.postDelayed({ this.soundsDataStorage.removeSounds(listOf(item)) }, 200) // give animation some time to settle
+			//else
 				this.deletionHandler.requestItemDeletion(item)
 		}
 	}

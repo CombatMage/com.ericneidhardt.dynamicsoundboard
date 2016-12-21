@@ -6,10 +6,12 @@ import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.misc.getCopyList
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.mediaplayer.ExoMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import rx.Observable
@@ -44,7 +46,8 @@ open class NewSoundManager(private val context: Context) {
 	internal var mSoundSheets: MutableList<NewSoundSheet>? = null
 	internal var mMediaPlayers: MutableMap<NewSoundSheet, MutableList<MediaPlayerController>>? = null
 
-	val sounds: Map<NewSoundSheet, List<MediaPlayerController>> get() = this.mMediaPlayers as Map<NewSoundSheet, List<MediaPlayerController>>
+	val sounds: Map<NewSoundSheet, List<MediaPlayerController>> get() =
+			this.mMediaPlayers as Map<NewSoundSheet, List<MediaPlayerController>>
 
 	fun set(soundSheets: MutableList<NewSoundSheet>) {
 		this.mMediaPlayers?.values?.forEach { it.forEach { it.destroy(false) } }
@@ -57,6 +60,9 @@ open class NewSoundManager(private val context: Context) {
 				.flatMapIterable { it }
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ soundSheet ->
+					if (soundSheet.mediaPlayers == null)
+						soundSheet.mediaPlayers = ArrayList()
+
 					val soundCopyList = soundSheet.mediaPlayers.getCopyList()
 					soundCopyList.forEach { this.createPlayerAndAddToSounds(soundSheet, it) }
 					this.invokeListeners()
@@ -69,8 +75,26 @@ open class NewSoundManager(private val context: Context) {
 				})
 	}
 
-	private fun add(soundSheet: NewSoundSheet, playerData: NewMediaPlayerData) {
+	fun add(soundSheet: NewSoundSheet, playerData: NewMediaPlayerData) {
 		this.createPlayerAndAddToSounds(soundSheet, playerData)
+		this.invokeListeners()
+	}
+
+	fun remove(soundSheet: NewSoundSheet, playerList: List<MediaPlayerController>) {
+		playerList.forEach { player ->
+			player.destroy(false)
+			soundSheet.mediaPlayers.remove(player.mediaPlayerData)
+		}
+		val playerOfSoundSheet = this.mMediaPlayers?.get(soundSheet)
+		playerOfSoundSheet?.removeAll(playerList)
+		this.invokeListeners()
+	}
+
+	fun notifyHasChanged(player: MediaPlayerController) {
+		if (this.mSoundSheets == null)
+			throw IllegalStateException("sound manager init not done")
+		if (this.mMediaPlayers?.values?.contains(player) == false)
+			throw IllegalArgumentException("given player not found in dataset")
 		this.invokeListeners()
 	}
 

@@ -21,12 +21,6 @@ class NewSoundLayoutManager(
 		private val newPlaylistManager: NewPlaylistManager,
 		private val newSoundManager: NewSoundManager) {
 
-	companion object {
-		fun getNewDatabaseIdForLabel(label: String): String {
-			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
-		}
-	}
-
 	internal var onSoundLayoutsChangedListener = ArrayList<((List<NewSoundLayout>) -> Unit)>()
 	internal var onPlayingSoundsChangedListener = ArrayList<((List<MediaPlayerController>) -> Unit)>()
 
@@ -113,6 +107,7 @@ class NewSoundLayoutManager(
 		if (activeLayout.soundSheets == null)
 			activeLayout.soundSheets = ArrayList()
 		this.newSoundSheetManager.set(activeLayout.soundSheets)
+		this.newSoundManager.set(activeLayout.soundSheets)
 
 		if (activeLayout.playList == null)
 			activeLayout.playList = ArrayList()

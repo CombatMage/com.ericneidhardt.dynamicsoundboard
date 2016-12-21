@@ -5,6 +5,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
 import org.greenrobot.eventbus.EventBus
+import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
@@ -19,7 +20,7 @@ class SoundViewHolder
 		itemTouchHelper: ItemTouchHelper,
 		itemView: View,
 		private val eventBus: EventBus,
-		private val soundsDataStorage: SoundsDataStorage
+		private val manager: NewSoundManager
 ) :
 		RecyclerView.ViewHolder(itemView)
 {
@@ -69,7 +70,7 @@ class SoundViewHolder
 				val toggleState = !this.inPlaylist.isSelected
 				this.inPlaylist.isSelected = toggleState
 				this.player?.isInPlaylist = toggleState
-				this.soundsDataStorage.toggleSoundInPlaylist(player.mediaPlayerData.playerId, toggleState)
+				//this.manager.toggleSoundInPlaylist(player.mediaPlayerData.playerId, toggleState)
 			}
 		}
 
