@@ -135,6 +135,8 @@ open class NewSoundManager(private val context: Context) {
 		}
 		else {
 			soundsForSoundSheet.add(player)
+			if (soundSheet.mediaPlayers == null)
+				soundSheet.mediaPlayers = ArrayList()
 			if (soundSheet.mediaPlayers.firstOrNull { it.playerId == playerData.playerId } == null)
 				soundSheet.mediaPlayers.add(playerData)
 		}
