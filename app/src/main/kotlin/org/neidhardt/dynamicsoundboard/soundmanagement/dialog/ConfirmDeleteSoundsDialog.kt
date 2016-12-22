@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
 
 /**
@@ -11,8 +12,8 @@ import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
  */
 class ConfirmDeleteSoundsDialog : BaseConfirmDeleteDialog() {
 
-	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
-	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
+	private val soundManager = SoundboardApplication.newSoundManager
 
 	private var fragmentTag: String? = null
 
@@ -27,7 +28,12 @@ class ConfirmDeleteSoundsDialog : BaseConfirmDeleteDialog() {
 	override val infoTextResource: Int = R.string.dialog_confirm_delete_sounds_in_soundheet_message
 
 	override fun delete() {
-		this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag as String))
+		this.fragmentTag?.let { fragmentTag ->
+			val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(fragmentTag)
+					?: throw IllegalStateException("no soundSheet for fragmentTag was found")
+			val sounds = this.soundManager.sounds[soundSheet] ?: emptyList()
+			this.soundManager.remove(soundSheet, sounds)
+		}
 	}
 
 	companion object {
@@ -47,21 +53,18 @@ class ConfirmDeleteSoundsDialog : BaseConfirmDeleteDialog() {
 	}
 }
 
-class ConfirmDeletePlayListDialog : BaseConfirmDeleteDialog()
-{
-	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
-	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+class ConfirmDeletePlayListDialog : BaseConfirmDeleteDialog() {
+
+	private val playListManager = SoundboardApplication.newPlaylistManager
 
 	override val infoTextResource: Int = R.string.dialog_confirm_delete_play_list_message
 
-	override fun delete()
-	{
-		val playlist = this.soundsDataAccess.playlist
-		this.soundsDataStorage.removeSounds(playlist)
+	override fun delete() {
+		val playlist = this.playListManager.playlist
+		this.playListManager.remove(playlist)
 	}
 
-	companion object
-	{
+	companion object {
 		private val TAG = ConfirmDeletePlayListDialog::class.java.name
 
 		fun showInstance(manager: FragmentManager) {
