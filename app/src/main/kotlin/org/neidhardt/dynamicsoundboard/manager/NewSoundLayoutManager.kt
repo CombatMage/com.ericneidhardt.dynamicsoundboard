@@ -2,7 +2,6 @@ package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
@@ -12,8 +11,8 @@ import rx.lang.kotlin.add
 import java.util.*
 
 /**
- * Created by eric.neidhardt@gmail.com on 19.12.2016.
- */
+* @author Eric.Neidhardt@GMail.com on 19.12.2016.
+*/
 class NewSoundLayoutManager(
 		private val context: Context,
 		private val storage: AppDataStorage,

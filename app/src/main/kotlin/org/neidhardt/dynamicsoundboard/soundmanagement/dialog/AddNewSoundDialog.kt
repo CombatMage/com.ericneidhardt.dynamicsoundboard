@@ -22,7 +22,6 @@ import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDeco
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.fileexplorer.FileResultHandler
 import org.neidhardt.dynamicsoundboard.fileexplorer.GetNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
@@ -226,11 +225,10 @@ private class AddNewSoundDialogPresenter(
 				this.soundManager.add(soundSheet, playerData)
 		}
 
-		// TODO
-		// this.showRenameDialog(renamedPlayers) // show the rename dialog for all altered players
+		this.showRenameDialog(renamedPlayers) // show the rename dialog for all altered players
 	}
 
-	private fun showRenameDialog(renamedMediaPlayers: List<MediaPlayerData>) {
+	private fun showRenameDialog(renamedMediaPlayers: List<NewMediaPlayerData>) {
 		for (data in renamedMediaPlayers)
 			RenameSoundFileDialog.show(this.dialog.fragmentManager, data)
 	}

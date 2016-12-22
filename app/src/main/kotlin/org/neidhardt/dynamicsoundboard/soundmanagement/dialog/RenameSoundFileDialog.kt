@@ -13,20 +13,20 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.dialog_rename_sound_file_layout.view.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
+import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsBaseDialog
 import java.io.File
 import java.io.IOException
-import java.util.*
 import kotlin.properties.Delegates
 
 /**
@@ -36,15 +36,13 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog()
 {
 	override var player: MediaPlayerController by Delegates.notNull<MediaPlayerController>()
 	override var fragmentTag: String by Delegates.notNull<String>()
-
-	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
-	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+	override var soundSheet: NewSoundSheet? = null
 
 	companion object
 	{
 		private val TAG = RenameSoundFileDialog::class.java.name
 
-		fun show(manager: FragmentManager, playerData: MediaPlayerData)
+		fun show(manager: FragmentManager, playerData: NewMediaPlayerData)
 		{
 			RenameSoundFileDialog().let { dialog ->
 				SoundSettingsBaseDialog.addArguments(dialog, playerData.playerId, playerData.fragmentTag)
@@ -57,11 +55,12 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog()
 	{
 		@SuppressLint("InflateParams")
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_rename_sound_file_layout, null)
-/*
+
 		val presenter = RenameSoundFileDialogPresenter(
 				playerData = this.player.mediaPlayerData,
-				soundsDataAccess = this.soundsDataAccess,
-				soundsDataStorage = this.soundsDataStorage,
+				soundSheetManager = this.soundSheetManager,
+				soundsManager = this.soundManager,
+				playlistManager = this.playlistManager,
 				dialog = this,
 				newName = view.tv_dialog_rename_sound_file_layout_new_name,
 				currentName = view.tv_dialog_rename_sound_file_layout_current_name,
@@ -76,16 +75,15 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog()
 			})
 			this.setNegativeButton(R.string.dialog_rename_sound_file_cancel, { dialogInterface, i -> dismiss() })
 		}.create()
-		*/
-		return AlertDialog.Builder(context).create()
 	}
 }
 
 private class RenameSoundFileDialogPresenter
 (
-		private val playerData: MediaPlayerData,
-		private val soundsDataAccess: SoundsDataAccess,
-		private val soundsDataStorage: SoundsDataStorage,
+		private val playerData: NewMediaPlayerData,
+		private val soundsManager: NewSoundManager,
+		private val playlistManager: NewPlaylistManager,
+		private val soundSheetManager: NewSoundSheetManager,
 		private val dialog: RenameSoundFileDialog,
 		private val newName : TextView,
 		private val currentName : TextView,
@@ -96,11 +94,9 @@ private class RenameSoundFileDialogPresenter
 
 	private var playersWithMatchingUri: List<MediaPlayerController>? = null
 
-	init
-	{
+	init {
 		this.playersWithMatchingUri = this.getPlayersWithMatchingUri(this.playerData.uri)
-		if (playersWithMatchingUri!!.size > 1)
-		{
+		if (playersWithMatchingUri!!.size > 1) {
 			this.renameAllOccurrences.visibility = View.VISIBLE
 			this.renameAllOccurrences.text = this.renameAllOccurrences.text.toString()
 					.replace("{%s0}", Integer.toString(playersWithMatchingUri!!.size))
@@ -117,21 +113,14 @@ private class RenameSoundFileDialogPresenter
 
 	private fun getPlayersWithMatchingUri(uri: String): List<MediaPlayerController>
 	{
-		val players = ArrayList<MediaPlayerController>()
 
-		val playlist = this.soundsDataAccess.playlist
-		for (player in playlist)
-		{
-			if (player.mediaPlayerData.uri == uri)
-				players.add(player)
-		}
+		val playlist = this.playlistManager.playlist
+		val players = playlist
+				.filter { it.mediaPlayerData.uri == uri }
+				.toMutableList()
 
-		val fragments = this.soundsDataAccess.sounds.keys
-		for (fragment in fragments)
-		{
-			val soundsInFragment = this.soundsDataAccess.getSoundsInFragment(fragment)
-			for (player in soundsInFragment)
-			{
+		this.soundsManager.sounds.forEach { entry ->
+			entry.value.forEach { player ->
 				if (player.mediaPlayerData.uri == uri)
 					players.add(player)
 			}
@@ -213,20 +202,21 @@ private class RenameSoundFileDialogPresenter
 		return newNameFilePath
 	}
 
-	private fun setUriForPlayer(player: MediaPlayerController, uri: String): Boolean
-	{
-		try
-		{
+	private fun setUriForPlayer(player: MediaPlayerController, uri: String): Boolean {
+		try {
 			player.setSoundUri(uri)
 			return true
 		}
-		catch (e: IOException)
-		{
+		catch (e: IOException) {
+
 			Logger.e(TAG, e.message)
 			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
-				this.soundsDataStorage.removeSoundsFromPlaylist(listOf(player))
-			else
-				this.soundsDataStorage.removeSounds(listOf(player))
+				this.playlistManager.remove(listOf(player))
+			else {
+				val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(player.mediaPlayerData.fragmentTag)
+						?: throw IllegalArgumentException("no soundSheet for given fragmentTag was found")
+				this.soundsManager.remove(soundSheet, listOf(player))
+			}
 			return false
 		}
 	}
