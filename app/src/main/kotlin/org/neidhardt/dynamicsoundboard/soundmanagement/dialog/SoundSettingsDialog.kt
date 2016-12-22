@@ -14,6 +14,7 @@ import org.neidhardt.android_utils.views.CustomEditText
 import org.neidhardt.android_utils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
@@ -123,10 +124,9 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 				mediaPlayerData = MediaPlayerFactory.getNewMediaPlayerData(fragmentTag, uri, soundLabel)
 			}
 
-			if (this.soundSheet != null)
-				this.soundManager.add(soundSheet!!, mediaPlayerData)
-			else
-				this.playlistManager.add(mediaPlayerData)
+			this.soundSheetManager.soundSheets.findByFragmentTag(mediaPlayerData.fragmentTag)?.let { newSoundSheet ->
+				this.soundManager.add(newSoundSheet, mediaPlayerData)
+			}
 		}
 	}
 
