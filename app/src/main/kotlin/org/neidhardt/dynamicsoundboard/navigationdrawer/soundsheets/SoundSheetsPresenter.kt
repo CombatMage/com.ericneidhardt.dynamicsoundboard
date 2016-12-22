@@ -5,8 +5,8 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
@@ -14,9 +14,7 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
 import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.*
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
+import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener
 import org.neidhardt.eventbus_utils.registerIfRequired
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
@@ -52,20 +50,28 @@ open class SoundSheetsPresenter
 {
 	override var view: RecyclerView? = null
 
-	private val manager = SoundboardApplication.newSoundSheetManager
+	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
+	private val soundManager = SoundboardApplication.newSoundManager
 
 	private var subscriptions = CompositeSubscription()
 
 	var adapter: SoundSheetsAdapter? = null
-	val values: List<NewSoundSheet> get() = this.manager.soundSheets
+	val values: List<NewSoundSheet> get() = this.soundSheetManager.soundSheets
 
 	override fun onAttachedToWindow() {
 		this.eventBus.registerIfRequired(this)
 		this.adapter?.notifyDataSetChanged()
+
 		this.subscriptions = CompositeSubscription()
-		this.subscriptions.add(RxNewSoundSheetManager.soundSheetsChanged(this.manager)
+		this.subscriptions.add(RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { this.adapter?.notifyDataSetChanged() })
+
+		this.subscriptions.add(RxSoundManager.changesSoundList(this.soundManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe {
+					// TODO update sound count
+				})
 	}
 
 	override fun onDetachedFromWindow() {
@@ -79,7 +85,7 @@ open class SoundSheetsPresenter
 			val soundsInFragment = this.soundsDataAccess.getSoundsInFragment(soundSheet.fragmentTag)
 			this.soundsDataStorage.removeSounds(soundsInFragment)
 		}
-		this.manager.remove(soundSheetsToRemove)
+		this.soundSheetManager.remove(soundSheetsToRemove)
 		this.stopDeletionMode()
 	}
 
@@ -90,7 +96,7 @@ open class SoundSheetsPresenter
 			this.adapter?.notifyItemChanged(data)
 		}
 		else {
-			this.manager.setSelected(data)
+			this.soundSheetManager.setSelected(data)
 		}
 	}
 
