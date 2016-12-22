@@ -5,69 +5,66 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
-import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.eventbus_utils.registerIfRequired
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
-import java.util.*
 
 /**
  * File created by eric.neidhardt on 02.07.2015.
  */
 fun createSoundPresenter(
-		fragmentTag: String,
+		soundSheet: NewSoundSheet,
 		eventBus: EventBus,
 		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit,
-		recyclerView: RecyclerView): SoundPresenter
+		soundManager: NewSoundManager,
+		recyclerView: RecyclerView
+): SoundPresenter
 {
 	return SoundPresenter(
-			fragmentTag = fragmentTag,
+			soundSheet = soundSheet,
 			eventBus = eventBus,
-			soundsDataAccess = soundsDataAccess
+			soundManager = soundManager
 	).apply {
-		val deletionHandler = PendingDeletionHandler(this, soundsDataStorage, onItemDeletionRequested)
+		val deletionHandler = PendingDeletionHandler(this, soundManager, onItemDeletionRequested)
 		val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(recyclerView.context, deletionHandler,
-				this, fragmentTag, soundsDataStorage)).apply { this.attachToRecyclerView(recyclerView) }
-		val adapter = SoundAdapter(itemTouchHelper, this, soundsDataStorage, eventBus)
+				this, soundSheet, soundManager)).apply { this.attachToRecyclerView(recyclerView) }
+
+		val adapter = SoundAdapter(itemTouchHelper, this, soundManager, eventBus)
 		this.adapter = adapter
 	}
 }
 
-class SoundPresenter
-(
+class SoundPresenter (
 		val soundSheet: NewSoundSheet,
 		private val eventBus: EventBus,
-		private val newSoundManager: NewSoundManager
-) :
-		OnSoundsChangedEventListener,
-		MediaPlayerEventListener
-{
-	private val TAG = javaClass.name
+		private val soundManager: NewSoundManager
+) : MediaPlayerEventListener {
 
 	private var subscriptions = CompositeSubscription()
+
 	var adapter: SoundAdapter? = null
 	val values: List<MediaPlayerController> get() =
-			this.newSoundManager.sounds.getOrElse(this.soundSheet, { emptyList() } )
+			this.soundManager.sounds.getOrElse(this.soundSheet, { emptyList() } )
 
 	fun onAttachedToWindow() {
 		this.eventBus.registerIfRequired(this)
 		this.adapter?.notifyDataSetChanged()
+
 		this.subscriptions = CompositeSubscription()
-		RxSoundManager.changesSoundList(this.newSoundManager)
+		this.subscriptions.add(RxSoundManager.changesSoundList(this.soundManager)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.adapter?.notifyDataSetChanged() }
+				.subscribe { this.adapter?.notifyDataSetChanged() })
+
+		this.subscriptions.add(RxSoundManager.movesSoundInList(this.soundManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { event -> this.adapter?.notifyItemMoved(event.from, event.to) })
 	}
 
 	fun onDetachedFromWindow() {
@@ -87,8 +84,5 @@ class SoundPresenter
 		}
 	}
 
-	@Subscribe
-	override fun onEvent(event: MediaPlayerCompletedEvent) {
-		Logger.d(TAG, "onEvent :" + event)
-	}
+	override fun onEvent(event: MediaPlayerCompletedEvent) {}
 }

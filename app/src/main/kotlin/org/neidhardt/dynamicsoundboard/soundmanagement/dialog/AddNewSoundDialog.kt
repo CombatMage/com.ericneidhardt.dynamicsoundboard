@@ -18,21 +18,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.fileexplorer.FileResultHandler
 import org.neidhardt.dynamicsoundboard.fileexplorer.GetNewSoundFromDirectoryDialog
+import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
-import org.neidhardt.dynamicsoundboard.base.BaseDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
-import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import java.io.File
 import java.util.*
 
@@ -44,7 +45,8 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 	private val KEY_SOUNDS_URI = "KEY_SOUNDS_URI"
 	private val KEY_SOUNDS_LABEL = "KEY_SOUNDS_LABEL"
 
-	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+	private val soundManager = SoundboardApplication.newSoundManager
+	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
 
 	private var presenter: AddNewSoundDialogPresenter? = null
 
@@ -77,7 +79,8 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 
 		this.presenter = AddNewSoundDialogPresenter(
 				dialog = this,
-				soundsDataStorage = this.soundsDataStorage,
+				soundManager = this.soundManager,
+				soundSheetManager = this.soundSheetManager,
 				playlistManager = SoundboardApplication.newPlaylistManager,
 				addAnotherSound = view.findViewById(R.id.b_add_another_sound),
 				addedSoundsLayout = view.findViewById(R.id.rv_dialog) as RecyclerView)
@@ -164,9 +167,9 @@ private class AddNewSoundDialogPresenter(
 		private val dialog: AddNewSoundDialog,
 		private val addAnotherSound: View,
 		private val addedSoundsLayout: RecyclerView,
-
 		private val playlistManager: NewPlaylistManager,
-		private val soundsDataStorage: SoundsDataStorage
+		private val soundSheetManager: NewSoundSheetManager,
+		private val soundManager: NewSoundManager
 )
 {
 	private val soundsToAdd = ArrayList<NewSoundData>()
@@ -216,8 +219,11 @@ private class AddNewSoundDialogPresenter(
 				this.playlistManager.add(playerData)
 		}
 		else {
-			//for (playerData in playersData)
-			//	this.soundsDataStorage.createSoundAndAddToManager(playerData)
+			val soundSheet =
+					this.soundSheetManager.soundSheets.findByFragmentTag(this.dialog.callingFragmentTag)
+							?: throw IllegalStateException("no soundSheet for fragmentTag was found")
+			for (playerData in playersData)
+				this.soundManager.add(soundSheet, playerData)
 		}
 
 		// TODO

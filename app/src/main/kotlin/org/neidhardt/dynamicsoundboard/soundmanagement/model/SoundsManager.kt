@@ -11,12 +11,14 @@ import org.neidhardt.dynamicsoundboard.dao.MediaPlayerDataDao
 import org.neidhardt.dynamicsoundboard.daohelper.GreenDaoHelper
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
-import org.neidhardt.dynamicsoundboard.mediaplayer.getNewMediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundAddedEvent
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundMovedEvent
+import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundsRemovedEvent
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.loadPlaylistFromDatabase
 import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.loadSoundsFromDatabase
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil

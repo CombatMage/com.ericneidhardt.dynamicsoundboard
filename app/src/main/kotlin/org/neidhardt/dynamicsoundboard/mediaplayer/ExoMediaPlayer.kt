@@ -14,21 +14,19 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
+import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import org.neidhardt.utils.letThis
+import java.io.File
 import kotlin.properties.Delegates
 
 /**
@@ -64,6 +62,25 @@ object MediaPlayerFactory {
 		return ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
 	}
 
+	fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): NewMediaPlayerData {
+		val data = NewMediaPlayerData()
+
+		data.playerId = Integer.toString((uri.toString() + SoundboardApplication.randomNumber).hashCode())
+		data.fragmentTag = fragmentTag
+		data.label = label
+		data.uri = uri.toString()
+		data.isInPlaylist = false
+		data.isLoop = false
+
+		return data
+	}
+
+	fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): NewMediaPlayerData {
+		val soundUri = Uri.parse(file.absolutePath)
+		val soundLabel = FileUtils.stripFileTypeFromName(
+				FileUtils.getFileNameFromUri(SoundboardApplication.context, soundUri))
+		return MediaPlayerFactory.getNewMediaPlayerData(fragmentTag, soundUri, soundLabel)
+	}
 }
 
 

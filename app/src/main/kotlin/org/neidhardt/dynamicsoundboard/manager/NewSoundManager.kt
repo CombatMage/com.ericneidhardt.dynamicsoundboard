@@ -6,12 +6,10 @@ import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.misc.getCopyList
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.mediaplayer.ExoMediaPlayer
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import rx.Observable
@@ -20,8 +18,8 @@ import rx.lang.kotlin.add
 import java.util.*
 
 /**
- * Created by eric.neidhardt@gmail.com on 19.12.2016.
- */
+* @author Eric.Neidhardt@GMail.com on 19.12.2016.
+*/
 open class NewSoundManager(private val context: Context) {
 
 	private val TAG = javaClass.name
@@ -42,6 +40,7 @@ open class NewSoundManager(private val context: Context) {
 	private val eventBus = EventBus.getDefault()
 
 	internal var onSoundListChangedListener = ArrayList<((Map<NewSoundSheet, List<MediaPlayerController>>) -> Unit)>()
+	internal var onSoundMovedListener = ArrayList<(MoveEvent) -> Unit>()
 
 	internal var mSoundSheets: MutableList<NewSoundSheet>? = null
 	internal var mMediaPlayers: MutableMap<NewSoundSheet, MutableList<MediaPlayerController>>? = null
@@ -90,17 +89,41 @@ open class NewSoundManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
+	fun move(soundSheet: NewSoundSheet, from: Int, to: Int) {
+		val size = soundSheet.mediaPlayers.size
+		var indexFrom = from
+		var indexTo = to
+
+		if (indexFrom > size)
+			indexFrom = size - 1
+		else if (indexFrom < 0)
+			indexFrom = 0
+
+		if (indexTo > size)
+			indexTo = size - 1
+		else if (indexTo < 0)
+			indexTo = 0
+
+
+		val playerData = soundSheet.mediaPlayers.removeAt(indexFrom)
+		soundSheet.mediaPlayers.add(indexTo, playerData)
+
+		val soundsInSoundSheet = this.mMediaPlayers?.get(soundSheet)
+		val player = soundsInSoundSheet?.removeAt(indexFrom) ?: throw IllegalStateException("no player was found in soundSheet list")
+		soundsInSoundSheet?.add(indexTo, player)
+
+		this.onSoundMovedListener.forEach { it.invoke(MoveEvent(player, from, to)) }
+	}
+
 	fun notifyHasChanged(player: MediaPlayerController) {
 		if (this.mSoundSheets == null)
 			throw IllegalStateException("sound manager init not done")
-		if (this.mMediaPlayers?.values?.contains(player) == false)
-			throw IllegalArgumentException("given player not found in dataset")
 		this.invokeListeners()
 	}
 
 	private fun createPlayerAndAddToSounds(soundSheet: NewSoundSheet, playerData: NewMediaPlayerData) {
 		val soundsForSoundSheet = this.mMediaPlayers?.getOrPut(soundSheet, { ArrayList() })
-				?: throw IllegalStateException("sound mangager is not init")
+				?: throw IllegalStateException("sound manager is not init")
 
 		if (soundsForSoundSheet.containsPlayerWithId(playerData.playerId))
 			return
@@ -111,8 +134,9 @@ open class NewSoundManager(private val context: Context) {
 			this.eventBus.post(CreatingPlayerFailedEvent(playerData))
 		}
 		else {
-			if (!soundsForSoundSheet.contains(player))
-				soundsForSoundSheet.add(player)
+			soundsForSoundSheet.add(player)
+			if (soundSheet.mediaPlayers.firstOrNull { it.playerId == playerData.playerId } == null)
+				soundSheet.mediaPlayers.add(playerData)
 		}
 	}
 
@@ -130,12 +154,25 @@ object RxSoundManager {
 			subscriber.add {
 				manager.onSoundListChangedListener.remove(listener)
 			}
-
 			manager.mMediaPlayers?.let { subscriber.onNext(it) }
 			manager.onSoundListChangedListener.add(listener)
 		}
 	}
+
+	fun movesSoundInList(manager: NewSoundManager): Observable<MoveEvent> {
+		return Observable.create { subscriber ->
+			val listener: (MoveEvent) -> Unit = {
+				subscriber.onNext(it)
+			}
+			subscriber.add {
+				manager.onSoundMovedListener.remove(listener)
+			}
+			manager.onSoundMovedListener.add(listener)
+		}
+	}
 }
+
+class MoveEvent(val player: MediaPlayerController, val from: Int, val to: Int)
 
 fun List<MediaPlayerController>.findById(playerId: String): MediaPlayerController? {
 	return this.firstOrNull { it.mediaPlayerData.playerId == playerId }

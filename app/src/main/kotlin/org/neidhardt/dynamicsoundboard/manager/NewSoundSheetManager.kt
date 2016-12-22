@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.manager
 import android.content.Context
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import rx.Observable
 import rx.lang.kotlin.add
@@ -80,3 +81,7 @@ object RxNewSoundSheetManager {
 
 val List<NewSoundSheet>.selectedSoundSheet: NewSoundSheet?
 	get() = this.firstOrNull { it.isSelected }
+
+fun List<NewSoundSheet>.findByFragmentTag(fragmentTag: String): NewSoundSheet? {
+	return this.firstOrNull { it.fragmentTag == fragmentTag }
+}

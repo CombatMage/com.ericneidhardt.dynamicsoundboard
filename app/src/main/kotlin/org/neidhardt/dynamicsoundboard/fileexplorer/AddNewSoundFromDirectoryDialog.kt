@@ -8,33 +8,31 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
-import org.neidhardt.dynamicsoundboard.soundmanagement.tasks.loadSounds
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
-import rx.android.schedulers.AndroidSchedulers
 import java.io.File
 import java.util.*
 
 /**
  * Project created by Eric Neidhardt on 30.09.2014.
  */
-open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
-{
-	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
+
+	private val soundManager = SoundboardApplication.newSoundManager
+	private val soundSheetsManager = SoundboardApplication.newSoundSheetManager
 
 	protected var callingFragmentTag: String? = null
 
 	private var directories: RecyclerView? = null
 
-	companion object
-	{
+	companion object {
 		private val TAG = AddNewSoundFromDirectoryDialog::class.java.name
 
-		fun showInstance(manager: FragmentManager, callingFragmentTag: String)
-		{
+		fun showInstance(manager: FragmentManager, callingFragmentTag: String) {
 			val dialog = AddNewSoundFromDirectoryDialog()
 
 			val args = Bundle()
@@ -45,8 +43,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 		}
 	}
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		val args = this.arguments
@@ -54,8 +51,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 			this.callingFragmentTag = args.getString(KEY_CALLING_FRAGMENT_TAG)
 	}
 
-	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
-	{
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		@SuppressLint("InflateParams")
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_from_directory, null)
 
@@ -77,8 +73,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 		}.create()
 	}
 
-	override fun onFileSelected(selectedFile: File)
-	{
+	override fun onFileSelected(selectedFile: File) {
 		val position = super.adapter.fileList.indexOf(selectedFile)
 		this.directories!!.scrollToPosition(position)
 	}
@@ -89,8 +84,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 
 	override fun canSelectMultipleFiles(): Boolean = true
 
-	private fun onConfirm()
-	{
+	private fun onConfirm() {
 		val currentDirectory = super.adapter.parentFile
 		if (currentDirectory != null)
 			this.storePathToSharedPreferences(TAG, currentDirectory.path)
@@ -99,14 +93,12 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 		this.dismiss()
 	}
 
-	protected fun getFileListResult(): Collection<File>
-	{
+	protected fun getFileListResult(): Collection<File> {
 		val files = HashSet<File>()
 		val adapter = super.adapter
 
 		// merge all files to single list, remove duplicates
-		for (file in adapter.selectedFiles)
-		{
+		for (file in adapter.selectedFiles) {
 			if (!file.isDirectory)
 				files.add(file)
 			else
@@ -116,29 +108,20 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog()
 		return files
 	}
 
-	protected open fun returnResults()
-	{
+	protected open fun returnResults() {
 		val fragmentToAddSounds = this.callingFragmentTag
-		if (fragmentToAddSounds != null)
-		{
+		if (fragmentToAddSounds != null) {
 			val result = this.getFileListResult()
 			if (result.isEmpty())
 				return
 
-			SoundboardApplication.taskCounter.value += 1
-			result.loadSounds(fragmentToAddSounds)
-					.flatMapIterable { it -> it }
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe ({ mediaPlayerData ->
-						Logger.d(TAG, "Loaded: $mediaPlayerData")
-						this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData)
-					}, { onError ->
-						Logger.e(TAG, "Error while loading sounds: ${onError.message}")
-						SoundboardApplication.taskCounter.value -= 1
-					}, {
-						Logger.d(TAG, "Loading sounds completed")
-						SoundboardApplication.taskCounter.value -= 1
-					})
+			val soundSheet = this.soundSheetsManager.soundSheets.findByFragmentTag(fragmentToAddSounds)
+					?: throw IllegalStateException("no soundSheet for given fragmentTag was found")
+
+			result.forEach {
+				val playerData = MediaPlayerFactory.getMediaPlayerDataFromFile(it, fragmentToAddSounds)
+				this.soundManager.add(soundSheet, playerData)
+			}
 		}
 	}
 }

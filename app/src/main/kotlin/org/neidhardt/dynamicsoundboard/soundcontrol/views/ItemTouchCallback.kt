@@ -10,8 +10,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 
 /**
  * @author eric.neidhardt on 14.06.2016.
@@ -21,8 +21,8 @@ class ItemTouchCallback
 		context: Context,
 		private val deletionHandler: PendingDeletionHandler,
 		private val presenter: SoundPresenter,
-		private val fragmentTag: String,
-		private val manager: NewSoundManager
+		private val soundSheet: NewSoundSheet,
+		private val soundManager: NewSoundManager
 ) : ItemTouchHelper.Callback() {
 
 	private val handler = Handler()
@@ -47,8 +47,7 @@ class ItemTouchCallback
 		val from = viewHolder.adapterPosition
 		val to = target.adapterPosition
 		if (from == RecyclerView.NO_POSITION || to == RecyclerView.NO_POSITION) return false
-		// TODO
-		//this.soundsDataStorage.moveSoundInFragment(this.fragmentTag, from, to)
+		this.soundManager.move(this.soundSheet, from, to)
 		return true
 	}
 
@@ -57,10 +56,9 @@ class ItemTouchCallback
 		if (position != RecyclerView.NO_POSITION) {
 			val item = this.presenter.values[position]
 
-			// TODO
-			//if (SoundboardPreferences.isOneSwipeToDeleteEnabled)
-			//	this.handler.postDelayed({ this.soundsDataStorage.removeSounds(listOf(item)) }, 200) // give animation some time to settle
-			//else
+			if (SoundboardPreferences.isOneSwipeToDeleteEnabled)
+				this.handler.postDelayed({ this.soundManager.remove(this.soundSheet, listOf(item)) }, 200) // give animation some time to settle
+			else
 				this.deletionHandler.requestItemDeletion(item)
 		}
 	}
@@ -105,7 +103,7 @@ class ItemTouchCallback
 			} else // swiping left
 			{
 				canvas.drawRect(width + dX, top, width, top + height, backgroundPaint)
-				canvas.drawBitmap(bitmap, (width - bitmap.width) - margin, top + heightBitmap, null);
+				canvas.drawBitmap(bitmap, (width - bitmap.width) - margin, top + heightBitmap, null)
 			}
 		}
 	}
