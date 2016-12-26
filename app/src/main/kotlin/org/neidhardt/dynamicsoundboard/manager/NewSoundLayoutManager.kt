@@ -20,8 +20,9 @@ class NewSoundLayoutManager(
 		private val newPlaylistManager: NewPlaylistManager,
 		private val newSoundManager: NewSoundManager) {
 
-	internal var onSoundLayoutsChangedListener = ArrayList<((List<NewSoundLayout>) -> Unit)>()
-	internal var onPlayingSoundsChangedListener = ArrayList<((List<MediaPlayerController>) -> Unit)>()
+	internal var onSoundLayoutsChangedListener = ArrayList<(List<NewSoundLayout>) -> Unit>()
+	internal var onPlayingSoundsChangedListener = ArrayList<(List<MediaPlayerController>) -> Unit>()
+	internal var onLoadingCompletedListener = ArrayList<(List<NewSoundLayout>) -> Unit>()
 
 	internal var mSoundLayouts: MutableList<NewSoundLayout>? = null
 	val soundLayouts: List<NewSoundLayout> get() = this.mSoundLayouts as List<NewSoundLayout>
@@ -40,6 +41,7 @@ class NewSoundLayoutManager(
 					this.mSoundLayouts?.add(this.getDefaultSoundLayout())
 
 				this.setSoundSheetsForActiveLayout()
+				this.onLoadingCompletedListener.forEach { it.invoke(this.soundLayouts) }
 				this.invokeListeners()
 			}
 		}
@@ -151,6 +153,24 @@ object RxNewSoundLayoutManager {
 			}
 			manager.mCurrentlyPlayingSounds.let{ subscriber.onNext(it) }
 			manager.onPlayingSoundsChangedListener.add(listener)
+		}
+	}
+
+	fun completesLoading(manager: NewSoundLayoutManager): Observable<List<NewSoundLayout>> {
+		return Observable.create { subscriber ->
+			val listener: (List<NewSoundLayout>) -> Unit = {
+				subscriber.onNext(it)
+				subscriber.onCompleted()
+			}
+			subscriber.add {
+				manager.onLoadingCompletedListener.remove(listener)
+			}
+
+			manager.mSoundLayouts?.let {
+				subscriber.onNext(it)
+				subscriber.onCompleted()
+			}
+			manager.onLoadingCompletedListener.add(listener)
 		}
 	}
 }

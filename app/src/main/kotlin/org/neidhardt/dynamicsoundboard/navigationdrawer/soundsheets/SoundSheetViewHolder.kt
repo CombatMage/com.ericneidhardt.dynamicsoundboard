@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 
@@ -31,12 +30,12 @@ class SoundSheetViewHolder
 			-> this.onItemClickListener.onItemClick(this.data as NewSoundSheet) })
 	}
 
-	fun bindData(data: NewSoundSheet, soundCount: Int, isLastItem: Boolean)
+	fun bindData(data: NewSoundSheet, isLastItem: Boolean)
 	{
 		this.data = data
 
 		this.label.text = data.label
-		this.setSoundCount(soundCount)
+		this.setSoundCount(data.mediaPlayers?.size ?: 0)
 
 		this.label.isSelected = data.isSelected
 		this.selectionIndicator.visibility = if (data.isSelected) View.VISIBLE else View.INVISIBLE
@@ -55,7 +54,7 @@ class SoundSheetViewHolder
 		} else {
 			this.soundCountLabel.visibility = View.VISIBLE
 			this.soundCount.visibility = View.VISIBLE
-			this.soundCount.text = Integer.toString(soundCount)
+			this.soundCount.text = soundCount.toString()
 		}
 	}
 

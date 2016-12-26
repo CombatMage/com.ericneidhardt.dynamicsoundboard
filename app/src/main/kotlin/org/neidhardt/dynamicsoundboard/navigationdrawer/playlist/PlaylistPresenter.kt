@@ -12,7 +12,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListen
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.eventbus_utils.registerIfRequired
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
@@ -21,23 +20,15 @@ import rx.subscriptions.CompositeSubscription
  * File created by eric.neidhardt on 16.07.2015.
  */
 fun createPlaylistPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView, soundsDataStorage: SoundsDataStorage): PlaylistPresenter
+		eventBus: EventBus, recyclerView: RecyclerView): PlaylistPresenter
 {
-	return PlaylistPresenter(
-			eventBus = eventBus,
-			soundsDataStorage = soundsDataStorage
-	).apply {
+	return PlaylistPresenter(eventBus).apply {
 		this.adapter = PlaylistAdapter(this)
 		this.view = recyclerView
 	}
 }
 
-class PlaylistPresenter
-(
-		override val eventBus: EventBus,
-		val soundsDataStorage: SoundsDataStorage
-
-) :
+class PlaylistPresenter(override val eventBus: EventBus) :
 		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<MediaPlayerController>,
 		MediaPlayerEventListener

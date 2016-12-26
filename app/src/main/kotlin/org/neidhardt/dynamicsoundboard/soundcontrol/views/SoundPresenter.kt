@@ -5,7 +5,9 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
@@ -24,19 +26,21 @@ fun createSoundPresenter(
 		eventBus: EventBus,
 		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit,
 		soundManager: NewSoundManager,
+		playlistManager: NewPlaylistManager,
 		recyclerView: RecyclerView
 ): SoundPresenter
 {
 	return SoundPresenter(
 			soundSheet = soundSheet,
 			eventBus = eventBus,
-			soundManager = soundManager
+			soundManager = soundManager,
+			playlistManager = playlistManager
 	).apply {
 		val deletionHandler = PendingDeletionHandler(this, soundManager, onItemDeletionRequested)
 		val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(recyclerView.context, deletionHandler,
 				this, soundSheet, soundManager)).apply { this.attachToRecyclerView(recyclerView) }
 
-		val adapter = SoundAdapter(itemTouchHelper, this, soundManager, eventBus)
+		val adapter = SoundAdapter(itemTouchHelper, this, playlistManager, eventBus)
 		this.adapter = adapter
 	}
 }
@@ -44,7 +48,8 @@ fun createSoundPresenter(
 class SoundPresenter (
 		val soundSheet: NewSoundSheet,
 		private val eventBus: EventBus,
-		private val soundManager: NewSoundManager
+		private val soundManager: NewSoundManager,
+		private val playlistManager: NewPlaylistManager
 ) : MediaPlayerEventListener {
 
 	private var subscriptions = CompositeSubscription()
@@ -65,6 +70,10 @@ class SoundPresenter (
 		this.subscriptions.add(RxSoundManager.movesSoundInList(this.soundManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { event -> this.adapter?.notifyItemMoved(event.from, event.to) })
+
+		this.subscriptions.add(RxNewPlaylistManager.playlistChanges(this.playlistManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { this.adapter?.notifyDataSetChanged() })
 	}
 
 	fun onDetachedFromWindow() {

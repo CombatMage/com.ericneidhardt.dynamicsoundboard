@@ -2,16 +2,12 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
+import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 
-open class SoundSheetsAdapter
-(
-		private val presenter: SoundSheetsPresenter
-) :
+open class SoundSheetsAdapter (private val presenter: SoundSheetsPresenter) :
 		BaseAdapter<NewSoundSheet, SoundSheetViewHolder>(),
 		NavigationDrawerItemClickListener<NewSoundSheet>
 {
@@ -26,24 +22,18 @@ open class SoundSheetsAdapter
 
 	override fun getItemCount(): Int = this.values.size
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundSheetViewHolder
-	{
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundSheetViewHolder {
 		val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
 		return SoundSheetViewHolder(view, this)
 	}
 
-	override fun onBindViewHolder(holder: SoundSheetViewHolder, position: Int)
-	{
+	override fun onBindViewHolder(holder: SoundSheetViewHolder, position: Int) {
 		val data = this.values[position]
 
-		val sounds = this.presenter.getSoundsInFragment(data.fragmentTag)
-		val soundCount = sounds.size
-
-		holder.bindData(data, soundCount, position == this.itemCount - 1)
+		holder.bindData(data, position == this.itemCount - 1)
 	}
 
-	override fun onItemClick(data: NewSoundSheet)
-	{
+	override fun onItemClick(data: NewSoundSheet) {
 		this.presenter.onItemClick(data)
 	}
 }

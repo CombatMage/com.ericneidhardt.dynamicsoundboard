@@ -69,7 +69,6 @@ object MediaPlayerFactory {
 		data.fragmentTag = fragmentTag
 		data.label = label
 		data.uri = uri.toString()
-		data.isInPlaylist = false
 		data.isLoop = false
 
 		return data
@@ -181,14 +180,6 @@ class ExoMediaPlayer
 		set(value) {
 			if (value != this.mediaPlayerData.isLoop) {
 				this.mediaPlayerData.isLoop = value
-			}
-		}
-
-	override var isInPlaylist: Boolean
-		get() = this.mediaPlayerData.isInPlaylist
-		set(value) {
-			if (value != this.mediaPlayerData.isInPlaylist) {
-				this.mediaPlayerData.isInPlaylist = value
 			}
 		}
 

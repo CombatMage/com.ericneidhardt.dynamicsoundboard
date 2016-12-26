@@ -1,19 +1,12 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
 import android.support.v7.widget.RecyclerView
-import android.widget.Toast
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.RxSoundLayoutManager
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
 
@@ -21,7 +14,7 @@ import rx.subscriptions.CompositeSubscription
  * File created by eric.neidhardt on 17.07.2015.
  */
 fun createSoundLayoutsPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView, soundLayoutsManager: ISoundLayoutManager): SoundLayoutsPresenter
+		eventBus: EventBus, recyclerView: RecyclerView): SoundLayoutsPresenter
 {
 	return SoundLayoutsPresenter(
 			eventBus = eventBus

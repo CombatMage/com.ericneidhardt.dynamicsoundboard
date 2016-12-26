@@ -44,9 +44,9 @@ import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundcontrol.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeletePlayListDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
@@ -64,8 +64,7 @@ class SoundActivity :
 		BaseActivity(),
 		RequestPermissionHelper,
 		AddPauseFloatingActionButtonView.FabEventListener,
-		OnOpenSoundLayoutSettingsEventListener,
-		OnSoundSheetsChangedEventListener {
+		OnOpenSoundLayoutSettingsEventListener {
 
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
@@ -135,21 +134,21 @@ class SoundActivity :
 
 	override fun onNewIntent(intent: Intent?) {
 		super.onNewIntent(intent)
-		this.handleIntent(intent)
+
+		this.subscriptions.add(RxNewSoundLayoutManager.completesLoading(this.soundLayoutManager)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { this.handleIntent(intent) })
 	}
 
 	fun handleIntent(intent: Intent?) {
 		if (intent == null)
 			return
 
-		/*if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-			if (this.soundSheetsDataAccess.getSoundSheets().isEmpty())
-				AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data,
-						this.soundSheetsDataUtil.getSuggestedName(), null)
-			else
-				AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data,
-						this.soundSheetsDataUtil.getSuggestedName(), soundSheetsDataAccess.getSoundSheets())
-		}*/
+		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
+			val suggestedName = this.soundSheetManager.suggestedName
+			val soundSheets = this.soundSheetManager.soundSheets
+			AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data, suggestedName, soundSheets)
+		}
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {

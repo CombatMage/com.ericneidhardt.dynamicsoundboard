@@ -28,8 +28,6 @@ interface MediaPlayerController
 
 	var isLoopingEnabled: Boolean
 
-	var isInPlaylist: Boolean
-
 	fun playSound(): Boolean
 
 	fun stopSound(): Boolean

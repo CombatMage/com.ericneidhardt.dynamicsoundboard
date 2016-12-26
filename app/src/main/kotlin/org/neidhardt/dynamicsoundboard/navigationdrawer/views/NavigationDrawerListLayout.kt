@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter
@@ -18,16 +19,8 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDraw
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataAccess
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataStorage
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.model.SoundSheetsDataUtil
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
-import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.ISoundLayoutManager
 import org.neidhardt.eventbus_utils.registerIfRequired
-import kotlin.properties.Delegates
 
 /**
  * @author eric.neidhardt on 03.05.2016.
@@ -54,22 +47,16 @@ class NavigationDrawerListPresenter(
 		private val appBarLayout: AppBarLayout,
 		private val recyclerView: RecyclerView,
 		private val deletionViewVM: NavigationDrawerDeletionViewVM,
-		private val buttonBarVM: NavigationDrawerButtonBarVM,
-
-		soundsDataAccess: SoundsDataAccess,
-		soundsDataStorage: SoundsDataStorage,
-
-		private val soundLayoutsManager: ISoundLayoutManager,
-		private val soundSheetsDataUtil: SoundSheetsDataUtil
+		private val buttonBarVM: NavigationDrawerButtonBarVM
 ) :
 		NavigationDrawerListLayout,
 		ItemSelectedForDeletionListener {
 
 	private var currentPresenter: NavigationDrawerListPresenter? = null
 
-	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView, soundsDataAccess, soundsDataStorage)
-	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView, soundsDataStorage)
-	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView, soundLayoutsManager)
+	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView)
+	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView)
+	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView)
 
 	private var currentListBacking: List? = null
 	override var currentList: List?

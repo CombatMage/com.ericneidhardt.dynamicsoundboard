@@ -73,6 +73,7 @@ class SoundSheetFragment :
 	private val eventBus = EventBus.getDefault()
 	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
 	private val soundManager = SoundboardApplication.newSoundManager
+	private val playlistManager = SoundboardApplication.newPlaylistManager
 
 	private var soundPresenter: SoundPresenter? = null
 
@@ -114,7 +115,8 @@ class SoundSheetFragment :
 					eventBus = this.eventBus,
 					recyclerView = soundList,
 					onItemDeletionRequested = { handler,time -> this.showSnackbarForRestore(handler, time) },
-					soundManager = this.soundManager)
+					soundManager = this.soundManager,
+					playlistManager = this.playlistManager)
 
 			soundList.apply {
 				this.adapter = soundPresenter?.adapter

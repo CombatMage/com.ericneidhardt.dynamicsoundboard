@@ -73,12 +73,7 @@ class NavigationDrawerFragment : BaseFragment() {
 						this.itemAnimator = DefaultItemAnimator()
 						this.layoutManager = LinearLayoutManager(this.context)
 				},
-				fragmentManager = this.fragmentManager,
-
-				soundLayoutsManager = SoundboardApplication.soundLayoutManager,
-				soundsDataAccess = SoundboardApplication.soundsDataAccess,
-				soundsDataStorage = SoundboardApplication.soundsDataStorage,
-				soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
+				fragmentManager = this.fragmentManager
 		)
 
 		this.tabView = NavigationDrawerTabLayoutPresenter(
@@ -91,8 +86,7 @@ class NavigationDrawerFragment : BaseFragment() {
 
 	}
 
-	override fun onStart()
-	{
+	override fun onStart() {
 		super.onStart()
 
 		this.subscriptions = CompositeSubscription()

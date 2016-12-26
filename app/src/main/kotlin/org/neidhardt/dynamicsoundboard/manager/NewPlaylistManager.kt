@@ -1,15 +1,13 @@
 package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
-import android.net.Uri
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.misc.getCopyList
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.misc.getFileForUri
-import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import rx.Observable
@@ -65,6 +63,28 @@ class NewPlaylistManager(private val context: Context) {
 
 	fun add(mediaPlayerData: NewMediaPlayerData) {
 		this.createPlayerAndAddToPlaylist(mediaPlayerData)
+		this.invokeListeners()
+	}
+
+	fun togglePlaylistSound(mediaPlayerData: NewMediaPlayerData, addToPlaylist: Boolean) {
+		if (addToPlaylist) {
+			if (this.playlist.findById(mediaPlayerData.playerId) != null)
+				throw IllegalArgumentException("player is already part of the playlist")
+
+			val newPlayerData = NewMediaPlayerData().apply {
+				this.playerId = mediaPlayerData.playerId
+				this.fragmentTag = PlaylistTAG
+				this.isLoop = false
+				this.label = mediaPlayerData.label
+				this.uri = mediaPlayerData.uri
+			}
+			this.add(newPlayerData)
+		}
+		else {
+			val existingPlayer = this.playlist.findById(mediaPlayerData.playerId)
+					?: throw IllegalArgumentException("player is not part of the playlist")
+			this.remove(listOf(existingPlayer))
+		}
 		this.invokeListeners()
 	}
 

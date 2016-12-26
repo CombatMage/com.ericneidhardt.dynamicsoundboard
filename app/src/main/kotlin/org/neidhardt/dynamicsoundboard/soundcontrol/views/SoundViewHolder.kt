@@ -5,11 +5,11 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
 import org.neidhardt.dynamicsoundboard.views.viewextensions.setOnUserChangesListener
 
 /**
@@ -20,7 +20,7 @@ class SoundViewHolder
 		itemTouchHelper: ItemTouchHelper,
 		itemView: View,
 		private val eventBus: EventBus,
-		private val manager: NewSoundManager
+		private val playlistManager: NewPlaylistManager
 ) :
 		RecyclerView.ViewHolder(itemView)
 {
@@ -69,8 +69,7 @@ class SoundViewHolder
 			this.player?.let { player ->
 				val toggleState = !this.inPlaylist.isSelected
 				this.inPlaylist.isSelected = toggleState
-				this.player?.isInPlaylist = toggleState
-				//this.manager.toggleSoundInPlaylist(player.mediaPlayerData.playerId, toggleState)
+				this.playlistManager.togglePlaylistSound(player.mediaPlayerData, toggleState)
 			}
 		}
 
@@ -87,7 +86,7 @@ class SoundViewHolder
 				val currentLabel = playerData.label
 				if (currentLabel != newName) {
 					playerData.label = newName
-					//this.eventBus.post(OpenSoundRenameEvent(playerData))
+					this.eventBus.post(OpenSoundRenameEvent(playerData))
 				}
 			}
 		}
@@ -117,7 +116,7 @@ class SoundViewHolder
 			val isPlaying = player.isPlayingSound
 			this.play.isSelected = isPlaying
 			this.loop.isSelected = playerData.isLoop
-			this.inPlaylist.isSelected = playerData.isInPlaylist
+			this.inPlaylist.isSelected = this.playlistManager.playlist.containsPlayerWithId(playerData.playerId)
 			this.timePosition.max = player.trackDuration
 			this.timePosition.progress = player.progress
 		}

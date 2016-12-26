@@ -2,20 +2,12 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
 import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.dynamicsoundboard.soundsheetmanagement.events.OnSoundSheetsChangedEventListener
-import org.neidhardt.eventbus_utils.registerIfRequired
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
 import java.util.*
@@ -23,30 +15,18 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
-fun createSoundSheetPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView,
-		soundsDataAccess: SoundsDataAccess, soundsDataStorage: SoundsDataStorage): SoundSheetsPresenter
-{
-	return SoundSheetsPresenter(
-			eventBus = eventBus,
-			soundsDataAccess = soundsDataAccess,
-			soundsDataStorage = soundsDataStorage
-	).apply {
+fun createSoundSheetPresenter(eventBus: EventBus, recyclerView: RecyclerView): SoundSheetsPresenter {
+	return SoundSheetsPresenter(eventBus).apply {
 		this.adapter = SoundSheetsAdapter(this)
 		this.view = recyclerView
 	}
 }
 
-open class SoundSheetsPresenter
-(
-		override val eventBus: EventBus,
-		private val soundsDataAccess: SoundsDataAccess,
-		private val soundsDataStorage: SoundsDataStorage
+open class SoundSheetsPresenter(
+		override val eventBus: EventBus
 ) :
 		NavigationDrawerListBasePresenter<RecyclerView?>(),
-		NavigationDrawerItemClickListener<NewSoundSheet>,
-		OnSoundSheetsChangedEventListener,
-		OnSoundsChangedEventListener
+		NavigationDrawerItemClickListener<NewSoundSheet>
 {
 	override var view: RecyclerView? = null
 
@@ -59,7 +39,6 @@ open class SoundSheetsPresenter
 	val values: List<NewSoundSheet> get() = this.soundSheetManager.soundSheets
 
 	override fun onAttachedToWindow() {
-		this.eventBus.registerIfRequired(this)
 		this.adapter?.notifyDataSetChanged()
 
 		this.subscriptions = CompositeSubscription()
@@ -69,21 +48,20 @@ open class SoundSheetsPresenter
 
 		this.subscriptions.add(RxSoundManager.changesSoundList(this.soundManager)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe {
-					// TODO update sound count
-				})
+				.subscribe { this.adapter?.notifyDataSetChanged() })
 	}
 
 	override fun onDetachedFromWindow() {
-		this.eventBus.unregister(this)
 		this.subscriptions.unsubscribe()
 	}
 
 	override fun deleteSelectedItems() {
 		val soundSheetsToRemove = this.getSoundSheetsSelectedForDeletion()
 		for (soundSheet in soundSheetsToRemove) {
-			val soundsInFragment = this.soundsDataAccess.getSoundsInFragment(soundSheet.fragmentTag)
-			this.soundsDataStorage.removeSounds(soundsInFragment)
+			// remove all souns of this soundSheet to free resources
+			this.soundManager.sounds[soundSheet]?.let {
+				this.soundManager.remove(soundSheet, it)
+			}
 		}
 		this.soundSheetManager.remove(soundSheetsToRemove)
 		this.stopDeletionMode()
@@ -132,46 +110,4 @@ open class SoundSheetsPresenter
 		return selectedSoundSheets
 	}
 
-	fun getSoundsInFragment(fragmentTag: String): List<MediaPlayerController> {
-		return this.soundsDataAccess.getSoundsInFragment(fragmentTag)
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundAddedEvent)
-	{
-		/*val fragmentTag = event.player.mediaPlayerData.fragmentTag
-		val changedSoundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag)
-		if (changedSoundSheet != null)
-			this.adapter?.notifyItemChanged(changedSoundSheet)*/
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundsRemovedEvent)
-	{
-		/*val removedPlayers = event.players
-		if (event.removeAll())
-			this.adapter?.notifyDataSetChanged()
-		else
-		{
-			val affectedFragmentTags = HashSet<String>()
-			for (player in removedPlayers.orEmpty())
-				affectedFragmentTags.add(player.mediaPlayerData.fragmentTag)
-
-			for (fragmentTag in affectedFragmentTags)
-			{
-				val changedSoundSheet = this.soundSheetsDataAccess
-						.getSoundSheetForFragmentTag(fragmentTag)
-
-				if (changedSoundSheet == null)
-					this.adapter?.notifyDataSetChanged()
-				else
-					this.adapter?.notifyItemChanged(changedSoundSheet)
-			}
-		}*/
-	}
-
-	// unused events
-	override fun onEvent(event: SoundChangedEvent) {}
-
-	override fun onEvent(event: SoundMovedEvent) {}
 }

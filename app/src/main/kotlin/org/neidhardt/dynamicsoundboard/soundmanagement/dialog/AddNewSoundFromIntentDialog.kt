@@ -10,20 +10,22 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.EditText
+import org.neidhardt.android_utils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet
-import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
-import org.neidhardt.android_utils.views.SimpleSpinner
+import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
+import org.neidhardt.dynamicsoundboard.misc.FileUtils
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import java.util.*
 
-class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChangeListener
-{
-	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
-	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
-	private val soundSheetsDataUtil = SoundboardApplication.soundSheetsDataUtil
+
+class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChangeListener {
+
+	private val soundManager = SoundboardApplication.newSoundManager
+	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
 
 	private var soundName: EditText? = null
 	private var soundSheetName: EditText? = null
@@ -118,7 +120,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 
 	private fun deliverResult() {
 		var newSoundSheetLabel = soundSheetName!!.text.toString()
-		if (newSoundSheetLabel.length == 0)
+		if (newSoundSheetLabel.isEmpty())
 			newSoundSheetLabel = this.suggestedName as String
 
 		val soundSheetFragmentTag: String
@@ -128,35 +130,40 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 			soundSheetFragmentTag = this.availableSoundSheetIds!![this.soundSheetSpinner!!.selectedItemPosition]
 
 		val soundLabel = this.soundName!!.text.toString()
-		val soundUri = this.uri
+		val soundUri = this.uri ?: return
 
-		val mediaPlayerData = MediaPlayerData.getNewMediaPlayerData(soundSheetFragmentTag, soundUri, soundLabel)
-		this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData)
+		val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(soundSheetFragmentTag) ?: return
+
+		val mediaPlayerData = MediaPlayerFactory.getNewMediaPlayerData(soundSheetFragmentTag, soundUri, soundLabel)
+		this.soundManager.add(soundSheet, mediaPlayerData)
 	}
 
 	private fun addNewSoundSheet(label: String): String {
-		val newSoundSheet = this.soundSheetsDataUtil.getNewSoundSheet(label)
-		newSoundSheet.isSelected = true
-		this.soundSheetsDataStorage.addSoundSheetToManager(newSoundSheet)
-		return newSoundSheet.fragmentTag
+		val soundSheet = NewSoundSheet().apply {
+			this.label = label
+			this.fragmentTag = NewSoundSheetManager.getNewFragmentTagForLabel(label)
+		}
+		this.soundSheetManager.add(soundSheet)
+		this.soundSheetManager.setSelected(soundSheet)
+		return soundSheet.fragmentTag
 	}
 
 	companion object {
 
 		private val TAG = AddNewSoundFromIntentDialog::class.java.name
 
-		private val KEY_SOUND_URI = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.uri"
-		private val KEY_SUGGESTED_NAME = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.suggestedName"
-		private val KEY_AVAILABLE_SOUND_SHEET_LABELS = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.availableSoundSheetLabels"
-		private val KEY_AVAILABLE_SOUND_SHEET_IDS = "org.neidhardt.dynamicsoundboard.soundmanagement.views.AddNewSoundFromIntent.availableSoundSheetIds"
+		private val KEY_SOUND_URI = "AddNewSoundFromIntent.KEY_SOUND_URI"
+		private val KEY_SUGGESTED_NAME = "AddNewSoundFromIntent.KEY_SUGGESTED_NAME"
+		private val KEY_AVAILABLE_SOUND_SHEET_LABELS = "AddNewSoundFromIntent.KEY_AVAILABLE_SOUND_SHEET_LABELS"
+		private val KEY_AVAILABLE_SOUND_SHEET_IDS = "AddNewSoundFromIntent.KEY_AVAILABLE_SOUND_SHEET_IDS"
 
-		fun showInstance(manager: FragmentManager, uri: Uri, suggestedName: String, availableSoundSheets: List<SoundSheet>?) {
+		fun showInstance(manager: FragmentManager, uri: Uri, suggestedName: String, availableSoundSheets: List<NewSoundSheet>) {
 			val dialog = AddNewSoundFromIntentDialog()
 
 			val args = Bundle()
 			args.putString(KEY_SOUND_URI, uri.toString())
 			args.putString(KEY_SUGGESTED_NAME, suggestedName)
-			if (availableSoundSheets != null) {
+			if (availableSoundSheets.isNotEmpty()) {
 				args.putStringArrayList(KEY_AVAILABLE_SOUND_SHEET_LABELS, getLabelsFromSoundSheets(availableSoundSheets))
 				args.putStringArrayList(KEY_AVAILABLE_SOUND_SHEET_IDS, getIdsFromSoundSheets(availableSoundSheets))
 			}
@@ -165,14 +172,14 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 			dialog.show(manager, TAG)
 		}
 
-		private fun getLabelsFromSoundSheets(soundSheets: List<SoundSheet>): ArrayList<String> {
+		private fun getLabelsFromSoundSheets(soundSheets: List<NewSoundSheet>): ArrayList<String> {
 			val labels = ArrayList<String>()
 			for (soundSheet in soundSheets)
 				labels.add(soundSheet.label)
 			return labels
 		}
 
-		private fun getIdsFromSoundSheets(soundSheets: List<SoundSheet>): ArrayList<String> {
+		private fun getIdsFromSoundSheets(soundSheets: List<NewSoundSheet>): ArrayList<String> {
 			val labels = ArrayList<String>()
 			for (soundSheet in soundSheets)
 				labels.add(soundSheet.fragmentTag)

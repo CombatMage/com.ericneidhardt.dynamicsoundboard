@@ -175,7 +175,7 @@ class SoundsManager (
 
 		if (addToPlaylist && playerInPlaylist == null) {
 			if (player != null) {
-				player.isInPlaylist = true
+//				player.isInPlaylist = true
 
 				/*val playerForPlaylist = createPlaylistSound(player.mediaPlayerData)
 				if (playerForPlaylist == null) {
@@ -189,7 +189,7 @@ class SoundsManager (
 		}
 
 		if (!addToPlaylist && playerInPlaylist != null) {
-			player?.isInPlaylist = false
+//			player?.isInPlaylist = false
 
 			this.playlist.remove(playerInPlaylist)
 
@@ -235,17 +235,17 @@ class SoundsManager (
 				val data = playerToRemove.mediaPlayerData
 				this.sounds[data.fragmentTag]?.remove(playerToRemove)
 
-				if (data.isInPlaylist) {
-					searchInListForId(data.playerId, this.playlist)?.let { correspondingPlayerInPlaylist ->
-						this.playlist.remove(correspondingPlayerInPlaylist)
+				//if (data.isInPlaylist) {
+				//	searchInListForId(data.playerId, this.playlist)?.let { correspondingPlayerInPlaylist ->
+				//		this.playlist.remove(correspondingPlayerInPlaylist)
 
 					//	this.removePlayerDataFromDatabase(this.getDbPlaylist().mediaPlayerDataDao,
 					//			correspondingPlayerInPlaylist.mediaPlayerData)
-						correspondingPlayerInPlaylist.destroy(true)
-					}
-				}
+				//		correspondingPlayerInPlaylist.destroy(true)
+				//	}
+				//}
 				//this.removePlayerDataFromDatabase(this.getDbSounds().mediaPlayerDataDao, playerToRemove.mediaPlayerData)
-				playerToRemove.destroy(true)
+				//playerToRemove.destroy(true)
 			}
 			this.eventBus.post(SoundsRemovedEvent(copyList))
 		}

@@ -31,7 +31,6 @@ open class NewSoundManager(private val context: Context) {
 			data.fragmentTag = fragmentTag
 			data.label = label
 			data.uri = uri.toString()
-			data.isInPlaylist = false
 			data.isLoop = false
 			return data
 		}
