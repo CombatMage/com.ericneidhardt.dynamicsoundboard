@@ -120,6 +120,13 @@ open class NewSoundManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
+	fun releaseAll() {
+		this.sounds.entries.forEach { entry ->
+			entry.value.forEach { it.destroy(false) }
+		}
+		this.mMediaPlayers?.clear()
+	}
+
 	private fun createPlayerAndAddToSounds(soundSheet: NewSoundSheet, playerData: NewMediaPlayerData) {
 		val soundsForSoundSheet = this.mMediaPlayers?.getOrPut(soundSheet, { ArrayList() })
 				?: throw IllegalStateException("sound manager is not init")
@@ -181,4 +188,13 @@ fun List<MediaPlayerController>.findById(playerId: String): MediaPlayerControlle
 
 fun List<MediaPlayerController>.containsPlayerWithId(playerId: String): Boolean {
 	return this.findById(playerId) != null
+}
+
+fun Map<NewSoundSheet, List<MediaPlayerController>>.findById(playerId: String): MediaPlayerController? {
+	this.entries.forEach { entry ->
+		val player = entry.value.findById(playerId)
+		if (player != null)
+			return player
+	}
+	return null
 }

@@ -88,6 +88,11 @@ class NewPlaylistManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
+	fun releaseAll() {
+		this.playlist.forEach { it.destroy(false) }
+		this.mMediaPlayers?.clear()
+	}
+
 	private fun createPlayerAndAddToPlaylist(playerData: NewMediaPlayerData) {
 		if (this.playlist.containsPlayerWithId(playerData.playerId))
 			return
