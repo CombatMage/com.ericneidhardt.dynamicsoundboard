@@ -90,9 +90,6 @@ class NotificationService : Service(),
 		this.unregisterReceiver(this.notificationActionReceiver)
 		this.eventBus.unregister(this)
 
-		this.playlistManager.releaseAll()
-		this.soundManager.releaseAll()
-
 		super.onDestroy()
 	}
 

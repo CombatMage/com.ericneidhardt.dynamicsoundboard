@@ -120,13 +120,6 @@ open class NewSoundManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	fun releaseAll() {
-		this.sounds.entries.forEach { entry ->
-			entry.value.forEach { it.destroy(false) }
-		}
-		this.mMediaPlayers?.clear()
-	}
-
 	private fun createPlayerAndAddToSounds(soundSheet: NewSoundSheet, playerData: NewMediaPlayerData) {
 		val soundsForSoundSheet = this.mMediaPlayers?.getOrPut(soundSheet, { ArrayList() })
 				?: throw IllegalStateException("sound manager is not init")

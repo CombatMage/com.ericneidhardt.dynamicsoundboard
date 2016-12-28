@@ -4,22 +4,20 @@ import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
 
 /**
  * File created by eric.neidhardt on 16.02.2015.
  */
-class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog()
-{
-	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
-	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
-	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
-	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
+class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog() {
 
 	private var fragmentTag: String? = null
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
+	private val soundManager = SoundboardApplication.newSoundManager
+
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		val args = this.arguments
@@ -29,29 +27,23 @@ class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog()
 
 	override val infoTextResource: Int = R.string.dialog_confirm_delete_soundsheet_message
 
-	override fun delete()
-	{
+	override fun delete() {
 		val fragmentTag = this.fragmentTag
-		if (fragmentTag != null)
-		{
-			this.soundsDataStorage.removeSounds(this.soundsDataAccess.getSoundsInFragment(fragmentTag))
-			val soundSheet = this.soundSheetsDataAccess.getSoundSheetForFragmentTag(fragmentTag)
-			if (soundSheet != null)
-			{
-				this.soundSheetsDataStorage.removeSoundSheets(listOf(soundSheet))
-				this.soundActivity.removeSoundFragment(soundSheet)
+		if (fragmentTag != null) {
+			this.soundSheetManager.soundSheets.findByFragmentTag(fragmentTag)?.let { soundSheet ->
+				val soundsInSoundSheet = this.soundManager.sounds[soundSheet] ?: emptyList()
+				this.soundManager.remove(soundSheet, soundsInSoundSheet)
+				this.soundSheetManager.remove(listOf(soundSheet))
 			}
 		}
 	}
 
-	companion object
-	{
+	companion object {
 		private val TAG = ConfirmDeleteSoundSheetDialog::class.java.name
 
 		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog.fragmentTag"
 
-		fun showInstance(manager: FragmentManager, fragmentTag: String)
-		{
+		fun showInstance(manager: FragmentManager, fragmentTag: String) {
 			val dialog = ConfirmDeleteSoundSheetDialog()
 
 			val args = Bundle()

@@ -13,21 +13,15 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.misc.writeToFile
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import org.neidhardt.dynamicsoundboard.R
 import java.io.File
 import java.io.IOException
 
 /**
  * File created by eric.neidhardt on 12.11.2014.
  */
-class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener
-{
-	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
-	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener {
 
 	private var inputFileName: EditText? = null
 	private var directories: RecyclerView? = null
@@ -82,14 +76,14 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 	private fun onConfirm()
 	{
-		val currentDirectory = super.adapter.parentFile
+		/*val currentDirectory = super.adapter.parentFile
 		if (currentDirectory != null)
 			this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
 
 		if (super.adapter.selectedFiles.size != 0)
 			this.saveDataAndDismiss()
 		else
-			Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()
+			Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()*/
 	}
 
 	private fun hideKeyboard()
@@ -138,6 +132,7 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 	}
 
+	/*
 	private fun saveDataAndDismiss()
 	{
 		try
@@ -155,9 +150,8 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 			Logger.d(TAG, e.message)
 			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_store_layout, Toast.LENGTH_SHORT).show()
 		}
-
-
 	}
+	*/
 
 	companion object
 	{

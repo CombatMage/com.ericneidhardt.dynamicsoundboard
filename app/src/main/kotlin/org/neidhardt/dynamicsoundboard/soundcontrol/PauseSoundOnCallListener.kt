@@ -13,7 +13,7 @@ import java.util.*
 class PauseSoundOnCallListener : PhoneStateListener() {
 
 	private val pauseSounds: MutableList<MediaPlayerController> = ArrayList()
-	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
+	private val soundsDataAccess = SoundboardApplication.newSoundLayoutManager
 
 	override fun onCallStateChanged(state: Int, incomingNumber: String?) {
 		super.onCallStateChanged(state, incomingNumber)
@@ -43,22 +43,22 @@ class PauseSoundOnCallListener : PhoneStateListener() {
 }
 
 fun SoundActivity.registerPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
-    val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
+    //val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    //manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
 }
 
 fun SoundActivity.unregisterPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
-    listener.clearReferences()
+	////listener.clearReferences()
     val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    manager.listen(listener, PhoneStateListener.LISTEN_NONE)
+	//manager.listen(listener, PhoneStateListener.LISTEN_NONE)
 }
 
 fun NotificationService.registerPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
-    val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
+	//val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+	//manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
 }
 
 fun NotificationService.unregisterPauseSoundOnCallListener(listener: PauseSoundOnCallListener) { listener.clearReferences()
-    val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    manager.listen(listener, PhoneStateListener.LISTEN_NONE)
+	//val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+	//manager.listen(listener, PhoneStateListener.LISTEN_NONE)
 }

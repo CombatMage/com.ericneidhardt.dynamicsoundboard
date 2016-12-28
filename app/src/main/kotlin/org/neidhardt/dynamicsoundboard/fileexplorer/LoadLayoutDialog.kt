@@ -8,18 +8,9 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.Toast
-import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.misc.readFromFile
-import org.neidhardt.dynamicsoundboard.reportError
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import org.neidhardt.dynamicsoundboard.R
 import java.io.File
-import java.io.IOException
-import java.util.*
 
 /**
  * File created by eric.neidhardt on 14.11.2014.
@@ -27,11 +18,6 @@ import java.util.*
 class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 {
 	private var directories: RecyclerView? = null
-
-	private val soundSheetsDataAccess = SoundboardApplication.soundSheetsDataAccess
-	private val soundSheetsDataStorage = SoundboardApplication.soundSheetsDataStorage
-	private val soundsDataAccess = SoundboardApplication.soundsDataAccess
-	private val soundsDataStorage = SoundboardApplication.soundsDataStorage
 
 	companion object {
 		private val TAG = LoadLayoutDialog::class.java.name
@@ -79,6 +65,7 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 
 	private fun onConfirm()
 	{
+		/*
 		val currentDirectory = super.adapter.parentFile
 		if (currentDirectory != null)
 			this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
@@ -86,9 +73,9 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 		if (super.adapter.selectedFiles.size != 0)
 			this.loadFromFileAndDismiss(super.adapter.selectedFiles.iterator().next())
 		else
-			Toast.makeText(this.activity, R.string.dialog_load_layout_no_file_info, Toast.LENGTH_SHORT).show()
+			Toast.makeText(this.activity, R.string.dialog_load_layout_no_file_info, Toast.LENGTH_SHORT).show()*/
 	}
-
+/*
 	private fun loadFromFileAndDismiss(file: File)
 	{
 		try
@@ -142,6 +129,6 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog
 			for (mediaPlayerData in soundsPerFragment)
 				this.soundsDataStorage.createSoundAndAddToManager(mediaPlayerData)
 		}
-	}
+	}*/
 
 }

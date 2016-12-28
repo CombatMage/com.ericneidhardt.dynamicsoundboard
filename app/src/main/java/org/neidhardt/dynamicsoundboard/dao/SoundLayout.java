@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.dao;
 
 import org.greenrobot.greendao.annotation.*;
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager;
 
 @Entity
 public class SoundLayout {
@@ -37,11 +36,6 @@ public class SoundLayout {
 					this.databaseId = databaseId;
 					this.label = label;
 					this.isSelected = isSelected;
-	}
-
-	public boolean isDefaultLayout()
-	{
-		return this.databaseId.equals(SoundLayoutManager.DB_DEFAULT);
 	}
 
 	public Long getId() {

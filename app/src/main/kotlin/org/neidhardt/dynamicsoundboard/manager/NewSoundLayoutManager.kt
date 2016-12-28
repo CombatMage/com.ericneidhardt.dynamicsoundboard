@@ -2,10 +2,10 @@ package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager
 import rx.Observable
 import rx.lang.kotlin.add
 import java.util.*
@@ -13,6 +13,8 @@ import java.util.*
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
 */
+val DB_DEFAULT = "Soundboard_db"
+
 class NewSoundLayoutManager(
 		private val context: Context,
 		private val storage: AppDataStorage,
@@ -98,7 +100,7 @@ class NewSoundLayoutManager(
 
 	private fun getDefaultSoundLayout(): NewSoundLayout =
 			NewSoundLayout().apply {
-				this.databaseId = SoundLayoutManager.DB_DEFAULT
+				this.databaseId = DB_DEFAULT
 				this.label = context.resources.getString(R.string.suggested_sound_layout_name)
 				this.isSelected = true
 			}
@@ -125,6 +127,12 @@ class NewSoundLayoutManager(
 	fun addSoundToCurrentlyPlayingSounds(player: MediaPlayerController) {
 		this.mCurrentlyPlayingSounds.add(player)
 		this.onPlayingSoundsChangedListener.forEach { it.invoke(this.currentlyPlayingSounds) }
+	}
+
+	companion object {
+		fun getNewDatabaseIdForLabel(label: String): String {
+			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
+		}
 	}
 }
 

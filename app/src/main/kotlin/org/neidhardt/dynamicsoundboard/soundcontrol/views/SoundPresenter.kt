@@ -55,8 +55,10 @@ class SoundPresenter (
 	private var subscriptions = CompositeSubscription()
 
 	var adapter: SoundAdapter? = null
-	val values: List<MediaPlayerController> get() =
-			this.soundManager.sounds.getOrElse(this.soundSheet, { emptyList() } )
+	val values: List<MediaPlayerController> get() {
+		val players = this.soundManager.sounds.getOrElse(this.soundSheet, { emptyList() } )
+		return players
+	}
 
 	fun onAttachedToWindow() {
 		this.eventBus.registerIfRequired(this)

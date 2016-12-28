@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.SoundLayoutManager
 import rx.subscriptions.CompositeSubscription
 
 /**
@@ -33,7 +33,7 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog() {
 
 		val layout = NewSoundLayout().apply {
 			this.isSelected = false
-			this.databaseId = SoundLayoutManager.getNewDatabaseIdForLabel(name)
+			this.databaseId = NewSoundLayoutManager.getNewDatabaseIdForLabel(name)
 			this.label = name
 		}
 		this.manager.add(layout)

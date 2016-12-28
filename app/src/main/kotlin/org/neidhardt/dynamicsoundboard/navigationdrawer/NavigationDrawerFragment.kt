@@ -21,7 +21,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDraw
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.model.activeLayout
 import org.neidhardt.utils.letThis
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
@@ -33,9 +32,8 @@ class NavigationDrawerFragment : BaseFragment() {
 
 	private val eventBus = EventBus.getDefault()
 	private var subscriptions = CompositeSubscription()
-	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
-	private val newSoundLayoutManager = SoundboardApplication.newSoundLayoutManager
+	private val soundLayoutManager = SoundboardApplication.newSoundLayoutManager
 
 	private var tabView: NavigationDrawerTabLayout? = null
 	private var listView: NavigationDrawerListLayout? = null
@@ -94,8 +92,8 @@ class NavigationDrawerFragment : BaseFragment() {
 		this.tabView?.onAttached()
 		this.listView?.onAttached()
 
-		this.headerVM.title = this.newSoundLayoutManager.soundLayouts.activeLayout.label
-		this.subscriptions.add(RxNewSoundLayoutManager.soundLayoutsChanges(this.newSoundLayoutManager)
+		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
+		this.subscriptions.add(RxNewSoundLayoutManager.soundLayoutsChanges(this.soundLayoutManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { layouts ->
 					val selectedLayout = layouts.activeLayout

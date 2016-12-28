@@ -8,7 +8,6 @@ import org.greenrobot.greendao.annotation.*;
 
 import android.net.Uri;
 import org.neidhardt.dynamicsoundboard.DynamicSoundboardApplication;
-import org.neidhardt.dynamicsoundboard.daohelper.DaoHelperKt;
 // KEEP INCLUDES END
 
 /**
@@ -158,15 +157,6 @@ public class MediaPlayerData {
 		return data;
 	}
 
-	public void insertItemInDatabaseAsync()
-	{
-        DaoHelperKt.insertAsync(this).subscribe();
-	}
-
-    public void updateItemInDatabaseAsync()
-	{
-        DaoHelperKt.updateAsync(this).subscribe();
-    }
 
     public boolean getIsSelectedForDeletion() {
         return isSelectedForDeletion;
