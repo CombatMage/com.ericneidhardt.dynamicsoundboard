@@ -16,6 +16,7 @@ import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.add
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
@@ -79,9 +80,26 @@ open class NewSoundManager(private val context: Context) {
 	}
 
 	fun add(soundSheet: NewSoundSheet, playerData: List<NewMediaPlayerData>) {
-		// TODO 
-		playerData.forEach { this.createPlayerAndAddToSounds(soundSheet, it) }
-		this.invokeListeners()
+		SoundboardApplication.taskCounter.value++
+		Observable.just(playerData)
+				.flatMapIterable { it }
+				.subscribeOn(AndroidSchedulers.mainThread())
+				.doOnNext {
+					this.createPlayerAndAddToSounds(soundSheet, it)
+				}
+				.sample(50, TimeUnit.MILLISECONDS)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe({
+					this.invokeListeners()
+				}, { error ->
+					Logger.e(TAG, "Error whie adding players")
+					SoundboardApplication.taskCounter.value--
+					this.invokeListeners()
+				}, {
+					Logger.d(TAG, "Adding players finished")
+					SoundboardApplication.taskCounter.value--
+					this.invokeListeners()
+				})
 	}
 
 	fun remove(soundSheet: NewSoundSheet, playerList: List<MediaPlayerController>) {

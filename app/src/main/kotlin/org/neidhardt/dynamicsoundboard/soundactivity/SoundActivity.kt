@@ -6,7 +6,6 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Gravity
@@ -15,7 +14,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_base.*
-import kotlinx.android.synthetic.main.layout_fab.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -23,7 +21,6 @@ import org.neidhardt.android_utils.misc.getCopyList
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseActivity
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
 import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog
@@ -33,10 +30,10 @@ import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
@@ -90,15 +87,11 @@ class SoundActivity :
 	private val navigationDrawerLayout: DrawerLayout? by lazy { this.dl_main } // this view does not exists in tablet layout
 	private val drawerToggle: ActionBarDrawerToggle? by lazy {
 		if (this.navigationDrawerLayout != null) {
-			NoAnimationDrawerToggle(
-					this,
-					this.navigationDrawerLayout,
-					this.toolbar
-			).letThis{
+			NoAnimationDrawerToggle(this, this.navigationDrawerLayout, this.toolbar, this.navigationDrawerFragment).letThis {
 				this.navigationDrawerLayout?.addDrawerListener(it)
-				it.isDrawerIndicatorEnabled = true
 			}
-		} else null
+		}
+		else null
 	}
 	private val isNavigationDrawerOpen: Boolean get() = this.navigationDrawerLayout?.isDrawerOpen(Gravity.START) ?: false
 
@@ -111,8 +104,6 @@ class SoundActivity :
 		}
 		this.binding.ablMain.setExpanded(true)
 		this.setSupportActionBar(this.toolbar)
-
-		this.fb_layout_fab
 
 		this.requestPermissionsIfRequired()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
@@ -212,10 +203,6 @@ class SoundActivity :
 	override fun onStop() {
 		this.eventBus.unregister(this)
 		this.subscriptions.unsubscribe()
-
-		if (this.isFinishing) {
-		}
-
 		super.onStop()
 	}
 
@@ -322,16 +309,6 @@ class SoundActivity :
 		}
 	}
 
-	fun removeSoundFragments(soundSheets: List<SoundSheet>) {
-		this.supportFragmentManager.let { fragmentManager ->
-			soundSheets
-					.mapNotNull { fragmentManager.findFragmentByTag(it.fragmentTag) }
-					.forEach { fragmentManager.beginTransaction().remove(it).commit() }
-
-			fragmentManager.executePendingTransactions()
-		}
-	}
-
 	fun removeSoundFragment(fragment: SoundSheetFragment) {
 		val fragmentManager = this.supportFragmentManager
 		fragmentManager.beginTransaction().remove(fragment).commit()
@@ -366,23 +343,32 @@ class SoundActivity :
 				return currentFragment
 			return null
 		}
+
+	private val navigationDrawerFragment: NavigationDrawerFragment
+		get() = this.supportFragmentManager.findFragmentById(R.id.navigation_drawer_fragment) as NavigationDrawerFragment
 }
 
 private class NoAnimationDrawerToggle(
 		activity: AppCompatActivity,
 		drawerLayout: DrawerLayout?,
-		toolbar: Toolbar
-		)
+		toolbar: Toolbar,
+		private val navigationDrawer: NavigationDrawerFragment)
 : ActionBarDrawerToggle(
 		activity,
 		drawerLayout,
 		toolbar,
 		R.string.navigation_drawer_content_description_open,
 		R.string.navigation_drawer_content_description_close
-)
-{
+) {
+	init { this.isDrawerIndicatorEnabled = true }
+
 	// override onDrawerSlide and pass 0 to super disable arrow animation
 	override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
 		super.onDrawerSlide(drawerView, 0f)
+	}
+
+	override fun onDrawerClosed(drawerView: View?) {
+		super.onDrawerClosed(drawerView)
+		this.navigationDrawer.onNavigationDrawerClosed()
 	}
 }

@@ -130,11 +130,9 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 		val soundSheet = this.soundSheetsManager.soundSheets.findByFragmentTag(fragmentToAddSounds)
 				?: throw IllegalStateException("no soundSheet for given fragmentTag was found")
 
-		// TODO do not do this on main
 		Observable.just(files)
 				.subscribeOn(Schedulers.computation())
 				.map { files -> files.map { singleFile -> MediaPlayerFactory.getMediaPlayerDataFromFile(singleFile, fragmentToAddSounds) } }
-				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ playerData ->
 					soundManager.add(soundSheet, playerData)
 				}, { error ->

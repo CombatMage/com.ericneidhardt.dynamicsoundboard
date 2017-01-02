@@ -10,5 +10,3 @@ data class SoundLayoutsRemovedEvent(var soundLayouts: List<SoundLayout>)
 data class SoundLayoutSelectedEvent(private val selectedSoundLayout: SoundLayout)
 
 data class SoundLayoutRenamedEvent(val renamedSoundLayout: SoundLayout)
-
-data class SoundLayoutAddedEvent(val data: SoundLayout)

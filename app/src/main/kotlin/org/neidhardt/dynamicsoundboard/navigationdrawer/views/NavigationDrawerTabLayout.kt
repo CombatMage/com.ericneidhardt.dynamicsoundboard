@@ -7,16 +7,15 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnOpenSoundLayoutsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundLayoutsRequestedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.OnSoundLayoutsChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutRenamedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutSelectedEvent
-import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.events.SoundLayoutsRemovedEvent
 import org.neidhardt.eventbus_utils.registerIfRequired
 
 /**
  * @author eric.neidhardt on 03.05.2016.
  */
 interface NavigationDrawerTabLayout {
+
+	val tabMode: TabMode
+
 	fun showDefaultTabBar()
 
 	fun showContextualTabBar()
@@ -43,14 +42,13 @@ class NavigationDrawerTabLayoutPresenter
 		private val onSoundLayoutsSelectedCallback: () -> Unit
 ) : NavigationDrawerTabLayout,
 		TabLayout.OnTabSelectedListener,
-		OnOpenSoundLayoutsEventListener,
-		OnSoundLayoutsChangedEventListener {
+		OnOpenSoundLayoutsEventListener {
 
 	private var tabSoundSheets: TabLayout.Tab = tabLayout.createSoundSheetTab()
 	private var tabPlayList: TabLayout.Tab = tabLayout.createPlaylistTab()
 	private var tabSoundLayouts: TabLayout.Tab = tabLayout.createSoundLayoutsTab()
 
-	private var tabMode: TabMode = TabMode.Normal
+	override var tabMode: TabMode = TabMode.Normal
 
 	init { this.tabLayout.addOnTabSelectedListener(this) }
 
@@ -90,12 +88,6 @@ class NavigationDrawerTabLayoutPresenter
 			this.showContextualTabBar()
 		else
 			this.showDefaultTabBar()
-	}
-
-	// TODO subscribe on
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundLayoutSelectedEvent) {
-		this.showDefaultTabBar()
 	}
 
 	override fun onTabSelected(tab: TabLayout.Tab?) {

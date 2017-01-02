@@ -109,5 +109,12 @@ class NavigationDrawerFragment : BaseFragment() {
 		this.tabView?.onDetached()
 		this.listView?.onDetached()
 	}
+
+	fun onNavigationDrawerClosed() {
+		if (this.tabView?.tabMode == TabMode.Context) {
+			this.tabView?.showDefaultTabBar()
+			this.headerVM.isSoundLayoutOpen = false
+		}
+	}
 }
 
