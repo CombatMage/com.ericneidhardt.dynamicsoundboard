@@ -12,7 +12,6 @@ import rx.subscriptions.CompositeSubscription
 class SoundLayoutSettingsDialog : SoundLayoutDialog() {
 
 	private val manager = SoundboardApplication.newSoundLayoutManager
-	private val subscriptions = CompositeSubscription()
 
 	private var databaseId: String? = null
 
@@ -22,11 +21,6 @@ class SoundLayoutSettingsDialog : SoundLayoutDialog() {
 		val args = this.arguments
 		if (args != null)
 			this.databaseId = args.getString(KEY_DATABASE_ID)
-	}
-
-	override fun onDestroy() {
-		super.onDestroy()
-		this.subscriptions.unsubscribe()
 	}
 
 	override fun deliverResult() {

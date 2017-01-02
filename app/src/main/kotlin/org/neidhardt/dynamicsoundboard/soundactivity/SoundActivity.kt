@@ -6,6 +6,7 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Gravity
@@ -35,6 +36,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
@@ -166,10 +168,6 @@ class SoundActivity :
 		this.subscriptions.add(RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { soundSheets -> this.setStateForSoundSheets() })
-
-		this.subscriptions.add(RxNewSoundLayoutManager.changesPlayingSounds(this.soundLayoutManager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { playingSounds ->  })
 	}
 
 	private fun setStateForSoundSheets() {
@@ -178,11 +176,12 @@ class SoundActivity :
 		this.toolbarVM.title = selectedSoundSheet?.label ?: this.getString(R.string.app_name)
 		this.toolbarVM.isSoundSheetActionsEnable = selectedSoundSheet != null
 
+		val currentFragment = this.currentSoundFragment
+		if (currentFragment != null && currentFragment.fragmentTag != selectedSoundSheet?.fragmentTag)
+			this.removeSoundFragment(currentFragment)
+
 		if (selectedSoundSheet != null) {
-			val currentFragment = this.currentSoundFragment
 			if (currentFragment == null)
-				this.openSoundFragment(selectedSoundSheet)
-			else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag)
 				this.openSoundFragment(selectedSoundSheet)
 		}
 	}
@@ -333,14 +332,11 @@ class SoundActivity :
 		}
 	}
 
-	fun removeSoundFragment(soundSheet: SoundSheet) {
+	fun removeSoundFragment(fragment: SoundSheetFragment) {
 		val fragmentManager = this.supportFragmentManager
-		val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag)
-		if (fragment != null) {
-			fragmentManager.beginTransaction().remove(fragment).commit()
-			if (fragment.isVisible)
-				this.toolbarVM.isSoundSheetActionsEnable = false
-		}
+		fragmentManager.beginTransaction().remove(fragment).commit()
+		if (fragment.isVisible)
+			this.toolbarVM.isSoundSheetActionsEnable = false
 		fragmentManager.executePendingTransactions()
 	}
 

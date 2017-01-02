@@ -11,9 +11,16 @@ import android.support.v7.widget.RecyclerView
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
+import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import rx.Observable
+import rx.Subscriber
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 import java.io.File
 import java.util.*
 
@@ -90,7 +97,6 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 			this.storePathToSharedPreferences(TAG, currentDirectory.path)
 
 		this.returnResults()
-		this.dismiss()
 	}
 
 	protected fun getFileListResult(): Collection<File> {
@@ -110,18 +116,32 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 
 	protected open fun returnResults() {
 		val fragmentToAddSounds = this.callingFragmentTag
-		if (fragmentToAddSounds != null) {
-			val result = this.getFileListResult()
-			if (result.isEmpty())
-				return
-
-			val soundSheet = this.soundSheetsManager.soundSheets.findByFragmentTag(fragmentToAddSounds)
-					?: throw IllegalStateException("no soundSheet for given fragmentTag was found")
-
-			result.forEach {
-				val playerData = MediaPlayerFactory.getMediaPlayerDataFromFile(it, fragmentToAddSounds)
-				this.soundManager.add(soundSheet, playerData)
-			}
+		if (fragmentToAddSounds == null) {
+			this.dismiss()
+			return
 		}
+
+		val files = this.getFileListResult()
+		if (files.isEmpty()) {
+			this.dismiss()
+			return
+		}
+
+		val soundSheet = this.soundSheetsManager.soundSheets.findByFragmentTag(fragmentToAddSounds)
+				?: throw IllegalStateException("no soundSheet for given fragmentTag was found")
+
+		// TODO do not do this on main
+		Observable.just(files)
+				.subscribeOn(Schedulers.computation())
+				.map { files -> files.map { singleFile -> MediaPlayerFactory.getMediaPlayerDataFromFile(singleFile, fragmentToAddSounds) } }
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe({ playerData ->
+					soundManager.add(soundSheet, playerData)
+				}, { error ->
+					Logger.e(TAG, error?.toString() ?: "")
+					this@AddNewSoundFromDirectoryDialog.dismiss()
+				}, {
+					this@AddNewSoundFromDirectoryDialog.dismiss()
+				})
 	}
 }

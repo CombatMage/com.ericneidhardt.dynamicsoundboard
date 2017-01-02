@@ -120,8 +120,10 @@ class NewSoundLayoutManager(
 	}
 
 	fun removeSoundFromCurrentlyPlayingSounds(player: MediaPlayerController) {
-		this.mCurrentlyPlayingSounds.remove(player)
-		this.onPlayingSoundsChangedListener.forEach { it.invoke(this.currentlyPlayingSounds) }
+		if (this.mCurrentlyPlayingSounds.contains(player)) {
+			this.mCurrentlyPlayingSounds.remove(player)
+			this.onPlayingSoundsChangedListener.forEach { it.invoke(this.currentlyPlayingSounds) }
+		}
 	}
 
 	fun addSoundToCurrentlyPlayingSounds(player: MediaPlayerController) {

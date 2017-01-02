@@ -15,6 +15,8 @@ import android.widget.EditText
 import android.widget.Toast
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import rx.android.schedulers.AndroidSchedulers
 import java.io.File
 import java.io.IOException
 
@@ -23,11 +25,13 @@ import java.io.IOException
  */
 class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener {
 
+	private val soundLayoutManager = SoundboardApplication.newSoundLayoutManager
+
 	private var inputFileName: EditText? = null
 	private var directories: RecyclerView? = null
 
-	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
-	{
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_store_sound_sheets, null)
 		view.findViewById(R.id.b_add).setOnClickListener(this)
 
@@ -74,22 +78,19 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 		}
 	}
 
-	private fun onConfirm()
-	{
-		/*val currentDirectory = super.adapter.parentFile
+	private fun onConfirm() {
+		val currentDirectory = super.adapter.parentFile
 		if (currentDirectory != null)
 			this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
 
 		if (super.adapter.selectedFiles.size != 0)
 			this.saveDataAndDismiss()
 		else
-			Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()*/
+			Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_info, Toast.LENGTH_SHORT).show()
 	}
 
-	private fun hideKeyboard()
-	{
-		if (this.inputFileName!!.hasFocus() && this.activity != null)
-		{
+	private fun hideKeyboard() {
+		if (this.inputFileName!!.hasFocus() && this.activity != null) {
 			val inputManager = this.activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 			inputManager.hideSoftInputFromWindow(this.inputFileName!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 		}
@@ -98,21 +99,18 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 	private fun createFileAndSelect()
 	{
 		val fileName = this.inputFileName!!.text.toString()
-		if (fileName.isEmpty())
-		{
+		if (fileName.isEmpty()) {
 			Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_name, Toast.LENGTH_SHORT).show()
 			return
 		}
 
 		val file = File(super.adapter.parentFile, fileName)
-		if (file.exists())
-		{
+		if (file.exists()) {
 			Toast.makeText(this.activity, R.string.dialog_store_layout_file_exists, Toast.LENGTH_SHORT).show()
 			return
 		}
 
-		try
-		{
+		try {
 			val created = file.createNewFile()
 			if (!created) {
 				Toast.makeText(this.activity, R.string.dialog_store_layout_failed_create_file, Toast.LENGTH_SHORT).show()
@@ -125,40 +123,30 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 			this.onFileSelected(file)
 		}
-		catch (e: IOException)
-		{
+		catch (e: IOException) {
 			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_create_file, Toast.LENGTH_SHORT).show()
 		}
-
 	}
 
-	/*
-	private fun saveDataAndDismiss()
-	{
-		try
-		{
-			writeToFile(
-					super.adapter.selectedFiles.elementAt(0),
-					this.soundSheetsDataAccess.getSoundSheets(),
-					this.soundsDataAccess.playlist,
-					this.soundsDataAccess.sounds)
-
+	private fun saveDataAndDismiss() {
+		val file = super.adapter.selectedFiles.elementAt(0)
+		SoundboardApplication.storage.saveToFile(file, this.soundLayoutManager.soundLayouts)
+		.observeOn(AndroidSchedulers.mainThread())
+		.subscribe({
+			// nothing to do
+		}, { error ->
+			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_store_layout,
+					Toast.LENGTH_SHORT).show()
 			this.dismiss()
-		}
-		catch (e: IOException)
-		{
-			Logger.d(TAG, e.message)
-			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_store_layout, Toast.LENGTH_SHORT).show()
-		}
+		}, {
+			this.dismiss()
+		})
 	}
-	*/
 
-	companion object
-	{
+	companion object {
 		private val TAG = StoreLayoutDialog::class.java.name
 
-		fun showInstance(manager: FragmentManager)
-		{
+		fun showInstance(manager: FragmentManager) {
 			val dialog = StoreLayoutDialog()
 			dialog.show(manager, TAG)
 		}

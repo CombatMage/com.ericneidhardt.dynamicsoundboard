@@ -78,6 +78,12 @@ open class NewSoundManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
+	fun add(soundSheet: NewSoundSheet, playerData: List<NewMediaPlayerData>) {
+		// TODO 
+		playerData.forEach { this.createPlayerAndAddToSounds(soundSheet, it) }
+		this.invokeListeners()
+	}
+
 	fun remove(soundSheet: NewSoundSheet, playerList: List<MediaPlayerController>) {
 		playerList.forEach { player ->
 			player.destroy(false)
@@ -129,7 +135,7 @@ open class NewSoundManager(private val context: Context) {
 
 		val player = MediaPlayerFactory.createPlayer(this.context, this.eventBus, playerData)
 		if (player == null) {
-			soundSheet.mediaPlayers.remove(playerData)
+			soundSheet.mediaPlayers?.remove(playerData)
 			this.eventBus.post(CreatingPlayerFailedEvent(playerData))
 		}
 		else {

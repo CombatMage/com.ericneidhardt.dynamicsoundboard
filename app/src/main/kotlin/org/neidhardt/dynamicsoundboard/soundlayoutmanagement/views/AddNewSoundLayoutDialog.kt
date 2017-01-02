@@ -15,7 +15,6 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog() {
 
 	private var suggestedName: String? = null
 
-	private val subscriptions = CompositeSubscription()
 	private val manager = SoundboardApplication.newSoundLayoutManager
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +37,6 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog() {
 		}
 		this.manager.add(layout)
 		this.dismiss()
-	}
-
-	override fun onDestroy() {
-		super.onDestroy()
-		this.subscriptions.unsubscribe()
 	}
 
 	override fun getLayoutId(): Int = R.layout.dialog_add_new_sound_layout
