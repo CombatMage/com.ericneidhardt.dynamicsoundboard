@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.fileexplorer
+package org.neidhardt.dynamicsoundboard.dialog.fileexplorer
 
 import android.annotation.SuppressLint
 import android.app.Dialog

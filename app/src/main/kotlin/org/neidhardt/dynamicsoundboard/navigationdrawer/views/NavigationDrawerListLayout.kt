@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.createSoundS
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.AddNewSoundLayoutDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.eventbus_utils.registerIfRequired
 

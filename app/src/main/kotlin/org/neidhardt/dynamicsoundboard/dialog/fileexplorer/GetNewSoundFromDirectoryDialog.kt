@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.fileexplorer
+package org.neidhardt.dynamicsoundboard.dialog.fileexplorer
 
 import android.os.Bundle
 import android.support.v4.app.FragmentManager

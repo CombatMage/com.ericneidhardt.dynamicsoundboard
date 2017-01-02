@@ -41,7 +41,7 @@ class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog() {
 	companion object {
 		private val TAG = ConfirmDeleteSoundSheetDialog::class.java.name
 
-		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog.fragmentTag"
+		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeleteSoundsDialog.fragmentTag"
 
 		fun showInstance(manager: FragmentManager, fragmentTag: String) {
 			val dialog = ConfirmDeleteSoundSheetDialog()

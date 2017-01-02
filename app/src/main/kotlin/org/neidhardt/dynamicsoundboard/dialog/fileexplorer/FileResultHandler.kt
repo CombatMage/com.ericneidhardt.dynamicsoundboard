@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.fileexplorer
+package org.neidhardt.dynamicsoundboard.dialog.fileexplorer
 
 import java.io.File
 

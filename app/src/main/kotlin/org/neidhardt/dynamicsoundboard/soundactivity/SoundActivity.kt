@@ -22,9 +22,9 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseActivity
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
-import org.neidhardt.dynamicsoundboard.fileexplorer.AddNewSoundFromDirectoryDialog
-import org.neidhardt.dynamicsoundboard.fileexplorer.LoadLayoutDialog
-import org.neidhardt.dynamicsoundboard.fileexplorer.StoreLayoutDialog
+import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
+import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog
+import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
@@ -42,9 +42,9 @@ import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChanged
 import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundcontrol.*
 import org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views.SoundLayoutSettingsDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.AddNewSoundFromIntentDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeletePlayListDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeletePlayListDialog
 import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteAllSoundSheetsDialog

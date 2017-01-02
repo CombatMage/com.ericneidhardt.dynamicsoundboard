@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.dialog
+package org.neidhardt.dynamicsoundboard.dialog.soundmanagement
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -196,7 +196,7 @@ private class RenameSoundFileDialogPresenter
 		val segments = oldFilePath.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 		if (segments.size > 1) {
 			val fileType = segments[segments.size - 1]
-			return newNameFilePath + "." + fileType
+			return newNameFilePath + "" + fileType
 		}
 
 		return newNameFilePath

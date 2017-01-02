@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.dialog
+package org.neidhardt.dynamicsoundboard.dialog.soundmanagement
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -22,8 +22,8 @@ import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDeco
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
-import org.neidhardt.dynamicsoundboard.fileexplorer.FileResultHandler
-import org.neidhardt.dynamicsoundboard.fileexplorer.GetNewSoundFromDirectoryDialog
+import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.FileResultHandler
+import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.GetNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
 import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
@@ -56,7 +56,7 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 
 		fun show(fragmentManager: FragmentManager, callingFragmentTag: String) {
 			val args = Bundle().apply {
-				this.putString(KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+				this.putString(org.neidhardt.dynamicsoundboard.base.BaseDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
 			}
 			val dialog = AddNewSoundDialog().apply {
 				this.arguments = args
@@ -85,13 +85,13 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 				addedSoundsLayout = view.findViewById(R.id.rv_dialog) as RecyclerView)
 
 		return AlertDialog.Builder(context).apply {
-			this.setTitle(R.string.dialog_add_new_sound_title)
+			this.setTitle(org.neidhardt.dynamicsoundboard.R.string.dialog_add_new_sound_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i ->
+			this.setPositiveButton(org.neidhardt.dynamicsoundboard.R.string.dialog_add, { dialogInterface, i ->
 				presenter?.addSoundsToSoundSheet()
 				dismiss()
 			})
-			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
 		}.create()
 	}
 
@@ -181,7 +181,7 @@ private class AddNewSoundDialogPresenter(
 		this.addAnotherSound.setOnClickListener({ this.addAnotherSound() })
 
 		this.addedSoundsLayout.apply {
-			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
+			this.addItemDecoration(org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration(this.context, org.neidhardt.dynamicsoundboard.R.color.background, org.neidhardt.dynamicsoundboard.R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
 		}

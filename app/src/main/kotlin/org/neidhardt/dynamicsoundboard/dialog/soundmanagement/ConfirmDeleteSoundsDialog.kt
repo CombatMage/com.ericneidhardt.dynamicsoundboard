@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.dialog
+package org.neidhardt.dynamicsoundboard.dialog.soundmanagement
 
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
@@ -39,7 +39,7 @@ class ConfirmDeleteSoundsDialog : BaseConfirmDeleteDialog() {
 	companion object {
 		private val TAG = ConfirmDeleteSoundsDialog::class.java.name
 
-		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog.fragmentTag"
+		private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeleteSoundsDialog.fragmentTag"
 
 		fun showInstance(manager: FragmentManager, fragmentTag: String) {
 			val dialog = ConfirmDeleteSoundsDialog()

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.fileexplorer
+package org.neidhardt.dynamicsoundboard.dialog.fileexplorer
 
 import android.animation.Animator
 import android.os.Bundle
@@ -26,7 +26,7 @@ import java.util.*
  */
 abstract class FileExplorerDialog : BaseDialog()
 {
-	private val KEY_PARENT_FILE = "org.neidhardt.dynamicsoundboard.fileexplorer.parentFile"
+	private val KEY_PARENT_FILE = "org.neidhardt.dynamicsoundboard.dialog.fileexplorer.parentFile"
 
 	internal val adapter: DirectoryAdapter = DirectoryAdapter()
 

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundmanagement.dialog
+package org.neidhardt.dynamicsoundboard.dialog.soundmanagement
 
 import android.annotation.SuppressLint
 import android.app.Dialog

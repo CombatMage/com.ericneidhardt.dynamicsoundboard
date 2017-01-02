@@ -33,9 +33,9 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEven
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.ConfirmDeleteSoundsDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.RenameSoundFileDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.dialog.SoundSettingsDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeleteSoundsDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.soundsheetmanagement.views.ConfirmDeleteSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.eventbus_utils.registerIfRequired
