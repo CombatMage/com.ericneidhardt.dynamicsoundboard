@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views
+package org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement
 
 import android.os.Bundle
 import android.support.v4.app.FragmentManager

@@ -5,6 +5,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
+import org.neidhardt.dynamicsoundboard.persistance.model.AppData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import rx.Observable
 import rx.lang.kotlin.add
@@ -47,6 +48,19 @@ class NewSoundLayoutManager(
 				this.invokeListeners()
 			}
 		}
+	}
+
+	@Synchronized
+	fun init(appData: AppData) {
+		this.mSoundLayouts = ArrayList()
+		this.mSoundLayouts = ArrayList()
+		appData.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
+		if (this.mSoundLayouts?.isEmpty() == true)
+			this.mSoundLayouts?.add(this.getDefaultSoundLayout())
+
+		this.setSoundSheetsForActiveLayout()
+		this.onLoadingCompletedListener.forEach { it.invoke(this.soundLayouts) }
+		this.invokeListeners()
 	}
 
 	fun remove(soundLayouts: List<NewSoundLayout>) {

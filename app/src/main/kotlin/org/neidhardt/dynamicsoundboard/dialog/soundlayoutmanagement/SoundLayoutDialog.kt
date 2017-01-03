@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundlayoutmanagement.views
+package org.neidhardt.dynamicsoundboard.dialog.soundlayoutmanagement
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -26,7 +26,7 @@ abstract class SoundLayoutDialog : BaseDialog()
 		return AlertDialog.Builder(this.activity).apply {
 			this.setTitle(getTitleId())
 			this.setView(view)
-			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
 			this.setPositiveButton(getPositiveButtonId(), { dialogInterface, i -> deliverResult() })
 		}.create()
 	}

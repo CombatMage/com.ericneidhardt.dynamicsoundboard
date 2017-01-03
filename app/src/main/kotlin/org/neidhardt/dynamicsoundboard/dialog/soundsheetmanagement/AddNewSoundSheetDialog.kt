@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundsheetmanagement.views
+package org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -32,13 +32,13 @@ class AddNewSoundSheetDialog : BaseDialog() {
 		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as EditText
 
 		return AlertDialog.Builder(context).apply {
-			this.setTitle(R.string.dialog_add_new_sound_sheet_title)
+			this.setTitle(org.neidhardt.dynamicsoundboard.R.string.dialog_add_new_sound_sheet_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i ->
+			this.setPositiveButton(org.neidhardt.dynamicsoundboard.R.string.dialog_add, { dialogInterface, i ->
 				deliverResult()
 				dismiss()
 			})
-			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
+			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
 		}.create()
 	}
 
