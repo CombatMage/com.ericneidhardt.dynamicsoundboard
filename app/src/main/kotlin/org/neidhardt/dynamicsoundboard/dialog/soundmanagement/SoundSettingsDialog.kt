@@ -13,7 +13,7 @@ import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.views.CustomEditText
 import org.neidhardt.android_utils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
@@ -111,7 +111,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 			val mediaPlayerData: NewMediaPlayerData
 			if (addNewSoundSheet) {
 				val soundSheetName = this.soundSheetName!!.displayedText
-				val fragmentTag = NewSoundSheetManager.getNewFragmentTagForLabel(soundSheetName)
+				val fragmentTag = SoundSheetManager.getNewFragmentTagForLabel(soundSheetName)
 				val soundSheet = NewSoundSheet().apply {
 					this.fragmentTag = fragmentTag
 					this.label = soundSheetName

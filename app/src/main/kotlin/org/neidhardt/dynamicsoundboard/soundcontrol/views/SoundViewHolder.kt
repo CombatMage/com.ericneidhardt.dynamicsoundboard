@@ -5,7 +5,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
@@ -20,7 +20,7 @@ class SoundViewHolder
 		itemTouchHelper: ItemTouchHelper,
 		itemView: View,
 		private val eventBus: EventBus,
-		private val playlistManager: NewPlaylistManager
+		private val playlistManager: PlaylistManager
 ) :
 		RecyclerView.ViewHolder(itemView)
 {

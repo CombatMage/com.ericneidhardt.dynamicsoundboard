@@ -2,10 +2,10 @@ package org.neidhardt.dynamicsoundboard
 
 import android.content.Context
 import android.support.multidex.MultiDexApplication
-import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
+import org.neidhardt.dynamicsoundboard.manager.SoundManager
+import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
 import org.neidhardt.utils.ValueHolder
 import java.util.*
@@ -21,11 +21,11 @@ open class SoundboardApplication : MultiDexApplication() {
 		private val random = Random()
 
 		val storage by lazy { AppDataStorage(this.context) }
-		val newSoundSheetManager by lazy { NewSoundSheetManager(this.context) }
-		val newSoundManager by lazy { NewSoundManager(this.context) }
-		val newPlaylistManager by lazy { NewPlaylistManager(this.context) }
+		val newSoundSheetManager by lazy { SoundSheetManager(this.context) }
+		val newSoundManager by lazy { SoundManager(this.context) }
+		val newPlaylistManager by lazy { PlaylistManager(this.context) }
 		val newSoundLayoutManager by lazy {
-			NewSoundLayoutManager(this.context,
+			SoundLayoutManager(this.context,
 					this.storage,
 					this.newSoundSheetManager,
 					this.newPlaylistManager,

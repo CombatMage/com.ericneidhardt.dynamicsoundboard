@@ -14,7 +14,7 @@ import org.neidhardt.android_utils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
-import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
@@ -141,7 +141,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 	private fun addNewSoundSheet(label: String): String {
 		val soundSheet = NewSoundSheet().apply {
 			this.label = label
-			this.fragmentTag = NewSoundSheetManager.getNewFragmentTagForLabel(label)
+			this.fragmentTag = SoundSheetManager.getNewFragmentTagForLabel(label)
 		}
 		this.soundSheetManager.add(soundSheet)
 		this.soundSheetManager.setSelected(soundSheet)

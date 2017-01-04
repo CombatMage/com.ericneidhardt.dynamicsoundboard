@@ -7,8 +7,8 @@ import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
-import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.utils.longHash
 
 /**
@@ -17,7 +17,7 @@ import org.neidhardt.utils.longHash
 class SoundAdapter (
 		private val itemTouchHelper: ItemTouchHelper,
 		private val presenter: SoundPresenter,
-		private val playlistManager: NewPlaylistManager,
+		private val playlistManager: PlaylistManager,
 		private val eventBus: EventBus
 
 ) :

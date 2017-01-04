@@ -11,7 +11,7 @@ import java.util.*
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
 */
-class NewSoundSheetManager(private val context: Context) {
+class SoundSheetManager(private val context: Context) {
 
 	companion object {
 		fun getNewFragmentTagForLabel(label: String): String {
@@ -64,7 +64,7 @@ class NewSoundSheetManager(private val context: Context) {
 }
 
 object RxNewSoundSheetManager {
-	fun soundSheetsChanged(manager: NewSoundSheetManager): Observable<List<NewSoundSheet>> {
+	fun soundSheetsChanged(manager: SoundSheetManager): Observable<List<NewSoundSheet>> {
 		return Observable.create { subscriber ->
 			val listener: (List<NewSoundSheet>) -> Unit = {
 				subscriber.onNext(it)

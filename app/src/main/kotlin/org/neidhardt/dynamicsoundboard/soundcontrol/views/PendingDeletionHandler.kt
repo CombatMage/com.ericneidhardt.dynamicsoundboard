@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
@@ -13,7 +13,7 @@ private val DELETION_TIMEOUT = 5000
 
 class PendingDeletionHandler (
 		private val soundPresenter: SoundPresenter,
-		private val manager: NewSoundManager,
+		private val manager: SoundManager,
 		private val onItemDeletionRequested: (deletionHandler: PendingDeletionHandler, timeTillDeletion: Int) -> Unit
 ) {
 	private val handler = EnhancedHandler()

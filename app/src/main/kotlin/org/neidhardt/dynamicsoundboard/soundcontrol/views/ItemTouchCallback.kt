@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 
@@ -22,7 +22,7 @@ class ItemTouchCallback
 		private val deletionHandler: PendingDeletionHandler,
 		private val presenter: SoundPresenter,
 		private val soundSheet: NewSoundSheet,
-		private val soundManager: NewSoundManager
+		private val soundManager: SoundManager
 ) : ItemTouchHelper.Callback() {
 
 	private val handler = Handler()

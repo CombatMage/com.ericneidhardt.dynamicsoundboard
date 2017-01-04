@@ -24,9 +24,9 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.FileResultHandler
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.GetNewSoundFromDirectoryDialog
-import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.SoundManager
+import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
@@ -166,9 +166,9 @@ private class AddNewSoundDialogPresenter(
 		private val dialog: AddNewSoundDialog,
 		private val addAnotherSound: View,
 		private val addedSoundsLayout: RecyclerView,
-		private val playlistManager: NewPlaylistManager,
-		private val soundSheetManager: NewSoundSheetManager,
-		private val soundManager: NewSoundManager
+		private val playlistManager: PlaylistManager,
+		private val soundSheetManager: SoundSheetManager,
+		private val soundManager: SoundManager
 )
 {
 	private val soundsToAdd = ArrayList<NewSoundData>()
@@ -206,7 +206,7 @@ private class AddNewSoundDialogPresenter(
 
 			val soundUri = item.uri
 			val soundLabel = item.label
-			val playerData = NewSoundManager.getNewMediaPlayerData(this.dialog.callingFragmentTag, soundUri, soundLabel)
+			val playerData = SoundManager.getNewMediaPlayerData(this.dialog.callingFragmentTag, soundUri, soundLabel)
 			playersData.add(playerData)
 
 			if (item.wasSoundRenamed)

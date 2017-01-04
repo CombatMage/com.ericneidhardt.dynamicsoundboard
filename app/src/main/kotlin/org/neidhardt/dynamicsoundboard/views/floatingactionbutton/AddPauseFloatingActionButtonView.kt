@@ -10,7 +10,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.animations.AnimationUtils
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
@@ -30,7 +30,7 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 	private val eventBus = EventBus.getDefault()
 
 	private var subscriptions = CompositeSubscription()
-	private var manager: NewSoundLayoutManager? = null
+	private var manager: SoundLayoutManager? = null
 	private var presenter: AddPauseFloatingActionButtonPresenter? = null
 
 	@SuppressWarnings("unused")
@@ -115,4 +115,4 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 	}
 }
 
-private val NewSoundLayoutManager.isAnySoundPlaying: Boolean get() = this.currentlyPlayingSounds.isNotEmpty()
+private val SoundLayoutManager.isAnySoundPlaying: Boolean get() = this.currentlyPlayingSounds.isNotEmpty()

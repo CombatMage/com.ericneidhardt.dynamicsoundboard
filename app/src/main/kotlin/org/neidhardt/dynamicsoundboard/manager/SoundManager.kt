@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
 */
-open class NewSoundManager(private val context: Context) {
+class SoundManager(private val context: Context) {
 
 	private val TAG = javaClass.name
 
@@ -171,7 +171,7 @@ open class NewSoundManager(private val context: Context) {
 }
 
 object RxSoundManager {
-	fun changesSoundList(manager: NewSoundManager): Observable<Map<NewSoundSheet, List<MediaPlayerController>>> {
+	fun changesSoundList(manager: SoundManager): Observable<Map<NewSoundSheet, List<MediaPlayerController>>> {
 		return Observable.create { subscriber ->
 			val listener: (Map<NewSoundSheet, List<MediaPlayerController>>) -> Unit = {
 				subscriber.onNext(manager.sounds)
@@ -184,7 +184,7 @@ object RxSoundManager {
 		}
 	}
 
-	fun movesSoundInList(manager: NewSoundManager): Observable<MoveEvent> {
+	fun movesSoundInList(manager: SoundManager): Observable<MoveEvent> {
 		return Observable.create { subscriber ->
 			val listener: (MoveEvent) -> Unit = {
 				subscriber.onNext(it)

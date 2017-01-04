@@ -14,7 +14,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.manager.NewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
@@ -58,7 +58,7 @@ object MediaPlayerFactory {
 	fun getNewMediaPlayerController(context: Context,
 									eventBus: EventBus,
 									mediaPlayerData: NewMediaPlayerData,
-									manager: NewSoundLayoutManager): MediaPlayerController {
+									manager: SoundLayoutManager): MediaPlayerController {
 		return ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
 	}
 
@@ -101,10 +101,10 @@ val UPDATE_INTERVAL: Long = 500
 
 class ExoMediaPlayer
 (
-	private val context: Context,
-	private val eventBus: EventBus,
-	private val manager: NewSoundLayoutManager,
-	override val mediaPlayerData: NewMediaPlayerData
+		private val context: Context,
+		private val eventBus: EventBus,
+		private val manager: SoundLayoutManager,
+		override val mediaPlayerData: NewMediaPlayerData
 ) : MediaPlayerController, ExoPlayer.EventListener
 {
 	private val TAG = javaClass.name

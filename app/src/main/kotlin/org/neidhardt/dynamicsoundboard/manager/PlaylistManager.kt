@@ -18,7 +18,7 @@ import java.util.*
 /**
  * Created by eric.neidhardt@gmail.com on 19.12.2016.
  */
-class NewPlaylistManager(private val context: Context) {
+class PlaylistManager(private val context: Context) {
 
 	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()
@@ -111,7 +111,7 @@ class NewPlaylistManager(private val context: Context) {
 }
 
 object RxNewPlaylistManager {
-	fun playlistChanges(manager: NewPlaylistManager): Observable<List<MediaPlayerController>> {
+	fun playlistChanges(manager: PlaylistManager): Observable<List<MediaPlayerController>> {
 		return Observable.create { subscriber ->
 			val listener: (List<MediaPlayerController>) -> Unit = {
 				subscriber.onNext(it)

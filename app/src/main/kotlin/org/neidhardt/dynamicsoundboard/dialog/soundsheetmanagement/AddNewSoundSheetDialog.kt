@@ -9,7 +9,7 @@ import android.widget.EditText
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
-import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 
 class AddNewSoundSheetDialog : BaseDialog() {
@@ -50,7 +50,7 @@ class AddNewSoundSheetDialog : BaseDialog() {
 
 		val soundSheet = NewSoundSheet().apply {
 			this.label = label
-			this.fragmentTag = NewSoundSheetManager.getNewFragmentTagForLabel(label)
+			this.fragmentTag = SoundSheetManager.getNewFragmentTagForLabel(label)
 		}
 		this.manager.add(soundSheet)
 		this.manager.setSelected(soundSheet)

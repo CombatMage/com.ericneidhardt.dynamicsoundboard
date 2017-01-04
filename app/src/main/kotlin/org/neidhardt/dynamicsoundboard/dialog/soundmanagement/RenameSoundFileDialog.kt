@@ -13,9 +13,9 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.dialog_rename_sound_file_layout.view.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.SoundManager
+import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
@@ -32,18 +32,15 @@ import kotlin.properties.Delegates
 /**
  * File created by eric.neidhardt on 06.07.2015.
  */
-class RenameSoundFileDialog() : SoundSettingsBaseDialog()
-{
+class RenameSoundFileDialog() : SoundSettingsBaseDialog() {
 	override var player: MediaPlayerController by Delegates.notNull<MediaPlayerController>()
 	override var fragmentTag: String by Delegates.notNull<String>()
 	override var soundSheet: NewSoundSheet? = null
 
-	companion object
-	{
+	companion object {
 		private val TAG = RenameSoundFileDialog::class.java.name
 
-		fun show(manager: FragmentManager, playerData: NewMediaPlayerData)
-		{
+		fun show(manager: FragmentManager, playerData: NewMediaPlayerData) {
 			RenameSoundFileDialog().let { dialog ->
 				SoundSettingsBaseDialog.addArguments(dialog, playerData.playerId, playerData.fragmentTag)
 				dialog.show(manager, TAG)
@@ -51,8 +48,7 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog()
 		}
 	}
 
-	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
-	{
+	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		@SuppressLint("InflateParams")
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_rename_sound_file_layout, null)
 
@@ -78,18 +74,16 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog()
 	}
 }
 
-private class RenameSoundFileDialogPresenter
-(
+private class RenameSoundFileDialogPresenter (
 		private val playerData: NewMediaPlayerData,
-		private val soundsManager: NewSoundManager,
-		private val playlistManager: NewPlaylistManager,
-		private val soundSheetManager: NewSoundSheetManager,
+		private val soundsManager: SoundManager,
+		private val playlistManager: PlaylistManager,
+		private val soundSheetManager: SoundSheetManager,
 		private val dialog: RenameSoundFileDialog,
 		private val newName : TextView,
 		private val currentName : TextView,
 		private val renameAllOccurrences: CheckBox
-)
-{
+) {
 	private val TAG = javaClass.name
 
 	private var playersWithMatchingUri: List<MediaPlayerController>? = null
@@ -182,16 +176,17 @@ private class RenameSoundFileDialogPresenter
 		}
 	}
 
-	private fun showErrorRenameFile()
-	{
-		if (this.dialog.activity != null)
-			Toast.makeText(this.dialog.activity, R.string.dialog_rename_sound_toast_player_not_updated, Toast.LENGTH_SHORT).show()
+	private fun showErrorRenameFile() {
+		this.dialog.activity?.let {
+			Toast.makeText(it, R.string.dialog_rename_sound_toast_player_not_updated, Toast.LENGTH_SHORT)
+					.show()
+		}
 	}
 
-	private fun appendFileTypeToNewPath(newNameFilePath: String?, oldFilePath: String?): String
-	{
+	private fun appendFileTypeToNewPath(newNameFilePath: String?, oldFilePath: String?): String {
 		if (newNameFilePath == null || oldFilePath == null)
-			throw NullPointerException(TAG + ": cannot create new file name, either old name or new name is null")
+			throw NullPointerException(TAG + ": cannot create new file name, " +
+					"either old name or new name is null")
 
 		val segments = oldFilePath.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 		if (segments.size > 1) {
@@ -208,7 +203,6 @@ private class RenameSoundFileDialogPresenter
 			return true
 		}
 		catch (e: IOException) {
-
 			Logger.e(TAG, e.message)
 			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
 				this.playlistManager.remove(listOf(player))

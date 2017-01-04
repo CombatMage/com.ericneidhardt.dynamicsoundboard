@@ -5,8 +5,8 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.neidhardt.dynamicsoundboard.manager.NewPlaylistManager
-import org.neidhardt.dynamicsoundboard.manager.NewSoundManager
+import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
@@ -25,8 +25,8 @@ fun createSoundPresenter(
 		soundSheet: NewSoundSheet,
 		eventBus: EventBus,
 		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit,
-		soundManager: NewSoundManager,
-		playlistManager: NewPlaylistManager,
+		soundManager: SoundManager,
+		playlistManager: PlaylistManager,
 		recyclerView: RecyclerView
 ): SoundPresenter
 {
@@ -48,8 +48,8 @@ fun createSoundPresenter(
 class SoundPresenter (
 		val soundSheet: NewSoundSheet,
 		private val eventBus: EventBus,
-		private val soundManager: NewSoundManager,
-		private val playlistManager: NewPlaylistManager
+		private val soundManager: SoundManager,
+		private val playlistManager: PlaylistManager
 ) : MediaPlayerEventListener {
 
 	private var subscriptions = CompositeSubscription()

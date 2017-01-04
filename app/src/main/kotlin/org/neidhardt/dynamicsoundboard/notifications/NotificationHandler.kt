@@ -30,10 +30,10 @@ interface INotificationHandler {
 class NotificationHandler(
 		private val service: NotificationService,
 		private val notificationManager: NotificationManagerCompat,
-		private val playlistManager: NewPlaylistManager,
-		private val soundsManager: NewSoundManager,
-		private val soundSheetManager: NewSoundSheetManager,
-		private val soundLayoutManager: NewSoundLayoutManager
+		private val playlistManager: PlaylistManager,
+		private val soundsManager: SoundManager,
+		private val soundSheetManager: SoundSheetManager,
+		private val soundLayoutManager: SoundLayoutManager
 ) : INotificationHandler {
 
 	private val notifications = ArrayList<PendingSoundNotification>()
