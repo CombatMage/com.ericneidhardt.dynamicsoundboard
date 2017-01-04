@@ -33,7 +33,7 @@ class SoundLayoutsPresenter
 {
 	override var view: RecyclerView? = null
 
-	private val manager = SoundboardApplication.newSoundLayoutManager
+	private val manager = SoundboardApplication.soundLayoutManager
 
 	var adapter: SoundLayoutsAdapter? = null
 	val values: List<NewSoundLayout> get() = this.manager.soundLayouts

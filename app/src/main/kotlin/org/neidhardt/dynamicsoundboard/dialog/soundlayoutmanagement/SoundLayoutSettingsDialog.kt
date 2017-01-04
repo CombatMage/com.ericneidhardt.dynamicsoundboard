@@ -11,7 +11,7 @@ import rx.subscriptions.CompositeSubscription
  */
 class SoundLayoutSettingsDialog : SoundLayoutDialog() {
 
-	private val manager = SoundboardApplication.newSoundLayoutManager
+	private val manager = SoundboardApplication.soundLayoutManager
 
 	private var databaseId: String? = null
 

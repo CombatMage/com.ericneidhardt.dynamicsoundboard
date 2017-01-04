@@ -14,8 +14,8 @@ class ConfirmDeleteSoundSheetDialog : BaseConfirmDeleteDialog() {
 
 	private var fragmentTag: String? = null
 
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
-	private val soundManager = SoundboardApplication.newSoundManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
+	private val soundManager = SoundboardApplication.soundManager
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

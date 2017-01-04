@@ -14,7 +14,7 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 
 class AddNewSoundSheetDialog : BaseDialog() {
 
-	private val manager = SoundboardApplication.newSoundSheetManager
+	private val manager = SoundboardApplication.soundSheetManager
 
 	private var soundSheetName: EditText? = null
 	private var suggestedName: String? = null

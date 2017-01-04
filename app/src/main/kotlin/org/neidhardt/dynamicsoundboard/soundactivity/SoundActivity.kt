@@ -72,8 +72,8 @@ class SoundActivity :
 	private var subscriptions = CompositeSubscription()
 
 	private val storage = SoundboardApplication.storage
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
-	private val soundLayoutManager = SoundboardApplication.newSoundLayoutManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private var binding by Delegates.notNull<ActivityBaseBinding>()
 	private val toolbar by lazy { this.binding.layoutToolbar.tbMain }

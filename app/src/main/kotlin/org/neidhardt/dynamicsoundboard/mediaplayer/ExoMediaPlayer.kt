@@ -46,7 +46,7 @@ object MediaPlayerFactory {
 					context = context,
 					eventBus = eventBus,
 					mediaPlayerData = playerData,
-					manager = SoundboardApplication.newSoundLayoutManager
+					manager = SoundboardApplication.soundLayoutManager
 			)
 		}
 		catch (e: Exception) {

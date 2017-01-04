@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -71,9 +72,9 @@ class SoundSheetFragment :
 
 	private var subscriptions = CompositeSubscription()
 	private val eventBus = EventBus.getDefault()
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
-	private val soundManager = SoundboardApplication.newSoundManager
-	private val playlistManager = SoundboardApplication.newPlaylistManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
+	private val soundManager = SoundboardApplication.soundManager
+	private val playlistManager = SoundboardApplication.playlistManager
 
 	private var soundPresenter: SoundPresenter? = null
 
@@ -122,6 +123,7 @@ class SoundSheetFragment :
 				this.adapter = soundPresenter?.adapter
 				this.layoutManager = LinearLayoutManager(this.context)
 				this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
+				this.itemAnimator = DefaultItemAnimator()
 			}
 		}
 	}

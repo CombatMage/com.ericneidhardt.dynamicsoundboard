@@ -43,10 +43,10 @@ class NotificationService : Service(),
 
 	private val TAG: String = javaClass.name
 
-	private val soundManager = SoundboardApplication.newSoundManager
-	private val playlistManager = SoundboardApplication.newPlaylistManager
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
-	private val soundLayoutManager = SoundboardApplication.newSoundLayoutManager
+	private val soundManager = SoundboardApplication.soundManager
+	private val playlistManager = SoundboardApplication.playlistManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private val eventBus = EventBus.getDefault()
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()

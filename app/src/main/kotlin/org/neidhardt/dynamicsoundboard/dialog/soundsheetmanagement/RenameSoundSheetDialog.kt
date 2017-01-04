@@ -25,7 +25,7 @@ class RenameSoundSheetDialog : BaseDialog() {
 		}
 	}
 
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private var soundSheetName: EditText? = null
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

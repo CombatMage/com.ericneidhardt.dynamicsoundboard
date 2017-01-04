@@ -44,7 +44,7 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 
 	private fun init() {
 		if (!this.isInEditMode) {
-			this.manager = SoundboardApplication.newSoundLayoutManager
+			this.manager = SoundboardApplication.soundLayoutManager
 			this.presenter = AddPauseFloatingActionButtonPresenter()
 		}
 	}

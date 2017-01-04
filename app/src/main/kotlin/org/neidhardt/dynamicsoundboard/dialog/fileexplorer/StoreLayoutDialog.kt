@@ -25,7 +25,7 @@ import java.io.IOException
  */
 class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClickListener {
 
-	private val soundLayoutManager = SoundboardApplication.newSoundLayoutManager
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private var inputFileName: EditText? = null
 	private var directories: RecyclerView? = null

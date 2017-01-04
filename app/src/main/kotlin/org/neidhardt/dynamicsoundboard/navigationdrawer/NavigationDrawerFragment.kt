@@ -33,7 +33,7 @@ class NavigationDrawerFragment : BaseFragment() {
 	private val eventBus = EventBus.getDefault()
 	private var subscriptions = CompositeSubscription()
 
-	private val soundLayoutManager = SoundboardApplication.newSoundLayoutManager
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private var tabView: NavigationDrawerTabLayout? = null
 	private var listView: NavigationDrawerListLayout? = null

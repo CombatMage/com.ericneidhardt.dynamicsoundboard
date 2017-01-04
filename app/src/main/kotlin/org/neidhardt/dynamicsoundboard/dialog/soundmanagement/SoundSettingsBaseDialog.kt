@@ -14,9 +14,9 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
  */
 abstract class SoundSettingsBaseDialog : BaseDialog() {
 
-	protected val soundSheetManager = SoundboardApplication.newSoundSheetManager
-	protected val soundManager = SoundboardApplication.newSoundManager
-	protected val playlistManager = SoundboardApplication.newPlaylistManager
+	protected val soundSheetManager = SoundboardApplication.soundSheetManager
+	protected val soundManager = SoundboardApplication.soundManager
+	protected val playlistManager = SoundboardApplication.playlistManager
 
 	protected abstract var fragmentTag: String
 	protected abstract var soundSheet: NewSoundSheet? // can be null if sound is from playlist

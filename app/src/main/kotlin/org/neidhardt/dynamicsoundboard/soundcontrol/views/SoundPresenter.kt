@@ -71,7 +71,9 @@ class SoundPresenter (
 
 		this.subscriptions.add(RxSoundManager.movesSoundInList(this.soundManager)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { event -> this.adapter?.notifyItemMoved(event.from, event.to) })
+				.subscribe { event ->
+				//	this.adapter?.notifyItemMoved(event.from, event.to)
+				})
 
 		this.subscriptions.add(RxNewPlaylistManager.playlistChanges(this.playlistManager)
 				.observeOn(AndroidSchedulers.mainThread())

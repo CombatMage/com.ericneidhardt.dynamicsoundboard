@@ -15,7 +15,7 @@ class AddNewSoundLayoutDialog : SoundLayoutDialog() {
 
 	private var suggestedName: String? = null
 
-	private val manager = SoundboardApplication.newSoundLayoutManager
+	private val manager = SoundboardApplication.soundLayoutManager
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

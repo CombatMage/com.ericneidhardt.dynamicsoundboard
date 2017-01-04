@@ -24,8 +24,8 @@ import java.util.*
 
 class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChangeListener {
 
-	private val soundManager = SoundboardApplication.newSoundManager
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
+	private val soundManager = SoundboardApplication.soundManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
 
 	private var soundName: EditText? = null
 	private var soundSheetName: EditText? = null

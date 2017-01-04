@@ -20,7 +20,7 @@ import java.io.File
 class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog {
 
 	private val storage = SoundboardApplication.storage
-	private val soundLayoutManager = SoundboardApplication.newSoundLayoutManager
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private var directories: RecyclerView? = null
 

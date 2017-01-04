@@ -21,14 +21,14 @@ open class SoundboardApplication : MultiDexApplication() {
 		private val random = Random()
 
 		val storage by lazy { AppDataStorage(this.context) }
-		val newSoundSheetManager by lazy { SoundSheetManager(this.context) }
-		val newSoundManager by lazy { SoundManager(this.context) }
-		val newPlaylistManager by lazy { PlaylistManager(this.context) }
-		val newSoundLayoutManager by lazy {
+		val soundSheetManager by lazy { SoundSheetManager(this.context) }
+		val soundManager by lazy { SoundManager(this.context) }
+		val playlistManager by lazy { PlaylistManager(this.context) }
+		val soundLayoutManager by lazy {
 			SoundLayoutManager(this.context,
-					this.newSoundSheetManager,
-					this.newPlaylistManager,
-					this.newSoundManager) }
+					this.soundSheetManager,
+					this.playlistManager,
+					this.soundManager) }
 
 		val randomNumber: Int get() = this.random.nextInt(Integer.MAX_VALUE)
 
@@ -39,6 +39,6 @@ open class SoundboardApplication : MultiDexApplication() {
 		super.onCreate()
 		staticContext = this.applicationContext
 
-		newSoundLayoutManager.initIfRequired(storage.get())
+		soundLayoutManager.initIfRequired(storage.get())
 	}
 }

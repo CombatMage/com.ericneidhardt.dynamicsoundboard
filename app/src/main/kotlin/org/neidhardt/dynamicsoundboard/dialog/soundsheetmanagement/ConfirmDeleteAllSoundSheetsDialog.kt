@@ -11,8 +11,8 @@ import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
  */
 class ConfirmDeleteAllSoundSheetsDialog : BaseConfirmDeleteDialog() {
 
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
-	private val soundManager = SoundboardApplication.newSoundManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
+	private val soundManager = SoundboardApplication.soundManager
 
 	override val infoTextResource: Int = R.string.dialog_confirm_delete_all_soundsheets_message
 

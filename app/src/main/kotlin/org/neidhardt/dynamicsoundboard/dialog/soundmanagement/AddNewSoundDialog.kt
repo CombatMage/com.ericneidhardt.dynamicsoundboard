@@ -44,8 +44,8 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 	private val KEY_SOUNDS_URI = "KEY_SOUNDS_URI"
 	private val KEY_SOUNDS_LABEL = "KEY_SOUNDS_LABEL"
 
-	private val soundManager = SoundboardApplication.newSoundManager
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
+	private val soundManager = SoundboardApplication.soundManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
 
 	private var presenter: AddNewSoundDialogPresenter? = null
 
@@ -80,7 +80,7 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 				dialog = this,
 				soundManager = this.soundManager,
 				soundSheetManager = this.soundSheetManager,
-				playlistManager = SoundboardApplication.newPlaylistManager,
+				playlistManager = SoundboardApplication.playlistManager,
 				addAnotherSound = view.findViewById(R.id.b_add_another_sound),
 				addedSoundsLayout = view.findViewById(R.id.rv_dialog) as RecyclerView)
 

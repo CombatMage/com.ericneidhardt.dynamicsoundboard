@@ -30,8 +30,8 @@ open class SoundSheetsPresenter(
 {
 	override var view: RecyclerView? = null
 
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
-	private val soundManager = SoundboardApplication.newSoundManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
+	private val soundManager = SoundboardApplication.soundManager
 
 	private var subscriptions = CompositeSubscription()
 

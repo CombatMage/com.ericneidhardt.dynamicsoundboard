@@ -12,8 +12,8 @@ import org.neidhardt.dynamicsoundboard.views.BaseConfirmDeleteDialog
  */
 class ConfirmDeleteSoundsDialog : BaseConfirmDeleteDialog() {
 
-	private val soundSheetManager = SoundboardApplication.newSoundSheetManager
-	private val soundManager = SoundboardApplication.newSoundManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
+	private val soundManager = SoundboardApplication.soundManager
 
 	private var fragmentTag: String? = null
 
@@ -55,7 +55,7 @@ class ConfirmDeleteSoundsDialog : BaseConfirmDeleteDialog() {
 
 class ConfirmDeletePlayListDialog : BaseConfirmDeleteDialog() {
 
-	private val playListManager = SoundboardApplication.newPlaylistManager
+	private val playListManager = SoundboardApplication.playlistManager
 
 	override val infoTextResource: Int = R.string.dialog_confirm_delete_play_list_message
 

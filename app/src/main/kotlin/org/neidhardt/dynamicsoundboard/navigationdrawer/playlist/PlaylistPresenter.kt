@@ -35,7 +35,7 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 {
 	override var view: RecyclerView? = null
 
-	private val manager = SoundboardApplication.newPlaylistManager
+	private val manager = SoundboardApplication.playlistManager
 
 	private var subscriptions = CompositeSubscription()
 	var adapter: PlaylistAdapter? = null

@@ -29,8 +29,8 @@ import java.util.*
  */
 open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 
-	private val soundManager = SoundboardApplication.newSoundManager
-	private val soundSheetsManager = SoundboardApplication.newSoundSheetManager
+	private val soundManager = SoundboardApplication.soundManager
+	private val soundSheetsManager = SoundboardApplication.soundSheetManager
 
 	protected var callingFragmentTag: String? = null
 
