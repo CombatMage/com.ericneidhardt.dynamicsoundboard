@@ -105,6 +105,12 @@ class PlaylistManager(private val context: Context) {
 		}
 	}
 
+	fun notifyHasChanged(player: MediaPlayerController) {
+		if (this.mMediaPlayers == null)
+			throw IllegalStateException("playlist manager init not done")
+		this.invokeListeners()
+	}
+
 	private fun invokeListeners() {
 		this.onPlaylistChangedListener.forEach { it.invoke(this.playlist) }
 	}

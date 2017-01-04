@@ -34,11 +34,10 @@ class AppDataStorage(context: Context) : SimpleStorage<AppData>(context, AppData
 		}.subscribeOn(Schedulers.io())
 	}
 
-	fun loadFromFile(file: File): Observable<List<NewSoundLayout>> {
+	fun getFromFile(file: File): Observable<AppData?> {
 		return Observable.fromCallable {
 			val json = file.readText()
-			val appData = this.converter.fromJson(json, AppData::class.java)
-			appData.soundLayouts
-		}
+			this.converter.fromJson(json, AppData::class.java)
+		}.subscribeOn(Schedulers.io())
 	}
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
 import org.neidhardt.dynamicsoundboard.persistance.model.AppData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import rx.Observable
@@ -18,7 +17,6 @@ val DB_DEFAULT = "Soundboard_db"
 
 class SoundLayoutManager(
 		private val context: Context,
-		private val storage: AppDataStorage,
 		private val soundSheetManager: SoundSheetManager,
 		private val playlistManager: PlaylistManager,
 		private val soundManager: SoundManager) {
@@ -34,10 +32,10 @@ class SoundLayoutManager(
 	val currentlyPlayingSounds: List<MediaPlayerController> get() = this.mCurrentlyPlayingSounds
 
 	@Synchronized
-	fun initIfRequired() {
+	fun initIfRequired(appData: Observable<AppData?>) {
 		if (mSoundLayouts == null) {
 			this.mSoundLayouts = ArrayList()
-			this.storage.get().subscribe { appData ->
+			appData.subscribe { appData ->
 				this.mSoundLayouts = ArrayList()
 				appData?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
 				if (this.mSoundLayouts?.isEmpty() == true)
@@ -51,18 +49,18 @@ class SoundLayoutManager(
 	}
 
 	@Synchronized
-	fun init(appData: AppData) {
+	fun init(appData: Observable<AppData?>) {
+		appData.subscribe { appData ->
+			this.mSoundLayouts = ArrayList()
+			this.mSoundLayouts = ArrayList()
+			appData?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
+			if (this.mSoundLayouts?.isEmpty() == true)
+				this.mSoundLayouts?.add(this.getDefaultSoundLayout())
 
-		// TODO release mediaPlayers
-		this.mSoundLayouts = ArrayList()
-		this.mSoundLayouts = ArrayList()
-		appData.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
-		if (this.mSoundLayouts?.isEmpty() == true)
-			this.mSoundLayouts?.add(this.getDefaultSoundLayout())
-
-		this.setSoundSheetsForActiveLayout()
-		this.onLoadingCompletedListener.forEach { it.invoke(this.soundLayouts) }
-		this.invokeListeners()
+			this.setSoundSheetsForActiveLayout()
+			this.onLoadingCompletedListener.forEach { it.invoke(this.soundLayouts) }
+			this.invokeListeners()
+		}
 	}
 
 	fun remove(soundLayouts: List<NewSoundLayout>) {

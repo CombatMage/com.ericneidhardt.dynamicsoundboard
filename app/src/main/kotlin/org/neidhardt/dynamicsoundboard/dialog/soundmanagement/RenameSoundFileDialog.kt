@@ -11,7 +11,6 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.dialog_rename_sound_file_layout.view.*
-import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
@@ -23,8 +22,6 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.PlaylistChangedEvent
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import java.io.File
 import java.io.IOException
 import kotlin.properties.Delegates
@@ -105,9 +102,7 @@ private class RenameSoundFileDialogPresenter (
 		this.currentName.text = currentFileName
 	}
 
-	private fun getPlayersWithMatchingUri(uri: String): List<MediaPlayerController>
-	{
-
+	private fun getPlayersWithMatchingUri(uri: String): List<MediaPlayerController> {
 		val playlist = this.playlistManager.playlist
 		val players = playlist
 				.filter { it.mediaPlayerData.uri == uri }
@@ -123,8 +118,7 @@ private class RenameSoundFileDialogPresenter (
 		return players
 	}
 
-	internal fun rename()
-	{
+	fun rename() {
 		val uri = Uri.parse(this.playerData.uri)
 		val label = this.playerData.label
 		val renameAllOccurrences = this.renameAllOccurrences.isChecked
@@ -134,33 +128,28 @@ private class RenameSoundFileDialogPresenter (
 		this.dialog.dismiss()
 	}
 
-	private fun deliverResult(fileUriToRename: Uri, newFileLabel: String, renameAllOccurrences: Boolean)
-	{
+	private fun deliverResult(fileUriToRename: Uri, newFileLabel: String, renameAllOccurrences: Boolean) {
 		val fileToRename = fileUriToRename.getFileForUri()
-		if (fileToRename == null)
-		{
+		if (fileToRename == null) {
 			this.showErrorRenameFile()
 			return
 		}
 
 		val newFilePath = fileToRename.absolutePath.replace(fileToRename.name, "") + this.appendFileTypeToNewPath(newFileLabel, fileToRename.name)
-		if (newFilePath == fileToRename.absolutePath)
-		{
+		if (newFilePath == fileToRename.absolutePath) {
 			Logger.d(TAG, "old name and new name are equal, nothing to be done")
 			return
 		}
 
 		val newFile = File(newFilePath)
 		val success = fileToRename.renameTo(newFile)
-		if (!success)
-		{
+		if (!success) {
 			this.showErrorRenameFile()
 			return
 		}
 
 		val newUri = Uri.fromFile(newFile).toString()
-		for (player in this.playersWithMatchingUri!!)
-		{
+		for (player in this.playersWithMatchingUri!!) {
 			if (!this.setUriForPlayer(player, newUri))
 				this.showErrorRenameFile()
 
@@ -170,9 +159,9 @@ private class RenameSoundFileDialogPresenter (
 			}
 
 			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
-				EventBus.getDefault().post(PlaylistChangedEvent())
+				this.playlistManager.notifyHasChanged(player)
 			else
-				EventBus.getDefault().post(SoundChangedEvent(player))
+				this.soundsManager.notifyHasChanged(player)
 		}
 	}
 

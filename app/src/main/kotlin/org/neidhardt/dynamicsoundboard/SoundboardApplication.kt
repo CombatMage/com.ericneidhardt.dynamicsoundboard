@@ -26,7 +26,6 @@ open class SoundboardApplication : MultiDexApplication() {
 		val newPlaylistManager by lazy { PlaylistManager(this.context) }
 		val newSoundLayoutManager by lazy {
 			SoundLayoutManager(this.context,
-					this.storage,
 					this.newSoundSheetManager,
 					this.newPlaylistManager,
 					this.newSoundManager) }
@@ -40,6 +39,6 @@ open class SoundboardApplication : MultiDexApplication() {
 		super.onCreate()
 		staticContext = this.applicationContext
 
-		newSoundLayoutManager.initIfRequired()
+		newSoundLayoutManager.initIfRequired(storage.get())
 	}
 }

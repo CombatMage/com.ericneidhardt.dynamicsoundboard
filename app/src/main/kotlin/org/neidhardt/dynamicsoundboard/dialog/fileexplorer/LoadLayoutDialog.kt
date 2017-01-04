@@ -77,10 +77,7 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog {
 	}
 
 	private fun loadFromFileAndDismiss(file: File) {
-		/*this.subscriptions.add(
-TODO
-		)*/
-
-
+		val appData = this.storage.getFromFile(file)
+		this.soundLayoutManager.init(appData)
 	}
 }
