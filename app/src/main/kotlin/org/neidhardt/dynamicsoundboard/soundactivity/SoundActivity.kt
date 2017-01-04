@@ -169,12 +169,11 @@ class SoundActivity :
 		this.toolbarVM.isSoundSheetActionsEnable = selectedSoundSheet != null
 
 		val currentFragment = this.currentSoundFragment
-		if (currentFragment != null && currentFragment.fragmentTag != selectedSoundSheet?.fragmentTag)
-			this.removeSoundFragment(currentFragment)
-
-		if (selectedSoundSheet != null) {
-			if (currentFragment == null)
-				this.openSoundFragment(selectedSoundSheet)
+		if (currentFragment == null) {
+			this.openSoundFragment(selectedSoundSheet)
+		}
+		else if (currentFragment.fragmentTag != selectedSoundSheet?.fragmentTag) {
+			this.openSoundFragment(selectedSoundSheet)
 		}
 	}
 

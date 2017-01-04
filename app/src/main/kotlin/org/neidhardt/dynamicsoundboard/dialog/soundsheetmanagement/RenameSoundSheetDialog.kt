@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.widget.EditText
-import kotlinx.android.synthetic.main.dialog_rename_sound_sheet.*
 import kotlinx.android.synthetic.main.dialog_rename_sound_sheet.view.*
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
