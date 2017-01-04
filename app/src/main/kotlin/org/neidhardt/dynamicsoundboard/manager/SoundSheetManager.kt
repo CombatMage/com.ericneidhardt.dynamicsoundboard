@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.manager
 import android.content.Context
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import rx.Observable
 import rx.lang.kotlin.add

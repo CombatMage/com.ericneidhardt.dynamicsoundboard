@@ -45,7 +45,7 @@ import org.neidhardt.dynamicsoundboard.dialog.soundlayoutmanagement.SoundLayoutS
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeletePlayListDialog
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
+import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.ConfirmDeleteAllSoundSheetsDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
@@ -295,6 +295,7 @@ class SoundActivity :
 	}
 
 	fun setNewSoundSheetTitle(text: String) {
+		// TODO this overrides label after selection
 		val selectedSoundSheet = this.soundSheetManager.soundSheets.selectedSoundSheet
 		if (selectedSoundSheet != null) {
 			selectedSoundSheet.label = text

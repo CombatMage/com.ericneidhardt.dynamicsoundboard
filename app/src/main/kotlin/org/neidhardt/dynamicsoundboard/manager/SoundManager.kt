@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.CreatingPlayerFailedEvent
+import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.add

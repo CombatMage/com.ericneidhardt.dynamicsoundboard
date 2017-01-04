@@ -80,11 +80,11 @@ class SoundViewHolder
 			}
 		}
 
-		this.name.setOnTextEditedListener { newName ->
+		this.name.setOnTextEditedListener { newName, isSetByUser ->
 			this.name.clearFocus()
 			this.player?.mediaPlayerData?.let { playerData ->
 				val currentLabel = playerData.label
-				if (currentLabel != newName) {
+				if (currentLabel != newName && isSetByUser) {
 					playerData.label = newName
 					this.eventBus.post(OpenSoundRenameEvent(playerData))
 				}

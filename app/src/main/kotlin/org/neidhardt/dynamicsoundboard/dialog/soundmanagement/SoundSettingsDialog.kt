@@ -2,24 +2,19 @@ package org.neidhardt.dynamicsoundboard.dialog.soundmanagement
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.CheckBox
 import kotlinx.android.synthetic.main.dialog_sound_settings_layout.view.*
-import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.views.CustomEditText
 import org.neidhardt.android_utils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
-import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.SoundChangedEvent
 import org.neidhardt.utils.letThis
 import java.util.*
 import kotlin.properties.Delegates
@@ -98,34 +93,35 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 
 		if (!hasSoundSheetChanged) {
 			this.player.mediaPlayerData.label = soundLabel
-			EventBus.getDefault().post(SoundChangedEvent(this.player))
-		} else {
-			if (soundSheet != null)
-				this.soundManager.remove(soundSheet!!, listOf(this.player))
-			else
-				this.playlistManager.remove(listOf(this.player))
+			this.soundManager.notifyHasChanged(this.player)
+			return
+		}
 
-
-			val uri = Uri.parse(this.player.mediaPlayerData.uri)
-
-			val mediaPlayerData: NewMediaPlayerData
-			if (addNewSoundSheet) {
-				val soundSheetName = this.soundSheetName!!.displayedText
-				val fragmentTag = SoundSheetManager.getNewFragmentTagForLabel(soundSheetName)
-				val soundSheet = NewSoundSheet().apply {
-					this.fragmentTag = fragmentTag
-					this.label = soundSheetName
-				}
-				this.soundSheetManager.add(soundSheet)
-
-				mediaPlayerData = MediaPlayerFactory.getNewMediaPlayerData(fragmentTag, uri, soundLabel)
-			} else {
-				val fragmentTag = this.soundSheetManager.soundSheets[indexOfSelectedSoundSheet].fragmentTag
-				mediaPlayerData = MediaPlayerFactory.getNewMediaPlayerData(fragmentTag, uri, soundLabel)
+		val newSoundSheet = if (addNewSoundSheet) {
+			val newSoundSheetLabel = this.soundSheetName?.displayedText ?: ""
+			val newFragmentTag = SoundSheetManager.getNewFragmentTagForLabel(newSoundSheetLabel)
+			val newSoundSheet = NewSoundSheet().apply {
+				this.fragmentTag = newFragmentTag
+				this.label = newSoundSheetLabel
 			}
+			this.soundSheetManager.add(newSoundSheet)
+			newSoundSheet
+		}
+		else null
 
-			this.soundSheetManager.soundSheets.findByFragmentTag(mediaPlayerData.fragmentTag)?.let { newSoundSheet ->
-				this.soundManager.add(newSoundSheet, mediaPlayerData)
+		if (hasSoundSheetChanged) {
+			// remove the sound from manager
+			this.soundManager.remove(this.soundSheet!!, listOf(this.player))
+
+			// the player is added to the newly created soundSheet
+			if (addNewSoundSheet) {
+				this.player.mediaPlayerData.fragmentTag = newSoundSheet?.fragmentTag
+				this.soundManager.add(newSoundSheet!!, this.player.mediaPlayerData)
+			}
+			else { // the player is added to the selected soundSheet
+				val selectedSoundSheet = this.soundSheetManager.soundSheets[indexOfSelectedSoundSheet]
+				this.player.mediaPlayerData.fragmentTag = selectedSoundSheet.fragmentTag
+				this.soundManager.add(selectedSoundSheet, this.player.mediaPlayerData)
 			}
 		}
 	}
