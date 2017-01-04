@@ -172,7 +172,10 @@ class SoundActivity :
 		if (currentFragment == null) {
 			this.openSoundFragment(selectedSoundSheet)
 		}
-		else if (currentFragment.fragmentTag != selectedSoundSheet?.fragmentTag) {
+		else if (selectedSoundSheet == null) {
+			this.removeSoundFragment(currentFragment)
+		}
+		else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag) {
 			this.openSoundFragment(selectedSoundSheet)
 		}
 	}
