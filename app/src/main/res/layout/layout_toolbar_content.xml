@@ -66,16 +66,23 @@
 				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.GONE : View.VISIBLE }"
 				app:typeface="roboto_medium"/>
 
-		<org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText
-				android:id="@+id/et_layout_toolbar_content_title"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:layout_alignParentStart="true"
-				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
-				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
-				app:text="@{viewModel.title}"
-				app:setOnTextEditedListener="@{viewModel.onTextEditedListener}"/>
+		<com.devspark.robototextview.widget.RobotoTextView
+			android:id="@+id/et_layout_toolbar_content_title"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:textCursorDrawable="@drawable/shape_cursor_edittext_white"
+			android:textColor="@color/text_header"
+			android:textSize="@dimen/text_title"
+			android:background="@android:color/transparent"
+			android:fadingEdge="horizontal"
+			android:maxLines="1"
+			android:gravity="center_vertical"
+			app:typeface="roboto_medium"
+			android:layout_alignParentStart="true"
+			android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
+			android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
+			app:text="@{viewModel.title}"
+			android:onClick="@{(view) -> viewModel.onTitleClicked()}"/>
 
 	</RelativeLayout>
 </layout>

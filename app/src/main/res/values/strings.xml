@@ -133,6 +133,8 @@
 
 	<string name="dialog_add_new_sound_sheet_title">Name der Sound Liste?</string>
 	<string name="dialog_add_new_sound_sheet_message">Dem SoundBoard wird ein neue Gruppe mit diesem Namen hinzugefügt. Der Name kann später noch geändert werden.</string>
+	<string name="dialog_rename_sound_sheet_title">Name der Sound Liste?</string>
+	<string name="dialog_rename_sound_sheet_message">Bitte gib einen neuen Namen für diese Gruppe an.</string>
 
 	<string name="dialog_add_new_sound_from_intent_title">Sound hinzufügen</string>
 	<string name="dialog_add_new_sound_from_intent_message">Es wurden noch keine Kategorien für Sounds angelegt. Soll eine neue Kategorie angelegt werden?</string>

@@ -16,12 +16,7 @@ class ToolbarVM : BaseObservable() {
 
 	fun onAddSoundFromDirectoryClicked() = this.addSoundFromDirectoryClickedCallback.invoke()
 
-	val onTextEditedListener = object : CustomEditText.OnTextEditedListener {
-		override fun onTextEdited(text: String) {
-			title = text
-			onTitleChanged(text)
-		}
-	}
+	fun onTitleClicked() = this.titleClickedCallback.invoke()
 
 	var isSoundSheetActionsEnable: Boolean = false
 		set(value) {
@@ -41,8 +36,6 @@ class ToolbarVM : BaseObservable() {
 		@Bindable
 		get
 
-	var onTitleChanged: (String) -> Unit = {}
-
 	var addSoundSheetClickedCallback: () -> Unit = {}
 		set(value) {
 			field = value
@@ -61,5 +54,9 @@ class ToolbarVM : BaseObservable() {
 			this.notifyChange()
 		}
 
-
+	var titleClickedCallback: () -> Unit = {}
+		set(value) {
+			field = value
+			this.notifyChange()
+		}
 }
