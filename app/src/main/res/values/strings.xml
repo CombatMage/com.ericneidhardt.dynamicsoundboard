@@ -15,6 +15,8 @@
 
 	<!-- GenericRenameDialog -->
 	<string name="genericrename_SoundSheetTitle">Name der Sound Liste?</string>
+	<string name="genericrename_SoundLayoutTitle">Abenteuer umbenennen</string>
+	<string name="genericrename_SoundLayoutEmptyTitleError">Der Name darf nicht leer sein!</string>
 
 	<!-- permissions -->
 	<string name="request_permission_title">Berechtigung erforderlich</string>
@@ -145,8 +147,6 @@
 
 	<string name="dialog_sound_settings_title">Sound editieren</string>
 	<string name="dialog_sound_settings_message">Sound umbenennen oder in eine andere Kategorie verschieben?</string>
-
-	<string name="dialog_sound_layout_settings_title">Abenteuer umbenennen</string>
 
 	<string name="dialog_add_new_sound_layout_title">Ein weitere Abenteuer anlegen</string>
 	<string name="dialog_add_new_sound_layout_message">Dem SoundBoard wird ein neu neues Abenteuer hinzugefügt. Du kannst zwischen den verschiedenen Abenteuern wechseln.</string>

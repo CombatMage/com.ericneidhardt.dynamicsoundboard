@@ -42,7 +42,6 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundcontrol.*
-import org.neidhardt.dynamicsoundboard.dialog.soundlayoutmanagement.SoundLayoutSettingsDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeletePlayListDialog
@@ -125,7 +124,7 @@ class SoundActivity :
 			IntentRequest.REQUEST_PERMISSIONS -> {
 				this.postAfterOnResume { if (!this.hasPermissionReadStorage) this.explainReadStoragePermission() }
 				this.postAfterOnResume { if (!this.hasPermissionWriteStorage) this.explainWriteStoragePermission() }
-				this.postAfterOnResume { if (!this.hasPermissionPhoneState) this.explainReadPhoneStatePermission() }
+				//this.postAfterOnResume { if (!this.hasPermissionPhoneState) this.explainReadPhoneStatePermission() }
 			}
 		}
 	}
@@ -229,7 +228,7 @@ class SoundActivity :
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundLayoutSettingsEvent) {
-		SoundLayoutSettingsDialog.showInstance(this.supportFragmentManager, event.soundLayout.databaseId)
+		RenameDialogs.showRenameSoundLayoutDialog(this.supportFragmentManager, event.soundLayout)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

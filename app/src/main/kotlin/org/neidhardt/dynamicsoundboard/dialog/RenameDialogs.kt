@@ -1,8 +1,10 @@
 package org.neidhardt.dynamicsoundboard.dialog
 
 import android.support.v4.app.FragmentManager
+import android.widget.Toast
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 
 /**
@@ -24,5 +26,25 @@ object RenameDialogs {
 				negativeButton = ButtonConfig(R.string.all_cancel, { dialog,input ->
 				})
 		)
+	}
+
+	fun showRenameSoundLayoutDialog(fragmentManager: FragmentManager, soundLayout: NewSoundLayout) {
+		val hint = SoundboardApplication.context.getString(R.string.all_CurrentNameIs).replace("{STR}",soundLayout.label)
+		GenericEditTextDialog.showInstance(
+				fragmentManager = fragmentManager,
+				fragmentTag = "RenameSoundLayoutDialog",
+				dialogConfig = DialogConfig(R.string.genericrename_SoundLayoutTitle, 0),
+				editTextConfig = EditTextConfig(hint, soundLayout.label),
+				positiveButton = ButtonConfig(R.string.all_rename, { dialog,input ->
+					if (input.isEmpty())
+						Toast.makeText(SoundboardApplication.context, R.string.genericrename_SoundLayoutEmptyTitleError, Toast.LENGTH_SHORT).show()
+					else {
+						soundLayout.label = input
+						SoundboardApplication.soundLayoutManager.notifyHasChanged(soundLayout)
+					}
+				}),
+				negativeButton = ButtonConfig(R.string.all_cancel, { dialog,input -> })
+		)
+
 	}
 }
