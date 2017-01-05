@@ -26,7 +26,7 @@ abstract class SoundLayoutDialog : BaseDialog()
 		return AlertDialog.Builder(this.activity).apply {
 			this.setTitle(getTitleId())
 			this.setView(view)
-			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.all_cancel, { dialogInterface, i -> dismiss() })
 			this.setPositiveButton(getPositiveButtonId(), { dialogInterface, i -> deliverResult() })
 		}.create()
 	}

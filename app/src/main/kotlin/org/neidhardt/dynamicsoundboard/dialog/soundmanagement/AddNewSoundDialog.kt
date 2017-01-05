@@ -91,7 +91,7 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 				presenter?.addSoundsToSoundSheet()
 				dismiss()
 			})
-			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.all_cancel, { dialogInterface, i -> dismiss() })
 		}.create()
 	}
 

@@ -22,7 +22,7 @@ abstract class BaseConfirmDeleteDialog : BaseDialog()
 
 		return AlertDialog.Builder(this.activity).apply {
 			this.setView(view)
-			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss() })
+			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss() })
 			this.setPositiveButton(R.string.dialog_delete, { dialogInterface, i ->
 				delete()
 				dismiss() })

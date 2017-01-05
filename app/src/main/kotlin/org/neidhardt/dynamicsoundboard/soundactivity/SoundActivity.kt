@@ -22,6 +22,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseActivity
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
+import org.neidhardt.dynamicsoundboard.dialog.RenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog
@@ -48,7 +49,6 @@ import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeletePlayL
 import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.ConfirmDeleteAllSoundSheetsDialog
-import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.RenameSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.eventbus_utils.registerIfRequired
@@ -79,7 +79,11 @@ class SoundActivity :
 	private val toolbar by lazy { this.binding.layoutToolbar.tbMain }
 
 	val toolbarVM = ToolbarVM().letThis {
-		it.titleClickedCallback = { RenameSoundSheetDialog.showInstance(this.supportFragmentManager) }
+		it.titleClickedCallback = {
+			this.soundSheetManager.soundSheets.selectedSoundSheet?.let {
+				RenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
+			}
+		}
 		it.addSoundSheetClickedCallback = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager) }
 		it.addSoundClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog.show(this.supportFragmentManager, it) } }
 		it.addSoundFromDirectoryClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
@@ -216,7 +220,7 @@ class SoundActivity :
 			val backStackSize = this.supportFragmentManager.backStackEntryCount
 			if (backStackSize == 0 && !this.closeAppOnBackPress) {
 				this.closeAppOnBackPress = true
-				Toast.makeText(this, R.string.toast_close_app_on_back_press, Toast.LENGTH_SHORT).show()
+				Toast.makeText(this, R.string.soundactivity_ToastCloseAppOnBackPress, Toast.LENGTH_SHORT).show()
 			}
 			else
 				super.onBackPressed()

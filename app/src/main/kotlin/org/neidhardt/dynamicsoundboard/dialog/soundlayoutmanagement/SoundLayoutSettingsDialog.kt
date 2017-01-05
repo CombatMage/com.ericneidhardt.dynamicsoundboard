@@ -35,7 +35,7 @@ class SoundLayoutSettingsDialog : SoundLayoutDialog() {
 		}
 	}
 
-	override fun getPositiveButtonId(): Int = R.string.dialog_rename
+	override fun getPositiveButtonId(): Int = R.string.all_rename
 
 	override fun getLayoutId(): Int = R.layout.dialog_sound_layout_settings
 

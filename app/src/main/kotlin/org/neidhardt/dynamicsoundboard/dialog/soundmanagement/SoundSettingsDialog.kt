@@ -65,7 +65,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 				if (hasLabelChanged)
 					RenameSoundFileDialog.show(fragmentManager, player.mediaPlayerData)
 			})
-			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
+			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss()})
 		}.create()
 	}
 

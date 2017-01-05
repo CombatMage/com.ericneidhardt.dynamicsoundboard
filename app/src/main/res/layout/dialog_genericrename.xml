@@ -1,34 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<FrameLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/padding_dialog"
-		android:orientation="vertical">
-
-	<com.devspark.robototextview.widget.RobotoTextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/dialog_rename_sound_sheet_message"
-			android:focusable="true"
-			android:focusableInTouchMode="true"
-			style="@style/Theme.TextView.Body1"/>
+		android:padding="@dimen/padding_dialog">
 
 	<android.support.design.widget.TextInputLayout
-		android:id="@+id/et_name_sound_sheet_hint"
+		android:id="@+id/textinputlayout_genericrename_hint"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/margin_default">
+		tools:hint="Hint">
 
 		<com.devspark.robototextview.widget.RobotoEditText
-				android:id="@+id/et_name_sound_sheet"
+				android:id="@+id/edittext_genericrename_inputfield"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:selectAllOnFocus="true"
+				android:maxLines="1"
 				tools:hint="neuer name"
 				style="@style/Theme.EditText"/>
 
 	</android.support.design.widget.TextInputLayout>
 
-</LinearLayout>
+</FrameLayout>

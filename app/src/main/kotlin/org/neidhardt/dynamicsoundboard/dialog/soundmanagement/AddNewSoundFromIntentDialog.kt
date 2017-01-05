@@ -68,7 +68,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 				deliverResult()
 				dismiss()
 			})
-			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
+			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss()})
 		}.create()
 	}
 
@@ -89,7 +89,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 				deliverResult()
 				dismiss()
 			})
-			this.setNegativeButton(R.string.dialog_cancel, { dialogInterface, i -> dismiss()})
+			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss()})
 		}.create()
 	}
 
