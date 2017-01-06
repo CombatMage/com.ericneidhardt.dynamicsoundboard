@@ -22,7 +22,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseActivity
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
-import org.neidhardt.dynamicsoundboard.dialog.RenameDialogs
+import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog
@@ -80,7 +80,7 @@ class SoundActivity :
 	val toolbarVM = ToolbarVM().letThis {
 		it.titleClickedCallback = {
 			this.soundSheetManager.soundSheets.selectedSoundSheet?.let {
-				RenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
+				GenericRenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
 			}
 		}
 		it.addSoundSheetClickedCallback = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager) }
@@ -228,7 +228,7 @@ class SoundActivity :
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: OpenSoundLayoutSettingsEvent) {
-		RenameDialogs.showRenameSoundLayoutDialog(this.supportFragmentManager, event.soundLayout)
+		GenericRenameDialogs.showRenameSoundLayoutDialog(this.supportFragmentManager, event.soundLayout)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

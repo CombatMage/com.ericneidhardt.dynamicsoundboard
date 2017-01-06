@@ -123,6 +123,7 @@ dependencies {
 	compile rootProject.ext.libraries.rxAndroid
 	compile rootProject.ext.libraries.rxKotlin
 	compile rootProject.ext.libraries.rxJava
+	compile rootProject.ext.libraries.rxBinding
 
 	compile rootProject.ext.libraries.multidex
 

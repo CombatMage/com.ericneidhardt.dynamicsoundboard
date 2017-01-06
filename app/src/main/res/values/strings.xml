@@ -8,6 +8,7 @@
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
 	<string name="all_rename">Umbenennen</string>
 	<string name="all_cancel">Abbrechen</string>
+	<string name="all_add">Hinzufügen</string>
 	<string name="all_CurrentNameIs">Aktueller Name: {STR}</string>
 
 	<!-- SoundActivity -->
@@ -16,7 +17,17 @@
 	<!-- GenericRenameDialog -->
 	<string name="genericrename_SoundSheetTitle">Name der Sound Liste?</string>
 	<string name="genericrename_SoundLayoutTitle">Abenteuer umbenennen</string>
-	<string name="genericrename_SoundLayoutEmptyTitleError">Der Name darf nicht leer sein!</string>
+
+	<!-- GenericAddDialog -->
+	<string name="genericadd_SoundLayoutTitle">Ein weiteres Abenteuer anlegen</string>
+	<string name="genericadd_SoundLayoutMessage">Dem SoundBoard wird ein neu neues Abenteuer hinzugefügt.
+		Du kannst zwischen den verschiedenen Abenteuern wechseln, indem du auf den Abenteuernamen im
+		Kopf des linken Menüs klickst.</string>
+	<string name="genericadd_SoundLayoutHint">Name des Abenteuers</string>
+	<string name="genericadd_SoundSheetTitle">Eine neue Soundliste anlegen</string>
+	<string name="genericadd_SoundSheetMessage">Dem SoundBoard wird ein neue Liste mit diesem Namen hinzugefügt.
+		Der Name kann später noch geändert werden.</string>
+	<string name="genericadd_SoundSheetHint">Name der Soundliste</string>
 
 	<!-- permissions -->
 	<string name="request_permission_title">Berechtigung erforderlich</string>
@@ -124,7 +135,6 @@
 	<string name="dialog_denial">Verweigern</string>
 	<string name="dialog_ok">OK</string>
 	<string name="dialog_delete">Löschen</string>
-	<string name="dialog_add">Hinzufügen</string>
 	<string name="dialog_save">Speichern</string>
 	<string name="dialog_load">Laden</string>
 
@@ -139,17 +149,11 @@
 	<string name="dialog_add_new_sound_from_directory_content_description_file_type">Dateityp</string>-
 	<string name="dialog_add_new_sound_from_directory_content_description_selection">Ausgewählte Datei</string>-
 
-	<string name="dialog_add_new_sound_sheet_title">Name der Sound Liste?</string>
-	<string name="dialog_add_new_sound_sheet_message">Dem SoundBoard wird ein neue Gruppe mit diesem Namen hinzugefügt. Der Name kann später noch geändert werden.</string>
-
 	<string name="dialog_add_new_sound_from_intent_title">Sound hinzufügen</string>
 	<string name="dialog_add_new_sound_from_intent_message">Es wurden noch keine Kategorien für Sounds angelegt. Soll eine neue Kategorie angelegt werden?</string>
 
 	<string name="dialog_sound_settings_title">Sound editieren</string>
 	<string name="dialog_sound_settings_message">Sound umbenennen oder in eine andere Kategorie verschieben?</string>
-
-	<string name="dialog_add_new_sound_layout_title">Ein weitere Abenteuer anlegen</string>
-	<string name="dialog_add_new_sound_layout_message">Dem SoundBoard wird ein neu neues Abenteuer hinzugefügt. Du kannst zwischen den verschiedenen Abenteuern wechseln.</string>
 
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_message">Welcher Kategorie soll der Sound hinzugefügt werden, oder soll eine neue Kategorie angelegt werden?</string>
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_checkbox">Eine neue Katagorie anlegen</string>

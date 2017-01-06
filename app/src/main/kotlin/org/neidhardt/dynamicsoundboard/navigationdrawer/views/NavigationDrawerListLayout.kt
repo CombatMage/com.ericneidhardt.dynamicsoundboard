@@ -8,6 +8,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
@@ -17,9 +18,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.createSound
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.createSoundSheetPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
-import org.neidhardt.dynamicsoundboard.dialog.soundlayoutmanagement.AddNewSoundLayoutDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
-import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.AddNewSoundSheetDialog
 import org.neidhardt.eventbus_utils.registerIfRequired
 
 /**
@@ -142,9 +141,9 @@ class NavigationDrawerListPresenter(
 
 	private fun add() {
 		when (this.currentList) {
-			List.SoundLayouts -> AddNewSoundLayoutDialog.showInstance(this.fragmentManager)
+			List.SoundLayouts -> GenericAddDialog.showAddSoundLayoutDialog(this.fragmentManager)
 			List.Playlist -> AddNewSoundDialog.show(this.fragmentManager, PlaylistTAG)
-			List.SoundSheet -> AddNewSoundSheetDialog.showInstance(this.fragmentManager)
+			List.SoundSheet -> GenericAddDialog.showAddSoundSheetDialog(this.fragmentManager)
 		}
 	}
 

@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.dialog_genericrename.view.*
 import org.neidhardt.android_utils.views.showKeyboard
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
+import com.jakewharton.rxbinding.widget.RxTextView
 
 /**
  * Created by eric.neidhardt@gmail.com on 05.01.2017.
@@ -58,24 +59,35 @@ open class GenericEditTextDialog : BaseDialog() {
 		val hint = view.textinputlayout_genericrename_hint
 		hint.hint = this.editTextConfig?.hint
 
-		val dialog = AlertDialog.Builder(context)
+		val dialogBuilder = AlertDialog.Builder(context)
 
 		this.dialogConfig?.let { config ->
 			if (config.titleId != 0)
-				dialog.setTitle(config.titleId)
+				dialogBuilder.setTitle(config.titleId)
 			if (config.messageId != 0)
-				dialog.setMessage(config.messageId)
+				dialogBuilder.setMessage(config.messageId)
 		}
-		dialog.setView(view)
+		dialogBuilder.setView(view)
 
-		dialog.setPositiveButton(this.positiveButton?.labelId ?: 0, { dialogInterface,i ->
+		dialogBuilder.setPositiveButton(this.positiveButton?.labelId ?: 0, { dialogInterface,i ->
 			this.positiveButton?.action?.invoke(this, editText.text.toString())
 		})
-		dialog.setNegativeButton(this.negativeButton?.labelId ?: 0, { dialogInterface,i ->
+		dialogBuilder.setNegativeButton(this.negativeButton?.labelId ?: 0, { dialogInterface,i ->
 			this.negativeButton?.action?.invoke(this, editText.text.toString())
 			this.dismiss()
 		})
-		return dialog.create()
+
+		val dialog = dialogBuilder.create()
+
+		val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+		// empty label is not allowed
+		//this.subscriptions.add(
+		//		RxTextView.afterTextChangeEvents(editText)
+		//				.subscribe { label -> positiveButton.isEnabled = label.toString().isNotBlank() }
+		//)
+
+		return dialog
 	}
 
 	override fun onResume() {

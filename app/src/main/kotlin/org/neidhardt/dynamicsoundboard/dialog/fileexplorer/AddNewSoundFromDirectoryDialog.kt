@@ -76,7 +76,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 		return AlertDialog.Builder(this.activity).apply {
 			this.setView(view)
 			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss() })
-			this.setPositiveButton(R.string.dialog_add, { dialogInterface, i -> onConfirm() })
+			this.setPositiveButton(R.string.all_add, { dialogInterface, i -> onConfirm() })
 		}.create()
 	}
 

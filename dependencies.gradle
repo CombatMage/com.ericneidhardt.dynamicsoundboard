@@ -20,6 +20,7 @@ ext.libraries = [
 		rxJava               : 'io.reactivex:rxjava:1.2.2',
 		rxKotlin             : 'io.reactivex:rxkotlin:0.60.0',
 		rxAndroid            : 'io.reactivex:rxandroid:1.2.1',
+		rxBinding            : 'com.jakewharton.rxbinding:rxbinding:1.0.0',
 
 		multidex             : "com.android.support:multidex:1.0.1",
 		supportV4            : "com.android.support:support-v4:$versions.supportLibs",
