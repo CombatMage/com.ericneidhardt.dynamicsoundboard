@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.dialog
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.support.design.widget.TextInputLayout
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.widget.EditText
@@ -11,6 +12,7 @@ import org.neidhardt.android_utils.views.showKeyboard
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import com.jakewharton.rxbinding.widget.RxTextView
+import rx.subscriptions.CompositeSubscription
 
 /**
  * Created by eric.neidhardt@gmail.com on 05.01.2017.
@@ -46,6 +48,7 @@ open class GenericEditTextDialog : BaseDialog() {
 	}
 
 	private var editText: EditText? = null
+	private var textInputHint: TextInputLayout? = null
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		val context = this.activity
@@ -58,6 +61,7 @@ open class GenericEditTextDialog : BaseDialog() {
 
 		val hint = view.textinputlayout_genericrename_hint
 		hint.hint = this.editTextConfig?.hint
+		this.textInputHint = hint
 
 		val dialogBuilder = AlertDialog.Builder(context)
 
@@ -77,24 +81,27 @@ open class GenericEditTextDialog : BaseDialog() {
 			this.dismiss()
 		})
 
-		val dialog = dialogBuilder.create()
-
-		val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-
-		// empty label is not allowed
-		//this.subscriptions.add(
-		//		RxTextView.afterTextChangeEvents(editText)
-		//				.subscribe { label -> positiveButton.isEnabled = label.toString().isNotBlank() }
-		//)
-
-		return dialog
+		return dialogBuilder.create()
 	}
 
 	override fun onResume() {
 		super.onResume()
 		this.editText?.showKeyboard()
-	}
 
+		val positiveButton = (dialog as (AlertDialog)).getButton(AlertDialog.BUTTON_POSITIVE)
+		val errorText = context.resources.getString(R.string.all_ErrorNameMustNotBeEmpty)
+
+		// empty label is not allowed
+		this.subscriptions.add(
+				RxTextView.afterTextChangeEvents(editText!!)
+						.subscribe { textChangedEvent ->
+							val label = textChangedEvent.editable().toString()
+							val validInput = label.isNotEmpty()
+							positiveButton.isEnabled = validInput
+							textInputHint?.error = if (validInput) null else errorText
+						}
+		)
+	}
 }
 
 class EditTextConfig(val hint: String, val text: String)

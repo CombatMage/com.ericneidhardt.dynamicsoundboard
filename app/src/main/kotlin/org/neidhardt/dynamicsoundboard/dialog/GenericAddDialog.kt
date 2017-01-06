@@ -25,8 +25,8 @@ object GenericAddDialog {
 				positiveButton = ButtonConfig(R.string.all_add, { dialog, input ->
 					val layout = NewSoundLayout().apply {
 						this.isSelected = false
-						this.databaseId = SoundLayoutManager.getNewDatabaseIdForLabel(name)
-						this.label = name
+						this.databaseId = SoundLayoutManager.getNewDatabaseIdForLabel(input)
+						this.label = input
 					}
 					SoundboardApplication.soundLayoutManager.add(layout)
 				}),
@@ -47,8 +47,8 @@ object GenericAddDialog {
 				positiveButton = ButtonConfig(R.string.all_add, { dialog, input ->
 					val manager = SoundboardApplication.soundSheetManager
 					val soundSheet = NewSoundSheet().apply {
-						this.label = label
-						this.fragmentTag = SoundSheetManager.getNewFragmentTagForLabel(label)
+						this.label = input
+						this.fragmentTag = SoundSheetManager.getNewFragmentTagForLabel(input)
 					}
 					manager.add(soundSheet)
 					manager.setSelected(soundSheet)

@@ -22,6 +22,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseActivity
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
+import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialog
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog
@@ -46,7 +47,6 @@ import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeletePlayListDialog
 import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
-import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.AddNewSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.ConfirmDeleteAllSoundSheetsDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
@@ -83,7 +83,7 @@ class SoundActivity :
 				GenericRenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
 			}
 		}
-		it.addSoundSheetClickedCallback = { AddNewSoundSheetDialog.showInstance(this.supportFragmentManager) }
+		it.addSoundSheetClickedCallback = { GenericAddDialog.showAddSoundSheetDialog(this.supportFragmentManager) }
 		it.addSoundClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog.show(this.supportFragmentManager, it) } }
 		it.addSoundFromDirectoryClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
 	}
@@ -241,7 +241,7 @@ class SoundActivity :
 				sound.pauseSound()
 		}
 		else if (currentSoundSheet == null) {
-			AddNewSoundSheetDialog.showInstance(this.supportFragmentManager)
+			GenericAddDialog.showAddSoundSheetDialog(this.supportFragmentManager)
 		} else {
 			if (SoundboardPreferences.useSystemBrowserForFiles()) {
 				val intent = Intent(Intent.ACTION_GET_CONTENT)
