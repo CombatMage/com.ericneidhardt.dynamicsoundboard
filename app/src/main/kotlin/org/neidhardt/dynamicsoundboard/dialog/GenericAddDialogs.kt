@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.dialog
 import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.dialog.generic.GenericEditTextDialog
 import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
@@ -11,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 /**
  * Created by eric.neidhardt@gmail.com on 05.01.2017.
  */
-object GenericAddDialog {
+object GenericAddDialogs {
 
 	fun showAddSoundLayoutDialog(fragmentManager: FragmentManager) {
 		val hint = SoundboardApplication.context.getString(R.string.genericadd_SoundLayoutHint)
@@ -19,10 +20,10 @@ object GenericAddDialog {
 		GenericEditTextDialog.showInstance(
 				fragmentManager = fragmentManager,
 				fragmentTag = "AddSoundLayoutDialog",
-				editTextConfig = EditTextConfig(hint, name),
-				dialogConfig = DialogConfig(R.string.genericrename_SoundLayoutTitle,
+				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, name),
+				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericrename_SoundLayoutTitle,
 						R.string.genericadd_SoundLayoutMessage),
-				positiveButton = ButtonConfig(R.string.all_add, { dialog, input ->
+				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { dialog, input ->
 					val layout = NewSoundLayout().apply {
 						this.isSelected = false
 						this.databaseId = SoundLayoutManager.getNewDatabaseIdForLabel(input)
@@ -30,7 +31,7 @@ object GenericAddDialog {
 					}
 					SoundboardApplication.soundLayoutManager.add(layout)
 				}),
-				negativeButton = ButtonConfig(R.string.all_cancel, { dialog, input ->
+				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { dialog, input ->
 				})
 		)
 	}
@@ -41,10 +42,10 @@ object GenericAddDialog {
 		GenericEditTextDialog.showInstance(
 				fragmentManager = fragmentManager,
 				fragmentTag = "AddSoundSheetDialog",
-				editTextConfig = EditTextConfig(hint, name),
-				dialogConfig = DialogConfig(R.string.genericrename_SoundSheetTitle,
+				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, name),
+				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericrename_SoundSheetTitle,
 						R.string.genericadd_SoundSheetMessage),
-				positiveButton = ButtonConfig(R.string.all_add, { dialog, input ->
+				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { dialog, input ->
 					val manager = SoundboardApplication.soundSheetManager
 					val soundSheet = NewSoundSheet().apply {
 						this.label = input
@@ -53,7 +54,7 @@ object GenericAddDialog {
 					manager.add(soundSheet)
 					manager.setSelected(soundSheet)
 				}),
-				negativeButton = ButtonConfig(R.string.all_cancel, { dialog, input ->
+				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { dialog, input ->
 				})
 		)
 	}

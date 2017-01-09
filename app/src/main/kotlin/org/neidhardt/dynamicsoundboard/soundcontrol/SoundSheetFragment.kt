@@ -20,6 +20,7 @@ import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDeco
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
+import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
@@ -34,10 +35,8 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEven
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeleteSoundsDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.SoundSettingsDialog
-import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.ConfirmDeleteSoundSheetDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.eventbus_utils.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
@@ -205,11 +204,11 @@ class SoundSheetFragment :
 		super.onOptionsItemSelected(item)
 		when (item.itemId) {
 			R.id.action_clear_sounds_in_sheet -> {
-				ConfirmDeleteSoundsDialog.showInstance(this.fragmentManager, this.fragmentTag)
+				GenericConfirmDialogs.showConfirmDeleteSoundsDialog(this.fragmentManager, this.soundSheet)
 				return true
 			}
 			R.id.action_delete_sheet -> {
-				ConfirmDeleteSoundSheetDialog.showInstance(this.fragmentManager, this.fragmentTag)
+				GenericConfirmDialogs.showConfirmDeleteSoundSheetDialog(this.fragmentManager, this.soundSheet)
 				return true
 			}
 			else -> return false

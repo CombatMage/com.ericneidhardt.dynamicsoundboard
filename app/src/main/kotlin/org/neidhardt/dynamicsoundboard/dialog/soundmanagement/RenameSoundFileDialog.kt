@@ -177,7 +177,7 @@ private class RenameSoundFileDialogPresenter (
 			throw NullPointerException(TAG + ": cannot create new file name, " +
 					"either old name or new name is null")
 
-		val segments = oldFilePath.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+		val segments = oldFilePath.split("\\.".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
 		if (segments.size > 1) {
 			val fileType = segments[segments.size - 1]
 			return newNameFilePath + "" + fileType

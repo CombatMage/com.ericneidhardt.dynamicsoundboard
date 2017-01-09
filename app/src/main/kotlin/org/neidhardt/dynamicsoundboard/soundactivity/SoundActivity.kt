@@ -22,7 +22,8 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseActivity
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
-import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialog
+import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
+import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog
@@ -45,9 +46,8 @@ import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundcontrol.*
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.ConfirmDeletePlayListDialog
 import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
-import org.neidhardt.dynamicsoundboard.dialog.soundsheetmanagement.ConfirmDeleteAllSoundSheetsDialog
+import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.eventbus_utils.registerIfRequired
@@ -83,7 +83,7 @@ class SoundActivity :
 				GenericRenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
 			}
 		}
-		it.addSoundSheetClickedCallback = { GenericAddDialog.showAddSoundSheetDialog(this.supportFragmentManager) }
+		it.addSoundSheetClickedCallback = { GenericAddDialogs.showAddSoundSheetDialog(this.supportFragmentManager) }
 		it.addSoundClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog.show(this.supportFragmentManager, it) } }
 		it.addSoundFromDirectoryClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
 	}
@@ -197,8 +197,7 @@ class SoundActivity :
 	override fun onPause() {
 		super.onPause()
 		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
-
-		this.storage.save(this.soundLayoutManager.soundLayouts).subscribe()
+		SaveDataIntentService.writeBack(this)
 	}
 
 	override fun onUserLeaveHint() {
@@ -241,7 +240,7 @@ class SoundActivity :
 				sound.pauseSound()
 		}
 		else if (currentSoundSheet == null) {
-			GenericAddDialog.showAddSoundSheetDialog(this.supportFragmentManager)
+			GenericAddDialogs.showAddSoundSheetDialog(this.supportFragmentManager)
 		} else {
 			if (SoundboardPreferences.useSystemBrowserForFiles()) {
 				val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -289,11 +288,11 @@ class SoundActivity :
 				return true
 			}
 			R.id.action_clear_sound_sheets -> {
-				ConfirmDeleteAllSoundSheetsDialog.showInstance(this.supportFragmentManager)
+				GenericConfirmDialogs.showConfirmDeleteAllSoundSheetsDialog(this.supportFragmentManager)
 				return true
 			}
 			R.id.action_clear_play_list -> {
-				ConfirmDeletePlayListDialog.showInstance(this.supportFragmentManager)
+				GenericConfirmDialogs.showConfirmDeletePlaylistDialog(this.supportFragmentManager)
 				return true
 			}
 			else -> return false

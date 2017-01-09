@@ -48,20 +48,19 @@
 
 		</activity>
 
-		<activity
-				android:name=".preferences.PreferenceActivity"
-				android:label="@string/preferences"
-				android:parentActivityName=".soundactivity.SoundActivity"/>
+		<activity android:name=".preferences.PreferenceActivity"
+				  android:label="@string/preferences"
+				  android:parentActivityName=".soundactivity.SoundActivity"/>
 
-		<activity
-				android:name=".preferences.AboutActivity"
-				android:label="@string/about"
-				android:parentActivityName=".soundactivity.SoundActivity"/>
+		<activity android:name=".preferences.AboutActivity"
+				  android:label="@string/about"
+				  android:parentActivityName=".soundactivity.SoundActivity"/>
 
-		<service
-				android:name=".notifications.NotificationService"
-				android:exported="false">
-		</service>
+		<service android:name=".persistance.SaveDataIntentService"
+				 android:exported="false"/>
+
+		<service android:name=".notifications.NotificationService"
+				 android:exported="false"/>
 
 	</application>
 

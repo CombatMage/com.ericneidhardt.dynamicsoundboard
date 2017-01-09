@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.dialog
+package org.neidhardt.dynamicsoundboard.dialog.generic
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -7,12 +7,11 @@ import android.support.design.widget.TextInputLayout
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.widget.EditText
+import com.jakewharton.rxbinding.widget.RxTextView
 import kotlinx.android.synthetic.main.dialog_genericrename.view.*
 import org.neidhardt.android_utils.views.showKeyboard
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
-import com.jakewharton.rxbinding.widget.RxTextView
-import rx.subscriptions.CompositeSubscription
 
 /**
  * Created by eric.neidhardt@gmail.com on 05.01.2017.
@@ -102,10 +101,10 @@ open class GenericEditTextDialog : BaseDialog() {
 						}
 		)
 	}
+
+	class EditTextConfig(val hint: String, val text: String)
+
+	class DialogConfig(val titleId: Int, val messageId: Int)
+
+	class ButtonConfig<in T : GenericEditTextDialog>(val labelId: Int, val action: (T, String) -> Unit)
 }
-
-class EditTextConfig(val hint: String, val text: String)
-
-class DialogConfig(val titleId: Int, val messageId: Int)
-
-class ButtonConfig<in T : GenericEditTextDialog>(val labelId: Int, val action: (T, String) -> Unit)

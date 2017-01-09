@@ -23,8 +23,7 @@ fun File.getFilesInDirectory(): MutableList<File> {
 		return ArrayList()
 
 	val files = ArrayList<File>(content.size)
-	for (file in content)
-		files.add(file)
+	files += content
 
 	return files
 }
@@ -44,11 +43,7 @@ val File.isAudioFile: Boolean
 		val mime = this.getMimeType ?: return false
 		if (mime.startsWith(AUDIO))
 			return true
-		for (audioMime in MIME_AUDIO_TYPES) {
-			if (mime == audioMime)
-				return true
-		}
-		return false
+		return MIME_AUDIO_TYPES.contains(mime)
 	}
 
 val File.getMimeType: String?
@@ -65,13 +60,7 @@ val File.getMimeType: String?
 val File.containsAudioFiles: Boolean
 	get() {
 		val filesInDirectory = this.listFiles() ?: return false
-		for (file in filesInDirectory) {
-			if (file.isDirectory)
-				continue
-			if (file.isAudioFile)
-				return true
-		}
-		return false
+		return filesInDirectory.any { !it.isDirectory && it.isAudioFile }
 	}
 
 object FileUtils {
@@ -81,7 +70,7 @@ object FileUtils {
 		if (fileName == null)
 			throw NullPointerException(TAG + ": cannot create new file name, either old name or new name is null")
 
-		val segments = fileName.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+		val segments = fileName.split("\\.".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
 		if (segments.size > 1) {
 			var strippedName = segments[0]
 			for (i in 1..segments.size - 1 - 1)

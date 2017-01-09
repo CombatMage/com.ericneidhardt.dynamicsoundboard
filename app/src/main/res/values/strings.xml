@@ -9,6 +9,7 @@
 	<string name="all_rename">Umbenennen</string>
 	<string name="all_cancel">Abbrechen</string>
 	<string name="all_add">Hinzufügen</string>
+	<string name="all_delete">Löschen</string>
 	<string name="all_CurrentNameIs">Aktueller Name: {STR}</string>
 	<string name="all_ErrorNameMustNotBeEmpty">Der Name darf nicht leer sein</string>
 
@@ -29,6 +30,12 @@
 	<string name="genericadd_SoundSheetMessage">Dem SoundBoard wird ein neue Liste mit diesem Namen hinzugefügt.
 		Der Name kann später noch geändert werden.</string>
 	<string name="genericadd_SoundSheetHint">Name der Soundliste</string>
+
+	<!-- GenericConfirmDialog -->
+	<string name="genericconfirm_DeleteSoundsMessage">Sollen alle Sounds in dieser Kategorie entfernt werden?</string>
+	<string name="genericconfirm_DeletePlaylistMessage">Soll die aktuelle Playliste gelöscht werden?</string>
+	<string name="genericconfirm_DeleteAllSoundSheetsMessage">Sollen alle Soundgruppen des Soundboards entfernt werden?</string>
+	<string name="genericconfirm_DeleteSoundSheetMessage">Soll diese Soundgruppe entfernt werden?</string>
 
 	<!-- permissions -->
 	<string name="request_permission_title">Berechtigung erforderlich</string>
@@ -135,15 +142,8 @@
 	<string name="dialog_close">Beenden</string>
 	<string name="dialog_denial">Verweigern</string>
 	<string name="dialog_ok">OK</string>
-	<string name="dialog_delete">Löschen</string>
 	<string name="dialog_save">Speichern</string>
 	<string name="dialog_load">Laden</string>
-
-	<string name="dialog_confirm_delete_title">Wirklich entfernen?</string>
-	<string name="dialog_confirm_delete_soundsheet_message">Soll diese Kategorie entfernt werden?</string>
-	<string name="dialog_confirm_delete_sounds_in_soundheet_message">Sollen alle Sounds in dieser Kategorie entfernt werden?</string>
-	<string name="dialog_confirm_delete_all_soundsheets_message">Sollen alle Kategorien des Soundboards entfernt werden?</string>
-	<string name="dialog_confirm_delete_play_list_message">Soll die aktuelle Playliste gelöscht werden?</string>
 
 	<string name="dialog_add_new_sound_from_directory_title">Verzeichniss auswählen</string>
 	<string name="dialog_add_new_sound_from_directory_message">Dem Soundbord werden alle Sounds in dem ausgewählten Verzeichniss hinzugefügt</string>

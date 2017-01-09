@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialog
+import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
@@ -141,9 +141,9 @@ class NavigationDrawerListPresenter(
 
 	private fun add() {
 		when (this.currentList) {
-			List.SoundLayouts -> GenericAddDialog.showAddSoundLayoutDialog(this.fragmentManager)
+			List.SoundLayouts -> GenericAddDialogs.showAddSoundLayoutDialog(this.fragmentManager)
 			List.Playlist -> AddNewSoundDialog.show(this.fragmentManager, PlaylistTAG)
-			List.SoundSheet -> GenericAddDialog.showAddSoundSheetDialog(this.fragmentManager)
+			List.SoundSheet -> GenericAddDialogs.showAddSoundSheetDialog(this.fragmentManager)
 		}
 	}
 
