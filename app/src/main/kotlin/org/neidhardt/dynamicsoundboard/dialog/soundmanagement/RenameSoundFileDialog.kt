@@ -180,7 +180,7 @@ private class RenameSoundFileDialogPresenter (
 		val segments = oldFilePath.split("\\.".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
 		if (segments.size > 1) {
 			val fileType = segments[segments.size - 1]
-			return newNameFilePath + "" + fileType
+			return newNameFilePath + "." + fileType
 		}
 
 		return newNameFilePath
