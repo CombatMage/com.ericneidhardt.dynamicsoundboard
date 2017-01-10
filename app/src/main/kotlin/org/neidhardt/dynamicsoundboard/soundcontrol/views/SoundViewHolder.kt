@@ -75,7 +75,8 @@ class SoundViewHolder
 
 		this.settings.setOnClickListener {
 			this.player?.let { player ->
-				player.pauseSound()
+				if (player.isPlayingSound)
+					player.pauseSound()
 				this.eventBus.post(OpenSoundSettingsEvent(player.mediaPlayerData))
 			}
 		}
