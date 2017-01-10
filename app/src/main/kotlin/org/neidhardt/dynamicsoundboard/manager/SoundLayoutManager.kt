@@ -107,7 +107,7 @@ class SoundLayoutManager(
 		this.onSoundLayoutsChangedListener.forEach { it.invoke(this.soundLayouts) }
 	}
 
-	val suggestedName: String get() = this.context.resources.getString(R.string.suggested_sound_sheet_name) +
+	val suggestedName: String get() = this.context.resources.getString(R.string.suggested_sound_layout_name) +
 			(this.mSoundLayouts?.size ?: "")
 
 	private fun getDefaultSoundLayout(): NewSoundLayout =

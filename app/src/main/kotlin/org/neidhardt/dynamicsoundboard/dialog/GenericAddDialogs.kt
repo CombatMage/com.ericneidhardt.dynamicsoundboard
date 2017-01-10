@@ -21,7 +21,7 @@ object GenericAddDialogs {
 				fragmentManager = fragmentManager,
 				fragmentTag = "AddSoundLayoutDialog",
 				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, name),
-				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericrename_SoundLayoutTitle,
+				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericadd_SoundLayoutTitle,
 						R.string.genericadd_SoundLayoutMessage),
 				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { dialog, input ->
 					val layout = NewSoundLayout().apply {
