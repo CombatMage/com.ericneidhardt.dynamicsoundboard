@@ -76,10 +76,9 @@
 				android:layout_gravity="bottom">
 
 			<View
-					android:layout_width="match_parent"
-					android:layout_height="@dimen/height_shadow_fixed"
-					android:background="@drawable/shape_shadow_horizontal"
-					android:rotation="180"/>
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/stroke"
+				android:background="@color/divider"/>
 
 			<include
 					layout="@layout/layout_navigation_drawer_button_bar"
@@ -89,7 +88,6 @@
 					android:layout_gravity="bottom"/>
 
 		</LinearLayout>
-
 
 	</org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout>
 </layout>

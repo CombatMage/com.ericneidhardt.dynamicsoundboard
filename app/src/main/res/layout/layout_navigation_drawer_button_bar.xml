@@ -27,7 +27,7 @@
 				android:background="@color/background"
 				app:animateVisibleFade="@{!viewModel.enableDeleteSelected}">
 
-			<com.devspark.robototextview.widget.RobotoTextView
+			<com.devspark.robototextview.widget.RobotoButton
 					android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -35,14 +35,10 @@
 					android:padding="@dimen/margin_default"
 					android:gravity="center"
 					android:text="@string/navigation_drawer_delete"
-					android:textSize="@dimen/text_body"
-					android:textColor="@color/text_body_primary"
-					app:typeface="roboto_medium"
-					android:clickable="true"
-					android:background="@drawable/selector_background_list_item"
+					style="@style/all_ButtonFlat"
 					android:onClick="@{(view) -> viewModel.onDeleteClicked()}"/>
 
-			<com.devspark.robototextview.widget.RobotoTextView
+			<com.devspark.robototextview.widget.RobotoButton
 					android:id="@+id/b_layout_navigation_drawer_button_bar_add"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -50,11 +46,7 @@
 					android:padding="@dimen/margin_default"
 					android:gravity="center"
 					android:text="@string/navigation_drawer_add"
-					android:textSize="@dimen/text_body"
-					android:textColor="@color/text_body_primary"
-					app:typeface="roboto_medium"
-					android:clickable="true"
-					android:background="@drawable/selector_background_list_item"
+					style="@style/all_ButtonFlat"
 					android:onClick="@{(view) -> viewModel.onAddClicked()}"/>
 		</LinearLayout>
 
