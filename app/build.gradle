@@ -109,12 +109,13 @@ dependencies {
 	kapt "com.android.databinding:compiler:$android.dataBinding.version"
 
 	compile fileTree(include: ['*.jar'], dir: 'libs')
-	compile project(':safe_async_task')
 	compile project(':enhanced_handler')
 	compile project(':app_utils')
 	compile project(':eventbus_utils')
 	compile project(':android_utils')
 	compile project(':simple_storage')
+
+	debugCompile rootProject.ext.libraries.leakcanary
 
 	testCompile project(':test_utils')
 
