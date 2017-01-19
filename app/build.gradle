@@ -115,7 +115,7 @@ dependencies {
 	compile project(':android_utils')
 	compile project(':simple_storage')
 
-	debugCompile rootProject.ext.libraries.leakcanary
+	debugCompile rootProject.ext.libraries.leakCanary
 
 	testCompile project(':test_utils')
 
