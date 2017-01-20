@@ -4,4 +4,5 @@ include ':app',
         ':test_utils',
         ':eventbus_utils',
         ':android_utils',
-        ':simple_storage'
+        ':simple_storage',
+        ':value_holder'

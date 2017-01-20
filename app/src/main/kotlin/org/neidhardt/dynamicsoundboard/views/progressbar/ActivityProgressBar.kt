@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.utils.ValueHolder
+import org.neidhardt.value_holder.ValueHolder
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import kotlin.properties.Delegates

@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
-import org.neidhardt.utils.ValueHolder
+import org.neidhardt.value_holder.ValueHolder
 import java.util.*
 
 

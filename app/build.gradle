@@ -114,6 +114,7 @@ dependencies {
 	compile project(':eventbus_utils')
 	compile project(':android_utils')
 	compile project(':simple_storage')
+	compile project(':value_holder')
 
 	debugCompile rootProject.ext.libraries.leakCanary
 

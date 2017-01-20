@@ -1,4 +1,6 @@
-package org.neidhardt.utils
+@file:Suppress("unused")
+
+package org.neidhardt.value_holder
 
 import android.support.annotation.CheckResult
 import rx.Observable
@@ -6,6 +8,7 @@ import rx.Observable
 /**
  * Created by eric.neidhardt on 24.11.2016.
  */
+@Suppress("unused")
 class ValueHolder<T>(initialValue: T) {
 
 	var onValueChangedListener: ((T) -> Unit)? = null
@@ -27,7 +30,7 @@ class ValueHolder<T>(initialValue: T) {
 	}
 }
 
-@Suppress("unused") // for convenience reason
+@Suppress("unused")
 object RxValueHolder {
 
 	@CheckResult

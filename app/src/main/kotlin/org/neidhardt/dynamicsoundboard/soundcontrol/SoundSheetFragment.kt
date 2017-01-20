@@ -33,7 +33,6 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundViewHolder
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.eventbus_utils.registerIfRequired
