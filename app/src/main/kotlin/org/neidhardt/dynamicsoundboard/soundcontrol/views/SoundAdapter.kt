@@ -15,11 +15,12 @@ import org.neidhardt.utils.longHash
  * File created by eric.neidhardt on 29.06.2015.
  */
 class SoundAdapter (
-		private val itemTouchHelper: ItemTouchHelper,
 		private val presenter: SoundPresenter,
+		private val itemTouchHelper: ItemTouchHelper,
 		private val playlistManager: PlaylistManager,
-		private val eventBus: EventBus
-
+		private val onTogglePlaylistClicked: (addToPlaylist: Boolean, MediaPlayerController) -> Unit,
+		private val onSoundNamedEdited: (name: String, MediaPlayerController) -> Unit,
+		private val onOpenSettingsClicked: (MediaPlayerController) -> Unit
 ) :
 		BaseAdapter<MediaPlayerController, SoundViewHolder>()
 {
@@ -35,8 +36,10 @@ class SoundAdapter (
 		return SoundViewHolder(
 				itemTouchHelper = this.itemTouchHelper,
 				itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control_item, parent, false),
-				eventBus = this.eventBus,
-				playlistManager = this.playlistManager)
+				playlistManager = this.playlistManager,
+				onTogglePlaylistClicked = this.onTogglePlaylistClicked,
+				onSoundNamedEdited = this.onSoundNamedEdited,
+				onOpenSettingsClicked = this.onOpenSettingsClicked)
 	}
 
 	override fun onBindViewHolder(holder: SoundViewHolder, position: Int) {

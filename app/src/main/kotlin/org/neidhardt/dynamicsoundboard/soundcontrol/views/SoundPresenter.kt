@@ -23,34 +23,59 @@ import rx.subscriptions.CompositeSubscription
  */
 fun createSoundPresenter(
 		soundSheet: NewSoundSheet,
-		eventBus: EventBus,
-		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit,
 		soundManager: SoundManager,
 		playlistManager: PlaylistManager,
-		recyclerView: RecyclerView
+		recyclerView: RecyclerView,
+
+		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit,
+		onTogglePlaylistClicked: (addToPlaylist: Boolean, MediaPlayerController) -> Unit,
+		onSoundNamedEdited: (name: String, MediaPlayerController) -> Unit,
+		onOpenSettingsClicked: (MediaPlayerController) -> Unit
 ): SoundPresenter
 {
-	return SoundPresenter(
+	val presenter = SoundPresenter(
 			soundSheet = soundSheet,
-			eventBus = eventBus,
 			soundManager = soundManager,
 			playlistManager = playlistManager
-	).apply {
-		val deletionHandler = PendingDeletionHandler(this, soundManager, onItemDeletionRequested)
-		val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(recyclerView.context, deletionHandler,
-				this, soundSheet, soundManager)).apply { this.attachToRecyclerView(recyclerView) }
+	)
 
-		val adapter = SoundAdapter(itemTouchHelper, this, playlistManager, eventBus)
-		this.adapter = adapter
-	}
+	val deletionHandler = PendingDeletionHandler(
+			soundPresenter = presenter,
+			manager = soundManager,
+			onItemDeletionRequested = onItemDeletionRequested
+	)
+
+	val itemTouchHelper = ItemTouchHelper(
+				ItemTouchCallback(
+						context = recyclerView.context,
+						deletionHandler = deletionHandler,
+						presenter = presenter,
+						soundSheet = soundSheet,
+						soundManager = soundManager
+				)
+	)
+	itemTouchHelper.attachToRecyclerView(recyclerView)
+
+	val adapter = SoundAdapter(
+			itemTouchHelper = itemTouchHelper,
+			presenter = presenter,
+			playlistManager = playlistManager,
+			onTogglePlaylistClicked = onTogglePlaylistClicked,
+			onSoundNamedEdited = onSoundNamedEdited,
+			onOpenSettingsClicked = onOpenSettingsClicked)
+
+	presenter.adapter = adapter
+
+	return presenter
 }
 
 class SoundPresenter (
 		val soundSheet: NewSoundSheet,
-		private val eventBus: EventBus,
 		private val soundManager: SoundManager,
 		private val playlistManager: PlaylistManager
 ) : MediaPlayerEventListener {
+
+	private val eventBus = EventBus.getDefault()
 
 	private var subscriptions = CompositeSubscription()
 
@@ -72,7 +97,7 @@ class SoundPresenter (
 		this.subscriptions.add(RxSoundManager.movesSoundInList(this.soundManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { event ->
-				//	this.adapter?.notifyItemMoved(event.from, event.to)
+					// nothing to do, item was already moved via ItemTouchHelper
 				})
 
 		this.subscriptions.add(RxNewPlaylistManager.playlistChanges(this.playlistManager)

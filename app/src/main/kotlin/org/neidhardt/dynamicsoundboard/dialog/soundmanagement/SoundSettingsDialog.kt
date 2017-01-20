@@ -129,10 +129,13 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 	companion object {
 		private val TAG = SoundSettingsDialog::class.java.name
 
-		fun showInstance(manager: FragmentManager, playerData: NewMediaPlayerData) {
+		fun showInstance(fragmentManager: FragmentManager?, playerData: NewMediaPlayerData) {
+			if (fragmentManager == null)
+				return
+
 			val dialog = SoundSettingsDialog()
 			addArguments(dialog, playerData.playerId, playerData.fragmentTag)
-			dialog.show(manager, TAG)
+			dialog.show(fragmentManager, TAG)
 		}
 	}
 

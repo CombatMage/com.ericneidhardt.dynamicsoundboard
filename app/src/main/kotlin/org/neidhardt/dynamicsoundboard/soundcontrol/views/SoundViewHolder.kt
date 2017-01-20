@@ -4,23 +4,21 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
-import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
-import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.views.viewextensions.setOnUserChangesListener
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
-class SoundViewHolder
-(
+class SoundViewHolder(
 		itemTouchHelper: ItemTouchHelper,
 		itemView: View,
-		private val eventBus: EventBus,
-		private val playlistManager: PlaylistManager
+		private val playlistManager: PlaylistManager,
+		private val onTogglePlaylistClicked: (addToPlaylist: Boolean, MediaPlayerController) -> Unit,
+		private val onSoundNamedEdited: (name: String, MediaPlayerController) -> Unit,
+		private val onOpenSettingsClicked: (MediaPlayerController) -> Unit
 ) :
 		RecyclerView.ViewHolder(itemView)
 {
@@ -66,30 +64,20 @@ class SoundViewHolder
 		}
 
 		this.inPlaylist.setOnClickListener {
+			val addToPlaylist = !this.inPlaylist.isSelected // toggle state of checkbox
+			this.inPlaylist.isSelected = addToPlaylist
 			this.player?.let { player ->
-				val toggleState = !this.inPlaylist.isSelected
-				this.inPlaylist.isSelected = toggleState
-				this.playlistManager.togglePlaylistSound(player.mediaPlayerData, toggleState)
+				this.onTogglePlaylistClicked(addToPlaylist, player)
 			}
 		}
 
 		this.settings.setOnClickListener {
-			this.player?.let { player ->
-				if (player.isPlayingSound)
-					player.pauseSound()
-				this.eventBus.post(OpenSoundSettingsEvent(player.mediaPlayerData))
-			}
+			this.player?.let { player -> this.onOpenSettingsClicked(player) }
 		}
 
 		this.name.setOnTextEditedListener { newName ->
 			this.name.clearFocus()
-			this.player?.mediaPlayerData?.let { playerData ->
-				val currentLabel = playerData.label
-				if (currentLabel != newName) {
-					playerData.label = newName
-					this.eventBus.post(OpenSoundRenameEvent(playerData))
-				}
-			}
+			this.player?.let { player -> this.onSoundNamedEdited(newName, player) }
 		}
 
 		this.timePosition.setOnUserChangesListener { progress ->

@@ -21,6 +21,8 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
@@ -29,14 +31,9 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import org.neidhardt.dynamicsoundboard.soundcontrol.events.OnOpenSoundDialogEventListener
-import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundRenameEvent
-import org.neidhardt.dynamicsoundboard.soundcontrol.events.OpenSoundSettingsEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.eventbus_utils.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
@@ -60,7 +57,6 @@ fun getNewInstance(soundSheet: NewSoundSheet): SoundSheetFragment {
 
 class SoundSheetFragment :
 		BaseFragment(),
-		OnOpenSoundDialogEventListener,
 		MediaPlayerFailedEventListener {
 
 	private val LOG_TAG = javaClass.name
@@ -112,11 +108,27 @@ class SoundSheetFragment :
 		this.rv_fragment_sound_sheet_sounds.let { soundList ->
 			this.soundPresenter = createSoundPresenter(
 					soundSheet = soundSheet,
-					eventBus = this.eventBus,
-					recyclerView = soundList,
-					onItemDeletionRequested = { handler,time -> this.showSnackbarForRestore(handler, time) },
 					soundManager = this.soundManager,
-					playlistManager = this.playlistManager)
+					playlistManager = this.playlistManager,
+					recyclerView = soundList,
+					onItemDeletionRequested = { handler,time ->
+						this.showSnackbarForRestore(handler, time)
+					},
+					onTogglePlaylistClicked = { addToPlaylist, player ->
+						this.playlistManager.togglePlaylistSound(player.mediaPlayerData, addToPlaylist)
+					},
+					onOpenSettingsClicked = { player ->
+						if (player.isPlayingSound)
+							player.pauseSound()
+						SoundSettingsDialog.showInstance(this.fragmentManager, player.mediaPlayerData)
+					},
+					onSoundNamedEdited = { newName, player ->
+						val currentLabel = player.mediaPlayerData.label
+						if (currentLabel != newName) {
+							player.mediaPlayerData.label = newName
+							RenameSoundFileDialog.show(this.fragmentManager, player.mediaPlayerData)
+						}
+					})
 
 			soundList.apply {
 				this.adapter = soundPresenter?.adapter
@@ -213,16 +225,6 @@ class SoundSheetFragment :
 			}
 			else -> return false
 		}
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: OpenSoundRenameEvent) {
-		RenameSoundFileDialog.show(this.fragmentManager, event.data)
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: OpenSoundSettingsEvent) {
-		SoundSettingsDialog.showInstance(this.fragmentManager, event.data)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

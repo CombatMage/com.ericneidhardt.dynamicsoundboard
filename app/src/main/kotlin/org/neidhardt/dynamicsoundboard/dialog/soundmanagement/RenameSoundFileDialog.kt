@@ -37,10 +37,11 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog() {
 	companion object {
 		private val TAG = RenameSoundFileDialog::class.java.name
 
-		fun show(manager: FragmentManager, playerData: NewMediaPlayerData) {
+		fun show(fragmentManager: FragmentManager?, playerData: NewMediaPlayerData) {
+			if (fragmentManager == null) return
 			RenameSoundFileDialog().let { dialog ->
 				SoundSettingsBaseDialog.addArguments(dialog, playerData.playerId, playerData.fragmentTag)
-				dialog.show(manager, TAG)
+				dialog.show(fragmentManager, TAG)
 			}
 		}
 	}
