@@ -34,9 +34,12 @@ class ValueHolder<T>(initialValue: T) {
 object RxValueHolder {
 
 	@CheckResult
-	fun <T>changes(value: ValueHolder<T>): Observable<T> {
+	fun <T>changes(valueHolder: ValueHolder<T>): Observable<T> {
 		return Observable.create({ subscriber ->
-			value.onValueChangedListener = { newValue ->
+
+			subscriber.onNext(valueHolder.value)
+
+			valueHolder.onValueChangedListener = { newValue ->
 				subscriber.onNext(newValue)
 			}
 		})

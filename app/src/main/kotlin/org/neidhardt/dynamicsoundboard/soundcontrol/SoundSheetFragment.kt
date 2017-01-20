@@ -167,9 +167,10 @@ class SoundSheetFragment :
 						} })
 
 			this.subscriptions.add(adapter.changesName
-					.subscribe { viewHolder -> viewHolder.name.clearFocus()
-						viewHolder.player?.let { player ->
-							val newLabel = viewHolder.name.text
+					.subscribe { event ->
+						event.viewHolder.name.clearFocus()
+						event.viewHolder.player?.let { player ->
+							val newLabel = event.data
 							val currentLabel = player.mediaPlayerData.label
 							if (currentLabel != newLabel) {
 								player.mediaPlayerData.label = newLabel

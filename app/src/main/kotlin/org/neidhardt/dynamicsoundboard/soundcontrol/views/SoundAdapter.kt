@@ -15,6 +15,8 @@ import rx.subjects.PublishSubject
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
+data class SoundViewHolderEvent<out T>(val viewHolder: SoundViewHolder, val data: T)
+
 class SoundAdapter (
 		private val presenter: SoundPresenter,
 		private val itemTouchHelper: ItemTouchHelper,
@@ -26,7 +28,7 @@ class SoundAdapter (
 
 	val clicksTogglePlaylist: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val clicksSettings: PublishSubject<SoundViewHolder> = PublishSubject.create()
-	val changesName: PublishSubject<SoundViewHolder> = PublishSubject.create()
+	val changesName: PublishSubject<SoundViewHolderEvent<String>> = PublishSubject.create()
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder {
 		val itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control_item, parent, false)
@@ -49,7 +51,7 @@ class SoundAdapter (
 
 		RxCustomEditText.editsText(viewHolder.name)
 				.takeUntil(parentIsDetached)
-				.map { viewHolder }
+				.map { string -> SoundViewHolderEvent(viewHolder, string) }
 				.subscribe { this.changesName.onNext(it) }
 
 		return viewHolder
