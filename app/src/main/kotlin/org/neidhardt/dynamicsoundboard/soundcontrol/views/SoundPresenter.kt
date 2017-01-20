@@ -27,10 +27,7 @@ fun createSoundPresenter(
 		playlistManager: PlaylistManager,
 		recyclerView: RecyclerView,
 
-		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit,
-		onTogglePlaylistClicked: (addToPlaylist: Boolean, MediaPlayerController) -> Unit,
-		onSoundNamedEdited: (name: String, MediaPlayerController) -> Unit,
-		onOpenSettingsClicked: (MediaPlayerController) -> Unit
+		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit
 ): SoundPresenter
 {
 	val presenter = SoundPresenter(
@@ -59,10 +56,7 @@ fun createSoundPresenter(
 	val adapter = SoundAdapter(
 			itemTouchHelper = itemTouchHelper,
 			presenter = presenter,
-			playlistManager = playlistManager,
-			onTogglePlaylistClicked = onTogglePlaylistClicked,
-			onSoundNamedEdited = onSoundNamedEdited,
-			onOpenSettingsClicked = onOpenSettingsClicked)
+			playlistManager = playlistManager)
 
 	presenter.adapter = adapter
 

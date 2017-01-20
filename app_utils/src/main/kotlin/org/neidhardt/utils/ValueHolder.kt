@@ -1,5 +1,6 @@
 package org.neidhardt.utils
 
+import android.support.annotation.CheckResult
 import rx.Observable
 
 /**
@@ -28,6 +29,8 @@ class ValueHolder<T>(initialValue: T) {
 
 @Suppress("unused") // for convenience reason
 object RxValueHolder {
+
+	@CheckResult
 	fun <T>changes(value: ValueHolder<T>): Observable<T> {
 		return Observable.create({ subscriber ->
 			value.onValueChangedListener = { newValue ->

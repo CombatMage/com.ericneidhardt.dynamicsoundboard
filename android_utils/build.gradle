@@ -42,5 +42,10 @@ dependencies {
 
 	compile rootProject.ext.libraries.robotoTextView
 
+	compile rootProject.ext.libraries.rxAndroid
+	compile rootProject.ext.libraries.rxKotlin
+	compile rootProject.ext.libraries.rxJava
+	compile rootProject.ext.libraries.rxBinding
+
 	testCompile project(':test_utils')
 }

@@ -3,7 +3,10 @@ package org.neidhardt.dynamicsoundboard.soundcontrol.views
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
+import android.widget.ImageButton
+import android.widget.SeekBar
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
+import org.neidhardt.android_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
@@ -15,25 +18,24 @@ import org.neidhardt.dynamicsoundboard.views.viewextensions.setOnUserChangesList
 class SoundViewHolder(
 		itemTouchHelper: ItemTouchHelper,
 		itemView: View,
-		private val playlistManager: PlaylistManager,
-		private val onTogglePlaylistClicked: (addToPlaylist: Boolean, MediaPlayerController) -> Unit,
-		private val onSoundNamedEdited: (name: String, MediaPlayerController) -> Unit,
-		private val onOpenSettingsClicked: (MediaPlayerController) -> Unit
+		private val playlistManager: PlaylistManager
 ) :
 		RecyclerView.ViewHolder(itemView)
 {
 	private val reorder = itemView.ib_view_sound_control_item_reorder
 
-	private val name = itemView.et_view_sound_control_item_name
-	private val play = itemView.ib_view_sound_control_item_play
-	private val loop = itemView.ib_view_sound_control_item_loop
-	private val stop = itemView.ib_view_sound_control_item_stop
+	val name: CustomEditText = itemView.et_view_sound_control_item_name
+	
+	val playButton: ImageButton = itemView.ib_view_sound_control_item_play
+	val stopButton: ImageButton = itemView.ib_view_sound_control_item_stop
 
-	private val inPlaylist = itemView.ib_view_sound_control_item_add_to_playlist
-	private val timePosition = itemView.sb_view_sound_control_item_progress
-	private val settings = itemView.ib_view_sound_control_item_settings
+	val isLoopEnabledButton: ImageButton = itemView.ib_view_sound_control_item_loop
+	val inPlaylistButton: ImageButton = itemView.ib_view_sound_control_item_add_to_playlist
+	
+	val timePosition: SeekBar= itemView.sb_view_sound_control_item_progress
+	val settingsButton: ImageButton = itemView.ib_view_sound_control_item_settings
 
-	private var player: MediaPlayerController? = null
+	var player: MediaPlayerController? = null
 
 	init {
 		this.reorder.setOnTouchListener { view, motionEvent ->
@@ -41,10 +43,10 @@ class SoundViewHolder(
 			true
 		}
 
-		this.play.setOnClickListener {
+		this.playButton.setOnClickListener {
 			this.player?.let { player ->
 				this.name.clearFocus()
-				if (!this.play.isSelected) {
+				if (!this.playButton.isSelected) {
 					player.playSound()
 				}
 				else
@@ -52,32 +54,15 @@ class SoundViewHolder(
 			}
 		}
 
-		this.stop.setOnClickListener {
+		this.stopButton.setOnClickListener {
 			this.player?.stopSound()
 			this.updateViewToPlayerState()
 		}
 
-		this.loop.setOnClickListener {
-			val toggleState = !this.loop.isSelected
-			this.loop.isSelected = toggleState
+		this.isLoopEnabledButton.setOnClickListener {
+			val toggleState = !this.isLoopEnabledButton.isSelected
+			this.isLoopEnabledButton.isSelected = toggleState
 			this.player?.isLoopingEnabled = toggleState
-		}
-
-		this.inPlaylist.setOnClickListener {
-			val addToPlaylist = !this.inPlaylist.isSelected // toggle state of checkbox
-			this.inPlaylist.isSelected = addToPlaylist
-			this.player?.let { player ->
-				this.onTogglePlaylistClicked(addToPlaylist, player)
-			}
-		}
-
-		this.settings.setOnClickListener {
-			this.player?.let { player -> this.onOpenSettingsClicked(player) }
-		}
-
-		this.name.setOnTextEditedListener { newName ->
-			this.name.clearFocus()
-			this.player?.let { player -> this.onSoundNamedEdited(newName, player) }
 		}
 
 		this.timePosition.setOnUserChangesListener { progress ->
@@ -103,9 +88,9 @@ class SoundViewHolder(
 				this.name.text = playerData.label
 
 			val isPlaying = player.isPlayingSound
-			this.play.isSelected = isPlaying
-			this.loop.isSelected = playerData.isLoop
-			this.inPlaylist.isSelected = this.playlistManager.playlist.containsPlayerWithId(playerData.playerId)
+			this.playButton.isSelected = isPlaying
+			this.isLoopEnabledButton.isSelected = playerData.isLoop
+			this.inPlaylistButton.isSelected = this.playlistManager.playlist.containsPlayerWithId(playerData.playerId)
 			this.timePosition.max = player.trackDuration
 			this.timePosition.progress = player.progress
 		}

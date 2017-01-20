@@ -33,6 +33,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundViewHolder
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.eventbus_utils.registerIfRequired
@@ -113,21 +114,6 @@ class SoundSheetFragment :
 					recyclerView = soundList,
 					onItemDeletionRequested = { handler,time ->
 						this.showSnackbarForRestore(handler, time)
-					},
-					onTogglePlaylistClicked = { addToPlaylist, player ->
-						this.playlistManager.togglePlaylistSound(player.mediaPlayerData, addToPlaylist)
-					},
-					onOpenSettingsClicked = { player ->
-						if (player.isPlayingSound)
-							player.pauseSound()
-						SoundSettingsDialog.showInstance(this.fragmentManager, player.mediaPlayerData)
-					},
-					onSoundNamedEdited = { newName, player ->
-						val currentLabel = player.mediaPlayerData.label
-						if (currentLabel != newName) {
-							player.mediaPlayerData.label = newName
-							RenameSoundFileDialog.show(this.fragmentManager, player.mediaPlayerData)
-						}
 					})
 
 			soundList.apply {
@@ -159,10 +145,39 @@ class SoundSheetFragment :
 		super.onStart()
 		this.eventBus.registerIfRequired(this)
 		this.subscriptions = CompositeSubscription()
+
 		// if sounds where removed, the view becomes unscrollable and therefore the fab can not be reached
 		this.subscriptions.add(RxSoundManager.changesSoundList(this.soundManager)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { sounds -> if (sounds.isEmpty()) this.floatingActionButton?.visibility = View.VISIBLE })
+
+		this.soundPresenter?.adapter?.let { adapter ->
+
+			this.subscriptions.add(adapter.clicksTogglePlaylist
+					.subscribe { viewHolder ->
+						val addToPlaylist = !viewHolder.inPlaylistButton.isSelected
+						viewHolder.inPlaylistButton.isSelected = addToPlaylist
+						viewHolder.player?.mediaPlayerData?.let { this.playlistManager.togglePlaylistSound(it, addToPlaylist) } })
+
+			this.subscriptions.add(adapter.clicksSettings
+					.subscribe { viewHolder ->
+						viewHolder.player?.let { player ->
+							if (player.isPlayingSound)
+								player.pauseSound()
+							SoundSettingsDialog.showInstance(this.fragmentManager, player.mediaPlayerData)
+						} })
+
+			this.subscriptions.add(adapter.changesName
+					.subscribe { viewHolder -> viewHolder.name.clearFocus()
+						viewHolder.player?.let { player ->
+							val newLabel = viewHolder.name.text
+							val currentLabel = player.mediaPlayerData.label
+							if (currentLabel != newLabel) {
+								player.mediaPlayerData.label = newLabel
+								RenameSoundFileDialog.show(this.fragmentManager, player.mediaPlayerData)
+							}
+						} })
+		}
 	}
 
 	override fun onResume() {

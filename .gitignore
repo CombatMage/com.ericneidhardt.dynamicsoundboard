@@ -6,7 +6,7 @@ gradle.properties
 # Eclipse
 .classpath
 .project
-.settings/
+.settingsButton/
 # Intellij
 .idea/
 *.iml

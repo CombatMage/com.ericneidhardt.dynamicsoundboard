@@ -23,7 +23,7 @@
     <item name='android.support.v4.media.session.MediaControllerCompatApi21.PlaybackInfo int getMaxVolume(java.lang.Object) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='android.support.v4.media.session.MediaControllerCompatApi21.TransportControls void play(java.lang.Object) 0'>
+    <item name='android.support.v4.media.session.MediaControllerCompatApi21.TransportControls void playButton(java.lang.Object) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='android.support.v4.media.session.MediaControllerCompatApi21.TransportControls void fastForward(java.lang.Object) 0'>
@@ -50,7 +50,7 @@
     <item name='android.support.v4.media.session.MediaControllerCompatApi21.PlaybackInfo android.media.AudioAttributes getAudioAttributes(java.lang.Object) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='android.support.v4.media.session.MediaControllerCompatApi21.TransportControls void stop(java.lang.Object) 0'>
+    <item name='android.support.v4.media.session.MediaControllerCompatApi21.TransportControls void stopButton(java.lang.Object) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='android.support.v4.media.session.MediaControllerCompatApi21.PlaybackInfo int getVolumeControl(java.lang.Object) 0'>
