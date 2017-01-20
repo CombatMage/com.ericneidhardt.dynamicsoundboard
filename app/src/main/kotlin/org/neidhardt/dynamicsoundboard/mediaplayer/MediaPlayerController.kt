@@ -20,6 +20,8 @@ interface MediaPlayerController
 
 	val isPlayingSound: Boolean
 
+	val isFadingOut: Boolean
+
 	val trackDuration: Int
 
 	var progress: Int

@@ -148,6 +148,9 @@ class ExoMediaPlayer
 	override val isPlayingSound: Boolean
 		get() = exoPlayer.playWhenReady
 
+	override val isFadingOut: Boolean
+		get() = this.volumeController.isFadeoutInProgress
+
 	override val albumCover: ByteArray? by lazy {
 		MediaMetadataRetriever().let {
 			it.setDataSource(this.context, Uri.parse(this.mediaPlayerData.uri))
