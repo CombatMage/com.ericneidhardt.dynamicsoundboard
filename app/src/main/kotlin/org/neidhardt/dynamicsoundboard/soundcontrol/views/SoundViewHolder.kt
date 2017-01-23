@@ -43,28 +43,6 @@ class SoundViewHolder(
 			true
 		}
 
-		this.playButton.setOnClickListener {
-			this.player?.let { player ->
-				this.name.clearFocus()
-				if (!this.playButton.isSelected) {
-					player.playSound()
-				}
-				else
-					player.fadeOutSound()
-			}
-		}
-
-		this.stopButton.setOnClickListener {
-			this.player?.stopSound()
-			this.updateViewToPlayerState()
-		}
-
-		this.isLoopEnabledButton.setOnClickListener {
-			val toggleState = !this.isLoopEnabledButton.isSelected
-			this.isLoopEnabledButton.isSelected = toggleState
-			this.player?.isLoopingEnabled = toggleState
-		}
-
 		this.timePosition.setOnUserChangesListener { progress ->
 			this.player?.progress = progress
 		}
@@ -80,7 +58,7 @@ class SoundViewHolder(
 		this.updateViewToPlayerState()
 	}
 
-	private fun updateViewToPlayerState() {
+	fun updateViewToPlayerState() {
 		this.player?.let { player ->
 			val playerData = player.mediaPlayerData
 

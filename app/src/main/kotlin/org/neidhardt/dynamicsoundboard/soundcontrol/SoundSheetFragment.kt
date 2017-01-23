@@ -87,13 +87,11 @@ class SoundSheetFragment :
 		val fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
 				?: throw NullPointerException(LOG_TAG + ": cannot create fragment, given fragmentTag is null")
 
-
 		this.fragmentTag = fragmentTag as String
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		if (container == null)
-			return null
+		if (container == null) return null
 		return inflater.inflate(R.layout.fragment_soundsheet, container, false)
 	}
 
@@ -152,11 +150,30 @@ class SoundSheetFragment :
 
 		this.soundPresenter?.adapter?.let { adapter ->
 
+			this.subscriptions.add(adapter.clicksPlay
+					.subscribe { viewHolder ->
+						viewHolder.player?.let { player ->
+							viewHolder.name.clearFocus()
+							if (!viewHolder.playButton.isSelected) {
+								player.playSound()
+							}
+							else
+								player.fadeOutSound()
+						}
+					})
+
+			this.subscriptions.add(adapter.clicksStop
+					.subscribe { viewHolder ->
+						viewHolder.player?.stopSound()
+						viewHolder.updateViewToPlayerState()
+					})
+
 			this.subscriptions.add(adapter.clicksTogglePlaylist
 					.subscribe { viewHolder ->
 						val addToPlaylist = !viewHolder.inPlaylistButton.isSelected
 						viewHolder.inPlaylistButton.isSelected = addToPlaylist
-						viewHolder.player?.mediaPlayerData?.let { this.playlistManager.togglePlaylistSound(it, addToPlaylist) } })
+						viewHolder.player?.mediaPlayerData?.let { this.playlistManager.togglePlaylistSound(it, addToPlaylist) }
+					})
 
 			this.subscriptions.add(adapter.clicksSettings
 					.subscribe { viewHolder ->
@@ -164,7 +181,15 @@ class SoundSheetFragment :
 							if (player.isPlayingSound)
 								player.pauseSound()
 							SoundSettingsDialog.showInstance(this.fragmentManager, player.mediaPlayerData)
-						} })
+						}
+					})
+
+			this.subscriptions.add(adapter.clicksLoopEnabled
+					.subscribe { viewHolder ->
+						val toggleState = !viewHolder.isLoopEnabledButton.isSelected
+						viewHolder.isLoopEnabledButton.isSelected = toggleState
+						viewHolder.player?.isLoopingEnabled = toggleState
+					})
 
 			this.subscriptions.add(adapter.changesName
 					.subscribe { event ->
@@ -176,7 +201,8 @@ class SoundSheetFragment :
 								player.mediaPlayerData.label = newLabel
 								RenameSoundFileDialog.show(this.fragmentManager, player.mediaPlayerData)
 							}
-						} })
+						}
+					})
 		}
 	}
 

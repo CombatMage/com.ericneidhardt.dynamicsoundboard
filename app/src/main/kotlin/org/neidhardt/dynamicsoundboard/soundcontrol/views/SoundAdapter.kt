@@ -4,6 +4,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding.view.RxView
+import com.jakewharton.rxbinding.widget.RxSeekBar
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.views.RxCustomEditText
 import org.neidhardt.dynamicsoundboard.R
@@ -26,8 +27,12 @@ class SoundAdapter (
 {
 	init { this.setHasStableIds(true) }
 
+	val clicksPlay: PublishSubject<SoundViewHolder> = PublishSubject.create()
+	val clicksStop: PublishSubject<SoundViewHolder> = PublishSubject.create()
+
 	val clicksTogglePlaylist: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val clicksSettings: PublishSubject<SoundViewHolder> = PublishSubject.create()
+	val clicksLoopEnabled: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val changesName: PublishSubject<SoundViewHolderEvent<String>> = PublishSubject.create()
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder {
@@ -39,6 +44,16 @@ class SoundAdapter (
 
 		val parentIsDetached = RxView.detaches(parent)
 
+		RxView.clicks(viewHolder.playButton)
+				.takeUntil(parentIsDetached)
+				.map { viewHolder }
+				.subscribe { this.clicksPlay.onNext(it) }
+
+		RxView.clicks(viewHolder.stopButton)
+				.takeUntil(parentIsDetached)
+				.map { viewHolder }
+				.subscribe { this.clicksStop.onNext(it) }
+
 		RxView.clicks(viewHolder.inPlaylistButton)
 				.takeUntil(parentIsDetached)
 				.map { viewHolder }
@@ -48,6 +63,11 @@ class SoundAdapter (
 				.takeUntil(parentIsDetached)
 				.map { viewHolder }
 				.subscribe { this.clicksSettings.onNext(it) }
+
+		RxView.clicks(viewHolder.isLoopEnabledButton)
+				.takeUntil(parentIsDetached)
+				.map { viewHolder }
+				.subscribe { this.clicksLoopEnabled.onNext(it) }
 
 		RxCustomEditText.editsText(viewHolder.name)
 				.takeUntil(parentIsDetached)
