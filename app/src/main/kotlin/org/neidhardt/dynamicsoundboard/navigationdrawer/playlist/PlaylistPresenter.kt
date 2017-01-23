@@ -28,6 +28,8 @@ fun createPlaylistPresenter(
 	}
 }
 
+private val INDEX_NOT_SET = -1
+
 class PlaylistPresenter(override val eventBus: EventBus) :
 		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<MediaPlayerController>,
@@ -41,7 +43,7 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 	var adapter: PlaylistAdapter? = null
 	val values: List<MediaPlayerController> get() = this.manager.playlist
 
-	private var currentItemIndex: Int? = null
+	private var currentItemIndex: Int = INDEX_NOT_SET
 
 	override fun onAttachedToWindow() {
 		this.eventBus.registerIfRequired(this)
@@ -105,10 +107,10 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 		if (!this.values.contains(nextActivePlayer))
 			throw IllegalStateException("next active player $nextActivePlayer is not in playlist")
 
+		// stop all playing sounds, except the next player
 		this.currentItemIndex = this.values.indexOf(nextActivePlayer)
-		this.values
-				.filter { it != nextActivePlayer && it.isPlayingSound }
-				.forEach { it.stopSound() }
+		this.values.filter { it != nextActivePlayer && it.isPlayingSound }
+				   .forEach { it.stopSound() }
 
 		if (nextActivePlayer.isPlayingSound)
 			nextActivePlayer.stopSound()
@@ -118,11 +120,9 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: MediaPlayerStateChangedEvent)
-	{
+	override fun onEvent(event: MediaPlayerStateChangedEvent) {
 		val player = event.player
-		if (this.values.contains(player) && !event.isAlive) // removed a destroyed media player
-		{
+		if (this.values.contains(player) && !event.isAlive) { // removed a destroyed media player
 			val index = this.values.indexOf(player)
 			this.manager.remove(listOf(player))
 			this.adapter?.notifyItemRemoved(index)
@@ -132,22 +132,25 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: MediaPlayerCompletedEvent)
-	{
+	override fun onEvent(event: MediaPlayerCompletedEvent) {
 		val finishedPlayerData = event.player.mediaPlayerData
-		if (this.currentItemIndex != null)
-		{
-			val currentPlayer = this.values[this.currentItemIndex!!].mediaPlayerData
-			if (currentPlayer !== finishedPlayerData)
+
+		if (this.currentItemIndex != INDEX_NOT_SET) {
+			val currentPlayer = this.values[this.currentItemIndex].mediaPlayerData
+			if (currentPlayer !== finishedPlayerData) // finished player was not the current player
 				return
 
-			this.currentItemIndex = (this.currentItemIndex as Int) + 1
-			if ((this.currentItemIndex as Int) >= this.values.size)
+			this.currentItemIndex += 1
+			if (this.values.isEmpty()) {
+				this.currentItemIndex = INDEX_NOT_SET
+				return
+			}
+
+			if (this.currentItemIndex >= this.values.size)
 				this.currentItemIndex = 0
 
-			this.values[this.currentItemIndex!!].playSound()
+			this.values[this.currentItemIndex].playSound()
 			this.adapter?.notifyDataSetChanged()
 		}
 	}
-
 }
