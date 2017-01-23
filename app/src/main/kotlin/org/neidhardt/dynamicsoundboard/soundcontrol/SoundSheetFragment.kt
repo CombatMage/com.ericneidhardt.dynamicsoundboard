@@ -7,6 +7,7 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -31,6 +32,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.ItemTouchCallback
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
@@ -72,6 +74,7 @@ class SoundSheetFragment :
 	private val playlistManager = SoundboardApplication.playlistManager
 
 	private var soundPresenter: SoundPresenter? = null
+	private var itemTouchHelper: ItemTouchHelper? = null
 
 	private val snackbarPresenter = SnackbarPresenter()
 
@@ -103,22 +106,40 @@ class SoundSheetFragment :
 		val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
 				?: throw IllegalStateException("no SoundSheet for fragmentTag was found")
 
-		this.rv_fragment_sound_sheet_sounds.let { soundList ->
-			this.soundPresenter = createSoundPresenter(
-					soundSheet = soundSheet,
-					soundManager = this.soundManager,
-					playlistManager = this.playlistManager,
-					recyclerView = soundList,
-					onItemDeletionRequested = { handler,time ->
-						this.showSnackbarForRestore(handler, time)
-					})
+		val soundList = this.rv_fragment_sound_sheet_sounds
 
-			soundList.apply {
-				this.adapter = soundPresenter?.adapter
-				this.layoutManager = LinearLayoutManager(this.context)
-				this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
-				this.itemAnimator = DefaultItemAnimator()
-			}
+		val presenter = createSoundPresenter(
+				soundSheet = soundSheet,
+				soundManager = this.soundManager,
+				playlistManager = this.playlistManager
+		)
+		this.soundPresenter = presenter
+
+		val deletionHandler = PendingDeletionHandler(
+				soundPresenter = presenter,
+				manager = soundManager,
+				onItemDeletionRequested = { handler, time ->
+					this.showSnackbarForRestore(handler, time)
+				}
+		)
+
+		val itemTouchHelper = ItemTouchHelper(
+				ItemTouchCallback(
+						context = soundList.context,
+						deletionHandler = deletionHandler,
+						presenter = presenter,
+						soundSheet = soundSheet,
+						soundManager = soundManager
+				)
+		)
+		itemTouchHelper.attachToRecyclerView(soundList)
+		this.itemTouchHelper = itemTouchHelper
+
+		soundList.apply {
+			this.adapter = presenter.adapter
+			this.layoutManager = LinearLayoutManager(this.context)
+			this.addItemDecoration(DividerItemDecoration(this.context.applicationContext, R.color.background, R.color.divider))
+			this.itemAnimator = DefaultItemAnimator()
 		}
 	}
 
@@ -138,8 +159,13 @@ class SoundSheetFragment :
 		}
 	}
 
-	override fun onStart() {
-		super.onStart()
+	override fun onResume() {
+		super.onResume()
+
+		this.baseActivity.let { it.toolbarVM.isSoundSheetActionsEnable = true }
+		this.floatingActionButton?.show(true)
+		this.soundPresenter?.onAttachedToWindow()
+
 		this.eventBus.registerIfRequired(this)
 		this.subscriptions = CompositeSubscription()
 
@@ -209,16 +235,20 @@ class SoundSheetFragment :
 						val position = event.data
 						event.viewHolder.player?.progress = position
 					})
+
+			this.subscriptions.add(adapter.startsReorder
+					.subscribe { viewHolder ->
+						this.itemTouchHelper?.startDrag(viewHolder)
+					})
 		}
 	}
 
-	override fun onResume() {
-		super.onResume()
-
-		this.baseActivity.let { it.toolbarVM.isSoundSheetActionsEnable = true }
-
-		this.soundPresenter?.onAttachedToWindow()
-		this.floatingActionButton?.show(true)
+	override fun onPause() {
+		super.onPause()
+		this.snackbarPresenter.stop()
+		this.soundPresenter?.onDetachedFromWindow()
+		this.subscriptions.unsubscribe()
+		this.eventBus.unregister(this)
 	}
 
 	override fun onRestoreState(savedInstanceState: Bundle) {
@@ -232,18 +262,6 @@ class SoundSheetFragment :
 		this.rv_fragment_sound_sheet_sounds?.layoutManager?.let { layoutManager ->
 			outState.putParcelable(KEY_STATE_RECYCLER_VIEW, layoutManager.onSaveInstanceState())
 		}
-	}
-
-	override fun onPause() {
-		super.onPause()
-		this.snackbarPresenter.stop()
-		this.soundPresenter?.onDetachedFromWindow()
-	}
-
-	override fun onStop() {
-		super.onStop()
-		this.subscriptions.unsubscribe()
-		this.eventBus.unregister(this)
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

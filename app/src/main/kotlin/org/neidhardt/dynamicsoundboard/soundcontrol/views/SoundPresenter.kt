@@ -1,14 +1,12 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
-import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
+import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
@@ -24,10 +22,7 @@ import rx.subscriptions.CompositeSubscription
 fun createSoundPresenter(
 		soundSheet: NewSoundSheet,
 		soundManager: SoundManager,
-		playlistManager: PlaylistManager,
-		recyclerView: RecyclerView,
-
-		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit
+		playlistManager: PlaylistManager
 ): SoundPresenter
 {
 	val presenter = SoundPresenter(
@@ -36,27 +31,10 @@ fun createSoundPresenter(
 			playlistManager = playlistManager
 	)
 
-	val deletionHandler = PendingDeletionHandler(
-			soundPresenter = presenter,
-			manager = soundManager,
-			onItemDeletionRequested = onItemDeletionRequested
-	)
-
-	val itemTouchHelper = ItemTouchHelper(
-				ItemTouchCallback(
-						context = recyclerView.context,
-						deletionHandler = deletionHandler,
-						presenter = presenter,
-						soundSheet = soundSheet,
-						soundManager = soundManager
-				)
-	)
-	itemTouchHelper.attachToRecyclerView(recyclerView)
-
 	val adapter = SoundAdapter(
-			itemTouchHelper = itemTouchHelper,
 			presenter = presenter,
-			playlistManager = playlistManager)
+			playlistManager = playlistManager
+	)
 
 	presenter.adapter = adapter
 

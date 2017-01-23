@@ -16,8 +16,7 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 /**
  * @author eric.neidhardt on 14.06.2016.
  */
-class ItemTouchCallback
-(
+class ItemTouchCallback(
 		context: Context,
 		private val deletionHandler: PendingDeletionHandler,
 		private val presenter: SoundPresenter,

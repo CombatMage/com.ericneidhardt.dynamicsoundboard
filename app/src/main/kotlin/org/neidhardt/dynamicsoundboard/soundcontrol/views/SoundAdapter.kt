@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding.view.RxView
@@ -20,7 +19,6 @@ data class SoundViewHolderEvent<out T>(val viewHolder: SoundViewHolder, val data
 
 class SoundAdapter (
 		private val presenter: SoundPresenter,
-		private val itemTouchHelper: ItemTouchHelper,
 		private val playlistManager: PlaylistManager
 ) :
 		BaseAdapter<MediaPlayerController, SoundViewHolder>()
@@ -35,11 +33,11 @@ class SoundAdapter (
 	val clicksLoopEnabled: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val changesName: PublishSubject<SoundViewHolderEvent<String>> = PublishSubject.create()
 	val seeksToPosition: PublishSubject<SoundViewHolderEvent<Int>> = PublishSubject.create()
+	val startsReorder: PublishSubject<SoundViewHolder> = PublishSubject.create()
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder {
 		val itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control_item, parent, false)
 		val viewHolder = SoundViewHolder(
-				itemTouchHelper = this.itemTouchHelper,
 				itemView = itemView,
 				playlistManager = this.playlistManager)
 
@@ -80,6 +78,11 @@ class SoundAdapter (
 				.map { int -> SoundViewHolderEvent(viewHolder, int) }
 				.skip(1)
 				.subscribe { this.seeksToPosition.onNext(it) }
+
+		RxView.touches(viewHolder.reorder)
+				.takeUntil(parentIsDetached)
+				.map { viewHolder }
+				.subscribe { this.startsReorder.onNext(it) }
 
 		return viewHolder
 	}
