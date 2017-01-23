@@ -42,10 +42,6 @@ class SoundViewHolder(
 			itemTouchHelper.startDrag(this)
 			true
 		}
-
-		this.timePosition.setOnUserChangesListener { progress ->
-			this.player?.progress = progress
-		}
 	}
 
 	fun bindData(player: MediaPlayerController) {

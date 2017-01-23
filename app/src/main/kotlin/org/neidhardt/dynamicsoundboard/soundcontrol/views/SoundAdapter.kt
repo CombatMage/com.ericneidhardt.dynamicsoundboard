@@ -34,6 +34,7 @@ class SoundAdapter (
 	val clicksSettings: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val clicksLoopEnabled: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val changesName: PublishSubject<SoundViewHolderEvent<String>> = PublishSubject.create()
+	val seeksToPosition: PublishSubject<SoundViewHolderEvent<Int>> = PublishSubject.create()
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder {
 		val itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control_item, parent, false)
@@ -73,6 +74,12 @@ class SoundAdapter (
 				.takeUntil(parentIsDetached)
 				.map { string -> SoundViewHolderEvent(viewHolder, string) }
 				.subscribe { this.changesName.onNext(it) }
+
+		RxSeekBar.userChanges(viewHolder.timePosition)
+				.takeUntil(parentIsDetached)
+				.map { int -> SoundViewHolderEvent(viewHolder, int) }
+				.skip(1)
+				.subscribe { this.seeksToPosition.onNext(it) }
 
 		return viewHolder
 	}

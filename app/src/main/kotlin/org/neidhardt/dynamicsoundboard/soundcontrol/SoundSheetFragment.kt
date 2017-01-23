@@ -203,6 +203,12 @@ class SoundSheetFragment :
 							}
 						}
 					})
+
+			this.subscriptions.add(adapter.seeksToPosition
+					.subscribe { event ->
+						val position = event.data
+						event.viewHolder.player?.progress = position
+					})
 		}
 	}
 
