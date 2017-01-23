@@ -25,15 +25,18 @@ class SoundAdapter (
 {
 	init { this.setHasStableIds(true) }
 
+	val startsReorder: PublishSubject<SoundViewHolder> = PublishSubject.create()
+	val startsSwipe: PublishSubject<SoundViewHolder> = PublishSubject.create()
+
 	val clicksPlay: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val clicksStop: PublishSubject<SoundViewHolder> = PublishSubject.create()
 
 	val clicksTogglePlaylist: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val clicksSettings: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val clicksLoopEnabled: PublishSubject<SoundViewHolder> = PublishSubject.create()
+
 	val changesName: PublishSubject<SoundViewHolderEvent<String>> = PublishSubject.create()
 	val seeksToPosition: PublishSubject<SoundViewHolderEvent<Int>> = PublishSubject.create()
-	val startsReorder: PublishSubject<SoundViewHolder> = PublishSubject.create()
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder {
 		val itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control_item, parent, false)
@@ -42,6 +45,16 @@ class SoundAdapter (
 				playlistManager = this.playlistManager)
 
 		val parentIsDetached = RxView.detaches(parent)
+
+		RxView.touches(viewHolder.reorder)
+				.takeUntil(parentIsDetached)
+				.map { viewHolder }
+				.subscribe { this.startsReorder.onNext(it) }
+
+		RxView.touches(itemView)
+				.takeUntil(parentIsDetached)
+				.map { viewHolder }
+				.subscribe { this.startsSwipe.onNext(it) }
 
 		RxView.clicks(viewHolder.playButton)
 				.takeUntil(parentIsDetached)
@@ -78,11 +91,6 @@ class SoundAdapter (
 				.map { int -> SoundViewHolderEvent(viewHolder, int) }
 				.skip(1)
 				.subscribe { this.seeksToPosition.onNext(it) }
-
-		RxView.touches(viewHolder.reorder)
-				.takeUntil(parentIsDetached)
-				.map { viewHolder }
-				.subscribe { this.startsReorder.onNext(it) }
 
 		return viewHolder
 	}

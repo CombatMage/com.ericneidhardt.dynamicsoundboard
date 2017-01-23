@@ -65,7 +65,8 @@ class SoundSheetFragment :
 
 	override var fragmentTag: String = javaClass.name
 	private val soundSheet: NewSoundSheet get() =
-			this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag) ?: throw IllegalStateException("no match for fragmentTag found")
+			this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
+					?: throw IllegalStateException("no match for fragmentTag found")
 
 	private var subscriptions = CompositeSubscription()
 	private val eventBus = EventBus.getDefault()
@@ -176,6 +177,16 @@ class SoundSheetFragment :
 
 		this.soundPresenter?.adapter?.let { adapter ->
 
+			this.subscriptions.add(adapter.startsReorder
+					.subscribe { viewHolder ->
+						this.itemTouchHelper?.startDrag(viewHolder)
+					})
+
+			this.subscriptions.add(adapter.startsSwipe
+					.subscribe { viewHolder ->
+						this.itemTouchHelper?.startSwipe(viewHolder)
+					})
+
 			this.subscriptions.add(adapter.clicksPlay
 					.subscribe { viewHolder ->
 						viewHolder.player?.let { player ->
@@ -234,11 +245,6 @@ class SoundSheetFragment :
 					.subscribe { event ->
 						val position = event.data
 						event.viewHolder.player?.progress = position
-					})
-
-			this.subscriptions.add(adapter.startsReorder
-					.subscribe { viewHolder ->
-						this.itemTouchHelper?.startDrag(viewHolder)
 					})
 		}
 	}
