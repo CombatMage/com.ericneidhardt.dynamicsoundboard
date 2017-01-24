@@ -19,28 +19,6 @@ import rx.subscriptions.CompositeSubscription
 /**
  * File created by eric.neidhardt on 02.07.2015.
  */
-fun createSoundPresenter(
-		soundSheet: NewSoundSheet,
-		soundManager: SoundManager,
-		playlistManager: PlaylistManager
-): SoundPresenter
-{
-	val presenter = SoundPresenter(
-			soundSheet = soundSheet,
-			soundManager = soundManager,
-			playlistManager = playlistManager
-	)
-
-	val adapter = SoundAdapter(
-			presenter = presenter,
-			playlistManager = playlistManager
-	)
-
-	presenter.adapter = adapter
-
-	return presenter
-}
-
 class SoundPresenter (
 		val soundSheet: NewSoundSheet,
 		private val soundManager: SoundManager,

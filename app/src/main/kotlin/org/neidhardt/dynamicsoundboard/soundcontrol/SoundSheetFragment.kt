@@ -32,10 +32,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.ItemTouchCallback
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.createSoundPresenter
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.*
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.eventbus_utils.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
@@ -73,6 +70,7 @@ class SoundSheetFragment :
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
 
+	private var soundAdapter: SoundAdapter? = null
 	private var soundPresenter: SoundPresenter? = null
 	private var itemTouchHelper: ItemTouchHelper? = null
 
@@ -108,12 +106,19 @@ class SoundSheetFragment :
 
 		val soundList = this.rv_fragment_sound_sheet_sounds
 
-		val presenter = createSoundPresenter(
+		val presenter = SoundPresenter(
 				soundSheet = soundSheet,
 				soundManager = this.soundManager,
 				playlistManager = this.playlistManager
 		)
 		this.soundPresenter = presenter
+
+		val adapter = SoundAdapter(
+				presenter = presenter,
+				playlistManager = playlistManager
+		)
+		presenter.adapter = adapter
+		this.soundAdapter = adapter
 
 		val deletionHandler = PendingDeletionHandler(
 				soundPresenter = presenter,
@@ -174,77 +179,73 @@ class SoundSheetFragment :
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { sounds -> if (sounds.isEmpty()) this.floatingActionButton?.visibility = View.VISIBLE })
 
-		this.soundPresenter?.adapter?.let { adapter ->
+		val adapter = this.soundAdapter ?: throw IllegalStateException("should not happen")
 
-			this.subscriptions.add(adapter.startsReorder
-					.subscribe { viewHolder ->
-						this.itemTouchHelper?.startDrag(viewHolder)
-					})
+		this.subscriptions.add(adapter.startsReorder
+				.subscribe { viewHolder -> this.itemTouchHelper?.startDrag(viewHolder) })
 
-			this.subscriptions.add(adapter.startsSwipe
-					.subscribe { viewHolder ->
-						this.itemTouchHelper?.startSwipe(viewHolder)
-					})
+		this.subscriptions.add(adapter.startsSwipe
+				.subscribe { viewHolder -> this.itemTouchHelper?.startSwipe(viewHolder) })
 
-			this.subscriptions.add(adapter.clicksPlay
-					.subscribe { viewHolder ->
-						viewHolder.player?.let { player ->
-							viewHolder.name.clearFocus()
-							if (!viewHolder.playButton.isSelected) {
-								player.playSound()
-							}
-							else
-								player.fadeOutSound()
+		this.subscriptions.add(adapter.clicksPlay
+				.subscribe { viewHolder ->
+					viewHolder.player?.let { player ->
+						viewHolder.name.clearFocus()
+						if (!viewHolder.playButton.isSelected) {
+							player.playSound()
 						}
-					})
+						else
+							player.fadeOutSound()
+					}
+				})
 
-			this.subscriptions.add(adapter.clicksStop
-					.subscribe { viewHolder ->
-						viewHolder.player?.stopSound()
-						viewHolder.updateViewToPlayerState()
-					})
+		this.subscriptions.add(adapter.clicksStop
+				.subscribe { viewHolder ->
+					viewHolder.player?.stopSound()
+					viewHolder.updateViewToPlayerState()
+				})
 
-			this.subscriptions.add(adapter.clicksTogglePlaylist
-					.subscribe { viewHolder ->
-						val addToPlaylist = !viewHolder.inPlaylistButton.isSelected
-						viewHolder.inPlaylistButton.isSelected = addToPlaylist
-						viewHolder.player?.mediaPlayerData?.let { this.playlistManager.togglePlaylistSound(it, addToPlaylist) }
-					})
+		this.subscriptions.add(adapter.clicksTogglePlaylist
+				.subscribe { viewHolder ->
+					val addToPlaylist = !viewHolder.inPlaylistButton.isSelected
+					viewHolder.inPlaylistButton.isSelected = addToPlaylist
+					viewHolder.player?.mediaPlayerData?.let { this.playlistManager.togglePlaylistSound(it, addToPlaylist) }
+				})
 
-			this.subscriptions.add(adapter.clicksSettings
-					.subscribe { viewHolder ->
-						viewHolder.player?.let { player ->
-							if (player.isPlayingSound)
-								player.pauseSound()
-							SoundSettingsDialog.showInstance(this.fragmentManager, player.mediaPlayerData)
+		this.subscriptions.add(adapter.clicksSettings
+				.subscribe { viewHolder ->
+					viewHolder.player?.let { player ->
+						if (player.isPlayingSound)
+							player.pauseSound()
+						SoundSettingsDialog.showInstance(this.fragmentManager, player.mediaPlayerData)
+					}
+				})
+
+		this.subscriptions.add(adapter.clicksLoopEnabled
+				.subscribe { viewHolder ->
+					val toggleState = !viewHolder.isLoopEnabledButton.isSelected
+					viewHolder.isLoopEnabledButton.isSelected = toggleState
+					viewHolder.player?.isLoopingEnabled = toggleState
+				})
+
+		this.subscriptions.add(adapter.changesName
+				.subscribe { event ->
+					event.viewHolder.name.clearFocus()
+					event.viewHolder.player?.let { player ->
+						val newLabel = event.data
+						val currentLabel = player.mediaPlayerData.label
+						if (currentLabel != newLabel) {
+							player.mediaPlayerData.label = newLabel
+							RenameSoundFileDialog.show(this.fragmentManager, player.mediaPlayerData)
 						}
-					})
+					}
+				})
 
-			this.subscriptions.add(adapter.clicksLoopEnabled
-					.subscribe { viewHolder ->
-						val toggleState = !viewHolder.isLoopEnabledButton.isSelected
-						viewHolder.isLoopEnabledButton.isSelected = toggleState
-						viewHolder.player?.isLoopingEnabled = toggleState
-					})
-
-			this.subscriptions.add(adapter.changesName
-					.subscribe { event ->
-						event.viewHolder.name.clearFocus()
-						event.viewHolder.player?.let { player ->
-							val newLabel = event.data
-							val currentLabel = player.mediaPlayerData.label
-							if (currentLabel != newLabel) {
-								player.mediaPlayerData.label = newLabel
-								RenameSoundFileDialog.show(this.fragmentManager, player.mediaPlayerData)
-							}
-						}
-					})
-
-			this.subscriptions.add(adapter.seeksToPosition
-					.subscribe { event ->
-						val position = event.data
-						event.viewHolder.player?.progress = position
-					})
+		this.subscriptions.add(adapter.seeksToPosition
+				.subscribe { event ->
+					val position = event.data
+					event.viewHolder.player?.progress = position
+				})
 		}
 	}
 
