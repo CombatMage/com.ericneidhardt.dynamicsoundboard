@@ -70,7 +70,6 @@ class SoundSheetFragment :
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
 
-	private var soundAdapter: SoundAdapter? = null
 	private var soundPresenter: SoundPresenter? = null
 	private var itemTouchHelper: ItemTouchHelper? = null
 
@@ -78,6 +77,8 @@ class SoundSheetFragment :
 
 	private val floatingActionButton: AddPauseFloatingActionButtonView? by lazy { this.fb_layout_fab }
 	private val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
+
+	var soundAdapter: SoundAdapter? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -107,18 +108,17 @@ class SoundSheetFragment :
 		val soundList = this.rv_fragment_sound_sheet_sounds
 
 		val presenter = SoundPresenter(
-				soundSheet = soundSheet,
 				soundManager = this.soundManager,
-				playlistManager = this.playlistManager
+				playlistManager = this.playlistManager,
+				fragment = this
 		)
 		this.soundPresenter = presenter
 
-		val adapter = SoundAdapter(
-				presenter = presenter,
+		this.soundAdapter = SoundAdapter(
+				soundSheet = this.soundSheet,
+				soundManager = this.soundManager,
 				playlistManager = playlistManager
 		)
-		presenter.adapter = adapter
-		this.soundAdapter = adapter
 
 		val deletionHandler = PendingDeletionHandler(
 				soundPresenter = presenter,
@@ -141,7 +141,7 @@ class SoundSheetFragment :
 		this.itemTouchHelper = itemTouchHelper
 
 		soundList.apply {
-			this.adapter = presenter.adapter
+			this.adapter = soundAdapter
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.addItemDecoration(DividerItemDecoration(this.context.applicationContext, R.color.background, R.color.divider))
 			this.itemAnimator = DefaultItemAnimator()
@@ -246,7 +246,6 @@ class SoundSheetFragment :
 					val position = event.data
 					event.viewHolder.player?.progress = position
 				})
-		}
 	}
 
 	override fun onPause() {

@@ -8,7 +8,9 @@ import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.views.RxCustomEditText
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
+import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.utils.longHash
 import rx.subjects.PublishSubject
 
@@ -18,7 +20,8 @@ import rx.subjects.PublishSubject
 data class SoundViewHolderEvent<out T>(val viewHolder: SoundViewHolder, val data: T)
 
 class SoundAdapter (
-		private val presenter: SoundPresenter,
+		private val soundSheet: NewSoundSheet,
+		private val soundManager: SoundManager,
 		private val playlistManager: PlaylistManager
 ) :
 		BaseAdapter<MediaPlayerController, SoundViewHolder>()
@@ -97,7 +100,10 @@ class SoundAdapter (
 
 	override fun onBindViewHolder(holder: SoundViewHolder, position: Int) { holder.bindData(this.values[position]) }
 
-	override val values: List<MediaPlayerController> get() = this.presenter.values
+	override val values: List<MediaPlayerController> get() {
+		val players = this.soundManager.sounds.getOrElse(this.soundSheet, { emptyList() } )
+		return players
+	}
 
 	override fun getItemCount(): Int = this.values.size
 
