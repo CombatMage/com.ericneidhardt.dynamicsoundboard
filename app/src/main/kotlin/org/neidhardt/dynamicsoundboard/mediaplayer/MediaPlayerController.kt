@@ -1,10 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
-import android.support.annotation.CheckResult
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
-import org.neidhardt.android_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
-import rx.Observable
 
 /**
  * File created by eric.neidhardt on 10.11.2015.

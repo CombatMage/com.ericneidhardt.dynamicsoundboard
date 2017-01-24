@@ -46,7 +46,7 @@ import rx.subscriptions.CompositeSubscription
 /**
  * File created by eric.neidhardt on 02.07.2015.
  */
-private val KEY_FRAGMENT_TAG = "org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment.fragmentTag"
+private val KEY_FRAGMENT_TAG = "SoundSheetFragment.KEY_FRAGMENT_TAG"
 private val KEY_STATE_RECYCLER_VIEW = KEY_FRAGMENT_TAG + "_recycler_view_state"
 
 fun getNewInstance(soundSheet: NewSoundSheet): SoundSheetFragment {
@@ -59,9 +59,8 @@ fun getNewInstance(soundSheet: NewSoundSheet): SoundSheetFragment {
 
 class SoundSheetFragment :
 		BaseFragment(),
-		MediaPlayerFailedEventListener {
-
-	private val LOG_TAG = javaClass.name
+		MediaPlayerFailedEventListener
+{
 
 	override var fragmentTag: String = javaClass.name
 	private val soundSheet: NewSoundSheet get() =
@@ -89,7 +88,7 @@ class SoundSheetFragment :
 
 		val args = this.arguments
 		val fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
-				?: throw NullPointerException(LOG_TAG + ": cannot create fragment, given fragmentTag is null")
+				?: throw NullPointerException(fragmentTag + ": cannot create fragment, given fragmentTag is null")
 
 		this.fragmentTag = fragmentTag as String
 	}
