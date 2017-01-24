@@ -22,8 +22,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.SoundSettingsDialog
+import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
@@ -32,13 +31,17 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import org.neidhardt.dynamicsoundboard.soundcontrol.views.*
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.ItemTouchCallback
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundAdapter
+import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.eventbus_utils.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 02.07.2015.
@@ -70,15 +73,15 @@ class SoundSheetFragment :
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
 
-	private var soundPresenter: SoundPresenter? = null
-	private var itemTouchHelper: ItemTouchHelper? = null
+	private var soundPresenter: SoundPresenter by Delegates.notNull<SoundPresenter>()
+	private var itemTouchHelper: ItemTouchHelper by Delegates.notNull<ItemTouchHelper>()
 
 	private val snackbarPresenter = SnackbarPresenter()
 
 	private val floatingActionButton: AddPauseFloatingActionButtonView? by lazy { this.fb_layout_fab }
 	private val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
 
-	var soundAdapter: SoundAdapter? = null
+	var soundAdapter: SoundAdapter by Delegates.notNull<SoundAdapter>()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -108,21 +111,22 @@ class SoundSheetFragment :
 		val soundList = this.rv_fragment_sound_sheet_sounds
 
 		val presenter = SoundPresenter(
-				soundManager = this.soundManager,
 				playlistManager = this.playlistManager,
 				fragment = this
 		)
 		this.soundPresenter = presenter
 
-		this.soundAdapter = SoundAdapter(
+		val adapter = SoundAdapter(
 				soundSheet = this.soundSheet,
 				soundManager = this.soundManager,
-				playlistManager = playlistManager
+				playlistManager = this.playlistManager
 		)
+		this.soundAdapter = adapter
 
 		val deletionHandler = PendingDeletionHandler(
-				soundPresenter = presenter,
-				manager = soundManager,
+				soundSheet = this.soundSheet,
+				adapter = adapter,
+				manager = this.soundManager,
 				onItemDeletionRequested = { handler, time ->
 					this.showSnackbarForRestore(handler, time)
 				}
@@ -132,9 +136,9 @@ class SoundSheetFragment :
 				ItemTouchCallback(
 						context = soundList.context,
 						deletionHandler = deletionHandler,
-						presenter = presenter,
+						adapter = adapter,
 						soundSheet = soundSheet,
-						soundManager = soundManager
+						soundManager = this.soundManager
 				)
 		)
 		itemTouchHelper.attachToRecyclerView(soundList)
@@ -169,89 +173,93 @@ class SoundSheetFragment :
 
 		this.baseActivity.let { it.toolbarVM.isSoundSheetActionsEnable = true }
 		this.floatingActionButton?.show(true)
-		this.soundPresenter?.onAttachedToWindow()
+		this.soundPresenter.onAttachedToWindow()
 
 		this.eventBus.registerIfRequired(this)
 		this.subscriptions = CompositeSubscription()
+		this.subscriptions.addAll(
 
-		// if sounds where removed, the view becomes unscrollable and therefore the fab can not be reached
-		this.subscriptions.add(RxSoundManager.changesSoundList(this.soundManager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { sounds -> if (sounds.isEmpty()) this.floatingActionButton?.visibility = View.VISIBLE })
+				// if sounds where removed, the view becomes unscrollable and therefore the fab can not be reached
+				RxSoundManager.changesSoundList(this.soundManager)
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe { sounds ->
+							if (sounds.isEmpty()) this.floatingActionButton?.visibility = View.VISIBLE
+						},
 
-		val adapter = this.soundAdapter ?: throw IllegalStateException("should not happen")
+				RxSoundManager.changesSoundList(this.soundManager)
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe { this.soundAdapter.notifyDataSetChanged() },
 
-		this.subscriptions.add(adapter.startsReorder
-				.subscribe { viewHolder -> this.itemTouchHelper?.startDrag(viewHolder) })
+				RxNewPlaylistManager.playlistChanges(this.playlistManager)
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe { this.soundAdapter.notifyDataSetChanged() },
 
-		this.subscriptions.add(adapter.startsSwipe
-				.subscribe { viewHolder -> this.itemTouchHelper?.startSwipe(viewHolder) })
+				this.soundAdapter.startsReorder
+						.subscribe { viewHolder -> this.itemTouchHelper.startDrag(viewHolder) },
 
-		this.subscriptions.add(adapter.clicksPlay
-				.subscribe { viewHolder ->
-					viewHolder.player?.let { player ->
-						viewHolder.name.clearFocus()
-						if (!viewHolder.playButton.isSelected) {
-							player.playSound()
+				this.soundAdapter.startsSwipe
+						.subscribe { viewHolder -> this.itemTouchHelper.startSwipe(viewHolder) },
+
+				this.soundAdapter.clicksPlay
+						.subscribe { viewHolder ->
+							val startPlaying = !viewHolder.playButton.isSelected
+							viewHolder.name.clearFocus()
+							viewHolder.player?.let { player ->
+								this.soundPresenter.userTogglesPlaybackState(player, startPlaying)
+							}
+						},
+
+				this.soundAdapter.clicksStop
+						.subscribe { viewHolder ->
+							viewHolder.player?.let { player ->
+								this.soundPresenter.userStopsPlayback(player)
+							}
+						},
+
+				this.soundAdapter.clicksTogglePlaylist
+						.subscribe { viewHolder ->
+							val addToPlaylist = !viewHolder.inPlaylistButton.isSelected
+							viewHolder.player?.let { player ->
+								this.soundPresenter.userTogglesPlaylistState(player, addToPlaylist)
+							}
+						},
+
+				this.soundAdapter.clicksSettings
+						.subscribe { viewHolder ->
+							viewHolder.player?.let { player ->
+								this.soundPresenter.userRequestPlayerSettings(player)
+							}
+						},
+
+				this.soundAdapter.clicksLoopEnabled
+						.subscribe { viewHolder ->
+							val enableLooping = !viewHolder.isLoopEnabledButton.isSelected
+							viewHolder.player?.let { player ->
+								this.soundPresenter.userEnablesLooping(player, enableLooping)
+							}
+						},
+
+				this.soundAdapter.changesName
+						.subscribe { event ->
+							event.viewHolder.name.clearFocus()
+							event.viewHolder.player?.let { player ->
+								this.soundPresenter.userChangesPlayerName(player, event.data)
+							}
+						},
+
+				this.soundAdapter.seeksToPosition
+						.subscribe { event ->
+							event.viewHolder.player?.let { player ->
+								this.soundPresenter.userSeeksToPlayerPosition(player, event.data)
+							}
 						}
-						else
-							player.fadeOutSound()
-					}
-				})
-
-		this.subscriptions.add(adapter.clicksStop
-				.subscribe { viewHolder ->
-					viewHolder.player?.stopSound()
-					viewHolder.updateViewToPlayerState()
-				})
-
-		this.subscriptions.add(adapter.clicksTogglePlaylist
-				.subscribe { viewHolder ->
-					val addToPlaylist = !viewHolder.inPlaylistButton.isSelected
-					viewHolder.inPlaylistButton.isSelected = addToPlaylist
-					viewHolder.player?.mediaPlayerData?.let { this.playlistManager.togglePlaylistSound(it, addToPlaylist) }
-				})
-
-		this.subscriptions.add(adapter.clicksSettings
-				.subscribe { viewHolder ->
-					viewHolder.player?.let { player ->
-						if (player.isPlayingSound)
-							player.pauseSound()
-						SoundSettingsDialog.showInstance(this.fragmentManager, player.mediaPlayerData)
-					}
-				})
-
-		this.subscriptions.add(adapter.clicksLoopEnabled
-				.subscribe { viewHolder ->
-					val toggleState = !viewHolder.isLoopEnabledButton.isSelected
-					viewHolder.isLoopEnabledButton.isSelected = toggleState
-					viewHolder.player?.isLoopingEnabled = toggleState
-				})
-
-		this.subscriptions.add(adapter.changesName
-				.subscribe { event ->
-					event.viewHolder.name.clearFocus()
-					event.viewHolder.player?.let { player ->
-						val newLabel = event.data
-						val currentLabel = player.mediaPlayerData.label
-						if (currentLabel != newLabel) {
-							player.mediaPlayerData.label = newLabel
-							RenameSoundFileDialog.show(this.fragmentManager, player.mediaPlayerData)
-						}
-					}
-				})
-
-		this.subscriptions.add(adapter.seeksToPosition
-				.subscribe { event ->
-					val position = event.data
-					event.viewHolder.player?.progress = position
-				})
+		)
 	}
 
 	override fun onPause() {
 		super.onPause()
 		this.snackbarPresenter.stop()
-		this.soundPresenter?.onDetachedFromWindow()
+		this.soundPresenter.onDetachedFromWindow()
 		this.subscriptions.unsubscribe()
 		this.eventBus.unregister(this)
 	}
@@ -305,5 +313,4 @@ class SoundSheetFragment :
 			this.snackbarPresenter.showSnackbar(message, Snackbar.LENGTH_INDEFINITE, null)
 		}
 	}
-
 }

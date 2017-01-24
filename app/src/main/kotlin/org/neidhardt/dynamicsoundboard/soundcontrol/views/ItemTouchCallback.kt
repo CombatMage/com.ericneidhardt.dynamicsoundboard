@@ -19,7 +19,7 @@ import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 class ItemTouchCallback(
 		context: Context,
 		private val deletionHandler: PendingDeletionHandler,
-		private val presenter: SoundPresenter,
+		private val adapter: SoundAdapter,
 		private val soundSheet: NewSoundSheet,
 		private val soundManager: SoundManager
 ) : ItemTouchHelper.Callback() {
@@ -53,7 +53,7 @@ class ItemTouchCallback(
 	override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 		val position = viewHolder.adapterPosition
 		if (position != RecyclerView.NO_POSITION) {
-			val item = this.presenter.values[position]
+			val item = this.adapter.values[position]
 
 			if (SoundboardPreferences.isOneSwipeToDeleteEnabled)
 				this.handler.postDelayed({ this.soundManager.remove(this.soundSheet, listOf(item)) }, 200) // give animation some time to settle
