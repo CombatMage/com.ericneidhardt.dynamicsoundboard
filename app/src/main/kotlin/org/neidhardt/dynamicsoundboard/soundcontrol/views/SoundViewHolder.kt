@@ -55,8 +55,9 @@ class SoundViewHolder(
 			this.playButton.isSelected = isPlaying
 			this.isLoopEnabledButton.isSelected = playerData.isLoop
 			this.inPlaylistButton.isSelected = this.playlistManager.playlist.containsPlayerWithId(playerData.playerId)
-			val trackDuration = player.trackDuration
-			this.timePosition.max = trackDuration
+
+			this.timePosition.isEnabled = player.isPlayingSound // only active player is prepared and can seekTo
+			this.timePosition.max = player.trackDuration
 			this.timePosition.progress = player.progress
 		}
 	}
