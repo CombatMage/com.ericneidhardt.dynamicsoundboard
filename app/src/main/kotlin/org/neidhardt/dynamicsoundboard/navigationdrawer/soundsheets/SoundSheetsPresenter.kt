@@ -21,7 +21,7 @@ import kotlin.properties.Delegates
 open class SoundSheetsPresenter(
 		override val eventBus: EventBus
 ) :
-		NavigationDrawerListBasePresenter<RecyclerView?>(),
+		NavigationDrawerListBasePresenter(),
 		NavigationDrawerItemClickListener<NewSoundSheet>
 {
 	companion object {

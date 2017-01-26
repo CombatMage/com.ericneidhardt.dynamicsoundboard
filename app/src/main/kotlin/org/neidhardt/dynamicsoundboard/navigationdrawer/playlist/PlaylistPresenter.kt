@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist
 
-import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -20,12 +19,10 @@ import kotlin.properties.Delegates
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
-
-
 private val INDEX_NOT_SET = -1
 
 class PlaylistPresenter(override val eventBus: EventBus) :
-		NavigationDrawerListBasePresenter<RecyclerView?>(),
+		NavigationDrawerListBasePresenter(),
 		NavigationDrawerItemClickListener<MediaPlayerController>,
 		MediaPlayerEventListener
 {

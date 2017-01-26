@@ -18,7 +18,7 @@ class SoundLayoutsPresenter
 (
 		override val eventBus: EventBus
 ) :
-		NavigationDrawerListBasePresenter<RecyclerView?>(),
+		NavigationDrawerListBasePresenter(),
 		NavigationDrawerItemClickListener<NewSoundLayout>
 {
 	companion object {

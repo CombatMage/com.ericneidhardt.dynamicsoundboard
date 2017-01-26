@@ -34,8 +34,6 @@ import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OnOpenSoundLayoutSettingsEventListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
@@ -62,8 +60,7 @@ import kotlin.properties.Delegates
 class SoundActivity :
 		BaseActivity(),
 		RequestPermissionHelper,
-		AddPauseFloatingActionButtonView.FabEventListener,
-		OnOpenSoundLayoutSettingsEventListener {
+		AddPauseFloatingActionButtonView.FabEventListener {
 
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
@@ -222,11 +219,6 @@ class SoundActivity :
 			else
 				super.onBackPressed()
 		}
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: OpenSoundLayoutSettingsEvent) {
-		GenericRenameDialogs.showRenameSoundLayoutDialog(this.supportFragmentManager, event.soundLayout)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

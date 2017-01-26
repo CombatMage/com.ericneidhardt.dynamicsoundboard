@@ -25,8 +25,7 @@ interface NavigationDrawerListPresenter {
 	val itemCount: Int
 }
 
-abstract class NavigationDrawerListBasePresenter<T: RecyclerView?> :
-		NavigationDrawerListPresenter {
+abstract class NavigationDrawerListBasePresenter : NavigationDrawerListPresenter {
 
 	var isInSelectionMode: Boolean = false
 

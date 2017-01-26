@@ -8,8 +8,6 @@ import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.events.OpenSoundLayoutSettingsEvent
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.utils.longHash
 import rx.lang.kotlin.PublishSubject
@@ -18,11 +16,12 @@ import rx.subjects.PublishSubject
 /**
  * File created by eric.neidhardt on 08.03.2015.
  */
-class SoundLayoutsAdapter(private val eventBus: EventBus) :
+class SoundLayoutsAdapter() :
 		BaseAdapter<NewSoundLayout, SoundLayoutViewHolder>(),
 		ListAdapter<NewSoundLayout>
 {
 	val clicksViewHolder: PublishSubject<SoundLayoutViewHolder> = PublishSubject()
+	val clicksSettings: PublishSubject<SoundLayoutViewHolder> = PublishSubject.create()
 
 	init { this.setHasStableIds(true) }
 
@@ -40,18 +39,19 @@ class SoundLayoutsAdapter(private val eventBus: EventBus) :
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundLayoutViewHolder
 	{
 		val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-		val viewHolder = SoundLayoutViewHolder(view, object: NavigationDrawerItemClickListener<NewSoundLayout>
-		{
-			override fun onItemClick(data: NewSoundLayout)
-			{
-				eventBus.post(OpenSoundLayoutSettingsEvent(data))
-			}
-		})
+		val viewHolder = SoundLayoutViewHolder(view)
+
+		val parentDetaches = RxView.detaches(parent)
 
 		RxView.clicks(view)
-				.takeUntil(RxView.detaches(parent))
+				.takeUntil(parentDetaches)
 				.map { viewHolder }
 				.subscribe(this.clicksViewHolder)
+
+		RxView.clicks(viewHolder.openSettings)
+				.takeUntil(parentDetaches)
+				.map { viewHolder }
+				.subscribe(this.clicksSettings)
 
 		return viewHolder
 	}

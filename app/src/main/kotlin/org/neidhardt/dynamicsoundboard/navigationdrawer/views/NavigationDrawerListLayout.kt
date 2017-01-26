@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.views
 
 import android.support.design.widget.AppBarLayout
-import android.support.v4.app.FragmentManager
 import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -9,20 +8,19 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsAdapter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
 import org.neidhardt.eventbus_utils.registerIfRequired
+import java.lang.ref.WeakReference
 
 /**
  * @author eric.neidhardt on 03.05.2016.
@@ -43,7 +41,7 @@ enum class List {
 
 class NavigationDrawerListPresenter(
 		private val eventBus: EventBus,
-		private val fragmentManager: FragmentManager,
+		fragment: NavigationDrawerFragment,
 
 		private val coordinatorLayout: NonTouchableCoordinatorLayout,
 		private val appBarLayout: AppBarLayout,
@@ -54,16 +52,16 @@ class NavigationDrawerListPresenter(
 		NavigationDrawerListLayout,
 		ItemSelectedForDeletionListener {
 
+	private val fragmentReference: WeakReference<NavigationDrawerFragment> = WeakReference(fragment)
+
 	private var currentPresenter: NavigationDrawerListPresenter? = null
 
-	private val adapterSoundSheets = SoundSheetsAdapter()
-	private val adapterPlaylist = PlaylistAdapter()
-	private val adapterSoundLayouts = SoundLayoutsAdapter(eventBus)
-
-	private val presenterSoundSheets = SoundSheetsPresenter.createSoundSheetPresenter(eventBus, this.adapterSoundSheets)
-	private val presenterPlaylist = PlaylistPresenter.createPlaylistPresenter(eventBus, this.adapterPlaylist)
-	private val presenterSoundLayouts = SoundLayoutsPresenter.createSoundLayoutsPresenter(eventBus, this.adapterSoundLayouts)
-
+	private val presenterSoundSheets = SoundSheetsPresenter
+			.createSoundSheetPresenter(eventBus, fragment.adapterSoundSheets)
+	private val presenterPlaylist = PlaylistPresenter
+			.createPlaylistPresenter(eventBus, fragment.adapterPlaylist)
+	private val presenterSoundLayouts = SoundLayoutsPresenter
+			.createSoundLayoutsPresenter(eventBus, fragment.adapterSoundLayouts)
 
 	private var currentListBacking: List? = null
 	override var currentList: List?
@@ -148,10 +146,11 @@ class NavigationDrawerListPresenter(
 	}
 
 	private fun add() {
+		val fragmentManager = this.fragmentReference.get().fragmentManager ?: return
 		when (this.currentList) {
-			List.SoundLayouts -> GenericAddDialogs.showAddSoundLayoutDialog(this.fragmentManager)
-			List.Playlist -> AddNewSoundDialog.show(this.fragmentManager, PlaylistTAG)
-			List.SoundSheet -> GenericAddDialogs.showAddSoundSheetDialog(this.fragmentManager)
+			List.SoundLayouts -> GenericAddDialogs.showAddSoundLayoutDialog(fragmentManager)
+			List.Playlist -> AddNewSoundDialog.show(fragmentManager, PlaylistTAG)
+			List.SoundSheet -> GenericAddDialogs.showAddSoundSheetDialog(fragmentManager)
 		}
 	}
 
