@@ -11,16 +11,12 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
 import java.util.*
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
-fun createSoundSheetPresenter(eventBus: EventBus, recyclerView: RecyclerView): SoundSheetsPresenter {
-	return SoundSheetsPresenter(eventBus).apply {
-		this.adapter = SoundSheetsAdapter(this)
-		this.view = recyclerView
-	}
-}
+
 
 open class SoundSheetsPresenter(
 		override val eventBus: EventBus
@@ -28,27 +24,38 @@ open class SoundSheetsPresenter(
 		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<NewSoundSheet>
 {
-	override var view: RecyclerView? = null
+	companion object {
+		fun createSoundSheetPresenter(eventBus: EventBus, adapter: SoundSheetsAdapter): SoundSheetsPresenter {
+			return SoundSheetsPresenter(eventBus).apply {
+				this.adapter = adapter
+			}
+		}
+	}
 
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager
 
 	private var subscriptions = CompositeSubscription()
 
-	var adapter: SoundSheetsAdapter? = null
+	var adapter: SoundSheetsAdapter by Delegates.notNull<SoundSheetsAdapter>()
 	val values: List<NewSoundSheet> get() = this.soundSheetManager.soundSheets
 
 	override fun onAttachedToWindow() {
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 
 		this.subscriptions = CompositeSubscription()
 		this.subscriptions.add(RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.adapter?.notifyDataSetChanged() })
+				.subscribe { this.adapter.notifyDataSetChanged() })
 
 		this.subscriptions.add(RxSoundManager.changesSoundList(this.soundManager)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.adapter?.notifyDataSetChanged() })
+				.subscribe { this.adapter.notifyDataSetChanged() })
+
+		this.subscriptions.add(this.adapter.clicksViewHolder
+				.subscribe { viewHolder ->
+					viewHolder.data?.let { this.onItemClick(it) }
+				})
 	}
 
 	override fun onDetachedFromWindow() {
@@ -71,7 +78,7 @@ open class SoundSheetsPresenter(
 		if (this.isInSelectionMode) {
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			super.onItemSelectedForDeletion()
-			this.adapter?.notifyItemChanged(data)
+			this.adapter.notifyItemChanged(data)
 		}
 		else {
 			this.soundSheetManager.setSelected(data)
@@ -89,7 +96,7 @@ open class SoundSheetsPresenter(
 		for (soundSheet in selectedSoundSheets) {
 			soundSheet.isSelectedForDeletion = false
 		}
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 	}
 
 	override fun selectAllItems() {
@@ -97,7 +104,7 @@ open class SoundSheetsPresenter(
 		for (soundSheet in selectedSoundSheets) {
 			soundSheet.isSelectedForDeletion = true
 		}
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 	}
 
 	private fun getSoundSheetsSelectedForDeletion(): List<NewSoundSheet> {

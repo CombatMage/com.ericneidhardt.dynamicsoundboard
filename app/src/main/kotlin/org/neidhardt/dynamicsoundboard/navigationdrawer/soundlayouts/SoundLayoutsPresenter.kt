@@ -9,21 +9,11 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBase
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 17.07.2015.
  */
-fun createSoundLayoutsPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView): SoundLayoutsPresenter
-{
-	return SoundLayoutsPresenter(
-			eventBus = eventBus
-	).apply {
-		this.adapter = SoundLayoutsAdapter(eventBus, this)
-		this.view = recyclerView
-	}
-}
-
 class SoundLayoutsPresenter
 (
 		override val eventBus: EventBus
@@ -31,21 +21,32 @@ class SoundLayoutsPresenter
 		NavigationDrawerListBasePresenter<RecyclerView?>(),
 		NavigationDrawerItemClickListener<NewSoundLayout>
 {
-	override var view: RecyclerView? = null
+	companion object {
+		fun createSoundLayoutsPresenter(eventBus: EventBus, adapter: SoundLayoutsAdapter): SoundLayoutsPresenter {
+			return SoundLayoutsPresenter(eventBus).apply {
+				this.adapter = adapter
+			}
+		}
+	}
 
 	private val manager = SoundboardApplication.soundLayoutManager
 
-	var adapter: SoundLayoutsAdapter? = null
+	var adapter: SoundLayoutsAdapter by Delegates.notNull<SoundLayoutsAdapter>()
 	val values: List<NewSoundLayout> get() = this.manager.soundLayouts
 
 	private var subscriptions = CompositeSubscription()
 
 	override fun onAttachedToWindow() {
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 		this.subscriptions = CompositeSubscription()
 		this.subscriptions.add(RxNewSoundLayoutManager.soundLayoutsChanges(this.manager)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.adapter?.notifyDataSetChanged() })
+				.subscribe { this.adapter.notifyDataSetChanged() })
+
+		this.subscriptions.add(this.adapter.clicksViewHolder
+				.subscribe { viewHolder ->
+					viewHolder.data?.let { this.onItemClick(it) }
+				})
 	}
 
 	override fun deleteSelectedItems() {
@@ -69,7 +70,7 @@ class SoundLayoutsPresenter
 		for (soundLayout in selectedSoundLayouts) {
 			soundLayout.isSelectedForDeletion = false
 		}
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 	}
 
 	override fun selectAllItems() {
@@ -77,11 +78,11 @@ class SoundLayoutsPresenter
 		for (soundLayout in selectedSoundLayouts) {
 			soundLayout.isSelectedForDeletion = true
 		}
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 	}
 
 	private fun getSoundLayoutsSelectedForDeletion(): List<NewSoundLayout> {
-		val existingSoundLayouts = this.adapter?.values
+		val existingSoundLayouts = this.adapter.values
 		val selectedSoundLayouts = existingSoundLayouts.orEmpty().filter { it.isSelectedForDeletion }
 		return selectedSoundLayouts
 	}
@@ -90,11 +91,10 @@ class SoundLayoutsPresenter
 		if (this.isInSelectionMode) {
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			super.onItemSelectedForDeletion()
-			this.adapter?.notifyDataSetChanged()
+			this.adapter.notifyDataSetChanged()
 		}
 		else {
 			this.manager.setSelected(data)
-			//this.eventBus.post(SoundLayoutSelectedEvent(data))
 		}
 	}
 }

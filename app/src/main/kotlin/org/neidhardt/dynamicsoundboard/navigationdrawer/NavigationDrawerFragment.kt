@@ -81,7 +81,6 @@ class NavigationDrawerFragment : BaseFragment() {
 				onSoundSheetsSelectedCallback = { this.listView?.currentList = List.SoundSheet },
 				onSoundLayoutsSelectedCallback = { this.listView?.currentList = List.SoundLayouts }
 		)
-
 	}
 
 	override fun onStart() {
@@ -99,6 +98,7 @@ class NavigationDrawerFragment : BaseFragment() {
 					val selectedLayout = layouts.activeLayout
 					this.headerVM.title = selectedLayout.label
 				})
+
 	}
 
 	override fun onStop() {

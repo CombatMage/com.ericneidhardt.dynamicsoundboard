@@ -40,7 +40,7 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog() {
 		fun show(fragmentManager: FragmentManager?, playerData: NewMediaPlayerData) {
 			if (fragmentManager == null) return
 			RenameSoundFileDialog().let { dialog ->
-				SoundSettingsBaseDialog.addArguments(dialog, playerData.playerId, playerData.fragmentTag)
+				SoundSettingsBaseDialog.addArguments(dialog, playerData.playerId!!, playerData.fragmentTag!!)
 				dialog.show(fragmentManager, TAG)
 			}
 		}
@@ -87,7 +87,7 @@ private class RenameSoundFileDialogPresenter (
 	private var playersWithMatchingUri: List<MediaPlayerController>? = null
 
 	init {
-		this.playersWithMatchingUri = this.getPlayersWithMatchingUri(this.playerData.uri)
+		this.playersWithMatchingUri = this.getPlayersWithMatchingUri(this.playerData.uri!!)
 		if (playersWithMatchingUri!!.size > 1) {
 			this.renameAllOccurrences.visibility = View.VISIBLE
 			this.renameAllOccurrences.text = this.renameAllOccurrences.text.toString()
@@ -124,7 +124,7 @@ private class RenameSoundFileDialogPresenter (
 		val label = this.playerData.label
 		val renameAllOccurrences = this.renameAllOccurrences.isChecked
 
-		this.deliverResult(uri, label, renameAllOccurrences)
+		this.deliverResult(uri, label!!, renameAllOccurrences)
 
 		this.dialog.dismiss()
 	}
@@ -197,7 +197,7 @@ private class RenameSoundFileDialogPresenter (
 			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
 				this.playlistManager.remove(listOf(player))
 			else {
-				val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(player.mediaPlayerData.fragmentTag)
+				val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(player.mediaPlayerData.fragmentTag!!)
 						?: throw IllegalArgumentException("no soundSheet for given fragmentTag was found")
 				this.soundsManager.remove(soundSheet, listOf(player))
 			}

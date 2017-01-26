@@ -15,18 +15,12 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBase
 import org.neidhardt.eventbus_utils.registerIfRequired
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
+import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
-fun createPlaylistPresenter(
-		eventBus: EventBus, recyclerView: RecyclerView): PlaylistPresenter
-{
-	return PlaylistPresenter(eventBus).apply {
-		this.adapter = PlaylistAdapter(this)
-		this.view = recyclerView
-	}
-}
+
 
 private val INDEX_NOT_SET = -1
 
@@ -35,12 +29,18 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 		NavigationDrawerItemClickListener<MediaPlayerController>,
 		MediaPlayerEventListener
 {
-	override var view: RecyclerView? = null
+	companion object {
+		fun createPlaylistPresenter(eventBus: EventBus, adapter: PlaylistAdapter): PlaylistPresenter {
+			return PlaylistPresenter(eventBus).apply {
+				this.adapter = adapter
+			}
+		}
+	}
 
 	private val manager = SoundboardApplication.playlistManager
 
 	private var subscriptions = CompositeSubscription()
-	var adapter: PlaylistAdapter? = null
+	var adapter: PlaylistAdapter by Delegates.notNull<PlaylistAdapter>()
 	val values: List<MediaPlayerController> get() = this.manager.playlist
 
 	private var currentItemIndex: Int = INDEX_NOT_SET
@@ -48,11 +48,16 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 	override fun onAttachedToWindow() {
 		this.eventBus.registerIfRequired(this)
 
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 		this.subscriptions = CompositeSubscription()
 		this.subscriptions.add(RxNewPlaylistManager.playlistChanges(this.manager)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.adapter?.notifyDataSetChanged() })
+				.subscribe { this.adapter.notifyDataSetChanged() })
+
+		this.subscriptions.add(this.adapter.clicksViewHolder
+				.subscribe { viewHolder ->
+					viewHolder.player?.let{ this.onItemClick(it) }
+				})
 	}
 
 	override fun onDetachedFromWindow() {
@@ -83,7 +88,7 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 		for (player in selectedPlayers)
 			player.mediaPlayerData.isSelectedForDeletion = false
 
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 	}
 
 	override fun selectAllItems() {
@@ -91,13 +96,13 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 		for (player in selectedPlayers) {
 			player.mediaPlayerData.isSelectedForDeletion = true
 		}
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 	}
 
 	override fun onItemClick(data: MediaPlayerController) {
 		if (this.isInSelectionMode) {
 			data.mediaPlayerData.isSelectedForDeletion = !data.mediaPlayerData.isSelectedForDeletion
-			this.adapter?.notifyItemChanged(data)
+			this.adapter.notifyItemChanged(data)
 			super.onItemSelectedForDeletion()
 		} else
 			this.startOrStopPlayList(data)
@@ -116,7 +121,7 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 			nextActivePlayer.stopSound()
 		else
 			nextActivePlayer.playSound()
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -125,10 +130,10 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 		if (this.values.contains(player) && !event.isAlive) { // removed a destroyed media player
 			val index = this.values.indexOf(player)
 			this.manager.remove(listOf(player))
-			this.adapter?.notifyItemRemoved(index)
+			this.adapter.notifyItemRemoved(index)
 		}
 		else
-			this.adapter?.notifyDataSetChanged()
+			this.adapter.notifyDataSetChanged()
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -150,7 +155,7 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 				this.currentItemIndex = 0
 
 			this.values[this.currentItemIndex].playSound()
-			this.adapter?.notifyDataSetChanged()
+			this.adapter.notifyDataSetChanged()
 		}
 	}
 }

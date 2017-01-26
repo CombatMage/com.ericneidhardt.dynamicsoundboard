@@ -13,12 +13,15 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.createPlaylistPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.createSoundLayoutsPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.createSoundSheetPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsAdapter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter
+import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
 import org.neidhardt.eventbus_utils.registerIfRequired
 
 /**
@@ -53,9 +56,14 @@ class NavigationDrawerListPresenter(
 
 	private var currentPresenter: NavigationDrawerListPresenter? = null
 
-	private val presenterSoundSheets = createSoundSheetPresenter(eventBus, recyclerView)
-	private val presenterPlaylist = createPlaylistPresenter(eventBus, recyclerView)
-	private val presenterSoundLayouts = createSoundLayoutsPresenter(eventBus, recyclerView)
+	private val adapterSoundSheets = SoundSheetsAdapter()
+	private val adapterPlaylist = PlaylistAdapter()
+	private val adapterSoundLayouts = SoundLayoutsAdapter(eventBus)
+
+	private val presenterSoundSheets = SoundSheetsPresenter.createSoundSheetPresenter(eventBus, this.adapterSoundSheets)
+	private val presenterPlaylist = PlaylistPresenter.createPlaylistPresenter(eventBus, this.adapterPlaylist)
+	private val presenterSoundLayouts = SoundLayoutsPresenter.createSoundLayoutsPresenter(eventBus, this.adapterSoundLayouts)
+
 
 	private var currentListBacking: List? = null
 	override var currentList: List?

@@ -7,31 +7,18 @@ import android.widget.SeekBar
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
-class PlaylistViewHolder
-(
-		itemView: View,
-		private val onItemClickListener: NavigationDrawerItemClickListener<MediaPlayerController>
-) :
-		RecyclerView.ViewHolder(itemView)
-{
+class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
 	private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
 	private val timePosition = itemView.findViewById(R.id.sb_progress) as SeekBar
 	private val divider = itemView.findViewById(R.id.v_divider)
 
-	private var player: MediaPlayerController? = null
-
-	init {
-		itemView.setOnClickListener( { view ->
-			this.onItemClickListener.onItemClick(this.player as MediaPlayerController)
-		})
-	}
+	var player: MediaPlayerController? = null
 
 	fun bindData(player: MediaPlayerController, isLastItem: Boolean) {
 		this.player = player

@@ -5,17 +5,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 
 /**
  * File created by eric.neidhardt on 10.07.2015.
  */
-class SoundSheetViewHolder
-(
-		itemView: View,
-		private val onItemClickListener: NavigationDrawerItemClickListener<NewSoundSheet>
-) : RecyclerView.ViewHolder(itemView)
+class SoundSheetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
 	private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
@@ -23,15 +18,9 @@ class SoundSheetViewHolder
 	private val soundCountLabel = itemView.findViewById(R.id.tv_sound_count_label)
 	private val divider = itemView.findViewById(R.id.v_divider)
 
-	private var data: NewSoundSheet? = null
+	var data: NewSoundSheet? = null
 
-	init {
-		itemView.setOnClickListener({ view
-			-> this.onItemClickListener.onItemClick(this.data as NewSoundSheet) })
-	}
-
-	fun bindData(data: NewSoundSheet, isLastItem: Boolean)
-	{
+	fun bindData(data: NewSoundSheet, isLastItem: Boolean) {
 		this.data = data
 
 		this.label.text = data.label
@@ -46,8 +35,7 @@ class SoundSheetViewHolder
 		this.divider.visibility = if (isLastItem) View.INVISIBLE else View.VISIBLE
 	}
 
-	private fun setSoundCount(soundCount: Int)
-	{
+	private fun setSoundCount(soundCount: Int) {
 		if (soundCount == 0) {
 			this.soundCount.visibility = View.INVISIBLE
 			this.soundCountLabel.visibility = View.INVISIBLE

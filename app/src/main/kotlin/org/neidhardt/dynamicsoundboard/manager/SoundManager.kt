@@ -11,7 +11,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.add
@@ -62,7 +61,7 @@ class SoundManager(private val context: Context) {
 					if (soundSheet.mediaPlayers == null)
 						soundSheet.mediaPlayers = ArrayList()
 
-					val soundCopyList = soundSheet.mediaPlayers.getCopyList()
+					val soundCopyList = soundSheet.mediaPlayers?.getCopyList()!!
 					soundCopyList.forEach { this.createPlayerAndAddToSounds(soundSheet, it) }
 					this.invokeListeners()
 				}, { error ->
@@ -105,7 +104,7 @@ class SoundManager(private val context: Context) {
 	fun remove(soundSheet: NewSoundSheet, playerList: List<MediaPlayerController>) {
 		playerList.forEach { player ->
 			player.destroy(false)
-			soundSheet.mediaPlayers.remove(player.mediaPlayerData)
+			soundSheet.mediaPlayers?.remove(player.mediaPlayerData)
 		}
 		val playerOfSoundSheet = this.mMediaPlayers?.get(soundSheet)
 		playerOfSoundSheet?.removeAll(playerList)
@@ -113,7 +112,9 @@ class SoundManager(private val context: Context) {
 	}
 
 	fun move(soundSheet: NewSoundSheet, from: Int, to: Int) {
-		val size = soundSheet.mediaPlayers.size
+		val players = soundSheet.mediaPlayers ?: return
+
+		val size = players.size
 		var indexFrom = from
 		var indexTo = to
 
@@ -128,8 +129,8 @@ class SoundManager(private val context: Context) {
 			indexTo = 0
 
 
-		val playerData = soundSheet.mediaPlayers.removeAt(indexFrom)
-		soundSheet.mediaPlayers.add(indexTo, playerData)
+		val playerData = players.removeAt(indexFrom)
+		players.add(indexTo, playerData)
 
 		val soundsInSoundSheet = this.mMediaPlayers?.get(soundSheet)
 		val player = soundsInSoundSheet?.removeAt(indexFrom) ?: throw IllegalStateException("no player was found in soundSheet list")
@@ -140,7 +141,7 @@ class SoundManager(private val context: Context) {
 
 	fun notifyHasChanged(player: MediaPlayerController) {
 		if (this.mSoundSheets == null)
-			throw IllegalStateException("sound manager init not done")
+			throw IllegalStateException("Cannot update player: $player, sound manager init not done")
 		this.invokeListeners()
 	}
 
@@ -160,8 +161,9 @@ class SoundManager(private val context: Context) {
 			soundsForSoundSheet.add(player)
 			if (soundSheet.mediaPlayers == null)
 				soundSheet.mediaPlayers = ArrayList()
-			if (soundSheet.mediaPlayers.firstOrNull { it.playerId == playerData.playerId } == null)
-				soundSheet.mediaPlayers.add(playerData)
+
+			if (soundSheet.mediaPlayers!!.firstOrNull { it.playerId == playerData.playerId } == null)
+				soundSheet.mediaPlayers!!.add(playerData)
 		}
 	}
 

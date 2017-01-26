@@ -1,5 +1,7 @@
 package org.neidhardt.dynamicsoundboard.persistance.model;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 /**
@@ -16,7 +18,9 @@ public class NewSoundLayout {
 
 	public boolean isSelectedForDeletion;
 
+	@Nullable
 	public List<NewSoundSheet> soundSheets;
 
+	@Nullable
 	public List<NewMediaPlayerData> playList;
 }

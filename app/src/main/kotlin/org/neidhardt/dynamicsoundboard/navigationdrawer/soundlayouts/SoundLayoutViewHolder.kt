@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 
@@ -15,7 +14,6 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 class SoundLayoutViewHolder
 (
 		itemView: View,
-		private val onItemClickedListener: NavigationDrawerItemClickListener<NewSoundLayout>,
 		private val onSettingsClickedListener: NavigationDrawerItemClickListener<NewSoundLayout>
 )
 :
@@ -26,10 +24,9 @@ class SoundLayoutViewHolder
 	private val openSettings: View = itemView.findViewById(R.id.ib_view_sound_layout_item_settings)
 	private val divider = itemView.findViewById(R.id.v_divider)
 
-	private var data: NewSoundLayout? = null
+	var data: NewSoundLayout? = null
 
 	init {
-		this.itemView.setOnClickListener { this.onItemClickedListener.onItemClick(this.data as NewSoundLayout) }
 		this.openSettings.setOnClickListener{ this.onSettingsClickedListener.onItemClick(this.data as NewSoundLayout )}
 	}
 

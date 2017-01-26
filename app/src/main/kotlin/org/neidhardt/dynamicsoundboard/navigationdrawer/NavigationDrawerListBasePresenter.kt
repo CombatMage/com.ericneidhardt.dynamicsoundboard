@@ -30,8 +30,6 @@ abstract class NavigationDrawerListBasePresenter<T: RecyclerView?> :
 
 	var isInSelectionMode: Boolean = false
 
-	abstract var view: T
-
 	abstract val eventBus: EventBus
 
 	override fun startDeletionMode() {

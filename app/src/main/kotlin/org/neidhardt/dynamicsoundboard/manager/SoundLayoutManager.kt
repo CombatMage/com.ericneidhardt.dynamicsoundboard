@@ -121,12 +121,12 @@ class SoundLayoutManager(
 		val activeLayout = this.soundLayouts.activeLayout
 		if (activeLayout.soundSheets == null)
 			activeLayout.soundSheets = ArrayList()
-		this.soundSheetManager.set(activeLayout.soundSheets)
-		this.soundManager.set(activeLayout.soundSheets)
+		this.soundSheetManager.set(activeLayout.soundSheets!!)
+		this.soundManager.set(activeLayout.soundSheets!!)
 
 		if (activeLayout.playList == null)
 			activeLayout.playList = ArrayList()
-		this.playlistManager.set(activeLayout.playList)
+		this.playlistManager.set(activeLayout.playList!!)
 
 		this.mCurrentlyPlayingSounds.clear()
 	}

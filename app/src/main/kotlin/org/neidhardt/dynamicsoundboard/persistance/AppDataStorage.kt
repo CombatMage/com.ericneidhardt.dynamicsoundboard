@@ -38,10 +38,10 @@ class AppDataStorage(context: Context) : SimpleStorage<AppData>(context, AppData
 	 */
 	private fun prepareAppDataForSave(appData: AppData) {
 		appData.soundLayouts?.forEach { soundLayout ->
-			soundLayout.playList.forEach { it.isSelectedForDeletion = false }
-			soundLayout.soundSheets.forEach { soundSheet ->
+			soundLayout.playList?.forEach { it.isSelectedForDeletion = false }
+			soundLayout.soundSheets?.forEach { soundSheet ->
 				soundSheet.isSelectedForDeletion = false
-				soundSheet.mediaPlayers.forEach { it.isSelectedForDeletion = false }
+				soundSheet.mediaPlayers?.forEach { it.isSelectedForDeletion = false }
 			}
 		}
 	}

@@ -57,7 +57,9 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 	}
 
 	private fun createDialogIfNoSheetsExists(): Dialog {
-		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_from_intent, null)
+		@SuppressLint("InflateParams") val view = this.activity.layoutInflater
+				.inflate(R.layout.dialog_add_new_sound_from_intent, null)
+
 		this.soundName = view.findViewById(R.id.et_name_file) as EditText
 		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as EditText
 
@@ -73,7 +75,8 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 	}
 
 	private fun createDialogToSelectSoundSheet(): Dialog {
-		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null)
+		@SuppressLint("InflateParams") val view = this.activity.layoutInflater
+				.inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null)
 
 		this.soundName = view.findViewById(R.id.et_name_file) as EditText
 		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as EditText
@@ -145,7 +148,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		}
 		this.soundSheetManager.add(soundSheet)
 		this.soundSheetManager.setSelected(soundSheet)
-		return soundSheet.fragmentTag
+		return soundSheet.fragmentTag!!
 	}
 
 	companion object {
@@ -174,15 +177,17 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 
 		private fun getLabelsFromSoundSheets(soundSheets: List<NewSoundSheet>): ArrayList<String> {
 			val labels = ArrayList<String>()
-			for (soundSheet in soundSheets)
-				labels.add(soundSheet.label)
+			for (soundSheet in soundSheets) {
+				soundSheet.label?.let { labels.add(it) }
+			}
 			return labels
 		}
 
 		private fun getIdsFromSoundSheets(soundSheets: List<NewSoundSheet>): ArrayList<String> {
 			val labels = ArrayList<String>()
-			for (soundSheet in soundSheets)
-				labels.add(soundSheet.fragmentTag)
+			for (soundSheet in soundSheets){
+				soundSheet.fragmentTag?.let { labels.add(it) }
+			}
 			return labels
 		}
 	}
