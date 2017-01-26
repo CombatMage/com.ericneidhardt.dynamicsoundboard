@@ -70,7 +70,6 @@ class SoundActivity :
 	private val eventBus = EventBus.getDefault()
 	private var subscriptions = CompositeSubscription()
 
-	private val storage = SoundboardApplication.storage
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
@@ -326,7 +325,8 @@ class SoundActivity :
 		val fragmentManager = this.supportFragmentManager
 		val transaction = fragmentManager.beginTransaction()
 
-		val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag) ?: getNewInstance(soundSheet)
+		val fragment = fragmentManager.findFragmentByTag(soundSheet.fragmentTag) ?:
+				SoundSheetFragment.getNewInstance(soundSheet)
 		transaction.replace(R.id.main_frame, fragment, soundSheet.fragmentTag)
 
 		transaction.commit()

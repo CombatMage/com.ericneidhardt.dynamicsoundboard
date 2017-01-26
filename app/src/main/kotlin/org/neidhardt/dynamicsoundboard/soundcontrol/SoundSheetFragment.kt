@@ -49,18 +49,19 @@ import kotlin.properties.Delegates
 private val KEY_FRAGMENT_TAG = "SoundSheetFragment.KEY_FRAGMENT_TAG"
 private val KEY_STATE_RECYCLER_VIEW = KEY_FRAGMENT_TAG + "_recycler_view_state"
 
-fun getNewInstance(soundSheet: NewSoundSheet): SoundSheetFragment {
-	val fragment = SoundSheetFragment()
-	val args = Bundle()
-	args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
-	fragment.arguments = args
-	return fragment
-}
-
 class SoundSheetFragment :
 		BaseFragment(),
 		MediaPlayerFailedEventListener
 {
+	companion object {
+		fun getNewInstance(soundSheet: NewSoundSheet): SoundSheetFragment {
+			val fragment = SoundSheetFragment()
+			val args = Bundle()
+			args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
+			fragment.arguments = args
+			return fragment
+		}
+	}
 
 	override var fragmentTag: String = javaClass.name
 	private val soundSheet: NewSoundSheet get() =
