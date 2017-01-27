@@ -1,8 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
-import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import kotlin.properties.Delegates
@@ -12,13 +10,11 @@ import kotlin.properties.Delegates
  */
 
 
-open class SoundSheetsPresenter(override val eventBus: EventBus) :
-		NavigationDrawerListBasePresenter(),
-		NavigationDrawerItemClickListener<NewSoundSheet>
-{
+open class SoundSheetsPresenter() : NavigationDrawerListBasePresenter() {
+
 	companion object {
-		fun createSoundSheetPresenter(eventBus: EventBus, adapter: SoundSheetsAdapter): SoundSheetsPresenter {
-			return SoundSheetsPresenter(eventBus).apply {
+		fun createSoundSheetPresenter(adapter: SoundSheetsAdapter): SoundSheetsPresenter {
+			return SoundSheetsPresenter().apply {
 				this.adapter = adapter
 			}
 		}
@@ -28,7 +24,7 @@ open class SoundSheetsPresenter(override val eventBus: EventBus) :
 	private val soundManager = SoundboardApplication.soundManager
 
 	var adapter: SoundSheetsAdapter by Delegates.notNull<SoundSheetsAdapter>()
-	val values: List<NewSoundSheet> get() = this.soundSheetManager.soundSheets
+	protected val values: List<NewSoundSheet> get() = this.soundSheetManager.soundSheets
 
 	override fun onAttachedToWindow() {
 		this.adapter.notifyDataSetChanged()
@@ -48,7 +44,7 @@ open class SoundSheetsPresenter(override val eventBus: EventBus) :
 		this.stopDeletionMode()
 	}
 
-	override fun onItemClick(data: NewSoundSheet) {
+	fun onItemClick(data: NewSoundSheet) {
 		if (this.isInSelectionMode) {
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			this.adapter.notifyItemChanged(data)

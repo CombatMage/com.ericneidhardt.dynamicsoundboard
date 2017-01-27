@@ -10,8 +10,8 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 /**
  * File created by eric.neidhardt on 10.07.2015.
  */
-class SoundSheetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-{
+class SoundSheetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
 	private val label = itemView.findViewById(R.id.tv_label) as TextView
 	private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
 	private val soundCount = itemView.findViewById(R.id.tv_sound_count) as TextView

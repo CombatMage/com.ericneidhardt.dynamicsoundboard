@@ -1,29 +1,18 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
-import android.support.v7.widget.RecyclerView
-import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import rx.android.schedulers.AndroidSchedulers
-import rx.subscriptions.CompositeSubscription
 import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 17.07.2015.
  */
-class SoundLayoutsPresenter
-(
-		override val eventBus: EventBus
-) :
-		NavigationDrawerListBasePresenter(),
-		NavigationDrawerItemClickListener<NewSoundLayout>
-{
+class SoundLayoutsPresenter() : NavigationDrawerListBasePresenter() {
+
 	companion object {
-		fun createSoundLayoutsPresenter(eventBus: EventBus, adapter: SoundLayoutsAdapter): SoundLayoutsPresenter {
-			return SoundLayoutsPresenter(eventBus).apply {
+		fun createSoundLayoutsPresenter(adapter: SoundLayoutsAdapter): SoundLayoutsPresenter {
+			return SoundLayoutsPresenter().apply {
 				this.adapter = adapter
 			}
 		}
@@ -74,7 +63,7 @@ class SoundLayoutsPresenter
 		return selectedSoundLayouts
 	}
 
-	override fun onItemClick(data: NewSoundLayout) {
+	fun onItemClick(data: NewSoundLayout) {
 		if (this.isInSelectionMode) {
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			this.adapter.notifyDataSetChanged()

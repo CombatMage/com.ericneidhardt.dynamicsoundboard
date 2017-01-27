@@ -1,7 +1,5 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer
 
-import org.greenrobot.eventbus.EventBus
-
 /**
  * File created by eric.neidhardt on 26.05.2015.
  */
@@ -25,8 +23,6 @@ interface NavigationDrawerListPresenter {
 abstract class NavigationDrawerListBasePresenter : NavigationDrawerListPresenter {
 
 	var isInSelectionMode: Boolean = false
-
-	abstract val eventBus: EventBus
 
 	override fun startDeletionMode() {
 		this.isInSelectionMode = true

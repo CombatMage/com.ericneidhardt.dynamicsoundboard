@@ -1,9 +1,7 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.views
 
-import android.support.design.widget.AppBarLayout
 import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
@@ -14,8 +12,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPres
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
-import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import java.lang.ref.WeakReference
@@ -32,24 +28,19 @@ enum class List {
 class NavigationDrawerListPresenter(
 		eventBus: EventBus,
 		fragment: NavigationDrawerFragment,
-
-		private val coordinatorLayout: NonTouchableCoordinatorLayout,
-		private val appBarLayout: AppBarLayout,
-		private val recyclerView: RecyclerView,
-		private val deletionViewVM: NavigationDrawerDeletionViewVM,
-		private val buttonBarVM: NavigationDrawerButtonBarVM
+		private val recyclerView: RecyclerView
 ) {
 
 	private val fragmentReference: WeakReference<NavigationDrawerFragment> = WeakReference(fragment)
 
-	private var currentPresenter: NavigationDrawerListPresenter? = null
+	var currentPresenter: NavigationDrawerListPresenter? = null
 
 	private val presenterSoundSheets = SoundSheetsPresenter
-			.createSoundSheetPresenter(eventBus, fragment.adapterSoundSheets)
+			.createSoundSheetPresenter(fragment.adapterSoundSheets)
 	private val presenterPlaylist = PlaylistPresenter
 			.createPlaylistPresenter(eventBus, fragment.adapterPlaylist)
 	private val presenterSoundLayouts = SoundLayoutsPresenter
-			.createSoundLayoutsPresenter(eventBus, fragment.adapterSoundLayouts)
+			.createSoundLayoutsPresenter(fragment.adapterSoundLayouts)
 
 	private var currentListBacking: List? = null
 	var currentList: List?
@@ -57,45 +48,31 @@ class NavigationDrawerListPresenter(
 		set(value) {
 			if (value == this.currentListBacking) return
 			this.currentPresenter?.onDetachedFromWindow()
-			val res = this.recyclerView.context.resources
 			when (value) {
 				List.Playlist -> {
 					this.currentListBacking = List.Playlist
 					this.currentPresenter = this.presenterPlaylist
 					this.recyclerView.adapter = this.presenterPlaylist.adapter
-					this.deletionViewVM.title = res.getString(R.string.cab_title_delete_play_list_sounds)
+					this.fragmentReference.get().setActionModeTitle(R.string.cab_title_delete_play_list_sounds)
 				}
 				List.SoundLayouts -> {
 					this.currentListBacking = List.SoundLayouts
 					this.currentPresenter = this.presenterSoundLayouts
 					this.recyclerView.adapter = this.presenterSoundLayouts.adapter
-					this.deletionViewVM.title = res.getString(R.string.cab_title_delete_sound_layouts)
+					this.fragmentReference.get().setActionModeTitle(R.string.cab_title_delete_sound_layouts)
 				}
 				List.SoundSheet -> {
 					this.currentListBacking = List.SoundSheet
 					this.currentPresenter = this.presenterSoundSheets
 					this.recyclerView.adapter = this.presenterSoundSheets.adapter
-					this.deletionViewVM.title = res.getString(R.string.cab_title_delete_sound_sheets)
+					this.fragmentReference.get().setActionModeTitle(R.string.cab_title_delete_sound_sheets)
 				}
 			}
 			this.currentPresenter?.onAttachedToWindow()
 		}
 
 	init {
-		this.buttonBarVM.addClickedCallback = { this.add() }
-		this.buttonBarVM.deleteClickedCallback = { this.prepareDeletion() }
-		this.buttonBarVM.deleteSelectedClickedCallback = { this.deleteSelected() }
 
-		this.deletionViewVM.doneClickedCallback = {
-			this.currentPresenter?.stopDeletionMode()
-			this.hideToolbarForDeletion()
-		}
-
-		this.deletionViewVM.selectAllClickedCallback = {
-			this.currentPresenter?.selectAllItems()
-			val itemCount = this.currentPresenter?.itemCount ?: 0
-			this.fragmentReference.get().setActionModeSubTitle(itemCount, itemCount)
-		}
 	}
 
 	fun onAttached() {
@@ -109,29 +86,14 @@ class NavigationDrawerListPresenter(
 	}
 
 	private fun showToolbarForDeletion() {
-		this.coordinatorLayout.isScrollingEnabled = false
-		this.recyclerView.isNestedScrollingEnabled = false
-
-		this.appBarLayout.setExpanded(false, true)
-
-		this.deletionViewVM.isEnable = true
-
-		this.buttonBarVM.enableDeleteSelected = true
+		this.fragmentReference.get().setDeletionModeUi(true)
 	}
 
 	private fun hideToolbarForDeletion() {
-		this.coordinatorLayout.isScrollingEnabled = true
-		this.recyclerView.isNestedScrollingEnabled = true
-
-		this.appBarLayout.setExpanded(true, true)
-
-		this.recyclerView.scrollToPosition(0)
-
-		this.deletionViewVM.isEnable = false
-		this.buttonBarVM.enableDeleteSelected = false
+		this.fragmentReference.get().setDeletionModeUi(false)
 	}
 
-	private fun add() {
+	fun userClicksAdd() {
 		val fragmentManager = this.fragmentReference.get().fragmentManager ?: return
 		when (this.currentList) {
 			List.SoundLayouts -> GenericAddDialogs.showAddSoundLayoutDialog(fragmentManager)
@@ -140,7 +102,7 @@ class NavigationDrawerListPresenter(
 		}
 	}
 
-	private fun prepareDeletion() {
+	fun userStartsDeletionMode() {
 		val itemCount = this.currentPresenter?.itemCount ?: 0
 		if (itemCount == 0) return
 		this.showToolbarForDeletion()
@@ -148,8 +110,19 @@ class NavigationDrawerListPresenter(
 		this.fragmentReference.get()?.setActionModeSubTitle(0, itemCount)
 	}
 
-	private fun deleteSelected() {
+	fun userDeletsSelectedItems() {
 		this.currentPresenter?.deleteSelectedItems()
+		this.hideToolbarForDeletion()
+	}
+
+	fun userClicksSelectAll() {
+		this.currentPresenter?.selectAllItems()
+		val itemCount = this.currentPresenter?.itemCount ?: 0
+		this.fragmentReference.get().setActionModeSubTitle(itemCount, itemCount)
+	}
+
+	fun userClicksDone() {
+		this.currentPresenter?.stopDeletionMode()
 		this.hideToolbarForDeletion()
 	}
 

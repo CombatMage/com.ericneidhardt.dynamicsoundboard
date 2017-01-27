@@ -41,9 +41,6 @@ class NavigationDrawerFragment : BaseFragment() {
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
 
-	private var tabView: NavigationDrawerTabLayout? = null
-	private var listPresenter: NavigationDrawerListPresenter? = null
-
 	private var binding by Delegates.notNull<FragmentNavigationDrawerBinding>()
 	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutManager.soundLayouts.activeLayout.label)
 	private val buttonBarVM = NavigationDrawerButtonBarVM()
@@ -52,6 +49,9 @@ class NavigationDrawerFragment : BaseFragment() {
 	val adapterSoundSheets = SoundSheetsAdapter()
 	val adapterPlaylist = PlaylistAdapter()
 	val adapterSoundLayouts = SoundLayoutsAdapter()
+
+	private var tabView: NavigationDrawerTabLayout? = null
+	private var listPresenter: NavigationDrawerListPresenter? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -73,16 +73,24 @@ class NavigationDrawerFragment : BaseFragment() {
 
 		this.listPresenter = NavigationDrawerListPresenter(
 				eventBus = this.eventBus,
-				coordinatorLayout = this.cl_navigation_drawer,
-				deletionViewVM = this.deletionViewVM,
-				appBarLayout = this.abl_navigation_drawer,
-				buttonBarVM = this.buttonBarVM,
+				fragment = this,
 				recyclerView = this.rv_navigation_drawer_list.apply {
 						this.itemAnimator = DefaultItemAnimator()
 						this.layoutManager = LinearLayoutManager(this.context)
-				},
-				fragment = this
+				}
 		)
+
+		this.buttonBarVM.addClickedCallback = { this.listPresenter?.userClicksAdd() }
+		this.buttonBarVM.deleteClickedCallback = { this.listPresenter?.userStartsDeletionMode() }
+		this.buttonBarVM.deleteSelectedClickedCallback = { this.listPresenter?.userDeletsSelectedItems() }
+
+		this.deletionViewVM.doneClickedCallback = {
+			this.listPresenter?.userClicksDone()
+		}
+
+		this.deletionViewVM.selectAllClickedCallback = {
+			this.listPresenter?.userClicksSelectAll()
+		}
 
 		this.tabView = NavigationDrawerTabLayoutPresenter(
 				eventBus = this.eventBus,
@@ -168,9 +176,34 @@ class NavigationDrawerFragment : BaseFragment() {
 		}
 	}
 
+	fun setActionModeTitle(stringId: Int) {
+		this.context?.resources?.let { res ->
+			val title = res.getString(stringId)
+			this.deletionViewVM.title = title
+		}
+	}
+
 	fun setActionModeSubTitle(count: Int, maxValue: Int) {
 		this.deletionViewVM.maxCount = maxValue
 		this.deletionViewVM.selectionCount = count
+	}
+
+	fun setDeletionModeUi(enable: Boolean) {
+
+		// disable parallax scrolling
+		this.binding.clNavigationDrawer.isScrollingEnabled = !enable
+		this.binding.rvNavigationDrawerList.isNestedScrollingEnabled = !enable
+
+		// hide header and show deletion ui
+		this.binding.ablNavigationDrawer.setExpanded(!enable, true)
+
+		// make sure we scroll to valid position after some items may have been deleted
+		if (!enable)
+			this.binding.rvNavigationDrawerList.scrollToPosition(0)
+
+		// enable deletion actions
+		this.deletionViewVM.isEnable = enable
+		this.buttonBarVM.enableDeleteSelected = enable
 	}
 }
 

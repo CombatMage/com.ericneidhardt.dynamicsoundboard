@@ -8,7 +8,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.eventbus_utils.registerIfRequired
 import kotlin.properties.Delegates
@@ -18,9 +17,8 @@ import kotlin.properties.Delegates
  */
 private val INDEX_NOT_SET = -1
 
-class PlaylistPresenter(override val eventBus: EventBus) :
+class PlaylistPresenter(private val eventBus: EventBus) :
 		NavigationDrawerListBasePresenter(),
-		NavigationDrawerItemClickListener<MediaPlayerController>,
 		MediaPlayerEventListener
 {
 	companion object {
@@ -81,7 +79,7 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 		this.adapter.notifyDataSetChanged()
 	}
 
-	override fun onItemClick(data: MediaPlayerController) {
+	fun onItemClick(data: MediaPlayerController) {
 		if (this.isInSelectionMode) {
 			data.mediaPlayerData.isSelectedForDeletion = !data.mediaPlayerData.isSelectedForDeletion
 			this.adapter.notifyItemChanged(data)
