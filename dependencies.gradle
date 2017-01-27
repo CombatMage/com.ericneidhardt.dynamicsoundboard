@@ -7,6 +7,8 @@ ext.versions = [
 
 		exoplayer   : 'r2.0.3',
 
+		anko        : '0.9',
+
 		robotoTextView : '2.5.1',
 
 		recyclerViewAnimator : '2.2.4',
@@ -28,6 +30,9 @@ ext.libraries = [
 		supportAppCompat     : "com.android.support:appcompat-v7:$versions.supportLibs",
 		supportDesign        : "com.android.support:design:$versions.supportLibs",
 		supportRecyclerView  : "com.android.support:recyclerview-v7:$versions.supportLibs",
+
+		anko                 : "org.jetbrains.anko:anko-sdk21:$versions.anko", // min sdk version important
+		ankoSupportAppCompat : "org.jetbrains.anko:anko-appcompat-v7:$versions.anko", // Anko libs matching support libs
 
 		greenRobotCommons    : "de.greenrobot:java-common:$versions.greenRobotCommons",
 		eventBus             : "org.greenrobot:eventbus:$versions.eventBus",

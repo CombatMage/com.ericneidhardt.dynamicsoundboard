@@ -41,10 +41,12 @@ class SoundPresenter (
 	}
 
 	fun userTogglesPlaybackState(player: MediaPlayerController, startPlayback: Boolean) {
-		if (startPlayback)
-			player.playSound()
+		if (player.isFadingOut)
+			player.stopSound()
+		else if (player.isPlayingSound)
+			player.fadeOutSound()
 		else
-			player.pauseSound()
+			player.playSound()
 		// no need to update item, this is done on the player's event
 	}
 

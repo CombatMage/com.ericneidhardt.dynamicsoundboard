@@ -9,6 +9,7 @@ import org.neidhardt.android_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.views.PlayButton
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
@@ -23,7 +24,7 @@ class SoundViewHolder(
 
 	val name: CustomEditText = itemView.et_view_sound_control_item_name
 	
-	val playButton: ImageButton = itemView.ib_view_sound_control_item_play
+	val playButton: PlayButton = itemView.ib_view_sound_control_item_play
 	val stopButton: ImageButton = itemView.ib_view_sound_control_item_stop
 
 	val isLoopEnabledButton: ImageButton = itemView.ib_view_sound_control_item_loop
@@ -51,8 +52,13 @@ class SoundViewHolder(
 			if (!this.name.hasFocus())
 				this.name.text = playerData.label
 
-			val isPlaying = player.isPlayingSound
-			this.playButton.isSelected = isPlaying
+			if (player.isFadingOut)
+				this.playButton.setState(PlayButton.State.FADE)
+			else if (player.isPlayingSound) // if already playing, we enable pause
+				this.playButton.setState(PlayButton.State.PAUSE)
+			else
+				this.playButton.setState(PlayButton.State.PLAY)
+
 			this.isLoopEnabledButton.isSelected = playerData.isLoop
 			this.inPlaylistButton.isSelected = this.playlistManager.playlist.containsPlayerWithId(playerData.playerId)
 

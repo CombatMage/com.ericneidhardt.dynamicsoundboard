@@ -172,11 +172,12 @@ class SoundSheetFragment :
 	override fun onResume() {
 		super.onResume()
 
-		this.baseActivity.let { it.toolbarVM.isSoundSheetActionsEnable = true }
+		this.baseActivity.toolbarVM.isSoundSheetActionsEnable = true
 		this.floatingActionButton?.show(true)
-		this.soundPresenter.onAttachedToWindow()
 
+		this.soundPresenter.onAttachedToWindow()
 		this.eventBus.registerIfRequired(this)
+
 		this.subscriptions = CompositeSubscription()
 		this.subscriptions.addAll(
 

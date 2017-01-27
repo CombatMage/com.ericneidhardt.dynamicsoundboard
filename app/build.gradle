@@ -135,6 +135,9 @@ dependencies {
 	compile rootProject.ext.libraries.supportAppCompat
 	compile rootProject.ext.libraries.supportDesign
 
+	compile rootProject.ext.libraries.anko
+	compile rootProject.ext.libraries.ankoSupportAppCompat
+
 	compile rootProject.ext.libraries.greendao
 
 	compile rootProject.ext.libraries.greenRobotCommons

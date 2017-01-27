@@ -247,6 +247,7 @@ class ExoMediaPlayer
 
 	override fun fadeOutSound() {
 		this.volumeController.fadeOutSound()
+		this.postStateChangedEvent(true)
 	}
 
 	override fun setSoundUri(uri: String) {
