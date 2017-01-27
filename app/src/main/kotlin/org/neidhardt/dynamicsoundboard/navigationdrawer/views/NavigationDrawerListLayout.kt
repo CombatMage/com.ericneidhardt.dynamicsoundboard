@@ -3,37 +3,26 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.views
 import android.support.design.widget.AppBarLayout
 import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletion
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.ItemSelectedForDeletionListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import java.lang.ref.WeakReference
 
 /**
  * @author eric.neidhardt on 03.05.2016.
  */
-interface NavigationDrawerListLayout {
-	var currentList: List?
-
-	fun onAttached()
-
-	fun onDetached()
-}
-
 enum class List {
 	SoundSheet,
 	Playlist,
@@ -41,7 +30,7 @@ enum class List {
 }
 
 class NavigationDrawerListPresenter(
-		private val eventBus: EventBus,
+		eventBus: EventBus,
 		fragment: NavigationDrawerFragment,
 
 		private val coordinatorLayout: NonTouchableCoordinatorLayout,
@@ -49,9 +38,7 @@ class NavigationDrawerListPresenter(
 		private val recyclerView: RecyclerView,
 		private val deletionViewVM: NavigationDrawerDeletionViewVM,
 		private val buttonBarVM: NavigationDrawerButtonBarVM
-) :
-		NavigationDrawerListLayout,
-		ItemSelectedForDeletionListener {
+) {
 
 	private val fragmentReference: WeakReference<NavigationDrawerFragment> = WeakReference(fragment)
 
@@ -65,7 +52,7 @@ class NavigationDrawerListPresenter(
 			.createSoundLayoutsPresenter(eventBus, fragment.adapterSoundLayouts)
 
 	private var currentListBacking: List? = null
-	override var currentList: List?
+	var currentList: List?
 		get() = this.currentListBacking
 		set(value) {
 			if (value == this.currentListBacking) return
@@ -107,17 +94,15 @@ class NavigationDrawerListPresenter(
 		this.deletionViewVM.selectAllClickedCallback = {
 			this.currentPresenter?.selectAllItems()
 			val itemCount = this.currentPresenter?.itemCount ?: 0
-			this.setActionModeSubTitle(itemCount, itemCount)
+			this.fragmentReference.get().setActionModeSubTitle(itemCount, itemCount)
 		}
 	}
 
-	override fun onAttached() {
-		this.eventBus.registerIfRequired(this)
+	fun onAttached() {
 		this.currentList = List.SoundSheet
 	}
 
-	override fun onDetached() {
-		this.eventBus.unregister(this)
+	fun onDetached() {
 		this.presenterSoundSheets.onDetachedFromWindow()
 		this.presenterPlaylist.onDetachedFromWindow()
 		this.presenterSoundLayouts.onDetachedFromWindow()
@@ -160,7 +145,7 @@ class NavigationDrawerListPresenter(
 		if (itemCount == 0) return
 		this.showToolbarForDeletion()
 		this.currentPresenter?.startDeletionMode()
-		this.setActionModeSubTitle(0, itemCount)
+		this.fragmentReference.get()?.setActionModeSubTitle(0, itemCount)
 	}
 
 	private fun deleteSelected() {
@@ -170,17 +155,29 @@ class NavigationDrawerListPresenter(
 
 	fun userClicksSoundLayout(soundLayout: NewSoundLayout) {
 		this.presenterSoundLayouts.onItemClick(soundLayout)
+		if (this.presenterSoundLayouts.isInSelectionMode) {
+			val itemCount = this.presenterSoundLayouts.itemCount
+			val selectedItemCount = this.presenterSoundLayouts.numberOfItemsSelectedForDeletion
+			this.fragmentReference.get()?.setActionModeSubTitle(selectedItemCount, itemCount)
+		}
 	}
 
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: ItemSelectedForDeletion) {
-		this.setActionModeSubTitle(event.selectedItemCount, event.itemCount)
+	fun userClicksPlaylistItem(player: MediaPlayerController) {
+		this.presenterPlaylist.onItemClick(player)
+		if (this.presenterPlaylist.isInSelectionMode) {
+			val itemCount = this.presenterPlaylist.itemCount
+			val selectedItemCount = this.presenterPlaylist.numberOfItemsSelectedForDeletion
+			this.fragmentReference.get()?.setActionModeSubTitle(selectedItemCount, itemCount)
+		}
 	}
 
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	private fun setActionModeSubTitle(count: Int, maxValue: Int) {
-		this.deletionViewVM.maxCount = maxValue
-		this.deletionViewVM.selectionCount = count
+	fun userClicksSoundSheetItem(soundSheet: NewSoundSheet) {
+		this.presenterSoundSheets.onItemClick(soundSheet)
+		if (this.presenterSoundSheets.isInSelectionMode) {
+			val itemCount = this.presenterSoundSheets.itemCount
+			val selectedItemCount = this.presenterSoundSheets.numberOfItemsSelectedForDeletion
+			this.fragmentReference.get()?.setActionModeSubTitle(selectedItemCount, itemCount)
+		}
 	}
 
 }

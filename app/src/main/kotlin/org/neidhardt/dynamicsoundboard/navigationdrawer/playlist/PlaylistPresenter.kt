@@ -4,7 +4,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
@@ -12,8 +11,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerItemClickListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
 import org.neidhardt.eventbus_utils.registerIfRequired
-import rx.android.schedulers.AndroidSchedulers
-import rx.subscriptions.CompositeSubscription
 import kotlin.properties.Delegates
 
 /**
@@ -36,7 +33,6 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 
 	private val manager = SoundboardApplication.playlistManager
 
-	private var subscriptions = CompositeSubscription()
 	var adapter: PlaylistAdapter by Delegates.notNull<PlaylistAdapter>()
 	val values: List<MediaPlayerController> get() = this.manager.playlist
 
@@ -44,19 +40,11 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 
 	override fun onAttachedToWindow() {
 		this.eventBus.registerIfRequired(this)
-
 		this.adapter.notifyDataSetChanged()
-		this.subscriptions = CompositeSubscription()
-
-		this.subscriptions.add(this.adapter.clicksViewHolder
-				.subscribe { viewHolder ->
-					viewHolder.player?.let{ this.onItemClick(it) }
-				})
 	}
 
 	override fun onDetachedFromWindow() {
 		this.eventBus.unregister(this)
-		this.subscriptions.unsubscribe()
 	}
 
 	override fun deleteSelectedItems() {
@@ -65,7 +53,7 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 		this.stopDeletionMode()
 	}
 
-	override val numberOfItemsSelectedForDeletion: Int
+	public override val numberOfItemsSelectedForDeletion: Int
 		get() = this.getPlayersSelectedForDeletion().size
 
 	override val itemCount: Int
@@ -97,7 +85,6 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 		if (this.isInSelectionMode) {
 			data.mediaPlayerData.isSelectedForDeletion = !data.mediaPlayerData.isSelectedForDeletion
 			this.adapter.notifyItemChanged(data)
-			super.onItemSelectedForDeletion()
 		} else
 			this.startOrStopPlayList(data)
 	}

@@ -46,7 +46,7 @@ class SoundLayoutsPresenter
 
 	override fun onDetachedFromWindow() { }
 
-	override val numberOfItemsSelectedForDeletion: Int
+	public override val numberOfItemsSelectedForDeletion: Int
 		get() = this.getSoundLayoutsSelectedForDeletion().size
 
 	override val itemCount: Int
@@ -77,7 +77,6 @@ class SoundLayoutsPresenter
 	override fun onItemClick(data: NewSoundLayout) {
 		if (this.isInSelectionMode) {
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
-			super.onItemSelectedForDeletion()
 			this.adapter.notifyDataSetChanged()
 		}
 		else {

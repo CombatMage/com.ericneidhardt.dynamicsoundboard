@@ -135,10 +135,20 @@ class NavigationDrawerFragment : BaseFragment() {
 							this.adapterSoundSheets.notifyDataSetChanged()
 						},
 
+				this.adapterSoundSheets.clicksViewHolder
+						.subscribe { viewHolder ->
+							viewHolder.data?.let { this.listPresenter?.userClicksSoundSheetItem(it) }
+						},
+
 				RxNewPlaylistManager.playlistChanges(this.playlistManager)
 						.subscribe {
 							this.adapterPlaylist.notifyDataSetChanged()
-						}
+						},
+
+				this.adapterPlaylist.clicksViewHolder
+					.subscribe { viewHolder ->
+						viewHolder.player?.let{ this.listPresenter?.userClicksPlaylistItem(it) }
+					}
 		)
 	}
 
@@ -156,6 +166,11 @@ class NavigationDrawerFragment : BaseFragment() {
 			this.tabView?.showDefaultTabBar()
 			this.headerVM.isSoundLayoutOpen = false
 		}
+	}
+
+	fun setActionModeSubTitle(count: Int, maxValue: Int) {
+		this.deletionViewVM.maxCount = maxValue
+		this.deletionViewVM.selectionCount = count
 	}
 }
 
