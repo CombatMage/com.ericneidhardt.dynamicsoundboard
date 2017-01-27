@@ -14,8 +14,7 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
-import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
-import org.neidhardt.dynamicsoundboard.manager.activeLayout
+import org.neidhardt.dynamicsoundboard.manager.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter
@@ -38,9 +37,12 @@ class NavigationDrawerFragment : BaseFragment() {
 	private var subscriptions = CompositeSubscription()
 
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
+	private val soundManager = SoundboardApplication.soundManager
+	private val playlistManager = SoundboardApplication.playlistManager
 
 	private var tabView: NavigationDrawerTabLayout? = null
-	private var listView: NavigationDrawerListLayout? = null
+	private var listPresenter: NavigationDrawerListPresenter? = null
 
 	private var binding by Delegates.notNull<FragmentNavigationDrawerBinding>()
 	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutManager.soundLayouts.activeLayout.label)
@@ -69,7 +71,7 @@ class NavigationDrawerFragment : BaseFragment() {
 	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		this.listView = NavigationDrawerListPresenter(
+		this.listPresenter = NavigationDrawerListPresenter(
 				eventBus = this.eventBus,
 				coordinatorLayout = this.cl_navigation_drawer,
 				deletionViewVM = this.deletionViewVM,
@@ -85,9 +87,9 @@ class NavigationDrawerFragment : BaseFragment() {
 		this.tabView = NavigationDrawerTabLayoutPresenter(
 				eventBus = this.eventBus,
 				tabLayout = this.tl_navigation_drawer_list,
-				onPlaylistSelectedCallback = { this.listView?.currentList = List.Playlist },
-				onSoundSheetsSelectedCallback = { this.listView?.currentList = List.SoundSheet },
-				onSoundLayoutsSelectedCallback = { this.listView?.currentList = List.SoundLayouts }
+				onPlaylistSelectedCallback = { this.listPresenter?.currentList = List.Playlist },
+				onSoundSheetsSelectedCallback = { this.listPresenter?.currentList = List.SoundSheet },
+				onSoundLayoutsSelectedCallback = { this.listPresenter?.currentList = List.SoundLayouts }
 		)
 	}
 
@@ -97,22 +99,47 @@ class NavigationDrawerFragment : BaseFragment() {
 		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
 
 		this.tabView?.onAttached()
-		this.listView?.onAttached()
+		this.listPresenter?.onAttached()
 
 		this.subscriptions = CompositeSubscription()
+		this.subscriptions.addAll(
 
-		this.subscriptions.add(RxNewSoundLayoutManager.soundLayoutsChanges(this.soundLayoutManager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { layouts ->
-					val selectedLayout = layouts.activeLayout
-					this.headerVM.title = selectedLayout.label
-				})
+				RxNewSoundLayoutManager.soundLayoutsChanges(this.soundLayoutManager)
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe { layouts ->
+							val selectedLayout = layouts.activeLayout
+							this.headerVM.title = selectedLayout.label
+							this.adapterSoundLayouts.notifyDataSetChanged()
+						},
 
-		this.subscriptions.add(this.adapterSoundLayouts.clicksSettings
-				.subscribe { viewHolder ->
-					viewHolder.data?.let { soundLayout ->
-						GenericRenameDialogs.showRenameSoundLayoutDialog(this.fragmentManager, soundLayout) }
-				})
+				this.adapterSoundLayouts.clicksSettings
+						.subscribe { viewHolder ->
+							viewHolder.data?.let { soundLayout ->
+								GenericRenameDialogs.showRenameSoundLayoutDialog(this.fragmentManager, soundLayout) }
+						},
+
+				this.adapterSoundLayouts.clicksViewHolder
+						.subscribe { viewHolder ->
+							viewHolder.data?.let { soundLayout ->
+								this.listPresenter?.userClicksSoundLayout(soundLayout)
+							}
+						},
+
+				RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
+						.subscribe {
+							this.adapterSoundSheets.notifyDataSetChanged()
+						},
+
+				RxSoundManager.changesSoundList(this.soundManager)
+						.subscribe {
+							this.adapterSoundSheets.notifyDataSetChanged()
+						},
+
+				RxNewPlaylistManager.playlistChanges(this.playlistManager)
+						.subscribe {
+							this.adapterPlaylist.notifyDataSetChanged()
+						}
+		)
 	}
 
 	override fun onStop() {
@@ -121,7 +148,7 @@ class NavigationDrawerFragment : BaseFragment() {
 		this.subscriptions.unsubscribe()
 		this.headerVM.isSoundLayoutOpen = false
 		this.tabView?.onDetached()
-		this.listView?.onDetached()
+		this.listPresenter?.onDetached()
 	}
 
 	fun onNavigationDrawerClosed() {

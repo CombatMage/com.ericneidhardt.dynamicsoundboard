@@ -47,9 +47,6 @@ class PlaylistPresenter(override val eventBus: EventBus) :
 
 		this.adapter.notifyDataSetChanged()
 		this.subscriptions = CompositeSubscription()
-		this.subscriptions.add(RxNewPlaylistManager.playlistChanges(this.manager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.adapter.notifyDataSetChanged() })
 
 		this.subscriptions.add(this.adapter.clicksViewHolder
 				.subscribe { viewHolder ->

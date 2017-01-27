@@ -34,19 +34,8 @@ class SoundLayoutsPresenter
 	var adapter: SoundLayoutsAdapter by Delegates.notNull<SoundLayoutsAdapter>()
 	val values: List<NewSoundLayout> get() = this.manager.soundLayouts
 
-	private var subscriptions = CompositeSubscription()
-
 	override fun onAttachedToWindow() {
 		this.adapter.notifyDataSetChanged()
-		this.subscriptions = CompositeSubscription()
-		this.subscriptions.add(RxNewSoundLayoutManager.soundLayoutsChanges(this.manager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.adapter.notifyDataSetChanged() })
-
-		this.subscriptions.add(this.adapter.clicksViewHolder
-				.subscribe { viewHolder ->
-					viewHolder.data?.let { this.onItemClick(it) }
-				})
 	}
 
 	override fun deleteSelectedItems() {
@@ -55,9 +44,7 @@ class SoundLayoutsPresenter
 		this.stopDeletionMode()
 	}
 
-	override fun onDetachedFromWindow() {
-		this.subscriptions.unsubscribe()
-	}
+	override fun onDetachedFromWindow() { }
 
 	override val numberOfItemsSelectedForDeletion: Int
 		get() = this.getSoundLayoutsSelectedForDeletion().size

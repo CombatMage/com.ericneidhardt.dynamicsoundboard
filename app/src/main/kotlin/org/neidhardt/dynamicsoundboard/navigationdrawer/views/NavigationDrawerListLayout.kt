@@ -19,6 +19,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayout
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
 import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.eventbus_utils.registerIfRequired
 import java.lang.ref.WeakReference
 
@@ -165,6 +166,10 @@ class NavigationDrawerListPresenter(
 	private fun deleteSelected() {
 		this.currentPresenter?.deleteSelectedItems()
 		this.hideToolbarForDeletion()
+	}
+
+	fun userClicksSoundLayout(soundLayout: NewSoundLayout) {
+		this.presenterSoundLayouts.onItemClick(soundLayout)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

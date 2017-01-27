@@ -44,13 +44,6 @@ open class SoundSheetsPresenter(
 		this.adapter.notifyDataSetChanged()
 
 		this.subscriptions = CompositeSubscription()
-		this.subscriptions.add(RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.adapter.notifyDataSetChanged() })
-
-		this.subscriptions.add(RxSoundManager.changesSoundList(this.soundManager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.adapter.notifyDataSetChanged() })
 
 		this.subscriptions.add(this.adapter.clicksViewHolder
 				.subscribe { viewHolder ->
