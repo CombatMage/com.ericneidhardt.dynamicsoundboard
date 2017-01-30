@@ -9,7 +9,7 @@
 		android:background="@color/background"
 		tools:background="#00ff00">
 
-	<org.neidhardt.dynamicsoundboard.views.PlayButton
+	<org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
 			android:id="@+id/ib_view_sound_control_item_play"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -57,29 +57,25 @@
 	</LinearLayout>
 
 	<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:layout_marginStart="@dimen/margin_default"
-			android:layout_marginBottom="@dimen/margin_tiny"
-			android:layout_toEndOf="@id/ib_view_sound_control_item_play"
-			android:orientation="horizontal">
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_below="@+id/ib_view_sound_control_item_play"
+		android:layout_alignParentEnd="true">
 
 		<ImageButton
 				android:id="@+id/ib_view_sound_control_item_stop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:contentDescription="@string/sound_control_content_description_stop"
-				android:src="@drawable/selector_ic_stop"
+				android:src="@drawable/ic_stop"
 				style="@style/Theme.ImageButton.SoundControl"/>
 
-		<ImageButton
+		<org.neidhardt.dynamicsoundboard.views.sound_control.LoopButton
 				android:id="@+id/ib_view_sound_control_item_loop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:contentDescription="@string/sound_control_content_description_loop"
-				android:src="@drawable/selector_ic_loop"
-				style="@style/Theme.ImageButton.SoundControl"/>
+				android:contentDescription="@string/sound_control_content_description_loop"/>
 
 		<ImageButton
 				android:id="@+id/ib_view_sound_control_item_add_to_playlist"
@@ -94,7 +90,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:contentDescription="@string/sound_control_content_description_settings"
-				android:src="@drawable/selector_ic_settings"
+				android:src="@drawable/ic_settings"
 				style="@style/Theme.ImageButton.SoundControl"/>
 
 	</LinearLayout>

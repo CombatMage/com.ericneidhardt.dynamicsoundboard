@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.views
+package org.neidhardt.dynamicsoundboard.views.sound_control
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,16 +6,16 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import org.jetbrains.anko.*
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.views.selectableItemBackgroundBorderlessResource
 
 /**
- * Created by eric.neidhardt@gmail.com on 27.01.2017.
+ * Created by eric.neidhardt@gmail.com on 30.01.2017.
  */
-class PlayButton : FrameLayout {
+class LoopButton : FrameLayout {
 
 	enum class State {
-		PLAY,
-		PAUSE,
-		FADE
+		FINITE,
+		INDEFINITE
 	}
 
 	constructor(context: Context?) : super(context) {
@@ -30,6 +30,9 @@ class PlayButton : FrameLayout {
 		init()
 	}
 
+	var isLoopEnabled = false
+		private set
+
 	private var icon: ImageView? = null
 
 	private fun init() = AnkoContext.createDelegate(this).apply {
@@ -39,19 +42,18 @@ class PlayButton : FrameLayout {
 			this.backgroundResource = selectableItemBackgroundBorderlessResource
 		}
 		isClickable = true
-		setState(State.PLAY)
+		setState(State.FINITE)
 	}
 
 	fun setState(newState: State) {
 		when (newState) {
-			PlayButton.State.PLAY -> {
-				this.icon?.setImageResource(R.drawable.ic_play)
+			State.FINITE -> {
+				this.isEnabled = false
+				this.icon?.setImageResource(R.drawable.ic_loop)
 			}
-			PlayButton.State.PAUSE -> {
-				this.icon?.setImageResource(R.drawable.ic_pause)
-			}
-			PlayButton.State.FADE -> {
-				this.icon?.setImageResource(R.drawable.ic_fade_out)
+			State.INDEFINITE -> {
+				this.isEnabled = true
+				this.icon?.setImageResource(R.drawable.ic_loop_checked)
 			}
 		}
 	}

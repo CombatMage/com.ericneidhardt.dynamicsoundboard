@@ -40,7 +40,7 @@ class SoundPresenter (
 		this.eventBus.unregister(this)
 	}
 
-	fun userTogglesPlaybackState(player: MediaPlayerController, startPlayback: Boolean) {
+	fun userTogglesPlaybackState(player: MediaPlayerController) {
 		if (player.isFadingOut)
 			player.stopSound()
 		else if (player.isPlayingSound)

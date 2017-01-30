@@ -204,10 +204,9 @@ class SoundSheetFragment :
 
 				this.soundAdapter.clicksPlay
 						.subscribe { viewHolder ->
-							val startPlaying = !viewHolder.playButton.isSelected
 							viewHolder.name.clearFocus()
 							viewHolder.player?.let { player ->
-								this.soundPresenter.userTogglesPlaybackState(player, startPlaying)
+								this.soundPresenter.userTogglesPlaybackState(player)
 							}
 						},
 
@@ -235,7 +234,7 @@ class SoundSheetFragment :
 
 				this.soundAdapter.clicksLoopEnabled
 						.subscribe { viewHolder ->
-							val enableLooping = !viewHolder.isLoopEnabledButton.isSelected
+							val enableLooping = !viewHolder.isLoopEnabledButton.isLoopEnabled
 							viewHolder.player?.let { player ->
 								this.soundPresenter.userEnablesLooping(player, enableLooping)
 							}
