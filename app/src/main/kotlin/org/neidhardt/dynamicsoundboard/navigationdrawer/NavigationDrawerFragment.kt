@@ -101,8 +101,8 @@ class NavigationDrawerFragment : BaseFragment() {
 		)
 	}
 
-	override fun onStart() {
-		super.onStart()
+	override fun onResume() {
+		super.onResume()
 
 		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
 
@@ -160,8 +160,8 @@ class NavigationDrawerFragment : BaseFragment() {
 		)
 	}
 
-	override fun onStop() {
-		super.onStop()
+	override fun onPause() {
+		super.onPause()
 
 		this.subscriptions.unsubscribe()
 		this.headerVM.isSoundLayoutOpen = false
@@ -190,7 +190,7 @@ class NavigationDrawerFragment : BaseFragment() {
 
 	fun setDeletionModeUi(enable: Boolean) {
 
-		// disable parallax scrolling
+		// disable parallax scrolling if in deletion mode
 		this.binding.clNavigationDrawer.isScrollingEnabled = !enable
 		this.binding.rvNavigationDrawerList.isNestedScrollingEnabled = !enable
 
