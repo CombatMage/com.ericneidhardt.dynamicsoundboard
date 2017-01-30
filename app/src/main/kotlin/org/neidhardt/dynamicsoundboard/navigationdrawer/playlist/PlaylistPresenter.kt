@@ -5,6 +5,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
@@ -106,6 +107,9 @@ class PlaylistPresenter(private val eventBus: EventBus) :
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerStateChangedEvent) {
 		val player = event.player
+		if (player.mediaPlayerData.fragmentTag != PlaylistTAG)
+			return
+
 		if (this.values.contains(player) && !event.isAlive) { // removed a destroyed media player
 			val index = this.values.indexOf(player)
 			this.manager.remove(listOf(player))
@@ -118,12 +122,13 @@ class PlaylistPresenter(private val eventBus: EventBus) :
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerCompletedEvent) {
 		val finishedPlayerData = event.player.mediaPlayerData
+		if (finishedPlayerData.fragmentTag != PlaylistTAG)
+			return
+
+		val currentPlayer = this.values[this.currentItemIndex]
+		currentPlayer.stopSound()
 
 		if (this.currentItemIndex != INDEX_NOT_SET) {
-			val currentPlayer = this.values[this.currentItemIndex].mediaPlayerData
-			if (currentPlayer !== finishedPlayerData) // finished player was not the current player
-				return
-
 			this.currentItemIndex += 1
 			if (this.values.isEmpty()) {
 				this.currentItemIndex = INDEX_NOT_SET

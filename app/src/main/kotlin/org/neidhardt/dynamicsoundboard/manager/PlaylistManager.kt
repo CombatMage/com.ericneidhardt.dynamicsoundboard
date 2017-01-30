@@ -9,7 +9,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
-import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.add
@@ -92,6 +91,7 @@ class PlaylistManager(private val context: Context) {
 		if (this.playlist.containsPlayerWithId(playerData.playerId))
 			return
 
+		playerData.isLoop = false
 		val player = MediaPlayerFactory.createPlayer(this.context, this.eventBus, playerData)
 		if (player == null) {
 			this.mMediaPlayersData?.remove(playerData)
@@ -107,7 +107,7 @@ class PlaylistManager(private val context: Context) {
 
 	fun notifyHasChanged(player: MediaPlayerController) {
 		if (this.mMediaPlayers == null)
-			throw IllegalStateException("playlist manager init not done")
+			throw IllegalStateException("playlist manager init not done, can not notify of $player")
 		this.invokeListeners()
 	}
 
