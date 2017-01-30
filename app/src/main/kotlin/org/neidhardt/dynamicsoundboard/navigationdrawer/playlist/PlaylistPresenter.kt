@@ -107,6 +107,9 @@ class PlaylistPresenter(private val eventBus: EventBus) :
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerStateChangedEvent) {
 		val player = event.player
+		if (player.mediaPlayerData.fragmentTag != PlaylistTAG)
+			return
+
 		if (this.values.contains(player) && !event.isAlive) { // removed a destroyed media player
 			val index = this.values.indexOf(player)
 			this.manager.remove(listOf(player))
