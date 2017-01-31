@@ -148,7 +148,7 @@ class SoundSheetFragment :
 
 		soundList.apply {
 			this.adapter = soundAdapter
-			this.layoutManager = LinearLayoutManager(this.context)
+			this.layoutManager = LinearLayoutManager(this.context.applicationContext)
 			this.addItemDecoration(DividerItemDecoration(this.context.applicationContext, R.color.background, R.color.divider))
 			this.itemAnimator = DefaultItemAnimator()
 		}

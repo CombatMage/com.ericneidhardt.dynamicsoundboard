@@ -24,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDraw
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
+import org.neidhardt.dynamicsoundboard.views.recyclerview_helper.PaddingDecorator
 import org.neidhardt.utils.letThis
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
@@ -75,8 +76,9 @@ class NavigationDrawerFragment : BaseFragment() {
 				eventBus = this.eventBus,
 				fragment = this,
 				recyclerView = this.rv_navigation_drawer_list.apply {
-						this.itemAnimator = DefaultItemAnimator()
-						this.layoutManager = LinearLayoutManager(this.context)
+					this.itemAnimator = DefaultItemAnimator()
+					this.layoutManager = LinearLayoutManager(this.context)
+					this.addItemDecoration(PaddingDecorator(this.context.applicationContext))
 				}
 		)
 
