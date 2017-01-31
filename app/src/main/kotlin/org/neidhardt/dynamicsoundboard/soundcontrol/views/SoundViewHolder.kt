@@ -9,7 +9,7 @@ import org.neidhardt.android_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.views.sound_control.LoopButton
+import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
 
 /**
@@ -28,7 +28,7 @@ class SoundViewHolder(
 	val playButton: PlayButton = itemView.ib_view_sound_control_item_play
 	val stopButton: ImageButton = itemView.ib_view_sound_control_item_stop
 
-	val isLoopEnabledButton: LoopButton = itemView.ib_view_sound_control_item_loop
+	val isLoopEnabledButton: ToggleLoopButton = itemView.ib_view_sound_control_item_loop
 	val inPlaylistButton: ImageButton = itemView.ib_view_sound_control_item_add_to_playlist
 	
 	val timePosition: SeekBar= itemView.sb_view_sound_control_item_progress
@@ -60,7 +60,12 @@ class SoundViewHolder(
 			else
 				this.playButton.setState(PlayButton.State.PLAY)
 
-			this.isLoopEnabledButton.setState(if (playerData.isLoop) LoopButton.State.INDEFINITE else LoopButton.State.FINITE)
+			this.stopButton.isEnabled = player.isPlayingSound || player.progress > 0
+
+			this.isLoopEnabledButton.state = if (playerData.isLoop)
+						ToggleLoopButton.State.LOOP_ENABLE
+					else
+						ToggleLoopButton.State.LOOP_DISABLE
 
 			this.inPlaylistButton.isSelected = this.playlistManager.playlist.containsPlayerWithId(playerData.playerId)
 

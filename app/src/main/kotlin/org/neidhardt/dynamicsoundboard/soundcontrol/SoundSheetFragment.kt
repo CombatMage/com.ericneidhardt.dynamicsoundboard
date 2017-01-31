@@ -36,6 +36,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundAdapter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
+import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.eventbus_utils.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
@@ -234,9 +235,10 @@ class SoundSheetFragment :
 
 				this.soundAdapter.clicksLoopEnabled
 						.subscribe { viewHolder ->
-							val enableLooping = !viewHolder.isLoopEnabledButton.isLoopEnabled
+							val enable = viewHolder
+									.isLoopEnabledButton.state == ToggleLoopButton.State.LOOP_DISABLE
 							viewHolder.player?.let { player ->
-								this.soundPresenter.userEnablesLooping(player, enableLooping)
+								this.soundPresenter.userEnablesLooping(player, enable)
 							}
 						},
 

@@ -16,7 +16,7 @@
 			android:layout_marginStart="@dimen/margin_tiny"
 			android:layout_marginTop="@dimen/margin_tiny"/>
 
-	<ImageButton
+	<ImageView
 			android:id="@+id/ib_view_sound_control_item_reorder"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -25,11 +25,11 @@
 			android:layout_marginEnd="@dimen/margin_tiny"
 			style="@style/Theme.ImageButton.SoundControl"
 			android:contentDescription="@string/sound_control_content_description_reorder"
-			android:src="@drawable/selector_ic_reorder"/>
+			android:src="@drawable/ic_reorder"/>
 
 	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
+			android:layout_height="wrap_content"
 			android:layout_toEndOf="@id/ib_view_sound_control_item_play"
 			android:layout_toStartOf="@id/ib_view_sound_control_item_reorder"
 			android:orientation="vertical">
@@ -60,7 +60,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:layout_below="@+id/ib_view_sound_control_item_play"
+		android:layout_below="@id/ib_view_sound_control_item_play"
+		android:layout_toEndOf="@id/ib_view_sound_control_item_play"
 		android:layout_alignParentEnd="true">
 
 		<ImageButton
@@ -71,7 +72,7 @@
 				android:src="@drawable/ic_stop"
 				style="@style/Theme.ImageButton.SoundControl"/>
 
-		<org.neidhardt.dynamicsoundboard.views.sound_control.LoopButton
+		<org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 				android:id="@+id/ib_view_sound_control_item_loop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"

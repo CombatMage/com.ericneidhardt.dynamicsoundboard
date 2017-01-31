@@ -11,11 +11,11 @@ import org.neidhardt.dynamicsoundboard.views.selectableItemBackgroundBorderlessR
 /**
  * Created by eric.neidhardt@gmail.com on 30.01.2017.
  */
-class LoopButton : FrameLayout {
+class ToggleLoopButton : FrameLayout {
 
 	enum class State {
-		FINITE,
-		INDEFINITE
+		LOOP_ENABLE,
+		LOOP_DISABLE
 	}
 
 	constructor(context: Context?) : super(context) {
@@ -30,9 +30,6 @@ class LoopButton : FrameLayout {
 		init()
 	}
 
-	var isLoopEnabled = false
-		private set
-
 	private var icon: ImageView? = null
 
 	private fun init() = AnkoContext.createDelegate(this).apply {
@@ -42,19 +39,19 @@ class LoopButton : FrameLayout {
 			this.backgroundResource = selectableItemBackgroundBorderlessResource
 		}
 		isClickable = true
-		setState(State.FINITE)
+		state = State.LOOP_ENABLE
 	}
 
-	fun setState(newState: State) {
-		when (newState) {
-			State.FINITE -> {
-				this.isEnabled = false
-				this.icon?.setImageResource(R.drawable.ic_loop)
-			}
-			State.INDEFINITE -> {
-				this.isEnabled = true
-				this.icon?.setImageResource(R.drawable.ic_loop_checked)
+	var state: State = State.LOOP_DISABLE
+		set(newState) {
+			field = newState
+			when (newState) {
+				State.LOOP_ENABLE -> {
+					this.icon?.setImageResource(R.drawable.ic_loop)
+				}
+				State.LOOP_DISABLE -> {
+					this.icon?.setImageResource(R.drawable.ic_loop_checked)
+				}
 			}
 		}
-	}
 }
