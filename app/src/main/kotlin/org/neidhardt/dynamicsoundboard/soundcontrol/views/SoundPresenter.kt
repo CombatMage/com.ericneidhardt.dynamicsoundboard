@@ -68,7 +68,6 @@ class SoundPresenter (
 
 	fun userEnablesLooping(player: MediaPlayerController, enableLoop: Boolean) {
 		player.isLoopingEnabled = enableLoop
-		this.adapter?.notifyItemChanged(player)
 	}
 
 	fun userChangesPlayerName(player: MediaPlayerController, name: String) {

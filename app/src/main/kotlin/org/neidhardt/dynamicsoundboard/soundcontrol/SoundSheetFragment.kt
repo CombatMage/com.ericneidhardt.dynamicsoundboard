@@ -237,6 +237,12 @@ class SoundSheetFragment :
 						.subscribe { viewHolder ->
 							val enable = viewHolder
 									.isLoopEnabledButton.state == ToggleLoopButton.State.LOOP_DISABLE
+
+							viewHolder.isLoopEnabledButton.state = if (enable)
+										ToggleLoopButton.State.LOOP_ENABLE
+									else
+										ToggleLoopButton.State.LOOP_DISABLE
+
 							viewHolder.player?.let { player ->
 								this.soundPresenter.userEnablesLooping(player, enable)
 							}
