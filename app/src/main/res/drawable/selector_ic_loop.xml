@@ -4,7 +4,6 @@
 		  android:exitFadeDuration="@android:integer/config_mediumAnimTime" >
 
 	<item android:state_selected="true" android:drawable="@drawable/ic_loop_checked"/>
-	<item android:state_pressed="true" android:drawable="@drawable/ic_loop_checked"/>
 	<item android:drawable="@drawable/ic_loop"/>
 
 </selector>

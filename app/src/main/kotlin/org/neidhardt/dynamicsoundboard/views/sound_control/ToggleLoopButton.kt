@@ -37,6 +37,7 @@ class ToggleLoopButton : FrameLayout {
 			this.padding = dip(12)
 			this.scaleType = ImageView.ScaleType.CENTER_CROP
 			this.backgroundResource = selectableItemBackgroundBorderlessResource
+			this.imageResource = R.drawable.selector_ic_loop
 		}
 		isClickable = true
 		state = State.LOOP_ENABLE
@@ -47,10 +48,10 @@ class ToggleLoopButton : FrameLayout {
 			field = newState
 			when (newState) {
 				State.LOOP_ENABLE -> {
-					this.icon?.setImageResource(R.drawable.ic_loop)
+					this.icon?.isSelected = true
 				}
 				State.LOOP_DISABLE -> {
-					this.icon?.setImageResource(R.drawable.ic_loop_checked)
+					this.icon?.isSelected = false
 				}
 			}
 		}

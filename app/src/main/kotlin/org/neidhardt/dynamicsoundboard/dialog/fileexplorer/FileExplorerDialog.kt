@@ -24,9 +24,9 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 12.11.2014.
  */
-abstract class FileExplorerDialog : BaseDialog()
-{
-	private val KEY_PARENT_FILE = "org.neidhardt.dynamicsoundboard.dialog.fileexplorer.parentFile"
+abstract class FileExplorerDialog : BaseDialog() {
+
+	private val KEY_PARENT_FILE = "FileExplorerDialog.KEY_PARENT_FILE"
 
 	internal val adapter: DirectoryAdapter = DirectoryAdapter()
 
@@ -38,8 +38,7 @@ abstract class FileExplorerDialog : BaseDialog()
 
 	protected abstract fun onFileSelected(selectedFile: File)
 
-	fun storePathToSharedPreferences(key: String, path: String)
-	{
+	fun storePathToSharedPreferences(key: String, path: String) {
 		val context = SoundboardApplication.context
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		val editor = preferences.edit()
@@ -47,55 +46,48 @@ abstract class FileExplorerDialog : BaseDialog()
 		editor.apply()
 	}
 
-	fun getPathFromSharedPreferences(key: String): String?
-	{
+	fun getPathFromSharedPreferences(key: String): String? {
 		val context = SoundboardApplication.context
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		return preferences.getString(key, null)
 	}
 
-	override fun onActivityCreated(savedInstanceState: Bundle?)
-	{
+	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		if (savedInstanceState != null)
-		{
+		if (savedInstanceState != null) {
 			val parentFilePath = savedInstanceState.getString(KEY_PARENT_FILE)
 			if (parentFilePath != null)
 				this.adapter.setParent(File(parentFilePath))
 		}
 	}
 
-	override fun onSaveInstanceState(outState: Bundle)
-	{
+	override fun onSaveInstanceState(outState: Bundle) {
 		super.onSaveInstanceState(outState)
 		outState.putString(KEY_PARENT_FILE, this.adapter.parentFile!!.path)
 	}
 
-	internal inner class DirectoryAdapter : RecyclerView.Adapter<DirectoryEntry>()
-	{
+	internal inner class DirectoryAdapter : RecyclerView.Adapter<DirectoryEntry>() {
+
 		internal var parentFile: File? = null
 		internal var selectedEntries: MutableSet<DirectoryEntry> = HashSet()
 		internal var selectedFiles: MutableSet<File> = HashSet()
 
 		internal var fileList: MutableList<File> = ArrayList()
 
-		init
-		{
+		init {
 			this.setHasStableIds(true)
 			this.setParent(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC))
 			this.notifyDataSetChanged()
 		}
 
-		fun setParent(parent: File)
-		{
+		fun setParent(parent: File) {
 			this.parentFile = parent
 			this.fileList = parent.getFilesInDirectory()
 			if (parent.parentFile != null)
 				this.fileList.add(0, parent.parentFile)
 		}
 
-		fun refreshDirectory()
-		{
+		fun refreshDirectory() {
 			this.parentFile?.apply {
 				fileList = this.getFilesInDirectory()
 				if (this.parentFile != null)
@@ -107,14 +99,12 @@ abstract class FileExplorerDialog : BaseDialog()
 
 		override fun getItemId(position: Int): Long = this.fileList[position].absolutePath.longHash
 
-		override fun onCreateViewHolder(parent: ViewGroup, i: Int): DirectoryEntry
-		{
+		override fun onCreateViewHolder(parent: ViewGroup, i: Int): DirectoryEntry {
 			val view = LayoutInflater.from(parent.context).inflate(R.layout.view_directory_item, parent, false)
 			return DirectoryEntry(view)
 		}
 
-		override fun onBindViewHolder(directoryEntry: DirectoryEntry, position: Int)
-		{
+		override fun onBindViewHolder(directoryEntry: DirectoryEntry, position: Int) {
 			val file = this.fileList[position]
 			directoryEntry.bindData(file)
 		}
@@ -131,19 +121,16 @@ abstract class FileExplorerDialog : BaseDialog()
 		private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
 		private val fileName = itemView.findViewById(R.id.tv_label) as TextView
 
-		init
-		{
+		init {
 			itemView.setOnClickListener(this)
 			itemView.setOnLongClickListener(this)
 		}
 
-		fun bindData(file: File)
-		{
+		fun bindData(file: File) {
 			this.file = file
 			if (file == adapter.parentFile!!.parentFile)
 				this.bindParentDirectory()
-			else
-			{
+			else {
 				this.fileName.text = file.name
 				if (file.isDirectory)
 					this.bindDirectory(file)
@@ -152,45 +139,39 @@ abstract class FileExplorerDialog : BaseDialog()
 
 				val isEntrySelected = adapter.selectedFiles.contains(file)
 				this.setSelection(isEntrySelected)
-				if (isEntrySelected)
-				{
+				if (isEntrySelected) {
 					adapter.selectedEntries.add(this)
 				}
 			}
 		}
 
-		private fun setSelection(selected: Boolean)
-		{
+		private fun setSelection(selected: Boolean) {
 			this.selectionIndicator.visibility = if (selected) View.VISIBLE else View.INVISIBLE
 			this.fileType.isSelected = selected
 			this.fileName.isSelected = selected
 		}
 
-		private fun bindFile(file: File)
-		{
+		private fun bindFile(file: File) {
 			if (file.isAudioFile)
 				this.fileType.setImageResource(R.drawable.selector_ic_file_sound)
 			else
 				this.fileType.setImageResource(R.drawable.selector_ic_file)
 		}
 
-		private fun bindDirectory(file: File)
-		{
+		private fun bindDirectory(file: File) {
 			if (file.containsAudioFiles)
 				this.fileType.setImageResource(R.drawable.selector_ic_folder_sound)
 			else
 				this.fileType.setImageResource(R.drawable.selector_ic_folder)
 		}
 
-		private fun bindParentDirectory()
-		{
+		private fun bindParentDirectory() {
 			this.fileName.text = ".."
 			this.fileType.setImageResource(R.drawable.selector_ic_parent_directory)
 			this.selectionIndicator.visibility = View.GONE
 		}
 
-		override fun onClick(v: View)
-		{
+		override fun onClick(v: View) {
 			val file = adapter.fileList[this.layoutPosition]
 			if (!file.isDirectory)
 				return
@@ -198,8 +179,7 @@ abstract class FileExplorerDialog : BaseDialog()
 			adapter.notifyDataSetChanged()
 		}
 
-		override fun onLongClick(v: View): Boolean
-		{
+		override fun onLongClick(v: View): Boolean {
 			val file = adapter.fileList[this.layoutPosition]
 			if (file == adapter.parentFile!!.parentFile)
 				return false
@@ -223,15 +203,12 @@ abstract class FileExplorerDialog : BaseDialog()
 			return true
 		}
 
-		private fun selectEntry(file: File)
-		{
-			if (canSelectMultipleFiles())
-			{
+		private fun selectEntry(file: File) {
+			if (canSelectMultipleFiles()) {
 				adapter.selectedFiles.add(file)
 				adapter.selectedEntries.add(this)
 			}
-			else
-			{
+			else {
 				adapter.selectedFiles.clear()
 				adapter.selectedFiles.add(file)
 
@@ -247,8 +224,7 @@ abstract class FileExplorerDialog : BaseDialog()
 			onFileSelected(file)
 		}
 
-		private fun animateFileLogoRotate()
-		{
+		private fun animateFileLogoRotate() {
 			this.fileType.animate().withLayer()
 					.rotationYBy(360f)
 					.setDuration(resources
@@ -270,8 +246,7 @@ abstract class FileExplorerDialog : BaseDialog()
 
 		override fun onAnimationRepeat(animation: Animator) {}
 
-		private fun animateSelectorSlideIn()
-		{
+		private fun animateSelectorSlideIn() {
 			val distance = this.selectionIndicator.width
 			this.selectionIndicator.translationX = distance.toFloat() // move selector to the right to be out of the screen
 
@@ -284,5 +259,4 @@ abstract class FileExplorerDialog : BaseDialog()
 					.start()
 		}
 	}
-
 }

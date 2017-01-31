@@ -22,10 +22,15 @@ fun File.getFilesInDirectory(): MutableList<File> {
 	if (content == null || content.isEmpty())
 		return ArrayList()
 
-	val files = ArrayList<File>(content.size)
-	files += content
+	val allFiles = ArrayList<File>(content.size)
+	allFiles += content
 
-	return files
+	val dirs = allFiles.filter { it.isDirectory }.sortedBy { it.name }
+	allFiles.removeAll(dirs)
+	allFiles.sortBy { it.name }
+
+	allFiles.addAll(0, dirs)
+	return allFiles
 }
 
 fun Uri.getFileForUri(): File? {
