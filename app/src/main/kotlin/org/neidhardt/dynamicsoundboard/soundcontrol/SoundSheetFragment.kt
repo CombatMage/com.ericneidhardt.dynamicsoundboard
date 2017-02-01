@@ -37,6 +37,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundAdapter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
+import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 import org.neidhardt.eventbus_utils.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
@@ -207,7 +208,7 @@ class SoundSheetFragment :
 						.subscribe { viewHolder ->
 							viewHolder.name.clearFocus()
 							viewHolder.player?.let { player ->
-								this.soundPresenter.userTogglesPlaybackState(player)
+								this.soundPresenter.userTogglesPlaybackState(player, viewHolder.playButton)
 							}
 						},
 
@@ -220,7 +221,14 @@ class SoundSheetFragment :
 
 				this.soundAdapter.clicksTogglePlaylist
 						.subscribe { viewHolder ->
-							val addToPlaylist = !viewHolder.inPlaylistButton.isSelected
+							val addToPlaylist = viewHolder
+									.inPlaylistButton.state == TogglePlaylistButton.State.NOT_IN_PLAYLIST
+
+							viewHolder.inPlaylistButton.state = if (addToPlaylist)
+								TogglePlaylistButton.State.IN_PLAYLIST
+							else
+								TogglePlaylistButton.State.NOT_IN_PLAYLIST
+
 							viewHolder.player?.let { player ->
 								this.soundPresenter.userTogglesPlaylistState(player, addToPlaylist)
 							}

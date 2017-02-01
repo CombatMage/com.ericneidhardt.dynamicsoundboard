@@ -38,6 +38,7 @@ class ToggleLoopButton : FrameLayout {
 			this.scaleType = ImageView.ScaleType.CENTER_CROP
 			this.backgroundResource = selectableItemBackgroundBorderlessResource
 			this.imageResource = R.drawable.selector_ic_loop
+			this.contentDescription = resources.getString(R.string.sound_control_content_description_loop)
 		}
 		isClickable = true
 		state = State.LOOP_ENABLE

@@ -11,6 +11,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
+import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
 import org.neidhardt.eventbus_utils.registerIfRequired
 import java.lang.ref.WeakReference
 
@@ -40,14 +41,19 @@ class SoundPresenter (
 		this.eventBus.unregister(this)
 	}
 
-	fun userTogglesPlaybackState(player: MediaPlayerController) {
-		if (player.isFadingOut)
+	fun userTogglesPlaybackState(player: MediaPlayerController, playbackButton: PlayButton) {
+		if (player.isFadingOut) {
+			playbackButton.state = PlayButton.State.PLAY
 			player.stopSound()
-		else if (player.isPlayingSound)
+		}
+		else if (player.isPlayingSound) {
+			playbackButton.state = PlayButton.State.FADE
 			player.fadeOutSound()
-		else
+		}
+		else {
+			playbackButton.state = PlayButton.State.PAUSE
 			player.playSound()
-		// no need to update item, this is done on the player's event
+		}
 	}
 
 	fun userStopsPlayback(player: MediaPlayerController) {
@@ -57,7 +63,6 @@ class SoundPresenter (
 
 	fun userTogglesPlaylistState(player: MediaPlayerController, addToPlaylist: Boolean) {
 		player.mediaPlayerData.let { this.playlistManager.togglePlaylistSound(it, addToPlaylist) }
-		this.adapter?.notifyItemChanged(player)
 	}
 
 	fun userRequestPlayerSettings(player: MediaPlayerController) {

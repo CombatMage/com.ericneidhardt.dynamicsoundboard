@@ -11,6 +11,7 @@ import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
+import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
@@ -29,7 +30,7 @@ class SoundViewHolder(
 	val stopButton: ImageButton = itemView.ib_view_sound_control_item_stop
 
 	val isLoopEnabledButton: ToggleLoopButton = itemView.ib_view_sound_control_item_loop
-	val inPlaylistButton: ImageButton = itemView.ib_view_sound_control_item_add_to_playlist
+	val inPlaylistButton: TogglePlaylistButton = itemView.ib_view_sound_control_item_add_to_playlist
 	
 	val timePosition: SeekBar= itemView.sb_view_sound_control_item_progress
 	val settingsButton: ImageButton = itemView.ib_view_sound_control_item_settings
@@ -54,11 +55,11 @@ class SoundViewHolder(
 				this.name.text = playerData.label
 
 			if (player.isFadingOut)
-				this.playButton.setState(PlayButton.State.FADE)
+				this.playButton.state = PlayButton.State.FADE
 			else if (player.isPlayingSound) // if already playing, we enable pause
-				this.playButton.setState(PlayButton.State.PAUSE)
+				this.playButton.state = PlayButton.State.PAUSE
 			else
-				this.playButton.setState(PlayButton.State.PLAY)
+				this.playButton.state = PlayButton.State.PLAY
 
 			this.stopButton.isEnabled = player.isPlayingSound || player.progress > 0
 

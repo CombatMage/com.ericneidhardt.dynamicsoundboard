@@ -2,9 +2,7 @@ package org.neidhardt.dynamicsoundboard.views.sound_control
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageButton
 import android.widget.ImageView
 import org.jetbrains.anko.*
 import org.neidhardt.dynamicsoundboard.R
@@ -40,22 +38,25 @@ class PlayButton : FrameLayout {
 			this.padding = dip(12)
 			this.scaleType = ImageView.ScaleType.CENTER_CROP
 			this.backgroundResource = selectableItemBackgroundBorderlessResource
+			this.contentDescription = resources.getString(R.string.sound_control_content_description_play)
 		}
 		isClickable = true
-		setState(State.PLAY)
+		state = State.PLAY
 	}
 
-	fun setState(newState: State) {
-		when (newState) {
-			State.PLAY -> {
-				this.icon?.setImageResource(R.drawable.ic_play)
+	var state: State = State.PLAY
+		set(newState) {
+			when (newState) {
+				State.PLAY -> {
+					this.icon?.setImageResource(R.drawable.ic_play)
+				}
+				State.PAUSE -> {
+					this.icon?.setImageResource(R.drawable.ic_pause)
+				}
+				State.FADE -> {
+					this.icon?.setImageResource(R.drawable.ic_fade_out)
+				}
 			}
-			State.PAUSE -> {
-				this.icon?.setImageResource(R.drawable.ic_pause)
-			}
-			State.FADE -> {
-				this.icon?.setImageResource(R.drawable.ic_fade_out)
-			}
+			field = newState
 		}
-	}
 }
