@@ -37,7 +37,6 @@ class TogglePlaylistButton : FrameLayout {
 			this.padding = dip(12)
 			this.scaleType = ImageView.ScaleType.CENTER_CROP
 			this.backgroundResource = selectableItemBackgroundBorderlessResource
-			this.imageResource = R.drawable.selector_ic_playlist
 			this.contentDescription = resources.getString(R.string.sound_control_content_description_playlist)
 		}
 		isClickable = true
@@ -49,10 +48,10 @@ class TogglePlaylistButton : FrameLayout {
 			field = newState
 			when (newState) {
 				State.IN_PLAYLIST -> {
-					this.icon?.isSelected = true
+					this.icon?.imageResource = R.drawable.ic_playlist_checked
 				}
 				State.NOT_IN_PLAYLIST -> {
-					this.icon?.isSelected = false
+					this.icon?.imageResource = R.drawable.ic_playlist
 				}
 			}
 		}
