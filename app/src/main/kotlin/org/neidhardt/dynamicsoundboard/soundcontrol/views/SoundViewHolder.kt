@@ -68,7 +68,11 @@ class SoundViewHolder(
 					else
 						ToggleLoopButton.State.LOOP_DISABLE
 
-			this.inPlaylistButton.isSelected = this.playlistManager.playlist.containsPlayerWithId(playerData.playerId)
+			this.inPlaylistButton.state =
+					if (this.playlistManager.playlist.containsPlayerWithId(playerData.playerId))
+						TogglePlaylistButton.State.IN_PLAYLIST
+					else
+						TogglePlaylistButton.State.NOT_IN_PLAYLIST
 
 			this.timePosition.isEnabled = player.isPlayingSound // only active player is prepared and can seekTo
 			this.timePosition.max = player.trackDuration

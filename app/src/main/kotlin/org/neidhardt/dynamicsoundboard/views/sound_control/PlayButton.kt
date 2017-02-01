@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.views.sound_control
 
+import android.animation.LayoutTransition
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
@@ -40,6 +41,7 @@ class PlayButton : FrameLayout {
 			this.backgroundResource = selectableItemBackgroundBorderlessResource
 			this.contentDescription = resources.getString(R.string.sound_control_content_description_play)
 		}
+		layoutTransition = LayoutTransition()
 		isClickable = true
 		state = State.PLAY
 	}
