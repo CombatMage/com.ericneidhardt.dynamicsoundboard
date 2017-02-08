@@ -82,14 +82,14 @@ abstract class FileExplorerDialog : BaseDialog() {
 
 		fun setParent(parent: File) {
 			this.parentFile = parent
-			this.fileList = parent.getFilesInDirectory()
+			this.fileList = parent.getFilesInDirectory().toMutableList()
 			if (parent.parentFile != null)
 				this.fileList.add(0, parent.parentFile)
 		}
 
 		fun refreshDirectory() {
 			this.parentFile?.apply {
-				fileList = this.getFilesInDirectory()
+				fileList = this.getFilesInDirectory().toMutableList()
 				if (this.parentFile != null)
 					fileList.add(0, this.parentFile)
 			}

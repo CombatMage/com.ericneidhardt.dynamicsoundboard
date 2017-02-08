@@ -7,6 +7,9 @@ import android.webkit.MimeTypeMap
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import java.io.File
 import java.util.*
+import kotlin.comparisons.compareByDescending
+import kotlin.comparisons.thenBy
+import kotlin.comparisons.thenByDescending
 
 /**
  * File created by eric.neidhardt on 09.04.2015.
@@ -17,20 +20,16 @@ private val AUDIO = "audio"
 private val MIME_AUDIO_TYPES = arrayOf("audio/*", "application/ogg", "application/x-ogg")
 private val SCHEME_CONTENT_URI = "content"
 
-fun File.getFilesInDirectory(): MutableList<File> {
+fun File.getFilesInDirectory(): List<File> {
 	val content = this.listFiles()
-	if (content == null || content.isEmpty())
-		return ArrayList()
+	if (content == null || content.isEmpty()) return ArrayList()
 
-	val allFiles = ArrayList<File>(content.size)
-	allFiles += content
-
-	val dirs = allFiles.filter { it.isDirectory }.sortedBy { it.name }
-	allFiles.removeAll(dirs)
-	allFiles.sortBy { it.name }
-
-	allFiles.addAll(0, dirs)
-	return allFiles
+	return content.sortedWith(
+			compareByDescending<File> { it.isDirectory }
+					.thenByDescending { it.containsAudioFiles }
+					.thenByDescending { it.isAudioFile }
+					.thenBy { it.name }
+	)
 }
 
 fun Uri.getFileForUri(): File? {
@@ -45,13 +44,14 @@ fun Uri.getFileForUri(): File? {
 
 val File.isAudioFile: Boolean
 	get() {
-		val mime = this.getMimeType ?: return false
+		if (this.isDirectory) return false
+		val mime = this.mimeType ?: return false
 		if (mime.startsWith(AUDIO))
 			return true
 		return MIME_AUDIO_TYPES.contains(mime)
 	}
 
-val File.getMimeType: String?
+val File.mimeType: String?
 	get() {
 		var type: String? = null
 		val extension = FileUtils.getFileExtension(this.absolutePath)
@@ -64,6 +64,7 @@ val File.getMimeType: String?
 
 val File.containsAudioFiles: Boolean
 	get() {
+		if (!this.isDirectory) return false
 		val filesInDirectory = this.listFiles() ?: return false
 		return filesInDirectory.any { !it.isDirectory && it.isAudioFile }
 	}
