@@ -119,15 +119,23 @@
 	<string name="about_version_title">Version</string>
 	<string name="about_used_third_party_software_title">Verwendete Komponenten</string>
 	<string name="about_used_third_party_software_summary">
-		ch.acra:acra,
-		org.greenrobot:eventbus,
-		de.greenrobot:greendao,
-		com.fasterxml.jackson.core:jackson-databind,
-		com.github.clans:fab,
-		com.github.johnkil.android-robototextview:robototextview,
-		com.emtronics.dragsortrecycler:DragSortRecycler,
-		me.zhanghai.android.materialprogressbar:library,
-		jp.wasabeef:recyclerview-animators
+		org.jetbrains.kotlin:kotlin-stdlib:1.0.6
+		io.reactivex:rxjava:1.2.2
+		io.reactivex:rxkotlin:0.60.0
+		io.reactivex:rxandroid:1.2.1
+		com.jakewharton.rxbinding:rxbinding:1.0.0
+		org.jetbrains.anko:anko-sdk21:0.9
+		org.jetbrains.anko:anko-appcompat-v7:0.9
+		de.greenrobot:java-common:2.3.1
+		org.greenrobot:eventbus:3.0.0
+		com.squareup.leakcanary:leakcanary-android:1.5
+		com.google.android.exoplayer:exoplayer:r2.0.3
+		com.google.code.gson:gson:2.4
+		com.github.johnkil.android-robototextview:robototextview:2.5.1
+		jp.wasabeef:recyclerview-animators:2.2.4
+		me.zhanghai.android.materialprogressbar:library:1.1.7
+		com.github.clans:fab:1.6.4
+		ch.acra:acra:$versions.acra
 	</string>
 	<string name="about_used_third_party_assets_title">Verwendete Ressourcen</string>
 	<string name="about_used_third_party_assets_summary">

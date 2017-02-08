@@ -2,18 +2,7 @@ ext.versions = [
 
 		supportLibs : '25.0.0',
 
-		eventBus          : '3.0.0',
-		greenRobotCommons : '2.3.1',
-
-		exoplayer   : 'r2.0.3',
-
-		anko        : '0.9',
-
-		robotoTextView : '2.5.1',
-
-		recyclerViewAnimator : '2.2.4',
-
-		acra              : '4.9.1'
+		anko        : '0.9'
 ]
 
 ext.libraries = [
@@ -34,23 +23,23 @@ ext.libraries = [
 		anko                 : "org.jetbrains.anko:anko-sdk21:$versions.anko", // min sdk version important
 		ankoSupportAppCompat : "org.jetbrains.anko:anko-appcompat-v7:$versions.anko", // Anko libs matching support libs
 
-		greenRobotCommons    : "de.greenrobot:java-common:$versions.greenRobotCommons",
-		eventBus             : "org.greenrobot:eventbus:$versions.eventBus",
+		greenRobotCommons    : "de.greenrobot:java-common:2.3.1",
+		eventBus             : "org.greenrobot:eventbus:3.0.0",
 		greendao             : "org.greenrobot:greendao:3.2.0",
 
 		leakCanary           : "com.squareup.leakcanary:leakcanary-android:1.5",
 
-		exoplayer            : "com.google.android.exoplayer:exoplayer:$versions.exoplayer",
+		exoplayer            : "com.google.android.exoplayer:exoplayer:r2.0.3",
 
 		gson                 : "com.google.code.gson:gson:2.4",
 
-		robotoTextView       : "com.github.johnkil.android-robototextview:robototextview:$versions.robotoTextView",
+		robotoTextView       : "com.github.johnkil.android-robototextview:robototextview:2.5.1",
 
-		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:$versions.recyclerViewAnimator",
+		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:2.2.4",
 
 		materialProgressBar  : "me.zhanghai.android.materialprogressbar:library:1.1.7",
 
 		floatingActionButton : "com.github.clans:fab:1.6.4",
 
-		acra                 : "ch.acra:acra:$versions.acra"
+		acra                 : "ch.acra:acra:4.9.1"
 ]
