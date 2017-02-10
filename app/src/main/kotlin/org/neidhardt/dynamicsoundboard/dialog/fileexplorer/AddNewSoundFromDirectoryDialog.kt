@@ -11,15 +11,10 @@ import android.support.v7.widget.RecyclerView
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import rx.Observable
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.io.File
 import java.util.*
@@ -108,7 +103,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 			if (!file.isDirectory)
 				files.add(file)
 			else
-				file.getFilesInDirectory().forEach { files.add(it) }
+				file.listFiles()?.forEach { files.add(it) }
 		}
 
 		return files

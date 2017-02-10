@@ -5,8 +5,9 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import rx.Observable
+import rx.schedulers.Schedulers
 import java.io.File
-import java.util.*
 import kotlin.comparisons.compareByDescending
 import kotlin.comparisons.thenBy
 import kotlin.comparisons.thenByDescending
@@ -20,16 +21,18 @@ private val AUDIO = "audio"
 private val MIME_AUDIO_TYPES = arrayOf("audio/*", "application/ogg", "application/x-ogg")
 private val SCHEME_CONTENT_URI = "content"
 
-fun File.getFilesInDirectory(): List<File> {
+fun File.getFilesInDirectorySorted(): Observable<List<File>> {
 	val content = this.listFiles()
-	if (content == null || content.isEmpty()) return ArrayList()
+	if (content == null || content.isEmpty()) return Observable.just(emptyList())
 
-	return content.sortedWith(
-			compareByDescending<File> { it.isDirectory }
-					.thenByDescending { it.containsAudioFiles }
-					.thenByDescending { it.isAudioFile }
-					.thenBy { it.name }
-	)
+	return Observable.fromCallable {
+		content.sortedWith(
+				compareByDescending<File> { it.isDirectory }
+						.thenByDescending { it.containsAudioFiles }
+						.thenByDescending { it.isAudioFile }
+						.thenBy { it.name }
+		)
+	}.subscribeOn(Schedulers.computation())
 }
 
 fun Uri.getFileForUri(): File? {

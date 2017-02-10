@@ -14,12 +14,14 @@ import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.misc.containsAudioFiles
-import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectory
+import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySorted
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.utils.longHash
+import rx.android.schedulers.AndroidSchedulers
 import java.io.File
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * File created by eric.neidhardt on 12.11.2014.
@@ -72,26 +74,35 @@ abstract class FileExplorerDialog : BaseDialog() {
 		internal var selectedEntries: MutableSet<DirectoryEntry> = HashSet()
 		internal var selectedFiles: MutableSet<File> = HashSet()
 
-		internal var fileList: MutableList<File> = ArrayList()
+		internal val fileList: List<File> get() = mFileList
+		internal val mFileList: MutableList<File> = ArrayList()
 
 		init {
 			this.setHasStableIds(true)
 			this.setParent(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC))
-			this.notifyDataSetChanged()
 		}
 
 		fun setParent(parent: File) {
 			this.parentFile = parent
-			this.fileList = parent.getFilesInDirectory().toMutableList()
-			if (parent.parentFile != null)
-				this.fileList.add(0, parent.parentFile)
+			this.mFileList.clear()
+			if (parent.parentFile != null) {
+				this.mFileList.add(0, parent.parentFile)
+				this.notifyDataSetChanged()
+			}
+
+			subscriptions.add(parent.getFilesInDirectorySorted()
+					.delay(200, TimeUnit.MILLISECONDS)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe { filesUnderParent ->
+						this.mFileList.addAll(filesUnderParent)
+						this.notifyItemRangeInserted(1, filesUnderParent.size)
+					})
 		}
 
+		// refresh current view by resetting the current parent. This will update the file list
 		fun refreshDirectory() {
-			this.parentFile?.apply {
-				fileList = this.getFilesInDirectory().toMutableList()
-				if (this.parentFile != null)
-					fileList.add(0, this.parentFile)
+			this.parentFile?.let { currentParent ->
+				this.setParent(currentParent)
 			}
 		}
 
@@ -172,20 +183,19 @@ abstract class FileExplorerDialog : BaseDialog() {
 		}
 
 		override fun onClick(v: View) {
-			val file = adapter.fileList[this.layoutPosition]
-			if (!file.isDirectory)
-				return
-			adapter.setParent(file)
-			adapter.notifyDataSetChanged()
+			this.file?.let { file ->
+				if (!file.isDirectory)
+					return
+				adapter.setParent(file)
+			}
 		}
 
 		override fun onLongClick(v: View): Boolean {
-			val file = adapter.fileList[this.layoutPosition]
+			val file = this.file ?: return false
 			if (file == adapter.parentFile!!.parentFile)
 				return false
 
-			if (adapter.selectedFiles.contains(file))
-			{
+			if (adapter.selectedFiles.contains(file)) {
 				adapter.selectedFiles.remove(file)
 				adapter.selectedEntries.remove(this)
 				this.setSelection(false)
