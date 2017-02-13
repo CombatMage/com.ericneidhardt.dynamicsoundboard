@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.dialog.fileexplorer
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Environment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
@@ -66,7 +67,11 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 
 		val previousPath = this.getPathFromSharedPreferences(TAG)
 		if (previousPath != null)
-			super.adapter.setParent(File(previousPath))
+			super.setDirectoryForAdapter(File(previousPath))
+		else {
+			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
+			super.setDirectoryForAdapter(file)
+		}
 
 		return AlertDialog.Builder(this.activity).apply {
 			this.setView(view)
@@ -76,7 +81,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 	}
 
 	override fun onFileSelected(selectedFile: File) {
-		val position = super.adapter.fileList.indexOf(selectedFile)
+		val position = super.adapter.displayedFiles.indexOf(selectedFile)
 		this.directories!!.scrollToPosition(position)
 	}
 
@@ -87,7 +92,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 	override fun canSelectMultipleFiles(): Boolean = true
 
 	private fun onConfirm() {
-		val currentDirectory = super.adapter.parentFile
+		val currentDirectory = super.adapter.rootDirectory
 		if (currentDirectory != null)
 			this.storePathToSharedPreferences(TAG, currentDirectory.path)
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.os.Environment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
@@ -46,7 +47,11 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
 		if (previousPath != null)
-			super.adapter.setParent(File(previousPath))
+			super.setDirectoryForAdapter(File(previousPath))
+		else {
+			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+			super.setDirectoryForAdapter(file)
+		}
 
 		return AlertDialog.Builder(this.activity).apply {
 			this.setView(view)
@@ -63,7 +68,7 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 	override fun onFileSelected(selectedFile: File)
 	{
-		val position = super.adapter.fileList.indexOf(selectedFile)
+		val position = super.adapter.displayedFiles.indexOf(selectedFile)
 		this.directories!!.scrollToPosition(position)
 	}
 
@@ -79,7 +84,7 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 	}
 
 	private fun onConfirm() {
-		val currentDirectory = super.adapter.parentFile
+		val currentDirectory = super.adapter.rootDirectory
 		if (currentDirectory != null)
 			this.storePathToSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE, currentDirectory.path)
 
@@ -104,7 +109,7 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 			return
 		}
 
-		val file = File(super.adapter.parentFile, fileName)
+		val file = File(super.adapter.rootDirectory, fileName)
 		if (file.exists()) {
 			Toast.makeText(this.activity, R.string.dialog_store_layout_file_exists, Toast.LENGTH_SHORT).show()
 			return

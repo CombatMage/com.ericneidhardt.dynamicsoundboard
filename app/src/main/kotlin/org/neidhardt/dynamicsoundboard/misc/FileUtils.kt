@@ -21,7 +21,7 @@ private val AUDIO = "audio"
 private val MIME_AUDIO_TYPES = arrayOf("audio/*", "application/ogg", "application/x-ogg")
 private val SCHEME_CONTENT_URI = "content"
 
-fun File.getFilesInDirectorySorted(): Observable<List<File>> {
+fun File.getFilesInDirectorySortedAsync(): Observable<List<File>> {
 	val content = this.listFiles()
 	if (content == null || content.isEmpty()) return Observable.just(emptyList())
 
@@ -33,6 +33,18 @@ fun File.getFilesInDirectorySorted(): Observable<List<File>> {
 						.thenBy { it.name }
 		)
 	}.subscribeOn(Schedulers.computation())
+}
+
+fun File.getFilesInDirectorySorted(): List<File> {
+	val content = this.listFiles()
+	if (content == null || content.isEmpty()) return emptyList()
+
+	return content.sortedWith(
+			compareByDescending<File> { it.isDirectory }
+					.thenByDescending { it.containsAudioFiles }
+					.thenByDescending { it.isAudioFile }
+					.thenBy { it.name }
+	)
 }
 
 fun Uri.getFileForUri(): File? {
