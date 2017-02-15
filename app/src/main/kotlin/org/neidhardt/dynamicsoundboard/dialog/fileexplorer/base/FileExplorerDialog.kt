@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base
 
 import android.os.Bundle
+import android.os.Environment
 import android.preference.PreferenceManager
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
@@ -42,12 +43,11 @@ abstract class FileExplorerDialog : BaseDialog() {
 		this.subscriptions.addAll(
 				this.adapter.clicksFileEntry
 						.filter(File::isDirectory)
-						.doOnNext { dir -> this.processOpenDirectory(dir) }
+						.doOnNext { dir -> this.displayRootDirectory(dir) }
 						.subscribeOn(Schedulers.computation())
 						.map { dir -> Tuple<File?, List<File>>(dir.parentFile, dir.getFilesInDirectorySorted()) }
-						//.delay(1000, TimeUnit.MILLISECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe { tupleRootFiles -> this.displayFile(tupleRootFiles.first, tupleRootFiles.second) },
+						.subscribe { tupleRootFiles -> this.displayFilesInDirectory(tupleRootFiles.first, tupleRootFiles.second) },
 
 				this.adapter.selectsFileEntry
 						.filter { viewHolder -> viewHolder.file != adapter.rootDirectory }
@@ -79,23 +79,28 @@ abstract class FileExplorerDialog : BaseDialog() {
 						})
 	}
 
-	private fun processOpenDirectory(directory: File) {
+	private fun displayRootDirectory(directory: File) {
 		if (!directory.isDirectory) throw IllegalArgumentException()
 		if (this.adapter.displayedFiles.isEmpty()) throw IllegalStateException()
 
+		val externalFileStorage = Environment.getExternalStorageDirectory()
 		val rootDirectory = directory.parentFile
-		this.adapter.rootDirectory = rootDirectory
-		if (rootDirectory == null) { // clicked directory is already root ( / )
+
+		// clicked directory is already root ( / ) our outside of external storage path
+		if (rootDirectory == null
+				|| rootDirectory.absolutePath.length < externalFileStorage.absolutePath.length) {
+			this.adapter.rootDirectory = null
 			this.adapter.displayedFiles.removeAt(0)
 			this.adapter.notifyItemRemoved(0)
 		}
 		else {
+			this.adapter.rootDirectory = rootDirectory
 			this.adapter.displayedFiles[0] = rootDirectory
 			this.adapter.notifyItemChanged(0)
 		}
 	}
 
-	private fun displayFile(root: File?, files: List<File>) {
+	private fun displayFilesInDirectory(root: File?, files: List<File>) {
 		this.adapter.displayedFiles.clear()
 		if (root == null) {
 			this.adapter.displayedFiles.addAll(files)
