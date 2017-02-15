@@ -27,12 +27,6 @@ class DirectoryAdapter : BaseAdapter<File, FileViewHolder>() {
 
 	init { this.setHasStableIds(true) }
 
-	fun refreshDirectory() {
-		this.rootDirectory?.let { currentParent ->
-			//this.setParent(currentParent)
-		}
-	}
-
 	override fun getItemCount(): Int = this.values.size
 
 	override fun getItemId(position: Int): Long = this.values[position].absolutePath.longHash

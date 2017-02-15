@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.Logger
@@ -67,10 +68,10 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 
 		val previousPath = this.getPathFromSharedPreferences(TAG)
 		if (previousPath != null)
-			super.setDirectoryForAdapter(File(previousPath))
+			super.setStartDirectoryForAdapter(File(previousPath))
 		else {
 			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
-			super.setDirectoryForAdapter(file)
+			super.setStartDirectoryForAdapter(file)
 		}
 
 		return AlertDialog.Builder(this.activity).apply {

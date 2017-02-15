@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.dialog
 
 import org.neidhardt.dynamicsoundboard.R
 import android.support.v4.app.FragmentManager
-import org.neidhardt.android_utils.misc.getCopyList
+import org.neidhardt.utils.getCopyList
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.generic.GenericConfirmDialog
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag

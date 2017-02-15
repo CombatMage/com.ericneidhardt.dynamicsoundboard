@@ -17,6 +17,7 @@ import android.widget.Toast
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
 import rx.android.schedulers.AndroidSchedulers
 import java.io.File
 import java.io.IOException
@@ -47,10 +48,10 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
 		if (previousPath != null)
-			super.setDirectoryForAdapter(File(previousPath))
+			super.setStartDirectoryForAdapter(File(previousPath))
 		else {
 			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-			super.setDirectoryForAdapter(file)
+			super.setStartDirectoryForAdapter(file)
 		}
 
 		return AlertDialog.Builder(this.activity).apply {
@@ -122,9 +123,8 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 				return
 			}
 
-			super.adapter.selectedFiles.add(file)
-			super.adapter.refreshDirectory()
-			super.adapter.notifyDataSetChanged()
+			super.selectedFiles.add(file)
+			super.refreshDirectory()
 
 			this.onFileSelected(file)
 		}

@@ -1,4 +1,4 @@
-package org.neidhardt.android_utils.misc
+package org.neidhardt.utils
 
 import java.util.*
 

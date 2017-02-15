@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.android_utils.misc.getCopyList
+import org.neidhardt.utils.getCopyList
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory

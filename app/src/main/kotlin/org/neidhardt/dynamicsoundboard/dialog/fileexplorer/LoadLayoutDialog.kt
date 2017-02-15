@@ -13,6 +13,7 @@ import android.widget.Toast
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
 import java.io.File
 
 /**
@@ -46,10 +47,10 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog {
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
 		if (previousPath != null)
-			super.setDirectoryForAdapter(File(previousPath))
+			super.setStartDirectoryForAdapter(File(previousPath))
 		else {
 			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-			super.setDirectoryForAdapter(file)
+			super.setStartDirectoryForAdapter(file)
 		}
 
 		return AlertDialog.Builder(this.activity).apply {
