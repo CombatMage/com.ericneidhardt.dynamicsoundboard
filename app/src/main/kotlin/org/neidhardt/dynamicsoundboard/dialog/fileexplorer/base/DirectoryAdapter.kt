@@ -19,6 +19,7 @@ class DirectoryAdapter : BaseAdapter<File, FileViewHolder>() {
 	val clicksFileEntry: PublishSubject<File> = PublishSubject()
 	val selectsFileEntry: PublishSubject<FileViewHolder> = PublishSubject()
 
+	var currentDirectory: File? = null
 	var rootDirectory: File? = null
 	val displayedFiles: MutableList<File> get() = this.values
 	val selectedFiles: MutableSet<File> = HashSet()

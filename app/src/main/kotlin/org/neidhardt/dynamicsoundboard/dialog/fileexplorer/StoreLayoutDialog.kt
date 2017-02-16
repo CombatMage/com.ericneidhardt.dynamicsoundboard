@@ -67,16 +67,13 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 	override fun canSelectMultipleFiles(): Boolean = false
 
-	override fun onFileSelected(selectedFile: File)
-	{
+	override fun onFileSelected(selectedFile: File) {
 		val position = super.adapter.displayedFiles.indexOf(selectedFile)
 		this.directories!!.scrollToPosition(position)
 	}
 
-	override fun onClick(v: View)
-	{
-		when (v.id)
-		{
+	override fun onClick(v: View) {
+		when (v.id) {
 			R.id.b_add -> {
 				this.createFileAndSelect()
 				this.hideKeyboard()
@@ -102,15 +99,14 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 		}
 	}
 
-	private fun createFileAndSelect()
-	{
+	private fun createFileAndSelect() {
 		val fileName = this.inputFileName!!.text.toString()
 		if (fileName.isEmpty()) {
 			Toast.makeText(this.activity, R.string.dialog_store_layout_no_file_name, Toast.LENGTH_SHORT).show()
 			return
 		}
 
-		val file = File(super.adapter.rootDirectory, fileName)
+		val file = File(super.adapter.currentDirectory, fileName)
 		if (file.exists()) {
 			Toast.makeText(this.activity, R.string.dialog_store_layout_file_exists, Toast.LENGTH_SHORT).show()
 			return
@@ -124,7 +120,7 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 			}
 
 			super.selectedFiles.add(file)
-			super.refreshDirectory()
+			super.addFileToAdapter(file)
 
 			this.onFileSelected(file)
 		}
@@ -156,5 +152,4 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 			dialog.show(manager, TAG)
 		}
 	}
-
 }

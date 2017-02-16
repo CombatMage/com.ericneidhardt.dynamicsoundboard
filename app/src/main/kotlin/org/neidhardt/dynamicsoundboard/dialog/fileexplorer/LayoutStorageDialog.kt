@@ -5,8 +5,7 @@ package org.neidhardt.dynamicsoundboard.dialog.fileexplorer
  */
 interface LayoutStorageDialog
 {
-	companion object
-	{
-		val KEY_PATH_STORAGE: String = "org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LayoutStorageDialog.KEY_PATH_STORAGE"
+	companion object {
+		val KEY_PATH_STORAGE: String = "LayoutStorageDialog.KEY_PATH_STORAGE"
 	}
 }

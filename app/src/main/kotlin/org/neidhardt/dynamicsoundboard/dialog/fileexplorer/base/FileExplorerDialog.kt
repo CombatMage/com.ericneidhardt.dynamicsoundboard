@@ -43,7 +43,10 @@ abstract class FileExplorerDialog : BaseDialog() {
 		this.subscriptions.addAll(
 				this.adapter.clicksFileEntry
 						.filter(File::isDirectory)
-						.doOnNext { dir -> this.displayRootDirectory(dir) }
+						.doOnNext { dir ->
+							this.displayRootDirectory(dir)
+							this.adapter.currentDirectory = dir
+						}
 						.subscribeOn(Schedulers.computation())
 						.map { dir -> Tuple<File?, List<File>>(dir.parentFile, dir.getFilesInDirectorySorted()) }
 						.observeOn(AndroidSchedulers.mainThread())
@@ -127,21 +130,13 @@ abstract class FileExplorerDialog : BaseDialog() {
 			this.adapter.notifyItemInserted(0)
 		}
 
+		this.adapter.currentDirectory = directory
 		this.displayFilesInDirAsync(directory)
 	}
 
-	protected fun refreshDirectory() {
-		this.adapter.rootDirectory?.let { currentDirectory ->
-
-			this.adapter.displayedFiles.clear()
-			currentDirectory.parentFile?.let { parentOfDirectory ->
-				this.adapter.rootDirectory = parentOfDirectory
-				this.adapter.displayedFiles.add(parentOfDirectory)
-			}
-			this.adapter.notifyDataSetChanged()
-
-			this.displayFilesInDirAsync(currentDirectory)
-		}
+	protected fun addFileToAdapter(file: File) {
+		this.adapter.displayedFiles.add(file)
+		this.adapter.notifyItemInserted(this.adapter.displayedFiles.size - 1)
 	}
 
 	private fun displayFilesInDirAsync(directory: File) {
