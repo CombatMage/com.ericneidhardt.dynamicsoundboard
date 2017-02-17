@@ -11,7 +11,6 @@ import org.neidhardt.utils.Tuple
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.io.File
-import java.util.concurrent.TimeUnit
 
 /**
  * File created by eric.neidhardt on 12.11.2014.
@@ -123,10 +122,13 @@ abstract class FileExplorerDialog : BaseDialog() {
 
 	protected fun setStartDirectoryForAdapter(directory: File) {
 		// set link to up directory if available
-		val parentOfDirectory = directory.parentFile
-		if (parentOfDirectory != null) {
-			this.adapter.rootDirectory = parentOfDirectory
-			this.adapter.displayedFiles.add(parentOfDirectory)
+		val externalFileStorage = Environment.getExternalStorageDirectory()
+		val rootDirectory = directory.parentFile
+
+		if (rootDirectory != null
+				&& externalFileStorage.absolutePath.length >= rootDirectory.absolutePath.length) {
+			this.adapter.rootDirectory = rootDirectory
+			this.adapter.displayedFiles.add(rootDirectory)
 			this.adapter.notifyItemInserted(0)
 		}
 
@@ -143,7 +145,6 @@ abstract class FileExplorerDialog : BaseDialog() {
 		// request files in directory and add them
 		this.subscriptions.add(
 				directory.getFilesInDirectorySortedAsync()
-						.delay(200, TimeUnit.MILLISECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe { filesUnderParent ->
 							val startIndex = this.adapter.displayedFiles.size

@@ -16,13 +16,13 @@ import java.util.*
  */
 class DirectoryAdapter : BaseAdapter<File, FileViewHolder>() {
 
-	val clicksFileEntry: PublishSubject<File> = PublishSubject()
-	val selectsFileEntry: PublishSubject<FileViewHolder> = PublishSubject()
+	internal val clicksFileEntry: PublishSubject<File> = PublishSubject()
+	internal val selectsFileEntry: PublishSubject<FileViewHolder> = PublishSubject()
 
-	var currentDirectory: File? = null
-	var rootDirectory: File? = null
-	val displayedFiles: MutableList<File> get() = this.values
-	val selectedFiles: MutableSet<File> = HashSet()
+	internal var currentDirectory: File? = null
+	internal var rootDirectory: File? = null
+	internal val displayedFiles: MutableList<File> get() = this.values
+	internal val selectedFiles: MutableSet<File> = HashSet()
 
 	override val values: MutableList<File> = ArrayList()
 
