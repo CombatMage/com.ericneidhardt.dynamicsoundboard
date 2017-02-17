@@ -68,7 +68,7 @@ class SoundLayoutManager(
 
 		this.mSoundLayouts?.let { mSoundLayouts ->
 			mSoundLayouts.removeAll(soundLayouts)
-			if (mSoundLayouts.isEmpty() == true) {
+			if (mSoundLayouts.isEmpty()) {
 				mSoundLayouts.add(this.getDefaultSoundLayout())
 				this.setSoundSheetsForActiveLayout()
 			}
@@ -187,7 +187,6 @@ object RxNewSoundLayoutManager {
 			subscriber.add {
 				manager.onLoadingCompletedListener.remove(listener)
 			}
-
 			manager.mSoundLayouts?.let {
 				subscriber.onNext(it)
 				subscriber.onCompleted()
