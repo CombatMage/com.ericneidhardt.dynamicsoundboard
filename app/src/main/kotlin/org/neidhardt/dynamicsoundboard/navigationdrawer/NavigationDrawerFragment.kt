@@ -136,11 +136,13 @@ class NavigationDrawerFragment : BaseFragment() {
 						},
 
 				RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
+						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe {
 							this.adapterSoundSheets.notifyDataSetChanged()
 						},
 
 				RxSoundManager.changesSoundList(this.soundManager)
+						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe {
 							this.adapterSoundSheets.notifyDataSetChanged()
 						},
@@ -151,6 +153,7 @@ class NavigationDrawerFragment : BaseFragment() {
 						},
 
 				RxNewPlaylistManager.playlistChanges(this.playlistManager)
+						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe {
 							this.adapterPlaylist.notifyDataSetChanged()
 						},
