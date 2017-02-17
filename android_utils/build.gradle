@@ -47,5 +47,10 @@ dependencies {
 	compile rootProject.ext.libraries.rxJava
 	compile rootProject.ext.libraries.rxBinding
 
+	compile rootProject.ext.libraries.rxlifecycle
+	compile rootProject.ext.libraries.rxlifecycleAndroid
+	compile rootProject.ext.libraries.rxlifecycleKotlin
+	compile rootProject.ext.libraries.rxlifecycleComponents
+
 	testCompile project(':test_utils')
 }

@@ -2,13 +2,13 @@ package org.neidhardt.android_utils
 
 import android.app.FragmentManager
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import java.util.*
 
 /**
  * Project created by Eric Neidhardt on 30.08.2014.
  */
-open class EnhancedAppCompatActivity : AppCompatActivity() {
+open class EnhancedAppCompatActivity : RxAppCompatActivity() {
 
 	private val TAG = javaClass.name
 

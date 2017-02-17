@@ -13,14 +13,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import com.trello.rxlifecycle.android.ActivityEvent
+import com.trello.rxlifecycle.kotlin.bindUntilEvent
 import kotlinx.android.synthetic.main.activity_base.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.neidhardt.utils.getCopyList
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseActivity
+import org.neidhardt.dynamicsoundboard.base.RxBaseActivity
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
@@ -28,30 +30,32 @@ import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog
-import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
+import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
+import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
-import org.neidhardt.dynamicsoundboard.soundcontrol.*
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
-import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
-import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
+import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
+import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.utils.getCopyList
 import org.neidhardt.utils.letThis
 import rx.android.schedulers.AndroidSchedulers
-import rx.subscriptions.CompositeSubscription
 import kotlin.properties.Delegates
 
 /**
@@ -65,7 +69,6 @@ class SoundActivity :
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private val eventBus = EventBus.getDefault()
-	private var subscriptions = CompositeSubscription()
 
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
@@ -107,6 +110,27 @@ class SoundActivity :
 
 		this.requestPermissionsIfRequired()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
+
+		RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
+				.bindUntilEvent(this, ActivityEvent.PAUSE)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { soundSheets -> this.setStateForSoundSheets() }
+
+
+		RxBaseActivity.receivesNewIntent(this)
+				.bindUntilEvent(this, ActivityEvent.PAUSE)
+				.subscribe { this.handleIntent(it) }
+	}
+
+	private fun handleIntent(intent: Intent?) {
+		if (intent == null)
+			return
+
+		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
+			val suggestedName = this.soundSheetManager.suggestedName
+			val soundSheets = this.soundSheetManager.soundSheets
+			AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data, suggestedName, soundSheets)
+		}
 	}
 
 	override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -125,25 +149,6 @@ class SoundActivity :
 		}
 	}
 
-	override fun onNewIntent(intent: Intent?) {
-		super.onNewIntent(intent)
-
-		this.subscriptions.add(RxNewSoundLayoutManager.completesLoading(this.soundLayoutManager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.handleIntent(intent) })
-	}
-
-	fun handleIntent(intent: Intent?) {
-		if (intent == null)
-			return
-
-		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-			val suggestedName = this.soundSheetManager.suggestedName
-			val soundSheets = this.soundSheetManager.soundSheets
-			AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data, suggestedName, soundSheets)
-		}
-	}
-
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		this.menuInflater.inflate(R.menu.overflow_menu, menu)
 		return true
@@ -152,13 +157,6 @@ class SoundActivity :
 	override fun onStart() {
 		super.onStart()
 		this.eventBus.registerIfRequired(this)
-
-		this.setStateForSoundSheets()
-		this.subscriptions = CompositeSubscription()
-
-		this.subscriptions.add(RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { soundSheets -> this.setStateForSoundSheets() })
 	}
 
 	private fun setStateForSoundSheets() {
@@ -203,7 +201,6 @@ class SoundActivity :
 
 	override fun onStop() {
 		this.eventBus.unregister(this)
-		this.subscriptions.unsubscribe()
 		super.onStop()
 	}
 

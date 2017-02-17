@@ -8,10 +8,16 @@ ext.versions = [
 ext.libraries = [
 
 		kotlin               : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
-		rxJava               : 'io.reactivex:rxjava:1.2.2',
+
+		rxJava               : 'io.reactivex:rxjava:1.2.6',
 		rxKotlin             : 'io.reactivex:rxkotlin:0.60.0',
 		rxAndroid            : 'io.reactivex:rxandroid:1.2.1',
 		rxBinding            : 'com.jakewharton.rxbinding:rxbinding:1.0.0',
+
+		rxlifecycle          : 'com.trello:rxlifecycle:1.0',
+		rxlifecycleAndroid   : 'com.trello:rxlifecycle-android:1.0',
+		rxlifecycleKotlin    : 'com.trello:rxlifecycle-kotlin:1.0',
+		rxlifecycleComponents: 'com.trello:rxlifecycle-components:1.0',
 
 		multidex             : "com.android.support:multidex:1.0.1",
 		supportV4            : "com.android.support:support-v4:$versions.supportLibs",
