@@ -13,7 +13,7 @@ import rx.subjects.PublishSubject
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
-class PlaylistAdapter() : BaseAdapter<MediaPlayerController, PlaylistViewHolder>() {
+class PlaylistAdapter : BaseAdapter<MediaPlayerController, PlaylistViewHolder>() {
 
 	private val manager = SoundboardApplication.playlistManager
 
@@ -29,8 +29,7 @@ class PlaylistAdapter() : BaseAdapter<MediaPlayerController, PlaylistViewHolder>
 
 	override fun getItemCount(): Int = this.values.size
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder
-	{
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
 		val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
 		val viewHolder = PlaylistViewHolder(view)
 
@@ -42,8 +41,7 @@ class PlaylistAdapter() : BaseAdapter<MediaPlayerController, PlaylistViewHolder>
 		return viewHolder
 	}
 
-	override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int)
-	{
+	override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
 		val data = this.values[position]
 		holder.bindData(data, position == this.itemCount - 1)
 	}
