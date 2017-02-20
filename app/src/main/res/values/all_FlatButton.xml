@@ -10,7 +10,7 @@
 		<item name="android:textColor">@color/text_body_primary</item>
 		<item name="android:textSize">@dimen/text_body</item>
 
-		<item name="typeface">roboto_medium</item>
+		<item name="android:fontFamily">sans-serif-medium</item>
 	</style>
 
 	<color name="ButtonFlat_ColorPressedState">#66999999</color>

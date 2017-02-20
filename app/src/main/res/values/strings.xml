@@ -131,7 +131,6 @@
 		com.squareup.leakcanary:leakcanary-android:1.5
 		com.google.android.exoplayer:exoplayer:r2.0.3
 		com.google.code.gson:gson:2.4
-		com.github.johnkil.android-robototextview:robototextview:2.5.1
 		jp.wasabeef:recyclerview-animators:2.2.4
 		me.zhanghai.android.materialprogressbar:library:1.1.7
 		com.github.clans:fab:1.6.4

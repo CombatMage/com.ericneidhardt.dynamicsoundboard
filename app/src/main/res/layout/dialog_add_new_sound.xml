@@ -23,7 +23,7 @@
 				android:contentDescription="@string/dialog_add_new_sound_content_description"
 				android:src="@drawable/selector_ic_add_sound_dialog"/>
 
-		<com.devspark.robototextview.widget.RobotoTextView
+		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="match_parent"
 				android:layout_toLeftOf="@id/b_add_another_sound"

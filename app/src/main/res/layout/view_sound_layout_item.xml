@@ -2,16 +2,12 @@
 
 <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
 	<RelativeLayout
-			xmlns:android="http://schemas.android.com/apk/res/android"
-			xmlns:app="http://schemas.android.com/apk/res-auto"
-			xmlns:tools="http://schemas.android.com/tools"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_list_item"
 			android:background="@drawable/selector_background_list_item">
@@ -26,7 +22,7 @@
 				android:contentDescription="@string/tab_sound_sheets_content_description_selected"
 				android:src="@drawable/shape_selected_indicator"/>
 
-		<com.devspark.robototextview.widget.RobotoTextView
+		<TextView
 				android:id="@+id/tv_view_sound_layout_item_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -39,7 +35,7 @@
 				android:textSize="@dimen/text_body"
 				android:textColor="@color/selector_text_content_primary"
 				tools:text="Sound Layout"
-				app:typeface="roboto_medium"/>
+				android:fontFamily="sans-serif-medium"/>
 
 		<ImageButton
 				android:id="@+id/ib_view_sound_layout_item_settings"

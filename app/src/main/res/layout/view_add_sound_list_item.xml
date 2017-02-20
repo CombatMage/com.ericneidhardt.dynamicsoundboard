@@ -8,7 +8,7 @@
 			  android:layout_height="wrap_content"
 			  tools:background="@color/background">
 
-	<com.devspark.robototextview.widget.RobotoTextView
+	<TextView
 			android:id="@+id/tv_path"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -16,9 +16,9 @@
 			android:layout_marginBottom="@dimen/margin_small"
 			android:textSize="@dimen/text_body"
 			android:textColor="@color/text_body_secondary"
-			app:typeface="roboto_medium"/>
+			android:fontFamily="sans-serif-medium"/>
 
-	<com.devspark.robototextview.widget.RobotoEditText
+	<EditText
 			android:id="@+id/et_name_file"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

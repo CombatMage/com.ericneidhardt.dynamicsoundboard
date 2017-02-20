@@ -11,14 +11,14 @@
 		tools:background="@color/background"
 		android:orientation="vertical">
 
-	<com.devspark.robototextview.widget.RobotoEditText
+	<EditText
 			android:id="@+id/et_name_file"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="@dimen/margin_default"
 			style="@style/Theme.EditText"/>
 
-	<com.devspark.robototextview.widget.RobotoTextView
+	<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_message"
@@ -51,7 +51,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content">
 
-			<com.devspark.robototextview.widget.RobotoEditText
+			<EditText
 					android:id="@+id/et_name_new_sound_sheet"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"

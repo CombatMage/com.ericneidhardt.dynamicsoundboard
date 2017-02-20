@@ -40,8 +40,6 @@ dependencies {
 
 	compile rootProject.ext.libraries.supportDesign
 
-	compile rootProject.ext.libraries.robotoTextView
-
 	compile rootProject.ext.libraries.rxAndroid
 	compile rootProject.ext.libraries.rxKotlin
 	compile rootProject.ext.libraries.rxJava

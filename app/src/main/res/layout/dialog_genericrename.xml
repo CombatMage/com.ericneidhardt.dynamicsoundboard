@@ -12,7 +12,7 @@
 		android:layout_height="wrap_content"
 		tools:hint="Hint">
 
-		<com.devspark.robototextview.widget.RobotoEditText
+		<EditText
 				android:id="@+id/edittext_genericrename_inputfield"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

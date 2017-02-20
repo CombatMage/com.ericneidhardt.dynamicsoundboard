@@ -27,7 +27,7 @@
 				android:background="@color/background"
 				app:animateVisibleFade="@{!viewModel.enableDeleteSelected}">
 
-			<com.devspark.robototextview.widget.RobotoButton
+			<Button
 					android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
 					style="@style/all_ButtonFlat"
 					android:onClick="@{(view) -> viewModel.onDeleteClicked()}"/>
 
-			<com.devspark.robototextview.widget.RobotoButton
+			<Button
 					android:id="@+id/b_layout_navigation_drawer_button_bar_add"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
 				android:layout_centerVertical="true"
 				android:background="@color/background">
 
-			<com.devspark.robototextview.widget.RobotoTextView
+			<TextView
 					android:id="@+id/b_layout_navigation_drawer_button_bar_delete_selected"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
@@ -65,7 +65,7 @@
 					android:text="@string/navigation_drawer_delete_selected"
 					android:textSize="@dimen/text_body"
 					android:textColor="@color/text_body_primary"
-					app:typeface="roboto_medium"
+					android:fontFamily="sans-serif-_medium"
 					android:background="@drawable/selector_background_list_item"
 					android:clickable="true"
 					tools:visibility="gone"

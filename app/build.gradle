@@ -64,20 +64,6 @@ android {
 		}
 	}
 
-	applicationVariants.all { variant ->
-		variant.mergeAssets.doFirst {
-			File fonts = file("${projectDir}/build/intermediates/exploded-aar/com.github.johnkil.android-robototextview/robototextview/2.4.2/assets/fonts")
-			if (fonts.exists()) {
-				for (File file : fonts.listFiles()) {
-					if (file.getName().contains("RobotoSlab")) {
-						println("delete " + file.getName() + " font")
-						file.delete()
-					};
-				}
-			}
-		}
-	}
-
 	buildTypes {
 		release {
 			signingConfig signingConfigs.release
@@ -145,8 +131,6 @@ dependencies {
 	compile rootProject.ext.libraries.exoplayer
 
 	compile rootProject.ext.libraries.gson
-
-	compile rootProject.ext.libraries.robotoTextView
 
 	compile rootProject.ext.libraries.floatingActionButton
 	compile rootProject.ext.libraries.materialProgressBar

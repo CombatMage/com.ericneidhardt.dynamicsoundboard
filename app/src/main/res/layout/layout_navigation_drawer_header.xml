@@ -45,7 +45,7 @@
 					android:src="@drawable/ic_drop_down"
 					app:animateVisibleRotateX="@{viewModel.isSoundLayoutOpen}"/>
 
-			<com.devspark.robototextview.widget.RobotoTextView
+			<TextView
 					android:id="@+id/tv_view_navigation_drawer_header_title"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -54,9 +54,9 @@
 					android:text="@string/app_name"
 					android:textColor="@color/text_header"
 					android:textSize="@dimen/text_body"
-					app:typeface="roboto_medium"/>
+					android:fontFamily="sans-serif-medium"/>
 
-			<com.devspark.robototextview.widget.RobotoTextView
+			<TextView
 					android:id="@+id/tv_view_navigation_drawer_header_current_sound_layout_name"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
 					android:textSize="@dimen/text_body"
 					android:text="@{viewModel.title != null ? viewModel.title : @string/suggested_sound_layout_name}"
 					android:textColor="@color/text_header"
-					app:typeface="roboto_regular"
+					android:fontFamily="sans-serif"
 					tools:text="@string/suggested_sound_layout_name"/>
 		</RelativeLayout>
 

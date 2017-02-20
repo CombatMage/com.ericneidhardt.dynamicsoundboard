@@ -39,8 +39,6 @@ ext.libraries = [
 
 		gson                 : "com.google.code.gson:gson:2.4",
 
-		robotoTextView       : "com.github.johnkil.android-robototextview:robototextview:2.5.1",
-
 		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:2.2.4",
 
 		materialProgressBar  : "me.zhanghai.android.materialprogressbar:library:1.1.7",
