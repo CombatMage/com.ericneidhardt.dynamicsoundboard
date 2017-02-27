@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.widget.EditText
 import com.jakewharton.rxbinding.widget.RxTextView
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.dialog_genericrename.view.*
 import org.neidhardt.android_utils.views.showKeyboard
 import org.neidhardt.dynamicsoundboard.R
@@ -87,19 +88,18 @@ open class GenericEditTextDialog : BaseDialog() {
 		super.onResume()
 		this.editText?.showKeyboard()
 
-		val positiveButton = (dialog as (AlertDialog)).getButton(AlertDialog.BUTTON_POSITIVE)
+		val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
 		val errorText = context.resources.getString(R.string.all_ErrorNameMustNotBeEmpty)
 
 		// empty label is not allowed
-		this.subscriptions.add(
-				RxTextView.afterTextChangeEvents(editText!!)
-						.subscribe { textChangedEvent ->
-							val label = textChangedEvent.editable().toString()
-							val validInput = label.isNotEmpty()
-							positiveButton.isEnabled = validInput
-							textInputHint?.error = if (validInput) null else errorText
-						}
-		)
+		RxTextView.afterTextChangeEvents(editText!!)
+				.bindToLifecycle(this)
+				.subscribe { textChangedEvent ->
+					val label = textChangedEvent.editable().toString()
+					val validInput = label.isNotEmpty()
+					positiveButton.isEnabled = validInput
+					textInputHint?.error = if (validInput) null else errorText
+				}
 	}
 
 	class EditTextConfig(val hint: String, val text: String)

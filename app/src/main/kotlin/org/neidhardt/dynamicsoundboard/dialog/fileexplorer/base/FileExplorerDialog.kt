@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySorted
@@ -39,46 +40,47 @@ abstract class FileExplorerDialog : BaseDialog() {
 			}
 		}
 
-		this.subscriptions.addAll(
-				this.adapter.clicksFileEntry
-						.filter(File::isDirectory)
-						.doOnNext { dir ->
-							this.displayRootDirectory(dir)
-							this.adapter.currentDirectory = dir
+		this.adapter.clicksFileEntry
+				.bindToLifecycle(this)
+				.filter(File::isDirectory)
+				.doOnNext { dir ->
+					this.displayRootDirectory(dir)
+					this.adapter.currentDirectory = dir
+				}
+				.subscribeOn(Schedulers.computation())
+				.map { dir -> Tuple<File?, List<File>>(dir.parentFile, dir.getFilesInDirectorySorted()) }
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { tupleRootFiles -> this.displayFilesInDirectory(tupleRootFiles.first, tupleRootFiles.second) }
+
+		this.adapter.selectsFileEntry
+				.bindToLifecycle(this)
+				.filter { viewHolder -> viewHolder.file != adapter.rootDirectory }
+				.filter { viewHolder -> this.canBeFileSelected(viewHolder.file) }
+				.subscribe { viewHolder ->
+					viewHolder.file?.let { file ->
+						// deselect file if already selected
+						if (this.selectedFiles.contains(file)) {
+							this.selectedFiles.remove(file)
+							viewHolder.setSelection(false)
 						}
-						.subscribeOn(Schedulers.computation())
-						.map { dir -> Tuple<File?, List<File>>(dir.parentFile, dir.getFilesInDirectorySorted()) }
-						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe { tupleRootFiles -> this.displayFilesInDirectory(tupleRootFiles.first, tupleRootFiles.second) },
-
-				this.adapter.selectsFileEntry
-						.filter { viewHolder -> viewHolder.file != adapter.rootDirectory }
-						.filter { viewHolder -> this.canBeFileSelected(viewHolder.file) }
-						.subscribe { viewHolder ->
-							viewHolder.file?.let { file ->
-								// deselect file if already selected
-								if (this.selectedFiles.contains(file)) {
-									this.selectedFiles.remove(file)
-									viewHolder.setSelection(false)
-								}
-								else {
-									// add files to selected files or replace current selected file with this one
-									if (canSelectMultipleFiles()) {
-										this.selectedFiles.add(file)
-									}
-									else {
-										this.selectedFiles.forEach { file -> this.adapter.notifyItemChanged(file) }
-										this.selectedFiles.clear()
-										this.selectedFiles.add(file)
-									}
-									viewHolder.setSelection(true)
-									viewHolder.animateSelectorSlideIn()
-									viewHolder.animateFileLogoRotate()
-
-									this.onFileSelected(file)
-								}
+						else {
+							// add files to selected files or replace current selected file with this one
+							if (canSelectMultipleFiles()) {
+								this.selectedFiles.add(file)
 							}
-						})
+							else {
+								this.selectedFiles.forEach { file -> this.adapter.notifyItemChanged(file) }
+								this.selectedFiles.clear()
+								this.selectedFiles.add(file)
+							}
+							viewHolder.setSelection(true)
+							viewHolder.animateSelectorSlideIn()
+							viewHolder.animateFileLogoRotate()
+
+							this.onFileSelected(file)
+						}
+					}
+				}
 	}
 
 	private fun displayRootDirectory(directory: File) {
@@ -143,14 +145,13 @@ abstract class FileExplorerDialog : BaseDialog() {
 
 	private fun displayFilesInDirAsync(directory: File) {
 		// request files in directory and add them
-		this.subscriptions.add(
-				directory.getFilesInDirectorySortedAsync()
-						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe { filesUnderParent ->
-							val startIndex = this.adapter.displayedFiles.size
-							this.adapter.displayedFiles.addAll(filesUnderParent)
-							this.adapter.notifyItemRangeInserted(startIndex, filesUnderParent.size)
-						})
+			directory.getFilesInDirectorySortedAsync()
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe { filesUnderParent ->
+						val startIndex = this.adapter.displayedFiles.size
+						this.adapter.displayedFiles.addAll(filesUnderParent)
+						this.adapter.notifyItemRangeInserted(startIndex, filesUnderParent.size)
+					}
 	}
 
 	override fun onSaveInstanceState(outState: Bundle) {
