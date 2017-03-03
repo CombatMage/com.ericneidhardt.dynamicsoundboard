@@ -53,19 +53,19 @@ class NavigationDrawerListPresenter(
 					this.currentListBacking = List.Playlist
 					this.currentPresenter = this.presenterPlaylist
 					this.recyclerView.adapter = this.presenterPlaylist.adapter
-					this.fragmentReference.get().setActionModeTitle(R.string.cab_title_delete_play_list_sounds)
+					this.fragmentReference.get()?.setActionModeTitle(R.string.cab_title_delete_play_list_sounds)
 				}
 				List.SoundLayouts -> {
 					this.currentListBacking = List.SoundLayouts
 					this.currentPresenter = this.presenterSoundLayouts
 					this.recyclerView.adapter = this.presenterSoundLayouts.adapter
-					this.fragmentReference.get().setActionModeTitle(R.string.cab_title_delete_sound_layouts)
+					this.fragmentReference.get()?.setActionModeTitle(R.string.cab_title_delete_sound_layouts)
 				}
 				List.SoundSheet -> {
 					this.currentListBacking = List.SoundSheet
 					this.currentPresenter = this.presenterSoundSheets
 					this.recyclerView.adapter = this.presenterSoundSheets.adapter
-					this.fragmentReference.get().setActionModeTitle(R.string.cab_title_delete_sound_sheets)
+					this.fragmentReference.get()?.setActionModeTitle(R.string.cab_title_delete_sound_sheets)
 				}
 			}
 			this.currentPresenter?.onAttachedToWindow()
@@ -86,15 +86,15 @@ class NavigationDrawerListPresenter(
 	}
 
 	private fun showToolbarForDeletion() {
-		this.fragmentReference.get().setDeletionModeUi(true)
+		this.fragmentReference.get()?.setDeletionModeUi(true)
 	}
 
 	private fun hideToolbarForDeletion() {
-		this.fragmentReference.get().setDeletionModeUi(false)
+		this.fragmentReference.get()?.setDeletionModeUi(false)
 	}
 
 	fun userClicksAdd() {
-		val fragmentManager = this.fragmentReference.get().fragmentManager ?: return
+		val fragmentManager = this.fragmentReference.get()?.fragmentManager ?: return
 		when (this.currentList) {
 			List.SoundLayouts -> GenericAddDialogs.showAddSoundLayoutDialog(fragmentManager)
 			List.Playlist -> AddNewSoundDialog.show(fragmentManager, PlaylistTAG)
@@ -118,7 +118,7 @@ class NavigationDrawerListPresenter(
 	fun userClicksSelectAll() {
 		this.currentPresenter?.selectAllItems()
 		val itemCount = this.currentPresenter?.itemCount ?: 0
-		this.fragmentReference.get().setActionModeSubTitle(itemCount, itemCount)
+		this.fragmentReference.get()?.setActionModeSubTitle(itemCount, itemCount)
 	}
 
 	fun userClicksDone() {

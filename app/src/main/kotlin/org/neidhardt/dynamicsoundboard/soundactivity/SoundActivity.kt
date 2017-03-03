@@ -114,7 +114,7 @@ class SoundActivity :
 		RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
 				.bindUntilEvent(this, ActivityEvent.PAUSE)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { soundSheets -> this.setStateForSoundSheets() }
+				.subscribe { this.setStateForSoundSheets() }
 
 		RxBaseActivity.receivesNewIntent(this)
 				.bindUntilEvent(this, ActivityEvent.PAUSE)

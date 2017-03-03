@@ -4,13 +4,13 @@ import android.content.Context
 import android.net.Uri
 import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.utils.getCopyList
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.utils.getCopyList
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.add
@@ -91,7 +91,7 @@ class SoundManager(private val context: Context) {
 				.subscribe({
 					this.invokeListeners()
 				}, { error ->
-					Logger.e(TAG, "Error whie adding players")
+					Logger.e(TAG, "Error while adding players " + error)
 					SoundboardApplication.taskCounter.value--
 					this.invokeListeners()
 				}, {
@@ -134,7 +134,7 @@ class SoundManager(private val context: Context) {
 
 		val soundsInSoundSheet = this.mMediaPlayers?.get(soundSheet)
 		val player = soundsInSoundSheet?.removeAt(indexFrom) ?: throw IllegalStateException("no player was found in soundSheet list")
-		soundsInSoundSheet?.add(indexTo, player)
+		soundsInSoundSheet.add(indexTo, player)
 
 		this.onSoundMovedListener.forEach { it.invoke(MoveEvent(player, from, to)) }
 	}
