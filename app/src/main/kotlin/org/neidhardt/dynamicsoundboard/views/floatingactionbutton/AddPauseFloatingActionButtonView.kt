@@ -10,8 +10,8 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.animations.AnimationUtils
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundLayoutManager
+import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
@@ -23,7 +23,7 @@ import rx.subscriptions.CompositeSubscription
  */
 private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
 
-class FabClickedEvent()
+class FabClickedEvent
 
 class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventListener {
 

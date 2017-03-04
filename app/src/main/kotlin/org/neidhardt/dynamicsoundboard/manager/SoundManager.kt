@@ -2,11 +2,14 @@ package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import de.greenrobot.common.ListMap
 import org.greenrobot.eventbus.EventBus
+import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
+import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
@@ -155,7 +158,10 @@ class SoundManager(private val context: Context) {
 		val player = MediaPlayerFactory.createPlayer(this.context, this.eventBus, playerData)
 		if (player == null) {
 			soundSheet.mediaPlayers?.remove(playerData)
-			this.eventBus.post(CreatingPlayerFailedEvent(playerData))
+			val message = this.context.getString(R.string.music_service_loading_sound_failed) +
+					" " +
+					FileUtils.getFileNameFromUri(this.context, playerData.uri)
+			Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
 		}
 		else {
 			soundsForSoundSheet.add(player)
@@ -183,18 +189,6 @@ object RxSoundManager {
 			}
 			manager.mMediaPlayers?.let { subscriber.onNext(it) }
 			manager.onSoundListChangedListener.add(listener)
-		}
-	}
-
-	fun movesSoundInList(manager: SoundManager): Observable<MoveEvent> {
-		return Observable.create { subscriber ->
-			val listener: (MoveEvent) -> Unit = {
-				subscriber.onNext(it)
-			}
-			subscriber.add {
-				manager.onSoundMovedListener.remove(listener)
-			}
-			manager.onSoundMovedListener.add(listener)
 		}
 	}
 }

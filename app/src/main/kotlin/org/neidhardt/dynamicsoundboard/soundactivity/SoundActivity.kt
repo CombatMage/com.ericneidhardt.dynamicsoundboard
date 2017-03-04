@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.trello.rxlifecycle.android.ActivityEvent
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.trello.rxlifecycle.kotlin.bindUntilEvent
 import kotlinx.android.synthetic.main.activity_base.*
 import org.greenrobot.eventbus.EventBus
@@ -32,7 +33,6 @@ import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.LoadLayoutDialog
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.StoreLayoutDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
-import org.neidhardt.dynamicsoundboard.manager.CreatingPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
@@ -110,15 +110,6 @@ class SoundActivity :
 
 		this.requestPermissionsIfRequired()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
-
-		RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
-				.bindUntilEvent(this, ActivityEvent.PAUSE)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.setStateForSoundSheets() }
-
-		RxBaseActivity.receivesNewIntent(this)
-				.bindUntilEvent(this, ActivityEvent.PAUSE)
-				.subscribe { this.handleIntent(it) }
 	}
 
 	private fun handleIntent(intent: Intent?) {
@@ -153,11 +144,6 @@ class SoundActivity :
 		return true
 	}
 
-	override fun onStart() {
-		super.onStart()
-		this.eventBus.registerIfRequired(this)
-	}
-
 	private fun setStateForSoundSheets() {
 		val soundSheets = this.soundSheetManager.soundSheets
 		val selectedSoundSheet = soundSheets.selectedSoundSheet
@@ -179,16 +165,27 @@ class SoundActivity :
 	override fun onResume() {
 		super.onResume()
 
-		this.registerPauseSoundOnCallListener(this.phoneStateListener)
-		NotificationService.start(this)
-		this.eventBus.postSticky(ActivityStateChangedEvent(true))
-
 		this.closeAppOnBackPress = false
 		this.toolbarVM.isSoundSheetActionsEnable = false
+
+		this.registerPauseSoundOnCallListener(this.phoneStateListener)
+		NotificationService.start(this)
+		this.eventBus.registerIfRequired(this)
+		this.eventBus.postSticky(ActivityStateChangedEvent(true))
+
+		RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
+				.bindToLifecycle(this)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { this.setStateForSoundSheets() }
+
+		RxBaseActivity.receivesNewIntent(this)
+				.bindToLifecycle(this)
+				.subscribe { this.handleIntent(it) }
 	}
 
 	override fun onPause() {
 		super.onPause()
+		this.eventBus.unregister(this)
 		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
 		SaveDataIntentService.writeBack(this)
 	}
@@ -196,11 +193,6 @@ class SoundActivity :
 	override fun onUserLeaveHint() {
 		super.onUserLeaveHint()
 		this.eventBus.postSticky(ActivityStateChangedEvent(false))
-	}
-
-	override fun onStop() {
-		this.eventBus.unregister(this)
-		super.onStop()
 	}
 
 	override fun onBackPressed() {
@@ -237,17 +229,6 @@ class SoundActivity :
 				AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, currentSoundSheet.fragmentTag)
 			}
 		}
-	}
-
-	/**
-	 * This is called by greenRobot EventBus in case creating a new sound failed.
-	 * @param event delivered CreatingPlayerFailedEvent
-	 */
-	@SuppressWarnings("unused")
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	fun onEvent(event: CreatingPlayerFailedEvent) {
-		val message = resources.getString(R.string.music_service_loading_sound_failed) + " " + FileUtils.getFileNameFromUri(applicationContext, event.failingPlayerData.uri)
-		Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {

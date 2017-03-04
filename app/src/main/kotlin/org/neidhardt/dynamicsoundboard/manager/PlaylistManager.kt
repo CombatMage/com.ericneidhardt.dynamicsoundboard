@@ -1,14 +1,17 @@
 package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
+import android.widget.Toast
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.utils.getCopyList
+import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import org.neidhardt.utils.getCopyList
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.add
@@ -95,7 +98,10 @@ class PlaylistManager(private val context: Context) {
 		val player = MediaPlayerFactory.createPlayer(this.context, this.eventBus, playerData)
 		if (player == null) {
 			this.mMediaPlayersData?.remove(playerData)
-			this.eventBus.post(CreatingPlayerFailedEvent(playerData))
+			val message = this.context.getString(R.string.music_service_loading_sound_failed) +
+					" " +
+					FileUtils.getFileNameFromUri(this.context, playerData.uri)
+			Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
 		}
 		else {
 			if (this.mMediaPlayersData?.contains(playerData) == false)
