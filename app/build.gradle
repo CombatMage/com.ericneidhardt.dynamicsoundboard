@@ -5,7 +5,6 @@ buildscript {
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
-		classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'
 	}
 }
 
@@ -49,8 +48,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion project.projectMinSdkVersion
 		targetSdkVersion project.projectTargetSdkVersion
-		versionCode 22903
-		versionName "2.29.3"
+		versionCode 22904
+		versionName "2.29.4"
 		resConfigs "de"
 		multiDexEnabled true
 	}
