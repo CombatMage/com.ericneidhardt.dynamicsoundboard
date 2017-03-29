@@ -13,10 +13,14 @@ abstract class BaseActivity : EnhancedAppCompatActivity() {
 
 	internal val onNewIntentCallback: MutableList<(Intent) -> Unit> = ArrayList()
 
+	internal var lastReceivedIntent: Intent? = null
+
 	override fun onNewIntent(intent: Intent?) {
 		super.onNewIntent(intent)
 
 		intent?: return
+
+		this.lastReceivedIntent = intent
 		this.onNewIntentCallback.forEach { it.invoke(intent) }
 	}
 }
@@ -30,6 +34,7 @@ object RxBaseActivity {
 			subscriber.add {
 				activity.onNewIntentCallback.remove(listener)
 			}
+			activity.lastReceivedIntent?.let { subscriber.onNext(it) }
 			activity.onNewIntentCallback.add(listener)
 		}
 	}

@@ -9,13 +9,13 @@ buildscript {
 	}
 	dependencies {
 		classpath 'com.android.tools.build:gradle:2.2.3'
-		classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
+		classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
 		classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'
 	}
 }
 
 ext {
-	kotlin_version = '1.1.0'
+	kotlin_version = '1.1.1'
 	compileSdkVersion = 25
 	buildToolsVersion = "25.0.2"
 }

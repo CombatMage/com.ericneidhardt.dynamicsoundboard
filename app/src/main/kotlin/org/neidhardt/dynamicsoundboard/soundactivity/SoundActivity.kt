@@ -110,6 +110,8 @@ class SoundActivity :
 
 		this.requestPermissionsIfRequired()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
+
+		this.handleIntent(this.intent)
 	}
 
 	private fun handleIntent(intent: Intent?) {

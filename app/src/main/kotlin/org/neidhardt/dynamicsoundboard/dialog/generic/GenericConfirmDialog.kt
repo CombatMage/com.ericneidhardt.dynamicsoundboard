@@ -46,10 +46,10 @@ open class GenericConfirmDialog : BaseDialog() {
 			if (config.messageId != 0)
 				dialogBuilder.setMessage(config.messageId)
 		}
-		dialogBuilder.setPositiveButton(this.positiveButton?.labelId ?: 0, { dialogInterface,i ->
+		dialogBuilder.setPositiveButton(this.positiveButton?.labelId ?: 0, { _, _ ->
 			this.positiveButton?.action?.invoke(this)
 		})
-		dialogBuilder.setNegativeButton(this.negativeButton?.labelId ?: 0, { dialogInterface,i ->
+		dialogBuilder.setNegativeButton(this.negativeButton?.labelId ?: 0, { _, _ ->
 			this.negativeButton?.action?.invoke(this)
 			this.dismiss()
 		})

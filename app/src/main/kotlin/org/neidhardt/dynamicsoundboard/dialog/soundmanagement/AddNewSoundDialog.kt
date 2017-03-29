@@ -87,11 +87,11 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(org.neidhardt.dynamicsoundboard.R.string.dialog_add_new_sound_title)
 			this.setView(view)
-			this.setPositiveButton(org.neidhardt.dynamicsoundboard.R.string.all_add, { dialogInterface, i ->
+			this.setPositiveButton(org.neidhardt.dynamicsoundboard.R.string.all_add, { _, _ ->
 				presenter?.addSoundsToSoundSheet()
 				dismiss()
 			})
-			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.all_cancel, { dialogInterface, i -> dismiss() })
+			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.all_cancel, { _, _ -> dismiss() })
 		}.create()
 	}
 

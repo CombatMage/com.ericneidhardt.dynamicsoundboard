@@ -7,14 +7,13 @@ import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import rx.lang.kotlin.PublishSubject
 import rx.subjects.PublishSubject
 
 open class SoundSheetsAdapter() : BaseAdapter<NewSoundSheet, SoundSheetViewHolder>() {
 
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 
-	val clicksViewHolder: PublishSubject<SoundSheetViewHolder> = PublishSubject()
+	val clicksViewHolder: PublishSubject<SoundSheetViewHolder> = PublishSubject.create()
 
 	init { this.setHasStableIds(true) }
 

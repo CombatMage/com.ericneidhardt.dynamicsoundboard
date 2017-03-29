@@ -12,7 +12,7 @@ ext.libraries = [
 		rxJava               : 'io.reactivex:rxjava:1.2.6',
 		rxKotlin             : 'io.reactivex:rxkotlin:0.60.0',
 		rxAndroid            : 'io.reactivex:rxandroid:1.2.1',
-		rxBinding            : 'com.jakewharton.rxbinding:rxbinding:1.0.0',
+		rxBinding            : 'com.jakewharton.rxbinding:rxbinding:1.0.1',
 
 		rxlifecycle          : 'com.trello:rxlifecycle:1.0',
 		rxlifecycleAndroid   : 'com.trello:rxlifecycle-android:1.0',
@@ -37,13 +37,13 @@ ext.libraries = [
 
 		exoplayer            : "com.google.android.exoplayer:exoplayer:r2.0.3",
 
-		gson                 : "com.google.code.gson:gson:2.4",
+		gson                 : "com.google.code.gson:gson:2.8.0",
 
-		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:2.2.4",
+		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:2.2.6",
 
 		materialProgressBar  : "me.zhanghai.android.materialprogressbar:library:1.1.7",
 
 		floatingActionButton : "com.github.clans:fab:1.6.4",
 
-		acra                 : "ch.acra:acra:4.9.1"
+		acra                 : "ch.acra:acra:4.9.2"
 ]

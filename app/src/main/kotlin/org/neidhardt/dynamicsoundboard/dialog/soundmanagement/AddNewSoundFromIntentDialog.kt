@@ -66,11 +66,11 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_add_new_sound_from_intent_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.all_add, { dialogInterface, i ->
+			this.setPositiveButton(R.string.all_add, { _, _ ->
 				deliverResult()
 				dismiss()
 			})
-			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss()})
+			this.setNegativeButton(R.string.all_cancel, { _, _ -> dismiss()})
 		}.create()
 	}
 
@@ -88,11 +88,11 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_add_new_sound_from_intent_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.all_add, { dialogInterface, i ->
+			this.setPositiveButton(R.string.all_add, { _, _ ->
 				deliverResult()
 				dismiss()
 			})
-			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss()})
+			this.setNegativeButton(R.string.all_cancel, { _, _ -> dismiss()})
 		}.create()
 	}
 

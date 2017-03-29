@@ -55,8 +55,8 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog {
 
 		return AlertDialog.Builder(this.activity).apply {
 			this.setView(view)
-			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss() })
-			this.setPositiveButton(R.string.dialog_load, { dialogInterface, i -> onConfirm() })
+			this.setNegativeButton(R.string.all_cancel, { _, _ -> dismiss() })
+			this.setPositiveButton(R.string.dialog_load, { _, _ -> onConfirm() })
 		}.create()
 	}
 

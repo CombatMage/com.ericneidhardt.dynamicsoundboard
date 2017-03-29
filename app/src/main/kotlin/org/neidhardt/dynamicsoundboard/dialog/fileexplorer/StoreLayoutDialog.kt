@@ -18,6 +18,7 @@ import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDeco
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
+import org.neidhardt.dynamicsoundboard.misc.Logger
 import rx.android.schedulers.AndroidSchedulers
 import java.io.File
 import java.io.IOException
@@ -56,8 +57,8 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 		return AlertDialog.Builder(this.activity).apply {
 			this.setView(view)
-			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss() })
-			this.setPositiveButton(R.string.dialog_save, { dialogInterface, i -> onConfirm() })
+			this.setNegativeButton(R.string.all_cancel, { _, _ -> dismiss() })
+			this.setPositiveButton(R.string.dialog_save, { _, _ -> onConfirm() })
 		}.create()
 	}
 
@@ -136,6 +137,7 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 		.subscribe({
 			// nothing to do
 		}, { error ->
+			Logger.e(TAG, error.toString())
 			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_store_layout,
 					Toast.LENGTH_SHORT).show()
 			this.dismiss()

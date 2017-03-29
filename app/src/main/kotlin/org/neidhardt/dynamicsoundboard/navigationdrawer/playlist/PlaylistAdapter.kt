@@ -7,7 +7,6 @@ import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import rx.lang.kotlin.PublishSubject
 import rx.subjects.PublishSubject
 
 /**
@@ -17,7 +16,7 @@ class PlaylistAdapter : BaseAdapter<MediaPlayerController, PlaylistViewHolder>()
 
 	private val manager = SoundboardApplication.playlistManager
 
-	val clicksViewHolder: PublishSubject<PlaylistViewHolder> = PublishSubject()
+	val clicksViewHolder: PublishSubject<PlaylistViewHolder> = PublishSubject.create()
 
 	init { this.setHasStableIds(true) }
 

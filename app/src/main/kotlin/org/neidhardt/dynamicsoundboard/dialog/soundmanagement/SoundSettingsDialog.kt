@@ -49,7 +49,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 			this.setAvailableSoundSheets(it)
 		}
 		this.addNewSoundSheet = view.cb_add_new_sound_sheet.letThis {
-			it.setOnCheckedChangeListener { view,isChecked ->
+			it.setOnCheckedChangeListener { _, isChecked ->
 				this.soundSheetSpinner?.visibility = if (isChecked) View.GONE else View.VISIBLE
 				this.soundSheetName?.visibility = if (isChecked) View.VISIBLE else View.GONE
 			}
@@ -58,14 +58,14 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_sound_settings_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.dialog_save, { dialogInterface, i ->
+			this.setPositiveButton(R.string.dialog_save, { _, _ ->
 				val hasLabelChanged = player.mediaPlayerData.label != soundName!!.displayedText
 				deliverResult()
 				dismiss()
 				if (hasLabelChanged)
 					RenameSoundFileDialog.show(fragmentManager, player.mediaPlayerData)
 			})
-			this.setNegativeButton(R.string.all_cancel, { dialogInterface, i -> dismiss()})
+			this.setNegativeButton(R.string.all_cancel, { _, _ -> dismiss()})
 		}.create()
 	}
 

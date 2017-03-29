@@ -6,7 +6,6 @@ import com.jakewharton.rxbinding.view.RxView
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.utils.longHash
-import rx.lang.kotlin.PublishSubject
 import rx.subjects.PublishSubject
 import java.io.File
 import java.util.*
@@ -16,8 +15,8 @@ import java.util.*
  */
 class DirectoryAdapter : BaseAdapter<File, FileViewHolder>() {
 
-	internal val clicksFileEntry: PublishSubject<File> = PublishSubject()
-	internal val selectsFileEntry: PublishSubject<FileViewHolder> = PublishSubject()
+	internal val clicksFileEntry: PublishSubject<File> = PublishSubject.create()
+	internal val selectsFileEntry: PublishSubject<FileViewHolder> = PublishSubject.create()
 
 	internal var currentDirectory: File? = null
 	internal var rootDirectory: File? = null

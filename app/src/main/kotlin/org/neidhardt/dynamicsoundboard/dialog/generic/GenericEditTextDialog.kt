@@ -73,10 +73,10 @@ open class GenericEditTextDialog : BaseDialog() {
 		}
 		dialogBuilder.setView(view)
 
-		dialogBuilder.setPositiveButton(this.positiveButton?.labelId ?: 0, { dialogInterface,i ->
+		dialogBuilder.setPositiveButton(this.positiveButton?.labelId ?: 0, { _, _ ->
 			this.positiveButton?.action?.invoke(this, editText.text.toString())
 		})
-		dialogBuilder.setNegativeButton(this.negativeButton?.labelId ?: 0, { dialogInterface,i ->
+		dialogBuilder.setNegativeButton(this.negativeButton?.labelId ?: 0, { _, _ ->
 			this.negativeButton?.action?.invoke(this, editText.text.toString())
 			this.dismiss()
 		})

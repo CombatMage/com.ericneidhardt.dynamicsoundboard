@@ -64,10 +64,10 @@ class RenameSoundFileDialog() : SoundSettingsBaseDialog() {
 
 		return AlertDialog.Builder(context).apply {
 			this.setView(view)
-			this.setPositiveButton(R.string.dialog_rename_sound_file_confirm, { dialogInterface, i ->
+			this.setPositiveButton(R.string.dialog_rename_sound_file_confirm, { _, _ ->
 				presenter.rename()
 			})
-			this.setNegativeButton(R.string.dialog_rename_sound_file_cancel, { dialogInterface, i -> dismiss() })
+			this.setNegativeButton(R.string.dialog_rename_sound_file_cancel, { _, _ -> dismiss() })
 		}.create()
 	}
 }

@@ -23,7 +23,7 @@ object GenericAddDialogs {
 				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, name),
 				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericadd_SoundLayoutTitle,
 						R.string.genericadd_SoundLayoutMessage),
-				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { dialog, input ->
+				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { _, input ->
 					val layout = NewSoundLayout().apply {
 						this.isSelected = false
 						this.databaseId = SoundLayoutManager.getNewDatabaseIdForLabel(input)
@@ -31,7 +31,7 @@ object GenericAddDialogs {
 					}
 					SoundboardApplication.soundLayoutManager.add(layout)
 				}),
-				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { dialog, input ->
+				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { _, _ ->
 				})
 		)
 	}
@@ -45,7 +45,7 @@ object GenericAddDialogs {
 				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, name),
 				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericrename_SoundSheetTitle,
 						R.string.genericadd_SoundSheetMessage),
-				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { dialog, input ->
+				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { _, input ->
 					val manager = SoundboardApplication.soundSheetManager
 					val soundSheet = NewSoundSheet().apply {
 						this.label = input
@@ -54,7 +54,7 @@ object GenericAddDialogs {
 					manager.add(soundSheet)
 					manager.setSelected(soundSheet)
 				}),
-				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { dialog, input ->
+				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { _, _ ->
 				})
 		)
 	}

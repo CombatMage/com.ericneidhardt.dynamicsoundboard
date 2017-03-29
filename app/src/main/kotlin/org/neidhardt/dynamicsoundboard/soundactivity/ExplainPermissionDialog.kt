@@ -82,9 +82,9 @@ class ExplainPermissionDialog : BaseDialog() {
 		dialogBuilder.setMessage(this.messageId)
 
 		if (this.closeAppOnDenial)
-			dialogBuilder.setPositiveButton(R.string.dialog_close, { dialogInterface, i -> this.activity?.finish() })
+			dialogBuilder.setPositiveButton(R.string.dialog_close, { _, _ -> this.activity?.finish() })
 		else {
-			dialogBuilder.setPositiveButton(R.string.dialog_grant, { dialogInterface, i -> this.requestPermission() })
+			dialogBuilder.setPositiveButton(R.string.dialog_grant, { _, _ -> this.requestPermission() })
 			dialogBuilder.setNegativeButton(R.string.dialog_denial, null)
 		}
 
