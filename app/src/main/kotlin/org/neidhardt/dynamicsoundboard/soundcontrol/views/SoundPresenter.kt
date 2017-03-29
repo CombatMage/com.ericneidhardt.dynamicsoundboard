@@ -23,9 +23,7 @@ class SoundPresenter (
 		fragment: SoundSheetFragment
 ) : MediaPlayerEventListener {
 
-	private val fragmentReference: WeakReference<SoundSheetFragment>
-
-	init { this.fragmentReference = WeakReference(fragment) }
+	private val fragmentReference: WeakReference<SoundSheetFragment> = WeakReference(fragment)
 
 	private val eventBus = EventBus.getDefault()
 

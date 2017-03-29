@@ -3,7 +3,6 @@ package org.neidhardt.dynamicsoundboard.base
 import android.content.Intent
 import org.neidhardt.android_utils.EnhancedAppCompatActivity
 import rx.Observable
-import rx.Subscription
 import rx.subscriptions.Subscriptions
 import java.util.*
 

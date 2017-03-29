@@ -6,16 +6,11 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
-import com.trello.rxlifecycle.android.ActivityEvent
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
-import com.trello.rxlifecycle.kotlin.bindUntilEvent
 import kotlinx.android.synthetic.main.activity_base.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -50,6 +45,7 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
 import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.view_helper.navigationdrawer_helper.NoAnimationDrawerToggle
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.eventbus_utils.registerIfRequired
@@ -313,30 +309,8 @@ class SoundActivity :
 		}
 
 	private val navigationDrawerFragment: NavigationDrawerFragment
-		get() = this.supportFragmentManager.findFragmentById(R.id.navigation_drawer_fragment) as NavigationDrawerFragment
-}
-
-private class NoAnimationDrawerToggle(
-		activity: AppCompatActivity,
-		drawerLayout: DrawerLayout?,
-		toolbar: Toolbar,
-		private val navigationDrawer: NavigationDrawerFragment)
-: ActionBarDrawerToggle(
-		activity,
-		drawerLayout,
-		toolbar,
-		R.string.navigation_drawer_content_description_open,
-		R.string.navigation_drawer_content_description_close
-) {
-	init { this.isDrawerIndicatorEnabled = true }
-
-	// override onDrawerSlide and pass 0 to super disable arrow animation
-	override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-		super.onDrawerSlide(drawerView, 0f)
-	}
-
-	override fun onDrawerClosed(drawerView: View?) {
-		super.onDrawerClosed(drawerView)
-		this.navigationDrawer.onNavigationDrawerClosed()
-	}
+		get() {
+			return this.supportFragmentManager.findFragmentById(R.id.navigation_drawer_fragment)
+					as NavigationDrawerFragment
+		}
 }

@@ -91,14 +91,16 @@ class SoundAdapter (
 
 		RxSeekBar.userChanges(viewHolder.timePosition)
 				.takeUntil(parentIsDetached)
-				.map { int -> SoundViewHolderEvent(viewHolder, int) }
 				.skip(1)
+				.map { int -> SoundViewHolderEvent(viewHolder, int) }
 				.subscribe { this.seeksToPosition.onNext(it) }
 
 		return viewHolder
 	}
 
-	override fun onBindViewHolder(holder: SoundViewHolder, position: Int) { holder.bindData(this.values[position]) }
+	override fun onBindViewHolder(holder: SoundViewHolder, position: Int) {
+		holder.bindData(this.values[position])
+	}
 
 	override val values: List<MediaPlayerController> get() {
 		val players = this.soundManager.sounds.getOrElse(this.soundSheet, { emptyList() } )
@@ -107,5 +109,7 @@ class SoundAdapter (
 
 	override fun getItemCount(): Int = this.values.size
 
-	override fun getItemId(position: Int): Long = this.values[position].mediaPlayerData.playerId.longHash
+	override fun getItemId(position: Int): Long {
+		return this.values[position].mediaPlayerData.playerId.longHash
+	}
 }
