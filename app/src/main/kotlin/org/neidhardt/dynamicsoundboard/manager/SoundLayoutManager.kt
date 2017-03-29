@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.persistance.model.AppData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import rx.Observable
-import rx.lang.kotlin.add
+import rx.subscriptions.Subscriptions
 import java.util.*
 
 /**
@@ -157,9 +157,9 @@ object RxNewSoundLayoutManager {
 			val listener: (List<NewSoundLayout>) -> Unit = {
 				subscriber.onNext(it)
 			}
-			subscriber.add {
+			subscriber.add(Subscriptions.create {
 				manager.onSoundLayoutsChangedListener.remove(listener)
-			}
+			})
 			manager.mSoundLayouts?.let { subscriber.onNext(it) }
 			manager.onSoundLayoutsChangedListener.add(listener)
 		}
@@ -170,9 +170,9 @@ object RxNewSoundLayoutManager {
 			val listener: (List<MediaPlayerController>) -> Unit = {
 				subscriber.onNext(it)
 			}
-			subscriber.add {
+			subscriber.add(Subscriptions.create {
 				manager.onPlayingSoundsChangedListener.remove(listener)
-			}
+			})
 			manager.mCurrentlyPlayingSounds.let{ subscriber.onNext(it) }
 			manager.onPlayingSoundsChangedListener.add(listener)
 		}
@@ -184,9 +184,9 @@ object RxNewSoundLayoutManager {
 				subscriber.onNext(it)
 				subscriber.onCompleted()
 			}
-			subscriber.add {
+			subscriber.add(Subscriptions.create {
 				manager.onLoadingCompletedListener.remove(listener)
-			}
+			})
 			manager.mSoundLayouts?.let {
 				subscriber.onNext(it)
 				subscriber.onCompleted()

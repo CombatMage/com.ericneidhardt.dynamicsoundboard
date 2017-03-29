@@ -3,7 +3,8 @@ package org.neidhardt.dynamicsoundboard.base
 import android.content.Intent
 import org.neidhardt.android_utils.EnhancedAppCompatActivity
 import rx.Observable
-import rx.lang.kotlin.add
+import rx.Subscription
+import rx.subscriptions.Subscriptions
 import java.util.*
 
 /**
@@ -31,9 +32,11 @@ object RxBaseActivity {
 			val listener = { intent: Intent ->
 				subscriber.onNext(intent)
 			}
-			subscriber.add {
+
+			subscriber.add(Subscriptions.create {
 				activity.onNewIntentCallback.remove(listener)
-			}
+			})
+
 			activity.lastReceivedIntent?.let { subscriber.onNext(it) }
 			activity.onNewIntentCallback.add(listener)
 		}

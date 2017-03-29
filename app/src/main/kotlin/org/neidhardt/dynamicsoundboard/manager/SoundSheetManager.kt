@@ -5,7 +5,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import rx.Observable
-import rx.lang.kotlin.add
+import rx.subscriptions.Subscriptions
 import java.util.*
 
 /**
@@ -69,9 +69,9 @@ object RxNewSoundSheetManager {
 			val listener: (List<NewSoundSheet>) -> Unit = {
 				subscriber.onNext(it)
 			}
-			subscriber.add {
+			subscriber.add(Subscriptions.create {
 				manager.onSoundSheetsChangedListener.remove(listener)
-			}
+			})
 			manager.mSoundSheets?.let { subscriber.onNext(it) }
 			manager.onSoundSheetsChangedListener.add(listener)
 		}

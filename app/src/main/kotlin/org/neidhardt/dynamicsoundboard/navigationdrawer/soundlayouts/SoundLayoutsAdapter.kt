@@ -3,14 +3,12 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding.view.RxView
-import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.utils.longHash
-import rx.lang.kotlin.PublishSubject
 import rx.subjects.PublishSubject
 
 /**
@@ -20,7 +18,7 @@ class SoundLayoutsAdapter() :
 		BaseAdapter<NewSoundLayout, SoundLayoutViewHolder>(),
 		ListAdapter<NewSoundLayout>
 {
-	val clicksViewHolder: PublishSubject<SoundLayoutViewHolder> = PublishSubject()
+	val clicksViewHolder: PublishSubject<SoundLayoutViewHolder> = PublishSubject.create()
 	val clicksSettings: PublishSubject<SoundLayoutViewHolder> = PublishSubject.create()
 
 	init { this.setHasStableIds(true) }

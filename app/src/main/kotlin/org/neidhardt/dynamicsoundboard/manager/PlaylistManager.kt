@@ -14,7 +14,7 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.utils.getCopyList
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
-import rx.lang.kotlin.add
+import rx.subscriptions.Subscriptions
 import java.util.*
 
 /**
@@ -128,9 +128,9 @@ object RxNewPlaylistManager {
 			val listener: (List<MediaPlayerController>) -> Unit = {
 				subscriber.onNext(it)
 			}
-			subscriber.add {
+			subscriber.add(Subscriptions.create {
 				manager.onPlaylistChangedListener.remove(listener)
-			}
+			})
 			manager.mMediaPlayers?.let { subscriber.onNext(it) }
 			manager.onPlaylistChangedListener.add(listener)
 		}

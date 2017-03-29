@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.utils.getCopyList
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
-import rx.lang.kotlin.add
+import rx.subscriptions.Subscriptions
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -184,9 +184,9 @@ object RxSoundManager {
 			val listener: (Map<NewSoundSheet, List<MediaPlayerController>>) -> Unit = {
 				subscriber.onNext(manager.sounds)
 			}
-			subscriber.add {
+			subscriber.add(Subscriptions.create {
 				manager.onSoundListChangedListener.remove(listener)
-			}
+			})
 			manager.mMediaPlayers?.let { subscriber.onNext(it) }
 			manager.onSoundListChangedListener.add(listener)
 		}
