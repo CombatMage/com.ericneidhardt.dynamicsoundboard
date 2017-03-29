@@ -26,7 +26,7 @@ interface RequestPermissionHelper
 		val requiredPermissions = ArrayList<String>()
 		if (!this.hasPermissionReadStorage) requiredPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
 		if (!this.hasPermissionWriteStorage) requiredPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-		if (!this.hasPermissionPhoneState) requiredPermissions.add(Manifest.permission.READ_PHONE_STATE)
+		//if (!this.hasPermissionPhoneState) requiredPermissions.add(Manifest.permission.READ_PHONE_STATE)
 
 		if (!requiredPermissions.isEmpty()) {
 			val array = requiredPermissions.toTypedArray()

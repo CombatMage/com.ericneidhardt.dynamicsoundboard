@@ -53,7 +53,7 @@
     <item name='android.support.v7.view.SupportActionModeWrapper.CallbackWrapper android.view.ActionMode getActionModeWrapper(android.support.v7.view.ActionMode)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='android.support.v7.view.ViewPropertyAnimatorCompatSet android.support.v7.view.ViewPropertyAnimatorCompatSet play(android.support.v4.view.ViewPropertyAnimatorCompat)'>
+    <item name='android.support.v7.view.ViewPropertyAnimatorCompatSet android.support.v7.view.ViewPropertyAnimatorCompatSet playButton(android.support.v4.view.ViewPropertyAnimatorCompat)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='android.support.v7.view.StandaloneActionMode boolean onSubMenuSelected(android.support.v7.view.menu.SubMenuBuilder) 0'>

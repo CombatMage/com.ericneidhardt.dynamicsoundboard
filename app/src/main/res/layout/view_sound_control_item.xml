@@ -9,36 +9,28 @@
 		android:background="@color/background"
 		tools:background="#00ff00">
 
-	<ImageButton
+	<org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
 			android:id="@+id/ib_view_sound_control_item_play"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/margin_tiny"
-			android:layout_marginLeft="@dimen/margin_tiny"
-			android:layout_marginTop="@dimen/margin_tiny"
-			style="@style/Theme.ImageButton.SoundControl"
-			android:contentDescription="@string/sound_control_content_description_play"
-			android:src="@drawable/selector_ic_play"/>
+			android:layout_marginTop="@dimen/margin_tiny"/>
 
-	<ImageButton
+	<ImageView
 			android:id="@+id/ib_view_sound_control_item_reorder"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
 			android:layout_alignParentEnd="true"
 			android:layout_marginTop="@dimen/margin_tiny"
-			android:layout_marginRight="@dimen/margin_tiny"
 			android:layout_marginEnd="@dimen/margin_tiny"
 			style="@style/Theme.ImageButton.SoundControl"
 			android:contentDescription="@string/sound_control_content_description_reorder"
-			android:src="@drawable/selector_ic_reorder"/>
+			android:src="@drawable/ic_reorder"/>
 
 	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_toRightOf="@id/ib_view_sound_control_item_play"
+			android:layout_height="wrap_content"
 			android:layout_toEndOf="@id/ib_view_sound_control_item_play"
-			android:layout_toLeftOf="@id/ib_view_sound_control_item_reorder"
 			android:layout_toStartOf="@id/ib_view_sound_control_item_reorder"
 			android:orientation="vertical">
 
@@ -65,49 +57,39 @@
 	</LinearLayout>
 
 	<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:layout_marginLeft="@dimen/margin_default"
-			android:layout_marginStart="@dimen/margin_default"
-			android:layout_marginBottom="@dimen/margin_tiny"
-			android:layout_toRightOf="@id/ib_view_sound_control_item_play"
-			android:layout_toEndOf="@id/ib_view_sound_control_item_play"
-			android:orientation="horizontal">
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_below="@id/ib_view_sound_control_item_play"
+		android:layout_toEndOf="@id/ib_view_sound_control_item_play"
+		android:layout_alignParentEnd="true">
 
 		<ImageButton
 				android:id="@+id/ib_view_sound_control_item_stop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:contentDescription="@string/sound_control_content_description_stop"
-				android:src="@drawable/selector_ic_stop"
+				android:src="@drawable/ic_stop"
 				style="@style/Theme.ImageButton.SoundControl"/>
 
-		<ImageButton
+		<org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 				android:id="@+id/ib_view_sound_control_item_loop"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:contentDescription="@string/sound_control_content_description_loop"
-				android:src="@drawable/selector_ic_loop"
-				style="@style/Theme.ImageButton.SoundControl"/>
+				android:layout_height="wrap_content"/>
 
-		<ImageButton
+		<org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 				android:id="@+id/ib_view_sound_control_item_add_to_playlist"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:contentDescription="@string/sound_control_content_description_playlist"
-				android:src="@drawable/selector_ic_playlist"
-				style="@style/Theme.ImageButton.SoundControl"/>
+				android:layout_height="wrap_content"/>
 
 		<ImageButton
 				android:id="@+id/ib_view_sound_control_item_settings"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:contentDescription="@string/sound_control_content_description_settings"
-				android:src="@drawable/selector_ic_settings"
+				android:src="@drawable/ic_settings"
 				style="@style/Theme.ImageButton.SoundControl"/>
 
 	</LinearLayout>
-
 
 </RelativeLayout>

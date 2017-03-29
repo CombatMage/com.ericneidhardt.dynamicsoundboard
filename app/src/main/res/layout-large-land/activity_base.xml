@@ -38,7 +38,6 @@
 				<FrameLayout
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
-						android:layout_toRightOf="@id/navigation_drawer_fragment"
 						android:layout_toEndOf="@id/navigation_drawer_fragment">
 
 					<FrameLayout

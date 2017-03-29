@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<!-- misc -->
+	<!-- generic -->
 	<string name="app_name">Dynamic Soundboard</string>
 	<string name="suggested_sound_sheet_name">neue Kategorie</string>
 	<string name="suggested_sound_layout_name">neues Abenteuer</string>
 	<string name="spinner_content_description_drop_down_arrow">Drop Down Auswahl</string>
-	<string name="toast_close_app_on_back_press">Zum Beenden erneut drücken</string>
-	
+	<string name="all_rename">Umbenennen</string>
+	<string name="all_cancel">Abbrechen</string>
+	<string name="all_add">Hinzufügen</string>
+	<string name="all_delete">Löschen</string>
+	<string name="all_CurrentNameIs">Aktueller Name: {STR}</string>
+	<string name="all_ErrorNameMustNotBeEmpty">Der Name darf nicht leer sein</string>
+
+	<!-- SoundActivity -->
+	<string name="soundactivity_ToastCloseAppOnBackPress">Zum Beenden erneut drücken</string>
+
+	<!-- GenericRenameDialog -->
+	<string name="genericrename_SoundSheetTitle">Name der Soundliste?</string>
+	<string name="genericrename_SoundLayoutTitle">Abenteuer umbenennen</string>
+
+	<!-- GenericAddDialog -->
+	<string name="genericadd_SoundLayoutTitle">Ein weiteres Abenteuer anlegen</string>
+	<string name="genericadd_SoundLayoutMessage">Dem SoundBoard wird ein neu neues Abenteuer hinzugefügt.
+		Du kannst zwischen den verschiedenen Abenteuern wechseln, indem du auf den Abenteuernamen im
+		Kopf des linken Menüs klickst.</string>
+	<string name="genericadd_SoundLayoutHint">Name des Abenteuers</string>
+	<string name="genericadd_SoundSheetTitle">Eine neue Soundliste anlegen</string>
+	<string name="genericadd_SoundSheetMessage">Dem SoundBoard wird ein neue Liste mit diesem Namen hinzugefügt.
+		Der Name kann später noch geändert werden.</string>
+	<string name="genericadd_SoundSheetHint">Name der Soundliste</string>
+
+	<!-- GenericConfirmDialog -->
+	<string name="genericconfirm_DeleteSoundsMessage">Sollen alle Sounds in dieser Kategorie entfernt werden?</string>
+	<string name="genericconfirm_DeletePlaylistMessage">Soll die aktuelle Playliste gelöscht werden?</string>
+	<string name="genericconfirm_DeleteAllSoundSheetsMessage">Sollen alle Soundgruppen des Soundboards entfernt werden?</string>
+	<string name="genericconfirm_DeleteSoundSheetMessage">Soll diese Soundgruppe entfernt werden?</string>
+
 	<!-- permissions -->
 	<string name="request_permission_title">Berechtigung erforderlich</string>
 	<string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
@@ -72,19 +101,6 @@
 	<string name="notification_play_sound">Sound abspielen</string>
 	<string name="notification_playlist">Playliste</string>
 
-	<!-- introduction -->
-	<string name="introduction_action_icon">Icon der beschriebenen Aktion</string>
-	<string name="introduction_action_new_sound_sheet_title">@string/action_add_new_sound_sheet</string>
-	<string name="introduction_action_new_sound_sheet_summary">Erstellt eine neue Kategorie für Sounds. Du kannst der
-		Kategorie einen namen geben und ihr verschiedene Sounds zuordnen. Über das Menü links kann zwischen den verschiedenen
-		Kategrien gewechselt werden.</string>
-	<string name="introduction_action_add_new_sound_from_dir_title">@string/action_add_new_sound_from_dir</string>
-	<string name="introduction_action_add_new_sound_from_dir_summary">Hiermit kaönnen mehrere Sounds aus einem Verzeichniss der aktuellen
-		Kategorie hinzugefügt werden. Wähle dazu ein Verzeichniss das geladen werden soll.</string>
-	<string name="introduction_action_add_new_sound_title">@string/action_add_new_sound</string>
-	<string name="introduction_action_add_new_sound_summary">Hiermit kannst du einen oder mehrere Sounds auswählen um diese der aktuellen Kategorie
-		hinzuzufügen. Für jeden geladenen Sound kannst du einen den angezeigten Namen einstellen.</string>
-
 	<!-- preferences & about -->
 	<string name="preferences">Einstellungen</string>
 	<string name="preferences_enable_notifications_title">Benachrichtigungen aktivieren</string>
@@ -103,15 +119,22 @@
 	<string name="about_version_title">Version</string>
 	<string name="about_used_third_party_software_title">Verwendete Komponenten</string>
 	<string name="about_used_third_party_software_summary">
-		ch.acra:acra,
-		org.greenrobot:eventbus,
-		de.greenrobot:greendao,
-		com.fasterxml.jackson.core:jackson-databind,
-		com.github.clans:fab,
-		com.github.johnkil.android-robototextview:robototextview,
-		com.emtronics.dragsortrecycler:DragSortRecycler,
-		me.zhanghai.android.materialprogressbar:library,
-		jp.wasabeef:recyclerview-animators
+		org.jetbrains.kotlin:kotlin-stdlib:1.0.6
+		io.reactivex:rxjava:1.2.2
+		io.reactivex:rxkotlin:0.60.0
+		io.reactivex:rxandroid:1.2.1
+		com.jakewharton.rxbinding:rxbinding:1.0.0
+		org.jetbrains.anko:anko-sdk21:0.9
+		org.jetbrains.anko:anko-appcompat-v7:0.9
+		de.greenrobot:java-common:2.3.1
+		org.greenrobot:eventbus:3.0.0
+		com.squareup.leakcanary:leakcanary-android:1.5
+		com.google.android.exoplayer:exoplayer:r2.0.3
+		com.google.code.gson:gson:2.4
+		jp.wasabeef:recyclerview-animators:2.2.4
+		me.zhanghai.android.materialprogressbar:library:1.1.7
+		com.github.clans:fab:1.6.4
+		ch.acra:acra:$versions.acra
 	</string>
 	<string name="about_used_third_party_assets_title">Verwendete Ressourcen</string>
 	<string name="about_used_third_party_assets_summary">
@@ -126,37 +149,19 @@
 	<string name="dialog_close">Beenden</string>
 	<string name="dialog_denial">Verweigern</string>
 	<string name="dialog_ok">OK</string>
-	<string name="dialog_delete">Löschen</string>
-	<string name="dialog_add">Hinzufügen</string>
 	<string name="dialog_save">Speichern</string>
-	<string name="dialog_cancel">Abbrechen</string>
 	<string name="dialog_load">Laden</string>
-	<string name="dialog_rename">Umbenennen</string>
-
-	<string name="dialog_confirm_delete_title">Wirklich entfernen?</string>
-	<string name="dialog_confirm_delete_soundsheet_message">Soll diese Kategorie entfernt werden?</string>
-	<string name="dialog_confirm_delete_sounds_in_soundheet_message">Sollen alle Sounds in dieser Kategorie entfernt werden?</string>
-	<string name="dialog_confirm_delete_all_soundsheets_message">Sollen alle Kategorien des Soundboards entfernt werden?</string>
-	<string name="dialog_confirm_delete_play_list_message">Soll die aktuelle Playliste gelöscht werden?</string>
 
 	<string name="dialog_add_new_sound_from_directory_title">Verzeichniss auswählen</string>
 	<string name="dialog_add_new_sound_from_directory_message">Dem Soundbord werden alle Sounds in dem ausgewählten Verzeichniss hinzugefügt</string>
 	<string name="dialog_add_new_sound_from_directory_content_description_file_type">Dateityp</string>-
 	<string name="dialog_add_new_sound_from_directory_content_description_selection">Ausgewählte Datei</string>-
 
-	<string name="dialog_add_new_sound_sheet_title">Name der Sound Liste?</string>
-	<string name="dialog_add_new_sound_sheet_message">Dem SoundBoard wird ein neue Gruppe mit diesem Namen hinzugefügt. Der Name kann später noch geändert werden.</string>
-
 	<string name="dialog_add_new_sound_from_intent_title">Sound hinzufügen</string>
 	<string name="dialog_add_new_sound_from_intent_message">Es wurden noch keine Kategorien für Sounds angelegt. Soll eine neue Kategorie angelegt werden?</string>
 
 	<string name="dialog_sound_settings_title">Sound editieren</string>
 	<string name="dialog_sound_settings_message">Sound umbenennen oder in eine andere Kategorie verschieben?</string>
-
-	<string name="dialog_sound_layout_settings_title">Abenteuer umbenennen</string>
-
-	<string name="dialog_add_new_sound_layout_title">Ein weitere Abenteuer anlegen</string>
-	<string name="dialog_add_new_sound_layout_message">Dem SoundBoard wird ein neu neues Abenteuer hinzugefügt. Du kannst zwischen den verschiedenen Abenteuern wechseln.</string>
 
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_message">Welcher Kategorie soll der Sound hinzugefügt werden, oder soll eine neue Kategorie angelegt werden?</string>
 	<string name="dialog_add_new_sound_from_intent_to_sound_sheet_checkbox">Eine neue Katagorie anlegen</string>

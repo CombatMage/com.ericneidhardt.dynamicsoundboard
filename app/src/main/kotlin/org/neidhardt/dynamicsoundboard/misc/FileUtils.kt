@@ -5,8 +5,12 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import rx.Observable
+import rx.schedulers.Schedulers
 import java.io.File
-import java.util.*
+import kotlin.comparisons.compareByDescending
+import kotlin.comparisons.thenBy
+import kotlin.comparisons.thenByDescending
 
 /**
  * File created by eric.neidhardt on 09.04.2015.
@@ -17,16 +21,30 @@ private val AUDIO = "audio"
 private val MIME_AUDIO_TYPES = arrayOf("audio/*", "application/ogg", "application/x-ogg")
 private val SCHEME_CONTENT_URI = "content"
 
-fun File.getFilesInDirectory(): MutableList<File> {
+fun File.getFilesInDirectorySortedAsync(): Observable<List<File>> {
 	val content = this.listFiles()
-	if (content == null || content.size == 0)
-		return ArrayList()
+	if (content == null || content.isEmpty()) return Observable.just(emptyList())
 
-	val files = ArrayList<File>(content.size)
-	for (file in content)
-		files.add(file)
+	return Observable.fromCallable {
+		content.sortedWith(
+				compareByDescending<File> { it.isDirectory }
+						.thenByDescending { it.containsAudioFiles }
+						.thenByDescending { it.isAudioFile }
+						.thenBy { it.name }
+		)
+	}.subscribeOn(Schedulers.computation())
+}
 
-	return files
+fun File.getFilesInDirectorySorted(): List<File> {
+	val content = this.listFiles()
+	if (content == null || content.isEmpty()) return emptyList()
+
+	return content.sortedWith(
+			compareByDescending<File> { it.isDirectory }
+					.thenByDescending { it.containsAudioFiles }
+					.thenByDescending { it.isAudioFile }
+					.thenBy { it.name }
+	)
 }
 
 fun Uri.getFileForUri(): File? {
@@ -41,17 +59,14 @@ fun Uri.getFileForUri(): File? {
 
 val File.isAudioFile: Boolean
 	get() {
-		val mime = this.getMimeType ?: return false
+		if (this.isDirectory) return false
+		val mime = this.mimeType ?: return false
 		if (mime.startsWith(AUDIO))
 			return true
-		for (audioMime in MIME_AUDIO_TYPES) {
-			if (mime == audioMime)
-				return true
-		}
-		return false
+		return MIME_AUDIO_TYPES.contains(mime)
 	}
 
-val File.getMimeType: String?
+val File.mimeType: String?
 	get() {
 		var type: String? = null
 		val extension = FileUtils.getFileExtension(this.absolutePath)
@@ -64,14 +79,9 @@ val File.getMimeType: String?
 
 val File.containsAudioFiles: Boolean
 	get() {
+		if (!this.isDirectory) return false
 		val filesInDirectory = this.listFiles() ?: return false
-		for (file in filesInDirectory) {
-			if (file.isDirectory)
-				continue
-			if (file.isAudioFile)
-				return true
-		}
-		return false
+		return filesInDirectory.any { !it.isDirectory && it.isAudioFile }
 	}
 
 object FileUtils {
@@ -81,7 +91,7 @@ object FileUtils {
 		if (fileName == null)
 			throw NullPointerException(TAG + ": cannot create new file name, either old name or new name is null")
 
-		val segments = fileName.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+		val segments = fileName.split("\\.".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
 		if (segments.size > 1) {
 			var strippedName = segments[0]
 			for (i in 1..segments.size - 1 - 1)

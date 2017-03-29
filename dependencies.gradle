@@ -2,42 +2,48 @@ ext.versions = [
 
 		supportLibs : '25.0.0',
 
-		eventBus          : '3.0.0',
-		greendao          : '2.1.0',
-		greenRobotCommons : '2.3.1',
-
-		exoplayer   : 'r2.0.3',
-
-		jackson   : '2.8.4',
-		robotoTextView : '2.5.1',
-
-		recyclerViewAnimator : '2.2.4',
-
-		acra              : '4.9.1'
+		anko        : '0.9'
 ]
 
 ext.libraries = [
 
 		kotlin               : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
 
+		rxJava               : 'io.reactivex:rxjava:1.2.6',
+		rxKotlin             : 'io.reactivex:rxkotlin:0.60.0',
+		rxAndroid            : 'io.reactivex:rxandroid:1.2.1',
+		rxBinding            : 'com.jakewharton.rxbinding:rxbinding:1.0.1',
+
+		rxlifecycle          : 'com.trello:rxlifecycle:1.0',
+		rxlifecycleAndroid   : 'com.trello:rxlifecycle-android:1.0',
+		rxlifecycleKotlin    : 'com.trello:rxlifecycle-kotlin:1.0',
+		rxlifecycleComponents: 'com.trello:rxlifecycle-components:1.0',
+
+		multidex             : "com.android.support:multidex:1.0.1",
 		supportV4            : "com.android.support:support-v4:$versions.supportLibs",
 		supportV13           : "com.android.support:support-v13:$versions.supportLibs",
 		supportAppCompat     : "com.android.support:appcompat-v7:$versions.supportLibs",
 		supportDesign        : "com.android.support:design:$versions.supportLibs",
 		supportRecyclerView  : "com.android.support:recyclerview-v7:$versions.supportLibs",
 
-		greenRobotCommons    : "de.greenrobot:java-common:$versions.greenRobotCommons",
-		eventBus             : "org.greenrobot:eventbus:$versions.eventBus",
-		greendao             : "de.greenrobot:greendao:$versions.greendao",
+		anko                 : "org.jetbrains.anko:anko-sdk21:$versions.anko", // min sdk version important
+		ankoSupportAppCompat : "org.jetbrains.anko:anko-appcompat-v7:$versions.anko", // Anko libs matching support libs
 
-		exoplayer            : "com.google.android.exoplayer:exoplayer:$versions.exoplayer",
+		greenRobotCommons    : "de.greenrobot:java-common:2.3.1",
+		eventBus             : "org.greenrobot:eventbus:3.0.0",
+		greendao             : "org.greenrobot:greendao:3.2.0",
 
-		jacksonDatabind      : "com.fasterxml.jackson.core:jackson-databind:$versions.jackson",
-		jacksonKotlin        : "com.fasterxml.jackson.module:jackson-module-kotlin:$versions.jackson",
+		leakCanary           : "com.squareup.leakcanary:leakcanary-android:1.5",
 
-		robotoTextView       : "com.github.johnkil.android-robototextview:robototextview:$versions.robotoTextView",
+		exoplayer            : "com.google.android.exoplayer:exoplayer:r2.0.3",
 
-		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:$versions.recyclerViewAnimator",
+		gson                 : "com.google.code.gson:gson:2.8.0",
 
-		acra                 : "ch.acra:acra:$versions.acra"
+		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:2.2.6",
+
+		materialProgressBar  : "me.zhanghai.android.materialprogressbar:library:1.1.7",
+
+		floatingActionButton : "com.github.clans:fab:1.6.4",
+
+		acra                 : "ch.acra:acra:4.9.2"
 ]

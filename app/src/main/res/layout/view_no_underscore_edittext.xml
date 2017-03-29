@@ -7,7 +7,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-	<org.neidhardt.ui_utils.views.EditTextBackEvent
+	<org.neidhardt.android_utils.views.EditTextBackEvent
 			android:id="@+id/et_view_no_underscore_edittext"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

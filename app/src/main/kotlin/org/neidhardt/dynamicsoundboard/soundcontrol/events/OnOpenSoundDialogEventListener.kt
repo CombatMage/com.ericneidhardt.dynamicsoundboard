@@ -12,7 +12,7 @@ interface OnOpenSoundDialogEventListener
 	fun onEvent(event: OpenSoundRenameEvent)
 
 	/**
-	 * This is called by greenRobot EventBus in case the settings for a certain sound are requested.
+	 * This is called by greenRobot EventBus in case the settingsButton for a certain sound are requested.
 	 * @param event delivered OpenSoundSettingsEvent
 	 */
 	fun onEvent(event: OpenSoundSettingsEvent)

@@ -74,7 +74,7 @@
     <item name='com.fasterxml.jackson.databind.jsontype.impl.TypeNameIdResolver java.lang.String _defaultTypeId(java.lang.Class&lt;?&gt;) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder init(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver)'>
+    <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder initIfRequired(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.jsontype.impl.StdSubtypeResolver java.util.Collection&lt;com.fasterxml.jackson.databind.jsontype.NamedType&gt; collectAndResolveSubtypesByTypeId(com.fasterxml.jackson.databind.cfg.MapperConfig&lt;?&gt;, com.fasterxml.jackson.databind.introspect.AnnotatedMember, com.fasterxml.jackson.databind.JavaType)'>
@@ -152,7 +152,7 @@
     <item name='com.fasterxml.jackson.databind.jsontype.impl.StdSubtypeResolver void _collectAndResolveByTypeId(com.fasterxml.jackson.databind.introspect.AnnotatedClass, com.fasterxml.jackson.databind.jsontype.NamedType, com.fasterxml.jackson.databind.cfg.MapperConfig&lt;?&gt;, java.util.Set&lt;java.lang.Class&lt;?&gt;&gt;, java.util.Map&lt;java.lang.String,com.fasterxml.jackson.databind.jsontype.NamedType&gt;) 1'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder init(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver) 0'>
+    <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder initIfRequired(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.jsontype.impl.TypeDeserializerBase java.lang.Object _deserializeWithNativeTypeId(com.fasterxml.jackson.core.JsonParser, com.fasterxml.jackson.databind.DeserializationContext) 0'>
@@ -179,7 +179,7 @@
     <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder inclusion(com.fasterxml.jackson.annotation.JsonTypeInfo.As)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder init(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver)'>
+    <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder initIfRequired(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder typeIdVisibility(boolean)'>
@@ -470,7 +470,7 @@
     <item name='com.fasterxml.jackson.databind.jsontype.impl.StdSubtypeResolver void _collectAndResolve(com.fasterxml.jackson.databind.introspect.AnnotatedClass, com.fasterxml.jackson.databind.jsontype.NamedType, com.fasterxml.jackson.databind.cfg.MapperConfig&lt;?&gt;, com.fasterxml.jackson.databind.AnnotationIntrospector, java.util.HashMap&lt;com.fasterxml.jackson.databind.jsontype.NamedType,com.fasterxml.jackson.databind.jsontype.NamedType&gt;) 1'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder init(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver) 0'>
+    <item name='com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder initIfRequired(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.jsontype.impl.AsPropertyTypeSerializer com.fasterxml.jackson.databind.jsontype.impl.AsArrayTypeSerializer forProperty(com.fasterxml.jackson.databind.BeanProperty)'>

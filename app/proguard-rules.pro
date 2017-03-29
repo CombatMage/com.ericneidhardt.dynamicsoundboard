@@ -32,7 +32,7 @@
     public void onEvent*(**);
 }
 -keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
-    <init>(java.lang.Throwable);
+    <initIfRequired>(java.lang.Throwable);
 }
 
 #ACRA

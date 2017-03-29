@@ -8,6 +8,8 @@ buildscript {
 	}
 }
 
+// for unkown reason greendao needs to be on first position
+apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -20,6 +22,10 @@ android {
 	dataBinding {
 		enabled = true
 		version = "2.1.0"
+	}
+
+	dexOptions {
+		javaMaxHeapSize "4g"
 	}
 
 	compileOptions {
@@ -42,9 +48,10 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion project.projectMinSdkVersion
 		targetSdkVersion project.projectTargetSdkVersion
-		versionCode 22706
-		versionName "2.27.6"
+		versionCode 22905
+		versionName "2.29.5"
 		resConfigs "de"
+		multiDexEnabled true
 	}
 
 	signingConfigs {
@@ -53,20 +60,6 @@ android {
 			storePassword RELEASE_STORE_PASSWORD
 			keyAlias RELEASE_KEY_ALIAS
 			keyPassword RELEASE_KEY_PASSWORD
-		}
-	}
-
-	applicationVariants.all { variant ->
-		variant.mergeAssets.doFirst {
-			File fonts = file("${projectDir}/build/intermediates/exploded-aar/com.github.johnkil.android-robototextview/robototextview/2.4.2/assets/fonts")
-			if (fonts.exists()) {
-				for (File file : fonts.listFiles()) {
-					if (file.getName().contains("RobotoSlab")) {
-						println("delete " + file.getName() + " font")
-						file.delete()
-					};
-				}
-			}
 		}
 	}
 
@@ -93,15 +86,33 @@ kapt {
 	generateStubs = true
 }
 
+greendao {
+	schemaVersion 15
+}
+
 dependencies {
 	kapt "com.android.databinding:compiler:$android.dataBinding.version"
 
 	compile fileTree(include: ['*.jar'], dir: 'libs')
-	compile project(':safe_async_task')
 	compile project(':enhanced_handler')
 	compile project(':app_utils')
+	compile project(':eventbus_utils')
+	compile project(':android_utils')
+	compile project(':simple_storage')
+	compile project(':value_holder')
+
+	debugCompile rootProject.ext.libraries.leakCanary
+
+	testCompile project(':test_utils')
 
 	compile rootProject.ext.libraries.kotlin
+
+	compile rootProject.ext.libraries.rxAndroid
+	compile rootProject.ext.libraries.rxKotlin
+	compile rootProject.ext.libraries.rxJava
+	compile rootProject.ext.libraries.rxBinding
+
+	compile rootProject.ext.libraries.multidex
 
 	compile rootProject.ext.libraries.supportV4
 	compile rootProject.ext.libraries.supportV13
@@ -109,27 +120,21 @@ dependencies {
 	compile rootProject.ext.libraries.supportAppCompat
 	compile rootProject.ext.libraries.supportDesign
 
-	compile rootProject.ext.libraries.eventBus
+	compile rootProject.ext.libraries.anko
+	compile rootProject.ext.libraries.ankoSupportAppCompat
+
 	compile rootProject.ext.libraries.greendao
 
+	compile rootProject.ext.libraries.greenRobotCommons
+
 	compile rootProject.ext.libraries.exoplayer
-	compile rootProject.ext.libraries.jacksonDatabind
-	compile rootProject.ext.libraries.jacksonKotlin
 
-	compile rootProject.ext.libraries.robotoTextView
+	compile rootProject.ext.libraries.gson
 
-	compile 'com.github.clans:fab:1.6.4'
-	compile 'me.zhanghai.android.materialprogressbar:library:1.1.7'
+	compile rootProject.ext.libraries.floatingActionButton
+	compile rootProject.ext.libraries.materialProgressBar
 
 	compile rootProject.ext.libraries.recyclerViewAnimator
 
 	compile rootProject.ext.libraries.acra
-	
-	testCompile 'junit:junit:4.12'
-	testCompile 'org.mockito:mockito-core:2.0.41-beta'
-	testCompile 'org.robolectric:shadows-support-v4:3.0'
-	testCompile('org.robolectric:robolectric:3.0') {
-		exclude group: 'commons-logging', module: 'commons-logging'
-		exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-	}
 }

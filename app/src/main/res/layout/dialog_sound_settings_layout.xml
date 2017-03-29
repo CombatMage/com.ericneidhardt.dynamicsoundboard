@@ -2,7 +2,6 @@
 
 <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -15,7 +14,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"/>
 
-	<com.devspark.robototextview.widget.RobotoTextView
+	<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/margin_default"
@@ -32,7 +31,7 @@
 			android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_checkbox"
 			tools:checked="true"/>
 
-	<org.neidhardt.ui_utils.views.SimpleSpinner
+	<org.neidhardt.android_utils.views.SimpleSpinner
 			android:id="@+id/s_sound_sheets"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_input_field"/>

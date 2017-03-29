@@ -1,12 +1,8 @@
 package org.neidhardt.dynamicsoundboard.notifications
 
 import android.support.v4.app.NotificationManagerCompat
+import org.neidhardt.dynamicsoundboard.manager.*
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.notifications.NotificationService
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataUtil
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInListForId
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.searchInMapForId
 import java.util.*
 
 /**
@@ -34,8 +30,10 @@ interface INotificationHandler {
 class NotificationHandler(
 		private val service: NotificationService,
 		private val notificationManager: NotificationManagerCompat,
-		private val soundsDataAccess: SoundsDataAccess,
-		private val soundsDataUtil: SoundsDataUtil
+		private val playlistManager: PlaylistManager,
+		private val soundsManager: SoundManager,
+		private val soundSheetManager: SoundSheetManager,
+		private val soundLayoutManager: SoundLayoutManager
 ) : INotificationHandler {
 
 	private val notifications = ArrayList<PendingSoundNotification>()
@@ -62,12 +60,15 @@ class NotificationHandler(
 	override fun showNotifications() {
 		var pendingPlaylistPlayer: MediaPlayerController? = null
 
-		val pendingSounds = this.soundsDataAccess.currentlyPlayingSounds
+		val pendingSounds = this.soundLayoutManager.currentlyPlayingSounds
 		for (player in pendingSounds) {
-			if (this.soundsDataUtil.isPlaylistPlayer(player.mediaPlayerData))
+			if (this.playlistManager.playlist.contains(player))
 				pendingPlaylistPlayer = player // playlist sound is added as the last notification
-			else
-				this.addNotification(PendingSoundNotification.getNotificationForPlayer(player, this.service))
+			else {
+				val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(player.mediaPlayerData.fragmentTag)
+						?: throw IllegalStateException("Sound sheet should not be null in this situation")
+				this.addNotification(PendingSoundNotification.getNotificationForPlayer(player, soundSheet, this.service))
+			}
 		}
 
 		if (pendingPlaylistPlayer != null) {
@@ -92,8 +93,10 @@ class NotificationHandler(
 	override fun onGenericPlayerStateChanged(playerId: String) {
 		val correspondingNotification = this.findNotificationForPendingPlayer(playerId)
 		if (correspondingNotification == null) {
-			searchInMapForId(playerId, soundsDataAccess.sounds)?.let {
-				addNotification(PendingSoundNotification.getNotificationForPlayer(it, this.service))
+			this.soundsManager.sounds.findById(playerId)?.let { player ->
+				val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(player.mediaPlayerData.fragmentTag)
+						?: throw IllegalStateException("Sound sheet should not be null in this situation")
+				addNotification(PendingSoundNotification.getNotificationForPlayer(player, soundSheet, this.service))
 			}
 		} else
 			this.updateOrRemovePendingNotification(correspondingNotification, playerId)
@@ -101,13 +104,15 @@ class NotificationHandler(
 
 	private fun updateOrRemovePendingNotification(notification: PendingSoundNotification, playerId: String) {
 		val notificationId = notification.notificationId
-		val player = searchInMapForId(playerId, soundsDataAccess.sounds)
+		val player = this.soundsManager.sounds.findById(playerId)
 
 		// if player stops playing and the service is still bound, we remove the notification
 		if (player == null || !player.isPlayingSound && this.service.isActivityVisible)
 			this.dismissNotificationForPlayer(playerId)
 		else {
-			val updateNotification = PendingSoundNotification.getNotificationForPlayer(player, this.service).notification
+			val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(player.mediaPlayerData.fragmentTag)
+					?: throw IllegalStateException("Sound sheet should not be null in this situation")
+			val updateNotification = PendingSoundNotification.getNotificationForPlayer(player, soundSheet, this.service).notification
 
 			notification.notification = updateNotification
 			notificationManager.notify(notificationId, notification.notification)
@@ -116,7 +121,8 @@ class NotificationHandler(
 
 	private fun updateOrRemovePendingPlaylistNotification(notification: PendingSoundNotification) {
 		val notificationId = notification.notificationId
-		val player = this.soundsDataAccess.playlist.firstOrNull { it.isPlayingSound } ?: searchInListForId(notification.playerId, soundsDataAccess.playlist)
+		val playerId = notification.playerId
+		val player = this.playlistManager.playlist.firstOrNull { it.isPlayingSound } ?: this.playlistManager.playlist.findById(playerId)
 
 		if (player == null)
 			this.dismissNotificationForPlaylist()

@@ -1,0 +1,6 @@
+<resources>
+	<!-- Default screen margins, per the Android Design guidelines. -->
+	<dimen name="status_bar_padding">0dp</dimen> <!-- for material style navigation drawer -->
+	<dimen name="height_navigation_drawer_header">144dp</dimen>
+
+</resources>

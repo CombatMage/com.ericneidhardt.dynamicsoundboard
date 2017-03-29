@@ -104,7 +104,7 @@
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder T init(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver) 0'>
+    <item name='com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder T initIfRequired(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
@@ -320,7 +320,7 @@
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder T init(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver)'>
+    <item name='com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder T initIfRequired(com.fasterxml.jackson.annotation.JsonTypeInfo.Id, com.fasterxml.jackson.databind.jsontype.TypeIdResolver)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>

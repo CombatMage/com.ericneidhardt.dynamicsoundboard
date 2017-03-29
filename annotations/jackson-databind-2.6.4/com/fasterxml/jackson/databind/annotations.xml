@@ -2363,7 +2363,7 @@
     <item name='com.fasterxml.jackson.databind.SerializerProvider void defaultSerializeDateKey(long, com.fasterxml.jackson.core.JsonGenerator) 1'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.SequenceWriter com.fasterxml.jackson.databind.SequenceWriter init(boolean)'>
+    <item name='com.fasterxml.jackson.databind.SequenceWriter com.fasterxml.jackson.databind.SequenceWriter initIfRequired(boolean)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.ObjectMapper void acceptJsonFormatVisitor(java.lang.Class&lt;?&gt;, com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitorWrapper) 0'>

@@ -188,7 +188,7 @@
     <item name='org.acra.ACRAConfiguration org.acra.ACRAConfiguration setSocketTimeout(java.lang.Integer)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='org.acra.ACRA void init(android.app.Application) 0'>
+    <item name='org.acra.ACRA void initIfRequired(android.app.Application) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='org.acra.ReportField DROPBOX'>
