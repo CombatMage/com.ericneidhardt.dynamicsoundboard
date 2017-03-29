@@ -35,7 +35,7 @@
 					android:padding="@dimen/margin_default"
 					android:gravity="center"
 					android:text="@string/navigation_drawer_delete"
-					style="@style/all_ButtonFlat"
+					style="@style/style_all_buttonflat"
 					android:onClick="@{(view) -> viewModel.onDeleteClicked()}"/>
 
 			<Button
@@ -46,7 +46,7 @@
 					android:padding="@dimen/margin_default"
 					android:gravity="center"
 					android:text="@string/navigation_drawer_add"
-					style="@style/all_ButtonFlat"
+					style="@style/style_all_buttonflat"
 					android:onClick="@{(view) -> viewModel.onAddClicked()}"/>
 		</LinearLayout>
 
