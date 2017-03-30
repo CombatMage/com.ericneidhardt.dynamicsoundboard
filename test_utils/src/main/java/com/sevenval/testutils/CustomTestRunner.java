@@ -20,7 +20,7 @@ public class CustomTestRunner extends RobolectricTestRunner {
 		super(classInstance);
 	}
 
-	@Override
+	/*@Override
 	protected AndroidManifest getAppManifest(Config config) {
 		String path = "src/main/AndroidManifest.xml";
 
@@ -31,9 +31,9 @@ public class CustomTestRunner extends RobolectricTestRunner {
 
 		config = overwriteConfig(config, "manifest", path);
 		return super.getAppManifest(config);
-	}
+	}*/
 
-	private Config.Implementation overwriteConfig(Config config, String key, String value)
+	/*private Config.Implementation overwriteConfig(Config config, String key, String value)
 	{
 		Properties properties = new Properties();
 		properties.setProperty(key, value);
@@ -70,6 +70,6 @@ public class CustomTestRunner extends RobolectricTestRunner {
 	private Class<?> ensureBuildConfig(Class<?> constants) {
 		if (constants == Void.class) return BuildConfig.class;
 		return constants;
-	}
+	}*/
 }
 

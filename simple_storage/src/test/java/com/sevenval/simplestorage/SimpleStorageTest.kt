@@ -17,7 +17,7 @@ class SimpleStorageTest : BaseRobolectricTest() {
 
 	@Before
 	fun setUp() {
-		this.unitUnderTest = SimpleStorage(RuntimeEnvironment.application, Int::class.java)
+		this.unitUnderTest = SimpleStorage(RuntimeEnvironment.application.applicationContext, Int::class.java)
 		this.unitUnderTest.clear()
 	}
 
