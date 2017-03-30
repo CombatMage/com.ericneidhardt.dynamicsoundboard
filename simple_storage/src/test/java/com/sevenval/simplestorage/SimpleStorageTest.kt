@@ -29,13 +29,13 @@ class SimpleStorageTest : BaseRobolectricTest() {
 
 	@Test
 	fun saveAndGet() {
-		this.unitUnderTest.save(42).toBlocking().subscribe()
+		this.unitUnderTest.save(42).blockingSubscribe()
 		assertEquals(42, firstItem)
 	}
 
 	@Test
 	fun clear() {
-		this.unitUnderTest.save(42).toBlocking().subscribe()
+		this.unitUnderTest.save(42).blockingSubscribe()
 		assertEquals(42, firstItem)
 
 		this.unitUnderTest.clear()
@@ -47,12 +47,12 @@ class SimpleStorageTest : BaseRobolectricTest() {
 		val testStorage = SimpleStorage(RuntimeEnvironment.application, TestUser::class.java)
 		val testData = TestUser("user", listOf("item_1", "item_2"))
 
-		testStorage.save(testData).toBlocking().subscribe()
-		val retrievedData = testStorage.get().toBlocking().toIterable().first()
+		testStorage.save(testData).blockingSubscribe()
+		val retrievedData = testStorage.get().blockingIterable().first()
 		assertEquals(testData, retrievedData)
 	}
 
-	private val firstItem: Int? get() = this.unitUnderTest.get().toBlocking().toIterable().first()
+	private val firstItem: Int? get() = this.unitUnderTest.get().blockingIterable().first()
 
 	private data class TestUser(val name: String, val inventory: List<String>)
 }

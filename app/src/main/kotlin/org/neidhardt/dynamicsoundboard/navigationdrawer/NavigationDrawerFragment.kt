@@ -7,7 +7,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_navigation_drawer.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
@@ -27,7 +28,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.view_helper.recyclerview_helper.PaddingDecorator
 import org.neidhardt.utils.letThis
-import rx.android.schedulers.AndroidSchedulers
 import kotlin.properties.Delegates
 
 class NavigationDrawerFragment : BaseFragment() {

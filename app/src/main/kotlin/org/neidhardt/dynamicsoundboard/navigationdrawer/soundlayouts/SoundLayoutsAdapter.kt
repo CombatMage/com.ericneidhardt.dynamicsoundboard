@@ -2,14 +2,14 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.jakewharton.rxbinding.view.RxView
+import com.jakewharton.rxbinding2.view.RxView
+import io.reactivex.subjects.PublishSubject
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
 import org.neidhardt.utils.longHash
-import rx.subjects.PublishSubject
 
 /**
  * File created by eric.neidhardt on 08.03.2015.

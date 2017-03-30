@@ -2,9 +2,7 @@ package org.neidhardt.dynamicsoundboard.base
 
 import android.content.Intent
 import org.neidhardt.android_utils.EnhancedAppCompatActivity
-import rx.Observable
-import rx.subscriptions.Subscriptions
-import java.util.*
+import io.reactivex.Observable
 
 /**
 * Created by Eric.Neidhardt@GMail.com on 09.04.2016.

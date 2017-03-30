@@ -7,8 +7,7 @@ import android.view.View
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.value_holder.ValueHolder
-import rx.Subscription
-import rx.android.schedulers.AndroidSchedulers
+import org.reactivestreams.Subscription
 import kotlin.properties.Delegates
 
 /**

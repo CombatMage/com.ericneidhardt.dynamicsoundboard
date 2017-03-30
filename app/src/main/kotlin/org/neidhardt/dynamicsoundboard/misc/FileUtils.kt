@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import rx.Observable
 import rx.schedulers.Schedulers

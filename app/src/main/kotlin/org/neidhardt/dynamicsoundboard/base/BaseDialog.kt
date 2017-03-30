@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.base
 
-import com.trello.rxlifecycle.components.support.RxDialogFragment
+import com.trello.rxlifecycle2.components.support.RxDialogFragment
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 
 /**

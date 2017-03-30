@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_soundsheet.*
 import kotlinx.android.synthetic.main.layout_fab.*
 import org.greenrobot.eventbus.EventBus
@@ -41,8 +42,6 @@ import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 import org.neidhardt.eventbus_utils.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
-import rx.android.schedulers.AndroidSchedulers
-import rx.subscriptions.CompositeSubscription
 import kotlin.properties.Delegates
 
 /**

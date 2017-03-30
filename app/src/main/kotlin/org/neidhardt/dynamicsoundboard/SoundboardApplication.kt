@@ -10,7 +10,6 @@ import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
 import org.neidhardt.value_holder.ValueHolder
 import java.util.*
 
-
 open class SoundboardApplication : MultiDexApplication() {
 
 	companion object {

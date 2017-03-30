@@ -2,6 +2,8 @@ package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
 import android.widget.Toast
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -12,10 +14,6 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.utils.getCopyList
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.subscriptions.Subscriptions
-import java.util.*
 
 /**
  * Created by eric.neidhardt@gmail.com on 19.12.2016.

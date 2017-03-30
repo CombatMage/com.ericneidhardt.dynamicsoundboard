@@ -25,24 +25,24 @@ class SimpleListStorageTest : BaseRobolectricTest() {
 	@Test
 	fun precondition() {
 		assertNotNull(this.unitUnderTest.storageKey)
-		assertTrue(this.unitUnderTest.get().toBlocking().toIterable().first().isEmpty())
+		assertTrue(this.unitUnderTest.get().blockingIterable().first().isEmpty())
 	}
 
 	@Test
 	fun saveAndGet() {
 		val data = listOf(1,2,3,4)
-		this.unitUnderTest.save(data).toBlocking().subscribe()
-		assertTrue(data.containsAll(this.unitUnderTest.get().toBlocking().toIterable().first()))
+		this.unitUnderTest.save(data).blockingSubscribe()
+		assertTrue(data.containsAll(this.unitUnderTest.get().blockingIterable().first()))
 	}
 
 	@Test
 	fun clear() {
 		val data = listOf(1,2,3,4)
-		this.unitUnderTest.save(data).toBlocking().subscribe()
-		assertTrue(data.containsAll(this.unitUnderTest.get().toBlocking().toIterable().first()))
+		this.unitUnderTest.save(data).blockingSubscribe()
+		assertTrue(data.containsAll(this.unitUnderTest.get().blockingIterable().first()))
 
 		this.unitUnderTest.clear()
-		assertTrue(this.unitUnderTest.get().toBlocking().toIterable().first().isEmpty())
+		assertTrue(this.unitUnderTest.get().blockingIterable().first().isEmpty())
 	}
 
 	@Test
@@ -50,9 +50,9 @@ class SimpleListStorageTest : BaseRobolectricTest() {
 		val testStorage = SimpleListStorage(RuntimeEnvironment.application, TestUser::class.java)
 
 		val data = listOf(TestUser("user_1", 30), TestUser("user_2", 32))
-		testStorage.save(data).toBlocking().subscribe()
+		testStorage.save(data).blockingSubscribe()
 
-		val retrievedData = testStorage.get().toBlocking().toIterable().first()
+		val retrievedData = testStorage.get().blockingIterable().first()
 		data.forEachIndexed { i, testUser ->
 			assertEquals(testUser, retrievedData[i])
 		}

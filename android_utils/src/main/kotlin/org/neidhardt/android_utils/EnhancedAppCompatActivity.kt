@@ -2,7 +2,7 @@ package org.neidhardt.android_utils
 
 import android.app.FragmentManager
 import android.os.Bundle
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import java.util.*
 
 /**

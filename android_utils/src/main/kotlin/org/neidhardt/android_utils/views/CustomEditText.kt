@@ -13,8 +13,8 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.TextView
+import io.reactivex.Observable
 import org.neidhardt.android_utils.R
-import rx.Observable
 
 abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		FrameLayout(context, attrs),
@@ -112,9 +112,8 @@ abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 	override fun onRestoreInstanceState(state: Parcelable?) {
 		val savedState = state as SavedCustomEditTextState?
 		super.onRestoreInstanceState(savedState?.superState)
-
 		if (savedState?.value != null)
-			this.input.setText(savedState?.value)
+			this.input.setText(savedState.value)
 	}
 
 	@SuppressWarnings("unchecked")

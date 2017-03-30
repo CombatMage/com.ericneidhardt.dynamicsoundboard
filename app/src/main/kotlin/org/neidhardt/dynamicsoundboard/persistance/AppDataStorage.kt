@@ -3,10 +3,10 @@ package org.neidhardt.dynamicsoundboard.persistance
 import android.content.Context
 import com.google.gson.Gson
 import com.sevenval.simplestorage.SimpleStorage
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import org.neidhardt.dynamicsoundboard.persistance.model.AppData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import rx.Observable
-import rx.schedulers.Schedulers
 import java .io.File
 
 /**

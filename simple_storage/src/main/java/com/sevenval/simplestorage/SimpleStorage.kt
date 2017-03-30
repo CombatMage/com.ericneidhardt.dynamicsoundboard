@@ -4,8 +4,8 @@ import android.content.Context
 import android.preference.PreferenceManager
 import android.support.annotation.CheckResult
 import com.google.gson.Gson
-import rx.Observable
-import rx.schedulers.Schedulers
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by eric.neidhardt on 28.11.2016.
@@ -22,13 +22,12 @@ open class SimpleStorage<T>(context: Context, private val classOfT: Class<T>) {
 	@CheckResult
 	fun save(data: T): Observable<T> {
 		return Observable.fromCallable {
-			data.letThis { item ->
-				this.cachedData = data
-				val json = converter.toJson(data)
-				this.sharedPreferences.edit()
-						.putString(storageKey, json)
-						.apply()
-			}
+			this.cachedData = data
+			val json = converter.toJson(data)
+			this.sharedPreferences.edit()
+					.putString(storageKey, json)
+					.apply()
+			data
 		}.subscribeOn(Schedulers.computation())
 	}
 
@@ -41,7 +40,7 @@ open class SimpleStorage<T>(context: Context, private val classOfT: Class<T>) {
 		return Observable.create<T?> { subscriber ->
 			val data = this.getSync()
 			subscriber.onNext(data)
-			subscriber.onCompleted()
+			subscriber.onComplete()
 		}
 	}
 

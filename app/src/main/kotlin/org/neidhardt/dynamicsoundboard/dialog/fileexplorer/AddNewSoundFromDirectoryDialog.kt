@@ -9,6 +9,8 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -16,10 +18,7 @@ import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDial
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import rx.Observable
-import rx.schedulers.Schedulers
 import java.io.File
-import java.util.*
 
 /**
  * Project created by Eric Neidhardt on 30.09.2014.

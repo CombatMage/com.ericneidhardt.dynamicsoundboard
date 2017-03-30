@@ -2,12 +2,12 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.jakewharton.rxbinding.view.RxView
+import com.jakewharton.rxbinding2.view.RxView
+import io.reactivex.subjects.PublishSubject
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import rx.subjects.PublishSubject
 
 open class SoundSheetsAdapter() : BaseAdapter<NewSoundSheet, SoundSheetViewHolder>() {
 

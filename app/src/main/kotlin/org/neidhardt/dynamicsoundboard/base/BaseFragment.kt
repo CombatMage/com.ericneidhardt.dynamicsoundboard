@@ -1,8 +1,7 @@
 package org.neidhardt.dynamicsoundboard.base
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import com.trello.rxlifecycle.components.support.RxFragment
+import com.trello.rxlifecycle2.components.support.RxFragment
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 
 

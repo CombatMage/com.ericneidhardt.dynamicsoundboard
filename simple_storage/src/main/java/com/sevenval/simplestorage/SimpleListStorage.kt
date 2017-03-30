@@ -6,8 +6,8 @@ import android.preference.PreferenceManager
 import android.support.annotation.CheckResult
 import android.text.TextUtils
 import com.google.gson.Gson
-import rx.Observable
-import rx.schedulers.Schedulers
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -34,7 +34,7 @@ class SimpleListStorage<T>(context: Context, private val classOfT: Class<T>) {
 	fun get(): Observable<List<T>> {
 		return Observable.create<List<T>> { subscriber ->
 			subscriber.onNext(this.getSync())
-			subscriber.onCompleted()
+			subscriber.onComplete()
 		}
 	}
 

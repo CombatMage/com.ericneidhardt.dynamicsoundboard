@@ -14,12 +14,12 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import io.reactivex.android.schedulers.AndroidSchedulers
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import rx.android.schedulers.AndroidSchedulers
 import java.io.File
 import java.io.IOException
 

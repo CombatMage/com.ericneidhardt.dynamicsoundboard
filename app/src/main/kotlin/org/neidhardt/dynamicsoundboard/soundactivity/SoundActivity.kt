@@ -10,7 +10,7 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_base.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

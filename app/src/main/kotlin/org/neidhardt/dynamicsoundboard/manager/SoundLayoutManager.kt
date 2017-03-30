@@ -1,14 +1,13 @@
 package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
+import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.persistance.model.AppData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import rx.Observable
 import rx.subscriptions.Subscriptions
-import java.util.*
 
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
@@ -182,14 +181,14 @@ object RxNewSoundLayoutManager {
 		return Observable.create { subscriber ->
 			val listener: (List<NewSoundLayout>) -> Unit = {
 				subscriber.onNext(it)
-				subscriber.onCompleted()
+				subscriber.onComplete()
 			}
 			subscriber.add(Subscriptions.create {
 				manager.onLoadingCompletedListener.remove(listener)
 			})
 			manager.mSoundLayouts?.let {
 				subscriber.onNext(it)
-				subscriber.onCompleted()
+				subscriber.onComplete()
 			}
 			manager.onLoadingCompletedListener.add(listener)
 		}

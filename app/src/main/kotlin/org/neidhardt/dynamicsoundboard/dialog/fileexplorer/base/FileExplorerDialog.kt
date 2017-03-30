@@ -3,7 +3,9 @@ package org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySorted

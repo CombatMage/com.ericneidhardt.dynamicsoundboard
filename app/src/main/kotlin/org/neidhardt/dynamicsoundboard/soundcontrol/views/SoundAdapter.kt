@@ -2,8 +2,9 @@ package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.jakewharton.rxbinding.view.RxView
-import com.jakewharton.rxbinding.widget.RxSeekBar
+import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.widget.RxSeekBar
+import io.reactivex.subjects.PublishSubject
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.views.RxCustomEditText
 import org.neidhardt.dynamicsoundboard.R
@@ -12,7 +13,6 @@ import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.utils.longHash
-import rx.subjects.PublishSubject
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
