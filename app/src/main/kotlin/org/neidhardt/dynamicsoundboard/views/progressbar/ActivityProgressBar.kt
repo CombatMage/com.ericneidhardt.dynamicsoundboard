@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.value_holder.ValueHolder
@@ -45,7 +47,7 @@ class ActivityProgressBarPresenter(
 ) {
 	private val handler = Handler()
 
-	private var subscription: Subscription? = null
+	private var subscription: Disposable? = null
 
 	fun onAttached() {
 		this.showProgressBar(this.taskCounter.value > 0)
@@ -56,7 +58,7 @@ class ActivityProgressBarPresenter(
 	}
 
 	fun onDetached() {
-		this.subscription?.unsubscribe()
+		this.subscription?.dispose()
 	}
 
 	private fun showProgressBar(showProgressBar: Boolean) {
@@ -65,5 +67,4 @@ class ActivityProgressBarPresenter(
 		else
 			this.handler.postDelayed( { this.view.visibility = View.GONE }, 1000)
 	}
-
 }

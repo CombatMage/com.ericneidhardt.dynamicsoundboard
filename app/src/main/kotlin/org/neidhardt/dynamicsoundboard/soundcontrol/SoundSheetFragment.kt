@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_soundsheet.*
 import kotlinx.android.synthetic.main.layout_fab.*
 import org.greenrobot.eventbus.EventBus
@@ -69,7 +70,7 @@ class SoundSheetFragment :
 			this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
 					?: throw IllegalStateException("no match for fragmentTag found")
 
-	private var subscriptions = CompositeSubscription()
+	private var subscriptions = CompositeDisposable()
 	private val eventBus = EventBus.getDefault()
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager
@@ -179,7 +180,7 @@ class SoundSheetFragment :
 		this.soundPresenter.onAttachedToWindow()
 		this.eventBus.registerIfRequired(this)
 
-		this.subscriptions = CompositeSubscription()
+		this.subscriptions = CompositeDisposable ()
 		this.subscriptions.addAll(
 
 				// if sounds where removed, the view becomes unscrollable and therefore the fab can not be reached
@@ -276,7 +277,7 @@ class SoundSheetFragment :
 		super.onPause()
 		this.snackbarPresenter.stop()
 		this.soundPresenter.onDetachedFromWindow()
-		this.subscriptions.unsubscribe()
+		this.subscriptions.dispose()
 		this.eventBus.unregister(this)
 	}
 

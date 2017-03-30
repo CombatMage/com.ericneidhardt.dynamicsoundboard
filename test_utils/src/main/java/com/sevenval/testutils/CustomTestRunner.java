@@ -48,21 +48,20 @@ public class CustomTestRunner extends RobolectricTestRunner {
 		// constants must point to a real BuildConfig class
 		//
 		int[] sdks = {16};
-		config = new Config.Implementation
-				(
-						sdks,
-		config.manifest(),
-		config.qualifiers(),
-		config.packageName(),
-		config.abiSplit(),
-		config.resourceDir(),
-		config.assetDir(),
-		config.buildDir(),
-		config.shadows(),
-		config.instrumentedPackages(),
-		config.application(),
-		config.libraries(),
-		ensureBuildConfig(config.constants())
+		config = new Config.Implementation(
+				sdks,
+				config.manifest(),
+				config.qualifiers(),
+				config.packageName(),
+				config.abiSplit(),
+				config.resourceDir(),
+				config.assetDir(),
+				config.buildDir(),
+				config.shadows(),
+				config.instrumentedPackages(),
+				config.application(),
+				config.libraries(),
+				ensureBuildConfig(config.constants())
 		);
 
 		return config;

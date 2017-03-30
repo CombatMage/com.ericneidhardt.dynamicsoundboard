@@ -126,9 +126,9 @@ object RxNewPlaylistManager {
 			val listener: (List<MediaPlayerController>) -> Unit = {
 				subscriber.onNext(it)
 			}
-			subscriber.add(Subscriptions.create {
-				manager.onPlaylistChangedListener.remove(listener)
-			})
+			//subscriber.add(Subscriptions.create {
+			//	manager.onPlaylistChangedListener.remove(listener)
+			//})
 			manager.mMediaPlayers?.let { subscriber.onNext(it) }
 			manager.onPlaylistChangedListener.add(listener)
 		}

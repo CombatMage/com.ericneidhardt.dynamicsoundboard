@@ -7,8 +7,6 @@ import android.webkit.MimeTypeMap
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import rx.Observable
-import rx.schedulers.Schedulers
 import java.io.File
 import kotlin.comparisons.compareByDescending
 import kotlin.comparisons.thenBy

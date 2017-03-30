@@ -1,12 +1,10 @@
 package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
+import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import rx.Observable
-import rx.subscriptions.Subscriptions
-import java.util.*
 
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
@@ -69,9 +67,9 @@ object RxNewSoundSheetManager {
 			val listener: (List<NewSoundSheet>) -> Unit = {
 				subscriber.onNext(it)
 			}
-			subscriber.add(Subscriptions.create {
-				manager.onSoundSheetsChangedListener.remove(listener)
-			})
+			//subscriber.add(Subscriptions.create {
+			//	manager.onSoundSheetsChangedListener.remove(listener)
+			//})
 			manager.mSoundSheets?.let { subscriber.onNext(it) }
 			manager.onSoundSheetsChangedListener.add(listener)
 		}

@@ -7,7 +7,6 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.persistance.model.AppData
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import rx.subscriptions.Subscriptions
 
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
@@ -156,9 +155,9 @@ object RxNewSoundLayoutManager {
 			val listener: (List<NewSoundLayout>) -> Unit = {
 				subscriber.onNext(it)
 			}
-			subscriber.add(Subscriptions.create {
-				manager.onSoundLayoutsChangedListener.remove(listener)
-			})
+			//subscriber.add(Subscriptions.create {
+			//	manager.onSoundLayoutsChangedListener.remove(listener)
+			//})
 			manager.mSoundLayouts?.let { subscriber.onNext(it) }
 			manager.onSoundLayoutsChangedListener.add(listener)
 		}
@@ -169,9 +168,9 @@ object RxNewSoundLayoutManager {
 			val listener: (List<MediaPlayerController>) -> Unit = {
 				subscriber.onNext(it)
 			}
-			subscriber.add(Subscriptions.create {
-				manager.onPlayingSoundsChangedListener.remove(listener)
-			})
+			//subscriber.add(Subscriptions.create {
+			//	manager.onPlayingSoundsChangedListener.remove(listener)
+			//})
 			manager.mCurrentlyPlayingSounds.let{ subscriber.onNext(it) }
 			manager.onPlayingSoundsChangedListener.add(listener)
 		}
@@ -183,9 +182,9 @@ object RxNewSoundLayoutManager {
 				subscriber.onNext(it)
 				subscriber.onComplete()
 			}
-			subscriber.add(Subscriptions.create {
-				manager.onLoadingCompletedListener.remove(listener)
-			})
+			//subscriber.add(Subscriptions.create {
+			//	manager.onLoadingCompletedListener.remove(listener)
+			//})
 			manager.mSoundLayouts?.let {
 				subscriber.onNext(it)
 				subscriber.onComplete()

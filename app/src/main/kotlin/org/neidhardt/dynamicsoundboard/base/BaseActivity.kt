@@ -30,9 +30,9 @@ object RxBaseActivity {
 				subscriber.onNext(intent)
 			}
 
-			subscriber.add(Subscriptions.create {
-				activity.onNewIntentCallback.remove(listener)
-			})
+			//subscriber.add(Subscriptions.create {
+			//	activity.onNewIntentCallback.remove(listener)
+			//})
 
 			activity.lastReceivedIntent?.let { subscriber.onNext(it) }
 			activity.onNewIntentCallback.add(listener)

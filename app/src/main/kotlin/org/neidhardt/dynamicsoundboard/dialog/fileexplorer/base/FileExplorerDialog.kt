@@ -11,8 +11,6 @@ import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySorted
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySortedAsync
 import org.neidhardt.utils.Tuple
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import java.io.File
 
 /**

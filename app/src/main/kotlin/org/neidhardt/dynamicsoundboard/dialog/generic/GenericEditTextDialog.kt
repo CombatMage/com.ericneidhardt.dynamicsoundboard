@@ -7,8 +7,8 @@ import android.support.design.widget.TextInputLayout
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.widget.EditText
-import com.jakewharton.rxbinding.widget.RxTextView
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import com.jakewharton.rxbinding2.widget.RxTextView
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.dialog_genericrename.view.*
 import org.neidhardt.android_utils.views.showKeyboard
 import org.neidhardt.dynamicsoundboard.R

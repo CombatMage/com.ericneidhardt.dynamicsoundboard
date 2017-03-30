@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_base.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -51,7 +52,6 @@ import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEven
 import org.neidhardt.eventbus_utils.registerIfRequired
 import org.neidhardt.utils.getCopyList
 import org.neidhardt.utils.letThis
-import rx.android.schedulers.AndroidSchedulers
 import kotlin.properties.Delegates
 
 /**
