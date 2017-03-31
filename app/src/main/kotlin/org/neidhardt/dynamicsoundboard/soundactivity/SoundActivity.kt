@@ -83,7 +83,7 @@ class SoundActivity :
 		it.addSoundFromDirectoryClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
 	}
 
-	private val navigationDrawerLayout: DrawerLayout? by lazy { this.dl_main } // this view does not exists in tablet layout
+	private val navigationDrawerLayout: DrawerLayout? by lazy { this.drawerlayout_soundactivity } // this view does not exists in tablet layout
 	private val drawerToggle: ActionBarDrawerToggle? by lazy {
 		if (this.navigationDrawerLayout != null) {
 			NoAnimationDrawerToggle(this, this.navigationDrawerLayout, this.toolbar, this.navigationDrawerFragment).letThis {
@@ -107,7 +107,9 @@ class SoundActivity :
 		this.requestPermissionsIfRequired()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
 
-		this.handleIntent(this.intent)
+		RxBaseActivity.receivesNewIntent(this)
+				.bindToLifecycle(this)
+				.subscribe { this.handleIntent(it) }
 	}
 
 	private fun handleIntent(intent: Intent?) {
@@ -175,10 +177,6 @@ class SoundActivity :
 				.bindToLifecycle(this)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { this.setStateForSoundSheets() }
-
-		RxBaseActivity.receivesNewIntent(this)
-				.bindToLifecycle(this)
-				.subscribe { this.handleIntent(it) }
 	}
 
 	override fun onPause() {

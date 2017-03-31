@@ -4,7 +4,7 @@
 		xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<android.support.v4.widget.DrawerLayout
-			android:id="@+id/dl_main"
+			android:id="@+id/drawerlayout_soundactivity"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:fitsSystemWindows="true">

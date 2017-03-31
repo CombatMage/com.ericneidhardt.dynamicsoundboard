@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.base
 
 import android.content.Intent
+import android.os.Bundle
 import org.neidhardt.android_utils.EnhancedAppCompatActivity
 import io.reactivex.Observable
 
@@ -11,14 +12,19 @@ abstract class BaseActivity : EnhancedAppCompatActivity() {
 
 	internal val onNewIntentCallback: MutableList<(Intent) -> Unit> = ArrayList()
 
-	internal var lastReceivedIntent: Intent? = null
+	override fun onPostCreate(savedInstanceState: Bundle?) {
+		super.onPostCreate(savedInstanceState)
+
+		val intent = this.intent
+		if (intent != null)
+			this.onNewIntentCallback.forEach { it.invoke(intent) }
+	}
 
 	override fun onNewIntent(intent: Intent?) {
 		super.onNewIntent(intent)
 
 		intent?: return
 
-		this.lastReceivedIntent = intent
 		this.onNewIntentCallback.forEach { it.invoke(intent) }
 	}
 }
@@ -34,7 +40,6 @@ object RxBaseActivity {
 			//	activity.onNewIntentCallback.remove(listener)
 			//})
 
-			activity.lastReceivedIntent?.let { subscriber.onNext(it) }
 			activity.onNewIntentCallback.add(listener)
 		}
 	}
