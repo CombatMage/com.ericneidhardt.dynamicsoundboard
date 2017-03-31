@@ -123,11 +123,6 @@ class SoundActivity :
 		}
 	}
 
-	override fun onPostCreate(savedInstanceState: Bundle?) {
-		super.onPostCreate(savedInstanceState)
-		this.drawerToggle?.syncState()
-	}
-
 	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 		when (requestCode) {
@@ -263,14 +258,14 @@ class SoundActivity :
 		}
 	}
 
-	fun closeNavigationDrawer() {
+	private fun closeNavigationDrawer() {
 		this.navigationDrawerLayout?.apply {
 			if (this.isDrawerOpen(Gravity.START))
 				this.closeDrawer(Gravity.START)
 		}
 	}
 
-	fun removeSoundFragment(fragment: SoundSheetFragment) {
+	private fun removeSoundFragment(fragment: SoundSheetFragment) {
 		val fragmentManager = this.supportFragmentManager
 		fragmentManager.beginTransaction().remove(fragment).commit()
 		if (fragment.isVisible)
@@ -278,7 +273,7 @@ class SoundActivity :
 		fragmentManager.executePendingTransactions()
 	}
 
-	fun openSoundFragment(soundSheet: NewSoundSheet?) {
+	private fun openSoundFragment(soundSheet: NewSoundSheet?) {
 		if (!this.isActivityResumed)
 			return
 
