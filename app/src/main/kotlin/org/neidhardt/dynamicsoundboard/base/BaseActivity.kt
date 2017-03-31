@@ -14,7 +14,6 @@ abstract class BaseActivity : EnhancedAppCompatActivity() {
 
 	override fun onPostCreate(savedInstanceState: Bundle?) {
 		super.onPostCreate(savedInstanceState)
-
 		val intent = this.intent
 		if (intent != null)
 			this.onNewIntentCallback.forEach { it.invoke(intent) }
@@ -22,10 +21,8 @@ abstract class BaseActivity : EnhancedAppCompatActivity() {
 
 	override fun onNewIntent(intent: Intent?) {
 		super.onNewIntent(intent)
-
-		intent?: return
-
-		this.onNewIntentCallback.forEach { it.invoke(intent) }
+		if (intent != null)
+			this.onNewIntentCallback.forEach { it.invoke(intent) }
 	}
 }
 
