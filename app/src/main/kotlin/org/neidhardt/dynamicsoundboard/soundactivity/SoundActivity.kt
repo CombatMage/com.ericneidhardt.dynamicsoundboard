@@ -53,8 +53,6 @@ class SoundActivity :
 		EnhancedAppCompatActivity(),
 		RequestPermissionHelper {
 
-	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
-
 	private val eventBus = EventBus.getDefault()
 
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
@@ -153,7 +151,6 @@ class SoundActivity :
 		this.closeAppOnBackPress = false
 		this.toolbarVM.isSoundSheetActionsEnable = false
 
-		this.registerPauseSoundOnCallListener(this.phoneStateListener)
 		NotificationService.start(this)
 		this.eventBus.postSticky(ActivityStateChangedEvent(true))
 
@@ -165,7 +162,6 @@ class SoundActivity :
 
 	override fun onPause() {
 		super.onPause()
-		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
 		SaveDataIntentService.writeBack(this)
 	}
 
