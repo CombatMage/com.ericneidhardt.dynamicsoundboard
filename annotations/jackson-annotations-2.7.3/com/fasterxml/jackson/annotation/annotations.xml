@@ -248,7 +248,7 @@
     <item name='com.fasterxml.jackson.annotation.JsonFormat.Value com.fasterxml.jackson.annotation.JsonFormat.Value empty()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.annotation.JsonFormat.Features java.lang.Boolean get(com.fasterxml.jackson.annotation.JsonFormat.Feature) 0'>
+    <item name='com.fasterxml.jackson.annotation.JsonFormat.Features java.lang.Boolean getAsync(com.fasterxml.jackson.annotation.JsonFormat.Feature) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.annotation.JsonFormat.Shape ARRAY'>

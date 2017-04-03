@@ -8,7 +8,7 @@
     <item name='freemarker.ext.dom.NodeModel void mergeAdjacentText(org.w3c.dom.Node) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.dom.NodeModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.dom.NodeModel freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='freemarker.ext.dom.XPathSupport freemarker.template.TemplateModel executeQuery(java.lang.Object, java.lang.String) 0'>

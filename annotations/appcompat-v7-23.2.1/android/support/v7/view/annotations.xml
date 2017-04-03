@@ -8,7 +8,7 @@
     <item name='android.support.v7.view.StandaloneActionMode android.view.MenuInflater getMenuInflater()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='android.support.v7.view.ActionBarPolicy android.support.v7.view.ActionBarPolicy get(android.content.Context)'>
+    <item name='android.support.v7.view.ActionBarPolicy android.support.v7.view.ActionBarPolicy getAsync(android.content.Context)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='android.support.v7.view.ViewPropertyAnimatorCompatSet android.support.v7.view.ViewPropertyAnimatorCompatSet playSequentially(android.support.v4.view.ViewPropertyAnimatorCompat, android.support.v4.view.ViewPropertyAnimatorCompat)'>

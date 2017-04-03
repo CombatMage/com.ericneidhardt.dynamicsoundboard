@@ -1,8 +1,7 @@
 package com.sevenval.simplestorage
 
 import com.sevenval.testutils.BaseRobolectricTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
@@ -24,7 +23,7 @@ class SimpleStorageTest : BaseRobolectricTest() {
 	@Test
 	fun precondition() {
 		assertNotNull(this.unitUnderTest.storageKey)
-		assertEquals(null, firstItem)
+		assertTrue(this.unitUnderTest.get().blockingIterable().none())
 	}
 
 	@Test
@@ -39,7 +38,7 @@ class SimpleStorageTest : BaseRobolectricTest() {
 		assertEquals(42, firstItem)
 
 		this.unitUnderTest.clear()
-		assertEquals(null, firstItem)
+		assertTrue(this.unitUnderTest.get().blockingIterable().none())
 	}
 
 	@Test

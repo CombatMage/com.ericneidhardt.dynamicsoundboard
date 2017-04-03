@@ -20,20 +20,29 @@ class SimpleListStorage<T>(context: Context, private val classOfT: Class<T>) {
 
 	val storageKey = "SimpleStorage_List_${classOfT.name}"
 
+	fun saveItem(item: T) {
+		val data = ArrayList<T>()
+		data.addAll(this.get())
+		data.add(item)
+		this.save(data)
+	}
+
+	fun save(data: List<T>) {
+		val listOfJson = data.map { item -> this.converter.toJson(item, this.classOfT) }
+		this.sharedPreferences.putListString(this.storageKey, listOfJson)
+	}
+
 	@CheckResult
-	fun save(data: List<T>): Observable<List<T>> {
+	fun saveAsync(data: List<T>): Observable<List<T>> {
 		return Observable.fromCallable {
-			data.letThis {
-				val listOfJson = data.map { item -> this.converter.toJson(item, this.classOfT) }
-				this.sharedPreferences.putListString(this.storageKey, listOfJson)
-			}
+			data.letThis { this.save(data) }
 		}.subscribeOn(Schedulers.computation())
 	}
 
 	@CheckResult
-	fun get(): Observable<List<T>> {
+	fun getAsync(): Observable<List<T>> {
 		return Observable.create<List<T>> { subscriber ->
-			subscriber.onNext(this.getSync())
+			subscriber.onNext(this.get())
 			subscriber.onComplete()
 		}
 	}
@@ -44,7 +53,7 @@ class SimpleListStorage<T>(context: Context, private val classOfT: Class<T>) {
 				.apply()
 	}
 
-	private fun getSync(): List<T> {
+	private fun get(): List<T> {
 		val listOfJson = this.sharedPreferences.getListString(this.storageKey)
 		return listOfJson.map { json -> this.converter.fromJson(json, this.classOfT) }
 	}

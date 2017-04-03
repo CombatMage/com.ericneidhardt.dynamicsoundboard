@@ -23,7 +23,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeUtils.SpecialType kotlin.reflect.jvm.internal.impl.types.TypeConstructor getConstructor()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.DisjointKeysUnionTypeSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.DisjointKeysUnionTypeSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution createByConstructorsMap(java.util.Map&lt;kotlin.reflect.jvm.internal.impl.types.TypeConstructor,? extends kotlin.reflect.jvm.internal.impl.types.TypeProjection&gt;) 0'>
@@ -449,7 +449,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeCapabilitiesKt kotlin.reflect.jvm.internal.impl.types.Specificity.Relation getSpecificityRelationTo(kotlin.reflect.jvm.internal.impl.types.KotlinType, kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution.Companion.createByParametersMap.1 kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.TypeConstructor) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution.Companion.createByParametersMap.1 kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.TypeConstructor) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.ErrorUtils boolean containsErrorType(kotlin.reflect.jvm.internal.impl.descriptors.FunctionDescriptor) 0'>
@@ -554,7 +554,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.KotlinTypeImpl.Companion kotlin.reflect.jvm.internal.impl.types.KotlinTypeImpl create(kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations, kotlin.reflect.jvm.internal.impl.types.TypeConstructor, boolean, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.types.TypeProjection&gt;, kotlin.reflect.jvm.internal.impl.types.TypeSubstitution, kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope, kotlin.reflect.jvm.internal.impl.types.TypeCapabilities) 1'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.TypeSubstitution.Companion.EMPTY.1 kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.TypeSubstitution.Companion.EMPTY.1 kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.Variance kotlin.reflect.jvm.internal.impl.types.Variance superpose(kotlin.reflect.jvm.internal.impl.types.Variance) 0'>
@@ -755,7 +755,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeUtils kotlin.reflect.jvm.internal.impl.types.KotlinType getPrimitiveNumberType(kotlin.reflect.jvm.internal.impl.resolve.constants.IntegerValueTypeConstructor, kotlin.reflect.jvm.internal.impl.types.KotlinType)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.TypeSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.TypeSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.ErrorUtils.ErrorScope java.util.Collection getContributedFunctions(kotlin.reflect.jvm.internal.impl.name.Name, kotlin.reflect.jvm.internal.impl.incremental.components.LookupLocation) 0'>
@@ -938,7 +938,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.FunctionPlaceholderTypeConstructor kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations getAnnotations()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.TypeConstructor) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.TypeConstructor) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeUtils kotlin.reflect.jvm.internal.impl.types.KotlinType makeUnsubstitutedType(kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor, kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope) 0'>
@@ -977,7 +977,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.CustomTypeVariable kotlin.reflect.jvm.internal.impl.types.KotlinType substitutionResult(kotlin.reflect.jvm.internal.impl.types.KotlinType)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution.Companion.createByConstructorsMap.1 kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.TypeConstructor) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution.Companion.createByConstructorsMap.1 kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.TypeConstructor) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeSubstitutor kotlin.reflect.jvm.internal.impl.types.KotlinType substitute(kotlin.reflect.jvm.internal.impl.types.KotlinType, kotlin.reflect.jvm.internal.impl.types.Variance) 0'>
@@ -1016,7 +1016,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.Specificity.Relation DONT_KNOW'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.IndexedParametersSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.IndexedParametersSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.KotlinTypeImpl java.util.List&lt;kotlin.reflect.jvm.internal.impl.types.TypeProjection&gt; getArguments()'>
@@ -1238,7 +1238,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution.Companion kotlin.reflect.jvm.internal.impl.types.TypeSubstitution create(kotlin.reflect.jvm.internal.impl.types.TypeConstructor, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.types.TypeProjection&gt;) 1'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.StarProjectionImplKt.starProjectionType.1 kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.TypeConstructor) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.StarProjectionImplKt.starProjectionType.1 kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.TypeConstructor) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.ErrorUtils kotlin.reflect.jvm.internal.impl.types.KotlinType createErrorTypeWithArguments(java.lang.String, java.util.List&lt;kotlin.reflect.jvm.internal.impl.types.TypeProjection&gt;) 1'>
@@ -1274,7 +1274,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.FlexibleTypesKt kotlin.reflect.jvm.internal.impl.types.KotlinType upperIfFlexible(kotlin.reflect.jvm.internal.impl.types.KotlinType)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.TypeSubstitution.Companion.EMPTY.1 java.lang.Void get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.TypeSubstitution.Companion.EMPTY.1 java.lang.Void getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.FlexibleTypeCapabilities T getCapability(java.lang.Class&lt;T&gt;, kotlin.reflect.jvm.internal.impl.types.KotlinType, kotlin.reflect.jvm.internal.impl.types.Flexibility) 2'>
@@ -1286,7 +1286,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeCapabilities.NONE INSTANCE'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.DelegatedTypeSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.DelegatedTypeSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeUtils kotlin.reflect.jvm.internal.impl.types.KotlinType makeNullableAsSpecified(kotlin.reflect.jvm.internal.impl.types.KotlinType, boolean) 0'>
@@ -1349,7 +1349,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorImpl kotlin.reflect.jvm.internal.impl.types.TypeConstructorImpl createForTypeParameter(kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor, kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations, boolean, java.lang.String, java.util.List&lt;? extends kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor&gt;, java.util.Collection&lt;kotlin.reflect.jvm.internal.impl.types.KotlinType&gt;) 3'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.types.TypeConstructorSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.types.DynamicTypesKt kotlin.reflect.jvm.internal.impl.types.DelegatingFlexibleType createDynamicType(kotlin.reflect.jvm.internal.impl.builtins.KotlinBuiltIns)'>

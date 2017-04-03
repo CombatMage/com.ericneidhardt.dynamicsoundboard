@@ -416,7 +416,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf.ValueParameter.Builder kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf.ValueParameter.Builder mergeFrom(kotlin.reflect.jvm.internal.impl.com.google.protobuf.CodedInputStream, kotlin.reflect.jvm.internal.impl.com.google.protobuf.ExtensionRegistryLite)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.serialization.Flags.BooleanFlagField java.lang.Boolean get(int)'>
+    <item name='kotlin.reflect.jvm.internal.impl.serialization.Flags.BooleanFlagField java.lang.Boolean getAsync(int)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf.Annotation.Argument.Value.Type ENUM'>
@@ -1838,7 +1838,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf.TypeParameter.Builder kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf.TypeParameter.Builder clone()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.serialization.Flags.BooleanFlagField java.lang.Object get(int)'>
+    <item name='kotlin.reflect.jvm.internal.impl.serialization.Flags.BooleanFlagField java.lang.Object getAsync(int)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf.QualifiedNameTable.QualifiedName.Kind LOCAL'>

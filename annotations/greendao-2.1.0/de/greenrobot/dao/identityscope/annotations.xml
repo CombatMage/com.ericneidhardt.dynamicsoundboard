@@ -20,7 +20,7 @@
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='de.greenrobot.dao.identityscope.IdentityScopeObject T get(K) 0'>
+    <item name='de.greenrobot.dao.identityscope.IdentityScopeObject T getAsync(K) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
@@ -47,7 +47,7 @@
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='de.greenrobot.dao.identityscope.IdentityScope T get(K) 0'>
+    <item name='de.greenrobot.dao.identityscope.IdentityScope T getAsync(K) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
@@ -65,7 +65,7 @@
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='de.greenrobot.dao.identityscope.IdentityScopeLong T get(java.lang.Long) 0'>
+    <item name='de.greenrobot.dao.identityscope.IdentityScopeLong T getAsync(java.lang.Long) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='de.greenrobot.dao.identityscope.IdentityScopeObject T getNoLock(K) 0'>
@@ -98,7 +98,7 @@
     <item name='de.greenrobot.dao.identityscope.IdentityScopeLong T getNoLock(java.lang.Long) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='de.greenrobot.dao.identityscope.IdentityScopeLong java.lang.Object get(java.lang.Object) 0'>
+    <item name='de.greenrobot.dao.identityscope.IdentityScopeLong java.lang.Object getAsync(java.lang.Object) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='de.greenrobot.dao.identityscope.IdentityScopeType Session'>

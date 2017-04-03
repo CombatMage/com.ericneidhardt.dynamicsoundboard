@@ -155,7 +155,7 @@
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='freemarker.ext.beans.BeanModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.beans.BeanModel freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
@@ -200,7 +200,7 @@
     <item name='freemarker.ext.beans.BeansWrapperConfiguration freemarker.template.Version getIncompatibleImprovements()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.beans.SimpleMapModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.beans.SimpleMapModel freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
@@ -221,7 +221,7 @@
     <item name='freemarker.ext.beans._EnumModels freemarker.template.TemplateModel createModel(java.lang.Class) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.beans._EnumModels freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.beans._EnumModels freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>

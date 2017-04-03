@@ -39,7 +39,7 @@ open class SimpleStorage<T>(context: Context, private val classOfT: Class<T>) {
 
 		return Observable.create<T?> { subscriber ->
 			val data = this.getSync()
-			subscriber.onNext(data)
+			data?.letThis { subscriber.onNext(it) }
 			subscriber.onComplete()
 		}
 	}

@@ -215,7 +215,7 @@
     <item name='com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility NONE'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.annotation.JsonFormat.Features java.lang.Boolean get(com.fasterxml.jackson.annotation.JsonFormat.Feature) 0'>
+    <item name='com.fasterxml.jackson.annotation.JsonFormat.Features java.lang.Boolean getAsync(com.fasterxml.jackson.annotation.JsonFormat.Feature) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.annotation.ObjectIdGenerators.UUIDGenerator com.fasterxml.jackson.annotation.ObjectIdGenerator&lt;java.util.UUID&gt; newForSerialization(java.lang.Object)'>

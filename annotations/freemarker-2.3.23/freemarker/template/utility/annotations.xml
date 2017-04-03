@@ -50,7 +50,7 @@
     <item name='freemarker.template.utility.DateUtil java.util.Date parseISO8601DateTime(java.lang.String, java.util.TimeZone, freemarker.template.utility.DateUtil.CalendarFieldsToDateConverter) 1'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.template.utility.DOMNodeModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.template.utility.DOMNodeModel freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
