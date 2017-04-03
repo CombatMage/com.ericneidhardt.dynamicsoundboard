@@ -9,7 +9,6 @@ import io.reactivex.disposables.Disposable
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.value_holder.ValueHolder
-import org.reactivestreams.Subscription
 import kotlin.properties.Delegates
 
 /**

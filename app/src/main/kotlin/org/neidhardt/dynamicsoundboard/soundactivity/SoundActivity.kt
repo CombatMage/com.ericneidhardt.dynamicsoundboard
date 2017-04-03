@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil
 import android.media.AudioManager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -51,11 +50,12 @@ class SoundActivity :
 		EnhancedAppCompatActivity(),
 		RequestPermissionHelper {
 
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
+
 	private lateinit var binding: ActivityBaseBinding
 	private var drawerToggle: ActionBarDrawerToggle? = null
 	private var toolbarVM: ToolbarVM
 
-	private val toolbar: Toolbar get() = this.binding.layoutToolbar.tbMain
 	private val drawerLayout: DrawerLayout? get() = this.drawerlayout_soundactivity // this view does not exists in tablet layout
 
 	init {
@@ -81,58 +81,64 @@ class SoundActivity :
 		}
 
 		RxNavi.observe(this, Event.CREATE).subscribe {
-			this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(this, R.layout.activity_base).letThis {
-				it.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
-			}
-			this.binding.ablMain.setExpanded(true)
-			this.setSupportActionBar(this.toolbar)
+			this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(
+					this, R.layout.activity_base)
+			this.binding.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
 
-			this.requestPermissionsIfRequired()
-			this.volumeControlStream = AudioManager.STREAM_MUSIC
-
+			val toolbar = this.binding.layoutToolbar.toolbarMain
 			if (this.drawerLayout != null) {
 				this.drawerToggle = NoAnimationDrawerToggle(
-						this, this.drawerLayout,
-						this.toolbar,
+						this,
+						this.drawerLayout,
+						toolbar,
 						this.navigationDrawerFragment)
 
 				this.drawerLayout?.addDrawerListener(this.drawerToggle!!)
 			}
 
+			this.appbarlayout_main.setExpanded(true)
+			this.setSupportActionBar(toolbar)
+
+			this.requestPermissionsIfRequired()
+			this.volumeControlStream = AudioManager.STREAM_MUSIC
+
 			RxEnhancedAppCompatActivity.receivesIntent(this)
 					.bindToLifecycle(this.activityLifeCycle)
-					.subscribe { this.handleIntent(it) }
+					.subscribe { intent ->
+						if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
+							val suggestedName = this.soundSheetManager.suggestedName
+							val soundSheets = this.soundSheetManager.soundSheets
+							AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data, suggestedName, soundSheets)
+						}
+					}
 		}
 
 		RxNavi.observe(this, Event.POST_CREATE).subscribe {
 			this.drawerToggle?.syncState()
 		}
-	}
 
-	private val soundSheetManager = SoundboardApplication.soundSheetManager
+		RxNavi.observe(this, Event.RESUME).subscribe {
+			this.toolbarVM.isSoundSheetActionsEnable = false
 
-	private val isNavigationDrawerOpen: Boolean get() = this.drawerLayout?.isDrawerOpen(Gravity.START) ?: false
+			NotificationService.start(this)
+			EventBus.getDefault().postSticky(ActivityStateChangedEvent(true))
 
-	private var closeAppOnBackPress = false
-
-	private fun handleIntent(intent: Intent?) {
-		if (intent == null)
-			return
-
-		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-			val suggestedName = this.soundSheetManager.suggestedName
-			val soundSheets = this.soundSheetManager.soundSheets
-			AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data, suggestedName, soundSheets)
+			RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
+					.bindToLifecycle(this.activityLifeCycle)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe { this.setStateForSoundSheets() }
 		}
-	}
 
-	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-		when (requestCode) {
-			IntentRequest.REQUEST_PERMISSIONS -> {
-				this.postAfterOnResume { if (!this.hasPermissionReadStorage) this.explainReadStoragePermission() }
-				this.postAfterOnResume { if (!this.hasPermissionWriteStorage) this.explainWriteStoragePermission() }
-				//this.postAfterOnResume { if (!this.hasPermissionPhoneState) this.explainReadPhoneStatePermission() }
+		RxNavi.observe(this, Event.PAUSE).subscribe {
+			SaveDataIntentService.writeBack(this)
+		}
+
+		RxNavi.observe(this, Event.REQUEST_PERMISSIONS_RESULT).subscribe { result ->
+			when (result.requestCode()) {
+				IntentRequest.REQUEST_PERMISSIONS -> {
+					if (!this.hasPermissionReadStorage) this.explainReadStoragePermission()
+					if (!this.hasPermissionWriteStorage) this.explainWriteStoragePermission()
+				}
 			}
 		}
 	}
@@ -140,63 +146,6 @@ class SoundActivity :
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		this.menuInflater.inflate(R.menu.overflow_menu, menu)
 		return true
-	}
-
-	private fun setStateForSoundSheets() {
-		val soundSheets = this.soundSheetManager.soundSheets
-		val selectedSoundSheet = soundSheets.selectedSoundSheet
-		this.toolbarVM.title = selectedSoundSheet?.label ?: this.getString(R.string.app_name)
-		this.toolbarVM.isSoundSheetActionsEnable = selectedSoundSheet != null
-
-		val currentFragment = this.currentSoundFragment
-		if (currentFragment == null) {
-			this.openSoundFragment(selectedSoundSheet)
-		}
-		else if (selectedSoundSheet == null) {
-			this.removeSoundFragment(currentFragment)
-		}
-		else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag) {
-			this.openSoundFragment(selectedSoundSheet)
-		}
-	}
-
-	override fun onResume() {
-		super.onResume()
-
-		this.closeAppOnBackPress = false
-		this.toolbarVM.isSoundSheetActionsEnable = false
-
-		NotificationService.start(this)
-		EventBus.getDefault().postSticky(ActivityStateChangedEvent(true))
-
-		RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
-				.bindToLifecycle(this.activityLifeCycle)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe { this.setStateForSoundSheets() }
-	}
-
-	override fun onPause() {
-		super.onPause()
-		SaveDataIntentService.writeBack(this)
-	}
-
-	override fun onUserLeaveHint() {
-		super.onUserLeaveHint()
-		EventBus.getDefault().postSticky(ActivityStateChangedEvent(false))
-	}
-
-	override fun onBackPressed() {
-		if (this.isNavigationDrawerOpen)
-			this.closeNavigationDrawer()
-		else {
-			val backStackSize = this.supportFragmentManager.backStackEntryCount
-			if (backStackSize == 0 && !this.closeAppOnBackPress) {
-				this.closeAppOnBackPress = true
-				Toast.makeText(this, R.string.soundactivity_ToastCloseAppOnBackPress, Toast.LENGTH_SHORT).show()
-			}
-			else
-				super.onBackPressed()
-		}
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -233,6 +182,53 @@ class SoundActivity :
 			}
 			else -> return false
 		}
+	}
+
+	private var closeAppOnBackPress = false
+	override fun onBackPressed() {
+		if (this.isNavigationDrawerOpen) {
+			this.closeNavigationDrawer()
+		}
+		else if (!this.closeAppOnBackPress) {
+			Toast.makeText(this, R.string.soundactivity_ToastCloseAppOnBackPress, Toast.LENGTH_SHORT).show()
+			this.closeAppOnBackPress = true
+		}
+		else {
+			super.onBackPressed()
+		}
+	}
+
+
+	fun onSoundSheetFragmentResumed() {
+		this.toolbarVM.isSoundSheetActionsEnable = true
+	}
+
+	private val isNavigationDrawerOpen: Boolean
+		get() {
+			return this.drawerLayout?.isDrawerOpen(Gravity.START) ?: false
+		}
+
+	private fun setStateForSoundSheets() {
+		val soundSheets = this.soundSheetManager.soundSheets
+		val selectedSoundSheet = soundSheets.selectedSoundSheet
+		this.toolbarVM.title = selectedSoundSheet?.label ?: this.getString(R.string.app_name)
+		this.toolbarVM.isSoundSheetActionsEnable = selectedSoundSheet != null
+
+		val currentFragment = this.currentSoundFragment
+		if (currentFragment == null) {
+			this.openSoundFragment(selectedSoundSheet)
+		}
+		else if (selectedSoundSheet == null) {
+			this.removeSoundFragment(currentFragment)
+		}
+		else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag) {
+			this.openSoundFragment(selectedSoundSheet)
+		}
+	}
+
+	override fun onUserLeaveHint() {
+		super.onUserLeaveHint()
+		EventBus.getDefault().postSticky(ActivityStateChangedEvent(false))
 	}
 
 	private fun closeNavigationDrawer() {
@@ -283,8 +279,4 @@ class SoundActivity :
 			return this.supportFragmentManager.findFragmentById(R.id.navigation_drawer_fragment)
 					as NavigationDrawerFragment
 		}
-
-	fun onSoundSheetFragmentResumed() {
-		this.toolbarVM.isSoundSheetActionsEnable = true
-	}
 }

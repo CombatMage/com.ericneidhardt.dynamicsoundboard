@@ -42,7 +42,7 @@ class NavigationDrawerFragment : BaseFragment() {
 	private val playlistManager = SoundboardApplication.playlistManager
 
 	private var binding by Delegates.notNull<FragmentNavigationDrawerBinding>()
-	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutManager.soundLayouts.activeLayout.label)
+	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutManager.soundLayouts.selectedLayout?.label)
 	private val buttonBarVM = NavigationDrawerButtonBarVM()
 	private val deletionViewVM = NavigationDrawerDeletionViewVM()
 
