@@ -1,7 +1,6 @@
 include ':app',
         ':enhanced_handler',
         ':app_utils',
-        ':test_utils',
         ':eventbus_utils',
         ':android_utils',
         ':simple_storage',

@@ -1,17 +1,19 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
 
-import com.sevenval.testutils.BaseRobolectricTest
 import org.greenrobot.eventbus.EventBus
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.robolectric.RobolectricTestRunner
 import kotlin.properties.Delegates
 
 /**
  * @author eric.neidhardt on 21.06.2016.
  */
-class NavigationDrawerButtonBarVMTest : BaseRobolectricTest() {
+@RunWith(RobolectricTestRunner::class)
+class NavigationDrawerButtonBarVMTest {
 
 	@Mock private var eventBus: EventBus? = null
 	private var unitUnderTest by Delegates.notNull<NavigationDrawerButtonBarVM>()

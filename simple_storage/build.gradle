@@ -33,8 +33,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile project(':test_utils')
-
     compile rootProject.ext.libraries.kotlin
     compile rootProject.ext.libraries.supportAppCompat
 
@@ -45,4 +43,11 @@ dependencies {
 
     //Gson
     compile rootProject.ext.libraries.gson
+
+	//Testing
+	testCompile rootProject.ext.libraries.junit
+	testCompile rootProject.ext.libraries.mockito
+	testCompile rootProject.ext.libraries.robolectric
+	testCompile rootProject.ext.libraries.robolectricMultidex
+	testCompile rootProject.ext.libraries.robolectricSupportV4
 }

@@ -103,8 +103,6 @@ dependencies {
 
 	debugCompile rootProject.ext.libraries.leakCanary
 
-	testCompile project(':test_utils')
-
 	compile rootProject.ext.libraries.kotlin
 
 	compile rootProject.ext.libraries.rxAndroid
@@ -137,4 +135,10 @@ dependencies {
 	compile rootProject.ext.libraries.recyclerViewAnimator
 
 	compile rootProject.ext.libraries.acra
+
+	testCompile rootProject.ext.libraries.junit
+	testCompile rootProject.ext.libraries.mockito
+	testCompile rootProject.ext.libraries.robolectric
+	testCompile rootProject.ext.libraries.robolectricMultidex
+	testCompile rootProject.ext.libraries.robolectricSupportV4
 }

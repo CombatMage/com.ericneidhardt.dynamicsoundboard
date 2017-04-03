@@ -1,14 +1,16 @@
 package org.neidhardt.dynamicsoundboard.soundactivity.viewmodel
 
-import com.sevenval.testutils.BaseRobolectricTest
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import kotlin.properties.Delegates
 
 /**
  * @author eric.neidhardt on 22.06.2016.
  */
-class ToolbarVMTest : BaseRobolectricTest() {
+@RunWith(RobolectricTestRunner::class)
+class ToolbarVMTest {
 
 	private var unitUnderTest: ToolbarVM by Delegates.notNull<ToolbarVM>()
 

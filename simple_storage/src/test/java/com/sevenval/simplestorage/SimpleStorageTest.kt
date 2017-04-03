@@ -1,16 +1,18 @@
 package com.sevenval.simplestorage
 
-import com.sevenval.testutils.BaseRobolectricTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import kotlin.properties.Delegates
 
 /**
  * Created by eric.neidhardt on 28.11.2016.
  */
-class SimpleStorageTest : BaseRobolectricTest() {
+@RunWith(RobolectricTestRunner::class)
+class SimpleStorageTest {
 
 	private var unitUnderTest: SimpleStorage<Int> by Delegates.notNull<SimpleStorage<Int>>()
 
