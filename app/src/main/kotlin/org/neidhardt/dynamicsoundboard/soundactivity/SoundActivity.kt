@@ -14,10 +14,10 @@ import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_base.*
 import org.greenrobot.eventbus.EventBus
+import org.neidhardt.android_utils.EnhancedAppCompatActivity
+import org.neidhardt.android_utils.RxEnhancedAppCompatActivity
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.base.BaseActivity
-import org.neidhardt.dynamicsoundboard.base.RxBaseActivity
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
@@ -50,7 +50,7 @@ import kotlin.properties.Delegates
  * File created by eric.neidhardt on 29.09.2015.
  */
 class SoundActivity :
-		BaseActivity(),
+		EnhancedAppCompatActivity(),
 		RequestPermissionHelper {
 
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
@@ -97,8 +97,8 @@ class SoundActivity :
 		this.requestPermissionsIfRequired()
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
 
-		RxBaseActivity.receivesNewIntent(this)
-				.bindToLifecycle(this)
+		RxEnhancedAppCompatActivity.receivesIntent(this)
+				.bindToLifecycle(this.activityLifeCycle)
 				.subscribe { this.handleIntent(it) }
 	}
 
@@ -158,7 +158,7 @@ class SoundActivity :
 		this.eventBus.postSticky(ActivityStateChangedEvent(true))
 
 		RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
-				.bindToLifecycle(this)
+				.bindToLifecycle(this.activityLifeCycle)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { this.setStateForSoundSheets() }
 	}
