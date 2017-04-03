@@ -40,7 +40,7 @@ class SoundViewHolder(
 	fun bindData(player: MediaPlayerController) {
 		this.player = player
 
-		player.setOnProgressChangedEventListener { progress, trackDuration ->
+		player.setOnProgressChangedEventListener { progress, _ ->
 			this.timePosition.max = player.trackDuration
 			this.timePosition.progress = progress
 		}

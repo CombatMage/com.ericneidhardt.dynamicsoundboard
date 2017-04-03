@@ -180,7 +180,7 @@ class SoundSheetFragment :
 	override fun onResume() {
 		super.onResume()
 
-		this.baseActivity.toolbarVM.isSoundSheetActionsEnable = true
+		this.baseActivity.onSoundSheetFragmentResumed()
 		this.floatingActionButton?.show(true)
 
 		this.soundPresenter.onAttachedToWindow()

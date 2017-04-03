@@ -32,7 +32,7 @@ class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		this.itemView.isSelected = player.mediaPlayerData.isSelectedForDeletion
 		this.divider.visibility = if (isLastItem) View.INVISIBLE else View.VISIBLE
 
-		player.setOnProgressChangedEventListener { progress, trackDuration ->
+		player.setOnProgressChangedEventListener { progress, _ ->
 			if (player.isPlayingSound) {
 				this.timePosition.max = player.trackDuration
 				this.timePosition.progress = progress

@@ -3,13 +3,15 @@ package org.neidhardt.dynamicsoundboard.soundactivity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.media.AudioManager
-import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.trello.navi2.Event
+import com.trello.navi2.rx.RxNavi
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_base.*
@@ -38,13 +40,9 @@ import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
-import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
-import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
-import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.view_helper.navigationdrawer_helper.NoAnimationDrawerToggle
 import org.neidhardt.utils.letThis
-import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 29.09.2015.
@@ -53,52 +51,69 @@ class SoundActivity :
 		EnhancedAppCompatActivity(),
 		RequestPermissionHelper {
 
-	private val eventBus = EventBus.getDefault()
+	private lateinit var binding: ActivityBaseBinding
+	private var drawerToggle: ActionBarDrawerToggle? = null
+	private var toolbarVM: ToolbarVM
+
+	private val toolbar: Toolbar get() = this.binding.layoutToolbar.tbMain
+	private val drawerLayout: DrawerLayout? get() = this.drawerlayout_soundactivity // this view does not exists in tablet layout
+
+	init {
+		this.toolbarVM = ToolbarVM().letThis {
+			it.titleClickedCallback = {
+				this.soundSheetManager.soundSheets.selectedSoundSheet?.let {
+					GenericRenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
+				}
+			}
+			it.addSoundSheetClickedCallback = {
+				GenericAddDialogs.showAddSoundSheetDialog(this.supportFragmentManager)
+			}
+			it.addSoundClickedCallback = {
+				this.currentSoundFragment?.fragmentTag?.let {
+					AddNewSoundDialog.show(this.supportFragmentManager, it)
+				}
+			}
+			it.addSoundFromDirectoryClickedCallback = {
+				this.currentSoundFragment?.fragmentTag?.let {
+					AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it)
+				}
+			}
+		}
+
+		RxNavi.observe(this, Event.CREATE).subscribe {
+			this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(this, R.layout.activity_base).letThis {
+				it.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
+			}
+			this.binding.ablMain.setExpanded(true)
+			this.setSupportActionBar(this.toolbar)
+
+			this.requestPermissionsIfRequired()
+			this.volumeControlStream = AudioManager.STREAM_MUSIC
+
+			if (this.drawerLayout != null) {
+				this.drawerToggle = NoAnimationDrawerToggle(
+						this, this.drawerLayout,
+						this.toolbar,
+						this.navigationDrawerFragment)
+
+				this.drawerLayout?.addDrawerListener(this.drawerToggle!!)
+			}
+
+			RxEnhancedAppCompatActivity.receivesIntent(this)
+					.bindToLifecycle(this.activityLifeCycle)
+					.subscribe { this.handleIntent(it) }
+		}
+
+		RxNavi.observe(this, Event.POST_CREATE).subscribe {
+			this.drawerToggle?.syncState()
+		}
+	}
 
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 
-	private var binding by Delegates.notNull<ActivityBaseBinding>()
-	private val toolbar by lazy { this.binding.layoutToolbar.tbMain }
-
-	val toolbarVM = ToolbarVM().letThis {
-		it.titleClickedCallback = {
-			this.soundSheetManager.soundSheets.selectedSoundSheet?.let {
-				GenericRenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
-			}
-		}
-		it.addSoundSheetClickedCallback = { GenericAddDialogs.showAddSoundSheetDialog(this.supportFragmentManager) }
-		it.addSoundClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundDialog.show(this.supportFragmentManager, it) } }
-		it.addSoundFromDirectoryClickedCallback = { this.currentSoundFragment?.fragmentTag?.let { AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it) } }
-	}
-
-	private val navigationDrawerLayout: DrawerLayout? by lazy { this.drawerlayout_soundactivity } // this view does not exists in tablet layout
-	private val drawerToggle: ActionBarDrawerToggle? by lazy {
-		if (this.navigationDrawerLayout != null) {
-			NoAnimationDrawerToggle(this, this.navigationDrawerLayout, this.toolbar, this.navigationDrawerFragment).letThis {
-				this.navigationDrawerLayout?.addDrawerListener(it)
-			}
-		}
-		else null
-	}
-	private val isNavigationDrawerOpen: Boolean get() = this.navigationDrawerLayout?.isDrawerOpen(Gravity.START) ?: false
+	private val isNavigationDrawerOpen: Boolean get() = this.drawerLayout?.isDrawerOpen(Gravity.START) ?: false
 
 	private var closeAppOnBackPress = false
-
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(this, R.layout.activity_base).letThis {
-			it.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
-		}
-		this.binding.ablMain.setExpanded(true)
-		this.setSupportActionBar(this.toolbar)
-
-		this.requestPermissionsIfRequired()
-		this.volumeControlStream = AudioManager.STREAM_MUSIC
-
-		RxEnhancedAppCompatActivity.receivesIntent(this)
-				.bindToLifecycle(this.activityLifeCycle)
-				.subscribe { this.handleIntent(it) }
-	}
 
 	private fun handleIntent(intent: Intent?) {
 		if (intent == null)
@@ -152,7 +167,7 @@ class SoundActivity :
 		this.toolbarVM.isSoundSheetActionsEnable = false
 
 		NotificationService.start(this)
-		this.eventBus.postSticky(ActivityStateChangedEvent(true))
+		EventBus.getDefault().postSticky(ActivityStateChangedEvent(true))
 
 		RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
 				.bindToLifecycle(this.activityLifeCycle)
@@ -167,7 +182,7 @@ class SoundActivity :
 
 	override fun onUserLeaveHint() {
 		super.onUserLeaveHint()
-		this.eventBus.postSticky(ActivityStateChangedEvent(false))
+		EventBus.getDefault().postSticky(ActivityStateChangedEvent(false))
 	}
 
 	override fun onBackPressed() {
@@ -221,7 +236,7 @@ class SoundActivity :
 	}
 
 	private fun closeNavigationDrawer() {
-		this.navigationDrawerLayout?.apply {
+		this.drawerLayout?.apply {
 			if (this.isDrawerOpen(Gravity.START))
 				this.closeDrawer(Gravity.START)
 		}
@@ -268,4 +283,8 @@ class SoundActivity :
 			return this.supportFragmentManager.findFragmentById(R.id.navigation_drawer_fragment)
 					as NavigationDrawerFragment
 		}
+
+	fun onSoundSheetFragmentResumed() {
+		this.toolbarVM.isSoundSheetActionsEnable = true
+	}
 }
