@@ -24,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
+import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
 import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
@@ -33,16 +34,19 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.ItemTouchCallback
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundAdapter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
+import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 import org.neidhardt.eventbus_utils.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
+import org.neidhardt.utils.getCopyList
 import kotlin.properties.Delegates
 
 /**
@@ -53,7 +57,8 @@ private val KEY_STATE_RECYCLER_VIEW = KEY_FRAGMENT_TAG + "_recycler_view_state"
 
 class SoundSheetFragment :
 		BaseFragment(),
-		MediaPlayerFailedEventListener
+		MediaPlayerFailedEventListener,
+		AddPauseFloatingActionButtonView.FabEventListener
 {
 	companion object {
 		fun getNewInstance(soundSheet: NewSoundSheet): SoundSheetFragment {
@@ -74,6 +79,7 @@ class SoundSheetFragment :
 	private val eventBus = EventBus.getDefault()
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 	private val playlistManager = SoundboardApplication.playlistManager
 
 	private var soundPresenter: SoundPresenter by Delegates.notNull<SoundPresenter>()
@@ -328,6 +334,25 @@ class SoundSheetFragment :
 			val message = "${res.getString(R.string.sound_control_error_during_playback)}: " +
 					event.player.mediaPlayerData.label
 			this.snackbarPresenter.showSnackbar(message, Snackbar.LENGTH_INDEFINITE, null)
+		}
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onFabClickedEvent(event: FabClickedEvent) {
+		val currentlyPlayingSounds = this.soundLayoutManager.currentlyPlayingSounds
+		if (currentlyPlayingSounds.isNotEmpty()) {
+			val copyCurrentlyPlayingSounds = currentlyPlayingSounds.getCopyList()
+			for (sound in copyCurrentlyPlayingSounds)
+				sound.pauseSound()
+		}
+		else {
+			if (SoundboardPreferences.useSystemBrowserForFiles()) {
+				val intent = Intent(Intent.ACTION_GET_CONTENT)
+				intent.type = FileUtils.MIME_AUDIO
+				this.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
+			} else {
+				AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, this.fragmentTag)
+			}
 		}
 	}
 }

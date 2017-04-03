@@ -14,8 +14,6 @@ import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_base.*
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseActivity
@@ -31,7 +29,6 @@ import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
-import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
@@ -39,7 +36,6 @@ import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
-import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
@@ -47,10 +43,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
 import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.view_helper.navigationdrawer_helper.NoAnimationDrawerToggle
-import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
-import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
-import org.neidhardt.eventbus_utils.registerIfRequired
-import org.neidhardt.utils.getCopyList
 import org.neidhardt.utils.letThis
 import kotlin.properties.Delegates
 
@@ -59,15 +51,13 @@ import kotlin.properties.Delegates
  */
 class SoundActivity :
 		BaseActivity(),
-		RequestPermissionHelper,
-		AddPauseFloatingActionButtonView.FabEventListener {
+		RequestPermissionHelper {
 
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
 
 	private val eventBus = EventBus.getDefault()
 
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
-	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private var binding by Delegates.notNull<ActivityBaseBinding>()
 	private val toolbar by lazy { this.binding.layoutToolbar.tbMain }
@@ -165,7 +155,6 @@ class SoundActivity :
 
 		this.registerPauseSoundOnCallListener(this.phoneStateListener)
 		NotificationService.start(this)
-		this.eventBus.registerIfRequired(this)
 		this.eventBus.postSticky(ActivityStateChangedEvent(true))
 
 		RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
@@ -176,7 +165,6 @@ class SoundActivity :
 
 	override fun onPause() {
 		super.onPause()
-		this.eventBus.unregister(this)
 		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
 		SaveDataIntentService.writeBack(this)
 	}
@@ -197,28 +185,6 @@ class SoundActivity :
 			}
 			else
 				super.onBackPressed()
-		}
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onFabClickedEvent(event: FabClickedEvent) {
-		val currentlyPlayingSounds = this.soundLayoutManager.currentlyPlayingSounds
-		val currentSoundSheet = this.currentSoundFragment
-		if (currentlyPlayingSounds.isNotEmpty()) {
-			val copyCurrentlyPlayingSounds = currentlyPlayingSounds.getCopyList()
-			for (sound in copyCurrentlyPlayingSounds)
-				sound.pauseSound()
-		}
-		else if (currentSoundSheet == null) {
-			GenericAddDialogs.showAddSoundSheetDialog(this.supportFragmentManager)
-		} else {
-			if (SoundboardPreferences.useSystemBrowserForFiles()) {
-				val intent = Intent(Intent.ACTION_GET_CONTENT)
-				intent.type = FileUtils.MIME_AUDIO
-				currentSoundSheet.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
-			} else {
-				AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, currentSoundSheet.fragmentTag)
-			}
 		}
 	}
 

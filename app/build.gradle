@@ -109,6 +109,8 @@ dependencies {
 	compile rootProject.ext.libraries.rxKotlin
 	compile rootProject.ext.libraries.rxJava
 	compile rootProject.ext.libraries.rxBinding
+	compile rootProject.ext.libraries.rxlifecycleNavi
+	compile rootProject.ext.libraries.rxNavi
 
 	compile rootProject.ext.libraries.multidex
 
@@ -130,6 +132,7 @@ dependencies {
 	compile rootProject.ext.libraries.gson
 
 	compile rootProject.ext.libraries.floatingActionButton
+
 	compile rootProject.ext.libraries.materialProgressBar
 
 	compile rootProject.ext.libraries.recyclerViewAnimator
