@@ -27,7 +27,7 @@
 				android:background="@color/background"
 				app:animateVisibleFade="@{!viewModel.enableDeleteSelected}">
 
-			<com.devspark.robototextview.widget.RobotoTextView
+			<Button
 					android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -35,14 +35,10 @@
 					android:padding="@dimen/margin_default"
 					android:gravity="center"
 					android:text="@string/navigation_drawer_delete"
-					android:textSize="@dimen/text_body"
-					android:textColor="@color/text_body_primary"
-					app:typeface="roboto_medium"
-					android:clickable="true"
-					android:background="@drawable/selector_background_list_item"
+					style="@style/style_all_buttonflat"
 					android:onClick="@{(view) -> viewModel.onDeleteClicked()}"/>
 
-			<com.devspark.robototextview.widget.RobotoTextView
+			<Button
 					android:id="@+id/b_layout_navigation_drawer_button_bar_add"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -50,11 +46,7 @@
 					android:padding="@dimen/margin_default"
 					android:gravity="center"
 					android:text="@string/navigation_drawer_add"
-					android:textSize="@dimen/text_body"
-					android:textColor="@color/text_body_primary"
-					app:typeface="roboto_medium"
-					android:clickable="true"
-					android:background="@drawable/selector_background_list_item"
+					style="@style/style_all_buttonflat"
 					android:onClick="@{(view) -> viewModel.onAddClicked()}"/>
 		</LinearLayout>
 
@@ -64,7 +56,7 @@
 				android:layout_centerVertical="true"
 				android:background="@color/background">
 
-			<com.devspark.robototextview.widget.RobotoTextView
+			<TextView
 					android:id="@+id/b_layout_navigation_drawer_button_bar_delete_selected"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
@@ -73,7 +65,7 @@
 					android:text="@string/navigation_drawer_delete_selected"
 					android:textSize="@dimen/text_body"
 					android:textColor="@color/text_body_primary"
-					app:typeface="roboto_medium"
+					android:fontFamily="sans-serif-_medium"
 					android:background="@drawable/selector_background_list_item"
 					android:clickable="true"
 					tools:visibility="gone"

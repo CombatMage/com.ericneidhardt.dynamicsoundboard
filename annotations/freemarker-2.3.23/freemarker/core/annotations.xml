@@ -272,7 +272,7 @@
     <item name='freemarker.core.Configurable java.util.HashMap parseAsImportList(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.core.CustomAttribute java.lang.Object get(freemarker.template.Template) 0'>
+    <item name='freemarker.core.CustomAttribute java.lang.Object getAsync(freemarker.template.Template) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='freemarker.core._CoreAPI java.util.Set getConfigurableSettingNames(freemarker.core.Configurable, boolean) 0'>
@@ -338,7 +338,7 @@
     <item name='freemarker.core.FreeMarkerTree java.lang.String convertValueToText(java.lang.Object, boolean, boolean, boolean, int, boolean) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.core.StringArraySequence freemarker.template.TemplateModel get(int)'>
+    <item name='freemarker.core.StringArraySequence freemarker.template.TemplateModel getAsync(int)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='freemarker.core.StopException void printStackTrace(java.io.PrintWriter) 0'>
@@ -530,7 +530,7 @@
     <item name='freemarker.core.TemplateElement freemarker.template.TemplateSequenceModel getChildNodes()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.core.CustomAttribute java.lang.Object get(freemarker.template.Configuration) 0'>
+    <item name='freemarker.core.CustomAttribute java.lang.Object getAsync(freemarker.template.Configuration) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='freemarker.core.FMParser freemarker.core.Comment Comment()'>

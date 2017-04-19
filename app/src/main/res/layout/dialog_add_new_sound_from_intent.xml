@@ -13,14 +13,14 @@
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
 
-		<com.devspark.robototextview.widget.RobotoEditText
+		<EditText
 				android:id="@+id/et_name_file"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="@dimen/margin_default"
 				style="@style/Theme.EditText"/>
 
-		<com.devspark.robototextview.widget.RobotoTextView
+		<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				style="@style/Theme.TextView.Body1"
@@ -31,7 +31,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/margin_default">
 
-			<com.devspark.robototextview.widget.RobotoEditText
+			<EditText
 					android:id="@+id/et_name_new_sound_sheet"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"

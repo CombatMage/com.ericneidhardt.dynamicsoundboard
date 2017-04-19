@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 
 /**
  * File created by eric.neidhardt on 10.11.2015.
@@ -12,9 +12,11 @@ interface MediaPlayerController
 
 	val albumCover: ByteArray?
 
-	val mediaPlayerData: MediaPlayerData
+	val mediaPlayerData: NewMediaPlayerData
 
 	val isPlayingSound: Boolean
+
+	val isFadingOut: Boolean
 
 	val trackDuration: Int
 
@@ -23,8 +25,6 @@ interface MediaPlayerController
 	var volume: Float
 
 	var isLoopingEnabled: Boolean
-
-	var isInPlaylist: Boolean
 
 	fun playSound(): Boolean
 
@@ -37,4 +37,18 @@ interface MediaPlayerController
 	fun setSoundUri(uri: String)
 
 	fun destroy(postStateChanged: Boolean)
+
+	var mOnProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener?
+
+	interface OnProgressChangedEventListener {
+		fun onProgressChanged(progress: Int, trackDuration: Int)
+	}
+
+	fun setOnProgressChangedEventListener(listener: (progress: Int, trackDuration: Int) -> Unit) {
+		this.mOnProgressChangedEventListener = object : OnProgressChangedEventListener {
+			override fun onProgressChanged(progress: Int, trackDuration: Int) {
+				listener.invoke(progress, trackDuration)
+			}
+		}
+	}
 }

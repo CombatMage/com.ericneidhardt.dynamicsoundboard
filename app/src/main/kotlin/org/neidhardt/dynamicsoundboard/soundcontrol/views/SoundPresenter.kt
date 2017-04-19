@@ -1,205 +1,101 @@
 package org.neidhardt.dynamicsoundboard.soundcontrol.views
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.SoundSettingsDialog
+import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.soundmanagement.events.*
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataAccess
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
-import org.neidhardt.utils.registerIfRequired
-import java.util.*
+import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
+import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
+import org.neidhardt.eventbus_utils.registerIfRequired
+import java.lang.ref.WeakReference
 
 /**
  * File created by eric.neidhardt on 02.07.2015.
  */
-fun createSoundPresenter(
-		fragmentTag: String,
-		eventBus: EventBus,
-		onItemDeletionRequested: (PendingDeletionHandler, Int) -> Unit,
-		recyclerView: RecyclerView,
-		soundsDataAccess: SoundsDataAccess,
-		soundsDataStorage: SoundsDataStorage): SoundPresenter
-{
-	return SoundPresenter(
-			fragmentTag = fragmentTag,
-			eventBus = eventBus,
-			soundsDataAccess = soundsDataAccess
-	).apply {
-		val deletionHandler = PendingDeletionHandler(this, soundsDataStorage, onItemDeletionRequested)
-		val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(recyclerView.context, deletionHandler,
-				this, fragmentTag, soundsDataStorage)).apply { this.attachToRecyclerView(recyclerView) }
-		val adapter = SoundAdapter(recyclerView, itemTouchHelper, this, soundsDataStorage, eventBus)
-		this.adapter = adapter
-	}
-}
+class SoundPresenter (
+		private val playlistManager: PlaylistManager,
+		fragment: SoundSheetFragment
+) : MediaPlayerEventListener {
 
-class SoundPresenter
-(
-		private val fragmentTag: String,
-		private val eventBus: EventBus,
-		private val soundsDataAccess: SoundsDataAccess
-) :
-		OnSoundsChangedEventListener,
-		MediaPlayerEventListener
-{
-	private val TAG = javaClass.name
+	private val fragmentReference: WeakReference<SoundSheetFragment> = WeakReference(fragment)
 
-	var adapter: SoundAdapter? = null
-	val values: MutableList<MediaPlayerController> = ArrayList()
+	private val eventBus = EventBus.getDefault()
 
-	fun onAttachedToWindow()
-	{
-		this.values.clear()
-		this.values.addAll(this.soundsDataAccess.getSoundsInFragment(this.fragmentTag))
-		this.adapter!!.notifyDataSetChanged()
+	private val fragment: SoundSheetFragment? get() = this.fragmentReference.get()
+	private val adapter: SoundAdapter? get() = this.fragment?.soundAdapter
 
+	fun onAttachedToWindow() {
 		this.eventBus.registerIfRequired(this)
+		this.adapter?.notifyDataSetChanged()
 	}
 
-	fun onDetachedFromWindow()
-	{
+	fun onDetachedFromWindow() {
 		this.eventBus.unregister(this)
 	}
 
-	fun setProgressUpdateTimer(startTime: Boolean)
-	{
-		if (startTime)
-			this.adapter?.startProgressUpdateTimer()
-		else
-			this.adapter?.stopProgressUpdateTimer()
+	fun userTogglesPlaybackState(player: MediaPlayerController, playbackButton: PlayButton) {
+		if (player.isFadingOut) {
+			playbackButton.state = PlayButton.State.PLAY
+			player.stopSound()
+		}
+		else if (player.isPlayingSound) {
+			playbackButton.state = PlayButton.State.FADE
+			player.fadeOutSound()
+		}
+		else {
+			playbackButton.state = PlayButton.State.PAUSE
+			player.playSound()
+		}
+	}
+
+	fun userStopsPlayback(player: MediaPlayerController) {
+		player.stopSound()
+		this.adapter?.notifyItemChanged(player)
+	}
+
+	fun userTogglesPlaylistState(player: MediaPlayerController, addToPlaylist: Boolean) {
+		player.mediaPlayerData.let { this.playlistManager.togglePlaylistSound(it, addToPlaylist) }
+	}
+
+	fun userRequestPlayerSettings(player: MediaPlayerController) {
+		if (player.isPlayingSound)
+			player.pauseSound()
+		SoundSettingsDialog.showInstance(this.fragment?.fragmentManager, player.mediaPlayerData)
+	}
+
+	fun userEnablesLooping(player: MediaPlayerController, enableLoop: Boolean) {
+		player.isLoopingEnabled = enableLoop
+	}
+
+	fun userChangesPlayerName(player: MediaPlayerController, name: String) {
+		val currentLabel = player.mediaPlayerData.label
+		if (currentLabel != name) {
+			player.mediaPlayerData.label = name
+			RenameSoundFileDialog.show(this.fragment?.fragmentManager, player.mediaPlayerData)
+		}
+	}
+
+	fun userSeeksToPlayerPosition(player: MediaPlayerController, position: Int) {
+		player.progress = position
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: MediaPlayerStateChangedEvent)
-	{
+	override fun onEvent(event: MediaPlayerStateChangedEvent) {
 		val playerId = event.playerId
-		val players = this.values
+		val players = this.adapter?.values ?: return
 		val count = players.size
-		for (i in 0..count - 1)
-		{
+		for (i in 0..count - 1) {
 			val player = players[i]
 			if (event.isAlive && player.mediaPlayerData.playerId == playerId && !player.isDeletionPending)
 				this.adapter?.notifyItemChanged(i)
 		}
 	}
 
-	@Subscribe
-	override fun onEvent(event: MediaPlayerCompletedEvent)
-	{
-		Logger.d(TAG, "onEvent :" + event)
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundAddedEvent)
-	{
-		val newPlayer = event.player
-		if (newPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
-		{
-			val count = this.values.size
-			val positionToInsert = newPlayer.mediaPlayerData.sortOrder
-			if (positionToInsert == null)
-			{
-				newPlayer.mediaPlayerData.sortOrder = count
-				newPlayer.mediaPlayerData.updateItemInDatabaseAsync()
-				this.insertPlayer(count, newPlayer) // append to end of list
-			}
-			else
-			{
-				for (i in 0..count - 1)
-				{
-					val existingPlayer = this.values[i]
-					if (positionToInsert < existingPlayer.mediaPlayerData.sortOrder)
-					{
-						this.insertPlayer(i, newPlayer)
-						return
-					}
-				}
-				this.insertPlayer(count, newPlayer) // append to end of list
-			}
-		}
-	}
-
-	private fun insertPlayer(position: Int, player: MediaPlayerController)
-	{
-		this.values.add(position, player)
-		this.adapter?.notifyItemInserted(position)
-		if (position == this.values.size - 1)
-			this.adapter?.notifyItemChanged(position - 1)
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundMovedEvent)
-	{
-		val movedPlayer = event.player
-		if (movedPlayer.mediaPlayerData.fragmentTag.equals(this.fragmentTag))
-		{
-			this.values.removeAt(event.from)
-			this.values.add(event.to, movedPlayer)
-
-			val start = Math.min(event.from, event.to); // we need to update all sound after the moved one
-			val end = Math.max(event.from, event.to);
-
-			for (i in start..end)
-			{
-				val playerData = this.values[i].mediaPlayerData
-				playerData.sortOrder = i;
-				playerData.updateItemInDatabaseAsync();
-			}
-
-			this.adapter?.notifyItemMoved(event.from, event.to)
-		}
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundsRemovedEvent)
-	{
-		if (event.removeAll())
-			this.adapter?.notifyDataSetChanged()
-		else
-		{
-			val players = event.players
-			for (player in players.orEmpty())
-				this.removePlayerAndUpdateSortOrder(player)
-		}
-	}
-
-	private fun removePlayerAndUpdateSortOrder(player: MediaPlayerController)
-	{
-		val index = this.values.indexOf(player)
-		if (index != -1)
-		{
-			this.values.remove(player)
-			this.adapter?.notifyItemRemoved(index)
-
-			this.updateSortOrdersAfter(index - 1) // -1 to ensure item at index (which was index + 1 before) is also updated
-		}
-	}
-
-	private fun updateSortOrdersAfter(index: Int)
-	{
-		val count = this.values.size
-		for (i in index + 1 .. count - 1)
-		{
-			val playerData = this.values[i].mediaPlayerData
-			val sortOrder = playerData.sortOrder
-			playerData.sortOrder = sortOrder - 1;
-			playerData.updateItemInDatabaseAsync();
-		}
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: SoundChangedEvent)
-	{
-		val player = event.player
-		val index = this.values.indexOf(player)
-		if (index != -1)
-			this.adapter?.notifyItemChanged(index)
-	}
+	override fun onEvent(event: MediaPlayerCompletedEvent) {}
 }

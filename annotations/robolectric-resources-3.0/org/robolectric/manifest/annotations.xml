@@ -11,7 +11,7 @@
     <item name='org.robolectric.manifest.AndroidManifest org.robolectric.manifest.AndroidManifest createLibraryAndroidManifest(org.robolectric.res.FsFile) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='org.robolectric.manifest.MetaData void init(org.robolectric.res.ResourceLoader, java.lang.String) 0'>
+    <item name='org.robolectric.manifest.MetaData void initIfRequired(org.robolectric.res.ResourceLoader, java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='org.robolectric.manifest.IntentFilterData java.util.List&lt;java.lang.String&gt; getPaths()'>

@@ -1,1 +1,7 @@
-include ':app', ':dao_generator', ':safe_async_task', ':enhanced_handler', ':app_utils'
+include ':app',
+        ':enhanced_handler',
+        ':app_utils',
+        ':eventbus_utils',
+        ':android_utils',
+        ':simple_storage',
+        ':value_holder'

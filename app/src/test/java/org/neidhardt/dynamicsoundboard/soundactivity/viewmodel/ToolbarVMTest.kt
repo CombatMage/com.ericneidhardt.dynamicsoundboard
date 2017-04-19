@@ -2,18 +2,20 @@ package org.neidhardt.dynamicsoundboard.soundactivity.viewmodel
 
 import org.junit.Before
 import org.junit.Test
-import robolectricutils.BaseRobolectricTest
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import kotlin.properties.Delegates
 
 /**
  * @author eric.neidhardt on 22.06.2016.
  */
-class ToolbarVMTest : BaseRobolectricTest() {
+@RunWith(RobolectricTestRunner::class)
+class ToolbarVMTest {
 
 	private var unitUnderTest: ToolbarVM by Delegates.notNull<ToolbarVM>()
 
 	@Before
-	override fun setUp() {
+	fun setUp() {
 		this.unitUnderTest = ToolbarVM()
 	}
 
@@ -61,19 +63,5 @@ class ToolbarVMTest : BaseRobolectricTest() {
 		assert(success)
 	}
 
-	@Test
-	fun setOnTitleChanged() {
-		var success = false
-
-		val callback = { value: String ->
-			assert(value == "test")
-			success = true
-		}
-		this.unitUnderTest.onTitleChanged = callback
-		assert(this.unitUnderTest.onTitleChanged == callback)
-
-		this.unitUnderTest.onTextEditedListener.onTextEdited("test")
-		assert(success)
-	}
 
 }

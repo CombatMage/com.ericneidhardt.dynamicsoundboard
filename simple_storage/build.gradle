@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+	buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion project.projectMinSdkVersion
+		targetSdkVersion project.projectTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile rootProject.ext.libraries.kotlin
+    compile rootProject.ext.libraries.supportAppCompat
+
+    //RxAndroid
+    compile rootProject.ext.libraries.rxAndroid
+	compile rootProject.ext.libraries.rxKotlin
+	compile rootProject.ext.libraries.rxJava
+
+    //Gson
+    compile rootProject.ext.libraries.gson
+
+	//Testing
+	testCompile rootProject.ext.libraries.junit
+	testCompile rootProject.ext.libraries.mockito
+	testCompile rootProject.ext.libraries.robolectric
+	testCompile rootProject.ext.libraries.robolectricMultidex
+	testCompile rootProject.ext.libraries.robolectricSupportV4
+}

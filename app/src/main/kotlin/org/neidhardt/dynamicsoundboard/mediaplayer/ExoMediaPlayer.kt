@@ -13,27 +13,75 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
+import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.soundmanagement.model.SoundsDataStorage
+import org.neidhardt.dynamicsoundboard.misc.getFileForUri
+import org.neidhardt.dynamicsoundboard.misc.isAudioFile
+import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import org.neidhardt.utils.letThis
+import java.io.File
 import kotlin.properties.Delegates
 
 /**
  * File created by eric.neidhardt on 11.04.2016.
  */
-fun getNewMediaPlayerController(context: Context,
-								eventBus: EventBus,
-								mediaPlayerData: MediaPlayerData,
-								soundsDataStorage: SoundsDataStorage): MediaPlayerController
-{
-	return ExoMediaPlayer(context, eventBus, soundsDataStorage, mediaPlayerData)
+object MediaPlayerFactory {
+
+	private val TAG = javaClass.name
+
+	fun createPlayer(context: Context, eventBus: EventBus, playerData: NewMediaPlayerData) : MediaPlayerController? {
+		try {
+			val file = Uri.parse(playerData.uri).getFileForUri()
+			if (file == null || !file.isAudioFile)
+				throw Exception("cannot create create media player, given file is no audio file")
+
+			return getNewMediaPlayerController (
+					context = context,
+					eventBus = eventBus,
+					mediaPlayerData = playerData,
+					manager = SoundboardApplication.soundLayoutManager
+			)
+		}
+		catch (e: Exception) {
+			Logger.d(TAG, playerData.toString() + " " + e.message)
+			return null
+		}
+	}
+
+	fun getNewMediaPlayerController(context: Context,
+									eventBus: EventBus,
+									mediaPlayerData: NewMediaPlayerData,
+									manager: SoundLayoutManager): MediaPlayerController {
+		return ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
+	}
+
+	fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): NewMediaPlayerData {
+		val data = NewMediaPlayerData()
+
+		data.playerId = Integer.toString((uri.toString() + SoundboardApplication.randomNumber).hashCode())
+		data.fragmentTag = fragmentTag
+		data.label = label
+		data.uri = uri.toString()
+		data.isLoop = false
+
+		return data
+	}
+
+	fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): NewMediaPlayerData {
+		val soundUri = Uri.parse(file.absolutePath)
+		val soundLabel = FileUtils.stripFileTypeFromName(
+				FileUtils.getFileNameFromUri(SoundboardApplication.context, soundUri))
+		return MediaPlayerFactory.getNewMediaPlayerData(fragmentTag, soundUri, soundLabel)
+	}
 }
+
 
 val PlaylistTAG = "PlaylistTAG"
 
@@ -49,12 +97,14 @@ enum class PlayerAction
 	UNDEFINED
 }
 
+val UPDATE_INTERVAL: Long = 500
+
 class ExoMediaPlayer
 (
-	private val context: Context,
-	private val eventBus: EventBus,
-	private val soundsDataStorage: SoundsDataStorage,
-	override val mediaPlayerData: MediaPlayerData
+		private val context: Context,
+		private val eventBus: EventBus,
+		private val manager: SoundLayoutManager,
+		override val mediaPlayerData: NewMediaPlayerData
 ) : MediaPlayerController, ExoPlayer.EventListener
 {
 	private val TAG = javaClass.name
@@ -65,6 +115,7 @@ class ExoMediaPlayer
 	private val handler = Handler()
 
 	private val volumeController = VolumeController(this)
+	private val progressMonitor = ProgressMonitor(this)
 
 	private var exoPlayer by Delegates.notNull<SimpleExoPlayer>()
 	private var audioSource: MediaSource? = null
@@ -72,10 +123,13 @@ class ExoMediaPlayer
 	private var releasePlayerSchedule: KillableRunnable? = null
 	private var lastPosition: Int? = null
 
+	override var mOnProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener?
+		get() = this.progressMonitor.onProgressChangedEventListener
+		set(value) { this.progressMonitor.onProgressChangedEventListener = value }
+
 	init { this.init() }
 
-	private fun init()
-	{
+	private fun init() {
 		this.lastPosition = null
 
 		val uriString = this.mediaPlayerData.uri ?: throw NullPointerException("$TAG: cannot init ExoMediaPlayer, given uri is null")
@@ -94,28 +148,28 @@ class ExoMediaPlayer
 	override val isPlayingSound: Boolean
 		get() = exoPlayer.playWhenReady
 
+	override val isFadingOut: Boolean
+		get() = this.volumeController.isFadeoutInProgress
+
 	override val albumCover: ByteArray? by lazy {
 		MediaMetadataRetriever().let {
-			it.setDataSource(context, Uri.parse(this.mediaPlayerData.uri))
+			it.setDataSource(this.context, Uri.parse(this.mediaPlayerData.uri))
 			it.embeddedPicture
 		}
 	}
 
 	override val trackDuration: Int
-		get()
-		{
+		get() {
 			if (this.exoPlayer.duration == TIME_UNKNOWN) return 0
 			return (this.exoPlayer.duration / PROGRESS_DIVIDER).toInt()
 		}
 
 	override var progress: Int
-		get()
-		{
+		get() {
 			if (exoPlayer.duration == TIME_UNKNOWN) return 0
 			return (exoPlayer.currentPosition / PROGRESS_DIVIDER).toInt()
 		}
-		set(value)
-		{
+		set(value) {
 			val seekPosition: Int =
 					if (exoPlayer.duration == TIME_UNKNOWN)
 						0
@@ -126,21 +180,9 @@ class ExoMediaPlayer
 
 	override var isLoopingEnabled: Boolean
 		get() = this.mediaPlayerData.isLoop
-		set(value)
-		{
-			if (value != this.mediaPlayerData.isLoop)
-			{
-				this.mediaPlayerData.isLoop = value
-				this.mediaPlayerData.updateItemInDatabaseAsync()
-			}
-		}
-
-	override var isInPlaylist: Boolean
-		get() = this.mediaPlayerData.isInPlaylist
 		set(value) {
-			if (value != this.mediaPlayerData.isInPlaylist) {
-				this.mediaPlayerData.isInPlaylist = value
-				this.mediaPlayerData.updateItemInDatabaseAsync()
+			if (value != this.mediaPlayerData.isLoop) {
+				this.mediaPlayerData.isLoop = value
 			}
 		}
 
@@ -166,24 +208,25 @@ class ExoMediaPlayer
 		else
 			this.lastPosition = null
 
-		this.soundsDataStorage.addSoundToCurrentlyPlayingSounds(this)
+		this.manager.addSoundToCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
+		this.progressMonitor.startProgressUpdateTimer()
 		return this.isPlayingSound
 	}
 
-	override fun stopSound(): Boolean
-	{
+	override fun stopSound(): Boolean {
 		this.releasePlayerSchedule?.let { this.enhancedHandler.removeCallbacks(it) }
 		this.exoPlayer.release()
 		this.init()
 
-		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
+		this.manager.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
+		this.progressMonitor.stopProgressUpdateTimer()
+
 		return !this.isPlayingSound
 	}
 
-	override fun pauseSound(): Boolean
-	{
+	override fun pauseSound(): Boolean {
 		this.releasePlayerSchedule = KillableRunnable({
 			val position = progress // remember the paused position so it can reused later
 			exoPlayer.release()
@@ -195,71 +238,71 @@ class ExoMediaPlayer
 
 		this.exoPlayer.playWhenReady = false
 
-		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
+		this.manager.removeSoundFromCurrentlyPlayingSounds(this)
 		this.postStateChangedEvent(true)
+		this.progressMonitor.stopProgressUpdateTimer()
 
 		return !this.isPlayingSound
 	}
 
-	override fun fadeOutSound()
-	{
+	override fun fadeOutSound() {
 		this.volumeController.fadeOutSound()
-	}
-
-	override fun setSoundUri(uri: String)
-	{
-		this.releasePlayerSchedule?.let { this.enhancedHandler.removeCallbacks(it) }
-
-		this.mediaPlayerData.uri = uri
-		this.mediaPlayerData.updateItemInDatabaseAsync()
-
-		this.init()
 		this.postStateChangedEvent(true)
 	}
 
-	override fun destroy(postStateChanged: Boolean)
-	{
+	override fun setSoundUri(uri: String) {
+		this.releasePlayerSchedule?.let { this.enhancedHandler.removeCallbacks(it) }
+
+		this.mediaPlayerData.uri = uri
+
+		this.init()
+		this.postStateChangedEvent(true)
+		this.progressMonitor.stopProgressUpdateTimer()
+	}
+
+	override fun destroy(postStateChanged: Boolean) {
 		this.releasePlayerSchedule?.let { this.enhancedHandler.removeCallbacks(it) }
 		this.volumeController.cancelFadeOut()
 
 		this.exoPlayer.release()
-		this.soundsDataStorage.removeSoundFromCurrentlyPlayingSounds(this)
+		this.manager.removeSoundFromCurrentlyPlayingSounds(this)
 		if (postStateChanged)
 			this.postStateChangedEvent(false)
+
+		this.progressMonitor.stopProgressUpdateTimer()
 	}
 
-	override fun onPlayerError(error: ExoPlaybackException)
-	{
+	override fun onPlayerError(error: ExoPlaybackException) {
 		Logger.e(TAG, "onPlayerError for $this with exception $error")
 		this.init()
 		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINED, error.message ?: ""))
+		this.progressMonitor.stopProgressUpdateTimer()
 	}
 
-	override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int)
-	{
+	override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
 		Logger.d(TAG, "onPlayerStateChanged($playWhenReady, $playbackState)")
-		if (playbackState == ExoPlayer.STATE_ENDED)
-		{
-			if (this.isLoopingEnabled)
-			{
+			if (playbackState == ExoPlayer.STATE_ENDED) {
+			if (this.isLoopingEnabled) {
 				this.progress = 0
 				this.exoPlayer.playWhenReady = true
 			}
-			else
-			{
+			else {
 				this.stopSound()
 				this.eventBus.post(MediaPlayerCompletedEvent(this))
+				this.progressMonitor.stopProgressUpdateTimer()
 			}
 		}
 
 		this.enhancedHandler.postDelayed({ this.postStateChangedEvent(true) }, 100)
 	}
 
-	private fun postStateChangedEvent(isAlive: Boolean): Unit = this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
+	private fun postStateChangedEvent(isAlive: Boolean): Unit =
+			this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
 
-	override fun toString(): String{
-		return "ExoMediaPlayer(TAG='$TAG', mediaPlayerData=$mediaPlayerData, exoPlayer=$exoPlayer, lastPosition=$lastPosition, isDeletionPending=$isDeletionPending)"
-	}
+	override fun toString(): String =
+		"ExoMediaPlayer(TAG='$TAG', " +
+				"mediaPlayerData=$mediaPlayerData, " +
+				"exoPlayer=$exoPlayer, lastPosition=$lastPosition, isDeletionPending=$isDeletionPending)"
 
 	override fun onLoadingChanged(isLoading: Boolean) {}
 

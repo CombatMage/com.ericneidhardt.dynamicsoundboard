@@ -3,14 +3,13 @@
 <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:padding="@dimen/padding_dialog"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:animateLayoutChanges="true"
 		android:orientation="vertical">
 
-	<com.devspark.robototextview.widget.RobotoTextView
+	<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/dialog_store_layout_message"
@@ -22,27 +21,24 @@
 			android:layout_marginTop="@dimen/margin_small"
 			android:layout_marginBottom="@dimen/margin_default">
 
-		<com.devspark.robototextview.widget.RobotoButton
+		<Button
 				android:id="@+id/b_add"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_alignParentEnd="true"
-				android:layout_alignParentRight="true"
-				android:text="@string/dialog_add"
+				android:text="@string/all_add"
 				android:theme="@style/Theme.Button.Flat"
 				style="@style/Widget.AppCompat.Button.Borderless"/>
 
-		<com.devspark.robototextview.widget.RobotoEditText
+		<EditText
 				android:id="@+id/et_name_file"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/margin_small"
-				android:layout_marginRight="@dimen/margin_default"
 				android:layout_marginEnd="@dimen/margin_default"
-				android:layout_toLeftOf="@id/b_add"
 				android:layout_toStartOf="@id/b_add"
 				style="@style/Theme.EditText"
-				tools:text="Neuer Datei Name"/>
+				android:hint="@string/all_NewFileName"/>
 
 	</RelativeLayout>
 

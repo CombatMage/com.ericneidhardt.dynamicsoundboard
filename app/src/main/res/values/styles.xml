@@ -56,30 +56,24 @@
 		<item name="android:scaleType">centerInside</item>
 	</style>
 
-	<style name="Theme.ImageButton.SoundControl" parent="Theme.AppTheme">
-		<item name="android:padding">@dimen/padding_button</item>
-		<item name="android:scaleType">centerCrop</item>
-		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-	</style>
-
 	<style name="Theme.Button.Flat" parent="Theme.AppTheme">
 		<item name="android:padding">@dimen/margin_small</item>
 		<item name="colorControlHighlight">@color/accent_200</item>
 		<item name="android:textSize">@dimen/text_body</item>
 		<item name="android:textAllCaps">true</item>
-		<item name="typeface">roboto_medium</item>
+		<item name="android:fontFamily">sans-serif-medium</item>
 	</style>
 
 	<style name="Theme.EditText" parent="TextAppearance.AppCompat.Subhead">
-		<item name="typeface">roboto_regular</item>
+		<item name="android:fontFamily">sans-serif</item>
 	</style>
 
 	<style name="Theme.TextView.Body1" parent="TextAppearance.AppCompat.Body1">
-		<item name="typeface">roboto_regular</item>
+		<item name="android:fontFamily">sans-serif</item>
 	</style>
 
 	<style name="Theme.TextView.Body2" parent="TextAppearance.AppCompat.Body2">
-		<item name="typeface">roboto_medium</item>
+		<item name="android:fontFamily">sans-serif-medium</item>
 	</style>
 
 </resources>

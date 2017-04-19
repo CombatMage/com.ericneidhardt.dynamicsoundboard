@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="Theme.ImageButton.SoundControl" parent="Theme.AppTheme">
+		<item name="android:padding">@dimen/padding_button</item>
+		<item name="android:scaleType">centerCrop</item>
+		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+	</style>
+</resources>

@@ -1,5 +1,5 @@
 <root>
-    <item name='kotlin.reflect.jvm.internal.impl.resolve.calls.inference.CapturedTypeConstructorKt.wrapWithCapturingSubstitution.2 kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.resolve.calls.inference.CapturedTypeConstructorKt.wrapWithCapturingSubstitution.2 kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.resolve.calls.inference.CapturedTypeConstructor kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations getAnnotations()'>

@@ -22,7 +22,6 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
-				android:layout_alignParentRight="true"
 				android:layout_alignParentEnd="true"
 				android:contentDescription="@string/action_add_new_sound_sheet"
 				android:src="@drawable/ic_action_new_sound_layout"
@@ -34,7 +33,6 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
-				android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_sheet"
 				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_sheet"
 				android:contentDescription="@string/action_add_new_sound"
 				android:src="@drawable/ic_action_add_sound"
@@ -47,7 +45,6 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
-				android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound"
 				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound"
 				android:contentDescription="@string/action_add_new_sound_from_dir"
 				android:src="@drawable/ic_action_add_sound_dir"
@@ -55,34 +52,37 @@
 				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
 				android:onClick="@{(view) -> viewModel.onAddSoundFromDirectoryClicked()}"/>
 
-		<com.devspark.robototextview.widget.RobotoTextView
+		<TextView
 				android:id="@+id/tv_layout_toolbar_content_app_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_alignParentStart="true"
-				android:layout_alignParentLeft="true"
-				android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_dir"
 				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
 				android:gravity="center_horizontal"
 				android:text="@string/app_name"
 				android:textColor="@color/text_header"
 				android:textSize="@dimen/text_title"
 				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.GONE : View.VISIBLE }"
-				app:typeface="roboto_medium"/>
+				android:fontFamily="sans-serif-medium"/>
 
-		<org.neidhardt.dynamicsoundboard.views.edittext.ActionbarEditText
-				android:id="@+id/et_layout_toolbar_content_title"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:layout_alignParentStart="true"
-				android:layout_alignParentLeft="true"
-				android:layout_toLeftOf="@id/ib_layout_toolbar_content_add_sound_dir"
-				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
-				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
-				app:text="@{viewModel.title}"
-				app:onTextEditedListener="@{viewModel.onTextEditedListener}"/>
+		<TextView
+			android:id="@+id/et_layout_toolbar_content_title"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:textCursorDrawable="@drawable/shape_cursor_edittext_white"
+			android:textColor="@color/text_header"
+			android:textSize="@dimen/text_title"
+			android:background="@android:color/transparent"
+			android:fadingEdge="horizontal"
+			android:maxLines="1"
+			android:gravity="center_vertical"
+			android:fontFamily="sans-serif-medium"
+			android:layout_alignParentStart="true"
+			android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
+			android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
+			app:text="@{viewModel.title}"
+			android:onClick="@{(view) -> viewModel.onTitleClicked()}"/>
 
 	</RelativeLayout>
 </layout>

@@ -14,13 +14,14 @@
 				android:orientation="vertical">
 
 			<android.support.design.widget.AppBarLayout
-					android:id="@+id/abl_main"
+					android:id="@+id/appbarlayout_main"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content">
 
 				<include
-						android:id="@+id/layout_toolbar"
-						layout="@layout/layout_toolbar"/>
+					android:id="@+id/layout_toolbar"
+					layout="@layout/layout_toolbar"
+					/>
 
 			</android.support.design.widget.AppBarLayout>
 
@@ -38,7 +39,6 @@
 				<FrameLayout
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
-						android:layout_toRightOf="@id/navigation_drawer_fragment"
 						android:layout_toEndOf="@id/navigation_drawer_fragment">
 
 					<FrameLayout

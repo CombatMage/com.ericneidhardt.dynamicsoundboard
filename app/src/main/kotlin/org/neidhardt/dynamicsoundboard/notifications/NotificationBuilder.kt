@@ -7,12 +7,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.support.v4.app.NotificationCompat
+import org.neidhardt.android_utils.AndroidVersion
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.dao.SoundSheet
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
+import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
-import org.neidhardt.utils.AndroidVersion
 
 /**
  * @author eric.neidhardt on 16.06.2016.
@@ -33,7 +33,7 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 
 		private fun getNotification(
 				player: MediaPlayerController,
-				soundSheet: SoundSheet?,
+				soundSheet: NewSoundSheet?,
 				context: Context,
 				isPlaylistNotification: Boolean
 		): PendingSoundNotification {
@@ -52,7 +52,7 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			return PendingSoundNotification(notificationId, player.mediaPlayerData.playerId, builder.build())
 		}
 
-		fun getNotificationForPlayer(player: MediaPlayerController, soundSheet: SoundSheet, context: Context): PendingSoundNotification
+		fun getNotificationForPlayer(player: MediaPlayerController, soundSheet: NewSoundSheet, context: Context): PendingSoundNotification
 				= getNotification(player, soundSheet, context, false)
 
 		fun getNotificationForPlaylist(player: MediaPlayerController, context: Context): PendingSoundNotification
@@ -61,7 +61,7 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 		private fun getDefaultNotification(
 				player: MediaPlayerController,
 				context: Context,
-				soundSheet: SoundSheet?,
+				soundSheet: NewSoundSheet?,
 				notificationId: Int,
 				isPlaylistNotification: Boolean
 		): NotificationCompat.Builder {

@@ -17,7 +17,7 @@
     <item name='kotlin.reflect.jvm.internal.pcollections.HashPMap boolean containsKey(java.lang.Object) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.pcollections.HashPMap V get(java.lang.Object) 0'>
+    <item name='kotlin.reflect.jvm.internal.pcollections.HashPMap V getAsync(java.lang.Object) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
 </root>

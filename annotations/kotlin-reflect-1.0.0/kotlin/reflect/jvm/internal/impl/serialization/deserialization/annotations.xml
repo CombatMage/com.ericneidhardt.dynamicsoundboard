@@ -659,7 +659,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.serialization.deserialization.BinaryVersion int[] toArray()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.serialization.deserialization.TypeTable kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf.Type get(int)'>
+    <item name='kotlin.reflect.jvm.internal.impl.serialization.deserialization.TypeTable kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf.Type getAsync(int)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.serialization.deserialization.AnnotationAndConstantLoaderImpl java.util.List&lt;kotlin.reflect.jvm.internal.impl.descriptors.annotations.AnnotationDescriptor&gt; loadValueParameterAnnotations(kotlin.reflect.jvm.internal.impl.serialization.deserialization.ProtoContainer, kotlin.reflect.jvm.internal.impl.com.google.protobuf.MessageLite, kotlin.reflect.jvm.internal.impl.serialization.deserialization.AnnotatedCallableKind, int, kotlin.reflect.jvm.internal.impl.serialization.ProtoBuf.ValueParameter) 0'>

@@ -1,7 +1,7 @@
 package org.neidhardt.dynamicsoundboard.dao;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
+import org.greenrobot.greendao.database.Database;
 import org.neidhardt.dynamicsoundboard.misc.Logger;
 
 /**
@@ -11,21 +11,15 @@ public class SoundboardDaoOpenHelper extends DaoMaster.OpenHelper
 {
 	private static final String TAG = SoundboardDaoOpenHelper.class.getName();
 
-	public SoundboardDaoOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory)
-	{
-		super(context, name, factory);
+	public SoundboardDaoOpenHelper(Context context, String name) {
+		super(context, name);
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-	{
+	public void onUpgrade(Database db, int oldVersion, int newVersion) {
 		Logger.INSTANCE.d(TAG, "Upgrading schema from version " + oldVersion + " to " + newVersion + " by dropping all tables");
 
-		if (oldVersion <= 9)
-			SoundLayoutDao.createTable(db, false);
-		else {
-			DaoMaster.dropAllTables(db, true);
-			onCreate(db);
-		}
+		DaoMaster.dropAllTables(db, true);
+		onCreate(db);
 	}
 }

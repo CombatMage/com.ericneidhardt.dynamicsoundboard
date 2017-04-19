@@ -13,8 +13,8 @@ private val INT_VOLUME_MIN = 0
 private val FLOAT_VOLUME_MAX = 1f
 private val FLOAT_VOLUME_MIN = 0f
 
-class VolumeController(private val mediaPlayerController: MediaPlayerController)
-{
+class VolumeController(private val mediaPlayerController: MediaPlayerController) {
+
 	private var volume: Int = INT_VOLUME_MAX
 	private var fadeOutSchedule: KillableRunnable? = null
 
@@ -22,41 +22,42 @@ class VolumeController(private val mediaPlayerController: MediaPlayerController)
 
 	val maxVolume = FLOAT_VOLUME_MAX
 
-	fun fadeOutSound()
-	{
+	var isFadeoutInProgress = false
+		private set
+
+	fun fadeOutSound() {
 		this.cancelFadeOut()
+		this.isFadeoutInProgress = true
 		this.updateVolume(0)
 		this.scheduleNextVolumeChange()
 	}
 
-	fun cancelFadeOut()
-	{
+	fun cancelFadeOut() {
 		this.fadeOutSchedule?.let { this.handler.removeCallbacks(it) }
+		this.isFadeoutInProgress = false
 	}
 
-	private fun scheduleNextVolumeChange()
-	{
+	private fun scheduleNextVolumeChange() {
 		val delay = FADE_OUT_DURATION / INT_VOLUME_MAX
 
 		this.fadeOutSchedule = KillableRunnable({
 			scheduleNexFadeOutIteration()
-		}).letThis { this.handler.postDelayed(it, delay.toLong()) }
+		}).letThis { this.handler.postDelayed(it, delay) }
 	}
 
-	private fun scheduleNexFadeOutIteration()
-	{
-		updateVolume(-1)
+	private fun scheduleNexFadeOutIteration() {
+		this.updateVolume(-1)
 		if (volume == INT_VOLUME_MIN)
 		{
-			updateVolume(INT_VOLUME_MAX)
+			this.updateVolume(INT_VOLUME_MAX)
+			this.isFadeoutInProgress = false
 			this.mediaPlayerController.pauseSound()
 		}
 		else
-			scheduleNextVolumeChange()
+			this.scheduleNextVolumeChange()
 	}
 
-	private fun updateVolume(change: Int)
-	{
+	private fun updateVolume(change: Int) {
 		this.volume = this.volume + change
 
 		//ensure volume within boundaries

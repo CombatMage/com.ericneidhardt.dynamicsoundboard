@@ -2,7 +2,7 @@
     <item name='org.acra.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper void registerActivityLifecycleCallbacks(android.app.Application, org.acra.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='org.acra.jraf.android.util.activitylifecyclecallbackscompat.MainLifecycleDispatcher org.acra.jraf.android.util.activitylifecyclecallbackscompat.MainLifecycleDispatcher get()'>
+    <item name='org.acra.jraf.android.util.activitylifecyclecallbackscompat.MainLifecycleDispatcher org.acra.jraf.android.util.activitylifecyclecallbackscompat.MainLifecycleDispatcher getAsync()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='org.acra.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper void unregisterActivityLifecycleCallbacks(android.app.Application, org.acra.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat) 0'>
