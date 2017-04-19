@@ -131,7 +131,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 			val externalFileStoragePath = externalFileStorage.absolutePath.split('/')
 			val rootDirectoryPath = rootDirectory.absolutePath.split('/')
 
-			if (externalFileStoragePath.size < rootDirectoryPath.size) {
+			if (externalFileStoragePath.size <= rootDirectoryPath.size) {
 				this.adapter.rootDirectory = rootDirectory
 				this.adapter.displayedFiles.add(rootDirectory)
 				this.adapter.notifyItemInserted(0)

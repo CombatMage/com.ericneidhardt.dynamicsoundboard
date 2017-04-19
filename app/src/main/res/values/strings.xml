@@ -12,6 +12,7 @@
 	<string name="all_delete">Löschen</string>
 	<string name="all_CurrentNameIs">Aktueller Name: {STR}</string>
 	<string name="all_ErrorNameMustNotBeEmpty">Der Name darf nicht leer sein</string>
+	<string name="all_NewFileName">Neuer Dateiname</string>
 
 	<!-- SoundActivity -->
 	<string name="soundactivity_ToastCloseAppOnBackPress">Zum Beenden erneut drücken</string>

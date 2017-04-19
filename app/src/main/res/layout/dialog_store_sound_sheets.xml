@@ -30,7 +30,7 @@
 				android:theme="@style/Theme.Button.Flat"
 				style="@style/Widget.AppCompat.Button.Borderless"/>
 
-		<TextView
+		<EditText
 				android:id="@+id/et_name_file"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
 				android:layout_marginEnd="@dimen/margin_default"
 				android:layout_toStartOf="@id/b_add"
 				style="@style/Theme.EditText"
-				tools:text="Neuer Datei Name"/>
+				android:hint="@string/all_NewFileName"/>
 
 	</RelativeLayout>
 
