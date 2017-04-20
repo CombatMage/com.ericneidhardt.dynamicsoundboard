@@ -189,10 +189,10 @@ class SoundSheetFragment :
 		this.soundPresenter.onAttachedToWindow()
 		this.eventBus.registerIfRequired(this)
 
-		this.subscriptions = CompositeDisposable ()
+		this.subscriptions = CompositeDisposable()
 		this.subscriptions.addAll(
 
-				// if sounds where removed, the view becomes unscrollable and therefore the fab can not be reached
+				// if sounds where removed, the view may becomes unscrollable and therefore the fab can not be reached
 				RxSoundManager.changesSoundList(this.soundManager)
 						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe { sounds ->
@@ -201,11 +201,15 @@ class SoundSheetFragment :
 
 				RxSoundManager.changesSoundList(this.soundManager)
 						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe { this.soundAdapter.notifyDataSetChanged() },
+						.subscribe {
+							this.soundAdapter.notifyDataSetChanged()
+						},
 
 				RxNewPlaylistManager.playlistChanges(this.playlistManager)
 						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe { this.soundAdapter.notifyDataSetChanged() },
+						.subscribe {
+							this.soundAdapter.notifyDataSetChanged()
+						},
 
 				this.soundAdapter.startsReorder
 						.subscribe { viewHolder -> this.itemTouchHelper.startDrag(viewHolder) },

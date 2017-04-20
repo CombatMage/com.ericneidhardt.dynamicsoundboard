@@ -51,6 +51,8 @@ open class SimpleStorage<T>(context: Context, private val classOfT: Class<T>) {
 				.apply()
 	}
 
-	private fun getSync(): T? =
-			this.converter.fromJson(this.sharedPreferences.getString(storageKey, null), this.classOfT)
+	private fun getSync(): T? {
+		val storedJson = this.sharedPreferences.getString(storageKey, null)
+		return this.converter.fromJson(storedJson, this.classOfT)
+	}
 }

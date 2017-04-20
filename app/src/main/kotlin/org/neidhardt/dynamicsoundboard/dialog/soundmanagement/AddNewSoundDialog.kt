@@ -225,7 +225,7 @@ private class AddNewSoundDialogPresenter(
 				this.soundManager.add(soundSheet, playerData)
 		}
 
-		this.showRenameDialog(renamedPlayers) // show the rename dialog for all altered players
+		this.showRenameDialog(renamedPlayers) // show the renameFileAndPlayer dialog for all altered players
 	}
 
 	private fun showRenameDialog(renamedMediaPlayers: List<NewMediaPlayerData>) {
