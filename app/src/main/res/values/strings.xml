@@ -18,6 +18,7 @@
 	<string name="soundactivity_ToastCloseAppOnBackPress">Zum Beenden erneut drücken</string>
 
 	<!-- GenericRenameDialog -->
+	<string name="genericrename_SoundTitle">Name der Sounddatei?</string>
 	<string name="genericrename_SoundSheetTitle">Name der Soundliste?</string>
 	<string name="genericrename_SoundLayoutTitle">Abenteuer umbenennen</string>
 

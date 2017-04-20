@@ -6,7 +6,6 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxSeekBar
 import io.reactivex.subjects.PublishSubject
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
-import org.neidhardt.android_utils.views.RxCustomEditText
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
@@ -37,8 +36,8 @@ class SoundAdapter (
 	val clicksTogglePlaylist: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val clicksSettings: PublishSubject<SoundViewHolder> = PublishSubject.create()
 	val clicksLoopEnabled: PublishSubject<SoundViewHolder> = PublishSubject.create()
+	val clicksName: PublishSubject<SoundViewHolder> = PublishSubject.create()
 
-	val changesName: PublishSubject<SoundViewHolderEvent<String>> = PublishSubject.create()
 	val seeksToPosition: PublishSubject<SoundViewHolderEvent<Int>> = PublishSubject.create()
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder {
@@ -84,10 +83,10 @@ class SoundAdapter (
 				.map { viewHolder }
 				.subscribe { this.clicksLoopEnabled.onNext(it) }
 
-		RxCustomEditText.editsText(viewHolder.name)
+		RxView.clicks(viewHolder.name)
 				.takeUntil(parentIsDetached)
-				.map { string -> SoundViewHolderEvent(viewHolder, string) }
-				.subscribe { this.changesName.onNext(it) }
+				.map { viewHolder }
+				.subscribe { this.clicksName.onNext(it) }
 
 		RxSeekBar.userChanges(viewHolder.timePosition)
 				.takeUntil(parentIsDetached)

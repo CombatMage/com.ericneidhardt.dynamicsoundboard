@@ -73,14 +73,6 @@ class SoundPresenter (
 		player.isLoopingEnabled = enableLoop
 	}
 
-	fun userChangesPlayerName(player: MediaPlayerController, name: String) {
-		val currentLabel = player.mediaPlayerData.label
-		if (currentLabel != name) {
-			player.mediaPlayerData.label = name
-			RenameSoundFileDialog.show(this.fragment?.fragmentManager, player.mediaPlayerData)
-		}
-	}
-
 	fun userSeeksToPlayerPosition(player: MediaPlayerController, position: Int) {
 		player.progress = position
 	}

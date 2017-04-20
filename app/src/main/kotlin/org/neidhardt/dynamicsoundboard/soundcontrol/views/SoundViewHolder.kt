@@ -4,13 +4,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
+import android.widget.TextView
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
-import org.neidhardt.android_utils.views.CustomEditText
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
+import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 
 /**
@@ -24,8 +24,8 @@ class SoundViewHolder(
 {
 	val reorder: View = itemView.ib_view_sound_control_item_reorder
 
-	val name: CustomEditText = itemView.et_view_sound_control_item_name
-	
+	val name: TextView = itemView.textview_soundcontrolitem_soundname
+
 	val playButton: PlayButton = itemView.ib_view_sound_control_item_play
 	val stopButton: ImageButton = itemView.ib_view_sound_control_item_stop
 
@@ -51,8 +51,7 @@ class SoundViewHolder(
 		this.player?.let { player ->
 			val playerData = player.mediaPlayerData
 
-			if (!this.name.hasFocus())
-				this.name.text = playerData.label
+			this.name.text = playerData.label
 
 			if (player.isFadingOut)
 				this.playButton.state = PlayButton.State.FADE

@@ -24,10 +24,13 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
+import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
@@ -262,11 +265,12 @@ class SoundSheetFragment :
 							}
 						},
 
-				this.soundAdapter.changesName
-						.subscribe { event ->
-							event.viewHolder.name.clearFocus()
-							event.viewHolder.player?.let { player ->
-								this.soundPresenter.userChangesPlayerName(player, event.data)
+				this.soundAdapter.clicksName
+						.subscribe { viewHolder ->
+							viewHolder.player?.let { player ->
+								GenericRenameDialogs.showRenameSoundDialog(
+										fragmentManager = this.fragmentManager,
+										playerData = player.mediaPlayerData)
 							}
 						},
 

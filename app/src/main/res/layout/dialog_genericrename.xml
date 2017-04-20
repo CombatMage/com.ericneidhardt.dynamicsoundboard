@@ -19,7 +19,7 @@
 				android:selectAllOnFocus="true"
 				android:maxLines="1"
 				tools:hint="neuer name"
-				style="@style/Theme.EditText"/>
+				style="@style/style_all_edittext"/>
 
 	</android.support.design.widget.TextInputLayout>
 
