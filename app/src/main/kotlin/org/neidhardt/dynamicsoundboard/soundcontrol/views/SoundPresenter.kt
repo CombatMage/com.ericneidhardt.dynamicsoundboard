@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListen
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
 import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
-import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import java.lang.ref.WeakReference
 
 /**

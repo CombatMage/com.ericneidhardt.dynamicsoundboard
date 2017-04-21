@@ -24,7 +24,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChanged
 import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
-import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 
 /**
  * @author eric.neidhardt on 15.06.2016.

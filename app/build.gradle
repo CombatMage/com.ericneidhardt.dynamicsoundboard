@@ -48,8 +48,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion project.projectMinSdkVersion
 		targetSdkVersion project.projectTargetSdkVersion
-		versionCode 22906
-		versionName "2.29.6"
+		versionCode 22907
+		versionName "2.29.7"
 		resConfigs "de"
 		multiDexEnabled true
 	}
@@ -96,7 +96,6 @@ dependencies {
 	compile fileTree(include: ['*.jar'], dir: 'libs')
 	compile project(':enhanced_handler')
 	compile project(':app_utils')
-	compile project(':eventbus_utils')
 	compile project(':android_utils')
 	compile project(':simple_storage')
 	compile project(':value_holder')

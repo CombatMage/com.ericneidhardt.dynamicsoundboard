@@ -107,9 +107,6 @@ class NavigationDrawerFragment : BaseFragment() {
 		this.tabView?.onAttached()
 		this.listPresenter?.onAttached()
 
-		// TODO check if this line is required
-		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
-
 		RxNewSoundLayoutManager.soundLayoutsChanges(this.soundLayoutManager)
 				.bindToLifecycle(this)
 				.observeOn(AndroidSchedulers.mainThread())

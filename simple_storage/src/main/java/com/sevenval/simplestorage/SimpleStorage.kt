@@ -32,14 +32,17 @@ open class SimpleStorage<T>(context: Context, private val classOfT: Class<T>) {
 	}
 
 	@CheckResult
-	fun get(): Observable<T?> {
+	fun get(): Observable<Optional<T>> {
 		this.cachedData?.let { cachedData ->
-			return Observable.just(cachedData)
+			return Observable.just(Optional.of(cachedData))
 		}
 
-		return Observable.create<T?> { subscriber ->
+		return Observable.create<Optional<T>> { subscriber ->
 			val data = this.getSync()
-			data?.letThis { subscriber.onNext(it) }
+			if (data == null)
+				subscriber.onNext(Optional.empty<T>())
+			else
+				subscriber.onNext(Optional.of(data))
 			subscriber.onComplete()
 		}
 	}

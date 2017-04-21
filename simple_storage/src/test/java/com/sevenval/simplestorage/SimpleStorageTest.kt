@@ -25,22 +25,22 @@ class SimpleStorageTest {
 	@Test
 	fun precondition() {
 		assertNotNull(this.unitUnderTest.storageKey)
-		assertTrue(this.unitUnderTest.get().blockingIterable().none())
+		assertNull(this.readFirstItem())
 	}
 
 	@Test
 	fun saveAndGet() {
 		this.unitUnderTest.save(42).blockingSubscribe()
-		assertEquals(42, firstItem)
+		assertEquals(42, this.readFirstItem())
 	}
 
 	@Test
 	fun clear() {
 		this.unitUnderTest.save(42).blockingSubscribe()
-		assertEquals(42, firstItem)
+		assertEquals(42, this.readFirstItem())
 
 		this.unitUnderTest.clear()
-		assertTrue(this.unitUnderTest.get().blockingIterable().none())
+		assertNull(this.readFirstItem())
 	}
 
 	@Test
@@ -49,11 +49,17 @@ class SimpleStorageTest {
 		val testData = TestUser("user", listOf("item_1", "item_2"))
 
 		testStorage.save(testData).blockingSubscribe()
-		val retrievedData = testStorage.get().blockingIterable().first()
-		assertEquals(testData, retrievedData)
+		val result = testStorage.get().blockingIterable().first().item
+		
+		assertEquals(testData, result)
 	}
 
-	private val firstItem: Int? get() = this.unitUnderTest.get().blockingIterable().first()
+	private fun readFirstItem(): Int? {
+		val entry = this.unitUnderTest.get().blockingIterable().first()
+		if (entry.isEmpty)
+			return null
+		return entry.item
+	}
 
 	private data class TestUser(val name: String, val inventory: List<String>)
 }

@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
+import com.sevenval.simplestorage.Optional
 import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -30,12 +31,14 @@ class SoundLayoutManager(
 	val currentlyPlayingSounds: List<MediaPlayerController> get() = this.mCurrentlyPlayingSounds
 
 	@Synchronized
-	fun initIfRequired(appData: Observable<AppData?>) {
+	fun initIfRequired(appData: Observable<Optional<AppData>>) {
 		if (mSoundLayouts == null) {
 			this.mSoundLayouts = ArrayList()
 			appData.subscribe { appData ->
 				this.mSoundLayouts = ArrayList()
-				appData?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
+				if (!appData.isEmpty)
+					appData.item?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
+
 				if (this.mSoundLayouts?.isEmpty() == true)
 					this.mSoundLayouts?.add(this.getDefaultSoundLayout())
 

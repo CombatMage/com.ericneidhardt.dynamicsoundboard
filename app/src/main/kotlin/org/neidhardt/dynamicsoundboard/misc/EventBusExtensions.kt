@@ -1,4 +1,4 @@
-package org.neidhardt.eventbus_utils
+package org.neidhardt.dynamicsoundboard.misc
 
 import org.greenrobot.eventbus.EventBus
 
