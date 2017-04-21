@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListen
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
 import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
-import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import java.lang.ref.WeakReference
 
 /**
@@ -71,14 +71,6 @@ class SoundPresenter (
 
 	fun userEnablesLooping(player: MediaPlayerController, enableLoop: Boolean) {
 		player.isLoopingEnabled = enableLoop
-	}
-
-	fun userChangesPlayerName(player: MediaPlayerController, name: String) {
-		val currentLabel = player.mediaPlayerData.label
-		if (currentLabel != name) {
-			player.mediaPlayerData.label = name
-			RenameSoundFileDialog.show(this.fragment?.fragmentManager, player.mediaPlayerData)
-		}
 	}
 
 	fun userSeeksToPlayerPosition(player: MediaPlayerController, position: Int) {

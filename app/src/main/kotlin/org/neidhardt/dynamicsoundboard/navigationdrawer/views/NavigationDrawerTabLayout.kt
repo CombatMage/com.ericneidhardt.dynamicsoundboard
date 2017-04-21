@@ -7,7 +7,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnOpenSoundLayoutsEventListener
 import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundLayoutsRequestedEvent
-import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 
 /**
  * @author eric.neidhardt on 03.05.2016.

@@ -125,7 +125,7 @@
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='com.fasterxml.jackson.databind.ser.impl.UnwrappingBeanPropertyWriter com.fasterxml.jackson.databind.ser.BeanPropertyWriter rename(com.fasterxml.jackson.databind.util.NameTransformer)'>
+    <item name='com.fasterxml.jackson.databind.ser.impl.UnwrappingBeanPropertyWriter com.fasterxml.jackson.databind.ser.BeanPropertyWriter renameFileAndPlayer(com.fasterxml.jackson.databind.util.NameTransformer)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.ser.impl.MapEntrySerializer void serializeUsing(java.util.Map.Entry&lt;?,?&gt;, com.fasterxml.jackson.core.JsonGenerator, com.fasterxml.jackson.databind.SerializerProvider, com.fasterxml.jackson.databind.JsonSerializer&lt;java.lang.Object&gt;) 0'>
@@ -314,7 +314,7 @@
     <item name='com.fasterxml.jackson.databind.ser.impl.MapEntrySerializer void serializeWithType(java.util.Map.Entry&lt;?,?&gt;, com.fasterxml.jackson.core.JsonGenerator, com.fasterxml.jackson.databind.SerializerProvider, com.fasterxml.jackson.databind.jsontype.TypeSerializer) 1'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.ser.impl.UnwrappingBeanPropertyWriter com.fasterxml.jackson.databind.ser.impl.UnwrappingBeanPropertyWriter rename(com.fasterxml.jackson.databind.util.NameTransformer)'>
+    <item name='com.fasterxml.jackson.databind.ser.impl.UnwrappingBeanPropertyWriter com.fasterxml.jackson.databind.ser.impl.UnwrappingBeanPropertyWriter renameFileAndPlayer(com.fasterxml.jackson.databind.util.NameTransformer)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.ser.impl.ReadOnlyClassToSerializerMap com.fasterxml.jackson.databind.JsonSerializer&lt;java.lang.Object&gt; untypedValueSerializer(com.fasterxml.jackson.databind.JavaType) 0'>
@@ -551,7 +551,7 @@
     <item name='com.fasterxml.jackson.databind.ser.impl.PropertySerializerMap com.fasterxml.jackson.databind.ser.impl.PropertySerializerMap.SerializerAndMapResult findAndAddPrimarySerializer(com.fasterxml.jackson.databind.JavaType, com.fasterxml.jackson.databind.SerializerProvider, com.fasterxml.jackson.databind.BeanProperty)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.ser.impl.UnwrappingBeanPropertyWriter com.fasterxml.jackson.databind.ser.BeanPropertyWriter rename(com.fasterxml.jackson.databind.util.NameTransformer) 0'>
+    <item name='com.fasterxml.jackson.databind.ser.impl.UnwrappingBeanPropertyWriter com.fasterxml.jackson.databind.ser.BeanPropertyWriter renameFileAndPlayer(com.fasterxml.jackson.databind.util.NameTransformer) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>

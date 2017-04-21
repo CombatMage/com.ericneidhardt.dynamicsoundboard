@@ -104,8 +104,6 @@ class NavigationDrawerFragment : BaseFragment() {
 	override fun onResume() {
 		super.onResume()
 
-		this.headerVM.title = this.soundLayoutManager.soundLayouts.activeLayout.label
-
 		this.tabView?.onAttached()
 		this.listPresenter?.onAttached()
 

@@ -10,7 +10,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
-import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import kotlin.properties.Delegates
 
 /**

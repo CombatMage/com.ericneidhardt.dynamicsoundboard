@@ -27,8 +27,7 @@
 				android:layout_height="wrap_content"
 				android:layout_alignParentEnd="true"
 				android:text="@string/all_add"
-				android:theme="@style/Theme.Button.Flat"
-				style="@style/Widget.AppCompat.Button.Borderless"/>
+				style="@style/style_all_buttonflat"/>
 
 		<EditText
 				android:id="@+id/et_name_file"
@@ -37,7 +36,7 @@
 				android:layout_marginTop="@dimen/margin_small"
 				android:layout_marginEnd="@dimen/margin_default"
 				android:layout_toStartOf="@id/b_add"
-				style="@style/Theme.EditText"
+				style="@style/style_all_edittext"
 				android:hint="@string/all_NewFileName"/>
 
 	</RelativeLayout>

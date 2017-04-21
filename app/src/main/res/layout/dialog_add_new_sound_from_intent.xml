@@ -18,7 +18,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="@dimen/margin_default"
-				style="@style/Theme.EditText"/>
+				style="@style/style_all_edittext"/>
 
 		<TextView
 				android:layout_width="match_parent"
@@ -36,7 +36,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:hint="@string/suggested_sound_sheet_name"
-					style="@style/Theme.EditText"/>
+					style="@style/style_all_edittext"/>
 
 		</android.support.design.widget.TextInputLayout>
 	</LinearLayout>

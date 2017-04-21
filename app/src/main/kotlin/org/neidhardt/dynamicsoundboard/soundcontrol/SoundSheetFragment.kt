@@ -24,10 +24,13 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
+import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
+import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
@@ -43,7 +46,7 @@ import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloati
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
-import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
 import org.neidhardt.utils.getCopyList
@@ -186,10 +189,10 @@ class SoundSheetFragment :
 		this.soundPresenter.onAttachedToWindow()
 		this.eventBus.registerIfRequired(this)
 
-		this.subscriptions = CompositeDisposable ()
+		this.subscriptions = CompositeDisposable()
 		this.subscriptions.addAll(
 
-				// if sounds where removed, the view becomes unscrollable and therefore the fab can not be reached
+				// if sounds where removed, the view may becomes unscrollable and therefore the fab can not be reached
 				RxSoundManager.changesSoundList(this.soundManager)
 						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe { sounds ->
@@ -198,11 +201,15 @@ class SoundSheetFragment :
 
 				RxSoundManager.changesSoundList(this.soundManager)
 						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe { this.soundAdapter.notifyDataSetChanged() },
+						.subscribe {
+							this.soundAdapter.notifyDataSetChanged()
+						},
 
 				RxNewPlaylistManager.playlistChanges(this.playlistManager)
 						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe { this.soundAdapter.notifyDataSetChanged() },
+						.subscribe {
+							this.soundAdapter.notifyDataSetChanged()
+						},
 
 				this.soundAdapter.startsReorder
 						.subscribe { viewHolder -> this.itemTouchHelper.startDrag(viewHolder) },
@@ -262,11 +269,12 @@ class SoundSheetFragment :
 							}
 						},
 
-				this.soundAdapter.changesName
-						.subscribe { event ->
-							event.viewHolder.name.clearFocus()
-							event.viewHolder.player?.let { player ->
-								this.soundPresenter.userChangesPlayerName(player, event.data)
+				this.soundAdapter.clicksName
+						.subscribe { viewHolder ->
+							viewHolder.player?.let { player ->
+								GenericRenameDialogs.showRenameSoundDialog(
+										fragmentManager = this.fragmentManager,
+										playerData = player.mediaPlayerData)
 							}
 						},
 
