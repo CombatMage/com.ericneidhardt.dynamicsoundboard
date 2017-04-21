@@ -124,18 +124,29 @@ private class RenameSoundFileDialogPresenter (
 	}
 
 	fun renamePlayer() {
-		val uri = Uri.parse(this.playerData.uri)
+		val newFileLabel = this.playerData.label
+		val renamedPlayerId = this.playerData.playerId
 		val renameAllOccurrences = this.renameAllOccurrences.isChecked
 
+		this.playersWithMatchingUri?.forEach { player ->
 
+			if (renameAllOccurrences || player.mediaPlayerData.playerId == renamedPlayerId) {
+				player.mediaPlayerData.label = newFileLabel
+			}
 
-		// TODO
+			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
+				this.playlistManager.notifyHasChanged(player)
+			else
+				this.soundsManager.notifyHasChanged(player)
+		}
+
 		this.dialog.dismiss()
 	}
 
 	fun renameFileAndPlayer() {
 		val fileUriToRename = Uri.parse(this.playerData.uri)
 		val newFileLabel = this.playerData.label
+		val renamedPlayerId = this.playerData.playerId
 		val renameAllOccurrences = this.renameAllOccurrences.isChecked
 
 		val fileToRename = fileUriToRename.getFileForUri()
@@ -160,11 +171,12 @@ private class RenameSoundFileDialogPresenter (
 		}
 
 		val newUri = Uri.fromFile(newFile).toString()
-		for (player in this.playersWithMatchingUri!!) {
+
+		this.playersWithMatchingUri?.forEach { player ->
 			if (!this.setUriForPlayer(player, newUri))
 				this.showErrorRenameFile()
 
-			if (renameAllOccurrences) {
+			if (renameAllOccurrences || player.mediaPlayerData.playerId == renamedPlayerId) {
 				player.mediaPlayerData.label = newFileLabel
 			}
 
