@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.trello.navi2.Event
 import com.trello.navi2.rx.RxNavi
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_soundsheet.*
@@ -134,6 +135,119 @@ class SoundSheetFragment :
 				this.itemAnimator = DefaultItemAnimator()
 			}
 		}
+
+		RxNavi.observe(this, Event.RESUME).subscribe {
+			this.baseActivity.onSoundSheetFragmentResumed()
+			this.floatingActionButton?.show(true)
+
+			this.soundPresenter.onAttachedToWindow()
+			this.eventBus.registerIfRequired(this)
+
+			// if sounds where removed, the view may becomes unscrollable and therefore the fab can not be reached
+			RxSoundManager.changesSoundList(this.soundManager)
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe { sounds ->
+						if (sounds.isEmpty()) this.floatingActionButton?.visibility = View.VISIBLE
+					}
+
+			RxSoundManager.changesSoundList(this.soundManager)
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe {
+						this.soundAdapter.notifyDataSetChanged()
+					}
+
+			RxNewPlaylistManager.playlistChanges(this.playlistManager)
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe {
+						this.soundAdapter.notifyDataSetChanged()
+					}
+
+			this.soundAdapter.startsReorder
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.subscribe { viewHolder -> this.itemTouchHelper.startDrag(viewHolder) }
+
+			this.soundAdapter.startsSwipe
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.subscribe { viewHolder -> this.itemTouchHelper.startSwipe(viewHolder) }
+
+			this.soundAdapter.clicksPlay
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.subscribe { viewHolder ->
+						viewHolder.name.clearFocus()
+						viewHolder.player?.let { player ->
+							this.soundPresenter.userTogglesPlaybackState(player, viewHolder.playButton)
+						}
+					}
+
+			this.soundAdapter.clicksStop
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.subscribe { viewHolder ->
+						viewHolder.player?.let { player ->
+							this.soundPresenter.userStopsPlayback(player)
+						}
+					}
+
+			this.soundAdapter.clicksTogglePlaylist
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.subscribe { viewHolder ->
+						val addToPlaylist = viewHolder
+								.inPlaylistButton.state == TogglePlaylistButton.State.NOT_IN_PLAYLIST
+
+								viewHolder.inPlaylistButton.state = if (addToPlaylist)
+									TogglePlaylistButton.State.IN_PLAYLIST
+								else
+									TogglePlaylistButton.State.NOT_IN_PLAYLIST
+
+								viewHolder.player?.let { player ->
+									this.soundPresenter.userTogglesPlaylistState(player, addToPlaylist)
+								}
+							}
+
+			this.soundAdapter.clicksSettings
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.subscribe { viewHolder ->
+						viewHolder.player?.let { player ->
+							this.soundPresenter.userRequestPlayerSettings(player)
+						}
+					}
+
+			this.soundAdapter.clicksLoopEnabled
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.subscribe { viewHolder ->
+						val enable = viewHolder
+								.isLoopEnabledButton.state == ToggleLoopButton.State.LOOP_DISABLE
+
+						viewHolder.isLoopEnabledButton.state = if (enable)
+							ToggleLoopButton.State.LOOP_ENABLE
+						else
+							ToggleLoopButton.State.LOOP_DISABLE
+
+						viewHolder.player?.let { player ->
+							this.soundPresenter.userEnablesLooping(player, enable)
+						}
+					}
+
+			this.soundAdapter.clicksName
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.subscribe { viewHolder ->
+						viewHolder.player?.let { player ->
+							GenericRenameDialogs.showRenameSoundDialog(
+									fragmentManager = this.fragmentManager,
+									playerData = player.mediaPlayerData)
+						}
+					}
+
+			this.soundAdapter.seeksToPosition
+					.bindToLifecycle(this.fragmentLifeCycle)
+					.subscribe { event ->
+						event.viewHolder.player?.let { player ->
+							this.soundPresenter.userSeeksToPlayerPosition(player, event.data)
+						}
+					}
+		}
 	}
 
 	override var fragmentTag: String = javaClass.name
@@ -141,7 +255,6 @@ class SoundSheetFragment :
 			this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
 					?: throw IllegalStateException("no match for fragmentTag found")
 
-	private var subscriptions = CompositeDisposable()
 	private val eventBus = EventBus.getDefault()
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager
@@ -157,12 +270,6 @@ class SoundSheetFragment :
 	private val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
 
 	var soundAdapter: SoundAdapter by Delegates.notNull<SoundAdapter>()
-
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		super.onCreateView(inflater, container, savedInstanceState)
-		if (container == null) return null
-		return inflater.inflate(R.layout.fragment_soundsheet, container, false)
-	}
 
 	private fun showSnackbarForRestore(deletionHandler: PendingDeletionHandler, timeTillDeletion: Int) {
 		this.coordinatorLayout.context.resources.let { res ->
@@ -180,118 +287,10 @@ class SoundSheetFragment :
 		}
 	}
 
-	override fun onResume() {
-		super.onResume()
-
-		this.baseActivity.onSoundSheetFragmentResumed()
-		this.floatingActionButton?.show(true)
-
-		this.soundPresenter.onAttachedToWindow()
-		this.eventBus.registerIfRequired(this)
-
-		this.subscriptions = CompositeDisposable()
-		this.subscriptions.addAll(
-
-				// if sounds where removed, the view may becomes unscrollable and therefore the fab can not be reached
-				RxSoundManager.changesSoundList(this.soundManager)
-						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe { sounds ->
-							if (sounds.isEmpty()) this.floatingActionButton?.visibility = View.VISIBLE
-						},
-
-				RxSoundManager.changesSoundList(this.soundManager)
-						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe {
-							this.soundAdapter.notifyDataSetChanged()
-						},
-
-				RxNewPlaylistManager.playlistChanges(this.playlistManager)
-						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe {
-							this.soundAdapter.notifyDataSetChanged()
-						},
-
-				this.soundAdapter.startsReorder
-						.subscribe { viewHolder -> this.itemTouchHelper.startDrag(viewHolder) },
-
-				this.soundAdapter.startsSwipe
-						.subscribe { viewHolder -> this.itemTouchHelper.startSwipe(viewHolder) },
-
-				this.soundAdapter.clicksPlay
-						.subscribe { viewHolder ->
-							viewHolder.name.clearFocus()
-							viewHolder.player?.let { player ->
-								this.soundPresenter.userTogglesPlaybackState(player, viewHolder.playButton)
-							}
-						},
-
-				this.soundAdapter.clicksStop
-						.subscribe { viewHolder ->
-							viewHolder.player?.let { player ->
-								this.soundPresenter.userStopsPlayback(player)
-							}
-						},
-
-				this.soundAdapter.clicksTogglePlaylist
-						.subscribe { viewHolder ->
-							val addToPlaylist = viewHolder
-									.inPlaylistButton.state == TogglePlaylistButton.State.NOT_IN_PLAYLIST
-
-							viewHolder.inPlaylistButton.state = if (addToPlaylist)
-								TogglePlaylistButton.State.IN_PLAYLIST
-							else
-								TogglePlaylistButton.State.NOT_IN_PLAYLIST
-
-							viewHolder.player?.let { player ->
-								this.soundPresenter.userTogglesPlaylistState(player, addToPlaylist)
-							}
-						},
-
-				this.soundAdapter.clicksSettings
-						.subscribe { viewHolder ->
-							viewHolder.player?.let { player ->
-								this.soundPresenter.userRequestPlayerSettings(player)
-							}
-						},
-
-				this.soundAdapter.clicksLoopEnabled
-						.subscribe { viewHolder ->
-							val enable = viewHolder
-									.isLoopEnabledButton.state == ToggleLoopButton.State.LOOP_DISABLE
-
-							viewHolder.isLoopEnabledButton.state = if (enable)
-										ToggleLoopButton.State.LOOP_ENABLE
-									else
-										ToggleLoopButton.State.LOOP_DISABLE
-
-							viewHolder.player?.let { player ->
-								this.soundPresenter.userEnablesLooping(player, enable)
-							}
-						},
-
-				this.soundAdapter.clicksName
-						.subscribe { viewHolder ->
-							viewHolder.player?.let { player ->
-								GenericRenameDialogs.showRenameSoundDialog(
-										fragmentManager = this.fragmentManager,
-										playerData = player.mediaPlayerData)
-							}
-						},
-
-				this.soundAdapter.seeksToPosition
-						.subscribe { event ->
-							event.viewHolder.player?.let { player ->
-								this.soundPresenter.userSeeksToPlayerPosition(player, event.data)
-							}
-						}
-		)
-	}
-
 	override fun onPause() {
 		super.onPause()
 		this.snackbarPresenter.stop()
 		this.soundPresenter.onDetachedFromWindow()
-		this.subscriptions.dispose()
 		this.eventBus.unregister(this)
 	}
 
@@ -334,6 +333,12 @@ class SoundSheetFragment :
 			}
 			else -> return false
 		}
+	}
+
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		super.onCreateView(inflater, container, savedInstanceState)
+		if (container == null) return null
+		return inflater.inflate(R.layout.fragment_soundsheet, container, false)
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
