@@ -12,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.trello.navi2.Event
+import com.trello.navi2.rx.RxNavi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_soundsheet.*
@@ -26,16 +28,15 @@ import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.manager.RxNewPlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.RxSoundManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEventListener
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.ItemTouchCallback
@@ -46,7 +47,6 @@ import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloati
 import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
-import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
 import org.neidhardt.ui_utils.helper.SnackbarView
 import org.neidhardt.utils.getCopyList
@@ -73,6 +73,69 @@ class SoundSheetFragment :
 		}
 	}
 
+	init {
+		RxNavi.observe(this, Event.CREATE).subscribe {
+			this.retainInstance = true
+			this.setHasOptionsMenu(true)
+
+			val args = this.arguments
+			val fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
+					?: throw NullPointerException(fragmentTag + ": cannot create fragment, given fragmentTag is null")
+
+			this.fragmentTag = fragmentTag as String
+		}
+
+		RxNavi.observe(this, Event.VIEW_CREATED).subscribe {
+			this.snackbarPresenter.init(this.coordinatorLayout)
+
+			val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
+					?: throw IllegalStateException("no SoundSheet for fragmentTag was found")
+
+			val soundList = this.rv_fragment_sound_sheet_sounds
+
+			val presenter = SoundPresenter(
+					playlistManager = this.playlistManager,
+					fragment = this
+			)
+			this.soundPresenter = presenter
+
+			val adapter = SoundAdapter(
+					soundSheet = this.soundSheet,
+					soundManager = this.soundManager,
+					playlistManager = this.playlistManager
+			)
+			this.soundAdapter = adapter
+
+			val deletionHandler = PendingDeletionHandler(
+					soundSheet = this.soundSheet,
+					adapter = adapter,
+					manager = this.soundManager,
+					onItemDeletionRequested = { handler, time ->
+						this.showSnackbarForRestore(handler, time)
+					}
+			)
+
+			val itemTouchHelper = ItemTouchHelper(
+					ItemTouchCallback(
+							context = soundList.context,
+							deletionHandler = deletionHandler,
+							adapter = adapter,
+							soundSheet = soundSheet,
+							soundManager = this.soundManager
+					)
+			)
+			itemTouchHelper.attachToRecyclerView(soundList)
+			this.itemTouchHelper = itemTouchHelper
+
+			soundList.apply {
+				this.adapter = soundAdapter
+				this.layoutManager = LinearLayoutManager(this.context.applicationContext)
+				this.addItemDecoration(DividerItemDecoration(this.context.applicationContext, R.color.background, R.color.divider))
+				this.itemAnimator = DefaultItemAnimator()
+			}
+		}
+	}
+
 	override var fragmentTag: String = javaClass.name
 	private val soundSheet: NewSoundSheet get() =
 			this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
@@ -95,73 +158,10 @@ class SoundSheetFragment :
 
 	var soundAdapter: SoundAdapter by Delegates.notNull<SoundAdapter>()
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		this.retainInstance = true
-		this.setHasOptionsMenu(true)
-
-		val args = this.arguments
-		val fragmentTag: String? = args.getString(KEY_FRAGMENT_TAG)
-				?: throw NullPointerException(fragmentTag + ": cannot create fragment, given fragmentTag is null")
-
-		this.fragmentTag = fragmentTag as String
-	}
-
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		super.onCreateView(inflater, container, savedInstanceState)
 		if (container == null) return null
 		return inflater.inflate(R.layout.fragment_soundsheet, container, false)
-	}
-
-	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-
-		this.snackbarPresenter.init(this.coordinatorLayout)
-
-		val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
-				?: throw IllegalStateException("no SoundSheet for fragmentTag was found")
-
-		val soundList = this.rv_fragment_sound_sheet_sounds
-
-		val presenter = SoundPresenter(
-				playlistManager = this.playlistManager,
-				fragment = this
-		)
-		this.soundPresenter = presenter
-
-		val adapter = SoundAdapter(
-				soundSheet = this.soundSheet,
-				soundManager = this.soundManager,
-				playlistManager = this.playlistManager
-		)
-		this.soundAdapter = adapter
-
-		val deletionHandler = PendingDeletionHandler(
-				soundSheet = this.soundSheet,
-				adapter = adapter,
-				manager = this.soundManager,
-				onItemDeletionRequested = { handler, time ->
-					this.showSnackbarForRestore(handler, time)
-				}
-		)
-
-		val itemTouchHelper = ItemTouchHelper(
-				ItemTouchCallback(
-						context = soundList.context,
-						deletionHandler = deletionHandler,
-						adapter = adapter,
-						soundSheet = soundSheet,
-						soundManager = this.soundManager
-				)
-		)
-		itemTouchHelper.attachToRecyclerView(soundList)
-		this.itemTouchHelper = itemTouchHelper
-
-		soundList.apply {
-			this.adapter = soundAdapter
-			this.layoutManager = LinearLayoutManager(this.context.applicationContext)
-			this.addItemDecoration(DividerItemDecoration(this.context.applicationContext, R.color.background, R.color.divider))
-			this.itemAnimator = DefaultItemAnimator()
-		}
 	}
 
 	private fun showSnackbarForRestore(deletionHandler: PendingDeletionHandler, timeTillDeletion: Int) {

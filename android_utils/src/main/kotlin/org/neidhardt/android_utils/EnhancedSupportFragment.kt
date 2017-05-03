@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.trello.navi2.Event
 import com.trello.navi2.component.support.NaviFragment
 import com.trello.navi2.rx.RxNavi
+import com.trello.rxlifecycle2.navi.NaviLifecycle
 import io.reactivex.Observable
 
 
@@ -13,6 +14,8 @@ import io.reactivex.Observable
 abstract class EnhancedSupportFragment : NaviFragment() {
 
 	open var fragmentTag: String = javaClass.name.toString()
+
+	val fragmentLifeCycle = NaviLifecycle.createFragmentLifecycleProvider(this)
 
 	internal var onFirstTimeLaunchedListener: (() -> Unit)? = null
 	internal var onRestoreStateListener: ((Bundle) -> Unit)? = null

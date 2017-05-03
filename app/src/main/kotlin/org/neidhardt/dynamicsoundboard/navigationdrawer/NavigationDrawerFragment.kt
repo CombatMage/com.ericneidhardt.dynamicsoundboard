@@ -58,6 +58,7 @@ class NavigationDrawerFragment : BaseFragment() {
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		super.onCreateView(inflater, container, savedInstanceState)
 		this.binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater,
 				R.layout.fragment_navigation_drawer, container, false).letThis {
 			it.layoutNavigationDrawerHeader.viewModel = this.headerVM
@@ -108,7 +109,7 @@ class NavigationDrawerFragment : BaseFragment() {
 		this.listPresenter?.onAttached()
 
 		RxNewSoundLayoutManager.soundLayoutsChanges(this.soundLayoutManager)
-				.bindToLifecycle(this)
+				.bindToLifecycle(this.fragmentLifeCycle)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe { layouts ->
 					val selectedLayout = layouts.activeLayout
@@ -117,14 +118,14 @@ class NavigationDrawerFragment : BaseFragment() {
 				}
 
 		this.adapterSoundLayouts.clicksSettings
-				.bindToLifecycle(this)
+				.bindToLifecycle(this.fragmentLifeCycle)
 				.subscribe { viewHolder ->
 					viewHolder.data?.let { soundLayout ->
 						GenericRenameDialogs.showRenameSoundLayoutDialog(this.fragmentManager, soundLayout) }
 				}
 
 		this.adapterSoundLayouts.clicksViewHolder
-				.bindToLifecycle(this)
+				.bindToLifecycle(this.fragmentLifeCycle)
 				.subscribe { viewHolder ->
 					viewHolder.data?.let { soundLayout ->
 						this.listPresenter?.userClicksSoundLayout(soundLayout)
@@ -132,34 +133,34 @@ class NavigationDrawerFragment : BaseFragment() {
 				}
 
 		RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
-				.bindToLifecycle(this)
+				.bindToLifecycle(this.fragmentLifeCycle)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe {
 					this.adapterSoundSheets.notifyDataSetChanged()
 				}
 
 		RxSoundManager.changesSoundList(this.soundManager)
-				.bindToLifecycle(this)
+				.bindToLifecycle(this.fragmentLifeCycle)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe {
 					this.adapterSoundSheets.notifyDataSetChanged()
 				}
 
 		this.adapterSoundSheets.clicksViewHolder
-				.bindToLifecycle(this)
+				.bindToLifecycle(this.fragmentLifeCycle)
 				.subscribe { viewHolder ->
 					viewHolder.data?.let { this.listPresenter?.userClicksSoundSheetItem(it) }
 				}
 
 		RxNewPlaylistManager.playlistChanges(this.playlistManager)
-				.bindToLifecycle(this)
+				.bindToLifecycle(this.fragmentLifeCycle)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe {
 					this.adapterPlaylist.notifyDataSetChanged()
 				}
 
 		this.adapterPlaylist.clicksViewHolder
-				.bindToLifecycle(this)
+				.bindToLifecycle(this.fragmentLifeCycle)
 				.subscribe { viewHolder ->
 					viewHolder.player?.let{ this.listPresenter?.userClicksPlaylistItem(it) }
 				}
