@@ -12,7 +12,7 @@ import io.reactivex.Observable
  */
 abstract class EnhancedSupportFragment : NaviFragment() {
 
-	var fragmentTag: String = javaClass.name.toString()
+	open var fragmentTag: String = javaClass.name.toString()
 
 	internal var onFirstTimeLaunchedListener: (() -> Unit)? = null
 	internal var onRestoreStateListener: ((Bundle) -> Unit)? = null
