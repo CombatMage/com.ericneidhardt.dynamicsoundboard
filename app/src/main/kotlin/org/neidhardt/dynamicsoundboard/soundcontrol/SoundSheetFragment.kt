@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.jakewharton.rxbinding2.view.RxView
 import com.trello.navi2.Event
 import com.trello.navi2.rx.RxNavi
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
@@ -44,8 +45,6 @@ import org.neidhardt.dynamicsoundboard.soundcontrol.views.ItemTouchCallback
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundAdapter
 import org.neidhardt.dynamicsoundboard.soundcontrol.views.SoundPresenter
-import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.AddPauseFloatingActionButtonView
-import org.neidhardt.dynamicsoundboard.views.floatingactionbutton.FabClickedEvent
 import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 import org.neidhardt.ui_utils.helper.SnackbarPresenter
@@ -61,8 +60,7 @@ private val KEY_STATE_RECYCLER_VIEW = KEY_FRAGMENT_TAG + "_recycler_view_state"
 
 class SoundSheetFragment :
 		BaseFragment(),
-		MediaPlayerFailedEventListener,
-		AddPauseFloatingActionButtonView.FabEventListener
+		MediaPlayerFailedEventListener
 {
 	companion object {
 		fun getNewInstance(soundSheet: NewSoundSheet): SoundSheetFragment {
@@ -149,6 +147,14 @@ class SoundSheetFragment :
 				this.layoutManager = LinearLayoutManager(this.context.applicationContext)
 				this.addItemDecoration(DividerItemDecoration(this.context.applicationContext, R.color.background, R.color.divider))
 				this.itemAnimator = DefaultItemAnimator()
+			}
+
+			this.fb_layout_fab?.let {
+				RxView.clicks(it)
+						.bindToLifecycle(this.fragmentLifeCycle)
+						.subscribe {
+							this.onFabClickedEvent()
+						}
 			}
 		}
 
@@ -355,8 +361,7 @@ class SoundSheetFragment :
 		}
 	}
 
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onFabClickedEvent(event: FabClickedEvent) {
+	fun onFabClickedEvent() {
 		val currentlyPlayingSounds = this.soundLayoutManager.currentlyPlayingSounds
 		if (currentlyPlayingSounds.isNotEmpty()) {
 			val copyCurrentlyPlayingSounds = currentlyPlayingSounds.getCopyList()

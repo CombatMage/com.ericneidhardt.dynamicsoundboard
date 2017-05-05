@@ -6,7 +6,6 @@ import android.view.View
 import com.github.clans.fab.FloatingActionButton
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.animations.AnimationUtils
@@ -23,11 +22,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
  */
 private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
 
-class FabClickedEvent
-
 class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventListener {
-
-	private val eventBus = EventBus.getDefault()
 
 	private var subscriptions = CompositeDisposable()
 	private var manager: SoundLayoutManager? = null
@@ -51,7 +46,6 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 
 	override fun onFinishInflate() {
 		super.onFinishInflate()
-		this.setOnClickListener { this.eventBus.post(FabClickedEvent()) }
 		this.presenter?.init(this)
 	}
 
@@ -108,10 +102,6 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 					AddPauseFloatingAction.State.PLAY
 				else
 					AddPauseFloatingAction.State.ADD
-	}
-
-	interface FabEventListener {
-		fun onFabClickedEvent(event: FabClickedEvent)
 	}
 }
 
