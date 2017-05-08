@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
-import org.neidhardt.ui_utils.presenter.ViewPresenter
+import org.neidhardt.android_utils.view_utils.ViewPresenter
 
 /**
  * File created by eric.neidhardt on 21.05.2015.

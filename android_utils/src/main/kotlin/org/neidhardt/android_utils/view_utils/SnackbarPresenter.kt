@@ -4,7 +4,7 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
-import org.neidhardt.ui_utils.presenter.ViewPresenter
+import org.neidhardt.android_utils.view_utils.ViewPresenter
 
 /**
  * File created by eric.neidhardt on 15.04.2016.

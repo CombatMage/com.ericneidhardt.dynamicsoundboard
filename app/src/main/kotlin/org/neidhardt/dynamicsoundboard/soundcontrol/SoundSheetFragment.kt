@@ -82,15 +82,15 @@ class SoundSheetFragment :
 	private val soundManager = SoundboardApplication.soundManager
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 	private val playlistManager = SoundboardApplication.playlistManager
-
+	private val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
+	private val soundAdapter = SoundAdapter(
+			soundSheet = this.soundSheet,
+			soundManager = this.soundManager,
+			playlistManager = this.playlistManager
+	)
+	private val snackbarPresenter = SnackbarPresenter()
 	private var soundPresenter: SoundPresenter by Delegates.notNull<SoundPresenter>()
 	private var itemTouchHelper: ItemTouchHelper by Delegates.notNull<ItemTouchHelper>()
-
-	private val snackbarPresenter = SnackbarPresenter()
-
-	private val coordinatorLayout: CoordinatorLayout by lazy { this.cl_fragment_sound_sheet }
-
-	var soundAdapter: SoundAdapter by Delegates.notNull<SoundAdapter>()
 
 	init {
 		RxNavi.observe(this, Event.CREATE).subscribe {
@@ -110,31 +110,25 @@ class SoundSheetFragment :
 			val soundList = this.rv_fragment_sound_sheet_sounds
 			val presenter = SoundPresenter(
 					playlistManager = this.playlistManager,
-					fragment = this
+					fragment = this,
+					adapter = this.soundAdapter
 			)
-			this.soundPresenter = presenter
 
-			val adapter = SoundAdapter(
-					soundSheet = this.soundSheet,
-					soundManager = this.soundManager,
-					playlistManager = this.playlistManager
-			)
-			this.soundAdapter = adapter
+			this.soundPresenter = presenter
 
 			val deletionHandler = PendingDeletionHandler(
 					soundSheet = this.soundSheet,
-					adapter = adapter,
+					adapter = this.soundAdapter,
 					manager = this.soundManager,
 					onItemDeletionRequested = { handler, time ->
 						this.showSnackbarForRestore(handler, time)
 					}
 			)
-
 			val itemTouchHelper = ItemTouchHelper(
 					ItemTouchCallback(
 							context = soundList.context,
 							deletionHandler = deletionHandler,
-							adapter = adapter,
+							adapter = this.soundAdapter,
 							soundSheet = soundSheet,
 							soundManager = this.soundManager
 					)
@@ -330,35 +324,10 @@ class SoundSheetFragment :
 		}
 	}
 
-	private fun showSnackbarForRestore(deletionHandler: PendingDeletionHandler, timeTillDeletion: Int) {
-		this.coordinatorLayout.context.resources.let { res ->
-			val snackbarAction = SnackbarView.SnackbarAction(
-					R.string.sound_control_deletion_pending_undo,
-					{ deletionHandler.restoreDeletedItems() })
-
-			val count = deletionHandler.countPendingDeletions
-			val message = if (count == 1)
-				res.getString(R.string.sound_control_deletion_pending_single)
-			else
-				res.getString(R.string.sound_control_deletion_pending).replace("{%s0}", count.toString())
-
-			this.snackbarPresenter.showSnackbar(message, timeTillDeletion, snackbarAction)
-		}
-	}
-
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		super.onCreateView(inflater, container, savedInstanceState)
 		if (container == null) return null
 		return inflater.inflate(R.layout.fragment_soundsheet, container, false)
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: MediaPlayerFailedEvent) {
-		this.coordinatorLayout.context.resources.let { res ->
-			val message = "${res.getString(R.string.sound_control_error_during_playback)}: " +
-					event.player.mediaPlayerData.label
-			this.snackbarPresenter.showSnackbar(message, Snackbar.LENGTH_INDEFINITE, null)
-		}
 	}
 
 	fun onFabClickedEvent() {
@@ -376,6 +345,31 @@ class SoundSheetFragment :
 			} else {
 				AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, this.fragmentTag)
 			}
+		}
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: MediaPlayerFailedEvent) {
+		this.coordinatorLayout.context.resources.let { res ->
+			val message = "${res.getString(R.string.sound_control_error_during_playback)}: " +
+					event.player.mediaPlayerData.label
+			this.snackbarPresenter.showSnackbar(message, Snackbar.LENGTH_INDEFINITE, null)
+		}
+	}
+
+	private fun showSnackbarForRestore(deletionHandler: PendingDeletionHandler, timeTillDeletion: Int) {
+		this.coordinatorLayout.context.resources.let { res ->
+			val snackbarAction = SnackbarView.SnackbarAction(
+					R.string.sound_control_deletion_pending_undo,
+					{ deletionHandler.restoreDeletedItems() })
+
+			val count = deletionHandler.countPendingDeletions
+			val message = if (count == 1)
+				res.getString(R.string.sound_control_deletion_pending_single)
+			else
+				res.getString(R.string.sound_control_deletion_pending).replace("{%s0}", count.toString())
+
+			this.snackbarPresenter.showSnackbar(message, timeTillDeletion, snackbarAction)
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package org.neidhardt.ui_utils.presenter
+package org.neidhardt.android_utils.view_utils
 
 /**
  * @author eric.neidhardt on 11.06.2016.

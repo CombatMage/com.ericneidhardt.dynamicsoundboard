@@ -3,22 +3,22 @@ package org.neidhardt.dynamicsoundboard.soundcontrol.views
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
 import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
-import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import java.lang.ref.WeakReference
 
 /**
  * File created by eric.neidhardt on 02.07.2015.
  */
 class SoundPresenter (
+		private val adapter: SoundAdapter,
 		private val playlistManager: PlaylistManager,
 		fragment: SoundSheetFragment
 ) : MediaPlayerEventListener {
@@ -28,11 +28,10 @@ class SoundPresenter (
 	private val eventBus = EventBus.getDefault()
 
 	private val fragment: SoundSheetFragment? get() = this.fragmentReference.get()
-	private val adapter: SoundAdapter? get() = this.fragment?.soundAdapter
 
 	fun onAttachedToWindow() {
 		this.eventBus.registerIfRequired(this)
-		this.adapter?.notifyDataSetChanged()
+		this.adapter.notifyDataSetChanged()
 	}
 
 	fun onDetachedFromWindow() {
@@ -56,7 +55,7 @@ class SoundPresenter (
 
 	fun userStopsPlayback(player: MediaPlayerController) {
 		player.stopSound()
-		this.adapter?.notifyItemChanged(player)
+		this.adapter.notifyItemChanged(player)
 	}
 
 	fun userTogglesPlaylistState(player: MediaPlayerController, addToPlaylist: Boolean) {
@@ -80,12 +79,12 @@ class SoundPresenter (
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerStateChangedEvent) {
 		val playerId = event.playerId
-		val players = this.adapter?.values ?: return
+		val players = this.adapter.values
 		val count = players.size
 		for (i in 0..count - 1) {
 			val player = players[i]
 			if (event.isAlive && player.mediaPlayerData.playerId == playerId && !player.isDeletionPending)
-				this.adapter?.notifyItemChanged(i)
+				this.adapter.notifyItemChanged(i)
 		}
 	}
 
