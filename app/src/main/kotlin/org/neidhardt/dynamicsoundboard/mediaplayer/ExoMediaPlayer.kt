@@ -22,7 +22,7 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import org.neidhardt.utils.letThis
@@ -36,7 +36,7 @@ object MediaPlayerFactory {
 
 	private val TAG = javaClass.name
 
-	fun createPlayer(context: Context, eventBus: EventBus, playerData: NewMediaPlayerData) : MediaPlayerController? {
+	fun createPlayer(context: Context, eventBus: EventBus, playerData: MediaPlayerData) : MediaPlayerController? {
 		try {
 			val file = Uri.parse(playerData.uri).getFileForUri()
 			if (file == null || !file.isAudioFile)
@@ -57,13 +57,13 @@ object MediaPlayerFactory {
 
 	fun getNewMediaPlayerController(context: Context,
 									eventBus: EventBus,
-									mediaPlayerData: NewMediaPlayerData,
+									mediaPlayerData: MediaPlayerData,
 									manager: SoundLayoutManager): MediaPlayerController {
 		return ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
 	}
 
-	fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): NewMediaPlayerData {
-		val data = NewMediaPlayerData()
+	fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): MediaPlayerData {
+		val data = MediaPlayerData()
 
 		data.playerId = Integer.toString((uri.toString() + SoundboardApplication.randomNumber).hashCode())
 		data.fragmentTag = fragmentTag
@@ -74,7 +74,7 @@ object MediaPlayerFactory {
 		return data
 	}
 
-	fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): NewMediaPlayerData {
+	fun getMediaPlayerDataFromFile(file: File, fragmentTag: String): MediaPlayerData {
 		val soundUri = Uri.parse(file.absolutePath)
 		val soundLabel = FileUtils.stripFileTypeFromName(
 				FileUtils.getFileNameFromUri(SoundboardApplication.context, soundUri))
@@ -104,7 +104,7 @@ class ExoMediaPlayer
 		private val context: Context,
 		private val eventBus: EventBus,
 		private val manager: SoundLayoutManager,
-		override val mediaPlayerData: NewMediaPlayerData
+		override val mediaPlayerData: MediaPlayerData
 ) : MediaPlayerController, ExoPlayer.EventListener
 {
 	private val TAG = javaClass.name

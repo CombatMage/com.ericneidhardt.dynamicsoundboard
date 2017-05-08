@@ -6,8 +6,8 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.generic.GenericEditTextDialog
 import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 
 /**
  * Created by eric.neidhardt@gmail.com on 05.01.2017.
@@ -24,7 +24,7 @@ object GenericAddDialogs {
 				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericadd_SoundLayoutTitle,
 						R.string.genericadd_SoundLayoutMessage),
 				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { _, input ->
-					val layout = NewSoundLayout().apply {
+					val layout = SoundLayout().apply {
 						this.isSelected = false
 						this.databaseId = SoundLayoutManager.getNewDatabaseIdForLabel(input)
 						this.label = input
@@ -47,7 +47,7 @@ object GenericAddDialogs {
 						R.string.genericadd_SoundSheetMessage),
 				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { _, input ->
 					val manager = SoundboardApplication.soundSheetManager
-					val soundSheet = NewSoundSheet().apply {
+					val soundSheet = SoundSheet().apply {
 						this.label = input
 						this.fragmentTag = SoundSheetManager.getNewFragmentTagForLabel(input)
 					}

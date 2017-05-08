@@ -8,7 +8,7 @@ import java.util.List;
  * Created by eric.neidhardt@gmail.com on 19.12.2016.
  */
 
-public class NewSoundLayout {
+public class SoundLayout {
 
 	public String databaseId;
 
@@ -19,8 +19,8 @@ public class NewSoundLayout {
 	public boolean isSelectedForDeletion;
 
 	@Nullable
-	public List<NewSoundSheet> soundSheets;
+	public List<SoundSheet> soundSheets;
 
 	@Nullable
-	public List<NewMediaPlayerData> playList;
+	public List<MediaPlayerData> playList;
 }

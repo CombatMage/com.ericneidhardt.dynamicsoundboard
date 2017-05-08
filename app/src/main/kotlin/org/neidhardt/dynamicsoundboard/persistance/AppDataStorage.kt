@@ -6,7 +6,7 @@ import com.sevenval.simplestorage.SimpleStorage
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import org.neidhardt.dynamicsoundboard.persistance.model.AppData
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
 import java .io.File
 
 /**
@@ -16,13 +16,13 @@ class AppDataStorage(context: Context) : SimpleStorage<AppData>(context, AppData
 
 	private val converter = Gson()
 
-	fun save(list: List<NewSoundLayout>): Observable<AppData> {
+	fun save(list: List<SoundLayout>): Observable<AppData> {
 		val data = AppData().apply { this.soundLayouts = list }
 		this.prepareAppDataForSave(data)
 		return super.save(data)
 	}
 
-	fun saveToFile(file: File, list: List<NewSoundLayout>): Observable<File> {
+	fun saveToFile(file: File, list: List<SoundLayout>): Observable<File> {
 		val data = AppData().apply { this.soundLayouts = list }
 		this.prepareAppDataForSave(data)
 

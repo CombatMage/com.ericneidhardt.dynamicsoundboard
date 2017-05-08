@@ -7,9 +7,9 @@ import io.reactivex.subjects.PublishSubject
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 
-open class SoundSheetsAdapter() : BaseAdapter<NewSoundSheet, SoundSheetViewHolder>() {
+open class SoundSheetsAdapter() : BaseAdapter<SoundSheet, SoundSheetViewHolder>() {
 
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 
@@ -19,7 +19,7 @@ open class SoundSheetsAdapter() : BaseAdapter<NewSoundSheet, SoundSheetViewHolde
 
 	override fun getItemId(position: Int): Long = this.values[position].fragmentTag.hashCode().toLong()
 
-	override val values: List<NewSoundSheet> get() = this.soundSheetManager.soundSheets
+	override val values: List<SoundSheet> get() = this.soundSheetManager.soundSheets
 
 	override fun getItemViewType(position: Int): Int = R.layout.view_sound_sheet_item
 

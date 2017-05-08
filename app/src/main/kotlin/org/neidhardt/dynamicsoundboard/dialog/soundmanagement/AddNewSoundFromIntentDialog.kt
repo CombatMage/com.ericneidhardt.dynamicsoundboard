@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import java.util.*
 
 
@@ -142,7 +142,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 	}
 
 	private fun addNewSoundSheet(label: String): String {
-		val soundSheet = NewSoundSheet().apply {
+		val soundSheet = SoundSheet().apply {
 			this.label = label
 			this.fragmentTag = SoundSheetManager.getNewFragmentTagForLabel(label)
 		}
@@ -160,7 +160,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		private val KEY_AVAILABLE_SOUND_SHEET_LABELS = "AddNewSoundFromIntent.KEY_AVAILABLE_SOUND_SHEET_LABELS"
 		private val KEY_AVAILABLE_SOUND_SHEET_IDS = "AddNewSoundFromIntent.KEY_AVAILABLE_SOUND_SHEET_IDS"
 
-		fun showInstance(manager: FragmentManager, uri: Uri, suggestedName: String, availableSoundSheets: List<NewSoundSheet>) {
+		fun showInstance(manager: FragmentManager, uri: Uri, suggestedName: String, availableSoundSheets: List<SoundSheet>) {
 			val dialog = AddNewSoundFromIntentDialog()
 
 			val args = Bundle()
@@ -175,7 +175,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 			dialog.show(manager, TAG)
 		}
 
-		private fun getLabelsFromSoundSheets(soundSheets: List<NewSoundSheet>): ArrayList<String> {
+		private fun getLabelsFromSoundSheets(soundSheets: List<SoundSheet>): ArrayList<String> {
 			val labels = ArrayList<String>()
 			for (soundSheet in soundSheets) {
 				soundSheet.label?.let { labels.add(it) }
@@ -183,7 +183,7 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 			return labels
 		}
 
-		private fun getIdsFromSoundSheets(soundSheets: List<NewSoundSheet>): ArrayList<String> {
+		private fun getIdsFromSoundSheets(soundSheets: List<SoundSheet>): ArrayList<String> {
 			val labels = ArrayList<String>()
 			for (soundSheet in soundSheets){
 				soundSheet.fragmentTag?.let { labels.add(it) }

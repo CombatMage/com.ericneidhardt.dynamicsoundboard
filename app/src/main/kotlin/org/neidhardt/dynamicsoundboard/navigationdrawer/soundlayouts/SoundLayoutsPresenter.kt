@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
 
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
 import kotlin.properties.Delegates
 
 /**
@@ -21,7 +21,7 @@ class SoundLayoutsPresenter() : NavigationDrawerListBasePresenter() {
 	private val manager = SoundboardApplication.soundLayoutManager
 
 	var adapter: SoundLayoutsAdapter by Delegates.notNull<SoundLayoutsAdapter>()
-	val values: List<NewSoundLayout> get() = this.manager.soundLayouts
+	val values: List<SoundLayout> get() = this.manager.soundLayouts
 
 	override fun onAttachedToWindow() {
 		this.adapter.notifyDataSetChanged()
@@ -57,13 +57,13 @@ class SoundLayoutsPresenter() : NavigationDrawerListBasePresenter() {
 		this.adapter.notifyDataSetChanged()
 	}
 
-	private fun getSoundLayoutsSelectedForDeletion(): List<NewSoundLayout> {
+	private fun getSoundLayoutsSelectedForDeletion(): List<SoundLayout> {
 		val existingSoundLayouts = this.adapter.values
 		val selectedSoundLayouts = existingSoundLayouts.orEmpty().filter { it.isSelectedForDeletion }
 		return selectedSoundLayouts
 	}
 
-	fun onItemClick(data: NewSoundLayout) {
+	fun onItemClick(data: SoundLayout) {
 		if (this.isInSelectionMode) {
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			this.adapter.notifyDataSetChanged()

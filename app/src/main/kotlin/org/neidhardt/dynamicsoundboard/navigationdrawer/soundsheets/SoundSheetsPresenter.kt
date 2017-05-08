@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import kotlin.properties.Delegates
 
 /**
@@ -24,7 +24,7 @@ open class SoundSheetsPresenter() : NavigationDrawerListBasePresenter() {
 	private val soundManager = SoundboardApplication.soundManager
 
 	var adapter: SoundSheetsAdapter by Delegates.notNull<SoundSheetsAdapter>()
-	protected val values: List<NewSoundSheet> get() = this.soundSheetManager.soundSheets
+	protected val values: List<SoundSheet> get() = this.soundSheetManager.soundSheets
 
 	override fun onAttachedToWindow() {
 		this.adapter.notifyDataSetChanged()
@@ -44,7 +44,7 @@ open class SoundSheetsPresenter() : NavigationDrawerListBasePresenter() {
 		this.stopDeletionMode()
 	}
 
-	fun onItemClick(data: NewSoundSheet) {
+	fun onItemClick(data: SoundSheet) {
 		if (this.isInSelectionMode) {
 			data.isSelectedForDeletion = !data.isSelectedForDeletion
 			this.adapter.notifyItemChanged(data)
@@ -76,7 +76,7 @@ open class SoundSheetsPresenter() : NavigationDrawerListBasePresenter() {
 		this.adapter.notifyDataSetChanged()
 	}
 
-	private fun getSoundSheetsSelectedForDeletion(): List<NewSoundSheet> {
+	private fun getSoundSheetsSelectedForDeletion(): List<SoundSheet> {
 		val existingSoundSheets = this.values
 		val selectedSoundSheets = existingSoundSheets.filter { it.isSelectedForDeletion }
 		return selectedSoundSheets

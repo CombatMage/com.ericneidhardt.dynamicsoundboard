@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.manager.findById
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 
 /**
  * File created by eric.neidhardt on 12.04.2015.
@@ -19,7 +19,7 @@ abstract class SoundSettingsBaseDialog : BaseDialog() {
 	protected val playlistManager = SoundboardApplication.playlistManager
 
 	protected abstract var fragmentTag: String
-	protected abstract var soundSheet: NewSoundSheet? // can be null if sound is from playlist
+	protected abstract var soundSheet: SoundSheet? // can be null if sound is from playlist
 	protected abstract var player: MediaPlayerController
 
 	override fun onCreate(savedInstanceState: Bundle?) {

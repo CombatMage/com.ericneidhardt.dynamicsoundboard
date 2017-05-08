@@ -12,8 +12,8 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPres
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import java.lang.ref.WeakReference
 
 /**
@@ -126,7 +126,7 @@ class NavigationDrawerListPresenter(
 		this.hideToolbarForDeletion()
 	}
 
-	fun userClicksSoundLayout(soundLayout: NewSoundLayout) {
+	fun userClicksSoundLayout(soundLayout: SoundLayout) {
 		this.presenterSoundLayouts.onItemClick(soundLayout)
 		if (this.presenterSoundLayouts.isInSelectionMode) {
 			val itemCount = this.presenterSoundLayouts.itemCount
@@ -144,7 +144,7 @@ class NavigationDrawerListPresenter(
 		}
 	}
 
-	fun userClicksSoundSheetItem(soundSheet: NewSoundSheet) {
+	fun userClicksSoundSheetItem(soundSheet: SoundSheet) {
 		this.presenterSoundSheets.onItemClick(soundSheet)
 		if (this.presenterSoundSheets.isInSelectionMode) {
 			val itemCount = this.presenterSoundSheets.itemCount

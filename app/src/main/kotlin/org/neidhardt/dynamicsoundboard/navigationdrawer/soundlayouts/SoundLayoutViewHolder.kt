@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
 
 /**
  * File created by eric.neidhardt on 17.07.2015.
@@ -18,9 +18,9 @@ class SoundLayoutViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
 
 	val openSettings: View = itemView.findViewById(R.id.ib_view_sound_layout_item_settings)
 
-	var data: NewSoundLayout? = null
+	var data: SoundLayout? = null
 
-	fun bindData(data: NewSoundLayout, isLastItem: Boolean) {
+	fun bindData(data: SoundLayout, isLastItem: Boolean) {
 		this.data = data
 
 		this.label.text = data.label

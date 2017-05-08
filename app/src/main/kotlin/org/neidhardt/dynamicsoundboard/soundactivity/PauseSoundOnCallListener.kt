@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundcontrol
+package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.content.Context
 import android.telephony.PhoneStateListener
@@ -49,7 +49,7 @@ fun SoundActivity.registerPauseSoundOnCallListener(listener: PauseSoundOnCallLis
 
 fun SoundActivity.unregisterPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
 	////listener.clearReferences()
-    val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    val manager = this.getSystemService(android.content.Context.TELEPHONY_SERVICE) as TelephonyManager
 	//manager.listen(listener, PhoneStateListener.LISTEN_NONE)
 }
 

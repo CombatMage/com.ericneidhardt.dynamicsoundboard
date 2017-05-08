@@ -34,12 +34,12 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
 import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
-import org.neidhardt.dynamicsoundboard.soundcontrol.SoundSheetFragment
+import org.neidhardt.dynamicsoundboard.soundsheetfragment.SoundSheetFragment
 import org.neidhardt.dynamicsoundboard.view_helper.navigationdrawer_helper.NoAnimationDrawerToggle
 import org.neidhardt.utils.letThis
 
@@ -198,7 +198,6 @@ class SoundActivity :
 		}
 	}
 
-
 	fun onSoundSheetFragmentResumed() {
 		this.toolbarVM.isSoundSheetActionsEnable = true
 	}
@@ -246,7 +245,7 @@ class SoundActivity :
 		fragmentManager.executePendingTransactions()
 	}
 
-	private fun openSoundFragment(soundSheet: NewSoundSheet?) {
+	private fun openSoundFragment(soundSheet: SoundSheet?) {
 		if (!this.isActivityResumed)
 			return
 

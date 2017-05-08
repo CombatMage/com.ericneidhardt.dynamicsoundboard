@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundcontrol.views
+package org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import org.neidhardt.utils.longHash
 
 /**
@@ -19,7 +19,7 @@ import org.neidhardt.utils.longHash
 data class SoundViewHolderEvent<out T>(val viewHolder: SoundViewHolder, val data: T)
 
 class SoundAdapter (
-		private val soundSheet: NewSoundSheet,
+		private val soundSheet: SoundSheet,
 		private val soundManager: SoundManager,
 		private val playlistManager: PlaylistManager
 ) :

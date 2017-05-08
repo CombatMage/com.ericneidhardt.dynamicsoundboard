@@ -8,15 +8,15 @@ import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
 import org.neidhardt.utils.longHash
 
 /**
  * File created by eric.neidhardt on 08.03.2015.
  */
 class SoundLayoutsAdapter() :
-		BaseAdapter<NewSoundLayout, SoundLayoutViewHolder>(),
-		ListAdapter<NewSoundLayout>
+		BaseAdapter<SoundLayout, SoundLayoutViewHolder>(),
+		ListAdapter<SoundLayout>
 {
 	val clicksViewHolder: PublishSubject<SoundLayoutViewHolder> = PublishSubject.create()
 	val clicksSettings: PublishSubject<SoundLayoutViewHolder> = PublishSubject.create()
@@ -28,7 +28,7 @@ class SoundLayoutsAdapter() :
 	override fun getItemId(position: Int): Long = this.values[position].databaseId?.longHash
 			?: throw IllegalStateException("SoundLayoutManager has invalid item ${this.values[position]}")
 
-	override val values: List<NewSoundLayout> get() = this.manager.soundLayouts
+	override val values: List<SoundLayout> get() = this.manager.soundLayouts
 
 	override fun getItemCount(): Int = this.values.size
 
@@ -60,7 +60,7 @@ class SoundLayoutsAdapter() :
 		holder.bindData(data, position == this.itemCount - 1)
 	}
 
-	override fun notifyItemChanged(data: NewSoundLayout)
+	override fun notifyItemChanged(data: SoundLayout)
 	{
 		val index = this.values.indexOf(data)
 		if (index == -1)

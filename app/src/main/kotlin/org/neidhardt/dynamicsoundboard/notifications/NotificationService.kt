@@ -21,9 +21,9 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
-import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
-import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundactivity.PauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundactivity.registerPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.soundactivity.unregisterPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 
 /**

@@ -20,8 +20,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import java.io.File
 import java.io.IOException
 import kotlin.properties.Delegates
@@ -32,12 +32,12 @@ import kotlin.properties.Delegates
 class RenameSoundFileDialog : SoundSettingsBaseDialog() {
 	override var player: MediaPlayerController by Delegates.notNull<MediaPlayerController>()
 	override var fragmentTag: String by Delegates.notNull<String>()
-	override var soundSheet: NewSoundSheet? = null
+	override var soundSheet: SoundSheet? = null
 
 	companion object {
 		private val TAG = RenameSoundFileDialog::class.java.name
 
-		fun show(fragmentManager: FragmentManager?, playerData: NewMediaPlayerData) {
+		fun show(fragmentManager: FragmentManager?, playerData: MediaPlayerData) {
 			fragmentManager ?: return
 			playerData.playerId ?: return
 			playerData.fragmentTag ?: return
@@ -77,7 +77,7 @@ class RenameSoundFileDialog : SoundSettingsBaseDialog() {
 }
 
 private class RenameSoundFileDialogPresenter (
-		private val playerData: NewMediaPlayerData,
+		private val playerData: MediaPlayerData,
 		private val soundsManager: SoundManager,
 		private val playlistManager: PlaylistManager,
 		private val soundSheetManager: SoundSheetManager,

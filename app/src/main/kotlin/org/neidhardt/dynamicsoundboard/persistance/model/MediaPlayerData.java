@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
  * Created by eric.neidhardt@gmail.com on 19.12.2016.
  */
 
-public class NewMediaPlayerData {
+public class MediaPlayerData {
 	public String playerId;
 	public String fragmentTag;
 	public String label;

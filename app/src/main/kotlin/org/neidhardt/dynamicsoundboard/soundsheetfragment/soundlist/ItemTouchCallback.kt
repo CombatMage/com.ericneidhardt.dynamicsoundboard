@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundcontrol.views
+package org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 
 /**
@@ -20,7 +20,7 @@ class ItemTouchCallback(
 		context: Context,
 		private val deletionHandler: PendingDeletionHandler,
 		private val adapter: SoundAdapter,
-		private val soundSheet: NewSoundSheet,
+		private val soundSheet: SoundSheet,
 		private val soundManager: SoundManager
 ) : ItemTouchHelper.Callback() {
 

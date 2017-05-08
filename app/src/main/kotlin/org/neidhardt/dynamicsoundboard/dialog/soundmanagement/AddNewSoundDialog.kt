@@ -31,7 +31,7 @@ import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import java.io.File
 import java.util.*
@@ -199,8 +199,8 @@ private class AddNewSoundDialogPresenter(
 
 	private fun returnResultsToCallingFragment() {
 		val count = this.soundsToAdd.size
-		val playersData = ArrayList<NewMediaPlayerData>(count)
-		val renamedPlayers = ArrayList<NewMediaPlayerData>()
+		val playersData = ArrayList<MediaPlayerData>(count)
+		val renamedPlayers = ArrayList<MediaPlayerData>()
 		for (i in 0..count - 1) {
 			val item = this.values[i]
 
@@ -228,7 +228,7 @@ private class AddNewSoundDialogPresenter(
 		this.showRenameDialog(renamedPlayers) // show the renameFileAndPlayer dialog for all altered players
 	}
 
-	private fun showRenameDialog(renamedMediaPlayers: List<NewMediaPlayerData>) {
+	private fun showRenameDialog(renamedMediaPlayers: List<MediaPlayerData>) {
 		for (data in renamedMediaPlayers)
 			RenameSoundFileDialog.show(this.dialog.fragmentManager, data)
 	}

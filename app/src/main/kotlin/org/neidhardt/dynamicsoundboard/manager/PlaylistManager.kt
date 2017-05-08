@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
 import org.neidhardt.utils.getCopyList
 
 /**
@@ -25,12 +25,12 @@ class PlaylistManager(private val context: Context) {
 
 	internal var onPlaylistChangedListener = ArrayList<((List<MediaPlayerController>) -> Unit)>()
 
-	internal var mMediaPlayersData: MutableList<NewMediaPlayerData>? = null
+	internal var mMediaPlayersData: MutableList<MediaPlayerData>? = null
 	internal var mMediaPlayers: MutableList<MediaPlayerController>? = null
 
 	val playlist: List<MediaPlayerController> get() = this.mMediaPlayers as List<MediaPlayerController>
 
-	fun set(mediaPlayerData: MutableList<NewMediaPlayerData>) {
+	fun set(mediaPlayerData: MutableList<MediaPlayerData>) {
 		this.mMediaPlayers?.forEach { it.destroy(false) }
 		this.mMediaPlayersData = mediaPlayerData
 		this.mMediaPlayers = ArrayList()
@@ -61,17 +61,17 @@ class PlaylistManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	fun add(mediaPlayerData: NewMediaPlayerData) {
+	fun add(mediaPlayerData: MediaPlayerData) {
 		this.createPlayerAndAddToPlaylist(mediaPlayerData)
 		this.invokeListeners()
 	}
 
-	fun togglePlaylistSound(mediaPlayerData: NewMediaPlayerData, addToPlaylist: Boolean) {
+	fun togglePlaylistSound(mediaPlayerData: MediaPlayerData, addToPlaylist: Boolean) {
 		if (addToPlaylist) {
 			if (this.playlist.findById(mediaPlayerData.playerId) != null)
 				throw IllegalArgumentException("player is already part of the playlist")
 
-			val newPlayerData = NewMediaPlayerData().apply {
+			val newPlayerData = MediaPlayerData().apply {
 				this.playerId = mediaPlayerData.playerId
 				this.fragmentTag = PlaylistTAG
 				this.isLoop = false
@@ -88,7 +88,7 @@ class PlaylistManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	private fun createPlayerAndAddToPlaylist(playerData: NewMediaPlayerData) {
+	private fun createPlayerAndAddToPlaylist(playerData: MediaPlayerData) {
 		if (this.playlist.containsPlayerWithId(playerData.playerId))
 			return
 

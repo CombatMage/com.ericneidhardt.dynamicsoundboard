@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 
 /**
  * File created by eric.neidhardt on 10.07.2015.
@@ -18,9 +18,9 @@ class SoundSheetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 	private val soundCountLabel = itemView.findViewById(R.id.tv_sound_count_label)
 	private val divider = itemView.findViewById(R.id.v_divider)
 
-	var data: NewSoundSheet? = null
+	var data: SoundSheet? = null
 
-	fun bindData(data: NewSoundSheet, isLastItem: Boolean) {
+	fun bindData(data: SoundSheet, isLastItem: Boolean) {
 		this.data = data
 
 		this.label.text = data.label

@@ -13,8 +13,8 @@ import org.neidhardt.android_utils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import org.neidhardt.utils.letThis
 import java.util.*
 import kotlin.properties.Delegates
@@ -26,7 +26,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 
 	override var fragmentTag: String by Delegates.notNull<String>()
 	override var player: MediaPlayerController by Delegates.notNull<MediaPlayerController>()
-	override var soundSheet: NewSoundSheet? = null
+	override var soundSheet: SoundSheet? = null
 
 	private var soundName: CustomEditText? = null
 	private var soundSheetName: CustomEditText? = null
@@ -100,7 +100,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 		val newSoundSheet = if (addNewSoundSheet) {
 			val newSoundSheetLabel = this.soundSheetName?.displayedText ?: ""
 			val newFragmentTag = SoundSheetManager.getNewFragmentTagForLabel(newSoundSheetLabel)
-			val newSoundSheet = NewSoundSheet().apply {
+			val newSoundSheet = SoundSheet().apply {
 				this.fragmentTag = newFragmentTag
 				this.label = newSoundSheetLabel
 			}
@@ -129,7 +129,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 	companion object {
 		private val TAG = SoundSettingsDialog::class.java.name
 
-		fun showInstance(fragmentManager: FragmentManager?, playerData: NewMediaPlayerData) {
+		fun showInstance(fragmentManager: FragmentManager?, playerData: MediaPlayerData) {
 			if (fragmentManager == null)
 				return
 

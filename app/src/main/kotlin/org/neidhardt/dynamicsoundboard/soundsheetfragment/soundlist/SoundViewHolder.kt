@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundcontrol.views
+package org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -32,7 +32,7 @@ class SoundViewHolder(
 	val isLoopEnabledButton: ToggleLoopButton = itemView.ib_view_sound_control_item_loop
 	val inPlaylistButton: TogglePlaylistButton = itemView.ib_view_sound_control_item_add_to_playlist
 	
-	val timePosition: SeekBar= itemView.sb_view_sound_control_item_progress
+	val timePosition: SeekBar = itemView.sb_view_sound_control_item_progress
 	val settingsButton: ImageButton = itemView.ib_view_sound_control_item_settings
 
 	var player: MediaPlayerController? = null
@@ -63,9 +63,9 @@ class SoundViewHolder(
 			this.stopButton.isEnabled = player.isPlayingSound || player.progress > 0
 
 			this.isLoopEnabledButton.state = if (playerData.isLoop)
-						ToggleLoopButton.State.LOOP_ENABLE
+				ToggleLoopButton.State.LOOP_ENABLE
 					else
-						ToggleLoopButton.State.LOOP_DISABLE
+				ToggleLoopButton.State.LOOP_DISABLE
 
 			this.inPlaylistButton.state =
 					if (this.playlistManager.playlist.containsPlayerWithId(playerData.playerId))
