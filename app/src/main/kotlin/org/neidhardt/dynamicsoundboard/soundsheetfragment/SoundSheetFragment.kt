@@ -45,7 +45,7 @@ import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 
 	companion object {
-		internal val KEY_FRAGMENT_TAG = "NewSoundSheetFragment.KEY_FRAGMENT_TAG"
+		internal val KEY_FRAGMENT_TAG = "SoundSheetFragment.KEY_FRAGMENT_TAG"
 		fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment {
 			val fragment = SoundSheetFragment()
 			val args = Bundle()
@@ -59,8 +59,7 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 		this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
 				?: throw IllegalStateException("no match for fragmentTag found")
 
-	private val KEY_STATE_RECYCLER_VIEW get() =
-		this.fragmentTag +  "_recycler_view_state"
+	private val KEY_STATE_RECYCLER_VIEW get() = "${this.fragmentTag}_recycler_view_state"
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
