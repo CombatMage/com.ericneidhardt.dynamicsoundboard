@@ -119,12 +119,12 @@ class SoundManager(private val context: Context) {
 		var indexFrom = from
 		var indexTo = to
 
-		if (indexFrom > size)
+		if (indexFrom >= size)
 			indexFrom = size - 1
 		else if (indexFrom < 0)
 			indexFrom = 0
 
-		if (indexTo > size)
+		if (indexTo >= size)
 			indexTo = size - 1
 		else if (indexTo < 0)
 			indexTo = 0
