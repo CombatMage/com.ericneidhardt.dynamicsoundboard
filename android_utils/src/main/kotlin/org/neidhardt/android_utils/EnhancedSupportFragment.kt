@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.neidhardt.android_utils
 
 import android.os.Bundle
