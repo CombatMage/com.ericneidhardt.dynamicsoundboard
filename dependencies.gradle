@@ -1,8 +1,6 @@
 ext.versions = [
 
-		supportLibs : '25.0.0',
-
-		anko        : '0.9'
+		supportLibs : '25.0.0'
 ]
 
 ext.libraries = [
@@ -29,9 +27,6 @@ ext.libraries = [
 		supportDesign        : "com.android.support:design:$versions.supportLibs",
 		supportRecyclerView  : "com.android.support:recyclerview-v7:$versions.supportLibs",
 		supportConstraints   : 'com.android.support.constraint:constraint-layout:1.0.2',
-
-		anko                 : "org.jetbrains.anko:anko-sdk21:$versions.anko", // min sdk version important
-		ankoSupportAppCompat : "org.jetbrains.anko:anko-appcompat-v7:$versions.anko", // Anko libs matching support libs
 
 		greenRobotCommons    : "de.greenrobot:java-common:2.3.1",
 		eventBus             : "org.greenrobot:eventbus:3.0.0",

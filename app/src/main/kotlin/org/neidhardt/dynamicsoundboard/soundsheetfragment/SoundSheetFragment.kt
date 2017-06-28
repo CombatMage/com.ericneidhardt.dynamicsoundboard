@@ -231,9 +231,9 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 				}
 		this.soundAdapter.seeksToPosition
 				.bindToLifecycle(this.fragmentLifeCycle)
-				.subscribe { event ->
-					event.viewHolder.player?.let { player ->
-						this.soundSheetPresenter.onUserSeeksToPlaybackPosition(player, event.data)
+				.subscribe { (viewHolder, data) ->
+					viewHolder.player?.let { player ->
+						this.soundSheetPresenter.onUserSeeksToPlaybackPosition(player, data)
 					}
 				}
 	}
