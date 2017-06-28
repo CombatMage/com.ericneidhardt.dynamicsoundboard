@@ -32,7 +32,7 @@ class SoundSheetPresenter(
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 	private val playlistManager = SoundboardApplication.playlistManager
 
-	override fun start() {
+	override fun onViewResumed() {
 		this.soundSheetView.showSounds()
 		// if sounds where removed, the view may becomes unscrollable
 		// and therefore the fab can not be reached
@@ -58,7 +58,7 @@ class SoundSheetPresenter(
 		this.eventBus.registerIfRequired(this)
 	}
 
-	override fun stop() {
+	override fun onViewPaused() {
 		this.eventBus.unregister(this)
 	}
 

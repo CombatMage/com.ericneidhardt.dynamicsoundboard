@@ -101,13 +101,13 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 		}
 		RxNavi.observe(this, Event.RESUME).subscribe {
 			this.baseActivity.onSoundSheetFragmentResumed()
-			this.soundSheetPresenter.start()
+			this.soundSheetPresenter.onViewResumed()
 			this.bindSoundActions()
 			this.bindSoundSettingsActions()
 			this.bindFloatingActionButton()
 		}
 		RxNavi.observe(this, Event.PAUSE).subscribe {
-			this.soundSheetPresenter.stop()
+			this.soundSheetPresenter.onViewPaused()
 		}
 		RxEnhancedSupportFragment.restoresState(this)
 				.bindToLifecycle(this.fragmentLifeCycle)

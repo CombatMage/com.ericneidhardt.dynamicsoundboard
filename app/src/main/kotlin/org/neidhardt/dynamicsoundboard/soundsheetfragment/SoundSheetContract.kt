@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundsheetfragment
 
 import android.net.Uri
-import org.neidhardt.dynamicsoundboard.base.BasePresenter
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 
@@ -17,7 +16,9 @@ interface SoundSheetContract {
 		fun showSnackbarForPlayerError(player: MediaPlayerController)
 		fun showSnackbarForRestoreSound()
 	}
-	interface Presenter: BasePresenter {
+	interface Presenter {
+		fun onViewResumed()
+		fun onViewPaused()
 		fun onUserClicksFab()
 		fun onUserClicksPlay(player: MediaPlayerController)
 		fun onUserClicksStop(player: MediaPlayerController)
