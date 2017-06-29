@@ -21,5 +21,4 @@ class SaveDataIntentService : IntentService(SaveDataIntentService::class.java.na
 		val soundLayouts = SoundboardApplication.soundLayoutManager.soundLayouts
 		SoundboardApplication.storage.save(soundLayouts).subscribe()
 	}
-
 }

@@ -48,6 +48,7 @@ import org.neidhardt.utils.letThis
  */
 class SoundActivity :
 		EnhancedAppCompatActivity(),
+		SoundActivityContract.View,
 		RequestPermissionHelper {
 
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
@@ -57,6 +58,8 @@ class SoundActivity :
 	private var toolbarVM: ToolbarVM
 
 	private val drawerLayout: DrawerLayout? get() = this.drawerlayout_soundactivity // this view does not exists in tablet layout
+
+	private lateinit var presenter: SoundActivityContract.Presenter
 
 	init {
 		this.toolbarVM = ToolbarVM().letThis {
@@ -81,6 +84,12 @@ class SoundActivity :
 		}
 
 		RxNavi.observe(this, Event.CREATE).subscribe {
+
+			this.presenter = SoundActivityPresenter(
+					this,
+					SoundActivityModel(this.applicationContext)
+			)
+
 			this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(
 					this, R.layout.activity_base)
 			this.binding.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
@@ -129,9 +138,7 @@ class SoundActivity :
 					.subscribe { this.setStateForSoundSheets() }
 		}
 
-		RxNavi.observe(this, Event.PAUSE).subscribe {
-			SaveDataIntentService.writeBack(this)
-		}
+		RxNavi.observe(this, Event.PAUSE).subscribe { this.presenter.onPaused() }
 
 		RxNavi.observe(this, Event.REQUEST_PERMISSIONS_RESULT).subscribe { result ->
 			when (result.requestCode()) {
