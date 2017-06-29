@@ -30,4 +30,40 @@ class SoundActivityPresenterTest {
 		verify(this.model).saveData()
 	}
 
+	@Test
+	fun userClicksSoundSheetTitle() {
+		// action
+		this.unit.userClicksSoundSheetTitle()
+
+		// verify
+		verify(this.view).openRenameSoundSheetDialog()
+	}
+
+	@Test
+	fun userClicksAddSoundSheet() {
+		// action
+		this.unit.userClicksAddSoundSheet()
+
+		// verify
+		verify(this.view).openAddSheetDialog()
+	}
+
+	@Test
+	fun userClicksAddSoundDialog() {
+		// action
+		this.unit.userClicksAddSoundDialog()
+
+		// verify
+		verify(this.view).openAddSoundDialog()
+	}
+
+	@Test
+	fun userClicksAddSoundsDialog() {
+		// action
+		this.unit.userClicksAddSoundsDialog()
+
+		// verify
+		verify(this.view).openAddSoundsDialog()
+	}
+
 }

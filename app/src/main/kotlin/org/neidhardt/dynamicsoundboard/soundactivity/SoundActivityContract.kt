@@ -5,10 +5,18 @@ package org.neidhardt.dynamicsoundboard.soundactivity
  */
 interface SoundActivityContract {
 	interface View {
+		fun openRenameSoundSheetDialog()
+		fun openAddSheetDialog()
+		fun openAddSoundDialog()
+		fun openAddSoundsDialog()
 	}
 	interface Presenter {
 		fun onResumed()
 		fun onPaused()
+		fun userClicksSoundSheetTitle()
+		fun userClicksAddSoundSheet()
+		fun userClicksAddSoundDialog()
+		fun userClicksAddSoundsDialog()
 	}
 	interface Model {
 		fun saveData()

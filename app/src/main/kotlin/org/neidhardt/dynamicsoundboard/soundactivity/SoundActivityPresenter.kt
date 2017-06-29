@@ -15,4 +15,20 @@ class SoundActivityPresenter(
 	override fun onPaused() {
 		this.model.saveData()
 	}
+
+	override fun userClicksSoundSheetTitle() {
+		this.view.openRenameSoundSheetDialog()
+	}
+
+	override fun userClicksAddSoundSheet() {
+		this.view.openAddSheetDialog()
+	}
+
+	override fun userClicksAddSoundDialog() {
+		this.view.openAddSoundDialog()
+	}
+
+	override fun userClicksAddSoundsDialog() {
+		this.view.openAddSoundsDialog()
+	}
 }

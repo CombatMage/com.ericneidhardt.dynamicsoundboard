@@ -33,7 +33,6 @@ import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
-import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
 import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
@@ -55,40 +54,26 @@ class SoundActivity :
 
 	private lateinit var binding: ActivityBaseBinding
 	private var drawerToggle: ActionBarDrawerToggle? = null
-	private var toolbarVM: ToolbarVM
 
 	private val drawerLayout: DrawerLayout? get() = this.drawerlayout_soundactivity // this view does not exists in tablet layout
 
+	private lateinit var toolbarVM: ToolbarVM
 	private lateinit var presenter: SoundActivityContract.Presenter
 
 	init {
-		this.toolbarVM = ToolbarVM().letThis {
-			it.titleClickedCallback = {
-				this.soundSheetManager.soundSheets.selectedSoundSheet?.let {
-					GenericRenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
-				}
-			}
-			it.addSoundSheetClickedCallback = {
-				GenericAddDialogs.showAddSoundSheetDialog(this.supportFragmentManager)
-			}
-			it.addSoundClickedCallback = {
-				this.currentSoundFragment?.fragmentTag?.let {
-					AddNewSoundDialog.show(this.supportFragmentManager, it)
-				}
-			}
-			it.addSoundFromDirectoryClickedCallback = {
-				this.currentSoundFragment?.fragmentTag?.let {
-					AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it)
-				}
-			}
-		}
-
 		RxNavi.observe(this, Event.CREATE).subscribe {
 
 			this.presenter = SoundActivityPresenter(
 					this,
 					SoundActivityModel(this.applicationContext)
 			)
+
+			this.toolbarVM = ToolbarVM().letThis {
+				it.titleClickedCallback = { this.presenter.userClicksSoundSheetTitle() }
+				it.addSoundSheetClickedCallback = { this.presenter.userClicksAddSoundSheet() }
+				it.addSoundClickedCallback = { this.presenter.userClicksAddSoundDialog() }
+				it.addSoundFromDirectoryClickedCallback = { this.presenter.userClicksAddSoundsDialog() }
+			}
 
 			this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(
 					this, R.layout.activity_base)
@@ -285,4 +270,29 @@ class SoundActivity :
 			return this.supportFragmentManager.findFragmentById(R.id.navigation_drawer_fragment)
 					as NavigationDrawerFragment
 		}
+
+	// refactored
+
+	override fun openRenameSoundSheetDialog() {
+		this.soundSheetManager.soundSheets.selectedSoundSheet?.let {
+			this.openRenameSoundSheetDialog()
+			GenericRenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
+		}
+	}
+
+	override fun openAddSheetDialog() {
+		GenericAddDialogs.showAddSoundSheetDialog(this.supportFragmentManager)
+	}
+
+	override fun openAddSoundDialog() {
+		this.currentSoundFragment?.fragmentTag?.let {
+			AddNewSoundDialog.show(this.supportFragmentManager, it)
+		}
+	}
+
+	override fun openAddSoundsDialog() {
+		this.currentSoundFragment?.fragmentTag?.let {
+			AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it)
+		}
+	}
 }

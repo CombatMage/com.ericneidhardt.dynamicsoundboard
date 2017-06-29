@@ -36,4 +36,6 @@ class SplashActivityPresenterTest {
 		verify(this.view).openActivity(SplashActivityPresenterTest::class.java)
 	}
 
+
+
 }
