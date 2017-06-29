@@ -36,8 +36,8 @@ class SoundActivityPresenter(
 	}
 
 	override fun userOpenSoundFileWithApp(soundUri: Uri) {
-		//val suggestedName = this.soundSheetManager.suggestedName
-		//val soundSheets = this.soundSheetManager.soundSheets
-		//AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data, suggestedName, soundSheets)
+		val suggestedName = this.model.getNameForNewSoundSheet()
+		val soundSheets = this.model.getSoundSheets()
+		this.view.openAddSoundDialog(soundUri, suggestedName, soundSheets)
 	}
 }

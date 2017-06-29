@@ -1,8 +1,11 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
+import android.net.Uri
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
@@ -64,6 +67,20 @@ class SoundActivityPresenterTest {
 
 		// verify
 		verify(this.view).openAddSoundsDialog()
+	}
+
+	@Test
+	fun userOpenSoundFileWithApp() {
+		// arrange
+		`when`(this.model.getNameForNewSoundSheet()).thenReturn("test")
+		`when`(this.model.getSoundSheets()).thenReturn(emptyList())
+		val testUri = Mockito.mock(Uri::class.java)
+
+		// action
+		this.unit.userOpenSoundFileWithApp(testUri)
+
+		// verify
+		verify(this.view).openAddSoundDialog(testUri, "test", emptyList())
 	}
 
 }

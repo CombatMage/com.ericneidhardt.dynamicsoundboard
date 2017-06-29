@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundactivity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.media.AudioManager
+import android.net.Uri
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Gravity
@@ -100,9 +101,7 @@ class SoundActivity :
 					.bindToLifecycle(this.activityLifeCycle)
 					.subscribe { intent ->
 						if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-							val suggestedName = this.soundSheetManager.suggestedName
-							val soundSheets = this.soundSheetManager.soundSheets
-							AddNewSoundFromIntentDialog.showInstance(this.supportFragmentManager, intent.data, suggestedName, soundSheets)
+							this.presenter.userOpenSoundFileWithApp(intent.data)
 						}
 					}
 		}
@@ -288,6 +287,14 @@ class SoundActivity :
 		this.currentSoundFragment?.fragmentTag?.let {
 			AddNewSoundDialog.show(this.supportFragmentManager, it)
 		}
+	}
+
+	override fun openAddSoundDialog(soundUri: Uri, name: String, availableSoundSheets: List<SoundSheet>) {
+		AddNewSoundFromIntentDialog.showInstance(
+				this.supportFragmentManager,
+				soundUri,
+				name,
+				availableSoundSheets)
 	}
 
 	override fun openAddSoundsDialog() {

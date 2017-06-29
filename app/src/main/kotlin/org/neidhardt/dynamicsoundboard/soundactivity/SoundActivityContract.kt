@@ -11,6 +11,7 @@ interface SoundActivityContract {
 		fun openRenameSoundSheetDialog()
 		fun openAddSheetDialog()
 		fun openAddSoundDialog()
+		fun openAddSoundDialog(soundUri: Uri, name: String, availableSoundSheets: List<SoundSheet>)
 		fun openAddSoundsDialog()
 	}
 	interface Presenter {
