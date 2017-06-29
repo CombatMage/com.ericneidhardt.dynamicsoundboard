@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
 */
-class SoundSheetManager(private val context: Context) {
+open class SoundSheetManager(private val context: Context) : SoundSheetManagerContract.Model {
 
 	companion object {
 		fun getNewFragmentTagForLabel(label: String): String {
@@ -21,7 +21,7 @@ class SoundSheetManager(private val context: Context) {
 
 	internal var mSoundSheets: MutableList<SoundSheet>? = null
 
-	val soundSheets: List<SoundSheet> get() = this.mSoundSheets as List<SoundSheet>
+	override val soundSheets: List<SoundSheet> get() = this.mSoundSheets as List<SoundSheet>
 
 	fun set(soundSheets: MutableList<SoundSheet>) {
 		this.mSoundSheets = soundSheets
@@ -54,7 +54,7 @@ class SoundSheetManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	val suggestedName: String get() = this.context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
+	override val suggestedName: String get() = this.context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
 
 	private fun invokeListeners() {
 		this.onSoundSheetsChangedListener.forEach { it.invoke(this.soundSheets) }

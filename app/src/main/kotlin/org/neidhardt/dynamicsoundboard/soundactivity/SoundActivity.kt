@@ -50,12 +50,12 @@ class SoundActivity :
 		SoundActivityContract.View,
 		RequestPermissionHelper {
 
-	private val soundSheetManager = SoundboardApplication.soundSheetManager
-
 	private lateinit var binding: ActivityBaseBinding
 	private var drawerToggle: ActionBarDrawerToggle? = null
 
 	private val drawerLayout: DrawerLayout? get() = this.drawerlayout_soundactivity // this view does not exists in tablet layout
+
+	private val soundSheetManager = SoundboardApplication.soundSheetManager
 
 	private lateinit var toolbarVM: ToolbarVM
 	private lateinit var presenter: SoundActivityContract.Presenter
@@ -65,7 +65,7 @@ class SoundActivity :
 
 			this.presenter = SoundActivityPresenter(
 					this,
-					SoundActivityModel(this.applicationContext)
+					SoundActivityModel(this.applicationContext, this.soundSheetManager)
 			)
 
 			this.toolbarVM = ToolbarVM().letThis {
