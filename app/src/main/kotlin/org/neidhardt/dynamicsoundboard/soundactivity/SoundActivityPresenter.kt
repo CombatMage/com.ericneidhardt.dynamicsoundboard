@@ -40,4 +40,14 @@ class SoundActivityPresenter(
 		val soundSheets = this.model.getSoundSheets()
 		this.view.openAddSoundDialog(soundUri, suggestedName, soundSheets)
 	}
+
+	override fun onPermissionReadStorageChanged(hasPermission: Boolean) {
+		if (!hasPermission)
+			this.view.openExplainPermissionReadStorageDialog()
+	}
+
+	override fun onPermissionWriteStorageChanged(hasPermission: Boolean) {
+		if (!hasPermission)
+			this.view.openExplainPermissionWriteStorageDialog()
+	}
 }

@@ -302,4 +302,16 @@ class SoundActivity :
 			AddNewSoundFromDirectoryDialog.showInstance(this.supportFragmentManager, it)
 		}
 	}
+
+	override fun openExplainPermissionReadStorageDialog() {
+		this.explainReadStoragePermission()
+	}
+
+	override fun openExplainPermissionWriteStorageDialog() {
+		this.explainWriteStoragePermission()
+	}
+
+	override fun openExplainPermissionReadPhoneStateDialog() {
+		this.explainReadPhoneStatePermission()
+	}
 }

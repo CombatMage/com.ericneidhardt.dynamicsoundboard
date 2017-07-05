@@ -5,8 +5,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
 /**
@@ -81,6 +80,36 @@ class SoundActivityPresenterTest {
 
 		// verify
 		verify(this.view).openAddSoundDialog(testUri, "test", emptyList())
+	}
+
+	@Test
+	fun onPermissionReadStorageChanged() {
+		// action
+		this.unit.onPermissionReadStorageChanged(false)
+
+		// verify
+		verify(this.view).openExplainPermissionReadStorageDialog()
+
+		// action
+		this.unit.onPermissionReadStorageChanged(true)
+
+		// verify
+		verifyNoMoreInteractions(this.view) // nothing to do if permission already given
+	}
+
+	@Test
+	fun onPermissionWriteStorageChanged() {
+		// action
+		this.unit.onPermissionWriteStorageChanged(false)
+
+		// verify
+		verify(this.view).openExplainPermissionWriteStorageDialog()
+
+		// action
+		this.unit.onPermissionWriteStorageChanged(true)
+
+		// verify
+		verifyNoMoreInteractions(this.view) // nothing to do if permission already given
 	}
 
 }

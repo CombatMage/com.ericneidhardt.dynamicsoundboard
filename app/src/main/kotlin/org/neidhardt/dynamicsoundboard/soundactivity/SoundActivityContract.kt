@@ -13,6 +13,9 @@ interface SoundActivityContract {
 		fun openAddSoundDialog()
 		fun openAddSoundDialog(soundUri: Uri, name: String, availableSoundSheets: List<SoundSheet>)
 		fun openAddSoundsDialog()
+		fun openExplainPermissionReadStorageDialog()
+		fun openExplainPermissionWriteStorageDialog()
+		fun openExplainPermissionReadPhoneStateDialog()
 	}
 	interface Presenter {
 		fun onResumed()
@@ -22,6 +25,8 @@ interface SoundActivityContract {
 		fun userClicksAddSoundDialog()
 		fun userClicksAddSoundsDialog()
 		fun userOpenSoundFileWithApp(soundUri: Uri)
+		fun onPermissionReadStorageChanged(hasPermission: Boolean)
+		fun onPermissionWriteStorageChanged(hasPermission: Boolean)
 	}
 	interface Model {
 		fun saveData()
