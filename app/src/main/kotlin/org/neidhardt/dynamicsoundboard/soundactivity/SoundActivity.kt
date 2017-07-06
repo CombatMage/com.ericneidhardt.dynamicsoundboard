@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
+import android.Manifest
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.media.AudioManager
@@ -45,6 +46,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.SoundSheetFragment
 import org.neidhardt.dynamicsoundboard.view_helper.navigationdrawer_helper.NoAnimationDrawerToggle
 import org.neidhardt.utils.letThis
+import java.util.ArrayList
 
 /**
  * File created by eric.neidhardt on 29.09.2015.
@@ -130,10 +132,7 @@ class SoundActivity :
 
 		RxNavi.observe(this, Event.REQUEST_PERMISSIONS_RESULT).subscribe { result ->
 			when (result.requestCode()) {
-				IntentRequest.REQUEST_PERMISSIONS -> {
-					this.presenter.onPermissionWriteStorageChanged(this.hasPermissionWriteStorage)
-					this.presenter.onPermissionReadStorageChanged(this.hasPermissionReadStorage)
-				}
+				IntentRequest.REQUEST_PERMISSIONS -> { this.presenter.onPermissionsHaveChanged() }
 			}
 		}
 	}
@@ -321,5 +320,14 @@ class SoundActivity :
 
 	override fun requestPermissions(permissions: Array<String>) {
 		ActivityCompat.requestPermissions(this, permissions, IntentRequest.REQUEST_PERMISSIONS)
+	}
+
+	override fun getMissingPermissions(): Array<String> {
+		val requiredPermissions = ArrayList<String>()
+		if (!this.hasPermissionReadStorage)
+			requiredPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+		if (!this.hasPermissionWriteStorage)
+			requiredPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+		return requiredPermissions.toTypedArray()
 	}
 }

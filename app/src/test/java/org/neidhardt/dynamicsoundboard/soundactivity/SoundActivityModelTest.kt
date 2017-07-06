@@ -1,17 +1,15 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import org.junit.Test
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
-import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
-import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
 import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
 import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import org.robolectric.RobolectricTestRunner
@@ -64,24 +62,6 @@ class SoundActivityModelTest {
 
 		// verify
 		assert(result == "test")
-	}
-
-	@Test
-	fun getRequiredPermissions() {
-		// arrange
-		doReturn(false).`when`(this.context).hasPermissionReadStorage
-		doReturn(false).`when`(this.context).hasPermissionWriteStorage
-
-		//`when`(this.context.hasPermissionReadStorage).thenReturn(false)
-		//`when`(this.context.hasPermissionWriteStorage).thenReturn(false)
-
-		// action
-		val result = this.unit.getRequiredPermissions()
-
-		// verify
-		assert(result.size == 2)
-		assert(result.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-		assert(result.contains(Manifest.permission.READ_EXTERNAL_STORAGE))
 	}
 
 }

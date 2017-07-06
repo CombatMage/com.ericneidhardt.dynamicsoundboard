@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
+import android.Manifest
 import android.net.Uri
 
 /**
@@ -40,13 +41,11 @@ class SoundActivityPresenter(
 		this.view.openAddSoundDialog(soundUri, suggestedName, soundSheets)
 	}
 
-	override fun onPermissionReadStorageChanged(hasPermission: Boolean) {
-		if (!hasPermission)
+	override fun onPermissionsHaveChanged() {
+		val missingPermissions = this.view.getMissingPermissions()
+		if (missingPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE))
 			this.view.openExplainPermissionReadStorageDialog()
-	}
-
-	override fun onPermissionWriteStorageChanged(hasPermission: Boolean) {
-		if (!hasPermission)
+		if (missingPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE))
 			this.view.openExplainPermissionWriteStorageDialog()
 	}
 }

@@ -1,12 +1,15 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
+import android.Manifest
 import android.net.Uri
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import java.util.Arrays.asList
 
 /**
  * Created by eric.neidhardt@gmail.com on 29.06.2017.
@@ -83,33 +86,16 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun onPermissionReadStorageChanged() {
+	fun onPermissionsHaveChanged() {
+		// arrange
+		`when`(this.view.getMissingPermissions()).thenReturn(
+				asList(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray())
+
 		// action
-		this.unit.onPermissionReadStorageChanged(false)
+		this.unit.onPermissionsHaveChanged()
 
 		// verify
 		verify(this.view).openExplainPermissionReadStorageDialog()
-
-		// action
-		this.unit.onPermissionReadStorageChanged(true)
-
-		// verify
-		verifyNoMoreInteractions(this.view) // nothing to do if permission already given
-	}
-
-	@Test
-	fun onPermissionWriteStorageChanged() {
-		// action
-		this.unit.onPermissionWriteStorageChanged(false)
-
-		// verify
-		verify(this.view).openExplainPermissionWriteStorageDialog()
-
-		// action
-		this.unit.onPermissionWriteStorageChanged(true)
-
-		// verify
-		verifyNoMoreInteractions(this.view) // nothing to do if permission already given
 	}
 
 }
