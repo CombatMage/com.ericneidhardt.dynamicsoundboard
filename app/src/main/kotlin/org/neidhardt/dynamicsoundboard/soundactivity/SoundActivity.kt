@@ -4,6 +4,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.media.AudioManager
 import android.net.Uri
+import android.support.v4.app.ActivityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Gravity
@@ -32,6 +33,8 @@ import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromInt
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
+import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
+import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
 import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
@@ -48,8 +51,7 @@ import org.neidhardt.utils.letThis
  */
 class SoundActivity :
 		EnhancedAppCompatActivity(),
-		SoundActivityContract.View,
-		RequestPermissionHelper {
+		SoundActivityContract.View {
 
 	private lateinit var binding: ActivityBaseBinding
 	private var drawerToggle: ActionBarDrawerToggle? = null
@@ -94,7 +96,9 @@ class SoundActivity :
 			this.appbarlayout_main.setExpanded(true)
 			this.setSupportActionBar(toolbar)
 
-			this.requestPermissionsIfRequired()
+			// TODO ask presenter
+			// request permission
+			// .requestPermissionsIfRequired()
 			this.volumeControlStream = AudioManager.STREAM_MUSIC
 
 			RxEnhancedAppCompatActivity.receivesIntent(this)
@@ -127,8 +131,8 @@ class SoundActivity :
 		RxNavi.observe(this, Event.REQUEST_PERMISSIONS_RESULT).subscribe { result ->
 			when (result.requestCode()) {
 				IntentRequest.REQUEST_PERMISSIONS -> {
-					if (!this.hasPermissionReadStorage) this.explainReadStoragePermission()
-					if (!this.hasPermissionWriteStorage) this.explainWriteStoragePermission()
+					this.presenter.onPermissionWriteStorageChanged(this.hasPermissionWriteStorage)
+					this.presenter.onPermissionReadStorageChanged(this.hasPermissionReadStorage)
 				}
 			}
 		}
@@ -313,5 +317,9 @@ class SoundActivity :
 
 	override fun openExplainPermissionReadPhoneStateDialog() {
 		this.explainReadPhoneStatePermission()
+	}
+
+	override fun requestPermissions(permissions: Array<String>) {
+		ActivityCompat.requestPermissions(this, permissions, IntentRequest.REQUEST_PERMISSIONS)
 	}
 }

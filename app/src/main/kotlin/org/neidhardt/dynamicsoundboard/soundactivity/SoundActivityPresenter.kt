@@ -1,7 +1,6 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.net.Uri
-import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
 
 /**
  * Created by eric.neidhardt@gmail.com on 29.06.2017.

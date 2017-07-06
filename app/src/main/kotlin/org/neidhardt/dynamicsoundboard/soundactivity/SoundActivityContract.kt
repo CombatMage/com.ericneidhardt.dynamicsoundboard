@@ -16,6 +16,7 @@ interface SoundActivityContract {
 		fun openExplainPermissionReadStorageDialog()
 		fun openExplainPermissionWriteStorageDialog()
 		fun openExplainPermissionReadPhoneStateDialog()
+		fun requestPermissions(permissions: Array<String>)
 	}
 	interface Presenter {
 		fun onResumed()
@@ -32,5 +33,6 @@ interface SoundActivityContract {
 		fun saveData()
 		fun getSoundSheets(): List<SoundSheet>
 		fun getNameForNewSoundSheet(): String
+		fun getRequiredPermissions(): Array<String>
 	}
 }
