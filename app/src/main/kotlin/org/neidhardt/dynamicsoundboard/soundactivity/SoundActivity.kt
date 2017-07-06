@@ -132,7 +132,7 @@ class SoundActivity :
 
 		RxNavi.observe(this, Event.REQUEST_PERMISSIONS_RESULT).subscribe { result ->
 			when (result.requestCode()) {
-				IntentRequest.REQUEST_PERMISSIONS -> { this.presenter.onPermissionsHaveChanged() }
+				IntentRequest.REQUEST_PERMISSIONS -> { this.presenter.onUserHasChangedPermissions() }
 			}
 		}
 	}

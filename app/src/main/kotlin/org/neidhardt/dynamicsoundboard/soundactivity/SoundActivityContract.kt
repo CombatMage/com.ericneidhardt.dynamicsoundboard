@@ -27,7 +27,7 @@ interface SoundActivityContract {
 		fun userClicksAddSoundDialog()
 		fun userClicksAddSoundsDialog()
 		fun userOpenSoundFileWithApp(soundUri: Uri)
-		fun onPermissionsHaveChanged()
+		fun onUserHasChangedPermissions()
 	}
 	interface Model {
 		fun saveData()

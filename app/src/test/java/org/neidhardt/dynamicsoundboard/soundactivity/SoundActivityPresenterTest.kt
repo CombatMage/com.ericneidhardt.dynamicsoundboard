@@ -6,8 +6,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import java.util.Arrays.asList
 
@@ -86,16 +85,26 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun onPermissionsHaveChanged() {
+	fun onUserHasChangedPermissions() {
 		// arrange
 		`when`(this.view.getMissingPermissions()).thenReturn(
 				asList(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray())
 
 		// action
-		this.unit.onPermissionsHaveChanged()
+		this.unit.onUserHasChangedPermissions()
 
 		// verify
 		verify(this.view).openExplainPermissionReadStorageDialog()
+
+		// arrange
+		`when`(this.view.getMissingPermissions()).thenReturn(
+				asList(Manifest.permission.WRITE_EXTERNAL_STORAGE).toTypedArray())
+
+		// action
+		this.unit.onUserHasChangedPermissions()
+
+		// verify
+		verify(this.view).openExplainPermissionWriteStorageDialog()
 	}
 
 }

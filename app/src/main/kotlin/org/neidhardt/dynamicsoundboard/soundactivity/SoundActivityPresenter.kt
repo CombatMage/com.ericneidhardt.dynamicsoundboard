@@ -41,7 +41,7 @@ class SoundActivityPresenter(
 		this.view.openAddSoundDialog(soundUri, suggestedName, soundSheets)
 	}
 
-	override fun onPermissionsHaveChanged() {
+	override fun onUserHasChangedPermissions() {
 		val missingPermissions = this.view.getMissingPermissions()
 		if (missingPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE))
 			this.view.openExplainPermissionReadStorageDialog()
