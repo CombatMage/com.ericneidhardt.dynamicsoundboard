@@ -98,9 +98,6 @@ class SoundActivity :
 			this.appbarlayout_main.setExpanded(true)
 			this.setSupportActionBar(toolbar)
 
-			// TODO ask presenter
-			// request permission
-			// .requestPermissionsIfRequired()
 			this.volumeControlStream = AudioManager.STREAM_MUSIC
 
 			RxEnhancedAppCompatActivity.receivesIntent(this)
@@ -113,21 +110,24 @@ class SoundActivity :
 		}
 
 		RxNavi.observe(this, Event.POST_CREATE).subscribe {
+			this.presenter.onCreated()
 			this.drawerToggle?.syncState()
 		}
 
 		RxNavi.observe(this, Event.RESUME).subscribe {
-			this.toolbarVM.isSoundSheetActionsEnable = false
-
-			// TODO refactor to onResume
 			NotificationService.start(this)
 			EventBus.getDefault().postSticky(ActivityStateChangedEvent(true))
+
+			// TODO refactor this
+			this.toolbarVM.isSoundSheetActionsEnable = false
 
 			// TODO refactor to onResume
 			RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
 					.bindToLifecycle(this.activityLifeCycle)
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe { this.setStateForSoundSheets() }
+
+			this.presenter.onResumed()
 		}
 
 		RxNavi.observe(this, Event.PAUSE).subscribe {
@@ -307,15 +307,15 @@ class SoundActivity :
 	}
 
 	override fun openExplainPermissionReadStorageDialog() {
-		this.explainReadStoragePermission()
+		this.postAfterOnResume { this.explainReadStoragePermission() }
 	}
 
 	override fun openExplainPermissionWriteStorageDialog() {
-		this.explainWriteStoragePermission()
+		this.postAfterOnResume { this.explainWriteStoragePermission() }
 	}
 
 	override fun openExplainPermissionReadPhoneStateDialog() {
-		this.explainReadPhoneStatePermission()
+		this.postAfterOnResume { this.explainReadPhoneStatePermission() }
 	}
 
 	override fun requestPermissions(permissions: Array<String>) {

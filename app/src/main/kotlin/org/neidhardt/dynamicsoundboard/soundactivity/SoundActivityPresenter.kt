@@ -11,8 +11,14 @@ class SoundActivityPresenter(
 		private val model: SoundActivityContract.Model
 ) : SoundActivityContract.Presenter {
 
+	override fun onCreated() {
+		val missingPermissions = this.view.getMissingPermissions()
+		this.view.requestPermissions(missingPermissions)
+	}
+
 	override fun onResumed() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		// TODO
+
 	}
 
 	override fun onPaused() {

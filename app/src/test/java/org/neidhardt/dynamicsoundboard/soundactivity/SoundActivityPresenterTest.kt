@@ -25,6 +25,19 @@ class SoundActivityPresenterTest {
 		this.unit = SoundActivityPresenter(this.view, this.model)
 	}
 
+
+
+	@Test
+	fun onCreated() {
+		// action
+		`when`(this.view.getMissingPermissions()).thenReturn(emptyArray())
+
+		this.unit.onCreated()
+
+		// verify
+		verify(this.view).requestPermissions(emptyArray())
+	}
+
 	@Test
 	fun onPaused() {
 		// action

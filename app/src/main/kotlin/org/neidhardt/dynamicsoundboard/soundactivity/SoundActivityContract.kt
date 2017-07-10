@@ -26,6 +26,7 @@ interface SoundActivityContract {
 		fun getMissingPermissions(): Array<String>
 	}
 	interface Presenter {
+		fun onCreated()
 		fun onResumed()
 		fun onPaused()
 		fun userClicksSoundSheetTitle()
