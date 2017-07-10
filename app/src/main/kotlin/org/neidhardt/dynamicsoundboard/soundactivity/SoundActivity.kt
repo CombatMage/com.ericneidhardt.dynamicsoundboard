@@ -76,8 +76,8 @@ class SoundActivity :
 			this.toolbarVM = ToolbarVM().letThis {
 				it.titleClickedCallback = { this.presenter.userClicksSoundSheetTitle() }
 				it.addSoundSheetClickedCallback = { this.presenter.userClicksAddSoundSheet() }
-				it.addSoundClickedCallback = { this.presenter.userClicksAddSoundDialog() }
-				it.addSoundFromDirectoryClickedCallback = { this.presenter.userClicksAddSoundsDialog() }
+				it.addSoundClickedCallback = { this.presenter.userClicksAddSound() }
+				it.addSoundFromDirectoryClickedCallback = { this.presenter.userClicksAddSounds() }
 			}
 
 			this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(
@@ -119,16 +119,20 @@ class SoundActivity :
 		RxNavi.observe(this, Event.RESUME).subscribe {
 			this.toolbarVM.isSoundSheetActionsEnable = false
 
+			// TODO refactor to onResume
 			NotificationService.start(this)
 			EventBus.getDefault().postSticky(ActivityStateChangedEvent(true))
 
+			// TODO refactor to onResume
 			RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
 					.bindToLifecycle(this.activityLifeCycle)
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe { this.setStateForSoundSheets() }
 		}
 
-		RxNavi.observe(this, Event.PAUSE).subscribe { this.presenter.onPaused() }
+		RxNavi.observe(this, Event.PAUSE).subscribe {
+			this.presenter.onPaused()
+		}
 
 		RxNavi.observe(this, Event.REQUEST_PERMISSIONS_RESULT).subscribe { result ->
 			when (result.requestCode()) {
@@ -149,38 +153,37 @@ class SoundActivity :
 
 		when (item.itemId) {
 			R.id.action_load_sound_sheets -> {
-				LoadLayoutDialog.showInstance(this.supportFragmentManager)
+				this.presenter.userClicksLoadLayout()
 				return true
 			}
 			R.id.action_store_sound_sheets -> {
-				StoreLayoutDialog.showInstance(this.supportFragmentManager)
+				this.presenter.userClicksStoreLayout()
 				return true
 			}
 			R.id.action_preferences -> {
-				this.startActivity(Intent(this, PreferenceActivity::class.java))
-				this.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_nothing)
+				this.presenter.userClicksPreferences()
 				return true
 			}
 			R.id.action_about -> {
-				this.startActivity(Intent(this, AboutActivity::class.java))
-				this.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_nothing)
+				this.presenter.userClicksInfoAbout()
 				return true
 			}
 			R.id.action_clear_sound_sheets -> {
-				GenericConfirmDialogs.showConfirmDeleteAllSoundSheetsDialog(this.supportFragmentManager)
+				this.presenter.userClicksClearSoundSheets()
 				return true
 			}
 			R.id.action_clear_play_list -> {
-				GenericConfirmDialogs.showConfirmDeletePlaylistDialog(this.supportFragmentManager)
+				this.presenter.userClickClearPlaylist()
 				return true
 			}
 			else -> return false
 		}
 	}
 
+	// TODO refactor
 	private var closeAppOnBackPress = false
 	override fun onBackPressed() {
-		if (this.isNavigationDrawerOpen) {
+		if (this.drawerLayout?.isDrawerOpen(Gravity.START) == true) { // first close navigation drawer if open
 			this.closeNavigationDrawer()
 		}
 		else if (!this.closeAppOnBackPress) {
@@ -192,15 +195,12 @@ class SoundActivity :
 		}
 	}
 
+	// TODO refactor
 	fun onSoundSheetFragmentResumed() {
 		this.toolbarVM.isSoundSheetActionsEnable = true
 	}
 
-	private val isNavigationDrawerOpen: Boolean
-		get() {
-			return this.drawerLayout?.isDrawerOpen(Gravity.START) ?: false
-		}
-
+	// TODO refactor
 	private fun setStateForSoundSheets() {
 		val soundSheets = this.soundSheetManager.soundSheets
 		val selectedSoundSheet = soundSheets.selectedSoundSheet
@@ -219,11 +219,13 @@ class SoundActivity :
 		}
 	}
 
+	// TODO refactor
 	override fun onUserLeaveHint() {
 		super.onUserLeaveHint()
 		EventBus.getDefault().postSticky(ActivityStateChangedEvent(false))
 	}
 
+	// TODO refactor
 	private fun closeNavigationDrawer() {
 		this.drawerLayout?.apply {
 			if (this.isDrawerOpen(Gravity.START))
@@ -273,8 +275,6 @@ class SoundActivity :
 					as NavigationDrawerFragment
 		}
 
-	// refactored
-
 	override fun openRenameSoundSheetDialog() {
 		this.soundSheetManager.soundSheets.selectedSoundSheet?.let {
 			this.openRenameSoundSheetDialog()
@@ -320,6 +320,32 @@ class SoundActivity :
 
 	override fun requestPermissions(permissions: Array<String>) {
 		ActivityCompat.requestPermissions(this, permissions, IntentRequest.REQUEST_PERMISSIONS)
+	}
+
+	override fun openLoadLayoutDialog() {
+		LoadLayoutDialog.showInstance(this.supportFragmentManager)
+	}
+
+	override fun openStoreLayoutDialog() {
+		StoreLayoutDialog.showInstance(this.supportFragmentManager)
+	}
+
+	override fun openConfirmClearSoundSheetsDialog() {
+		GenericConfirmDialogs.showConfirmDeleteAllSoundSheetsDialog(this.supportFragmentManager)
+	}
+
+	override fun openConfirmClearPlaylistDialog() {
+		GenericConfirmDialogs.showConfirmDeletePlaylistDialog(this.supportFragmentManager)
+	}
+
+	override fun openInfoActivity() {
+		this.startActivity(Intent(this, AboutActivity::class.java))
+		this.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_nothing)
+	}
+
+	override fun openPreferenceActivity() {
+		this.startActivity(Intent(this, PreferenceActivity::class.java))
+		this.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_nothing)
 	}
 
 	override fun getMissingPermissions(): Array<String> {

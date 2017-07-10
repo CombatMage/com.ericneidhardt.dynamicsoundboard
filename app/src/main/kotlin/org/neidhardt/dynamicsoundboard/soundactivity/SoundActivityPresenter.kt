@@ -27,12 +27,36 @@ class SoundActivityPresenter(
 		this.view.openAddSheetDialog()
 	}
 
-	override fun userClicksAddSoundDialog() {
+	override fun userClicksAddSound() {
 		this.view.openAddSoundDialog()
 	}
 
-	override fun userClicksAddSoundsDialog() {
+	override fun userClicksAddSounds() {
 		this.view.openAddSoundsDialog()
+	}
+
+	override fun userClicksLoadLayout() {
+		this.view.openLoadLayoutDialog()
+	}
+
+	override fun userClicksStoreLayout() {
+		this.view.openStoreLayoutDialog()
+	}
+
+	override fun userClicksPreferences() {
+		this.view.openPreferenceActivity()
+	}
+
+	override fun userClicksInfoAbout() {
+		this.view.openInfoActivity()
+	}
+
+	override fun userClicksClearSoundSheets() {
+		this.view.openConfirmClearSoundSheetsDialog()
+	}
+
+	override fun userClickClearPlaylist() {
+		this.view.openConfirmClearPlaylistDialog()
 	}
 
 	override fun userOpenSoundFileWithApp(soundUri: Uri) {

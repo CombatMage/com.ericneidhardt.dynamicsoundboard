@@ -53,18 +53,18 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksAddSoundDialog() {
+	fun userClicksAddSound() {
 		// action
-		this.unit.userClicksAddSoundDialog()
+		this.unit.userClicksAddSound()
 
 		// verify
 		verify(this.view).openAddSoundDialog()
 	}
 
 	@Test
-	fun userClicksAddSoundsDialog() {
+	fun userClicksAddSounds() {
 		// action
-		this.unit.userClicksAddSoundsDialog()
+		this.unit.userClicksAddSounds()
 
 		// verify
 		verify(this.view).openAddSoundsDialog()
@@ -105,6 +105,60 @@ class SoundActivityPresenterTest {
 
 		// verify
 		verify(this.view).openExplainPermissionWriteStorageDialog()
+	}
+
+	@Test
+	fun userClicksLoadLayout() {
+		// action
+		this.unit.userClicksLoadLayout()
+
+		// verify
+		verify(this.view).openLoadLayoutDialog()
+	}
+
+	@Test
+	fun userClicksStoreLayout() {
+		// action
+		this.unit.userClicksStoreLayout()
+
+		// verify
+		verify(this.view).openStoreLayoutDialog()
+	}
+
+	@Test
+	fun userClicksPreferences() {
+		// action
+		this.unit.userClicksPreferences()
+
+		// verify
+		verify(this.view).openPreferenceActivity()
+	}
+
+	@Test
+	fun userClicksInfoAbout() {
+		// action
+		this.unit.userClicksInfoAbout()
+
+		// verify
+		verify(this.view).openInfoActivity()
+	}
+
+	@Test
+	fun userClicksClearSoundSheets() {
+		// action
+		this.unit.userClicksClearSoundSheets()
+
+		// verify
+		verify(this.view).openConfirmClearSoundSheetsDialog()
+	}
+
+	@Test
+	fun userClickClearPlaylist() {
+		// action
+		this.unit.userClickClearPlaylist()
+
+		// verify
+		verify(this.view).openConfirmClearPlaylistDialog()
 	}
 
 }
