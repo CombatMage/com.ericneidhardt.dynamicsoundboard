@@ -19,6 +19,7 @@ class SoundActivityPresenter(
 	override fun onResumed() {
 		this.view.showSoundSheetActionsInToolbar(false)
 
+		this.model.startNotificationService()
 		this.model.loadSoundSheets()
 				.subscribe { this.view.updateUiForSoundSheets(it) }
 	}

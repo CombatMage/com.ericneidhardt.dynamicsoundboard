@@ -46,6 +46,7 @@ interface SoundActivityContract {
 		fun onUserHasChangedPermissions()
 	}
 	interface Model {
+		fun startNotificationService()
 		fun saveData()
 		fun loadSoundSheets(): Observable<List<SoundSheet>>
 		fun getSoundSheets(): List<SoundSheet>
