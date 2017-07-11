@@ -1,7 +1,10 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.content.Context
-import org.neidhardt.dynamicsoundboard.manager.SoundSheetManagerContract
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
 import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 
@@ -11,8 +14,14 @@ import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
  */
 class SoundActivityModel(
 		private val context: Context,
-		private val soundSheetManager: SoundSheetManagerContract.Model)
+		private val soundSheetManager: SoundSheetManager)
 : SoundActivityContract.Model {
+
+	// no unit test
+	override fun loadSoundSheets(): Observable<List<SoundSheet>> {
+		return RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
+				.observeOn(AndroidSchedulers.mainThread())
+	}
 
 	override fun getSoundSheets(): List<SoundSheet> {
 		return this.soundSheetManager.soundSheets

@@ -118,15 +118,6 @@ class SoundActivity :
 			NotificationService.start(this)
 			EventBus.getDefault().postSticky(ActivityStateChangedEvent(true))
 
-			// TODO refactor this
-			this.toolbarVM.isSoundSheetActionsEnable = false
-
-			// TODO refactor to onResume
-			RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
-					.bindToLifecycle(this.activityLifeCycle)
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe { this.setStateForSoundSheets() }
-
 			this.presenter.onResumed()
 		}
 
@@ -201,25 +192,6 @@ class SoundActivity :
 	}
 
 	// TODO refactor
-	private fun setStateForSoundSheets() {
-		val soundSheets = this.soundSheetManager.soundSheets
-		val selectedSoundSheet = soundSheets.selectedSoundSheet
-		this.toolbarVM.title = selectedSoundSheet?.label ?: this.getString(R.string.app_name)
-		this.toolbarVM.isSoundSheetActionsEnable = selectedSoundSheet != null
-
-		val currentFragment = this.currentSoundFragment
-		if (currentFragment == null) {
-			this.openSoundFragment(selectedSoundSheet)
-		}
-		else if (selectedSoundSheet == null) {
-			this.removeSoundFragment(currentFragment)
-		}
-		else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag) {
-			this.openSoundFragment(selectedSoundSheet)
-		}
-	}
-
-	// TODO refactor
 	override fun onUserLeaveHint() {
 		super.onUserLeaveHint()
 		EventBus.getDefault().postSticky(ActivityStateChangedEvent(false))
@@ -274,6 +246,27 @@ class SoundActivity :
 			return this.supportFragmentManager.findFragmentById(R.id.navigation_drawer_fragment)
 					as NavigationDrawerFragment
 		}
+
+	override fun showSoundSheetActionsInToolbar(show: Boolean) {
+		this.toolbarVM.isSoundSheetActionsEnable = show
+	}
+
+	override fun updateUiForSoundSheets(soundSheets: List<SoundSheet>) {
+		val selectedSoundSheet = soundSheets.selectedSoundSheet
+		this.toolbarVM.title = selectedSoundSheet?.label ?: this.getString(R.string.app_name)
+		this.showSoundSheetActionsInToolbar(selectedSoundSheet != null)
+
+		val currentFragment = this.currentSoundFragment
+		if (currentFragment == null) {
+			this.openSoundFragment(selectedSoundSheet)
+		}
+		else if (selectedSoundSheet == null) {
+			this.removeSoundFragment(currentFragment)
+		}
+		else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag) {
+			this.openSoundFragment(selectedSoundSheet)
+		}
+	}
 
 	override fun openRenameSoundSheetDialog() {
 		this.soundSheetManager.soundSheets.selectedSoundSheet?.let {

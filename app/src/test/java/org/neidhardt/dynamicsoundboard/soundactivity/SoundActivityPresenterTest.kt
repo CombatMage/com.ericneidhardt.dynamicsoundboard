@@ -2,12 +2,15 @@ package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.Manifest
 import android.net.Uri
+import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import java.util.Arrays.asList
 
 /**
@@ -25,17 +28,30 @@ class SoundActivityPresenterTest {
 		this.unit = SoundActivityPresenter(this.view, this.model)
 	}
 
-
-
 	@Test
 	fun onCreated() {
-		// action
+		//arrange
 		`when`(this.view.getMissingPermissions()).thenReturn(emptyArray())
 
+		// action
 		this.unit.onCreated()
 
 		// verify
 		verify(this.view).requestPermissions(emptyArray())
+	}
+
+	@Test
+	fun onResumed() {
+		// arrange
+		val testData = asList(SoundSheet())
+		`when`(this.model.loadSoundSheets()).thenReturn(Observable.just(testData))
+
+		// action
+		this.unit.onResumed()
+
+		// verify
+		verify(this.view).updateUiForSoundSheets(testData)
+		verify(this.view).showSoundSheetActionsInToolbar(false)
 	}
 
 	@Test

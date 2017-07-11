@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.net.Uri
+import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 
 /**
@@ -8,6 +9,8 @@ import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
  */
 interface SoundActivityContract {
 	interface View {
+		fun updateUiForSoundSheets(soundSheets: List<SoundSheet>)
+		fun showSoundSheetActionsInToolbar(show: Boolean)
 		fun openRenameSoundSheetDialog()
 		fun openAddSheetDialog()
 		fun openAddSoundDialog()
@@ -44,6 +47,7 @@ interface SoundActivityContract {
 	}
 	interface Model {
 		fun saveData()
+		fun loadSoundSheets(): Observable<List<SoundSheet>>
 		fun getSoundSheets(): List<SoundSheet>
 		fun getNameForNewSoundSheet(): String
 	}

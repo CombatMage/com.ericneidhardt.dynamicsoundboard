@@ -17,8 +17,10 @@ class SoundActivityPresenter(
 	}
 
 	override fun onResumed() {
-		// TODO
+		this.view.showSoundSheetActionsInToolbar(false)
 
+		this.model.loadSoundSheets()
+				.subscribe { this.view.updateUiForSoundSheets(it) }
 	}
 
 	override fun onPaused() {
