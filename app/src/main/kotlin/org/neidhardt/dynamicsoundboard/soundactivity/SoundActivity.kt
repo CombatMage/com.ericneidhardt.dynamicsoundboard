@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.media.AudioManager
@@ -166,46 +167,59 @@ class SoundActivity :
 		}
 	}
 
-	// TODO refactor
-	private var closeAppOnBackPress = false
+	@SuppressLint("MissingSuperCall")
 	override fun onBackPressed() {
-		if (this.drawerLayout?.isDrawerOpen(Gravity.START) == true) { // first close navigation drawer if open
-			this.closeNavigationDrawer()
-		}
-		else if (!this.closeAppOnBackPress) {
-			Toast.makeText(this, R.string.soundactivity_ToastCloseAppOnBackPress, Toast.LENGTH_SHORT).show()
-			this.closeAppOnBackPress = true
-		}
-		else {
-			super.onBackPressed()
-		}
+		this.presenter.userClicksBackButton()
 	}
 
-	// TODO refactor
-	fun onSoundSheetFragmentResumed() {
-		this.toolbarVM.isSoundSheetActionsEnable = true
-	}
-
-	// TODO refactor
 	override fun onUserLeaveHint() {
 		super.onUserLeaveHint()
 		EventBus.getDefault().postSticky(ActivityStateChangedEvent(false))
 	}
 
-	// TODO refactor
-	private fun closeNavigationDrawer() {
+	override fun closeNavigationDrawer() {
 		this.drawerLayout?.apply {
-			if (this.isDrawerOpen(Gravity.START))
+			if (isNavigationDrawerOpen)
 				this.closeDrawer(Gravity.START)
 		}
 	}
 
-	private fun removeSoundFragment(fragment: SoundSheetFragment) {
-		val fragmentManager = this.supportFragmentManager
-		fragmentManager.beginTransaction().remove(fragment).commit()
-		if (fragment.isVisible)
-			this.toolbarVM.isSoundSheetActionsEnable = false
-		fragmentManager.executePendingTransactions()
+	override val isNavigationDrawerOpen: Boolean
+		get() = this.drawerLayout?.isDrawerOpen(Gravity.START) == true
+
+	override fun finishActivity() {
+		this.finish()
+	}
+
+	private val currentSoundFragment: SoundSheetFragment?
+		get() {
+			val currentFragment = this.supportFragmentManager.findFragmentById(R.id.main_frame)
+			if (currentFragment != null && currentFragment is SoundSheetFragment)
+				return currentFragment
+			return null
+		}
+
+	private val navigationDrawerFragment: NavigationDrawerFragment
+		get() {
+			return this.supportFragmentManager.findFragmentById(R.id.navigation_drawer_fragment)
+					as NavigationDrawerFragment
+		}
+
+	override fun updateUiForSoundSheets(soundSheets: List<SoundSheet>) {
+		val selectedSoundSheet = soundSheets.selectedSoundSheet
+		this.toolbarVM.title = selectedSoundSheet?.label ?: this.getString(R.string.app_name)
+		this.toolbarVM.isSoundSheetActionsEnable = selectedSoundSheet != null
+
+		val currentFragment = this.currentSoundFragment
+		if (currentFragment == null) {
+			this.openSoundFragment(selectedSoundSheet)
+		}
+		else if (selectedSoundSheet == null) {
+			this.removeSoundFragment(currentFragment)
+		}
+		else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag) {
+			this.openSoundFragment(selectedSoundSheet)
+		}
 	}
 
 	private fun openSoundFragment(soundSheet: SoundSheet?) {
@@ -228,39 +242,12 @@ class SoundActivity :
 		fragmentManager.executePendingTransactions()
 	}
 
-	private val currentSoundFragment: SoundSheetFragment?
-		get() {
-			val currentFragment = this.supportFragmentManager.findFragmentById(R.id.main_frame)
-			if (currentFragment != null && currentFragment is SoundSheetFragment)
-				return currentFragment
-			return null
-		}
-
-	private val navigationDrawerFragment: NavigationDrawerFragment
-		get() {
-			return this.supportFragmentManager.findFragmentById(R.id.navigation_drawer_fragment)
-					as NavigationDrawerFragment
-		}
-
-	override fun showSoundSheetActionsInToolbar(show: Boolean) {
-		this.toolbarVM.isSoundSheetActionsEnable = show
-	}
-
-	override fun updateUiForSoundSheets(soundSheets: List<SoundSheet>) {
-		val selectedSoundSheet = soundSheets.selectedSoundSheet
-		this.toolbarVM.title = selectedSoundSheet?.label ?: this.getString(R.string.app_name)
-		this.showSoundSheetActionsInToolbar(selectedSoundSheet != null)
-
-		val currentFragment = this.currentSoundFragment
-		if (currentFragment == null) {
-			this.openSoundFragment(selectedSoundSheet)
-		}
-		else if (selectedSoundSheet == null) {
-			this.removeSoundFragment(currentFragment)
-		}
-		else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag) {
-			this.openSoundFragment(selectedSoundSheet)
-		}
+	private fun removeSoundFragment(fragment: SoundSheetFragment) {
+		val fragmentManager = this.supportFragmentManager
+		fragmentManager.beginTransaction().remove(fragment).commit()
+		if (fragment.isVisible)
+			this.toolbarVM.isSoundSheetActionsEnable = false
+		fragmentManager.executePendingTransactions()
 	}
 
 	override fun openRenameSoundSheetDialog() {
@@ -343,5 +330,9 @@ class SoundActivity :
 		if (!this.hasPermissionWriteStorage)
 			requiredPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 		return requiredPermissions.toTypedArray()
+	}
+
+	override fun showToastMessage(messageId: Int) {
+		Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
 	}
 }

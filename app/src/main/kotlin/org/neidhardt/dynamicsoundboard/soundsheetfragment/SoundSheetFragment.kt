@@ -100,7 +100,6 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 			this.configureUi()
 		}
 		RxNavi.observe(this, Event.RESUME).subscribe {
-			this.baseActivity.onSoundSheetFragmentResumed()
 			this.soundSheetPresenter.onViewResumed()
 			this.bindSoundActions()
 			this.bindSoundSettingsActions()

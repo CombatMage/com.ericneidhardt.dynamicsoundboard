@@ -51,7 +51,6 @@ class SoundActivityPresenterTest {
 
 		// verify
 		verify(this.view).updateUiForSoundSheets(testData)
-		verify(this.view).showSoundSheetActionsInToolbar(false)
 	}
 
 	@Test

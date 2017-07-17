@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.Manifest
 import android.net.Uri
+import org.neidhardt.dynamicsoundboard.R
 
 /**
  * Created by eric.neidhardt@gmail.com on 29.06.2017.
@@ -17,7 +18,7 @@ class SoundActivityPresenter(
 	}
 
 	override fun onResumed() {
-		this.view.showSoundSheetActionsInToolbar(false)
+		this.view.updateUiForSoundSheets(emptyList())
 
 		this.model.startNotificationService()
 		this.model.loadSoundSheets()
@@ -26,6 +27,20 @@ class SoundActivityPresenter(
 
 	override fun onPaused() {
 		this.model.saveData()
+	}
+
+	private var closeAppOnBackPress = false
+	override fun userClicksBackButton() {
+		if (this.view.isNavigationDrawerOpen) { // first close navigation drawer if open
+			this.view.closeNavigationDrawer()
+		}
+		else if (!this.closeAppOnBackPress) {
+			this.view.showToastMessage(R.string.soundactivity_ToastCloseAppOnBackPress)
+			this.closeAppOnBackPress = true
+		}
+		else {
+			this.view.finishActivity()
+		}
 	}
 
 	override fun userClicksSoundSheetTitle() {

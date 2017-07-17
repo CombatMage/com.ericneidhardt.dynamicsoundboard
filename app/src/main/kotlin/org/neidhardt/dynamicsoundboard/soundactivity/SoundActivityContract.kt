@@ -10,7 +10,9 @@ import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 interface SoundActivityContract {
 	interface View {
 		fun updateUiForSoundSheets(soundSheets: List<SoundSheet>)
-		fun showSoundSheetActionsInToolbar(show: Boolean)
+		val isNavigationDrawerOpen: Boolean
+		fun closeNavigationDrawer()
+		fun finishActivity()
 		fun openRenameSoundSheetDialog()
 		fun openAddSheetDialog()
 		fun openAddSoundDialog()
@@ -27,11 +29,13 @@ interface SoundActivityContract {
 		fun openPreferenceActivity()
 		fun requestPermissions(permissions: Array<String>)
 		fun getMissingPermissions(): Array<String>
+		fun showToastMessage(messageId: Int)
 	}
 	interface Presenter {
 		fun onCreated()
 		fun onResumed()
 		fun onPaused()
+		fun userClicksBackButton()
 		fun userClicksSoundSheetTitle()
 		fun userClicksAddSoundSheet()
 		fun userClicksAddSound()
