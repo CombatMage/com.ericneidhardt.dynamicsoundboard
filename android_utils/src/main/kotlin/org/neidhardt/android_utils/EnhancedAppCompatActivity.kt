@@ -3,10 +3,7 @@ package org.neidhardt.android_utils
 import android.app.FragmentManager
 import android.content.Intent
 import android.os.Bundle
-import com.trello.navi2.Event
 import com.trello.navi2.component.support.NaviAppCompatActivity
-import com.trello.navi2.rx.RxNavi
-import com.trello.rxlifecycle2.navi.NaviLifecycle
 import io.reactivex.Observable
 import java.util.*
 
@@ -18,7 +15,6 @@ open class EnhancedAppCompatActivity : NaviAppCompatActivity() {
 
 	private val TAG = javaClass.name
 
-	val activityLifeCycle = NaviLifecycle.createActivityLifecycleProvider(this)
 	val isActivityResumed: Boolean get() = this.isResumed
 
 	private var isResumed = false
@@ -26,26 +22,28 @@ open class EnhancedAppCompatActivity : NaviAppCompatActivity() {
 
 	internal var onIntentCallback: ((Intent) -> Unit)? = null
 
-	init {
-		RxNavi.observe(this, Event.CREATE).subscribe {
-			this.isResumed = false
-			this.queueOnResume.clear()
-		}
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		this.isResumed = false
+		this.queueOnResume.clear()
+	}
 
-		RxNavi.observe(this, Event.POST_CREATE).subscribe {
-			val intent = this.intent
-			if (intent != null)
-				this.onIntentCallback?.invoke(intent)
-		}
+	override fun onPostCreate(savedInstanceState: Bundle?) {
+		super.onPostCreate(savedInstanceState)
+		val intent = this.intent
+		if (intent != null)
+			this.onIntentCallback?.invoke(intent)
+	}
 
-		RxNavi.observe(this, Event.RESUME).subscribe {
-			this.isResumed = true
-			while (this.queueOnResume.isNotEmpty()) this.queueOnResume.pop().invoke(this)
-		}
+	override fun onResume() {
+		super.onResume()
+		this.isResumed = true
+		while (this.queueOnResume.isNotEmpty()) this.queueOnResume.pop().invoke(this)
+	}
 
-		RxNavi.observe(this, Event.PAUSE).subscribe {
-			this.isResumed = false
-		}
+	override fun onPause() {
+		super.onPause()
+		this.isResumed = false
 	}
 
 	override fun onNewIntent(intent: Intent?) {
@@ -59,12 +57,6 @@ open class EnhancedAppCompatActivity : NaviAppCompatActivity() {
 			action.invoke(this)
 		else
 			this.queueOnResume.push(action)
-	}
-
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		this.isResumed = false
-		this.queueOnResume.clear()
 	}
 
 	override fun getFragmentManager(): FragmentManager? {

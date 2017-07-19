@@ -6,6 +6,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.media.AudioManager
 import android.net.Uri
+import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -13,9 +14,6 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.trello.navi2.Event
-import com.trello.navi2.rx.RxNavi
-import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_base.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.EnhancedAppCompatActivity
@@ -53,78 +51,98 @@ class SoundActivity :
 		EnhancedAppCompatActivity(),
 		SoundActivityContract.View {
 
-	private lateinit var binding: ActivityBaseBinding
-	private var drawerToggle: ActionBarDrawerToggle? = null
-
-	private val drawerLayout: DrawerLayout? get() = this.drawerlayout_soundactivity // this view does not exists in tablet layout
-
+	// this view does not exists in tablet layout
+	private val drawerLayout: DrawerLayout? get() = this.drawerlayout_soundactivity
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 
+	private var drawerToggle: ActionBarDrawerToggle? = null
+
+	private lateinit var binding: ActivityBaseBinding
 	private lateinit var toolbarVM: ToolbarVM
 	private lateinit var presenter: SoundActivityContract.Presenter
 
-	init {
-		RxNavi.observe(this, Event.CREATE).subscribe {
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
 
-			this.presenter = SoundActivityPresenter(
-					this,
-					SoundActivityModel(this.applicationContext, this.soundSheetManager)
-			)
+		this.toolbarVM = ToolbarVM().letThis {
+			it.titleClickedCallback = { this.presenter.userClicksSoundSheetTitle() }
+			it.addSoundSheetClickedCallback = { this.presenter.userClicksAddSoundSheet() }
+			it.addSoundClickedCallback = { this.presenter.userClicksAddSound() }
+			it.addSoundFromDirectoryClickedCallback = { this.presenter.userClicksAddSounds() }
+		}
 
-			this.toolbarVM = ToolbarVM().letThis {
-				it.titleClickedCallback = { this.presenter.userClicksSoundSheetTitle() }
-				it.addSoundSheetClickedCallback = { this.presenter.userClicksAddSoundSheet() }
-				it.addSoundClickedCallback = { this.presenter.userClicksAddSound() }
-				it.addSoundFromDirectoryClickedCallback = { this.presenter.userClicksAddSounds() }
-			}
+		this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(
+				this, R.layout.activity_base)
+		this.binding.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
 
-			this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(
-					this, R.layout.activity_base)
-			this.binding.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
+		this.presenter = SoundActivityPresenter(
+				this,
+				SoundActivityModel(
+						this.applicationContext,
+						this.soundSheetManager)
+		)
 
-			val toolbar = this.binding.layoutToolbar.toolbarMain
-			if (this.drawerLayout != null) {
-				this.drawerToggle = NoAnimationDrawerToggle(
-						this,
-						this.drawerLayout,
-						toolbar,
-						this.navigationDrawerFragment)
+		this.configureToolbar()
 
-				this.drawerLayout?.addDrawerListener(this.drawerToggle!!)
-			}
-
-			this.appbarlayout_main.setExpanded(true)
-			this.setSupportActionBar(toolbar)
-
-			this.volumeControlStream = AudioManager.STREAM_MUSIC
-
-			RxEnhancedAppCompatActivity.receivesIntent(this)
-					.bindToLifecycle(this.activityLifeCycle)
-					.subscribe { intent ->
-						if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-							this.presenter.userOpenSoundFileWithApp(intent.data)
-						}
+		RxEnhancedAppCompatActivity.receivesIntent(this)
+				.subscribe { intent ->
+					if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
+						this.presenter.userOpenSoundFileWithApp(intent.data)
 					}
+				}
+	}
+
+	private fun configureToolbar() {
+		val toolbar = this.binding.layoutToolbar.toolbarMain
+		if (this.drawerLayout != null) {
+			this.drawerToggle = NoAnimationDrawerToggle(
+					this,
+					this.drawerLayout,
+					toolbar,
+					this.navigationDrawerFragment)
+
+			this.drawerLayout?.addDrawerListener(this.drawerToggle!!)
 		}
 
-		RxNavi.observe(this, Event.POST_CREATE).subscribe {
-			this.presenter.onCreated()
-			this.drawerToggle?.syncState()
-		}
+		this.appbarlayout_main.setExpanded(true)
+		this.setSupportActionBar(toolbar)
 
-		RxNavi.observe(this, Event.RESUME).subscribe {
-			EventBus.getDefault().postSticky(ActivityStateChangedEvent(true))
-			this.presenter.onResumed()
-		}
+		this.volumeControlStream = AudioManager.STREAM_MUSIC
+	}
 
-		RxNavi.observe(this, Event.PAUSE).subscribe {
-			this.presenter.onPaused()
-		}
+	override fun onPostCreate(savedInstanceState: Bundle?) {
+		super.onPostCreate(savedInstanceState)
+		this.presenter.onCreated()
+		this.drawerToggle?.syncState()
+	}
 
-		RxNavi.observe(this, Event.REQUEST_PERMISSIONS_RESULT).subscribe { result ->
-			when (result.requestCode()) {
-				IntentRequest.REQUEST_PERMISSIONS -> { this.presenter.onUserHasChangedPermissions() }
-			}
+	override fun onNewIntent(intent: Intent?) {
+		super.onNewIntent(intent)
+		if (intent == null) return
+		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
+			this.presenter.userOpenSoundFileWithApp(intent.data)
+		}
+	}
+
+	override fun onResume() {
+		super.onResume()
+		EventBus.getDefault().postSticky(ActivityStateChangedEvent(true))
+		this.presenter.onResumed()
+	}
+
+	override fun onPause() {
+		super.onPause()
+		this.presenter.onPaused()
+	}
+
+	override fun onRequestPermissionsResult(
+			requestCode: Int,
+			permissions: Array<out String>,
+			grantResults: IntArray
+	) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+		when (requestCode) {
+			IntentRequest.REQUEST_PERMISSIONS -> { this.presenter.onUserHasChangedPermissions() }
 		}
 	}
 
