@@ -64,16 +64,10 @@ class SoundActivity :
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		this.toolbarVM = ToolbarVM().letThis {
-			it.titleClickedCallback = { this.presenter.userClicksSoundSheetTitle() }
-			it.addSoundSheetClickedCallback = { this.presenter.userClicksAddSoundSheet() }
-			it.addSoundClickedCallback = { this.presenter.userClicksAddSound() }
-			it.addSoundFromDirectoryClickedCallback = { this.presenter.userClicksAddSounds() }
-		}
-
 		this.binding = DataBindingUtil.setContentView<ActivityBaseBinding>(
-				this, R.layout.activity_base)
-		this.binding.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
+				this,
+				R.layout.activity_base)
+		this.toolbarVM = ToolbarVM()
 
 		this.presenter = SoundActivityPresenter(
 				this,
@@ -84,6 +78,8 @@ class SoundActivity :
 
 		this.configureToolbar()
 
+		this.volumeControlStream = AudioManager.STREAM_MUSIC
+
 		RxEnhancedAppCompatActivity.receivesIntent(this)
 				.subscribe { intent ->
 					if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
@@ -93,6 +89,15 @@ class SoundActivity :
 	}
 
 	private fun configureToolbar() {
+		this.binding.layoutToolbar.layoutToolbarContent.viewModel = this.toolbarVM
+
+		this.toolbarVM.letThis {
+			it.titleClickedCallback = { this.presenter.userClicksSoundSheetTitle() }
+			it.addSoundSheetClickedCallback = { this.presenter.userClicksAddSoundSheet() }
+			it.addSoundClickedCallback = { this.presenter.userClicksAddSound() }
+			it.addSoundFromDirectoryClickedCallback = { this.presenter.userClicksAddSounds() }
+		}
+
 		val toolbar = this.binding.layoutToolbar.toolbarMain
 		if (this.drawerLayout != null) {
 			this.drawerToggle = NoAnimationDrawerToggle(
@@ -106,8 +111,6 @@ class SoundActivity :
 
 		this.appbarlayout_main.setExpanded(true)
 		this.setSupportActionBar(toolbar)
-
-		this.volumeControlStream = AudioManager.STREAM_MUSIC
 	}
 
 	override fun onPostCreate(savedInstanceState: Bundle?) {
