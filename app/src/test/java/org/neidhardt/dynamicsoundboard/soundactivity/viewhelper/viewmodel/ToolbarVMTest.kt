@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundactivity.viewmodel
+package org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.viewmodel
 
 import org.junit.Before
 import org.junit.Test

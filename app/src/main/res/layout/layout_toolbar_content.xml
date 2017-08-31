@@ -9,7 +9,7 @@
 		
 		<variable
 				name="viewModel"
-				type="org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM"/>
+				type="org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.viewmodel.ToolbarVM"/>
 	</data>
 
 	<RelativeLayout

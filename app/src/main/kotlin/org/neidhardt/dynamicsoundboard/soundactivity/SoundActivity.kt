@@ -38,7 +38,10 @@ import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
 import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
-import org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM
+import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.viewmodel.ToolbarVM
+import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainReadPhoneStatePermission
+import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainReadStoragePermission
+import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainWriteStoragePermission
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.SoundSheetFragment
 import org.neidhardt.dynamicsoundboard.view_helper.navigationdrawer_helper.NoAnimationDrawerToggle
 import org.neidhardt.utils.letThis
