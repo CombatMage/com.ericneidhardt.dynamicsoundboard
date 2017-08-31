@@ -34,8 +34,8 @@ import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
-import org.neidhardt.dynamicsoundboard.preferences.AboutActivity
-import org.neidhardt.dynamicsoundboard.preferences.PreferenceActivity
+import org.neidhardt.dynamicsoundboard.infoactivity.InfoActivity
+import org.neidhardt.dynamicsoundboard.preferenceactivity.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.viewmodel.ToolbarVM
 import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainReadPhoneStatePermission
@@ -335,7 +335,7 @@ class SoundActivity :
 	}
 
 	override fun openInfoActivity() {
-		this.startActivity(Intent(this, AboutActivity::class.java))
+		this.startActivity(Intent(this, InfoActivity::class.java))
 		this.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_nothing)
 	}
 

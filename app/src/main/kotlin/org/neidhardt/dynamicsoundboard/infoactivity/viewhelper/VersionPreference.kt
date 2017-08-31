@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.preferences
+package org.neidhardt.dynamicsoundboard.infoactivity.viewhelper
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -10,33 +10,28 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 /**
  * File created by eric.neidhardt on 17.02.2015.
  */
-class VersionPreference : Preference
-{
+class VersionPreference : Preference {
+
 	private val TAG = javaClass.name
 
-	@SuppressWarnings("unused")
-	constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-	{
+	@Suppress("unused")
+	constructor(context: Context) : super(context) {
 		this.init(context)
 	}
 
-	@SuppressWarnings("unused")
-	constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-	{
+	@Suppress("unused")
+	constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
 		this.init(context)
 	}
 
-	@SuppressWarnings("unused")
-	constructor(context: Context) : super(context)
-	{
+	@Suppress("unused")
+	constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
 		this.init(context)
 	}
 
-	private fun init(context: Context)
-	{
+	private fun init(context: Context) {
 		var versionName = context.getString(R.string.app_name)
-		try
-		{
+		try {
 			val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
 			versionName = versionName + " " + packageInfo.versionName + " (" + packageInfo.versionCode + ")"
 		}

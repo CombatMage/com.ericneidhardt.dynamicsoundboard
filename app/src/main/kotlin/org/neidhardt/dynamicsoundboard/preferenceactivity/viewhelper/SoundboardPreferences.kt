@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.preferences
+package org.neidhardt.dynamicsoundboard.preferenceactivity.viewhelper
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
@@ -43,5 +43,4 @@ object SoundboardPreferences
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		return preferences.getBoolean(context.getString(R.string.preferences_use_system_file_browser_key), false)
 	}
-
 }

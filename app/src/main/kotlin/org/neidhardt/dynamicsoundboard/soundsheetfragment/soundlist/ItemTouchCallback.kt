@@ -11,7 +11,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
-import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
+import org.neidhardt.dynamicsoundboard.preferenceactivity.viewhelper.SoundboardPreferences
 
 /**
  * @author eric.neidhardt on 14.06.2016.
