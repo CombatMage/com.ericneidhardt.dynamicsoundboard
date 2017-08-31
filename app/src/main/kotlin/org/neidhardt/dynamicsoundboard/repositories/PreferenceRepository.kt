@@ -1,6 +1,7 @@
 package org.neidhardt.dynamicsoundboard.repositories
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import org.neidhardt.dynamicsoundboard.R
 
@@ -27,5 +28,13 @@ class PreferenceRepository(private val context: Context) {
 		return this.preferenceManager.getBoolean(
 				this.context.getString(R.string.preferences_use_system_file_browser_key),
 				false)
+	}
+
+	fun registerSharedPreferenceChangedListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+		this.preferenceManager.registerOnSharedPreferenceChangeListener(listener)
+	}
+
+	fun unregisterSharedPreferenceChangedListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+		this.preferenceManager.unregisterOnSharedPreferenceChangeListener(listener)
 	}
 }

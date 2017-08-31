@@ -18,7 +18,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.repositories.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.PauseSoundOnCallListener
@@ -74,7 +73,8 @@ class NotificationService : Service(),
 				soundLayoutManager = this.soundLayoutManager)
 
 		this.eventBus.registerIfRequired(this)
-		SoundboardPreferences.registerSharedPreferenceChangedListener(this)
+
+		this.preferences.registerSharedPreferenceChangedListener(this)
 		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotification.getNotificationIntentFilter())
 	}
 
@@ -88,7 +88,7 @@ class NotificationService : Service(),
 		Logger.d(TAG, "onDestroy")
 
 		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
-		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this)
+		this.preferences.unregisterSharedPreferenceChangedListener(this)
 		this.unregisterReceiver(this.notificationActionReceiver)
 		this.eventBus.unregister(this)
 

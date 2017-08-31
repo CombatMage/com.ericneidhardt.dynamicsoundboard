@@ -31,7 +31,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import org.neidhardt.dynamicsoundboard.repositories.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist.ItemTouchCallback
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist.SoundAdapter
