@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.persistance
+package org.neidhardt.dynamicsoundboard.repositories
 
 import android.content.Context
 import com.google.gson.Gson

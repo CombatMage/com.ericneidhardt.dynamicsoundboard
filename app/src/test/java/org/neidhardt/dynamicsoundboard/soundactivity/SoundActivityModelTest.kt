@@ -10,7 +10,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
-import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
+import org.neidhardt.dynamicsoundboard.repositories.SaveDataIntentService
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.robolectric.RobolectricTestRunner
 

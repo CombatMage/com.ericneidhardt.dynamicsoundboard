@@ -56,7 +56,7 @@
 				  android:label="@string/about"
 				  android:parentActivityName=".soundactivity.SoundActivity"/>
 
-		<service android:name=".persistance.SaveDataIntentService"
+		<service android:name=".repositories.SaveDataIntentService"
 				 android:exported="false"/>
 
 		<service android:name=".notifications.NotificationService"

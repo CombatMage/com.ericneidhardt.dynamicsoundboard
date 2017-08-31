@@ -18,7 +18,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.preferenceactivity.viewhelper.SoundboardPreferences
+import org.neidhardt.dynamicsoundboard.repositories.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
 import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.PauseSoundOnCallListener
@@ -42,6 +42,8 @@ class NotificationService : Service(),
 	}
 
 	private val TAG: String = javaClass.name
+
+	private val preferences = SoundboardApplication.preferenceRepository
 
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
@@ -123,7 +125,7 @@ class NotificationService : Service(),
 
 	override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
 		if (key == this.getString(R.string.preferences_enable_notifications_key)) {
-			val areNotificationsEnabledEnabled = SoundboardPreferences.areNotificationsEnabled()
+			val areNotificationsEnabledEnabled = this.preferences.isNotificationEnabled
 			Logger.d(TAG, "onSharedPreferenceChanged $key to $areNotificationsEnabledEnabled")
 
 			if (areNotificationsEnabledEnabled)
@@ -179,7 +181,7 @@ class NotificationService : Service(),
 	override fun onEvent(event: MediaPlayerStateChangedEvent) {
 		Logger.d(TAG, event.toString())
 
-		val areNotificationsEnabled = SoundboardPreferences.areNotificationsEnabled()
+		val areNotificationsEnabled = this.preferences.isNotificationEnabled
 		if (!areNotificationsEnabled)
 			return
 

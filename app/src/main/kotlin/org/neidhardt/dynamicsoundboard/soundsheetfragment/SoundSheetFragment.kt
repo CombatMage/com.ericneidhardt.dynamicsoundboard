@@ -31,7 +31,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import org.neidhardt.dynamicsoundboard.preferenceactivity.viewhelper.SoundboardPreferences
+import org.neidhardt.dynamicsoundboard.repositories.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist.ItemTouchCallback
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist.SoundAdapter
@@ -60,6 +60,8 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 				?: throw IllegalStateException("no match for fragmentTag found")
 
 	private val KEY_STATE_RECYCLER_VIEW get() = "${this.fragmentTag}_recycler_view_state"
+
+	private val preferences = SoundboardApplication.preferenceRepository
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
@@ -148,6 +150,7 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 		val itemTouchHelper = ItemTouchHelper(
 				ItemTouchCallback(
 						context = this.rv_fragment_sound_sheet_sounds.context,
+						oneSwipeToDelete = this.preferences.isOneSwipeToDeleteEnabled,
 						deletionHandler = deletionHandler,
 						adapter = this.soundAdapter,
 						soundSheet = soundSheet,
@@ -290,7 +293,7 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 	}
 
 	override fun openDialogForNewSound() {
-		if (SoundboardPreferences.useSystemBrowserForFiles()) {
+		if (this.preferences.useSystemBrowserForFiles) {
 			val intent = Intent(Intent.ACTION_GET_CONTENT)
 			intent.type = FileUtils.MIME_AUDIO
 			this.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)

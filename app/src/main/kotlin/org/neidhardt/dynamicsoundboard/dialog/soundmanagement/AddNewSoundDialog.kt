@@ -31,7 +31,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.preferenceactivity.viewhelper.SoundboardPreferences
+import org.neidhardt.dynamicsoundboard.repositories.SoundboardPreferences
 import java.io.File
 import java.util.*
 
@@ -170,6 +170,8 @@ private class AddNewSoundDialogPresenter(
 		private val soundManager: SoundManager
 )
 {
+	private val preferenceRepository = SoundboardApplication.preferenceRepository
+
 	private val soundsToAdd = ArrayList<NewSoundData>()
 	val values: List<NewSoundData>
 		get() = this.soundsToAdd
@@ -232,9 +234,8 @@ private class AddNewSoundDialogPresenter(
 			RenameSoundFileDialog.show(this.dialog.fragmentManager, data)
 	}
 
-	private fun addAnotherSound()
-	{
-		if (SoundboardPreferences.useSystemBrowserForFiles()) {
+	private fun addAnotherSound() {
+		if (this.preferenceRepository.useSystemBrowserForFiles) {
 			val intent = Intent(Intent.ACTION_GET_CONTENT)
 			intent.type = FileUtils.MIME_AUDIO
 			this.dialog.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
