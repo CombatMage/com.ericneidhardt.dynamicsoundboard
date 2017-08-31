@@ -1,10 +1,8 @@
 package org.neidhardt.android_utils
 
 import android.app.FragmentManager
-import android.content.Intent
 import android.os.Bundle
 import com.trello.navi2.component.support.NaviAppCompatActivity
-import io.reactivex.Observable
 import java.util.*
 
 
@@ -20,19 +18,10 @@ open class EnhancedAppCompatActivity : NaviAppCompatActivity() {
 	private var isResumed = false
 	private val queueOnResume = ArrayList<(activity: EnhancedAppCompatActivity) -> Unit>()
 
-	internal var onIntentCallback: ((Intent) -> Unit)? = null
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		this.isResumed = false
 		this.queueOnResume.clear()
-	}
-
-	override fun onPostCreate(savedInstanceState: Bundle?) {
-		super.onPostCreate(savedInstanceState)
-		val intent = this.intent
-		if (intent != null)
-			this.onIntentCallback?.invoke(intent)
 	}
 
 	override fun onResume() {
@@ -46,12 +35,6 @@ open class EnhancedAppCompatActivity : NaviAppCompatActivity() {
 		this.isResumed = false
 	}
 
-	override fun onNewIntent(intent: Intent?) {
-		super.onNewIntent(intent)
-		if (intent != null)
-			this.onIntentCallback?.invoke(intent)
-	}
-
 	fun postAfterOnResume(action: (activity: EnhancedAppCompatActivity) -> Unit) {
 		if (this.isResumed)
 			action.invoke(this)
@@ -61,17 +44,6 @@ open class EnhancedAppCompatActivity : NaviAppCompatActivity() {
 
 	override fun getFragmentManager(): FragmentManager? {
 		throw IllegalAccessException("$TAG: Do not use default getFragmentManager, use getSupportFragmentManager instead")
-	}
-}
-
-object RxEnhancedAppCompatActivity {
-	fun receivesIntent(activity: EnhancedAppCompatActivity): Observable<Intent> {
-		return Observable.create<Intent> { subscriber ->
-			val listener = { intent: Intent ->
-				subscriber.onNext(intent)
-			}
-			activity.onIntentCallback = listener
-		}
 	}
 }
 

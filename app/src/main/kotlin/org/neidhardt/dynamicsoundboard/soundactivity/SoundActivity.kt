@@ -17,7 +17,6 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_base.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.EnhancedAppCompatActivity
-import org.neidhardt.android_utils.RxEnhancedAppCompatActivity
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.databinding.ActivityBaseBinding
@@ -72,6 +71,8 @@ class SoundActivity :
 				R.layout.activity_base)
 		this.toolbarVM = ToolbarVM()
 
+		this.volumeControlStream = AudioManager.STREAM_MUSIC
+
 		this.presenter = SoundActivityPresenter(
 				this,
 				SoundActivityModel(
@@ -81,14 +82,7 @@ class SoundActivity :
 
 		this.configureToolbar()
 
-		this.volumeControlStream = AudioManager.STREAM_MUSIC
-
-		RxEnhancedAppCompatActivity.receivesIntent(this)
-				.subscribe { intent ->
-					if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-						this.presenter.userOpenSoundFileWithApp(intent.data)
-					}
-				}
+		this.presenter.onCreated()
 	}
 
 	private fun configureToolbar() {
@@ -118,8 +112,9 @@ class SoundActivity :
 
 	override fun onPostCreate(savedInstanceState: Bundle?) {
 		super.onPostCreate(savedInstanceState)
-		this.presenter.onCreated()
 		this.drawerToggle?.syncState()
+
+		this.onNewIntent(this.intent)
 	}
 
 	override fun onNewIntent(intent: Intent?) {
@@ -318,7 +313,9 @@ class SoundActivity :
 	}
 
 	override fun requestPermissions(permissions: Array<String>) {
-		ActivityCompat.requestPermissions(this, permissions, IntentRequest.REQUEST_PERMISSIONS)
+		if (permissions.isNotEmpty()) {
+			ActivityCompat.requestPermissions(this, permissions, IntentRequest.REQUEST_PERMISSIONS)
+		}
 	}
 
 	override fun openLoadLayoutDialog() {
