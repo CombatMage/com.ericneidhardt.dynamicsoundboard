@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.manager.findById
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
  * File created by eric.neidhardt on 12.04.2015.

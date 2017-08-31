@@ -33,7 +33,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.infoactivity.InfoActivity
 import org.neidhardt.dynamicsoundboard.preferenceactivity.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
@@ -42,7 +42,7 @@ import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainReadPhone
 import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainReadStoragePermission
 import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainWriteStoragePermission
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.SoundSheetFragment
-import org.neidhardt.dynamicsoundboard.view_helper.navigationdrawer_helper.NoAnimationDrawerToggle
+import org.neidhardt.dynamicsoundboard.viewhelper.navigationdrawer_helper.NoAnimationDrawerToggle
 import org.neidhardt.utils.letThis
 import java.util.*
 

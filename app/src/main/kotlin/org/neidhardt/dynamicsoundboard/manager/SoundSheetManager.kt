@@ -4,7 +4,7 @@ import android.content.Context
 import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.

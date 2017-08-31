@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
  * File created by eric.neidhardt on 10.07.2015.

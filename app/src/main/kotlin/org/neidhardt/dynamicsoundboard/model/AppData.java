@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.persistance.model;
+package org.neidhardt.dynamicsoundboard.model;
 
 import java.util.List;
 

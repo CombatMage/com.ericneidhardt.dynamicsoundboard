@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
-import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 
 /**
  * File created by eric.neidhardt on 10.11.2015.

@@ -8,7 +8,7 @@ import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
+import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.utils.longHash
 
 /**

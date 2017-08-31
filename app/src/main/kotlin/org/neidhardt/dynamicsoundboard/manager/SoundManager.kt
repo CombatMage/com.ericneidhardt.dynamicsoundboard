@@ -13,8 +13,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.utils.getCopyList
 import java.util.concurrent.TimeUnit
 

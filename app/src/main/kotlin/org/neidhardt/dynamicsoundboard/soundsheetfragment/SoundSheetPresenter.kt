@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.*
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.utils.getCopyList
 
 /**

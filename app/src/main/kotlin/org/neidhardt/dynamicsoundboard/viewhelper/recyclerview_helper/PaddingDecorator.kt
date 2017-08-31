@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.view_helper.recyclerview_helper
+package org.neidhardt.dynamicsoundboard.viewhelper.recyclerview_helper
 
 import android.graphics.Rect
 import android.support.v7.widget.RecyclerView

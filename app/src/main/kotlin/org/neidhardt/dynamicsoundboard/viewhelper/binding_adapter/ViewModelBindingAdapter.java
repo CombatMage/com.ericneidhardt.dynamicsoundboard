@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.view_helper.binding_adapter;
+package org.neidhardt.dynamicsoundboard.viewhelper.binding_adapter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

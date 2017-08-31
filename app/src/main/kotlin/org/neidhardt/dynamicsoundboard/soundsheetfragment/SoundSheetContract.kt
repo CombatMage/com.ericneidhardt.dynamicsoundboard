@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetfragment
 
 import android.net.Uri
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
  * Created by eric.neidhardt@gmail.com on 08.05.2017.

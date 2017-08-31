@@ -1,6 +1,4 @@
-package org.neidhardt.dynamicsoundboard.persistance.model;
-
-import android.support.annotation.Nullable;
+package org.neidhardt.dynamicsoundboard.model;
 
 /**
  * Created by eric.neidhardt@gmail.com on 19.12.2016.

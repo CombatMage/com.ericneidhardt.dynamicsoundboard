@@ -5,10 +5,9 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.generic.GenericEditTextDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.RenameSoundFileDialog
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.model.SoundLayout
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
  * Created by eric.neidhardt@gmail.com on 05.01.2017.

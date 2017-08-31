@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist
 
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import java.util.*

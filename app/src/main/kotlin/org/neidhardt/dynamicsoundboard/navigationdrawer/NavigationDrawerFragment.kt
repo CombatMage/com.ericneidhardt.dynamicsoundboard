@@ -26,7 +26,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDraw
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
 import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
-import org.neidhardt.dynamicsoundboard.view_helper.recyclerview_helper.PaddingDecorator
+import org.neidhardt.dynamicsoundboard.viewhelper.recyclerview_helper.PaddingDecorator
 import org.neidhardt.utils.letThis
 import kotlin.properties.Delegates
 

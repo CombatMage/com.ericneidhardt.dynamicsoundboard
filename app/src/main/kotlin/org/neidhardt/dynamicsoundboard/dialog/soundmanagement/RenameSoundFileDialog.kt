@@ -20,8 +20,8 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
-import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import java.io.File
 import java.io.IOException
 import kotlin.properties.Delegates

@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundactivity
 
 import android.net.Uri
 import io.reactivex.Observable
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
  * Created by eric.neidhardt@gmail.com on 29.06.2017.

@@ -6,8 +6,8 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.generic.GenericEditTextDialog
 import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundLayout
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
  * Created by eric.neidhardt@gmail.com on 05.01.2017.

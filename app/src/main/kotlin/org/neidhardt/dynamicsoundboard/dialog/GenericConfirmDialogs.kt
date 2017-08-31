@@ -5,8 +5,7 @@ import android.support.v4.app.FragmentManager
 import org.neidhardt.utils.getCopyList
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.generic.GenericConfirmDialog
-import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
  * Created by eric.neidhardt@gmail.com on 09.01.2017.

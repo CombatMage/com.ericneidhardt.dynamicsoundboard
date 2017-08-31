@@ -22,7 +22,7 @@ import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
-import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.util.enhanced_handler.EnhancedHandler
 import org.neidhardt.util.enhanced_handler.KillableRunnable
 import org.neidhardt.utils.letThis

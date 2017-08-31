@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
 
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import kotlin.properties.Delegates
 
 /**

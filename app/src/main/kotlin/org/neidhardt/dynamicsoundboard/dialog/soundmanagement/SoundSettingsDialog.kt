@@ -13,8 +13,8 @@ import org.neidhardt.android_utils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.model.MediaPlayerData
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.utils.letThis
 import java.util.*
 import kotlin.properties.Delegates

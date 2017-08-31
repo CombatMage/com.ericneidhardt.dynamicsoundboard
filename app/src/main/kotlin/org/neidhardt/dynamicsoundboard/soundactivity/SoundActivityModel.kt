@@ -7,7 +7,7 @@ import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
 import org.neidhardt.dynamicsoundboard.persistance.SaveDataIntentService
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 
 /**

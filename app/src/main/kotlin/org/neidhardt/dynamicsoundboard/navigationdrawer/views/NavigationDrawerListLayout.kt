@@ -12,8 +12,8 @@ import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPres
 import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundLayout
-import org.neidhardt.dynamicsoundboard.persistance.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.model.SoundLayout
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import java.lang.ref.WeakReference
 
 /**
