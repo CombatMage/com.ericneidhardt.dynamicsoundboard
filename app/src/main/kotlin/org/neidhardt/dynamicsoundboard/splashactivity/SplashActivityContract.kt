@@ -10,7 +10,4 @@ interface SplashActivityContract {
 	interface Presenter {
 		fun onCreated()
 	}
-	interface Model {
-		fun getActivityToStart(): Class<*>
-	}
 }
