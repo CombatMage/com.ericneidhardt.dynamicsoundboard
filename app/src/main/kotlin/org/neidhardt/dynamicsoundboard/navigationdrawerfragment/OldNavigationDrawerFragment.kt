@@ -14,7 +14,6 @@ import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
-import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.manager.*
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist.PlaylistAdapter
@@ -41,7 +40,7 @@ class OldNavigationDrawerFragment : BaseFragment() {
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
 
-	private var binding by Delegates.notNull<FragmentNavigationDrawerBinding>()
+	//private var binding by Delegates.notNull<FragmentNavigationDrawerBinding>()
 	private val headerVM = NavigationDrawerHeaderVM(this.eventBus, this.soundLayoutManager.soundLayouts.selectedLayout?.label)
 	private val buttonBarVM = NavigationDrawerButtonBarVM()
 	private val deletionViewVM = NavigationDrawerDeletionViewVM()
@@ -59,13 +58,14 @@ class OldNavigationDrawerFragment : BaseFragment() {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		super.onCreateView(inflater, container, savedInstanceState)
-		this.binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater,
-				R.layout.fragment_navigation_drawer, container, false).letThis {
+		//this.binding = DataBindingUtil.inflate<FragmentNavigationDrawerBinding>(inflater,
+				//R.layout.fragment_navigation_drawer, container, false).letThis {
 			//it.layoutNavigationDrawerHeader.viewModel = this.headerVM
 			//it.layoutNavigationDrawerButtonBar.viewModel = this.buttonBarVM
 			//it.layoutNavigationDrawerDeletionHeader.viewModel = this.deletionViewVM
-		}
-		return this.binding.root
+		//}
+		//return this.binding.root
+		return null
 	}
 
 	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -196,15 +196,15 @@ class OldNavigationDrawerFragment : BaseFragment() {
 	fun setDeletionModeUi(enable: Boolean) {
 
 		// disable parallax scrolling if in deletion mode
-		this.binding.clNavigationDrawer.isScrollingEnabled = !enable
-		this.binding.rvNavigationDrawerList.isNestedScrollingEnabled = !enable
+		//this.binding.clNavigationDrawer.isScrollingEnabled = !enable
+		//this.binding.rvNavigationDrawerList.isNestedScrollingEnabled = !enable
 
 		// hide header and show deletion ui
-		this.binding.ablNavigationDrawer.setExpanded(!enable, true)
+		//this.binding.ablNavigationDrawer.setExpanded(!enable, true)
 
 		// make sure we scroll to valid position after some items may have been deleted
-		if (!enable)
-			this.binding.rvNavigationDrawerList.scrollToPosition(0)
+		//if (!enable)
+		//	this.binding.rvNavigationDrawerList.scrollToPosition(0)
 
 		// enable deletion actions
 		this.deletionViewVM.isEnable = enable

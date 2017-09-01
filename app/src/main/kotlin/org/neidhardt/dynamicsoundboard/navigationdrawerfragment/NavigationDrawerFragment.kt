@@ -2,6 +2,8 @@ package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -11,13 +13,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.support.design.widget.RxTabLayout
 import com.jakewharton.rxbinding2.view.RxView
+import kotlinx.android.synthetic.main.activity_base.*
+import kotlinx.android.synthetic.main.fragment_navigation_drawer.*
 import kotlinx.android.synthetic.main.fragment_navigation_drawer.view.*
+import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_header.view.*
+import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
-import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
@@ -40,8 +45,12 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 
 	private lateinit var presenter: NavigationDrawerFragmentContract.Presenter
 
+	private lateinit var coordinatorLayout: NonTouchableCoordinatorLayout
+	private lateinit var appBarLayout: AppBarLayout
 	private lateinit var tabLayout: TabLayout
 	private lateinit var recyclerView: RecyclerView
+
+	private lateinit var buttonDeleteSelected: View
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -58,15 +67,21 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 
 		val view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
 
+		this.coordinatorLayout = view.cl_navigation_drawer
+		this.appBarLayout = view.abl_navigation_drawer
+
 		this.recyclerView = view.rv_navigation_drawer_list.apply {
 			this.itemAnimator = DefaultItemAnimator()
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.addItemDecoration(PaddingDecorator(this.context.applicationContext))
 		}
 
-		this.tabLayout = view.tl_navigation_drawer_list
-		this.tabLayout.newTab().setText(R.string.tab_sound_sheets)
-		this.tabLayout.newTab().setText(R.string.tab_play_list)
+		this.tabLayout = view.tl_navigation_drawer_list.apply {
+			this.newTab().setText(R.string.tab_sound_sheets)
+			this.newTab().setText(R.string.tab_play_list)
+		}
+
+		this.buttonDeleteSelected = view.framelayout_layoutnavigationdrawerbuttonbar_deleteselected
 
 		RxTabLayout.selections(this.tabLayout)
 				.takeUntil(RxView.detaches(this.tabLayout))
@@ -105,16 +120,17 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 		this.presenter.viewCreated()
 	}
 
-	override fun showSoundSheets() {
-		this.recyclerView.adapter = this.adapterSoundSheets
-	}
+	override fun stopDeletionMode() {
+		// hide delete button and header
+		this.buttonDeleteSelected.visibility = View.GONE
+		this.abl_navigation_drawer
 
-	override fun showPlaylist() {
-		this.recyclerView.adapter = this.adapterPlaylist
-	}
+		// enable scrolling
+		this.recyclerView.isNestedScrollingEnabled = true
+		this.coordinatorLayout.isScrollingEnabled = true
 
-	override fun showSoundLayouts() {
-		this.recyclerView.adapter = this.adapterSoundLayouts
+		// make sure we scroll to valid position after some items may have been deleted
+		this.recyclerView.scrollToPosition(0)
 	}
 
 	override fun showDeletionModeSoundSheets() {
@@ -127,6 +143,18 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 
 	override fun showDeletionModeSoundLayouts() {
 		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+	override fun showSoundSheets() {
+		this.recyclerView.adapter = this.adapterSoundSheets
+	}
+
+	override fun showPlaylist() {
+		this.recyclerView.adapter = this.adapterPlaylist
+	}
+
+	override fun showSoundLayouts() {
+		this.recyclerView.adapter = this.adapterSoundLayouts
 	}
 
 	override fun showDialogAddSoundSheet() {

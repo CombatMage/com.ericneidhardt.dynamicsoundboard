@@ -12,6 +12,10 @@ class NewNavigationDrawerPresenter(
 ) : NavigationDrawerFragmentContract.Presenter {
 
 	override fun viewCreated() {
+		this.view.stopDeletionMode()
+
+		this.view.showSoundSheets()
+
 		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 

@@ -20,6 +20,7 @@ interface NavigationDrawerFragmentContract {
 		fun showDeletionModeSoundSheets()
 		fun showDeletionModePlaylist()
 		fun showDeletionModeSoundLayouts()
+		fun stopDeletionMode()
 	}
 	interface Presenter {
 		fun viewCreated()
