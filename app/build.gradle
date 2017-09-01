@@ -108,6 +108,7 @@ dependencies {
 	compile rootProject.ext.libraries.rxKotlin
 	compile rootProject.ext.libraries.rxJava
 	compile rootProject.ext.libraries.rxBinding
+	compile rootProject.ext.libraries.rxBindingDesign
 	compile rootProject.ext.libraries.rxlifecycleNavi
 	compile rootProject.ext.libraries.rxNavi
 

@@ -16,8 +16,7 @@ class SplashActivity : AppCompatActivity(), SplashActivityContract.View {
 		super.onCreate(savedInstanceState)
 
 		this.presenter = SplashActivityPresenter(
-				this,
-				SplashActivityModel()
+				this
 		)
 		this.presenter.onCreated()
 	}
