@@ -32,7 +32,7 @@ import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.infoactivity.InfoActivity
 import org.neidhardt.dynamicsoundboard.preferenceactivity.PreferenceActivity

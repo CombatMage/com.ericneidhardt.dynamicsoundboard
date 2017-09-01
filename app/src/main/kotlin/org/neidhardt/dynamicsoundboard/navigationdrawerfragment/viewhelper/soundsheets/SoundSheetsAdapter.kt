@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundsheets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

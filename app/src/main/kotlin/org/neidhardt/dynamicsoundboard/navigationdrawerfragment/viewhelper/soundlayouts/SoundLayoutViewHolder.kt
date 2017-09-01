@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

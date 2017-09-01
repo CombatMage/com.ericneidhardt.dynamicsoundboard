@@ -9,7 +9,7 @@
 
 		<variable
 				name="viewModel"
-				type="org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM"/>
+				type="org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel.NavigationDrawerButtonBarVM"/>
 	</data>
 
 	<RelativeLayout

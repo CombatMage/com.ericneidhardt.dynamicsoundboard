@@ -1,7 +1,7 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts
 
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import kotlin.properties.Delegates
 

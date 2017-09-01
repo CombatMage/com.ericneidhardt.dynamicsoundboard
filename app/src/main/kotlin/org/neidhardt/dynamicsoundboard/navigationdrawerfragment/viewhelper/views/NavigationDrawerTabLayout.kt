@@ -1,12 +1,12 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.views
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.views
 
 import android.support.design.widget.TabLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OnOpenSoundLayoutsEventListener
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundLayoutsRequestedEvent
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.events.OnOpenSoundLayoutsEventListener
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.events.OpenSoundLayoutsRequestedEvent
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 
 /**

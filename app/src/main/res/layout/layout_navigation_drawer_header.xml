@@ -7,7 +7,7 @@
 
 		<variable
 				name="viewModel"
-				type="org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerHeaderVM"/>
+				type="org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel.NavigationDrawerHeaderVM"/>
 	</data>
 
 	<RelativeLayout

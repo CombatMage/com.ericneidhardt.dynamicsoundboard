@@ -1,8 +1,8 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel
 
 import android.databinding.BaseObservable
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundLayoutsRequestedEvent
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.events.OpenSoundLayoutsRequestedEvent
 
 /**
 * Created by Eric.Neidhardt@GMail.com on 17.06.2016.

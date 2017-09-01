@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.views
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.views
 
 import android.support.v7.widget.RecyclerView
 import org.greenrobot.eventbus.EventBus
@@ -7,11 +7,11 @@ import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsPresenter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.NavigationDrawerFragment
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.NavigationDrawerListPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist.PlaylistPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts.SoundLayoutsPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundsheets.SoundSheetsPresenter
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import java.lang.ref.WeakReference

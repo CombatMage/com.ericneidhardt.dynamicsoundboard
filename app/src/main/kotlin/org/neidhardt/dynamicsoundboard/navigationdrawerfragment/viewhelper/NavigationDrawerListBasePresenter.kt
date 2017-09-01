@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper
 
 /**
  * File created by eric.neidhardt on 26.05.2015.

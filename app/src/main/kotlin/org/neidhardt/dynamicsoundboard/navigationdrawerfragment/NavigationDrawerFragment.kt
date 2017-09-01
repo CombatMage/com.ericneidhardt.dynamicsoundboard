@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -17,15 +17,15 @@ import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.databinding.FragmentNavigationDrawerBinding
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.manager.*
-import org.neidhardt.dynamicsoundboard.navigationdrawer.playlist.PlaylistAdapter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundlayouts.SoundLayoutsAdapter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.soundsheets.SoundSheetsAdapter
-import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM
-import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM
-import org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerHeaderVM
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.*
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.List
-import org.neidhardt.dynamicsoundboard.navigationdrawer.views.NavigationDrawerListPresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist.PlaylistAdapter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts.SoundLayoutsAdapter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundsheets.SoundSheetsAdapter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel.NavigationDrawerButtonBarVM
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel.NavigationDrawerDeletionViewVM
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel.NavigationDrawerHeaderVM
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.views.*
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.views.List
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.views.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.viewhelper.recyclerview_helper.PaddingDecorator
 import org.neidhardt.utils.letThis
 import kotlin.properties.Delegates

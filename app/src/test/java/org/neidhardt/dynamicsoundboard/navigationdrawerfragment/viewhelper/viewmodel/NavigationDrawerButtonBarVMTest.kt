@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel
 
 import org.greenrobot.eventbus.EventBus
 import org.junit.Before

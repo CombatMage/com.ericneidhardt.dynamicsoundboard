@@ -31,7 +31,7 @@
 
 				<fragment
 						android:id="@+id/navigation_drawer_fragment"
-						android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
+						android:name="org.neidhardt.dynamicsoundboard.navigationdrawerfragment.NavigationDrawerFragment"
 						android:layout_width="@dimen/width_navigation_drawer_landscape"
 						android:layout_height="match_parent"
 						tools:layout="@layout/fragment_navigation_drawer"/>

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable

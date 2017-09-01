@@ -8,7 +8,7 @@
 
 		<variable
 				name="viewModel"
-				type="org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM"/>
+				type="org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel.NavigationDrawerDeletionViewVM"/>
 		
 	</data>
 	

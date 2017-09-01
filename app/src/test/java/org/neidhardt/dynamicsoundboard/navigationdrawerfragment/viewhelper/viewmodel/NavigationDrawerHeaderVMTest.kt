@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel
 
 import org.greenrobot.eventbus.EventBus
 import org.junit.Before
@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import org.neidhardt.dynamicsoundboard.navigationdrawer.events.OpenSoundLayoutsRequestedEvent
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.events.OpenSoundLayoutsRequestedEvent
 import org.robolectric.RobolectricTestRunner
 import kotlin.properties.Delegates
 

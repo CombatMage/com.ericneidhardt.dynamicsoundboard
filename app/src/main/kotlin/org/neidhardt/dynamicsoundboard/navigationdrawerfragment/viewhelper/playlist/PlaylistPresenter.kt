@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.navigationdrawer.playlist
+package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerListBasePresenter
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.NavigationDrawerListBasePresenter
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import kotlin.properties.Delegates
 
