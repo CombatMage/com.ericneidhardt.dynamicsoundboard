@@ -1,9 +1,7 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -11,12 +9,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.jakewharton.rxbinding2.support.design.widget.RxTabLayout
 import com.jakewharton.rxbinding2.view.RxView
-import kotlinx.android.synthetic.main.activity_base.*
-import kotlinx.android.synthetic.main.fragment_navigation_drawer.*
 import kotlinx.android.synthetic.main.fragment_navigation_drawer.view.*
-import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_header.view.*
@@ -32,7 +28,6 @@ import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playl
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts.SoundLayoutsAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundsheets.SoundSheetsAdapter
 import org.neidhardt.dynamicsoundboard.viewhelper.recyclerview_helper.PaddingDecorator
-import org.neidhardt.utils.letThis
 
 /**
  * Created by eric.neidhardt@gmail.com on 01.09.2017.
@@ -47,6 +42,11 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 
 	private lateinit var coordinatorLayout: NonTouchableCoordinatorLayout
 	private lateinit var appBarLayout: AppBarLayout
+
+	private lateinit var deletionToolbar: View
+	private lateinit var deletionToolbarTitle: TextView
+	private lateinit var deletionToolbarSubTitle: TextView
+
 	private lateinit var tabLayout: TabLayout
 	private lateinit var recyclerView: RecyclerView
 
@@ -68,7 +68,12 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 		val view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
 
 		this.coordinatorLayout = view.cl_navigation_drawer
+
 		this.appBarLayout = view.abl_navigation_drawer
+
+		this.deletionToolbar = view.layout_navigation_drawer_deletion_header
+		this.deletionToolbarTitle = view.tv_layout_navigation_drawer_deletion_header_title
+		this.deletionToolbarSubTitle = view.tv_layout_navigation_drawer_deletion_header_sub_title
 
 		this.recyclerView = view.rv_navigation_drawer_list.apply {
 			this.itemAnimator = DefaultItemAnimator()
@@ -123,7 +128,7 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 	override fun stopDeletionMode() {
 		// hide delete button and header
 		this.buttonDeleteSelected.visibility = View.GONE
-		this.abl_navigation_drawer
+		this.appBarLayout.setExpanded(true, true)
 
 		// enable scrolling
 		this.recyclerView.isNestedScrollingEnabled = true
@@ -131,18 +136,46 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 
 		// make sure we scroll to valid position after some items may have been deleted
 		this.recyclerView.scrollToPosition(0)
+
+		// hide deletion toolbar
+		this.deletionToolbar.visibility = View.GONE
 	}
 
 	override fun showDeletionModeSoundSheets() {
+		this.deletionToolbarTitle.setText(R.string.deletiontoolbar_titledeletesoundsheets)
+		// TODO setSubTitle
+
 		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.startDeletionMode()
 	}
 
 	override fun showDeletionModePlaylist() {
+		this.deletionToolbarTitle.setText(R.string.deletiontoolbar_titledeleteplaylistsounds)
+		// TODO setSubTitle
+
 		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.startDeletionMode()
 	}
 
 	override fun showDeletionModeSoundLayouts() {
+		this.deletionToolbarTitle.setText(R.string.deletiontoolbar_titledeletesoundlayouts)
+		// TODO setSubTitle
+
 		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.startDeletionMode()
+	}
+
+	private fun startDeletionMode() {
+		// show delete button and collapse header
+		this.buttonDeleteSelected.visibility = View.VISIBLE
+		this.appBarLayout.setExpanded(false, true)
+
+		// disable scrolling
+		this.recyclerView.isNestedScrollingEnabled = false
+		this.coordinatorLayout.isScrollingEnabled = false
+
+		// show deletion toolbar
+		this.deletionToolbar.visibility = View.VISIBLE
 	}
 
 	override fun showSoundSheets() {

@@ -19,7 +19,7 @@
 			android:layout_height="48dp"
 			android:layout_alignParentEnd="true"
 			android:layout_centerVertical="true"
-			android:contentDescription="@string/cab_content_description_cancel"
+			android:contentDescription="@string/deletiontoolbar_contentdescriptioncancel"
 			android:src="@drawable/ic_action_done"/>
 
 		<LinearLayout
@@ -40,7 +40,7 @@
 				android:layout_height="wrap_content"
 				android:textColor="@color/text_header"
 				android:textSize="@dimen/text_body"
-				tools:text="@string/cab_title_delete_sound_sheets"/>
+				tools:text="@string/deletiontoolbar_titledeletesoundsheets"/>
 
 			<TextView
 				android:id="@+id/tv_layout_navigation_drawer_deletion_header_sub_title"

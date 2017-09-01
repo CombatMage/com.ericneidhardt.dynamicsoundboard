@@ -7,7 +7,6 @@ import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
-import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.NavigationDrawerFragment
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.NavigationDrawerListPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist.PlaylistPresenter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts.SoundLayoutsPresenter
@@ -54,19 +53,19 @@ class NavigationDrawerListPresenter(
 					this.currentListBacking = List.Playlist
 					this.currentPresenter = this.presenterPlaylist
 					this.recyclerView.adapter = this.presenterPlaylist.adapter
-					this.fragmentReference.get()?.setActionModeTitle(R.string.cab_title_delete_play_list_sounds)
+					this.fragmentReference.get()?.setActionModeTitle(R.string.deletiontoolbar_titledeleteplaylistsounds)
 				}
 				List.SoundLayouts -> {
 					this.currentListBacking = List.SoundLayouts
 					this.currentPresenter = this.presenterSoundLayouts
 					this.recyclerView.adapter = this.presenterSoundLayouts.adapter
-					this.fragmentReference.get()?.setActionModeTitle(R.string.cab_title_delete_sound_layouts)
+					this.fragmentReference.get()?.setActionModeTitle(R.string.deletiontoolbar_titledeletesoundlayouts)
 				}
 				List.SoundSheet -> {
 					this.currentListBacking = List.SoundSheet
 					this.currentPresenter = this.presenterSoundSheets
 					this.recyclerView.adapter = this.presenterSoundSheets.adapter
-					this.fragmentReference.get()?.setActionModeTitle(R.string.cab_title_delete_sound_sheets)
+					this.fragmentReference.get()?.setActionModeTitle(R.string.deletiontoolbar_titledeletesoundsheets)
 				}
 			}
 			this.currentPresenter?.onAttachedToWindow()

@@ -11,6 +11,14 @@ class NewNavigationDrawerPresenter(
 		private val view: NavigationDrawerFragmentContract.View
 ) : NavigationDrawerFragmentContract.Presenter {
 
+	private enum class List {
+		SoundSheet,
+		Playlist,
+		SoundLayouts
+	}
+
+	private var currentList: List = List.SoundSheet
+
 	override fun viewCreated() {
 		this.view.stopDeletionMode()
 
@@ -40,15 +48,19 @@ class NewNavigationDrawerPresenter(
 	}
 
 	override fun userClicksDelete() {
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		when(this.currentList) {
+			NewNavigationDrawerPresenter.List.SoundSheet -> this.view.showDeletionModeSoundSheets()
+			NewNavigationDrawerPresenter.List.Playlist -> this.view.showDeletionModePlaylist()
+			NewNavigationDrawerPresenter.List.SoundLayouts -> this.view.showDialogAddSoundLayout()
+		}
 	}
 
 	override fun userClicksDeleteCancel() {
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.view.stopDeletionMode()
 	}
 
 	override fun userClicksDeleteSelected() {
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.view.stopDeletionMode()
 	}
 
 	override fun userClicksSoundSheet(soundSheet: SoundSheet) {
