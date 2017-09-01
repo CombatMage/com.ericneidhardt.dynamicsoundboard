@@ -4,14 +4,6 @@
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools">
 
-	<data>
-		<import type="android.view.View"/>
-
-		<variable
-				name="viewModel"
-				type="org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.viewmodel.NavigationDrawerButtonBarVM"/>
-	</data>
-
 	<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_list_item"
@@ -24,8 +16,7 @@
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
 				android:orientation="horizontal"
-				android:background="@color/background"
-				app:animateVisibleFade="@{!viewModel.enableDeleteSelected}">
+				android:background="@color/background">
 
 			<Button
 					android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
@@ -35,8 +26,7 @@
 					android:padding="@dimen/margin_default"
 					android:gravity="center"
 					android:text="@string/navigation_drawer_delete"
-					style="@style/style_all_buttonflat"
-					android:onClick="@{(view) -> viewModel.onDeleteClicked()}"/>
+					style="@style/style_all_buttonflat"/>
 
 			<Button
 					android:id="@+id/b_layout_navigation_drawer_button_bar_add"
@@ -46,8 +36,7 @@
 					android:padding="@dimen/margin_default"
 					android:gravity="center"
 					android:text="@string/navigation_drawer_add"
-					style="@style/style_all_buttonflat"
-					android:onClick="@{(view) -> viewModel.onAddClicked()}"/>
+					style="@style/style_all_buttonflat"/>
 		</LinearLayout>
 
 		<FrameLayout
@@ -68,10 +57,7 @@
 					android:fontFamily="sans-serif-_medium"
 					android:background="@drawable/selector_background_list_item"
 					android:clickable="true"
-					tools:visibility="gone"
-					android:onClick="@{(view) -> viewModel.onDeleteSelectedClicked()}"
-					android:visibility="@{viewModel.enableDeleteSelected ? View.VISIBLE : View.GONE}"
-					app:animateVisibleSlide="@{viewModel.enableDeleteSelected}"/>
+					tools:visibility="gone"/>
 		</FrameLayout>
 	</RelativeLayout>
 </layout>

@@ -14,6 +14,7 @@ import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.sound
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundsheets.SoundSheetsPresenter
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.OldNavigationDrawerFragment
 import java.lang.ref.WeakReference
 
 /**
@@ -27,11 +28,11 @@ enum class List {
 
 class NavigationDrawerListPresenter(
 		eventBus: EventBus,
-		fragment: NavigationDrawerFragment,
+		fragment: OldNavigationDrawerFragment,
 		private val recyclerView: RecyclerView
 ) {
 
-	private val fragmentReference: WeakReference<NavigationDrawerFragment> = WeakReference(fragment)
+	private val fragmentReference: WeakReference<OldNavigationDrawerFragment> = WeakReference(fragment)
 
 	var currentPresenter: NavigationDrawerListPresenter? = null
 
