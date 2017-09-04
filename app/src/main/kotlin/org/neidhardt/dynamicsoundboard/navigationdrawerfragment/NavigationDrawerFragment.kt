@@ -41,7 +41,6 @@ class NavigationDrawerFragment :
 		BaseFragment(),
 		NavigationDrawerFragmentContract.View {
 
-	private val eventBus = EventBus.getDefault()
 	private val soundsSheetManager = SoundboardApplication.soundSheetManager
 	private val playListManager = SoundboardApplication.playlistManager
 
@@ -69,14 +68,14 @@ class NavigationDrawerFragment :
 	override var displayedSoundSheets: List<SoundSheet>
 		get() = this.adapterSoundSheets.values
 		set(value) {
-			this.adapterSoundSheets.setValues(value)
+			this.adapterSoundSheets.values = value
 			this.adapterSoundSheets.notifyDataSetChanged()
 		}
 
 	override var displayedPlaylist: List<MediaPlayerController>
 		get() = this.adapterPlaylist.values
 		set(value) {
-			this.adapterPlaylist.setValues(value)
+			this.adapterPlaylist.values = value
 			this.adapterPlaylist.notifyDataSetChanged()
 		}
 

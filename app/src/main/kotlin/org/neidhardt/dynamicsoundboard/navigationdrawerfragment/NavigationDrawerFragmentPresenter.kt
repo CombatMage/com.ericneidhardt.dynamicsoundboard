@@ -9,13 +9,12 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
 /**
  * Created by eric.neidhardt@gmail.com on 01.09.2017.
  */
-
-private val INDEX_NOT_SET = -1
-
 class NavigationDrawerFragmentPresenter(
 		private val view: NavigationDrawerFragmentContract.View,
 		private val model: NavigationDrawerFragmentContract.Model
 ) : NavigationDrawerFragmentContract.Presenter {
+
+	private val INDEX_NOT_SET = -1
 
 	private enum class List {
 		SoundSheet,
