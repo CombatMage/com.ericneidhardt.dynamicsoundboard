@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.fragment_navigation_drawer.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_header.view.*
-import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.animations.setOnAnimationEndedListener
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
@@ -43,6 +42,7 @@ class NavigationDrawerFragment :
 
 	private val soundsSheetManager = SoundboardApplication.soundSheetManager
 	private val playListManager = SoundboardApplication.playlistManager
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private val adapterSoundSheets = SoundSheetsAdapter()
 	private val adapterPlaylist = PlaylistAdapter()
@@ -79,12 +79,20 @@ class NavigationDrawerFragment :
 			this.adapterPlaylist.notifyDataSetChanged()
 		}
 
+	override var displayedSoundLayouts: List<SoundLayout>
+		get() = this.adapterSoundLayouts.values
+		set(value) {
+			this.adapterSoundLayouts.values = value
+			this.adapterSoundLayouts.notifyDataSetChanged()
+		}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		this.model = NavigationDrawerFragmentModel(
 				this.soundsSheetManager,
-				this.playListManager)
+				this.playListManager,
+				this.soundLayoutManager)
 
 		this.presenter = NavigationDrawerFragmentPresenter(
 				this,

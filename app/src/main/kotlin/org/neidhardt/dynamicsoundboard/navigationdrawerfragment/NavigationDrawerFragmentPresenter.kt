@@ -5,7 +5,6 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import java.util.logging.Logger
 
 
 /**
@@ -33,6 +32,9 @@ class NavigationDrawerFragmentPresenter(
 
 		this.model.playList
 				.subscribe { playList -> this.view.displayedPlaylist = playList }
+
+		this.model.soundLayouts
+				.subscribe { soundLayouts -> this.view.displayedSoundLayouts = soundLayouts }
 
 		this.model.mediaPlayerStateChangedEvents
 				.filter { (player) -> player.mediaPlayerData.fragmentTag == PlaylistTAG }
@@ -102,7 +104,7 @@ class NavigationDrawerFragmentPresenter(
 	}
 
 	override fun userClicksSoundLayoutItem(soundLayout: SoundLayout) {
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.model.setSoundLayoutSelected(soundLayout)
 	}
 
 	override fun userClicksSoundLayoutSettings(soundLayout: SoundLayout) {
@@ -146,8 +148,7 @@ class NavigationDrawerFragmentPresenter(
 	private fun onPlayListPlayerCompleted(player: MediaPlayerController) {
 		val currentPlayList = this.view.displayedPlaylist // get current playlist
 
-		val currentPlayer = currentPlayList[this.currentPlayListItemIndex]
-		currentPlayer.stopSound()
+		player.stopSound()
 
 		if (this.currentPlayListItemIndex != INDEX_NOT_SET) {
 			this.currentPlayListItemIndex += 1

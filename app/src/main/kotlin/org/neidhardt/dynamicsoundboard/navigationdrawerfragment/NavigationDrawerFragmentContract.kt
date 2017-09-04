@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 
-import android.provider.MediaStore
 import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
@@ -20,6 +19,7 @@ interface NavigationDrawerFragmentContract {
 
 		var displayedSoundSheets: List<SoundSheet>
 		var displayedPlaylist: List<MediaPlayerController>
+		var displayedSoundLayouts: List<SoundLayout>
 
 		fun setHeaderTitle(text: String)
 		fun animateHeaderArrow(direction: AnimationDirection)
@@ -54,9 +54,12 @@ interface NavigationDrawerFragmentContract {
 	interface Model {
 		val soundSheets: Observable<List<SoundSheet>>
 		val playList: Observable<List<MediaPlayerController>>
+		val soundLayouts: Observable<List<SoundLayout>>
+
 		val mediaPlayerStateChangedEvents: Observable<MediaPlayerStateChangedEvent>
 		val mediaPlayerCompletedEvents: Observable<MediaPlayerCompletedEvent>
 
 		fun setSoundSheetSelected(soundSheet: SoundSheet)
+		fun setSoundLayoutSelected(soundLayout: SoundLayout)
 	}
 }

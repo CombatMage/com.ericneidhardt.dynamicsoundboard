@@ -8,13 +8,14 @@ import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.utils.longHash
 
 /**
  * File created by eric.neidhardt on 08.03.2015.
  */
-class SoundLayoutsAdapter() :
+class SoundLayoutsAdapter :
 		BaseAdapter<SoundLayout, SoundLayoutViewHolder>(),
 		ListAdapter<SoundLayout>
 {
@@ -23,12 +24,10 @@ class SoundLayoutsAdapter() :
 
 	init { this.setHasStableIds(true) }
 
-	private val manager = SoundboardApplication.soundLayoutManager
-
 	override fun getItemId(position: Int): Long = this.values[position].databaseId?.longHash
 			?: throw IllegalStateException("SoundLayoutManager has invalid item ${this.values[position]}")
 
-	override val values: List<SoundLayout> get() = this.manager.soundLayouts
+	override var values: List<SoundLayout> = ArrayList()
 
 	override fun getItemCount(): Int = this.values.size
 
