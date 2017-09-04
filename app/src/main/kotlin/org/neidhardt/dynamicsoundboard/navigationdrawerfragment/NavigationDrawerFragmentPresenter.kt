@@ -1,9 +1,11 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 
+import android.util.Log
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
+import java.util.logging.Logger
 
 
 /**
@@ -14,6 +16,7 @@ class NavigationDrawerFragmentPresenter(
 		private val model: NavigationDrawerFragmentContract.Model
 ) : NavigationDrawerFragmentContract.Presenter {
 
+	private val TAG = javaClass.name
 	private val INDEX_NOT_SET = -1
 
 	private enum class List {
@@ -137,22 +140,7 @@ class NavigationDrawerFragmentPresenter(
 	}
 
 	private fun onPlayListPlayerStateChanged(player: MediaPlayerController, isPlayerRemoved: Boolean) {
-		/*val currentPlayList = this.view.displayedPlaylist // get current playlist
-
-		// TODO handle this in model
-		// TODO check if relevant
-		if (currentPlayList.contains(player) && isPlayerRemoved) {
-		}
-
-		this.view.displayedPlaylist = currentPlayList // set playlist to display
-
-		if (this.values.contains(player) && !event.isAlive) { // removed a destroyed media player
-			val index = this.values.indexOf(player)
-			this.manager.remove(listOf(player))
-			this.adapter.notifyItemRemoved(index)
-		}
-		else
-			this.adapter.notifyDataSetChanged() */
+		Log.d(TAG, "onPlayListPlayerStateChanged($player, $isPlayerRemoved)")
 	}
 
 	private fun onPlayListPlayerCompleted(player: MediaPlayerController) {
