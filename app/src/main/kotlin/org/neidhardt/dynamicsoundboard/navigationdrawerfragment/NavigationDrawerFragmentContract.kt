@@ -9,6 +9,13 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
  */
 interface NavigationDrawerFragmentContract {
 	interface View {
+		enum class AnimationDirection {
+			UP,
+			DOWN
+		}
+
+		fun setHeaderTitle(text: String)
+		fun animateHeaderArrow(direction: AnimationDirection)
 		fun showSoundSheets()
 		fun showPlaylist()
 		fun showSoundLayouts()

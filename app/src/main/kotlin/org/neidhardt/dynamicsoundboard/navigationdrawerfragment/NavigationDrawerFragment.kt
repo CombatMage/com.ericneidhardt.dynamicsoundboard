@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_navigation_drawer.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_header.view.*
+import org.neidhardt.android_utils.animations.setOnAnimationEndedListener
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
@@ -43,6 +44,8 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 
 	private lateinit var coordinatorLayout: NonTouchableCoordinatorLayout
 	private lateinit var appBarLayout: AppBarLayout
+	private lateinit var headerLabel: TextView
+	private lateinit var headerArrow: View
 
 	private lateinit var deletionToolbar: View
 	private lateinit var deletionToolbarTitle: TextView
@@ -71,6 +74,8 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 		this.coordinatorLayout = view.cl_navigation_drawer
 
 		this.appBarLayout = view.abl_navigation_drawer
+		this.headerLabel = view.tv_view_navigation_drawer_header_current_sound_layout_name
+		this.headerArrow = view.iv_view_navigation_drawer_header_change_sound_layout_indicator
 
 		this.deletionToolbar = view.layout_navigation_drawer_deletion_header
 		this.deletionToolbarTitle = view.tv_layout_navigation_drawer_deletion_header_title
@@ -156,6 +161,34 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		this.presenter.viewCreated()
+	}
+
+	override fun setHeaderTitle(text: String) {
+		this.headerLabel.text = text
+	}
+
+	override fun animateHeaderArrow(direction: NavigationDrawerFragmentContract.View.AnimationDirection) {
+		this.headerArrow.animate().cancel()
+
+		if (direction == NavigationDrawerFragmentContract.View.AnimationDirection.UP) {
+			this.headerArrow.rotationX = 0f
+			this.headerArrow
+					.animate()
+					.withLayer()
+					.rotationX(180f)
+					.setOnAnimationEndedListener {
+						this.headerArrow.rotationX = 180f
+					}
+		} else {
+			this.headerArrow.rotationX = 180f
+			this.headerArrow
+					.animate()
+					.withLayer()
+					.rotationX(0f)
+					.setOnAnimationEndedListener {
+						this.headerArrow.rotationX = 0f
+					}
+		}
 	}
 
 	override fun stopDeletionMode() {
