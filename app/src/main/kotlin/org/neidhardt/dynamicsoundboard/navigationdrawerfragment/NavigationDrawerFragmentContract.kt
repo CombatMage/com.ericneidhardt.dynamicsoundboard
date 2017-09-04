@@ -34,6 +34,7 @@ interface NavigationDrawerFragmentContract {
 		fun showDeletionModeSoundSheets()
 		fun showDeletionModePlaylist()
 		fun showDeletionModeSoundLayouts()
+		fun setSelectedItemCount(selectedCount: Int, maxCount: Int)
 		fun stopDeletionMode()
 	}
 	interface Presenter {

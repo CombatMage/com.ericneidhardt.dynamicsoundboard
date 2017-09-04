@@ -281,6 +281,10 @@ class NavigationDrawerFragment :
 		this.deletionToolbar.visibility = View.VISIBLE
 	}
 
+	override fun setSelectedItemCount(selectedCount: Int, maxCount: Int) {
+		this.deletionToolbarSubTitle.text = "$selectedCount/$maxCount"
+	}
+
 	override fun showSoundSheets() {
 		this.recyclerView.adapter = this.adapterSoundSheets
 	}
