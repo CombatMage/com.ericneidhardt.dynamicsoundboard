@@ -38,8 +38,15 @@ class NewNavigationDrawerPresenter(
 	}
 
 	override fun userClicksHeaderSoundLayout() {
-		this.currentList = List.SoundLayouts
-		this.view.showSoundLayouts()
+		if (this.currentList != List.SoundLayouts) { // show sound layouts
+			this.currentList = List.SoundLayouts
+			this.view.showSoundLayouts()
+			this.view.animateHeaderArrow(NavigationDrawerFragmentContract.View.AnimationDirection.UP)
+		} else { // hide sound sound layouts
+			this.currentList = List.SoundSheet
+			this.view.showSoundSheets()
+			this.view.animateHeaderArrow(NavigationDrawerFragmentContract.View.AnimationDirection.DOWN)
+		}
 	}
 
 	override fun userClicksAdd() {
