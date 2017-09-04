@@ -247,8 +247,6 @@ class SoundActivity :
 		if (soundSheet == null)
 			return
 
-		this.closeNavigationDrawer()
-
 		val fragmentManager = this.supportFragmentManager
 		val transaction = fragmentManager.beginTransaction()
 

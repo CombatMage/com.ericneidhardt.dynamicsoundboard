@@ -100,10 +100,12 @@ class NavigationDrawerFragmentPresenter(
 	}
 
 	override fun userClicksSoundSheet(soundSheet: SoundSheet) {
+		this.view.closeNavigationDrawer()
 		this.model.setSoundSheetSelected(soundSheet)
 	}
 
 	override fun userClicksSoundLayoutItem(soundLayout: SoundLayout) {
+		this.view.closeNavigationDrawer()
 		this.model.setSoundLayoutSelected(soundLayout)
 	}
 
