@@ -2,12 +2,9 @@ package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.manager.*
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
-import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
@@ -16,6 +13,7 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
  * Created by eric.neidhardt@gmail.com on 04.09.2017.
  */
 class NavigationDrawerFragmentModel(
+		private val soundManager: SoundManager,
 		private val soundSheetManager: SoundSheetManager,
 		private val playlistManager: PlaylistManager,
 		private val soundLayoutManager: SoundLayoutManager
@@ -59,5 +57,23 @@ class NavigationDrawerFragmentModel(
 
 	override fun setSoundLayoutSelected(soundLayout: SoundLayout) {
 		this.soundLayoutManager.setSelected(soundLayout)
+	}
+
+	override fun deleteSoundSheets(soundSheets: List<SoundSheet>) {
+		for (soundSheet in soundSheets) {
+			// remove all sounds of this soundSheet to free resources
+			this.soundManager.sounds[soundSheet]?.let {
+				this.soundManager.remove(soundSheet, it)
+			}
+		}
+		this.soundSheetManager.remove(soundSheets)
+	}
+
+	override fun deletePlayListPlayer(player: List<MediaPlayerController>) {
+		this.playlistManager.remove(player)
+	}
+
+	override fun deleteSoundLayouts(soundLayouts: List<SoundLayout>) {
+		this.soundLayoutManager.remove(soundLayouts)
 	}
 }

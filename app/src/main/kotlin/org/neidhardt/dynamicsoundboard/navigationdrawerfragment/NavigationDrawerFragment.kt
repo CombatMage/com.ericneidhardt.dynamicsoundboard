@@ -40,6 +40,7 @@ class NavigationDrawerFragment :
 		BaseFragment(),
 		NavigationDrawerFragmentContract.View {
 
+	private val soundManager = SoundboardApplication.soundManager
 	private val soundsSheetManager = SoundboardApplication.soundSheetManager
 	private val playListManager = SoundboardApplication.playlistManager
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
@@ -90,6 +91,7 @@ class NavigationDrawerFragment :
 		super.onCreate(savedInstanceState)
 
 		this.model = NavigationDrawerFragmentModel(
+				this.soundManager,
 				this.soundsSheetManager,
 				this.playListManager,
 				this.soundLayoutManager)
@@ -246,25 +248,16 @@ class NavigationDrawerFragment :
 
 	override fun showDeletionModeSoundSheets() {
 		this.deletionToolbarTitle.setText(R.string.deletiontoolbar_titledeletesoundsheets)
-		// TODO setSubTitle
-
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 		this.startDeletionMode()
 	}
 
 	override fun showDeletionModePlaylist() {
 		this.deletionToolbarTitle.setText(R.string.deletiontoolbar_titledeleteplaylistsounds)
-		// TODO setSubTitle
-
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 		this.startDeletionMode()
 	}
 
 	override fun showDeletionModeSoundLayouts() {
 		this.deletionToolbarTitle.setText(R.string.deletiontoolbar_titledeletesoundlayouts)
-		// TODO setSubTitle
-
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 		this.startDeletionMode()
 	}
 

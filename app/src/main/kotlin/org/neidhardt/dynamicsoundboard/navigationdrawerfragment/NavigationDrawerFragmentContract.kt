@@ -56,10 +56,11 @@ interface NavigationDrawerFragmentContract {
 		val soundSheets: Observable<List<SoundSheet>>
 		val playList: Observable<List<MediaPlayerController>>
 		val soundLayouts: Observable<List<SoundLayout>>
-
 		val mediaPlayerStateChangedEvents: Observable<MediaPlayerStateChangedEvent>
 		val mediaPlayerCompletedEvents: Observable<MediaPlayerCompletedEvent>
-
+		fun deleteSoundSheets(soundSheets: List<SoundSheet>)
+		fun deletePlayListPlayer(player: List<MediaPlayerController>)
+		fun deleteSoundLayouts(soundLayouts: List<SoundLayout>)
 		fun setSoundSheetSelected(soundSheet: SoundSheet)
 		fun setSoundLayoutSelected(soundLayout: SoundLayout)
 	}

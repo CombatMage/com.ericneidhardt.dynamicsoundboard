@@ -156,7 +156,26 @@ class NavigationDrawerFragmentPresenter(
 		this.isSelectionModeActive = false
 		this.view.stopDeletionMode()
 
-		// TODO
+		when(this.currentList) {
+			NavigationDrawerFragmentPresenter.List.SoundSheet -> {
+				val itemsToDelete = this.view.displayedSoundSheets.filter {
+					it.isSelectedForDeletion
+				}
+				this.model.deleteSoundSheets(itemsToDelete)
+			}
+			NavigationDrawerFragmentPresenter.List.Playlist -> {
+				val itemsToDelete = this.view.displayedPlaylist.filter {
+					it.mediaPlayerData.isSelectedForDeletion
+				}
+				this.model.deletePlayListPlayer(itemsToDelete)
+			}
+			NavigationDrawerFragmentPresenter.List.SoundLayouts -> {
+				val itemsToDelete = this.view.displayedSoundLayouts.filter {
+					it.isSelectedForDeletion
+				}
+				this.model.deleteSoundLayouts(itemsToDelete)
+			}
+		}
 	}
 
 	override fun userClicksSoundSheet(soundSheet: SoundSheet) {
