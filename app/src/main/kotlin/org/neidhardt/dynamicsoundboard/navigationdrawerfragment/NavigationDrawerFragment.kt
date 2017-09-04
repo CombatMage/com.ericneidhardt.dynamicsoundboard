@@ -16,6 +16,9 @@ import kotlinx.android.synthetic.main.fragment_navigation_drawer.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_header.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.animations.setOnAnimationEndedListener
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
@@ -26,6 +29,10 @@ import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist.PlaylistAdapter
@@ -36,8 +43,11 @@ import org.neidhardt.dynamicsoundboard.viewhelper.recyclerview_helper.PaddingDec
 /**
  * Created by eric.neidhardt@gmail.com on 01.09.2017.
  */
-class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContract.View {
+class NavigationDrawerFragment :
+		BaseFragment(),
+		NavigationDrawerFragmentContract.View {
 
+	private val eventBus = EventBus.getDefault()
 	private val soundsSheetManager = SoundboardApplication.soundSheetManager
 	private val playListManager = SoundboardApplication.playlistManager
 
@@ -45,6 +55,7 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 	private val adapterPlaylist = PlaylistAdapter()
 	private val adapterSoundLayouts = SoundLayoutsAdapter()
 
+	private lateinit var model: NavigationDrawerFragmentContract.Model
 	private lateinit var presenter: NavigationDrawerFragmentContract.Presenter
 
 	private lateinit var coordinatorLayout: NonTouchableCoordinatorLayout
@@ -78,11 +89,13 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
+		this.model = NavigationDrawerFragmentModel(
+				this.soundsSheetManager,
+				this.playListManager)
+
 		this.presenter = NavigationDrawerFragmentPresenter(
 				this,
-				NavigationDrawerFragmentModel(
-						this.soundsSheetManager,
-						this.playListManager))
+				this.model)
 	}
 
 	override fun onCreateView(
@@ -184,6 +197,16 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		this.presenter.viewCreated()
+	}
+
+	override fun onResume() {
+		super.onResume()
+		this.eventBus.registerIfRequired(this.model)
+	}
+
+	override fun onPause() {
+		super.onPause()
+		this.eventBus.unregister(this.model)
 	}
 
 	override fun setHeaderTitle(text: String) {

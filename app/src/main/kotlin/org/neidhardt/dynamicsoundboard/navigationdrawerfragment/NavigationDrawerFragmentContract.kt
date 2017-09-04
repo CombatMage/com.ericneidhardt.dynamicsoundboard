@@ -3,6 +3,8 @@ package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 import android.provider.MediaStore
 import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
@@ -52,6 +54,9 @@ interface NavigationDrawerFragmentContract {
 	interface Model {
 		val soundSheets: Observable<List<SoundSheet>>
 		val playList: Observable<List<MediaPlayerController>>
+		val mediaPlayerStateChangedEvents: Observable<MediaPlayerStateChangedEvent>
+		val mediaPlayerCompletedEvents: Observable<MediaPlayerCompletedEvent>
+
 		fun setSoundSheetSelected(soundSheet: SoundSheet)
 	}
 }
