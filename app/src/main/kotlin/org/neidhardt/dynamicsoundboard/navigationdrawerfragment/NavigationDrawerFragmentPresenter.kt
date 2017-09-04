@@ -130,7 +130,26 @@ class NavigationDrawerFragmentPresenter(
 		this.isSelectionModeActive = false
 		this.view.stopDeletionMode()
 
-
+		when(this.currentList) {
+			NavigationDrawerFragmentPresenter.List.SoundSheet -> {
+				val items = this.view.displayedSoundSheets
+				items.forEach { it.isSelectedForDeletion = false }
+				this.view.displayedSoundSheets = items
+				this.view.setSelectedItemCount(0, items.size)
+			}
+			NavigationDrawerFragmentPresenter.List.Playlist -> {
+				val items = this.view.displayedPlaylist
+				items.forEach { it.mediaPlayerData.isSelectedForDeletion = false }
+				this.view.displayedPlaylist = items
+				this.view.setSelectedItemCount(0, items.size)
+			}
+			NavigationDrawerFragmentPresenter.List.SoundLayouts -> {
+				val items = this.view.displayedSoundLayouts
+				items.forEach { it.isSelectedForDeletion = false }
+				this.view.displayedSoundLayouts = items
+				this.view.setSelectedItemCount(0, items.size)
+			}
+		}
 	}
 
 	override fun userClicksDeleteSelected() {
@@ -140,17 +159,51 @@ class NavigationDrawerFragmentPresenter(
 	}
 
 	override fun userClicksSoundSheet(soundSheet: SoundSheet) {
-		this.view.closeNavigationDrawer()
-		this.model.setSoundSheetSelected(soundSheet)
+		if (this.isSelectionModeActive) {
+			soundSheet.isSelectedForDeletion = true
+
+			val items = this.view.displayedSoundSheets
+			val selectedCount = items.filter { it.isSelectedForDeletion }.size
+
+			this.view.setSelectedItemCount(selectedCount, items.size)
+			this.view.displayedSoundSheets = items
+		} else {
+			this.view.closeNavigationDrawer()
+			this.model.setSoundSheetSelected(soundSheet)
+		}
 	}
 
 	override fun userClicksSoundLayoutItem(soundLayout: SoundLayout) {
-		this.view.setHeaderTitle(soundLayout.label)
-		this.currentList = List.SoundSheet
-		this.view.showSoundSheets()
-		this.view.animateHeaderArrow(NavigationDrawerFragmentContract.View.AnimationDirection.DOWN)
-		this.view.closeNavigationDrawer()
-		this.model.setSoundLayoutSelected(soundLayout)
+		if (this.isSelectionModeActive) {
+			soundLayout.isSelectedForDeletion = true
+
+			val items = this.view.displayedSoundLayouts
+			val selectedCount = items.filter { it.isSelectedForDeletion }.size
+
+			this.view.setSelectedItemCount(selectedCount, items.size)
+			this.view.displayedSoundLayouts = items
+		} else {
+			this.view.setHeaderTitle(soundLayout.label)
+			this.currentList = List.SoundSheet
+			this.view.showSoundSheets()
+			this.view.animateHeaderArrow(NavigationDrawerFragmentContract.View.AnimationDirection.DOWN)
+			this.view.closeNavigationDrawer()
+			this.model.setSoundLayoutSelected(soundLayout)
+		}
+	}
+
+	override fun userClicksPlaylistSound(player: MediaPlayerController) {
+		if (this.isSelectionModeActive) {
+			player.mediaPlayerData.isSelectedForDeletion = true
+
+			val items = this.view.displayedPlaylist
+			val selectedCount = items.filter { it.mediaPlayerData.isSelectedForDeletion }.size
+
+			this.view.setSelectedItemCount(selectedCount, items.size)
+			this.view.displayedPlaylist = items
+		} else {
+			this.startOrStopPlayList(player)
+		}
 	}
 
 	override fun userClicksSoundLayoutSettings(soundLayout: SoundLayout) {
@@ -161,10 +214,6 @@ class NavigationDrawerFragmentPresenter(
 	 * playlist handling
 	 */
 	private var currentPlayListItemIndex: Int = INDEX_NOT_SET
-
-	override fun userClicksPlaylistSound(player: MediaPlayerController) {
-		this.startOrStopPlayList(player)
-	}
 
 	private fun startOrStopPlayList(nextActivePlayer: MediaPlayerController) {
 		val currentPlayList = this.view.displayedPlaylist // get current playlist
