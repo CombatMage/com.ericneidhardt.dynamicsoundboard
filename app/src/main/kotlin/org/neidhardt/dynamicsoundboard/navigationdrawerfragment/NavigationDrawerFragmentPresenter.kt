@@ -156,11 +156,12 @@ class NavigationDrawerFragmentPresenter(
 		this.isSelectionModeActive = false
 		this.view.stopDeletionMode()
 
+		// TODO
 	}
 
 	override fun userClicksSoundSheet(soundSheet: SoundSheet) {
 		if (this.isSelectionModeActive) {
-			soundSheet.isSelectedForDeletion = true
+			soundSheet.isSelectedForDeletion = !soundSheet.isSelectedForDeletion
 
 			val items = this.view.displayedSoundSheets
 			val selectedCount = items.filter { it.isSelectedForDeletion }.size
@@ -175,7 +176,7 @@ class NavigationDrawerFragmentPresenter(
 
 	override fun userClicksSoundLayoutItem(soundLayout: SoundLayout) {
 		if (this.isSelectionModeActive) {
-			soundLayout.isSelectedForDeletion = true
+			soundLayout.isSelectedForDeletion = !soundLayout.isSelectedForDeletion
 
 			val items = this.view.displayedSoundLayouts
 			val selectedCount = items.filter { it.isSelectedForDeletion }.size
@@ -194,7 +195,7 @@ class NavigationDrawerFragmentPresenter(
 
 	override fun userClicksPlaylistSound(player: MediaPlayerController) {
 		if (this.isSelectionModeActive) {
-			player.mediaPlayerData.isSelectedForDeletion = true
+			player.mediaPlayerData.isSelectedForDeletion = !player.mediaPlayerData.isSelectedForDeletion
 
 			val items = this.view.displayedPlaylist
 			val selectedCount = items.filter { it.mediaPlayerData.isSelectedForDeletion }.size
