@@ -143,9 +143,7 @@ class NavigationDrawerFragmentPresenter(
 		// TODO handle this in model
 		// TODO check if relevant
 		if (currentPlayList.contains(player) && isPlayerRemoved) {
-
 		}
-
 
 		this.view.displayedPlaylist = currentPlayList // set playlist to display
 

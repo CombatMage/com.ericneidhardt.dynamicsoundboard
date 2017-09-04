@@ -21,9 +21,9 @@ class NavigationDrawerFragmentModel(
 		private val soundSheetManager: SoundSheetManager,
 		private val playlistManager: PlaylistManager
 ) :
-		NavigationDrawerFragmentContract.Model,
-		MediaPlayerEventListener
+		NavigationDrawerFragmentContract.Model
 {
+
 	override val soundSheets: Observable<List<SoundSheet>>
 		get() {
 			return RxNewSoundSheetManager.soundSheetsChanged(this.soundSheetManager)
@@ -36,23 +36,19 @@ class NavigationDrawerFragmentModel(
 					.observeOn(AndroidSchedulers.mainThread())
 		}
 
-	override val mediaPlayerStateChangedEvents: Observable<MediaPlayerStateChangedEvent>
-		get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-
 	override val mediaPlayerCompletedEvents: Observable<MediaPlayerCompletedEvent>
-		get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+		get() {
+			return RxNewPlaylistManager.playlistPlayerCompletes(this.playlistManager)
+					.observeOn(AndroidSchedulers.mainThread())
+		}
+
+	override val mediaPlayerStateChangedEvents: Observable<MediaPlayerStateChangedEvent>
+		get() {
+			return RxNewPlaylistManager.playlistPlayerStateChanges(this.playlistManager)
+					.observeOn(AndroidSchedulers.mainThread())
+		}
 
 	override fun setSoundSheetSelected(soundSheet: SoundSheet) {
 		this.soundSheetManager.setSelected(soundSheet)
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: MediaPlayerStateChangedEvent) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	override fun onEvent(event: MediaPlayerCompletedEvent) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 }
