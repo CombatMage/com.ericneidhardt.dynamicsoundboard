@@ -83,8 +83,8 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 		}
 
 		this.tabLayout = view.tl_navigation_drawer_list.apply {
-			this.newTab().setText(R.string.tab_sound_sheets)
-			this.newTab().setText(R.string.tab_play_list)
+			this.addTab(this.newTab().setText(R.string.tab_sound_sheets))
+			this.addTab(this.newTab().setText(R.string.tab_play_list))
 		}
 
 		this.buttonDeleteSelected = view.framelayout_layoutnavigationdrawerbuttonbar_deleteselected

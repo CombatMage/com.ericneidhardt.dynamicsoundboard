@@ -28,19 +28,26 @@ class NewNavigationDrawerPresenter(
 	}
 
 	override fun userClicksTabSoundSheets() {
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.currentList = List.SoundSheet
+		this.view.showSoundSheets()
 	}
 
 	override fun userClicksTabPlaylist() {
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.currentList = List.Playlist
+		this.view.showPlaylist()
 	}
 
 	override fun userClicksHeaderSoundLayout() {
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.currentList = List.SoundLayouts
+		this.view.showSoundLayouts()
 	}
 
 	override fun userClicksAdd() {
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		when(this.currentList) {
+			NewNavigationDrawerPresenter.List.SoundSheet -> this.view.showDialogAddSoundSheet()
+			NewNavigationDrawerPresenter.List.Playlist -> this.view.showDialogAddSoundToPlaylist()
+			NewNavigationDrawerPresenter.List.SoundLayouts -> this.view.showDialogAddSoundLayout()
+		}
 	}
 
 	override fun userClicksSelectAll() {
