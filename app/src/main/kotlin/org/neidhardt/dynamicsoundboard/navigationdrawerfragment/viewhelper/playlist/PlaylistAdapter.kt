@@ -8,21 +8,25 @@ import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
  * File created by eric.neidhardt on 16.07.2015.
  */
 class PlaylistAdapter : BaseAdapter<MediaPlayerController, PlaylistViewHolder>() {
 
-	private val manager = SoundboardApplication.playlistManager
-
 	val clicksViewHolder: PublishSubject<PlaylistViewHolder> = PublishSubject.create()
 
 	init { this.setHasStableIds(true) }
 
+	fun setValues(playList: List<MediaPlayerController>) {
+		this.values.clear()
+		this.values.addAll(playList)
+	}
+
 	override fun getItemId(position: Int): Long = this.values[position].mediaPlayerData.playerId.hashCode().toLong()
 
-	override val values: List<MediaPlayerController> get() = this.manager.playlist
+	override val values: MutableList<MediaPlayerController> = ArrayList()
 
 	override fun getItemViewType(position: Int): Int = R.layout.view_playlist_item
 

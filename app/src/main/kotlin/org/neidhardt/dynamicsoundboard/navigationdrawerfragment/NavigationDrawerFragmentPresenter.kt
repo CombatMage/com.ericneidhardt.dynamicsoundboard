@@ -24,6 +24,9 @@ class NavigationDrawerFragmentPresenter(
 		this.model.soundSheets
 				.subscribe { soundSheets -> this.view.displayedSoundSheets = soundSheets }
 
+		this.model.playList
+				.subscribe { playList -> this.view.displayedPlaylist = playList }
+
 		this.view.stopDeletionMode()
 		this.view.showSoundSheets()
 

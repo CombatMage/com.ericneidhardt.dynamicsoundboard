@@ -24,6 +24,7 @@ import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
+import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
@@ -38,6 +39,7 @@ import org.neidhardt.dynamicsoundboard.viewhelper.recyclerview_helper.PaddingDec
 class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContract.View {
 
 	private val soundsSheetManager = SoundboardApplication.soundSheetManager
+	private val playListManager = SoundboardApplication.playlistManager
 
 	private val adapterSoundSheets = SoundSheetsAdapter()
 	private val adapterPlaylist = PlaylistAdapter()
@@ -66,12 +68,21 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 			this.adapterSoundSheets.notifyDataSetChanged()
 		}
 
+	override var displayedPlaylist: List<MediaPlayerController>
+		get() = this.adapterPlaylist.values
+		set(value) {
+			this.adapterPlaylist.setValues(value)
+			this.adapterPlaylist.notifyDataSetChanged()
+		}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		this.presenter = NavigationDrawerFragmentPresenter(
 				this,
-				NavigationDrawerFragmentModel(this.soundsSheetManager))
+				NavigationDrawerFragmentModel(
+						this.soundsSheetManager,
+						this.playListManager))
 	}
 
 	override fun onCreateView(
