@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 
+import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
@@ -13,6 +14,8 @@ interface NavigationDrawerFragmentContract {
 			UP,
 			DOWN
 		}
+
+		var displayedSoundSheets: List<SoundSheet>
 
 		fun setHeaderTitle(text: String)
 		fun animateHeaderArrow(direction: AnimationDirection)
@@ -45,6 +48,7 @@ interface NavigationDrawerFragmentContract {
 		fun userClicksSoundLayoutSettings(soundLayout: SoundLayout)
 	}
 	interface Model {
+		val soundSheets: Observable<List<SoundSheet>>
 		fun setSoundSheetSelected(soundSheet: SoundSheet)
 	}
 }

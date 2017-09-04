@@ -9,17 +9,20 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
-open class SoundSheetsAdapter() : BaseAdapter<SoundSheet, SoundSheetViewHolder>() {
-
-	private val soundSheetManager = SoundboardApplication.soundSheetManager
+open class SoundSheetsAdapter : BaseAdapter<SoundSheet, SoundSheetViewHolder>() {
 
 	val clicksViewHolder: PublishSubject<SoundSheetViewHolder> = PublishSubject.create()
 
 	init { this.setHasStableIds(true) }
 
+	fun setValues(soundSheets: List<SoundSheet>) {
+		this.values.clear()
+		this.values.addAll(soundSheets)
+	}
+
 	override fun getItemId(position: Int): Long = this.values[position].fragmentTag.hashCode().toLong()
 
-	override val values: List<SoundSheet> get() = this.soundSheetManager.soundSheets
+	override val values: MutableList<SoundSheet> = ArrayList()
 
 	override fun getItemViewType(position: Int): Int = R.layout.view_sound_sheet_item
 

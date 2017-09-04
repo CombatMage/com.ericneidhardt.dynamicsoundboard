@@ -26,6 +26,7 @@ import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist.PlaylistAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts.SoundLayoutsAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundsheets.SoundSheetsAdapter
@@ -57,6 +58,13 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 	private lateinit var recyclerView: RecyclerView
 
 	private lateinit var buttonDeleteSelected: View
+
+	override var displayedSoundSheets: List<SoundSheet>
+		get() = this.adapterSoundSheets.values
+		set(value) {
+			this.adapterSoundSheets.setValues(value)
+			this.adapterSoundSheets.notifyDataSetChanged()
+		}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -140,7 +148,7 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 					this.presenter.userClicksPlaylistSound(player!!)
 				}
 
-		view.b_layout_navigation_drawer_button_bar_delete.setOnClickListener {
+		view.b_layout_navigation_drawer_button_bar_add.setOnClickListener {
 			this.presenter.userClicksAdd()
 		}
 		view.b_layout_navigation_drawer_button_bar_delete.setOnClickListener {

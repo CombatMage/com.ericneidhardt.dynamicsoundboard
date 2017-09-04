@@ -21,8 +21,10 @@ class NavigationDrawerFragmentPresenter(
 	private var currentList: List = List.SoundSheet
 
 	override fun viewCreated() {
-		this.view.stopDeletionMode()
+		this.model.soundSheets
+				.subscribe { soundSheets -> this.view.displayedSoundSheets = soundSheets }
 
+		this.view.stopDeletionMode()
 		this.view.showSoundSheets()
 
 		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
