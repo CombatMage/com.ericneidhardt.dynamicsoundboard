@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.jakewharton.rxbinding2.support.design.widget.RxTabLayout
 import com.jakewharton.rxbinding2.view.RxView
-import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.fragment_navigation_drawer.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.view.*
@@ -20,6 +19,7 @@ import kotlinx.android.synthetic.main.layout_navigation_drawer_header.view.*
 import org.neidhardt.android_utils.animations.setOnAnimationEndedListener
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
@@ -35,6 +35,8 @@ import org.neidhardt.dynamicsoundboard.viewhelper.recyclerview_helper.PaddingDec
  * Created by eric.neidhardt@gmail.com on 01.09.2017.
  */
 class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContract.View {
+
+	private val soundsSheetManager = SoundboardApplication.soundSheetManager
 
 	private val adapterSoundSheets = SoundSheetsAdapter()
 	private val adapterPlaylist = PlaylistAdapter()
@@ -59,7 +61,9 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		this.presenter = NewNavigationDrawerPresenter(this)
+		this.presenter = NavigationDrawerFragmentPresenter(
+				this,
+				NavigationDrawerFragmentModel(this.soundsSheetManager))
 	}
 
 	override fun onCreateView(

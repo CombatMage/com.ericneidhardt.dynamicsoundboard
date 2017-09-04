@@ -45,6 +45,6 @@ interface NavigationDrawerFragmentContract {
 		fun userClicksSoundLayoutSettings(soundLayout: SoundLayout)
 	}
 	interface Model {
-
+		fun setSoundSheetSelected(soundSheet: SoundSheet)
 	}
 }
