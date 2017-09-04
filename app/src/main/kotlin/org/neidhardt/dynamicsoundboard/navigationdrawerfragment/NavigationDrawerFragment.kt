@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.jakewharton.rxbinding2.support.design.widget.RxTabLayout
 import com.jakewharton.rxbinding2.view.RxView
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.fragment_navigation_drawer.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.view.*
@@ -96,6 +97,38 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 					} else if (tab.position == 1) {
 						this.presenter.userClicksTabPlaylist()
 					}
+				}
+
+		this.adapterSoundLayouts.clicksSettings
+				.takeUntil(RxView.detaches(this.recyclerView))
+				.map { viewHolder -> viewHolder.data }
+				.filter { soundLayout -> soundLayout != null }
+				.subscribe { soundLayout ->
+					this.presenter.userClicksSoundLayoutSettings(soundLayout!!)
+				}
+
+		this.adapterSoundLayouts.clicksViewHolder
+				.takeUntil(RxView.detaches(this.recyclerView))
+				.map { viewHolder -> viewHolder.data }
+				.filter { soundLayout -> soundLayout != null }
+				.subscribe { soundLayout ->
+					this.presenter.userClicksSoundLayoutItem(soundLayout!!)
+				}
+
+		this.adapterSoundSheets.clicksViewHolder
+				.takeUntil(RxView.detaches(this.recyclerView))
+				.map { viewHolder -> viewHolder.data }
+				.filter { soundSheet -> soundSheet != null }
+				.subscribe { soundSheet ->
+					this.presenter.userClicksSoundSheet(soundSheet!!)
+				}
+
+		this.adapterPlaylist.clicksViewHolder
+				.takeUntil(RxView.detaches(this.recyclerView))
+				.map { viewHolder -> viewHolder.player }
+				.filter { player -> player != null }
+				.subscribe { player ->
+					this.presenter.userClicksPlaylistSound(player!!)
 				}
 
 		view.b_layout_navigation_drawer_button_bar_delete.setOnClickListener {
@@ -208,9 +241,5 @@ class NavigationDrawerFragment : BaseFragment(), NavigationDrawerFragmentContrac
 
 	override fun closeNavigationDrawer() {
 		this.baseActivity.closeNavigationDrawer()
-	}
-
-	fun onNavigationDrawerClosed() {
-		//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 }

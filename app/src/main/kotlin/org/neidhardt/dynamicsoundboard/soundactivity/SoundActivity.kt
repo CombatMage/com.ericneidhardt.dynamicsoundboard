@@ -100,8 +100,7 @@ class SoundActivity :
 			this.drawerToggle = NoAnimationDrawerToggle(
 					this,
 					this.drawerLayout,
-					toolbar,
-					this.navigationDrawerFragment)
+					toolbar)
 
 			this.drawerLayout?.addDrawerListener(this.drawerToggle!!)
 		}

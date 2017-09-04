@@ -35,6 +35,7 @@ interface NavigationDrawerFragmentContract {
 		fun userClicksSoundSheet(soundSheet: SoundSheet)
 		fun userClicksPlaylistSound(player: MediaPlayerController)
 		fun userClicksSoundLayoutItem(soundLayout: SoundLayout)
+		fun userClicksSoundLayoutSettings(soundLayout: SoundLayout)
 	}
 	interface Model {
 
