@@ -30,7 +30,6 @@ ext.libraries = [
 
 		greenRobotCommons    : "de.greenrobot:java-common:2.3.1",
 		eventBus             : "org.greenrobot:eventbus:3.0.0",
-		greendao             : "org.greenrobot:greendao:3.2.0",
 
 		leakCanary           : "com.squareup.leakcanary:leakcanary-android:1.5",
 

@@ -8,8 +8,6 @@ buildscript {
 	}
 }
 
-// for unkown reason greendao needs to be on first position
-apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -86,10 +84,6 @@ kapt {
 	generateStubs = true
 }
 
-greendao {
-	schemaVersion 15
-}
-
 dependencies {
 	kapt "com.android.databinding:compiler:$android.dataBinding.version"
 
@@ -119,8 +113,6 @@ dependencies {
 	compile rootProject.ext.libraries.supportRecyclerView
 	compile rootProject.ext.libraries.supportAppCompat
 	compile rootProject.ext.libraries.supportDesign
-
-	compile rootProject.ext.libraries.greendao
 
 	compile rootProject.ext.libraries.greenRobotCommons
 
