@@ -17,10 +17,16 @@ interface NavigationDrawerFragmentContract {
 			DOWN
 		}
 
+		enum class TapBarState {
+			NORMAL,
+			SOUND_LAYOUTS
+		}
+
 		var displayedSoundSheets: List<SoundSheet>
 		var displayedPlaylist: List<MediaPlayerController>
 		var displayedSoundLayouts: List<SoundLayout>
 
+		fun setTapBarState(newState: TapBarState)
 		fun setHeaderTitle(text: String)
 		fun animateHeaderArrow(direction: AnimationDirection)
 		fun showSoundSheets()

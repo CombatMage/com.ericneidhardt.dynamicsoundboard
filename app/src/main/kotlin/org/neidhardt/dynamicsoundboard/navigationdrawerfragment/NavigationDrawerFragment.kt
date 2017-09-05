@@ -61,6 +61,7 @@ class NavigationDrawerFragment :
 	private lateinit var deletionToolbarTitle: TextView
 	private lateinit var deletionToolbarSubTitle: TextView
 
+	private lateinit var soundLayoutInfo: TextView
 	private lateinit var tabLayout: TabLayout
 	private lateinit var recyclerView: RecyclerView
 
@@ -126,6 +127,7 @@ class NavigationDrawerFragment :
 			this.addItemDecoration(PaddingDecorator(this.context.applicationContext))
 		}
 
+		this.soundLayoutInfo = view.textview_navigationdrawer_labelselectsoundlayout
 		this.tabLayout = view.tl_navigation_drawer_list.apply {
 			this.addTab(this.newTab().setText(R.string.tab_sound_sheets))
 			this.addTab(this.newTab().setText(R.string.tab_play_list))
@@ -276,6 +278,14 @@ class NavigationDrawerFragment :
 
 	override fun setSelectedItemCount(selectedCount: Int, maxCount: Int) {
 		this.deletionToolbarSubTitle.text = "$selectedCount/$maxCount"
+	}
+
+	override fun setTapBarState(newState: NavigationDrawerFragmentContract.View.TapBarState) {
+		if (newState == NavigationDrawerFragmentContract.View.TapBarState.NORMAL) {
+			this.soundLayoutInfo.visibility = View.INVISIBLE
+		} else {
+			this.soundLayoutInfo.visibility = View.VISIBLE
+		}
 	}
 
 	override fun showSoundSheets() {

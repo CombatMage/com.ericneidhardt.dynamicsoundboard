@@ -50,6 +50,7 @@ class NavigationDrawerFragmentPresenter(
 				.filter { player -> player.mediaPlayerData.fragmentTag == PlaylistTAG }
 				.subscribe { player -> this.onPlayListPlayerCompleted(player) }
 
+		this.view.setTapBarState(NavigationDrawerFragmentContract.View.TapBarState.NORMAL)
 		this.view.stopDeletionMode()
 		this.view.showSoundSheets()
 	}
@@ -67,10 +68,12 @@ class NavigationDrawerFragmentPresenter(
 	override fun userClicksHeaderSoundLayout() {
 		if (this.currentList != List.SoundLayouts) { // show sound layouts
 			this.currentList = List.SoundLayouts
+			this.view.setTapBarState(NavigationDrawerFragmentContract.View.TapBarState.SOUND_LAYOUTS)
 			this.view.showSoundLayouts()
 			this.view.animateHeaderArrow(NavigationDrawerFragmentContract.View.AnimationDirection.UP)
 		} else { // hide sound sound layouts
 			this.currentList = List.SoundSheet
+			this.view.setTapBarState(NavigationDrawerFragmentContract.View.TapBarState.NORMAL)
 			this.view.showSoundSheets()
 			this.view.animateHeaderArrow(NavigationDrawerFragmentContract.View.AnimationDirection.DOWN)
 		}
@@ -121,7 +124,7 @@ class NavigationDrawerFragmentPresenter(
 			}
 			NavigationDrawerFragmentPresenter.List.SoundLayouts -> {
 				this.view.setSelectedItemCount(0, this.view.displayedSoundLayouts.size)
-				this.view.showDialogAddSoundLayout()
+				this.view.showDeletionModeSoundLayouts()
 			}
 		}
 	}

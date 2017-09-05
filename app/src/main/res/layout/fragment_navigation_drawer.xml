@@ -10,15 +10,29 @@
 	android:background="@color/background"
 	android:fitsSystemWindows="true">
 
-	<android.support.design.widget.TabLayout
-		android:id="@+id/tl_navigation_drawer_list"
+	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/height_list_item"
 		android:layout_gravity="bottom"
-		android:background="@color/primary_200"
 		app:layout_anchor="@+id/abl_navigation_drawer"
-		app:layout_anchorGravity="bottom"
-		app:tabGravity="fill"/>
+		app:layout_anchorGravity="bottom">
+
+		<android.support.design.widget.TabLayout
+			android:id="@+id/tl_navigation_drawer_list"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@color/primary_200"
+			app:tabGravity="fill"/>
+
+		<TextView
+			android:id="@+id/textview_navigationdrawer_labelselectsoundlayout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@color/primary_200"
+			android:gravity="center"
+			android:text="@string/navigation_drawer_select_sound_layout"
+			android:textAppearance="@style/style_tapbar_label"/>
+	</FrameLayout>
 
 	<include
 		android:id="@+id/layout_navigation_drawer_deletion_header"
@@ -33,6 +47,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_marginTop="@dimen/height_list_item"
+		android:layout_marginBottom="@dimen/height_list_item"
 		android:overScrollMode="never"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior"
 		tools:listitem="@layout/view_sound_sheet_item"/>
