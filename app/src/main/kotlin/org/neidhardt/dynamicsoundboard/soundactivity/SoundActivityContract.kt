@@ -8,7 +8,15 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
  * Created by eric.neidhardt@gmail.com on 29.06.2017.
  */
 interface SoundActivityContract {
+
 	interface View {
+		enum class ToolbarState {
+			NORMAL,
+			SOUND_SHEET_ACTIVE
+		}
+
+		var toolbarState: ToolbarState
+
 		fun updateUiForSoundSheets(soundSheets: List<SoundSheet>)
 		val isNavigationDrawerOpen: Boolean
 		fun closeNavigationDrawer()
