@@ -73,7 +73,7 @@ class SoundActivity :
 
 		this.volumeControlStream = AudioManager.STREAM_MUSIC
 
-		val toolbar = this.toolbar_main
+		val toolbar = this.toolbar_soundactivity
 		this.appTitle = toolbar.tv_layout_toolbar_content_app_name
 		this.soundSheetLabel = toolbar.et_layout_toolbar_content_title
 		this.buttonAddSoundSheet = toolbar.ib_layout_toolbar_content_add_sound_sheet
@@ -85,7 +85,7 @@ class SoundActivity :
 		this.buttonAddSoundSheet.setOnClickListener { this.presenter.userClicksAddSoundSheet() }
 		this.soundSheetLabel.setOnClickListener { this.presenter.userClicksSoundSheetTitle() }
 
-		this.configureToolbar(toolbar)
+		this.configureToolbar(toolbar as Toolbar)
 
 		this.presenter = SoundActivityPresenter(
 				this,
@@ -155,7 +155,7 @@ class SoundActivity :
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		super.onOptionsItemSelected(item)
-		if (this.drawerToggle?.onOptionsItemSelected(item) ?: false)
+		if (this.drawerToggle?.onOptionsItemSelected(item) == true)
 			return true
 
 		when (item.itemId) {
@@ -205,7 +205,13 @@ class SoundActivity :
 	}
 
 	override var toolbarState: SoundActivityContract.View.ToolbarState
-		get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+		get() {
+			return if (this.appTitle.visibility == View.VISIBLE) {
+				SoundActivityContract.View.ToolbarState.NORMAL
+			} else {
+				SoundActivityContract.View.ToolbarState.SOUND_SHEET_ACTIVE
+			}
+		}
 		set(value) {
 			if (value == SoundActivityContract.View.ToolbarState.NORMAL) {
 				this.buttonAddSound.visibility = View.GONE
@@ -213,10 +219,12 @@ class SoundActivity :
 				this.soundSheetLabel.visibility = View.GONE
 				this.appTitle.visibility = View.VISIBLE
 			} else {
-
+				this.buttonAddSound.visibility = View.VISIBLE
+				this.buttonAddSoundsFromDir.visibility = View.VISIBLE
+				this.soundSheetLabel.visibility = View.VISIBLE
+				this.appTitle.visibility = View.GONE
 			}
 		}
-
 
 	override val isNavigationDrawerOpen: Boolean
 		get() = this.drawerLayout?.isDrawerOpen(Gravity.START) == true
@@ -243,14 +251,10 @@ class SoundActivity :
 		}
 
 		val currentFragment = this.currentSoundFragment
-		if (currentFragment == null) {
-			this.openSoundFragment(selectedSoundSheet)
-		}
-		else if (selectedSoundSheet == null) {
-			this.removeSoundFragment(currentFragment)
-		}
-		else if (currentFragment.fragmentTag != selectedSoundSheet.fragmentTag) {
-			this.openSoundFragment(selectedSoundSheet)
+		when {
+			currentFragment == null -> this.openSoundFragment(selectedSoundSheet)
+			selectedSoundSheet == null -> this.removeSoundFragment(currentFragment)
+			currentFragment.fragmentTag != selectedSoundSheet.fragmentTag -> this.openSoundFragment(selectedSoundSheet)
 		}
 	}
 

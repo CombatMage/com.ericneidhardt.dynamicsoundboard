@@ -1,63 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools">
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/height_list_item"
+	android:background="@color/background"
+	android:orientation="horizontal"
+	tools:layout_marginTop="@dimen/status_bar_padding">
 
-	<RelativeLayout
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="@dimen/height_list_item"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
 		android:background="@color/background"
-		android:orientation="horizontal"
-		tools:layout_marginTop="@dimen/status_bar_padding">
+		android:orientation="horizontal">
 
-		<LinearLayout
-			android:layout_width="match_parent"
+		<Button
+			android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
+			style="@style/style_all_buttonflat"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:background="@color/background"
-			android:orientation="horizontal">
+			android:layout_weight="1"
+			android:gravity="center"
+			android:padding="@dimen/margin_default"
+			android:text="@string/navigation_drawer_delete"/>
 
-			<Button
-				android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
-				style="@style/style_all_buttonflat"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:gravity="center"
-				android:padding="@dimen/margin_default"
-				android:text="@string/navigation_drawer_delete"/>
-
-			<Button
-				android:id="@+id/b_layout_navigation_drawer_button_bar_add"
-				style="@style/style_all_buttonflat"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:gravity="center"
-				android:padding="@dimen/margin_default"
-				android:text="@string/navigation_drawer_add"/>
-		</LinearLayout>
-
-		<FrameLayout
-			android:id="@+id/framelayout_layoutnavigationdrawerbuttonbar_deleteselected"
-			android:layout_width="match_parent"
+		<Button
+			android:id="@+id/b_layout_navigation_drawer_button_bar_add"
+			style="@style/style_all_buttonflat"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:background="@color/background">
+			android:layout_weight="1"
+			android:gravity="center"
+			android:padding="@dimen/margin_default"
+			android:text="@string/navigation_drawer_add"/>
+	</LinearLayout>
 
-			<TextView
-				android:id="@+id/b_layout_navigation_drawer_button_bar_delete_selected"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:background="@drawable/selector_background_list_item"
-				android:clickable="true"
-				android:fontFamily="sans-serif-_medium"
-				android:gravity="center"
-				android:padding="@dimen/margin_default"
-				android:text="@string/navigation_drawer_delete_selected"
-				android:textColor="@color/text_body_primary"
-				android:textSize="@dimen/text_body"
-				tools:visibility="gone"/>
-		</FrameLayout>
-	</RelativeLayout>
-</layout>
+	<FrameLayout
+		android:id="@+id/framelayout_layoutnavigationdrawerbuttonbar_deleteselected"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:background="@color/background">
+
+		<TextView
+			android:id="@+id/b_layout_navigation_drawer_button_bar_delete_selected"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@drawable/selector_background_list_item"
+			android:clickable="true"
+			android:fontFamily="sans-serif-_medium"
+			android:gravity="center"
+			android:padding="@dimen/margin_default"
+			android:text="@string/navigation_drawer_delete_selected"
+			android:textColor="@color/text_body_primary"
+			android:textSize="@dimen/text_body"
+			tools:visibility="gone"/>
+	</FrameLayout>
+</RelativeLayout>

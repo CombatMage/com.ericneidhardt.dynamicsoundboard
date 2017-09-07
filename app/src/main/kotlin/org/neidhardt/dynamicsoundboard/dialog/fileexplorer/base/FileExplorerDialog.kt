@@ -69,7 +69,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 								this.selectedFiles.add(file)
 							}
 							else {
-								this.selectedFiles.forEach { file -> this.adapter.notifyItemChanged(file) }
+								this.selectedFiles.forEach { this.adapter.notifyItemChanged(it) }
 								this.selectedFiles.clear()
 								this.selectedFiles.add(file)
 							}

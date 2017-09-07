@@ -31,10 +31,10 @@ class SoundLayoutManager(
 	val currentlyPlayingSounds: List<MediaPlayerController> get() = this.mCurrentlyPlayingSounds
 
 	@Synchronized
-	fun initIfRequired(appData: Observable<Optional<AppData>>) {
+	fun initIfRequired(loadingAppData: Observable<Optional<AppData>>) {
 		if (mSoundLayouts == null) {
 			this.mSoundLayouts = ArrayList()
-			appData.subscribe { appData ->
+			loadingAppData.subscribe { appData ->
 				this.mSoundLayouts = ArrayList()
 				if (!appData.isEmpty)
 					appData.item?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
@@ -50,10 +50,10 @@ class SoundLayoutManager(
 	}
 
 	@Synchronized
-	fun init(appData: Observable<AppData?>) {
-		appData.subscribe { appData ->
+	fun init(loadingAppData: Observable<AppData?>) {
+		loadingAppData.subscribe { appData ->
 			this.mSoundLayouts = ArrayList()
-			appData?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
+			appData.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
 			if (this.mSoundLayouts?.isEmpty() == true)
 				this.mSoundLayouts?.add(this.getDefaultSoundLayout())
 
@@ -144,9 +144,8 @@ class SoundLayoutManager(
 	}
 
 	companion object {
-		fun getNewDatabaseIdForLabel(label: String): String {
-			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
-		}
+		fun getNewDatabaseIdForLabel(label: String): String =
+				Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
 	}
 }
 
