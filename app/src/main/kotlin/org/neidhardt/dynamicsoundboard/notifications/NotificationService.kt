@@ -20,9 +20,9 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChange
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.PauseSoundOnCallListener
-import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.registerPauseSoundOnCallListener
-import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.unregisterPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.misc.PauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.misc.registerPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.misc.unregisterPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 
 /**
@@ -51,9 +51,9 @@ class NotificationService : Service(),
 
 	private val eventBus = EventBus.getDefault()
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
-	private val notificationActionReceiver: BroadcastReceiver = NotificationActionReceiver({ action, playerId, notificationId ->
-		this.onNotificationAction(action, playerId, notificationId)
-	})
+	private val notificationActionReceiver: BroadcastReceiver = NotificationActionReceiver(
+			{ action, playerId, notificationId ->
+				this.onNotificationAction(action, playerId, notificationId) })
 
 	private var notificationHandler: INotificationHandler? = null
 
@@ -76,6 +76,7 @@ class NotificationService : Service(),
 
 		this.preferences.registerSharedPreferenceChangedListener(this)
 		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotification.getNotificationIntentFilter())
+		this.registerPauseSoundOnCallListener(this.phoneStateListener)
 	}
 
 	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -141,14 +142,10 @@ class NotificationService : Service(),
 	override fun onEvent(event: ActivityStateChangedEvent) {
 		if (event.isActivityClosed) {
 			this.isActivityVisible = false
-
-			this.registerPauseSoundOnCallListener(this.phoneStateListener)
 			if (this.soundLayoutManager.currentlyPlayingSounds.isEmpty())
 				this.stopSelf()
 		}
 		else if (event.isActivityResumed) {
-			this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
-
 			this.isActivityVisible = true
 			this.removeNotificationForPausedSounds()
 		}

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundactivity.viewhelper
+package org.neidhardt.dynamicsoundboard.misc
 
 import android.content.Context
 import android.telephony.PhoneStateListener
@@ -6,7 +6,6 @@ import android.telephony.TelephonyManager
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
-import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 import java.util.*
 
 
@@ -42,23 +41,13 @@ class PauseSoundOnCallListener : PhoneStateListener() {
 	}
 }
 
-fun SoundActivity.registerPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
-    //val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    //manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
-}
-
-fun SoundActivity.unregisterPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
-	////listener.clearReferences()
-    val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-	//manager.listen(listener, PhoneStateListener.LISTEN_NONE)
-}
-
 fun NotificationService.registerPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
-	//val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-	//manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
+	val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+	manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
 }
 
-fun NotificationService.unregisterPauseSoundOnCallListener(listener: PauseSoundOnCallListener) { listener.clearReferences()
-	//val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-	//manager.listen(listener, PhoneStateListener.LISTEN_NONE)
+fun NotificationService.unregisterPauseSoundOnCallListener(listener: PauseSoundOnCallListener) {
+	listener.clearReferences()
+	val manager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+	manager.listen(listener, PhoneStateListener.LISTEN_NONE)
 }

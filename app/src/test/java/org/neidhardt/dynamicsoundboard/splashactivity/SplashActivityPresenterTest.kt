@@ -29,16 +29,6 @@ class SplashActivityPresenterTest {
 		// arrange
 		Mockito.`when`(this.view.getMissingPermissions()).thenReturn(emptyArray())
 
-		// TODO
-		//arrange
-		//Mockito.`when`(this.view.getMissingPermissions()).thenReturn(emptyArray())
-		// action
-		//this.unit.onCreated()
-		// verify
-		//verify(this.view).requestPermissions(emptyArray())
-
-
-
 		// action
 		this.unit.onCreated()
 
