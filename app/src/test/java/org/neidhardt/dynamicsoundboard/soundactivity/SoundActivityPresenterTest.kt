@@ -29,18 +29,6 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun onCreated() {
-		//arrange
-		`when`(this.view.getMissingPermissions()).thenReturn(emptyArray())
-
-		// action
-		this.unit.onCreated()
-
-		// verify
-		verify(this.view).requestPermissions(emptyArray())
-	}
-
-	@Test
 	fun onResumed() {
 		// arrange
 		val testData = asList(SoundSheet())
@@ -110,29 +98,6 @@ class SoundActivityPresenterTest {
 
 		// verify
 		verify(this.view).openAddSoundDialog(testUri, "test", emptyList())
-	}
-
-	@Test
-	fun onUserHasChangedPermissions() {
-		// arrange
-		`when`(this.view.getMissingPermissions()).thenReturn(
-				asList(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray())
-
-		// action
-		this.unit.onUserHasChangedPermissions()
-
-		// verify
-		verify(this.view).openExplainPermissionReadStorageDialog()
-
-		// arrange
-		`when`(this.view.getMissingPermissions()).thenReturn(
-				asList(Manifest.permission.WRITE_EXTERNAL_STORAGE).toTypedArray())
-
-		// action
-		this.unit.onUserHasChangedPermissions()
-
-		// verify
-		verify(this.view).openExplainPermissionWriteStorageDialog()
 	}
 
 	@Test

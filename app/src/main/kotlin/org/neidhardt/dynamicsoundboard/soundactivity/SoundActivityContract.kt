@@ -30,17 +30,11 @@ interface SoundActivityContract {
 		fun openStoreLayoutDialog()
 		fun openConfirmClearSoundSheetsDialog()
 		fun openConfirmClearPlaylistDialog()
-		fun openExplainPermissionReadStorageDialog()
-		fun openExplainPermissionWriteStorageDialog()
-		fun openExplainPermissionReadPhoneStateDialog()
 		fun openInfoActivity()
 		fun openPreferenceActivity()
-		fun requestPermissions(permissions: Array<String>)
-		fun getMissingPermissions(): Array<String>
 		fun showToastMessage(messageId: Int)
 	}
 	interface Presenter {
-		fun onCreated()
 		fun onResumed()
 		fun onPaused()
 		fun userClicksBackButton()
@@ -55,7 +49,6 @@ interface SoundActivityContract {
 		fun userClicksClearSoundSheets()
 		fun userClickClearPlaylist()
 		fun userOpenSoundFileWithApp(soundUri: Uri)
-		fun onUserHasChangedPermissions()
 	}
 	interface Model {
 		fun startNotificationService()

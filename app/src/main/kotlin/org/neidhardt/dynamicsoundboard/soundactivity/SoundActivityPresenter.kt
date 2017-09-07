@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
-import android.Manifest
 import android.net.Uri
 import org.neidhardt.dynamicsoundboard.R
 
@@ -11,11 +10,6 @@ class SoundActivityPresenter(
 		private val view: SoundActivityContract.View,
 		private val model: SoundActivityContract.Model
 ) : SoundActivityContract.Presenter {
-
-	override fun onCreated() {
-		val missingPermissions = this.view.getMissingPermissions()
-		this.view.requestPermissions(missingPermissions)
-	}
 
 	override fun onResumed() {
 		this.view.updateUiForSoundSheets(emptyList())
@@ -87,15 +81,5 @@ class SoundActivityPresenter(
 		val suggestedName = this.model.getNameForNewSoundSheet()
 		val soundSheets = this.model.getSoundSheets()
 		this.view.openAddSoundDialog(soundUri, suggestedName, soundSheets)
-	}
-
-	override fun onUserHasChangedPermissions() {
-		val missingPermissions = this.view.getMissingPermissions()
-		if (missingPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE))
-			this.view.openExplainPermissionReadStorageDialog()
-		if (missingPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-			this.view.openExplainPermissionWriteStorageDialog()
-		if (missingPermissions.contains(Manifest.permission.READ_PHONE_STATE))
-			this.view.openExplainPermissionReadPhoneStateDialog()
 	}
 }

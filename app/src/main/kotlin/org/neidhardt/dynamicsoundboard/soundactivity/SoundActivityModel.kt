@@ -29,13 +29,9 @@ class SoundActivityModel(
 				.observeOn(AndroidSchedulers.mainThread())
 	}
 
-	override fun getSoundSheets(): List<SoundSheet> {
-		return this.soundSheetManager.soundSheets
-	}
+	override fun getSoundSheets(): List<SoundSheet> = this.soundSheetManager.soundSheets
 
-	override fun getNameForNewSoundSheet(): String {
-		return this.soundSheetManager.suggestedName
-	}
+	override fun getNameForNewSoundSheet(): String = this.soundSheetManager.suggestedName
 
 	override fun saveData() {
 		SaveDataIntentService.writeBack(this.context)

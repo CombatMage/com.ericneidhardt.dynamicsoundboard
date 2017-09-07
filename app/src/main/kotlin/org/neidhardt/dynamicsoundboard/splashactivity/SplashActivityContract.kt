@@ -6,8 +6,14 @@ package org.neidhardt.dynamicsoundboard.splashactivity
 interface SplashActivityContract {
 	interface View {
 		fun openActivity(cls: Class<*>)
+		fun requestPermissions(permissions: Array<String>)
+		fun getMissingPermissions(): Array<String>
+		fun openExplainPermissionReadStorageDialog()
+		fun openExplainPermissionWriteStorageDialog()
+		fun openExplainPermissionReadPhoneStateDialog()
 	}
 	interface Presenter {
 		fun onCreated()
+		fun onUserHasChangedPermissions()
 	}
 }

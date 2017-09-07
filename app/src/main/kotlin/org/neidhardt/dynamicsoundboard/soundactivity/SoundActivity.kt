@@ -1,12 +1,10 @@
 package org.neidhardt.dynamicsoundboard.soundactivity
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
@@ -32,19 +30,11 @@ import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromIntentDialog
 import org.neidhardt.dynamicsoundboard.infoactivity.InfoActivity
 import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
-import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.misc.hasPermissionPhoneState
-import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
-import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.preferenceactivity.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
-import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainReadPhoneStatePermission
-import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainReadStoragePermission
-import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainWriteStoragePermission
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.SoundSheetFragment
 import org.neidhardt.dynamicsoundboard.viewhelper.navigationdrawer_helper.NoAnimationDrawerToggle
-import java.util.*
 
 /**
  * File created by eric.neidhardt on 29.09.2015.
@@ -93,8 +83,6 @@ class SoundActivity :
 						this.applicationContext,
 						this.soundSheetManager)
 		)
-
-		this.presenter.onCreated()
 	}
 
 	private fun configureToolbar(toolbar: Toolbar) {
@@ -135,16 +123,6 @@ class SoundActivity :
 	override fun onPause() {
 		super.onPause()
 		this.presenter.onPaused()
-	}
-
-	override fun onRequestPermissionsResult(
-			requestCode: Int,
-			permissions: Array<out String>,
-			grantResults: IntArray) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-		when (requestCode) {
-			IntentRequest.REQUEST_PERMISSIONS -> { this.presenter.onUserHasChangedPermissions() }
-		}
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -314,24 +292,6 @@ class SoundActivity :
 		}
 	}
 
-	override fun openExplainPermissionReadStorageDialog() {
-		this.postAfterOnResume { this.explainReadStoragePermission() }
-	}
-
-	override fun openExplainPermissionWriteStorageDialog() {
-		this.postAfterOnResume { this.explainWriteStoragePermission() }
-	}
-
-	override fun openExplainPermissionReadPhoneStateDialog() {
-		this.postAfterOnResume { this.explainReadPhoneStatePermission() }
-	}
-
-	override fun requestPermissions(permissions: Array<String>) {
-		if (permissions.isNotEmpty()) {
-			ActivityCompat.requestPermissions(this, permissions, IntentRequest.REQUEST_PERMISSIONS)
-		}
-	}
-
 	override fun openLoadLayoutDialog() {
 		LoadLayoutDialog.showInstance(this.supportFragmentManager)
 	}
@@ -356,20 +316,6 @@ class SoundActivity :
 	override fun openPreferenceActivity() {
 		this.startActivity(Intent(this, PreferenceActivity::class.java))
 		this.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_nothing)
-	}
-
-	override fun getMissingPermissions(): Array<String> {
-		val requiredPermissions = ArrayList<String>()
-		if (!this.hasPermissionReadStorage) {
-			requiredPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-		}
-		if (!this.hasPermissionWriteStorage) {
-			requiredPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-		}
-		if (!this.hasPermissionPhoneState) {
-			requiredPermissions.add(Manifest.permission.READ_PHONE_STATE)
-		}
-		return requiredPermissions.toTypedArray()
 	}
 
 	override fun showToastMessage(messageId: Int) {
