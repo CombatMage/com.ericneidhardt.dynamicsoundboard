@@ -287,7 +287,6 @@ class SoundActivity :
 
 	override fun openRenameSoundSheetDialog() {
 		this.soundSheetManager.soundSheets.selectedSoundSheet?.let {
-			this.openRenameSoundSheetDialog()
 			GenericRenameDialogs.showRenameSoundSheetDialog(this.supportFragmentManager, it)
 		}
 	}
