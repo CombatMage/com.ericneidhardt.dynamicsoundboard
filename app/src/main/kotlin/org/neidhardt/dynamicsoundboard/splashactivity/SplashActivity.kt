@@ -4,16 +4,13 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.support.v7.app.AppCompatActivity
 import org.neidhardt.android_utils.EnhancedAppCompatActivity
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionPhoneState
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
-import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainReadPhoneStatePermission
-import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainReadStoragePermission
-import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.explainWriteStoragePermission
-import java.util.ArrayList
+import org.neidhardt.dynamicsoundboard.splashactivity.viewhelper.ExplainPermissionDialog
+import java.util.*
 
 
 /**
@@ -36,6 +33,14 @@ class SplashActivity : EnhancedAppCompatActivity(), SplashActivityContract.View 
 		this.finish()
 	}
 
+	override fun finishActivity() {
+		this.finish()
+	}
+
+	override fun explainPermissions(permissions: Array<String>) {
+		ExplainPermissionDialog.show(this.supportFragmentManager)
+	}
+
 	override fun onRequestPermissionsResult(
 			requestCode: Int,
 			permissions: Array<out String>,
@@ -44,18 +49,6 @@ class SplashActivity : EnhancedAppCompatActivity(), SplashActivityContract.View 
 		when (requestCode) {
 			IntentRequest.REQUEST_PERMISSIONS -> { this.presenter.onUserHasChangedPermissions() }
 		}
-	}
-
-	override fun openExplainPermissionReadStorageDialog() {
-		this.postAfterOnResume { this.explainReadStoragePermission() }
-	}
-
-	override fun openExplainPermissionWriteStorageDialog() {
-		this.postAfterOnResume { this.explainWriteStoragePermission() }
-	}
-
-	override fun openExplainPermissionReadPhoneStateDialog() {
-		this.postAfterOnResume { this.explainReadPhoneStatePermission() }
 	}
 
 	override fun requestPermissions(permissions: Array<String>) {

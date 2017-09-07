@@ -2,6 +2,7 @@ package org.neidhardt.dynamicsoundboard.base
 
 import com.trello.rxlifecycle2.components.support.RxDialogFragment
 import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
+import org.neidhardt.dynamicsoundboard.splashactivity.SplashActivity
 
 /**
  * File created by eric.neidhardt on 14.11.2014.
@@ -15,5 +16,8 @@ abstract class BaseDialog : BaseDialogFragment() {
 
 	val soundActivity: SoundActivity
 		get() = this.activity as SoundActivity
+
+	val splashActivity: SplashActivity
+		get() = this.activity as SplashActivity
 }
 

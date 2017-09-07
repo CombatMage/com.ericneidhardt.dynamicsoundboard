@@ -20,14 +20,14 @@ private val KEY_REQUEST_PERMISSION_ID = "KEY_REQUEST_PERMISSION_ID"
 private val KEY_CLOSE_ON_DENIAL = "KEY_CLOSE_ON_DENIAL"
 
 fun AppCompatActivity.explainReadPhoneStatePermission() {
-	ExplainPermissionDialog.show(this.supportFragmentManager,
+	OldExplainPermissionDialog.show(this.supportFragmentManager,
 			R.string.request_permission_read_phone_state_message,
 			Manifest.permission.READ_PHONE_STATE,
 			IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
 }
 
 fun AppCompatActivity.explainReadStoragePermission() {
-	ExplainPermissionDialog.show(this.supportFragmentManager,
+	OldExplainPermissionDialog.show(this.supportFragmentManager,
 			R.string.request_permission_read_storage_message,
 			Manifest.permission.READ_EXTERNAL_STORAGE,
 			IntentRequest.REQUEST_PERMISSION_READ_STORAGE,
@@ -35,14 +35,14 @@ fun AppCompatActivity.explainReadStoragePermission() {
 }
 
 fun AppCompatActivity.explainWriteStoragePermission() {
-	ExplainPermissionDialog.show(this.supportFragmentManager,
+	OldExplainPermissionDialog.show(this.supportFragmentManager,
 			R.string.request_permission_write_storage_message,
 			Manifest.permission.WRITE_EXTERNAL_STORAGE,
 			IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE,
 			true)
 }
 
-class ExplainPermissionDialog : BaseDialog() {
+class OldExplainPermissionDialog : BaseDialog() {
 
 	private var messageId = 0
 	private var permission = ""
@@ -54,7 +54,7 @@ class ExplainPermissionDialog : BaseDialog() {
 		private val TAG = BaseDialog::javaClass.name
 
 		fun show(fragmentManager: FragmentManager, messageId: Int, permission: String, requestId: Int, closeAppOnDenial: Boolean = false) {
-			val dialog = ExplainPermissionDialog()
+			val dialog = OldExplainPermissionDialog()
 			val args = Bundle()
 			args.putInt(KEY_MESSAGE_ID, messageId)
 			args.putBoolean(KEY_CLOSE_ON_DENIAL, closeAppOnDenial)

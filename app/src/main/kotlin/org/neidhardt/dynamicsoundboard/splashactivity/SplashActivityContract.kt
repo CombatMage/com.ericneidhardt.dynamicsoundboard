@@ -8,9 +8,8 @@ interface SplashActivityContract {
 		fun openActivity(cls: Class<*>)
 		fun requestPermissions(permissions: Array<String>)
 		fun getMissingPermissions(): Array<String>
-		fun openExplainPermissionReadStorageDialog()
-		fun openExplainPermissionWriteStorageDialog()
-		fun openExplainPermissionReadPhoneStateDialog()
+		fun explainPermissions(permissions: Array<String>)
+		fun finishActivity()
 	}
 	interface Presenter {
 		fun onCreated()

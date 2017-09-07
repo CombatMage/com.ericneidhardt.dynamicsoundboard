@@ -13,7 +13,7 @@ class SplashActivityPresenter(
 	override fun onCreated() {
 		val missingPermissions = this.view.getMissingPermissions()
 		if (missingPermissions.isNotEmpty()) {
-			this.view.requestPermissions(missingPermissions)
+			this.view.explainPermissions(missingPermissions)
 		} else {
 			this.view.openActivity(SoundActivity::class.java)
 		}
@@ -21,18 +21,11 @@ class SplashActivityPresenter(
 
 	override fun onUserHasChangedPermissions() {
 		val missingPermissions = this.view.getMissingPermissions()
-		if (missingPermissions.isEmpty()) {
-			this.view.openActivity(SoundActivity::class.java)
+		if (missingPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE)
+				|| missingPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+			this.view.finishActivity()
 		} else {
-			if (missingPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-				this.view.openExplainPermissionReadStorageDialog()
-			}
-			if (missingPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-				this.view.openExplainPermissionWriteStorageDialog()
-			}
-			if (missingPermissions.contains(Manifest.permission.READ_PHONE_STATE)) {
-				this.view.openExplainPermissionReadPhoneStateDialog()
-			}
+			this.view.openActivity(SoundActivity::class.java)
 		}
 	}
 }
