@@ -95,5 +95,7 @@ class SoundActivityPresenter(
 			this.view.openExplainPermissionReadStorageDialog()
 		if (missingPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE))
 			this.view.openExplainPermissionWriteStorageDialog()
+		if (missingPermissions.contains(Manifest.permission.READ_PHONE_STATE))
+			this.view.openExplainPermissionReadPhoneStateDialog()
 	}
 }

@@ -17,7 +17,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_base.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar_content.view.*
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.android_utils.EnhancedAppCompatActivity
@@ -34,6 +33,7 @@ import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundFromInt
 import org.neidhardt.dynamicsoundboard.infoactivity.InfoActivity
 import org.neidhardt.dynamicsoundboard.manager.selectedSoundSheet
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
+import org.neidhardt.dynamicsoundboard.misc.hasPermissionPhoneState
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
@@ -361,10 +361,15 @@ class SoundActivity :
 
 	override fun getMissingPermissions(): Array<String> {
 		val requiredPermissions = ArrayList<String>()
-		if (!this.hasPermissionReadStorage)
+		if (!this.hasPermissionReadStorage) {
 			requiredPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-		if (!this.hasPermissionWriteStorage)
+		}
+		if (!this.hasPermissionWriteStorage) {
 			requiredPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+		}
+		if (!this.hasPermissionPhoneState) {
+			requiredPermissions.add(Manifest.permission.READ_PHONE_STATE)
+		}
 		return requiredPermissions.toTypedArray()
 	}
 
