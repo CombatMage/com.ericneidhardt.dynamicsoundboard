@@ -25,7 +25,7 @@ class SplashActivityPresenterTest {
 	}
 
 	@Test
-	fun onCreated() {
+	fun onCreated__normalStart() {
 		// arrange
 		Mockito.`when`(this.view.getMissingPermissions()).thenReturn(emptyArray())
 
@@ -37,26 +37,42 @@ class SplashActivityPresenterTest {
 	}
 
 	@Test
-	fun onUserHasChangedPermissions() {
+	fun onCreated__withMissingPermissions() {
 		// arrange
-		/*Mockito.`when`(this.view.getMissingPermissions()).thenReturn(
+		val missingPermissions = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray()
+		Mockito.`when`(this.view.getMissingPermissions()).thenReturn(missingPermissions)
+
+		// action
+		this.unit.onCreated()
+
+		// verify
+		verify(this.view).explainPermissions(missingPermissions)
+	}
+
+	@Test
+	fun onUserHasChangedPermissions__mandatoryPermissionMissing() {
+		// arrange
+		Mockito.`when`(this.view.getMissingPermissions()).thenReturn(
 				Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray())
 
 		// action
 		this.unit.onUserHasChangedPermissions()
 
 		// verify
-		verify(this.view).openExplainPermissionReadStorageDialog()
+		verify(this.view).finishActivity()
+	}
 
+	@Test
+	fun onUserHasChangedPermissions__noMandatoryPermissionMissing() {
 		// arrange
 		Mockito.`when`(this.view.getMissingPermissions()).thenReturn(
-				Arrays.asList(Manifest.permission.WRITE_EXTERNAL_STORAGE).toTypedArray())
+				Arrays.asList(Manifest.permission.READ_PHONE_STATE).toTypedArray())
 
 		// action
 		this.unit.onUserHasChangedPermissions()
 
 		// verify
-		verify(this.view).openExplainPermissionWriteStorageDialog()*/
+		verify(this.view).openActivity(SoundActivity::class.java)
 	}
 
 }
