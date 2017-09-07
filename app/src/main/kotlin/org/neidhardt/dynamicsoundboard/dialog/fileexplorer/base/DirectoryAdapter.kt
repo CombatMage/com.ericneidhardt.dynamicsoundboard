@@ -39,7 +39,8 @@ class DirectoryAdapter : BaseAdapter<File, FileViewHolder>() {
 
 		RxView.clicks(view)
 				.takeUntil(parentDetaches)
-				.map { viewHolder.file }
+				.filter { viewHolder.file != null }
+				.map { viewHolder.file!! }
 				.subscribe(this.clicksFileEntry)
 
 		RxView.longClicks(view)

@@ -147,34 +147,34 @@ class NavigationDrawerFragment :
 
 		this.adapterSoundLayouts.clicksSettings
 				.takeUntil(RxView.detaches(this.recyclerView))
-				.map { viewHolder -> viewHolder.data }
-				.filter { soundLayout -> soundLayout != null }
+				.filter { viewHolder -> viewHolder.data != null }
+				.map { viewHolder -> viewHolder.data!! }
 				.subscribe { soundLayout ->
-					this.presenter.userClicksSoundLayoutSettings(soundLayout!!)
+					this.presenter.userClicksSoundLayoutSettings(soundLayout)
 				}
 
 		this.adapterSoundLayouts.clicksViewHolder
 				.takeUntil(RxView.detaches(this.recyclerView))
-				.map { viewHolder -> viewHolder.data }
-				.filter { soundLayout -> soundLayout != null }
+				.filter { viewHolder -> viewHolder.data != null }
+				.map { viewHolder -> viewHolder.data!! }
 				.subscribe { soundLayout ->
-					this.presenter.userClicksSoundLayoutItem(soundLayout!!)
+					this.presenter.userClicksSoundLayoutItem(soundLayout)
 				}
 
 		this.adapterSoundSheets.clicksViewHolder
 				.takeUntil(RxView.detaches(this.recyclerView))
-				.map { viewHolder -> viewHolder.data }
-				.filter { soundSheet -> soundSheet != null }
+				.filter { viewHolder -> viewHolder.data != null }
+				.map { viewHolder -> viewHolder.data!! }
 				.subscribe { soundSheet ->
-					this.presenter.userClicksSoundSheet(soundSheet!!)
+					this.presenter.userClicksSoundSheet(soundSheet)
 				}
 
 		this.adapterPlaylist.clicksViewHolder
 				.takeUntil(RxView.detaches(this.recyclerView))
-				.map { viewHolder -> viewHolder.player }
-				.filter { player -> player != null }
+				.filter { viewHolder -> viewHolder.player != null }
+				.map { viewHolder -> viewHolder.player!! }
 				.subscribe { player ->
-					this.presenter.userClicksPlaylistSound(player!!)
+					this.presenter.userClicksPlaylistSound(player)
 				}
 
 		view.b_layout_navigation_drawer_button_bar_add.setOnClickListener {
