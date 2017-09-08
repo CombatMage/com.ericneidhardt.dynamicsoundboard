@@ -82,6 +82,7 @@ dependencies {
 	compile project(':android_utils')
 	compile project(':simple_storage')
 	compile project(':value_holder')
+	compile project(':viewpager_dialog')
 
 	debugCompile rootProject.ext.libraries.leakCanary
 
