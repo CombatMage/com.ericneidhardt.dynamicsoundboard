@@ -39,22 +39,30 @@ open class ViewPagerDialog : DialogFragment() {
 		this.getStringMessage()?.let { dialogBuilder.setMessage(it) }
 
 		dialogBuilder.setDataToDisplay(this.viewData)
-		dialogBuilder.setPositiveButton()
+
+		this.getStringButtonOk()?.let {
+			dialogBuilder.setPositiveButton(it, { _, _ ->
+				this.onButtonClicked()
+			})
+		}
 
 		return dialogBuilder.create()
-
-		/*val dialogBuilder = AlertDialog.Builder(this.activity)
-		dialogBuilder.setTitle(R.string.request_permission_title)
-		dialogBuilder.setMessage(this.getMessageForPermissions())
-
-		dialogBuilder.setPositiveButton(R.string.dialog_ok, { _,_ ->
-			this.requestMissingPermissions()
-		})
-
-		return dialogBuilder.create()*/
 	}
 
 	protected fun getStringTitle(): String? = null
 
 	protected fun getStringMessage(): String? = null
+
+	protected fun getStringButtonOk(): String? = null
+
+	protected fun onButtonClicked() {
+		val activity = this.activity
+		if (activity is ViewPagerDialogActivity) {
+			activity.onViewPagerDialogButtonClicked()
+		}
+	}
+
+	interface ViewPagerDialogActivity {
+		fun onViewPagerDialogButtonClicked()
+	}
 }
