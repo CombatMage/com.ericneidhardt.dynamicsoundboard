@@ -1,4 +1,4 @@
-package org.neidhardt.viewpager_dialog.viewhelper
+package org.neidhardt.dynamicsoundboard.views.viewpagerdialog.viewhelper
 
 import android.content.Context
 import android.support.v4.view.PagerAdapter
@@ -32,6 +32,7 @@ class ViewPagerDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 
 	private fun createViewPager() {
 		val viewPager = ViewPager(this.context)
+		viewPager.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 		this.viewPager = viewPager
 		this.setView(viewPager)
 	}
@@ -53,6 +54,7 @@ class ViewPagerDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 			if (container == null) return super.instantiateItem(container, position)
 
 			val view = TextView(container.context)
+			view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 			view.text = this.viewData[position]
 
 			container.addView(view)

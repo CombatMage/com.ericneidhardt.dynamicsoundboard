@@ -1,31 +1,25 @@
-package org.neidhardt.viewpager_dialog
+package org.neidhardt.dynamicsoundboard.views.viewpagerdialog
 
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
-import org.neidhardt.viewpager_dialog.viewhelper.ViewPagerDialogBuilder
+import org.neidhardt.dynamicsoundboard.base.BaseDialogFragment
+import org.neidhardt.dynamicsoundboard.views.viewpagerdialog.viewhelper.ViewPagerDialogBuilder
 
 /**
  * Created by eric.neidhardt@gmail.com on 08.09.2017.
  */
-open class ViewPagerDialog : DialogFragment() {
+abstract class ViewPagerDialog : BaseDialogFragment() {
 
-	companion object {
-
-		private val TAG = ViewPagerDialog::class.java.name
-		private val KEY_VIEW_DATA = "KEY_VIEW_DATA"
-
-		fun showDialog(fragmentManager: FragmentManager, viewData: Array<String>) {
-			val dialog = ViewPagerDialog()
-			dialog.arguments = Bundle().apply {
-				this.putStringArray(KEY_VIEW_DATA, viewData)
-			}
-			dialog.show(fragmentManager, TAG)
-		}
-	}
+	private val KEY_VIEW_DATA = "KEY_VIEW_DATA"
 
 	private lateinit var viewData: Array<String>
+
+	fun setViewData(viewData: Array<String>) {
+		this.arguments = Bundle().apply {
+			this.putStringArray(KEY_VIEW_DATA, viewData)
+		}
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -38,7 +32,7 @@ open class ViewPagerDialog : DialogFragment() {
 		this.getStringTitle()?.let { dialogBuilder.setTitle(it) }
 		this.getStringMessage()?.let { dialogBuilder.setMessage(it) }
 
-		dialogBuilder.setDataToDisplay(this.viewData)
+		//dialogBuilder.setDataToDisplay(this.viewData)
 
 		this.getStringButtonOk()?.let {
 			dialogBuilder.setPositiveButton(it, { _, _ ->
@@ -49,13 +43,13 @@ open class ViewPagerDialog : DialogFragment() {
 		return dialogBuilder.create()
 	}
 
-	protected fun getStringTitle(): String? = null
+	open fun getStringTitle(): String? = null
 
-	protected fun getStringMessage(): String? = null
+	open fun getStringMessage(): String? = null
 
-	protected fun getStringButtonOk(): String? = null
+	open fun getStringButtonOk(): String? = null
 
-	protected fun onButtonClicked() {
+	open fun onButtonClicked() {
 		val activity = this.activity
 		if (activity is ViewPagerDialogActivity) {
 			activity.onViewPagerDialogButtonClicked()
