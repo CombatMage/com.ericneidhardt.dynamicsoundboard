@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.splashactivity.viewhelper
 
 import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.splashactivity.SplashActivity
-import org.neidhardt.dynamicsoundboard.views.viewpagerdialog.ViewPagerDialog
+import org.neihdardt.viewpagerdialog.ViewPagerDialog
 
 /**
  * Created by eric.neidhardt@gmail.com on 12.09.2017.
