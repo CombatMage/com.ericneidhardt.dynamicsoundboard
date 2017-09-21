@@ -8,14 +8,16 @@ import org.neihdardt.viewpagerdialog.viewhelper.ViewPagerDialogBuilder
 /**
  * Created by eric.neidhardt@gmail.com on 08.09.2017.
  */
-abstract class ViewPagerDialog : DialogFragment() {
+open class ViewPagerDialog : DialogFragment() {
 
 	private val KEY_TITLE = "KEY_TITLE"
 	private val KEY_MESSAGE = "KEY_MESSAGE"
+	private val KEY_BUTTON_LABEL = "KEY_BUTTON_LABEL"
 	private val KEY_VIEW_DATA = "KEY_VIEW_DATA"
 
 	private var title: String? = null
 	private var message: String? = null
+	private var positiveButtonLabel: String? = null
 	private lateinit var viewData: Array<String>
 
 	fun setViewData(viewData: Array<String>) {
@@ -36,11 +38,18 @@ abstract class ViewPagerDialog : DialogFragment() {
 		this.arguments = args
 	}
 
+	fun setPositiveButtonLabel(label: String) {
+		val args = this.arguments ?: Bundle()
+		args.putString(KEY_BUTTON_LABEL, label)
+		this.arguments = args
+	}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		this.title = this.arguments?.getString(KEY_TITLE)
 		this.message = this.arguments?.getString(KEY_MESSAGE)
+		this.positiveButtonLabel = this.arguments?.getString(KEY_BUTTON_LABEL)
 		this.viewData = this.arguments?.getStringArray(KEY_VIEW_DATA) ?: emptyArray()
 	}
 
@@ -62,16 +71,13 @@ abstract class ViewPagerDialog : DialogFragment() {
 			}
 		}
 
-		this.getStringButtonOk()?.let {
+		this.positiveButtonLabel?.let {
 			dialogBuilder.setPositiveButton(it, { _, _ ->
 				this.onButtonClicked()
 			})
 		}
-
 		return dialogBuilder.create()
 	}
-
-	open fun getStringButtonOk(): String? = null
 
 	private fun onButtonClicked() {
 		val activity = this.activity

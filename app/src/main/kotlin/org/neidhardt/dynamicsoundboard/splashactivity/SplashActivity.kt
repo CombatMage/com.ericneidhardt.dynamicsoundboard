@@ -5,11 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import org.neidhardt.android_utils.EnhancedAppCompatActivity
+import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionPhoneState
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
-import org.neidhardt.dynamicsoundboard.splashactivity.viewhelper.ExplainPermissionDialog
 import org.neihdardt.viewpagerdialog.ViewPagerDialog
 import java.util.*
 
@@ -42,7 +42,23 @@ class SplashActivity :
 	}
 
 	override fun explainPermissions(permissions: Array<String>) {
-		ExplainPermissionDialog.show(this.supportFragmentManager, permissions, this)
+		val dialog = ViewPagerDialog()
+
+		val messagesToDisplay = ArrayList<String>()
+		if (permissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+				permissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+			messagesToDisplay.add(this.getString(R.string.dialogexplainpermissions_explainstorage))
+		}
+		if (permissions.contains(Manifest.permission.READ_PHONE_STATE)) {
+			messagesToDisplay.add(this.getString(
+					R.string.dialogexplainpermissions_explainreadphonestate))
+		}
+		dialog.setTitle(this.getString(R.string.dialogexplainpermissions_title))
+		dialog.setMessage(this.getString(R.string.dialogexplainpermissions_message))
+		dialog.setPositiveButtonLabel(this.getString(R.string.dialog_ok))
+		dialog.setViewData(messagesToDisplay.toTypedArray())
+
+		dialog.show(this.supportFragmentManager, "ExplainPermissionDialog")
 	}
 
 	override fun onRequestPermissionsResult(
@@ -76,14 +92,10 @@ class SplashActivity :
 	}
 
 	override fun onViewPagerDialogButtonClicked() {
-		this.explainPermissionDialogClosed()
+		this.presenter.onExplainPermissionDialogClosed()
 	}
 
 	override fun onViewPagerDialogBackPressed() {
-		this.explainPermissionDialogClosed()
-	}
-
-	fun explainPermissionDialogClosed() {
 		this.presenter.onExplainPermissionDialogClosed()
 	}
 }
