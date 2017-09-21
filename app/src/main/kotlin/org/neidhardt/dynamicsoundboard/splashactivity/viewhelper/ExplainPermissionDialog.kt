@@ -51,4 +51,11 @@ class ExplainPermissionDialog : ViewPagerDialog() {
 			(activity as SplashActivity).explainPermissionDialogClosed()
 		}
 	}
+
+	override fun onBackPressed() {
+		super.onBackPressed()
+		this.activity?.let { activity ->
+			(activity as SplashActivity).explainPermissionDialogClosed()
+		}
+	}
 }

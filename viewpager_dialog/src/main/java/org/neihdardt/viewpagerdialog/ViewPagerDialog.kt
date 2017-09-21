@@ -33,6 +33,16 @@ abstract class ViewPagerDialog : DialogFragment() {
 
 		dialogBuilder.setDataToDisplay(this.viewData)
 
+		dialogBuilder.setOnKeyListener { _, keyCode, _ ->
+			if ((keyCode ==  android.view.KeyEvent.KEYCODE_BACK)) {
+				this.onBackPressed()
+				this.dismiss()
+				true
+			} else {
+				false
+			}
+		}
+
 		this.getStringButtonOk()?.let {
 			dialogBuilder.setPositiveButton(it, { _, _ ->
 				this.onButtonClicked()
@@ -55,7 +65,15 @@ abstract class ViewPagerDialog : DialogFragment() {
 		}
 	}
 
+	open fun onBackPressed() {
+		val activity = this.activity
+		if (activity is ViewPagerDialogActivity) {
+			activity.onViewPagerDialogBackPressed()
+		}
+	}
+
 	interface ViewPagerDialogActivity {
 		fun onViewPagerDialogButtonClicked()
+		fun onViewPagerDialogBackPressed()
 	}
 }
