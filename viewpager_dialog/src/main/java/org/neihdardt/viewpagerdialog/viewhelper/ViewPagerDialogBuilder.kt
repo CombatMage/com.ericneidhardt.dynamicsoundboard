@@ -39,7 +39,7 @@ class ViewPagerDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 				null,
 				false
 		)
-		val vp = view.findViewById(R.id.vp_test) as ViewPager
+		val vp = view.findViewById(R.id.viewpager_viewpagerdialog) as ViewPager
 
 		this.viewPager = vp
 		this.setView(view)
@@ -64,7 +64,6 @@ class ViewPagerDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 			val view = TextView(container.context)
 			view.height = 300
 			view.text = this.viewData[position]
-			view.setBackgroundColor(Color.CYAN)
 
 			container.addView(view)
 			return view
