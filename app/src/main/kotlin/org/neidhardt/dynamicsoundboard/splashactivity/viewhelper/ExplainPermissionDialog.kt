@@ -46,16 +46,4 @@ class ExplainPermissionDialog : ViewPagerDialog() {
 
 	override fun getStringButtonOk(): String? = this.context?.getString(R.string.dialog_ok)
 
-	override fun onButtonClicked() {
-		this.activity?.let { activity ->
-			(activity as SplashActivity).explainPermissionDialogClosed()
-		}
-	}
-
-	override fun onBackPressed() {
-		super.onBackPressed()
-		this.activity?.let { activity ->
-			(activity as SplashActivity).explainPermissionDialogClosed()
-		}
-	}
 }

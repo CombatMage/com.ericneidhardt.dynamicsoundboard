@@ -10,13 +10,17 @@ import org.neidhardt.dynamicsoundboard.misc.hasPermissionPhoneState
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
 import org.neidhardt.dynamicsoundboard.splashactivity.viewhelper.ExplainPermissionDialog
+import org.neihdardt.viewpagerdialog.ViewPagerDialog
 import java.util.*
 
 
 /**
 * Created by eric.neidhardt@sevenval.com on 10.11.2016.
 */
-class SplashActivity : EnhancedAppCompatActivity(), SplashActivityContract.View {
+class SplashActivity :
+		EnhancedAppCompatActivity(),
+		SplashActivityContract.View,
+		ViewPagerDialog.ViewPagerDialogActivity {
 
 	private lateinit var presenter: SplashActivityContract.Presenter
 
@@ -39,10 +43,6 @@ class SplashActivity : EnhancedAppCompatActivity(), SplashActivityContract.View 
 
 	override fun explainPermissions(permissions: Array<String>) {
 		ExplainPermissionDialog.show(this.supportFragmentManager, permissions, this)
-	}
-
-	fun explainPermissionDialogClosed() {
-		this.presenter.onExplainPermissionDialogClosed()
 	}
 
 	override fun onRequestPermissionsResult(
@@ -73,5 +73,17 @@ class SplashActivity : EnhancedAppCompatActivity(), SplashActivityContract.View 
 			requiredPermissions.add(Manifest.permission.READ_PHONE_STATE)
 		}
 		return requiredPermissions.toTypedArray()
+	}
+
+	override fun onViewPagerDialogButtonClicked() {
+		this.explainPermissionDialogClosed()
+	}
+
+	override fun onViewPagerDialogBackPressed() {
+		this.explainPermissionDialogClosed()
+	}
+
+	fun explainPermissionDialogClosed() {
+		this.presenter.onExplainPermissionDialogClosed()
 	}
 }
