@@ -1,5 +1,7 @@
 package org.neidhardt.dynamicsoundboard.splashactivity.viewhelper
 
+import android.Manifest
+import android.content.Context
 import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.splashactivity.SplashActivity
@@ -14,18 +16,27 @@ class ExplainPermissionDialog : ViewPagerDialog() {
 	companion object {
 		private val TAG = ViewPagerDialog::class.java.name
 
-		fun show(fragmentManager: FragmentManager, missingPermissions: Array<String>) {
+		fun show(fragmentManager: FragmentManager, missingPermissions: Array<String>, context: Context) {
 			val dialog = ExplainPermissionDialog()
 
-			dialog.setViewData(missingPermissions)
+			dialog.setViewData(missingPermissions, context)
 			dialog.show(fragmentManager, TAG)
 		}
 	}
 
-	override fun setViewData(viewData: Array<String>) {
+	fun setViewData(missingPermissions: Array<String>, context: Context) {
 		val messagesToDisplay = ArrayList<String>()
 
-		// TODO
+		if (missingPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+				missingPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE))
+		{
+			messagesToDisplay.add(context.getString(R.string.dialogexplainpermissions_explainstorage))
+		}
+
+		if (missingPermissions.contains(Manifest.permission.READ_PHONE_STATE)) {
+			messagesToDisplay.add(context.getString(R.string.dialogexplainpermissions_explainreadphonestate))
+		}
+
 		super.setViewData(messagesToDisplay.toTypedArray())
 	}
 
