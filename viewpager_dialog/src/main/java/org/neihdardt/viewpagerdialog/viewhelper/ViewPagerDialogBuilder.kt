@@ -62,7 +62,6 @@ class ViewPagerDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 			if (container == null) return super.instantiateItem(container, position)
 
 			val view = TextView(container.context)
-			view.height = 300
 			view.text = this.viewData[position]
 
 			container.addView(view)
