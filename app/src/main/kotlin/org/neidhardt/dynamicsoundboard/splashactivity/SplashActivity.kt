@@ -41,6 +41,10 @@ class SplashActivity : EnhancedAppCompatActivity(), SplashActivityContract.View 
 		ExplainPermissionDialog.show(this.supportFragmentManager, permissions, this)
 	}
 
+	fun explainPermissionDialogClosed() {
+		this.presenter.onExplainPermissionDialogClosed()
+	}
+
 	override fun onRequestPermissionsResult(
 			requestCode: Int,
 			permissions: Array<out String>,

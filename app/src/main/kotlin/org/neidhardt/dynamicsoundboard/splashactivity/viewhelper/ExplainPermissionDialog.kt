@@ -47,8 +47,8 @@ class ExplainPermissionDialog : ViewPagerDialog() {
 	override fun getStringButtonOk(): String? = this.context?.getString(R.string.dialog_ok)
 
 	override fun onButtonClicked() {
-		val callingActivity = this.activity as SplashActivity
-		val missingPermissions = callingActivity.getMissingPermissions()
-		callingActivity.requestPermissions(missingPermissions)
+		this.activity?.let { activity ->
+			(activity as SplashActivity).explainPermissionDialogClosed()
+		}
 	}
 }

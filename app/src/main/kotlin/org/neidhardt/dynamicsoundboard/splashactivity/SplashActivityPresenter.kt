@@ -19,6 +19,15 @@ class SplashActivityPresenter(
 		}
 	}
 
+	override fun onExplainPermissionDialogClosed() {
+		val missingPermissions = this.view.getMissingPermissions()
+		if (missingPermissions.isNotEmpty()) {
+			this.view.requestPermissions(missingPermissions)
+		} else {
+			this.view.openActivity(SoundActivity::class.java)
+		}
+	}
+
 	override fun onUserHasChangedPermissions() {
 		val missingPermissions = this.view.getMissingPermissions()
 		if (missingPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE)

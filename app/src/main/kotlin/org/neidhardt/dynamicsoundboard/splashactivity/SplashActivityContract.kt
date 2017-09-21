@@ -13,6 +13,7 @@ interface SplashActivityContract {
 	}
 	interface Presenter {
 		fun onCreated()
+		fun onExplainPermissionDialogClosed()
 		fun onUserHasChangedPermissions()
 	}
 }
