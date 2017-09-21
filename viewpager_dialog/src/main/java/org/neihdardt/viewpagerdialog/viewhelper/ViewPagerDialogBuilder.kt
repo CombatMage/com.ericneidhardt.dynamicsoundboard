@@ -1,12 +1,15 @@
 package org.neihdardt.viewpagerdialog.viewhelper
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AlertDialog
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import org.neihdardt.viewpagerdialog.R
 
 @Suppress("unused")
 /**
@@ -31,10 +34,15 @@ class ViewPagerDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 	}
 
 	private fun createViewPager() {
-		val viewPager = ViewPager(this.context)
-		viewPager.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-		this.viewPager = viewPager
-		this.setView(viewPager)
+		val view = LayoutInflater.from(this.context).inflate(
+				R.layout.view_viewpagerdialog,
+				null,
+				false
+		)
+		val vp = view.findViewById(R.id.vp_test) as ViewPager
+
+		this.viewPager = vp
+		this.setView(view)
 	}
 
 	private class DefaultPageAdapter(private val viewData: Array<String>) : PagerAdapter() {
@@ -54,8 +62,9 @@ class ViewPagerDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 			if (container == null) return super.instantiateItem(container, position)
 
 			val view = TextView(container.context)
-			view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+			view.height = 300
 			view.text = this.viewData[position]
+			view.setBackgroundColor(Color.CYAN)
 
 			container.addView(view)
 			return view
