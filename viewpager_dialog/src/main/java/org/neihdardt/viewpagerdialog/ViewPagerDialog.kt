@@ -10,26 +10,45 @@ import org.neihdardt.viewpagerdialog.viewhelper.ViewPagerDialogBuilder
  */
 abstract class ViewPagerDialog : DialogFragment() {
 
+	private val KEY_TITLE = "KEY_TITLE"
+	private val KEY_MESSAGE = "KEY_MESSAGE"
 	private val KEY_VIEW_DATA = "KEY_VIEW_DATA"
 
+	private var title: String? = null
+	private var message: String? = null
 	private lateinit var viewData: Array<String>
 
-	open fun setViewData(viewData: Array<String>) {
-		this.arguments = Bundle().apply {
-			this.putStringArray(KEY_VIEW_DATA, viewData)
-		}
+	fun setViewData(viewData: Array<String>) {
+		val args = this.arguments ?: Bundle()
+		args.putStringArray(KEY_VIEW_DATA, viewData)
+		this.arguments = args
+	}
+
+	fun setTitle(title: String) {
+		val args = this.arguments ?: Bundle()
+		args.putString(KEY_TITLE, title)
+		this.arguments = args
+	}
+
+	fun setMessage(message: String) {
+		val args = this.arguments ?: Bundle()
+		args.putString(KEY_MESSAGE, message)
+		this.arguments = args
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+
+		this.title = this.arguments?.getString(KEY_TITLE)
+		this.message = this.arguments?.getString(KEY_MESSAGE)
 		this.viewData = this.arguments?.getStringArray(KEY_VIEW_DATA) ?: emptyArray()
 	}
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		val dialogBuilder = ViewPagerDialogBuilder(this.activity)
 
-		this.getStringTitle()?.let { dialogBuilder.setTitle(it) }
-		this.getStringMessage()?.let { dialogBuilder.setMessage(it) }
+		this.title?.let { dialogBuilder.setTitle(it) }
+		this.message?.let { dialogBuilder.setMessage(it) }
 
 		dialogBuilder.setDataToDisplay(this.viewData)
 
@@ -52,20 +71,16 @@ abstract class ViewPagerDialog : DialogFragment() {
 		return dialogBuilder.create()
 	}
 
-	open fun getStringTitle(): String? = null
-
-	open fun getStringMessage(): String? = null
-
 	open fun getStringButtonOk(): String? = null
 
-	open fun onButtonClicked() {
+	private fun onButtonClicked() {
 		val activity = this.activity
 		if (activity is ViewPagerDialogActivity) {
 			activity.onViewPagerDialogButtonClicked()
 		}
 	}
 
-	open fun onBackPressed() {
+	private fun onBackPressed() {
 		val activity = this.activity
 		if (activity is ViewPagerDialogActivity) {
 			activity.onViewPagerDialogBackPressed()

@@ -4,9 +4,8 @@ import android.Manifest
 import android.content.Context
 import android.support.v4.app.FragmentManager
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.splashactivity.SplashActivity
 import org.neihdardt.viewpagerdialog.ViewPagerDialog
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by eric.neidhardt@gmail.com on 12.09.2017.
@@ -19,7 +18,10 @@ class ExplainPermissionDialog : ViewPagerDialog() {
 		fun show(fragmentManager: FragmentManager, missingPermissions: Array<String>, context: Context) {
 			val dialog = ExplainPermissionDialog()
 
+			dialog.setTitle(context.getString(R.string.dialogexplainpermissions_title))
+			dialog.setMessage(context.getString(R.string.dialogexplainpermissions_message))
 			dialog.setViewData(missingPermissions, context)
+
 			dialog.show(fragmentManager, TAG)
 		}
 	}
@@ -40,10 +42,5 @@ class ExplainPermissionDialog : ViewPagerDialog() {
 		super.setViewData(messagesToDisplay.toTypedArray())
 	}
 
-	override fun getStringTitle(): String? = this.context?.getString(R.string.dialogexplainpermissions_title)
-
-	override fun getStringMessage(): String? = this.context?.getString(R.string.dialogexplainpermissions_message)
-
 	override fun getStringButtonOk(): String? = this.context?.getString(R.string.dialog_ok)
-
 }
