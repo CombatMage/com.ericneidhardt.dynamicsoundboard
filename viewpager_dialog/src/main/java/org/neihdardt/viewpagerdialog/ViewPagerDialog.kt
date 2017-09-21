@@ -14,7 +14,7 @@ abstract class ViewPagerDialog : DialogFragment() {
 
 	private lateinit var viewData: Array<String>
 
-	fun setViewData(viewData: Array<String>) {
+	open fun setViewData(viewData: Array<String>) {
 		this.arguments = Bundle().apply {
 			this.putStringArray(KEY_VIEW_DATA, viewData)
 		}

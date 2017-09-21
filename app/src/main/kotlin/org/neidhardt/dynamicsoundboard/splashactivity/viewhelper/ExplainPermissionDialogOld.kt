@@ -23,7 +23,7 @@ class ExplainPermissionDialogOld : BaseDialog() {
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		val dialogBuilder = AlertDialog.Builder(this.activity)
-		dialogBuilder.setTitle(R.string.request_permission_title)
+		//dialogBuilder.setTitle(R.string.request_permission_title)
 		dialogBuilder.setMessage(this.getMessageForPermissions())
 
 		dialogBuilder.setPositiveButton(R.string.dialog_ok, { _,_ ->

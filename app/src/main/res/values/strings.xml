@@ -40,10 +40,10 @@
 	<string name="genericconfirm_DeleteSoundSheetMessage">Soll diese Soundgruppe entfernt werden?</string>
 
 	<!-- permissions -->
-	<string name="request_permission_title">Berechtigung erforderlich</string>
-	<string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
-	<string name="request_permission_read_storage_message">Die Berechtigung vom Dateisystem zu lesen ist erforderlich um Sounddateien zum Abspielen zu laden. Die App wird ohne diese Berechtigung beendet.</string>
-	<string name="request_permission_write_storage_message">Die Berechtigung auf das Dateisystem zu schreiben wird unter anderem benötigt um die Sound Zusammenstellung abzuspeichern. Die App wird ohne diese Berechtigung beendet.</string>
+	<string name="dialogexplainpermissions_title">Berechtigung erforderlich</string>
+	<string name="dialogexplainpermissions_message">Um alle Features der App nutzen zu können, sind eine Berechtigungen erforderlich</string>
+	<string name="dialogexplainpermissions_explainreadphonestate">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
+	<string name="dialogexplainpermissions_explainstorage">Die Berechtigung für den Zugriff auf das Dateisystem ist erforderlich um Sounddateien zum Abspielen zu laden. Die App kann ohne diese Berechtigung nicht funktionieren.</string>
 
 	<!-- soundmanagement -->
 	<string name="music_service_loading_sound_failed">Eine Sound konnte nicht geladen werden:</string>

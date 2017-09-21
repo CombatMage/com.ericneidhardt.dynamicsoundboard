@@ -20,26 +20,26 @@ private val KEY_REQUEST_PERMISSION_ID = "KEY_REQUEST_PERMISSION_ID"
 private val KEY_CLOSE_ON_DENIAL = "KEY_CLOSE_ON_DENIAL"
 
 fun AppCompatActivity.explainReadPhoneStatePermission() {
-	OldExplainPermissionDialog.show(this.supportFragmentManager,
+	/*OldExplainPermissionDialog.show(this.supportFragmentManager,
 			R.string.request_permission_read_phone_state_message,
 			Manifest.permission.READ_PHONE_STATE,
-			IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)
+			IntentRequest.REQUEST_PERMISSION_READ_PHONE_STATE)*/
 }
 
 fun AppCompatActivity.explainReadStoragePermission() {
-	OldExplainPermissionDialog.show(this.supportFragmentManager,
+	/*OldExplainPermissionDialog.show(this.supportFragmentManager,
 			R.string.request_permission_read_storage_message,
 			Manifest.permission.READ_EXTERNAL_STORAGE,
 			IntentRequest.REQUEST_PERMISSION_READ_STORAGE,
-			true)
+			true)*/
 }
 
 fun AppCompatActivity.explainWriteStoragePermission() {
-	OldExplainPermissionDialog.show(this.supportFragmentManager,
+	/*OldExplainPermissionDialog.show(this.supportFragmentManager,
 			R.string.request_permission_write_storage_message,
 			Manifest.permission.WRITE_EXTERNAL_STORAGE,
 			IntentRequest.REQUEST_PERMISSION_WRITE_STORAGE,
-			true)
+			true)*/
 }
 
 class OldExplainPermissionDialog : BaseDialog() {
@@ -79,7 +79,7 @@ class OldExplainPermissionDialog : BaseDialog() {
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		val dialogBuilder = AlertDialog.Builder(this.activity)
-		dialogBuilder.setTitle(R.string.request_permission_title)
+		//dialogBuilder.setTitle(R.string.request_permission_title)
 		dialogBuilder.setMessage(this.messageId)
 
 		if (this.closeAppOnDenial)
