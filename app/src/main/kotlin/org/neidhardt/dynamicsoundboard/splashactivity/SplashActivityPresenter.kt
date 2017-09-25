@@ -32,7 +32,7 @@ class SplashActivityPresenter(
 		val missingPermissions = this.view.getMissingPermissions()
 		if (missingPermissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE)
 				|| missingPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-			this.view.finishActivity()
+			this.view.showAppClosingInfo()
 		} else {
 			this.view.openActivity(SoundActivity::class.java)
 		}

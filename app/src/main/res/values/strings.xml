@@ -45,6 +45,9 @@
 	<string name="dialogexplainpermissions_explainreadphonestate">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
 	<string name="dialogexplainpermissions_explainstorage">Die Berechtigung für den Zugriff auf das Dateisystem ist erforderlich um Sounddateien zum Abspielen zu laden. Die App kann ohne diese Berechtigung nicht funktionieren.</string>
 
+	<!-- AppClosingInfoDialog -->
+	<string name="dialogappclosing_message">Ohne die erforderliche Berechtigung wird die App jetzt beendet.</string>
+
 	<!-- soundmanagement -->
 	<string name="music_service_loading_sound_failed">Eine Sound konnte nicht geladen werden:</string>
 

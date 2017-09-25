@@ -10,6 +10,7 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionPhoneState
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
+import org.neidhardt.dynamicsoundboard.splashactivity.viewhelper.AppClosingInfoDialog
 import org.neihdardt.viewpagerdialog.ViewPagerDialog
 import java.util.*
 
@@ -97,5 +98,11 @@ class SplashActivity :
 
 	override fun onViewPagerDialogBackPressed() {
 		this.presenter.onExplainPermissionDialogClosed()
+	}
+
+	override fun showAppClosingInfo() {
+		this.postAfterOnResume {
+			AppClosingInfoDialog.show(this.supportFragmentManager)
+		}
 	}
 }
