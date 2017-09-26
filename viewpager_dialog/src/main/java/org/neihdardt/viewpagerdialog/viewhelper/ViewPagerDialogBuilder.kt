@@ -1,7 +1,6 @@
 package org.neihdardt.viewpagerdialog.viewhelper
 
 import android.content.Context
-import android.graphics.Color
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AlertDialog
@@ -18,19 +17,20 @@ import org.neihdardt.viewpagerdialog.R
 class ViewPagerDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 
 	private var viewPager: ViewPager? = null
+	private var counter: TextView? = null
 
 	fun setDataToDisplay(viewData: Array<String>) {
 		if (this.viewPager == null) {
 			this.createViewPager()
 		}
-		this.viewPager?.adapter = DefaultPageAdapter(viewData)
+		this.initViewPager(DefaultPageAdapter(viewData))
 	}
 
 	fun setCustomViewPagerAdapter(adapter: PagerAdapter) {
 		if (this.viewPager == null) {
 			this.createViewPager()
 		}
-		this.viewPager?.adapter = adapter
+		this.initViewPager(adapter)
 	}
 
 	private fun createViewPager() {
@@ -39,10 +39,28 @@ class ViewPagerDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 				null,
 				false
 		)
-		val vp = view.findViewById(R.id.viewpager_viewpagerdialog) as ViewPager
-
-		this.viewPager = vp
+		this.viewPager = view.findViewById(R.id.viewpager_viewpagerdialog_messages) as ViewPager
+		this.counter = view.findViewById(R.id.textview_viewpagerdialog_messagecount) as TextView
 		this.setView(view)
+	}
+
+	private fun initViewPager(adapter: PagerAdapter) {
+		val count = adapter.count
+		if (count > 0) {
+			this.counter?.text = "1 / $count"
+			this.viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+				override fun onPageScrollStateChanged(state: Int) {}
+				override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+				override fun onPageSelected(position: Int) {
+					counter?.text = "${position + 1} / $count"
+				}
+			})
+
+			this.counter?.visibility = View.VISIBLE
+		} else {
+			this.counter?.visibility = View.GONE
+		}
+		this.viewPager?.adapter = adapter
 	}
 
 	private class DefaultPageAdapter(private val viewData: Array<String>) : PagerAdapter() {

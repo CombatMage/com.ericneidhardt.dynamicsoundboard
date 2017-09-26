@@ -34,7 +34,7 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.preferenceactivity.PreferenceActivity
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.SoundSheetFragment
-import org.neidhardt.dynamicsoundboard.viewhelper.navigationdrawer_helper.NoAnimationDrawerToggle
+import org.neidhardt.dynamicsoundboard.soundactivity.viewhelper.NoAnimationDrawerToggle
 
 /**
  * File created by eric.neidhardt on 29.09.2015.

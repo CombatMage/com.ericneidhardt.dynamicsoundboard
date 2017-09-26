@@ -31,7 +31,7 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist.PlaylistAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts.SoundLayoutsAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundsheets.SoundSheetsAdapter
-import org.neidhardt.dynamicsoundboard.viewhelper.recyclerview_helper.PaddingDecorator
+import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.PaddingDecorator
 
 /**
  * Created by eric.neidhardt@gmail.com on 01.09.2017.

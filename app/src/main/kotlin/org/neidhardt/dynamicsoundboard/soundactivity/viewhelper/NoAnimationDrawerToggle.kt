@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.viewhelper.navigationdrawer_helper
+package org.neidhardt.dynamicsoundboard.soundactivity.viewhelper
 
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
