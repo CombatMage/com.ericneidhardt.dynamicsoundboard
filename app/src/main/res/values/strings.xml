@@ -41,7 +41,7 @@
 
 	<!-- permissions -->
 	<string name="dialogexplainpermissions_title">Berechtigung erforderlich</string>
-	<string name="dialogexplainpermissions_message">Um alle Features der App nutzen zu können, sind eine Berechtigungen erforderlich</string>
+	<string name="dialogexplainpermissions_message">Um alle Features der App nutzen zu können, sind ein paar Berechtigungen erforderlich.</string>
 	<string name="dialogexplainpermissions_explainreadphonestate">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
 	<string name="dialogexplainpermissions_explainstorage">Die Berechtigung für den Zugriff auf das Dateisystem ist erforderlich um Sounddateien zum Abspielen zu laden. Die App kann ohne diese Berechtigung nicht funktionieren.</string>
 
