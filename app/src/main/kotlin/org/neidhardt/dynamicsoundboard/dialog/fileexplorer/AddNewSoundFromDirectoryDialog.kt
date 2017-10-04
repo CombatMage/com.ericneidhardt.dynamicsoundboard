@@ -121,8 +121,8 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 			return
 		}
 
-		val files = this.getFileListResult()
-		if (files.isEmpty()) {
+		val filesInDir = this.getFileListResult()
+		if (filesInDir.isEmpty()) {
 			this.dismiss()
 			return
 		}
@@ -130,13 +130,17 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 		val soundSheet = this.soundSheetsManager.soundSheets.findByFragmentTag(fragmentToAddSounds)
 				?: throw IllegalStateException("no soundSheet for given fragmentTag was found")
 
-		Observable.just(files)
+		Observable.just(filesInDir)
 				.subscribeOn(Schedulers.computation())
-				.map { files -> files.map { singleFile -> MediaPlayerFactory.getMediaPlayerDataFromFile(singleFile, fragmentToAddSounds) } }
+				.map { files ->
+					files.map { singleFile ->
+						MediaPlayerFactory.getMediaPlayerDataFromFile(singleFile, fragmentToAddSounds)
+					}
+				}
 				.subscribe({ playerData ->
 					soundManager.add(soundSheet, playerData)
 				}, { error ->
-					Logger.e(TAG, error?.toString() ?: "")
+					Logger.e(TAG, error.toString())
 					this@AddNewSoundFromDirectoryDialog.dismiss()
 				}, {
 					this@AddNewSoundFromDirectoryDialog.dismiss()

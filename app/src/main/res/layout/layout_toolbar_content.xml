@@ -1,88 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools">
 
-	<data>
-		<import type="android.view.View"/>
-		
-		<variable
-				name="viewModel"
-				type="org.neidhardt.dynamicsoundboard.soundactivity.viewmodel.ToolbarVM"/>
-	</data>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/abc_action_bar_default_height_material"
+	tools:background="@color/primary_500">
 
-	<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/abc_action_bar_default_height_material"
-			tools:background="@color/primary_500">
+	<ImageButton
+		android:id="@+id/ib_layout_toolbar_content_add_sound_sheet"
+		style="@style/Theme.ImageButton.Flat.Toolbar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentEnd="true"
+		android:layout_centerVertical="true"
+		android:contentDescription="@string/action_add_new_sound_sheet"
+		android:src="@drawable/ic_action_new_sound_layout"/>
 
-		<ImageButton
-				android:id="@+id/ib_layout_toolbar_content_add_sound_sheet"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:layout_alignParentEnd="true"
-				android:contentDescription="@string/action_add_new_sound_sheet"
-				android:src="@drawable/ic_action_new_sound_layout"
-				android:onClick="@{(view) -> viewModel.onAddSoundSheetClicked()}"
-				style="@style/Theme.ImageButton.Flat.Toolbar"/>
+	<ImageButton
+		android:id="@+id/ib_layout_toolbar_content_add_sound"
+		style="@style/Theme.ImageButton.Flat.Toolbar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_sheet"
+		android:contentDescription="@string/action_add_new_sound"
+		android:src="@drawable/ic_action_add_sound"/>
 
-		<ImageButton
-				android:id="@+id/ib_layout_toolbar_content_add_sound"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_sheet"
-				android:contentDescription="@string/action_add_new_sound"
-				android:src="@drawable/ic_action_add_sound"
-				android:onClick="@{(view) -> viewModel.onAddSoundClicked()}"
-				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
-				style="@style/Theme.ImageButton.Flat.Toolbar"/>
+	<ImageButton
+		android:id="@+id/ib_layout_toolbar_content_add_sound_dir"
+		style="@style/Theme.ImageButton.Flat.Toolbar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound"
+		android:contentDescription="@string/action_add_new_sound_from_dir"
+		android:src="@drawable/ic_action_add_sound_dir"/>
 
-		<ImageButton
-				android:id="@+id/ib_layout_toolbar_content_add_sound_dir"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound"
-				android:contentDescription="@string/action_add_new_sound_from_dir"
-				android:src="@drawable/ic_action_add_sound_dir"
-				style="@style/Theme.ImageButton.Flat.Toolbar"
-				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
-				android:onClick="@{(view) -> viewModel.onAddSoundFromDirectoryClicked()}"/>
+	<TextView
+		android:id="@+id/tv_layout_toolbar_content_app_name"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentStart="true"
+		android:layout_centerVertical="true"
+		android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
+		android:fontFamily="sans-serif-medium"
+		android:gravity="center_horizontal"
+		android:text="@string/app_name"
+		android:textColor="@color/text_header"
+		android:textSize="@dimen/text_title"/>
 
-		<TextView
-				android:id="@+id/tv_layout_toolbar_content_app_name"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:layout_alignParentStart="true"
-				android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
-				android:gravity="center_horizontal"
-				android:text="@string/app_name"
-				android:textColor="@color/text_header"
-				android:textSize="@dimen/text_title"
-				android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.GONE : View.VISIBLE }"
-				android:fontFamily="sans-serif-medium"/>
+	<TextView
+		android:id="@+id/et_layout_toolbar_content_title"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_alignParentStart="true"
+		android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
+		android:background="@android:color/transparent"
+		android:fadingEdge="horizontal"
+		android:fontFamily="sans-serif-medium"
+		android:gravity="center_vertical"
+		android:maxLines="1"
+		android:textColor="@color/text_header"
+		android:textCursorDrawable="@drawable/shape_cursor_edittext_white"
+		android:textSize="@dimen/text_title"/>
 
-		<TextView
-			android:id="@+id/et_layout_toolbar_content_title"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:textCursorDrawable="@drawable/shape_cursor_edittext_white"
-			android:textColor="@color/text_header"
-			android:textSize="@dimen/text_title"
-			android:background="@android:color/transparent"
-			android:fadingEdge="horizontal"
-			android:maxLines="1"
-			android:gravity="center_vertical"
-			android:fontFamily="sans-serif-medium"
-			android:layout_alignParentStart="true"
-			android:layout_toStartOf="@id/ib_layout_toolbar_content_add_sound_dir"
-			android:visibility="@{viewModel.isSoundSheetActionsEnable ? View.VISIBLE : View.GONE }"
-			app:text="@{viewModel.title}"
-			android:onClick="@{(view) -> viewModel.onTitleClicked()}"/>
-
-	</RelativeLayout>
-</layout>
+</RelativeLayout>

@@ -1,6 +1,6 @@
 package org.neidhardt.dynamicsoundboard.mediaplayer
 
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 
 /**
  * File created by eric.neidhardt on 10.11.2015.
@@ -12,7 +12,7 @@ interface MediaPlayerController
 
 	val albumCover: ByteArray?
 
-	val mediaPlayerData: NewMediaPlayerData
+	val mediaPlayerData: MediaPlayerData
 
 	val isPlayingSound: Boolean
 

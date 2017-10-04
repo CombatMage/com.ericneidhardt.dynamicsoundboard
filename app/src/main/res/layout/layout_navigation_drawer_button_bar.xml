@@ -1,77 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/height_list_item"
+	android:background="@color/background"
+	android:orientation="horizontal"
+	tools:layout_marginTop="@dimen/status_bar_padding">
 
-	<data>
-		<import type="android.view.View"/>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:background="@color/background"
+		android:orientation="horizontal">
 
-		<variable
-				name="viewModel"
-				type="org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerButtonBarVM"/>
-	</data>
+		<Button
+			android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
+			style="@style/style_all_buttonflat"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:padding="@dimen/margin_default"
+			android:text="@string/navigation_drawer_delete"/>
 
-	<RelativeLayout
+		<Button
+			android:id="@+id/b_layout_navigation_drawer_button_bar_add"
+			style="@style/style_all_buttonflat"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:padding="@dimen/margin_default"
+			android:text="@string/navigation_drawer_add"/>
+	</LinearLayout>
+
+	<FrameLayout
+		android:id="@+id/framelayout_layoutnavigationdrawerbuttonbar_deleteselected"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:background="@color/background">
+
+		<TextView
+			android:id="@+id/b_layout_navigation_drawer_button_bar_delete_selected"
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_list_item"
-			android:orientation="horizontal"
-			android:background="@color/background"
-			tools:layout_marginTop="@dimen/status_bar_padding">
-
-		<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:orientation="horizontal"
-				android:background="@color/background"
-				app:animateVisibleFade="@{!viewModel.enableDeleteSelected}">
-
-			<Button
-					android:id="@+id/b_layout_navigation_drawer_button_bar_delete"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:padding="@dimen/margin_default"
-					android:gravity="center"
-					android:text="@string/navigation_drawer_delete"
-					style="@style/style_all_buttonflat"
-					android:onClick="@{(view) -> viewModel.onDeleteClicked()}"/>
-
-			<Button
-					android:id="@+id/b_layout_navigation_drawer_button_bar_add"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:padding="@dimen/margin_default"
-					android:gravity="center"
-					android:text="@string/navigation_drawer_add"
-					style="@style/style_all_buttonflat"
-					android:onClick="@{(view) -> viewModel.onAddClicked()}"/>
-		</LinearLayout>
-
-		<FrameLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:background="@color/background">
-
-			<TextView
-					android:id="@+id/b_layout_navigation_drawer_button_bar_delete_selected"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:padding="@dimen/margin_default"
-					android:gravity="center"
-					android:text="@string/navigation_drawer_delete_selected"
-					android:textSize="@dimen/text_body"
-					android:textColor="@color/text_body_primary"
-					android:fontFamily="sans-serif-_medium"
-					android:background="@drawable/selector_background_list_item"
-					android:clickable="true"
-					tools:visibility="gone"
-					android:onClick="@{(view) -> viewModel.onDeleteSelectedClicked()}"
-					android:visibility="@{viewModel.enableDeleteSelected ? View.VISIBLE : View.GONE}"
-					app:animateVisibleSlide="@{viewModel.enableDeleteSelected}"/>
-		</FrameLayout>
-	</RelativeLayout>
-</layout>
+			android:layout_height="match_parent"
+			android:background="@drawable/selector_background_list_item"
+			android:clickable="true"
+			android:fontFamily="sans-serif-_medium"
+			android:gravity="center"
+			android:padding="@dimen/margin_default"
+			android:text="@string/navigation_drawer_delete_selected"
+			android:textColor="@color/text_body_primary"
+			android:textSize="@dimen/text_body"
+			tools:visibility="gone"/>
+	</FrameLayout>
+</RelativeLayout>

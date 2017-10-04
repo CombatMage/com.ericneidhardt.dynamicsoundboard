@@ -2,7 +2,6 @@
 
 <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -22,7 +21,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/dialog_add_new_sound_from_intent_to_sound_sheet_message"
-			style="@style/Theme.TextView.Body1"/>
+			style="@style/style_all_body1"/>
 
 	<CheckBox
 			android:id="@+id/cb_add_new_sound_sheet"

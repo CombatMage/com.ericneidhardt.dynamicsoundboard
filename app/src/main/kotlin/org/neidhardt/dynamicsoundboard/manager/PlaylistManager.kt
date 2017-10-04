@@ -5,32 +5,39 @@ import android.widget.Toast
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.utils.getCopyList
 
 /**
  * Created by eric.neidhardt@gmail.com on 19.12.2016.
  */
-class PlaylistManager(private val context: Context) {
+class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 	private val TAG = javaClass.name
 	private val eventBus = EventBus.getDefault()
 
 	internal var onPlaylistChangedListener = ArrayList<((List<MediaPlayerController>) -> Unit)>()
+	internal var onPlaylistPlayerCompletedListener = ArrayList<((MediaPlayerCompletedEvent) -> Unit)>()
+	internal var onPlaylistPlayerStateChangedListener = ArrayList<((MediaPlayerStateChangedEvent) -> Unit)>()
 
-	internal var mMediaPlayersData: MutableList<NewMediaPlayerData>? = null
+	internal var mMediaPlayersData: MutableList<MediaPlayerData>? = null
 	internal var mMediaPlayers: MutableList<MediaPlayerController>? = null
 
 	val playlist: List<MediaPlayerController> get() = this.mMediaPlayers as List<MediaPlayerController>
 
-	fun set(mediaPlayerData: MutableList<NewMediaPlayerData>) {
+	fun set(mediaPlayerData: MutableList<MediaPlayerData>) {
 		this.mMediaPlayers?.forEach { it.destroy(false) }
 		this.mMediaPlayersData = mediaPlayerData
 		this.mMediaPlayers = ArrayList()
@@ -61,17 +68,17 @@ class PlaylistManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	fun add(mediaPlayerData: NewMediaPlayerData) {
+	fun add(mediaPlayerData: MediaPlayerData) {
 		this.createPlayerAndAddToPlaylist(mediaPlayerData)
 		this.invokeListeners()
 	}
 
-	fun togglePlaylistSound(mediaPlayerData: NewMediaPlayerData, addToPlaylist: Boolean) {
+	fun togglePlaylistSound(mediaPlayerData: MediaPlayerData, addToPlaylist: Boolean) {
 		if (addToPlaylist) {
 			if (this.playlist.findById(mediaPlayerData.playerId) != null)
 				throw IllegalArgumentException("player is already part of the playlist")
 
-			val newPlayerData = NewMediaPlayerData().apply {
+			val newPlayerData = MediaPlayerData().apply {
 				this.playerId = mediaPlayerData.playerId
 				this.fragmentTag = PlaylistTAG
 				this.isLoop = false
@@ -88,7 +95,7 @@ class PlaylistManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	private fun createPlayerAndAddToPlaylist(playerData: NewMediaPlayerData) {
+	private fun createPlayerAndAddToPlaylist(playerData: MediaPlayerData) {
 		if (this.playlist.containsPlayerWithId(playerData.playerId))
 			return
 
@@ -118,9 +125,26 @@ class PlaylistManager(private val context: Context) {
 	private fun invokeListeners() {
 		this.onPlaylistChangedListener.forEach { it.invoke(this.playlist) }
 	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: MediaPlayerStateChangedEvent) {
+		if (event.fragmentTag != PlaylistTAG) return
+		if (!event.isAlive) {
+			this.remove(listOf(event.player))
+		}
+
+		this.onPlaylistPlayerStateChangedListener.forEach { it.invoke(event) }
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: MediaPlayerCompletedEvent) {
+		if (event.player.mediaPlayerData.fragmentTag != PlaylistTAG) return
+		this.onPlaylistPlayerCompletedListener.forEach { it.invoke(event) }
+	}
 }
 
 object RxNewPlaylistManager {
+
 	fun playlistChanges(manager: PlaylistManager): Observable<List<MediaPlayerController>> {
 		return Observable.create { subscriber ->
 			val listener: (List<MediaPlayerController>) -> Unit = {
@@ -131,6 +155,24 @@ object RxNewPlaylistManager {
 			//})
 			manager.mMediaPlayers?.let { subscriber.onNext(it) }
 			manager.onPlaylistChangedListener.add(listener)
+		}
+	}
+
+	fun playlistPlayerCompletes(manager: PlaylistManager): Observable<MediaPlayerCompletedEvent> {
+		return Observable.create { subscriber ->
+			val listener: (MediaPlayerCompletedEvent) -> Unit = {
+				subscriber.onNext(it)
+			}
+			manager.onPlaylistPlayerCompletedListener.add(listener)
+		}
+	}
+
+	fun playlistPlayerStateChanges(manager: PlaylistManager): Observable<MediaPlayerStateChangedEvent> {
+		return Observable.create { subscriber ->
+			val listener: (MediaPlayerStateChangedEvent) -> Unit = {
+				subscriber.onNext(it)
+			}
+			manager.onPlaylistPlayerStateChangedListener.add(listener)
 		}
 	}
 }

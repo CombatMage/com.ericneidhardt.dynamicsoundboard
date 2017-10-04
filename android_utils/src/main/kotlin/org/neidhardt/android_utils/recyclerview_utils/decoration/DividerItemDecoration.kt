@@ -9,7 +9,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import org.neidhardt.android_utils.R
 
-class DividerItemDecoration(val context: Context, backgroundColorId: Int, dividerColorId: Int) : RecyclerView.ItemDecoration() {
+class DividerItemDecoration(
+	context: Context,
+	backgroundColorId: Int, 
+	dividerColorId: Int
+) : RecyclerView.ItemDecoration() {
 
 	private val heightDivider: Int
 

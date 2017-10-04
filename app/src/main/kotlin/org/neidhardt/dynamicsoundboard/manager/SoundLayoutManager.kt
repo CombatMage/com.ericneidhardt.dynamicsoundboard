@@ -6,8 +6,8 @@ import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.persistance.model.AppData
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundLayout
+import org.neidhardt.dynamicsoundboard.model.AppData
+import org.neidhardt.dynamicsoundboard.model.SoundLayout
 
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
@@ -20,21 +20,21 @@ class SoundLayoutManager(
 		private val playlistManager: PlaylistManager,
 		private val soundManager: SoundManager) {
 
-	internal var onSoundLayoutsChangedListener = ArrayList<(List<NewSoundLayout>) -> Unit>()
+	internal var onSoundLayoutsChangedListener = ArrayList<(List<SoundLayout>) -> Unit>()
 	internal var onPlayingSoundsChangedListener = ArrayList<(List<MediaPlayerController>) -> Unit>()
-	internal var onLoadingCompletedListener = ArrayList<(List<NewSoundLayout>) -> Unit>()
+	internal var onLoadingCompletedListener = ArrayList<(List<SoundLayout>) -> Unit>()
 
-	internal var mSoundLayouts: MutableList<NewSoundLayout>? = null
-	val soundLayouts: List<NewSoundLayout> get() = this.mSoundLayouts as List<NewSoundLayout>
+	internal var mSoundLayouts: MutableList<SoundLayout>? = null
+	val soundLayouts: List<SoundLayout> get() = this.mSoundLayouts as List<SoundLayout>
 
 	internal val mCurrentlyPlayingSounds = ArrayList<MediaPlayerController>()
 	val currentlyPlayingSounds: List<MediaPlayerController> get() = this.mCurrentlyPlayingSounds
 
 	@Synchronized
-	fun initIfRequired(appData: Observable<Optional<AppData>>) {
+	fun initIfRequired(loadingAppData: Observable<Optional<AppData>>) {
 		if (mSoundLayouts == null) {
 			this.mSoundLayouts = ArrayList()
-			appData.subscribe { appData ->
+			loadingAppData.subscribe { appData ->
 				this.mSoundLayouts = ArrayList()
 				if (!appData.isEmpty)
 					appData.item?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
@@ -50,10 +50,10 @@ class SoundLayoutManager(
 	}
 
 	@Synchronized
-	fun init(appData: Observable<AppData?>) {
-		appData.subscribe { appData ->
+	fun init(loadingAppData: Observable<AppData?>) {
+		loadingAppData.subscribe { appData ->
 			this.mSoundLayouts = ArrayList()
-			appData?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
+			appData.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
 			if (this.mSoundLayouts?.isEmpty() == true)
 				this.mSoundLayouts?.add(this.getDefaultSoundLayout())
 
@@ -63,7 +63,7 @@ class SoundLayoutManager(
 		}
 	}
 
-	fun remove(soundLayouts: List<NewSoundLayout>) {
+	fun remove(soundLayouts: List<SoundLayout>) {
 		if (this.mSoundLayouts == null) throw IllegalStateException("sound layout init not done")
 
 		this.mSoundLayouts?.let { mSoundLayouts ->
@@ -81,14 +81,14 @@ class SoundLayoutManager(
 		}
 	}
 
-	fun add(soundLayout: NewSoundLayout) {
+	fun add(soundLayout: SoundLayout) {
 		if (this.mSoundLayouts == null) throw IllegalStateException("sound layout init not done")
 
 		this.mSoundLayouts?.add(soundLayout)
 		this.invokeListeners()
 	}
 
-	fun setSelected(soundLayout: NewSoundLayout) {
+	fun setSelected(soundLayout: SoundLayout) {
 		if (this.mSoundLayouts == null) throw IllegalStateException("sound layout init not done")
 		if (!this.soundLayouts.contains(soundLayout)) throw IllegalArgumentException("given layout not found in dataset")
 
@@ -97,7 +97,7 @@ class SoundLayoutManager(
 		this.invokeListeners()
 	}
 
-	fun notifyHasChanged(soundLayout: NewSoundLayout) {
+	fun notifyHasChanged(soundLayout: SoundLayout) {
 		if (this.mSoundLayouts == null) throw IllegalStateException("sound layout init not done")
 		if (!this.soundLayouts.contains(soundLayout)) throw IllegalArgumentException("given layout not found in dataset")
 		this.invokeListeners()
@@ -110,8 +110,8 @@ class SoundLayoutManager(
 	val suggestedName: String get() = this.context.resources.getString(R.string.suggested_sound_layout_name) +
 			(this.mSoundLayouts?.size ?: "")
 
-	private fun getDefaultSoundLayout(): NewSoundLayout =
-			NewSoundLayout().apply {
+	private fun getDefaultSoundLayout(): SoundLayout =
+			SoundLayout().apply {
 				this.databaseId = DB_DEFAULT
 				this.label = context.resources.getString(R.string.suggested_sound_layout_name)
 				this.isSelected = true
@@ -144,17 +144,16 @@ class SoundLayoutManager(
 	}
 
 	companion object {
-		fun getNewDatabaseIdForLabel(label: String): String {
-			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
-		}
+		fun getNewDatabaseIdForLabel(label: String): String =
+				Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
 	}
 }
 
 object RxNewSoundLayoutManager {
 
-	fun soundLayoutsChanges(manager: SoundLayoutManager): Observable<List<NewSoundLayout>> {
+	fun soundLayoutsChanges(manager: SoundLayoutManager): Observable<List<SoundLayout>> {
 		return Observable.create { subscriber ->
-			val listener: (List<NewSoundLayout>) -> Unit = {
+			val listener: (List<SoundLayout>) -> Unit = {
 				subscriber.onNext(it)
 			}
 			//subscriber.add(Subscriptions.create {
@@ -178,9 +177,9 @@ object RxNewSoundLayoutManager {
 		}
 	}
 
-	fun completesLoading(manager: SoundLayoutManager): Observable<List<NewSoundLayout>> {
+	fun completesLoading(manager: SoundLayoutManager): Observable<List<SoundLayout>> {
 		return Observable.create { subscriber ->
-			val listener: (List<NewSoundLayout>) -> Unit = {
+			val listener: (List<SoundLayout>) -> Unit = {
 				subscriber.onNext(it)
 				subscriber.onComplete()
 			}
@@ -196,8 +195,8 @@ object RxNewSoundLayoutManager {
 	}
 }
 
-val List<NewSoundLayout>.selectedLayout: NewSoundLayout?
+val List<SoundLayout>.selectedLayout: SoundLayout?
 	get() = this.firstOrNull { it.isSelected }
 
-val List<NewSoundLayout>.activeLayout: NewSoundLayout
+val List<SoundLayout>.activeLayout: SoundLayout
 	get() = selectedLayout ?: throw IllegalStateException("no sound layout is selected")

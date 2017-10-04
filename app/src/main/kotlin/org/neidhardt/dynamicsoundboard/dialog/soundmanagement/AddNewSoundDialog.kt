@@ -18,7 +18,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
@@ -31,8 +30,7 @@ import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
-import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import java.io.File
 import java.util.*
 
@@ -171,6 +169,8 @@ private class AddNewSoundDialogPresenter(
 		private val soundManager: SoundManager
 )
 {
+	private val preferenceRepository = SoundboardApplication.preferenceRepository
+
 	private val soundsToAdd = ArrayList<NewSoundData>()
 	val values: List<NewSoundData>
 		get() = this.soundsToAdd
@@ -199,8 +199,8 @@ private class AddNewSoundDialogPresenter(
 
 	private fun returnResultsToCallingFragment() {
 		val count = this.soundsToAdd.size
-		val playersData = ArrayList<NewMediaPlayerData>(count)
-		val renamedPlayers = ArrayList<NewMediaPlayerData>()
+		val playersData = ArrayList<MediaPlayerData>(count)
+		val renamedPlayers = ArrayList<MediaPlayerData>()
 		for (i in 0..count - 1) {
 			val item = this.values[i]
 
@@ -228,14 +228,13 @@ private class AddNewSoundDialogPresenter(
 		this.showRenameDialog(renamedPlayers) // show the renameFileAndPlayer dialog for all altered players
 	}
 
-	private fun showRenameDialog(renamedMediaPlayers: List<NewMediaPlayerData>) {
+	private fun showRenameDialog(renamedMediaPlayers: List<MediaPlayerData>) {
 		for (data in renamedMediaPlayers)
 			RenameSoundFileDialog.show(this.dialog.fragmentManager, data)
 	}
 
-	private fun addAnotherSound()
-	{
-		if (SoundboardPreferences.useSystemBrowserForFiles()) {
+	private fun addAnotherSound() {
+		if (this.preferenceRepository.useSystemBrowserForFiles) {
 			val intent = Intent(Intent.ACTION_GET_CONTENT)
 			intent.type = FileUtils.MIME_AUDIO
 			this.dialog.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)

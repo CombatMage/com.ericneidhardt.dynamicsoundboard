@@ -1,8 +1,5 @@
 ext.versions = [
-
-		supportLibs : '25.0.0',
-
-		anko        : '0.9'
+		supportLibs : '25.0.0'
 ]
 
 ext.libraries = [
@@ -13,14 +10,7 @@ ext.libraries = [
 		rxKotlin             : 'io.reactivex.rxjava2:rxkotlin:2.0.0',
 		rxAndroid            : 'io.reactivex.rxjava2:rxandroid:2.0.1',
 		rxBinding            : 'com.jakewharton.rxbinding2:rxbinding:2.0.0',
-
-		rxlifecycle          : 'com.trello.rxlifecycle2:rxlifecycle:2.0.1',
-		rxlifecycleAndroid   : 'com.trello.rxlifecycle2:rxlifecycle-android:2.0.1',
-		rxlifecycleKotlin    : 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.0.1',
-		rxlifecycleNavi      : 'com.trello.rxlifecycle2:rxlifecycle-navi:2.0.1',
-		rxlifecycleComponents: 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1',
-
-		rxNavi               : 'com.trello.navi2:navi:2.0',
+		rxBindingDesign      : 'com.jakewharton.rxbinding2:rxbinding-design:2.0.0',
 
 		multidex             : "com.android.support:multidex:1.0.1",
 		supportV4            : "com.android.support:support-v4:$versions.supportLibs",
@@ -30,18 +20,14 @@ ext.libraries = [
 		supportRecyclerView  : "com.android.support:recyclerview-v7:$versions.supportLibs",
 		supportConstraints   : 'com.android.support.constraint:constraint-layout:1.0.2',
 
-		anko                 : "org.jetbrains.anko:anko-sdk21:$versions.anko", // min sdk version important
-		ankoSupportAppCompat : "org.jetbrains.anko:anko-appcompat-v7:$versions.anko", // Anko libs matching support libs
-
 		greenRobotCommons    : "de.greenrobot:java-common:2.3.1",
 		eventBus             : "org.greenrobot:eventbus:3.0.0",
-		greendao             : "org.greenrobot:greendao:3.2.0",
 
 		leakCanary           : "com.squareup.leakcanary:leakcanary-android:1.5",
 
 		exoplayer            : "com.google.android.exoplayer:exoplayer:r2.0.3",
 
-		gson                 : "com.google.code.gson:gson:2.8.0",
+		gson                 : "com.google.code.gson:gson:2.8.2",
 
 		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:2.2.6",
 
@@ -52,7 +38,7 @@ ext.libraries = [
 		acra                 : "ch.acra:acra:4.9.2",
 
 		junit                : 'junit:junit:4.12',
-		mockito              : 'org.mockito:mockito-core:2.7.20',
+		mockito              : 'org.mockito:mockito-core:2.8.47',
 		robolectric          : 'org.robolectric:robolectric:3.3.2',
 		robolectricMultidex  : 'org.robolectric:shadows-multidex:3.3.2',
 		robolectricSupportV4 : 'org.robolectric:shadows-support-v4:3.3.2'

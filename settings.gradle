@@ -3,4 +3,5 @@ include ':app',
         ':app_utils',
         ':android_utils',
         ':simple_storage',
-        ':value_holder'
+        ':value_holder',
+        ':viewpager_dialog'
