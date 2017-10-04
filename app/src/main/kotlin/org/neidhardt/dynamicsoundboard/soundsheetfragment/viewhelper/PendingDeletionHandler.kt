@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist
+package org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper
 
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController

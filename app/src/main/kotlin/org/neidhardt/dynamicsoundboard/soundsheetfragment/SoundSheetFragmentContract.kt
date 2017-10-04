@@ -1,24 +1,27 @@
 package org.neidhardt.dynamicsoundboard.soundsheetfragment
 
 import android.net.Uri
+import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
  * Created by eric.neidhardt@gmail.com on 08.05.2017.
  */
-interface SoundSheetContract {
+interface SoundSheetFragmentContract {
 	interface View {
+		var displayedSounds: List<MediaPlayerController>
+		var currentPlaylist: List<MediaPlayerController>
+
 		fun openDialogForNewSound()
 		fun updateSound(player: MediaPlayerController)
-		fun showSounds()
 		fun showAddButton()
 		fun showSnackbarForPlayerError(player: MediaPlayerController)
 		fun showSnackbarForRestoreSound()
 	}
 	interface Presenter {
-		fun onViewResumed()
-		fun onViewPaused()
+		fun viewCreated()
 		fun onUserClicksFab()
 		fun onUserClicksPlay(player: MediaPlayerController)
 		fun onUserClicksStop(player: MediaPlayerController)
@@ -27,5 +30,11 @@ interface SoundSheetContract {
 		fun onUserSeeksToPlaybackPosition(player: MediaPlayerController, position: Int)
 		fun onUserAddsNewPlayer(soundUri: Uri, label: String, soundSheet: SoundSheet)
 		fun onUserDeletesSound()
+		fun onMediaPlayerStateChanges(player: MediaPlayerController, isPlayerAlive: Boolean)
+		fun onMediaPlayerFailed(player: MediaPlayerController)
+	}
+	interface Model {
+		val sounds: Observable<List<MediaPlayerController>>
+		val playList: Observable<List<MediaPlayerController>>
 	}
 }

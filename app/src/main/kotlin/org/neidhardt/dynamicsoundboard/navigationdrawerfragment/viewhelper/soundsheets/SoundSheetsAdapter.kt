@@ -6,8 +6,6 @@ import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.subjects.PublishSubject
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 open class SoundSheetsAdapter : BaseAdapter<SoundSheet, SoundSheetViewHolder>() {

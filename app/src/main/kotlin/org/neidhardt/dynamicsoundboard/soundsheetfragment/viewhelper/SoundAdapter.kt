@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist
+package org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,10 +7,8 @@ import com.jakewharton.rxbinding2.widget.RxSeekBar
 import io.reactivex.subjects.PublishSubject
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
-import org.neidhardt.dynamicsoundboard.manager.SoundManager
+import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.utils.longHash
 
 /**
@@ -18,13 +16,8 @@ import org.neidhardt.utils.longHash
  */
 data class SoundViewHolderEvent<out T>(val viewHolder: SoundViewHolder, val data: T)
 
-class SoundAdapter (
-		private val soundSheet: SoundSheet,
-		private val soundManager: SoundManager,
-		private val playlistManager: PlaylistManager
-) :
-		BaseAdapter<MediaPlayerController, SoundViewHolder>()
-{
+class SoundAdapter : BaseAdapter<MediaPlayerController, SoundViewHolder>() {
+
 	init { this.setHasStableIds(true) }
 
 	val startsReorder: PublishSubject<SoundViewHolder> = PublishSubject.create()
@@ -42,9 +35,7 @@ class SoundAdapter (
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundViewHolder {
 		val itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_sound_control_item, parent, false)
-		val viewHolder = SoundViewHolder(
-				itemView = itemView,
-				playlistManager = this.playlistManager)
+		val viewHolder = SoundViewHolder(itemView)
 
 		val parentIsDetached = RxView.detaches(parent)
 
@@ -98,17 +89,18 @@ class SoundAdapter (
 	}
 
 	override fun onBindViewHolder(holder: SoundViewHolder, position: Int) {
-		holder.bindData(this.values[position])
+		val playerData = this.values[position]
+		val isPlayerInPlaylist = this.currentPlaylist.containsPlayerWithId(
+				playerData.mediaPlayerData.playerId
+		)
+		holder.bindData(playerData, isPlayerInPlaylist)
 	}
 
-	override val values: List<MediaPlayerController> get() {
-		val players = this.soundManager.sounds.getOrElse(this.soundSheet, { emptyList() } )
-		return players
-	}
+	var currentPlaylist: List<MediaPlayerController> = ArrayList()
+
+	override var values: List<MediaPlayerController> = ArrayList()
 
 	override fun getItemCount(): Int = this.values.size
 
-	override fun getItemId(position: Int): Long {
-		return this.values[position].mediaPlayerData.playerId.longHash
-	}
+	override fun getItemId(position: Int): Long = this.values[position].mediaPlayerData.playerId.longHash
 }

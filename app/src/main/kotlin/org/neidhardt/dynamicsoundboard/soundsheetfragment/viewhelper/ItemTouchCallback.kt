@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist
+package org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper
 
 import android.content.Context
 import android.graphics.BitmapFactory

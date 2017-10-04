@@ -6,18 +6,19 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
-import com.trello.navi2.Event
-import com.trello.navi2.rx.RxNavi
-import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.fragment_soundsheet.*
+import kotlinx.android.synthetic.main.fragment_soundsheet.view.*
 import kotlinx.android.synthetic.main.layout_fab.*
-import org.neidhardt.android_utils.RxEnhancedSupportFragment
+import kotlinx.android.synthetic.main.layout_fab.view.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -28,12 +29,13 @@ import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirect
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.SoundSettingsDialog
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.mediaplayer.events.*
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist.ItemTouchCallback
-import org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist.PendingDeletionHandler
-import org.neidhardt.dynamicsoundboard.soundsheetfragment.soundlist.SoundAdapter
+import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.ItemTouchCallback
+import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.PendingDeletionHandler
+import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.SoundAdapter
 import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
@@ -41,7 +43,10 @@ import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 /**
  * Created by eric.neidhardt@gmail.com on 08.05.2017.
  */
-class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
+class SoundSheetFragment : BaseFragment(),
+		SoundSheetFragmentContract.View,
+		MediaPlayerEventListener,
+		MediaPlayerFailedEventListener {
 
 	companion object {
 		internal val KEY_FRAGMENT_TAG = "SoundSheetFragment.KEY_FRAGMENT_TAG"
@@ -65,82 +70,68 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
 
-	private val soundAdapter by lazy {
-		SoundAdapter(
-				soundSheet = this.soundSheet,
-				soundManager = this.soundManager,
-				playlistManager = this.playlistManager
-		)
-	}
+	private val adapterSounds = SoundAdapter()
+
 	private val deletionHandler by lazy {
 		PendingDeletionHandler(
 				soundSheet = this.soundSheet,
-				adapter = this.soundAdapter,
+				adapter = this.adapterSounds,
 				manager = this.soundManager,
 				onItemDeletionRequested = { _, _ ->
-					this.soundSheetPresenter.onUserDeletesSound()
+					this.presenter.onUserDeletesSound()
 				}
 		)
 	}
-	private val soundSheetPresenter: SoundSheetContract.Presenter = SoundSheetPresenter(
-			soundSheetView = this,
-			lifecycleProvider = this.fragmentLifeCycle
-	)
 
-	private var snackbar: Snackbar? = null
+	private lateinit var presenter: SoundSheetFragmentContract.Presenter
+	private lateinit var model: SoundSheetFragmentContract.Model
 
-	init {
-		RxNavi.observe(this, Event.CREATE).subscribe {
-			this.retainInstance = true
-			this.setHasOptionsMenu(true)
-			this.fragmentTag = this.arguments.getString(KEY_FRAGMENT_TAG)
-					?: throw NullPointerException(fragmentTag
-					+ ": cannot create fragment, given fragmentTag is null")
+	private lateinit var recyclerView: RecyclerView
+	private lateinit var snackbar: Snackbar
+
+	override var displayedSounds: List<MediaPlayerController>
+		get() = this.adapterSounds.values
+		set(value) {
+			this.adapterSounds.values = value
+			this.adapterSounds.notifyDataSetChanged()
 		}
-		RxNavi.observe(this, Event.VIEW_CREATED).subscribe {
-			this.configureUi()
+
+	override var currentPlaylist: List<MediaPlayerController>
+		get() = this.adapterSounds.currentPlaylist
+		set(value) {
+			this.adapterSounds.currentPlaylist = value
+			this.adapterSounds.notifyDataSetChanged()
 		}
-		RxNavi.observe(this, Event.RESUME).subscribe {
-			this.soundSheetPresenter.onViewResumed()
-			this.bindSoundActions()
-			this.bindSoundSettingsActions()
-			this.bindFloatingActionButton()
-		}
-		RxNavi.observe(this, Event.PAUSE).subscribe {
-			this.soundSheetPresenter.onViewPaused()
-		}
-		RxEnhancedSupportFragment.restoresState(this)
-				.bindToLifecycle(this.fragmentLifeCycle)
-				.subscribe { state ->
-					this.rv_fragment_sound_sheet_sounds?.layoutManager?.let { layoutManager ->
-						state.putParcelable(KEY_STATE_RECYCLER_VIEW, layoutManager.onSaveInstanceState())
-					}
-				}
-		RxEnhancedSupportFragment.savesState(this)
-				.bindToLifecycle(this.fragmentLifeCycle)
-				.subscribe { state ->
-					this.rv_fragment_sound_sheet_sounds?.layoutManager?.onRestoreInstanceState(
-							state.getParcelable(KEY_STATE_RECYCLER_VIEW))
-				}
-		RxNavi.observe(this, Event.ACTIVITY_RESULT).subscribe { result ->
-			val resultCode = result.resultCode()
-			val requestCode = result.requestCode()
-			val data = result.data()
-			if (resultCode == Activity.RESULT_OK) {
-				if (requestCode == IntentRequest.GET_AUDIO_FILE) {
-					val soundUri = data!!.data
-					val soundLabel = FileUtils.stripFileTypeFromName(
-							FileUtils.getFileNameFromUri(this.activity, soundUri))
-					this.soundSheetPresenter.onUserAddsNewPlayer(
-							soundUri, soundLabel, this.soundSheet)
-				}
-			}
-		}
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		this.retainInstance = true
+		this.setHasOptionsMenu(true)
+
+		this.fragmentTag = this.arguments.getString(KEY_FRAGMENT_TAG)
+				?: throw NullPointerException(fragmentTag + ": cannot create fragment, given fragmentTag is null")
+
+		this.model = SoundSheetFragmentModel(
+				this.soundSheet,
+				this.soundManager,
+				this.playlistManager
+		)
+
+		this.presenter = SoundSheetFragmentPresenter(
+				this,
+				this.model
+		)
 	}
 
-	private fun configureUi() {
-		this.rv_fragment_sound_sheet_sounds.apply {
-			this.adapter = soundAdapter
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		super.onCreateView(inflater, container, savedInstanceState)
+		if (container == null) return null
+
+		val view = inflater.inflate(R.layout.fragment_soundsheet, container, false)
+
+		this.recyclerView = view.rv_fragment_sound_sheet_sounds.apply {
+			this.adapter = adapterSounds
 			this.layoutManager = LinearLayoutManager(this.context.applicationContext)
 			this.itemAnimator = DefaultItemAnimator()
 			this.addItemDecoration(DividerItemDecoration(
@@ -148,61 +139,67 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 		}
 		val itemTouchHelper = ItemTouchHelper(
 				ItemTouchCallback(
-						context = this.rv_fragment_sound_sheet_sounds.context,
+						context = this.recyclerView.context,
 						oneSwipeToDelete = this.preferences.isOneSwipeToDeleteEnabled,
-						deletionHandler = deletionHandler,
-						adapter = this.soundAdapter,
-						soundSheet = soundSheet,
+						deletionHandler = this.deletionHandler,
+						adapter = this.adapterSounds,
+						soundSheet = this.soundSheet,
 						soundManager = this.soundManager
 				)
 		)
-		itemTouchHelper.attachToRecyclerView(this.rv_fragment_sound_sheet_sounds)
+		itemTouchHelper.attachToRecyclerView(this.recyclerView)
 
-		this.soundAdapter.startsReorder
-				.bindToLifecycle(this.fragmentLifeCycle)
+		val recyclerViewDetaches = RxView.detaches(this.recyclerView)
+		this.adapterSounds.startsReorder
+				.takeUntil(recyclerViewDetaches)
 				.subscribe { viewHolder -> itemTouchHelper.startDrag(viewHolder) }
 
-		this.soundAdapter.startsSwipe
-				.bindToLifecycle(this.fragmentLifeCycle)
+		this.adapterSounds.startsSwipe
+				.takeUntil(recyclerViewDetaches)
 				.subscribe { viewHolder -> itemTouchHelper.startSwipe(viewHolder) }
-	}
 
-	private fun bindFloatingActionButton() {
-		val fab = this.fb_layout_fab ?: return
-		RxView.clicks(fab)
-				.bindToLifecycle(this.fragmentLifeCycle)
-				.subscribe {
-					this.soundSheetPresenter.onUserClicksFab()
+		this.adapterSounds.clicksSettings
+				.takeUntil(recyclerViewDetaches)
+				.subscribe { viewHolder ->
+					viewHolder.player?.let { player ->
+						SoundSettingsDialog.showInstance(
+								this.fragmentManager, player.mediaPlayerData)
+					}
 				}
-	}
 
-	private fun bindSoundActions() {
-		this.soundAdapter.clicksPlay
-				.bindToLifecycle(this.fragmentLifeCycle)
+		this.adapterSounds.clicksName
+				.takeUntil(recyclerViewDetaches)
+				.subscribe { viewHolder ->
+					viewHolder.player?.let { player ->
+						GenericRenameDialogs.showRenameSoundDialog(
+								this.fragmentManager, playerData = player.mediaPlayerData)
+					}
+				}
+
+		this.adapterSounds.clicksPlay
+				.takeUntil(recyclerViewDetaches)
 				.subscribe { viewHolder ->
 					viewHolder.name.clearFocus()
 					viewHolder.player?.let { player ->
-						if (player.isFadingOut) {
-							viewHolder.playButton.state = PlayButton.State.PLAY
+						when {
+							player.isFadingOut -> viewHolder.playButton.state = PlayButton.State.PLAY
+							player.isPlayingSound -> viewHolder.playButton.state = PlayButton.State.FADE
+							else -> viewHolder.playButton.state = PlayButton.State.PAUSE
 						}
-						else if (player.isPlayingSound) {
-							viewHolder.playButton.state = PlayButton.State.FADE
-						}
-						else {
-							viewHolder.playButton.state = PlayButton.State.PAUSE
-						}
-						this.soundSheetPresenter.onUserClicksPlay(player)
+						this.presenter.onUserClicksPlay(player)
 					}
 				}
-		this.soundAdapter.clicksStop
-				.bindToLifecycle(this.fragmentLifeCycle)
+
+		this.adapterSounds.clicksStop
+				.takeUntil(recyclerViewDetaches)
 				.subscribe { viewHolder ->
 					viewHolder.player?.let { player ->
-						this.soundSheetPresenter.onUserClicksStop(player)
+						this.presenter.onUserClicksStop(player)
 					}
 				}
-		this.soundAdapter.clicksTogglePlaylist
-				.bindToLifecycle(this.fragmentLifeCycle)
+
+		this.adapterSounds.clicksTogglePlaylist
+				.takeUntil(recyclerViewDetaches)
 				.subscribe { viewHolder ->
 					val addToPlaylist = viewHolder
 							.inPlaylistButton.state == TogglePlaylistButton.State.NOT_IN_PLAYLIST
@@ -212,11 +209,12 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 						TogglePlaylistButton.State.NOT_IN_PLAYLIST
 
 					viewHolder.player?.let { player ->
-						this.soundSheetPresenter.onUserTogglePlaylist(player)
+						this.presenter.onUserTogglePlaylist(player)
 					}
 				}
-		this.soundAdapter.clicksLoopEnabled
-				.bindToLifecycle(this.fragmentLifeCycle)
+
+		this.adapterSounds.clicksLoopEnabled
+				.takeUntil(recyclerViewDetaches)
 				.subscribe { viewHolder ->
 					val enable = viewHolder
 							.isLoopEnabledButton.state == ToggleLoopButton.State.LOOP_DISABLE
@@ -227,60 +225,78 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 						ToggleLoopButton.State.LOOP_DISABLE
 
 					viewHolder.player?.let { player ->
-						this.soundSheetPresenter.onUserTogglePlayerLooping(player)
+						this.presenter.onUserTogglePlayerLooping(player)
 					}
 				}
-		this.soundAdapter.seeksToPosition
-				.bindToLifecycle(this.fragmentLifeCycle)
+
+		this.adapterSounds.seeksToPosition
+				.takeUntil(recyclerViewDetaches)
 				.subscribe { (viewHolder, data) ->
 					viewHolder.player?.let { player ->
-						this.soundSheetPresenter.onUserSeeksToPlaybackPosition(player, data)
+						this.presenter.onUserSeeksToPlaybackPosition(player, data)
 					}
 				}
+
+		val fab = view.fb_layout_fab
+		if (fab != null) {
+			RxView.clicks(fab)
+					.takeUntil(RxView.detaches(this.recyclerView))
+					.subscribe {
+						this.presenter.onUserClicksFab()
+					}
+		}
+
+		return view
 	}
 
-	private fun bindSoundSettingsActions() {
-		this.soundAdapter.clicksSettings
-				.bindToLifecycle(this.fragmentLifeCycle)
-				.subscribe { viewHolder ->
-					viewHolder.player?.let { player ->
-						SoundSettingsDialog.showInstance(
-								this.fragmentManager, player.mediaPlayerData)
-					}
-				}
-		this.soundAdapter.clicksName
-				.bindToLifecycle(this.fragmentLifeCycle)
-				.subscribe { viewHolder ->
-					viewHolder.player?.let { player ->
-						GenericRenameDialogs.showRenameSoundDialog(
-								this.fragmentManager, playerData = player.mediaPlayerData)
-					}
-				}
+	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		this.presenter.viewCreated()
+	}
+
+	override fun onRestoreState(savedInstanceState: Bundle) {
+		super.onRestoreState(savedInstanceState)
+		this.rv_fragment_sound_sheet_sounds?.layoutManager?.let { layoutManager ->
+			savedInstanceState.putParcelable(
+					KEY_STATE_RECYCLER_VIEW,
+					layoutManager.onSaveInstanceState()
+			)
+		}
+	}
+
+	override fun onSaveState(outState: Bundle) {
+		super.onSaveState(outState)
+		this.rv_fragment_sound_sheet_sounds?.layoutManager?.onRestoreInstanceState(
+				outState.getParcelable(KEY_STATE_RECYCLER_VIEW)
+		)
+	}
+
+	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+		super.onActivityResult(requestCode, resultCode, data)
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == IntentRequest.GET_AUDIO_FILE) {
+				val soundUri = data!!.data
+				val soundLabel = FileUtils.stripFileTypeFromName(
+						FileUtils.getFileNameFromUri(this.activity, soundUri))
+				this.presenter.onUserAddsNewPlayer(
+						soundUri, soundLabel, this.soundSheet)
+			}
+		}
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		super.onOptionsItemSelected(item)
-		when (item.itemId) {
+		return when (item.itemId) {
 			R.id.action_clear_sounds_in_sheet -> {
 				GenericConfirmDialogs.showConfirmDeleteSoundsDialog(this.fragmentManager, this.soundSheet)
-				return true
+				true
 			}
 			R.id.action_delete_sheet -> {
 				GenericConfirmDialogs.showConfirmDeleteSoundSheetDialog(this.fragmentManager, this.soundSheet)
-				return true
+				true
 			}
-			else -> return false
+			else -> false
 		}
-	}
-
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		super.onCreateView(inflater, container, savedInstanceState)
-		if (container == null) return null
-		return inflater.inflate(R.layout.fragment_soundsheet, container, false)
-	}
-
-	override fun showSounds() {
-		this.soundAdapter.notifyDataSetChanged()
 	}
 
 	override fun showAddButton() {
@@ -288,7 +304,7 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 	}
 
 	override fun updateSound(player: MediaPlayerController) {
-		this.soundAdapter.notifyItemChanged(player)
+		this.adapterSounds.notifyItemChanged(player)
 	}
 
 	override fun openDialogForNewSound() {
@@ -306,10 +322,10 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 		val message = "${resources.getString(R.string.sound_control_error_during_playback)}: " +
 				player.mediaPlayerData.label
 
-		this.snackbar?.dismiss()
+		this.snackbar.dismiss()
 		this.snackbar = Snackbar.make(
 				this.cl_fragment_sound_sheet, message, Snackbar.LENGTH_INDEFINITE)
-		this.snackbar?.show()
+		this.snackbar.show()
 	}
 
 	override fun showSnackbarForRestoreSound() {
@@ -323,7 +339,7 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 			resources.getString(R.string.sound_control_deletion_pending).replace("{%s0}",
 					count.toString())
 
-		this.snackbar?.dismiss()
+		this.snackbar.dismiss()
 		this.snackbar = Snackbar.make(
 				this.cl_fragment_sound_sheet, message, timeTillDeletion).apply {
 			this.setAction(
@@ -331,6 +347,18 @@ class SoundSheetFragment : BaseFragment(), SoundSheetContract.View {
 					{ deletionHandler.restoreDeletedItems() }
 			)
 		}
-		this.snackbar?.show()
+		this.snackbar.show()
 	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: MediaPlayerStateChangedEvent) {
+		this.presenter.onMediaPlayerStateChanges(event.player, event.isAlive)
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	override fun onEvent(event: MediaPlayerFailedEvent) {
+		this.presenter.onMediaPlayerFailed(event.player)
+	}
+
+	override fun onEvent(event: MediaPlayerCompletedEvent) {}
 }
