@@ -27,7 +27,7 @@ ext.libraries = [
 
 		exoplayer            : "com.google.android.exoplayer:exoplayer:r2.0.3",
 
-		gson                 : "com.google.code.gson:gson:2.8.0",
+		gson                 : "com.google.code.gson:gson:2.8.2",
 
 		recyclerViewAnimator : "jp.wasabeef:recyclerview-animators:2.2.6",
 
