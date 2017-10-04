@@ -53,7 +53,7 @@
     <item name='android.support.v4.util.AtomicFile AtomicFile(java.io.File) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='android.support.v4.util.LruCache V get(K) 0'>
+    <item name='android.support.v4.util.LruCache V getAsync(K) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='android.support.v4.util.LruCache V put(K, V) 1'>

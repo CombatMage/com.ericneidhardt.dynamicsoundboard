@@ -26,7 +26,7 @@
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='com.fasterxml.jackson.databind.ser.BeanPropertyWriter com.fasterxml.jackson.databind.ser.BeanPropertyWriter rename(com.fasterxml.jackson.databind.util.NameTransformer)'>
+    <item name='com.fasterxml.jackson.databind.ser.BeanPropertyWriter com.fasterxml.jackson.databind.ser.BeanPropertyWriter renameFileAndPlayer(com.fasterxml.jackson.databind.util.NameTransformer)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.ser.BasicSerializerFactory com.fasterxml.jackson.databind.ser.ContainerSerializer&lt;?&gt; buildIndexedListSerializer(com.fasterxml.jackson.databind.JavaType, boolean, com.fasterxml.jackson.databind.jsontype.TypeSerializer, com.fasterxml.jackson.databind.JsonSerializer&lt;java.lang.Object&gt;)'>
@@ -308,7 +308,7 @@
     <item name='com.fasterxml.jackson.databind.ser.PropertyBuilder com.fasterxml.jackson.databind.ser.BeanPropertyWriter buildWriter(com.fasterxml.jackson.databind.SerializerProvider, com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition, com.fasterxml.jackson.databind.JavaType, com.fasterxml.jackson.databind.JsonSerializer&lt;?&gt;, com.fasterxml.jackson.databind.jsontype.TypeSerializer, com.fasterxml.jackson.databind.jsontype.TypeSerializer, com.fasterxml.jackson.databind.introspect.AnnotatedMember, boolean) 2'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='com.fasterxml.jackson.databind.ser.BeanPropertyWriter com.fasterxml.jackson.databind.ser.BeanPropertyWriter rename(com.fasterxml.jackson.databind.util.NameTransformer) 0'>
+    <item name='com.fasterxml.jackson.databind.ser.BeanPropertyWriter com.fasterxml.jackson.databind.ser.BeanPropertyWriter renameFileAndPlayer(com.fasterxml.jackson.databind.util.NameTransformer) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='com.fasterxml.jackson.databind.ser.SerializerFactory com.fasterxml.jackson.databind.ser.SerializerFactory withSerializerModifier(com.fasterxml.jackson.databind.ser.BeanSerializerModifier) 0'>

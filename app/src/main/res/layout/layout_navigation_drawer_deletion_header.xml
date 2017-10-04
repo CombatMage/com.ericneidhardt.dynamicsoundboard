@@ -1,73 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools">
 
-	<data>
-		<import type="android.view.View"/>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/height_list_item"
+	android:background="@color/primary_500">
 
-		<variable
-				name="viewModel"
-				type="org.neidhardt.dynamicsoundboard.navigationdrawer.viewmodel.NavigationDrawerDeletionViewVM"/>
-		
-	</data>
-	
-	<LinearLayout
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/primary_500">
+
+		<ImageButton
+			android:id="@+id/b_layout_navigation_drawer_deletion_header_cancel"
+			style="@style/Theme.ImageButton.Flat.Toolbar"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_alignParentEnd="true"
+			android:layout_centerVertical="true"
+			android:contentDescription="@string/deletiontoolbar_contentdescriptioncancel"
+			android:src="@drawable/ic_action_done"/>
+
+		<LinearLayout
+			android:id="@+id/ll_layout_navigation_drawer_deletion_header_title"
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_list_item"
-			android:background="@color/primary_500"
-			android:visibility="@{viewModel.enable ? View.VISIBLE : View.GONE}">
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_toStartOf="@id/b_layout_navigation_drawer_deletion_header_cancel"
+			android:background="?attr/selectableItemBackgroundBorderless"
+			android:gravity="center_vertical"
+			android:orientation="vertical"
+			android:paddingEnd="@dimen/margin_default"
+			android:paddingStart="@dimen/margin_default">
 
-		<RelativeLayout
+			<TextView
+				android:id="@+id/tv_layout_navigation_drawer_deletion_header_title"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:background="@color/primary_500">
+				android:layout_height="wrap_content"
+				android:textColor="@color/text_header"
+				android:textSize="@dimen/text_body"
+				tools:text="@string/deletiontoolbar_titledeletesoundsheets"/>
 
-			<ImageButton
-					android:id="@+id/b_layout_navigation_drawer_deletion_header_cancel"
-					android:layout_width="48dp"
-					android:layout_height="48dp"
-					android:layout_alignParentEnd="true"
-					android:layout_centerVertical="true"
-					android:contentDescription="@string/cab_content_description_cancel"
-					android:src="@drawable/ic_action_done"
-					android:onClick="@{view -> viewModel.onDoneClicked()}"
-					style="@style/Theme.ImageButton.Flat.Toolbar"/>
+			<TextView
+				android:id="@+id/tv_layout_navigation_drawer_deletion_header_sub_title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/text_header"
+				android:textSize="@dimen/text_body"
+				tools:text="2 / 20"/>
 
-			<LinearLayout
-					android:id="@+id/ll_layout_navigation_drawer_deletion_header_title"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_centerVertical="true"
-					android:gravity="center_vertical"
-					android:orientation="vertical"
-					android:paddingStart="@dimen/margin_default"
-					android:paddingEnd="@dimen/margin_default"
-					android:layout_toStartOf="@id/b_layout_navigation_drawer_deletion_header_cancel"
-					android:background="?attr/selectableItemBackgroundBorderless"
-					android:onClick="@{view -> viewModel.onSelectAllClicked()}">
+		</LinearLayout>
 
-				<TextView
-						android:id="@+id/tv_layout_navigation_drawer_deletion_header_title"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:textColor="@color/text_header"
-						android:textSize="@dimen/text_body"
-						android:text="@{viewModel.title}"
-						tools:text="@string/cab_title_delete_sound_sheets"/>
+	</RelativeLayout>
 
-				<TextView
-						android:id="@+id/tv_layout_navigation_drawer_deletion_header_sub_title"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:textColor="@color/text_header"
-						android:textSize="@dimen/text_body"
-						android:text="@{viewModel.subTitle}"
-						tools:text="2 / 20"/>
-
-			</LinearLayout>
-
-		</RelativeLayout>
-
-	</LinearLayout>
-</layout>
+</LinearLayout>

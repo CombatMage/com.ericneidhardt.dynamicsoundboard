@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			  xmlns:tools="http://schemas.android.com/tools"
-			  xmlns:app="http://schemas.android.com/apk/res-auto"
 			  android:orientation="vertical"
 			  android:layout_width="wrap_content"
 			  android:layout_height="wrap_content"
@@ -18,12 +17,12 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="@dimen/margin_default"
-				style="@style/Theme.EditText"/>
+				style="@style/style_all_edittext"/>
 
 		<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				style="@style/Theme.TextView.Body1"
+				style="@style/style_all_body1"
 				android:text="@string/dialog_add_new_sound_from_intent_message"/>
 
 		<android.support.design.widget.TextInputLayout
@@ -36,7 +35,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:hint="@string/suggested_sound_sheet_name"
-					style="@style/Theme.EditText"/>
+					style="@style/style_all_edittext"/>
 
 		</android.support.design.widget.TextInputLayout>
 	</LinearLayout>

@@ -137,7 +137,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.LazyJavaTypeResolverKt.toAttributes.1 kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations getTypeAnnotations()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjectionImpl get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjectionImpl getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.LazyJavaTypeResolver kotlin.reflect.jvm.internal.impl.types.KotlinType transformArrayType$default(kotlin.reflect.jvm.internal.impl.load.java.lazy.types.LazyJavaTypeResolver, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaArrayType, kotlin.reflect.jvm.internal.impl.load.java.lazy.types.JavaTypeAttributes, boolean, int, java.lang.Object) 1'>
@@ -161,7 +161,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.LazyJavaTypeResolverKt kotlin.reflect.jvm.internal.impl.load.java.lazy.types.JavaTypeAttributes toAttributes(kotlin.reflect.jvm.internal.impl.load.java.components.TypeUsage, boolean, boolean, kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.KotlinType)'>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.LazyJavaTypeResolverKt boolean isMarkedNotNull(kotlin.reflect.jvm.internal.impl.descriptors.annotations.Annotations) 0'>
@@ -200,7 +200,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.LazyJavaTypeResolver kotlin.reflect.jvm.internal.impl.types.KotlinType transformArrayType$default(kotlin.reflect.jvm.internal.impl.load.java.lazy.types.LazyJavaTypeResolver, kotlin.reflect.jvm.internal.impl.load.java.structure.JavaArrayType, kotlin.reflect.jvm.internal.impl.load.java.lazy.types.JavaTypeAttributes, boolean, int, java.lang.Object) 2'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection get(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjection computeProjection$default(kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution, kotlin.reflect.jvm.internal.impl.descriptors.TypeParameterDescriptor, kotlin.reflect.jvm.internal.impl.load.java.lazy.types.JavaTypeAttributes, kotlin.reflect.jvm.internal.impl.types.KotlinType, int, java.lang.Object) 3'>
@@ -212,7 +212,7 @@
     <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.LazyJavaTypeResolverKt kotlin.reflect.jvm.internal.impl.load.java.lazy.types.JavaTypeAttributes toFlexible(kotlin.reflect.jvm.internal.impl.load.java.lazy.types.JavaTypeAttributes, kotlin.reflect.jvm.internal.impl.load.java.lazy.types.JavaTypeFlexibility) 1'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjectionImpl get(kotlin.reflect.jvm.internal.impl.types.KotlinType)'>
+    <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.RawSubstitution kotlin.reflect.jvm.internal.impl.types.TypeProjectionImpl getAsync(kotlin.reflect.jvm.internal.impl.types.KotlinType)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.reflect.jvm.internal.impl.load.java.lazy.types.LazyJavaTypeResolver.FlexibleJavaClassifierTypeCapabilities java.lang.String getId()'>

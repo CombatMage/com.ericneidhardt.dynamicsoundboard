@@ -1490,7 +1490,7 @@
     <item name='kotlin.text.CharDirectionality RIGHT_TO_LEFT_OVERRIDE'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.text.MatcherMatchResult.groupValues.1 java.lang.Object get(int)'>
+    <item name='kotlin.text.MatcherMatchResult.groupValues.1 java.lang.Object getAsync(int)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.text.StringsKt C filterIndexedTo(java.lang.CharSequence, C, kotlin.jvm.functions.Function2&lt;? super java.lang.Integer,? super java.lang.Character,java.lang.Boolean&gt;) 1'>
@@ -1520,7 +1520,7 @@
     <item name='kotlin.text.CharCategory COMBINING_SPACING_MARK'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='kotlin.text.MatcherMatchResult.groupValues.1 java.lang.String get(int)'>
+    <item name='kotlin.text.MatcherMatchResult.groupValues.1 java.lang.String getAsync(int)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='kotlin.text.StringsKt java.lang.CharSequence dropLast(java.lang.CharSequence, int) 0'>

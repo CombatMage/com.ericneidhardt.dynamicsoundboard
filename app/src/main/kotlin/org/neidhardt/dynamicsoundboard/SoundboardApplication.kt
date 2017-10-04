@@ -2,14 +2,16 @@ package org.neidhardt.dynamicsoundboard
 
 import android.content.Context
 import android.support.multidex.MultiDexApplication
+import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
-import org.neidhardt.dynamicsoundboard.persistance.AppDataStorage
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
+import org.neidhardt.dynamicsoundboard.repositories.AppDataStorage
+import org.neidhardt.dynamicsoundboard.repositories.PreferenceRepository
 import org.neidhardt.value_holder.ValueHolder
 import java.util.*
-
 
 open class SoundboardApplication : MultiDexApplication() {
 
@@ -21,6 +23,8 @@ open class SoundboardApplication : MultiDexApplication() {
 		private val random = Random()
 
 		val storage by lazy { AppDataStorage(this.context) }
+		val preferenceRepository by lazy { PreferenceRepository(this.context) }
+
 		val soundSheetManager by lazy { SoundSheetManager(this.context) }
 		val soundManager by lazy { SoundManager(this.context) }
 		val playlistManager by lazy { PlaylistManager(this.context) }
@@ -40,5 +44,8 @@ open class SoundboardApplication : MultiDexApplication() {
 		staticContext = this.applicationContext
 
 		soundLayoutManager.initIfRequired(storage.get())
+
+		val eventBus = EventBus.getDefault()
+		eventBus.registerIfRequired(playlistManager)
 	}
 }

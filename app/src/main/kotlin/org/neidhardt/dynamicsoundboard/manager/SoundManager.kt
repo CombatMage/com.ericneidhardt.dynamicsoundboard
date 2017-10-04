@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import de.greenrobot.common.ListMap
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import org.greenrobot.eventbus.EventBus
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -11,13 +13,9 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.persistance.model.NewMediaPlayerData
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.utils.getCopyList
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.lang.kotlin.add
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -28,8 +26,8 @@ class SoundManager(private val context: Context) {
 	private val TAG = javaClass.name
 
 	companion object {
-		fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): NewMediaPlayerData {
-			val data = NewMediaPlayerData()
+		fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): MediaPlayerData {
+			val data = MediaPlayerData()
 			data.playerId = Integer.toString((uri.toString() + SoundboardApplication.randomNumber).hashCode())
 			data.fragmentTag = fragmentTag
 			data.label = label
@@ -41,16 +39,16 @@ class SoundManager(private val context: Context) {
 
 	private val eventBus = EventBus.getDefault()
 
-	internal var onSoundListChangedListener = ArrayList<((Map<NewSoundSheet, List<MediaPlayerController>>) -> Unit)>()
+	internal var onSoundListChangedListener = ArrayList<((Map<SoundSheet, List<MediaPlayerController>>) -> Unit)>()
 	internal var onSoundMovedListener = ArrayList<(MoveEvent) -> Unit>()
 
-	internal var mSoundSheets: MutableList<NewSoundSheet>? = null
-	internal var mMediaPlayers: MutableMap<NewSoundSheet, MutableList<MediaPlayerController>>? = null
+	internal var mSoundSheets: MutableList<SoundSheet>? = null
+	internal var mMediaPlayers: MutableMap<SoundSheet, MutableList<MediaPlayerController>>? = null
 
-	val sounds: Map<NewSoundSheet, List<MediaPlayerController>> get() =
-			this.mMediaPlayers as Map<NewSoundSheet, List<MediaPlayerController>>
+	val sounds: Map<SoundSheet, List<MediaPlayerController>> get() =
+			this.mMediaPlayers as Map<SoundSheet, List<MediaPlayerController>>
 
-	fun set(soundSheets: MutableList<NewSoundSheet>) {
+	fun set(soundSheets: MutableList<SoundSheet>) {
 		this.mMediaPlayers?.values?.forEach { it.forEach { it.destroy(false) } }
 		this.mSoundSheets = soundSheets
 		this.mMediaPlayers = ListMap()
@@ -76,12 +74,12 @@ class SoundManager(private val context: Context) {
 				})
 	}
 
-	fun add(soundSheet: NewSoundSheet, playerData: NewMediaPlayerData) {
+	fun add(soundSheet: SoundSheet, playerData: MediaPlayerData) {
 		this.createPlayerAndAddToSounds(soundSheet, playerData)
 		this.invokeListeners()
 	}
 
-	fun add(soundSheet: NewSoundSheet, playerData: List<NewMediaPlayerData>) {
+	fun add(soundSheet: SoundSheet, playerData: List<MediaPlayerData>) {
 		SoundboardApplication.taskCounter.value++
 		Observable.just(playerData)
 				.flatMapIterable { it }
@@ -104,7 +102,7 @@ class SoundManager(private val context: Context) {
 				})
 	}
 
-	fun remove(soundSheet: NewSoundSheet, playerList: List<MediaPlayerController>) {
+	fun remove(soundSheet: SoundSheet, playerList: List<MediaPlayerController>) {
 		playerList.forEach { player ->
 			player.destroy(false)
 			soundSheet.mediaPlayers?.remove(player.mediaPlayerData)
@@ -114,19 +112,19 @@ class SoundManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	fun move(soundSheet: NewSoundSheet, from: Int, to: Int) {
+	fun move(soundSheet: SoundSheet, from: Int, to: Int) {
 		val players = soundSheet.mediaPlayers ?: return
 
 		val size = players.size
 		var indexFrom = from
 		var indexTo = to
 
-		if (indexFrom > size)
+		if (indexFrom >= size)
 			indexFrom = size - 1
 		else if (indexFrom < 0)
 			indexFrom = 0
 
-		if (indexTo > size)
+		if (indexTo >= size)
 			indexTo = size - 1
 		else if (indexTo < 0)
 			indexTo = 0
@@ -148,7 +146,7 @@ class SoundManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	private fun createPlayerAndAddToSounds(soundSheet: NewSoundSheet, playerData: NewMediaPlayerData) {
+	private fun createPlayerAndAddToSounds(soundSheet: SoundSheet, playerData: MediaPlayerData) {
 		val soundsForSoundSheet = this.mMediaPlayers?.getOrPut(soundSheet, { ArrayList() })
 				?: throw IllegalStateException("sound manager is not init")
 
@@ -179,14 +177,14 @@ class SoundManager(private val context: Context) {
 }
 
 object RxSoundManager {
-	fun changesSoundList(manager: SoundManager): Observable<Map<NewSoundSheet, List<MediaPlayerController>>> {
+	fun changesSoundList(manager: SoundManager): Observable<Map<SoundSheet, List<MediaPlayerController>>> {
 		return Observable.create { subscriber ->
-			val listener: (Map<NewSoundSheet, List<MediaPlayerController>>) -> Unit = {
+			val listener: (Map<SoundSheet, List<MediaPlayerController>>) -> Unit = {
 				subscriber.onNext(manager.sounds)
 			}
-			subscriber.add {
-				manager.onSoundListChangedListener.remove(listener)
-			}
+			//subscriber.add(Subscriptions.create {
+			//	manager.onSoundListChangedListener.remove(listener)
+			//})
 			manager.mMediaPlayers?.let { subscriber.onNext(it) }
 			manager.onSoundListChangedListener.add(listener)
 		}
@@ -203,7 +201,7 @@ fun List<MediaPlayerController>.containsPlayerWithId(playerId: String): Boolean 
 	return this.findById(playerId) != null
 }
 
-fun Map<NewSoundSheet, List<MediaPlayerController>>.findById(playerId: String): MediaPlayerController? {
+fun Map<SoundSheet, List<MediaPlayerController>>.findById(playerId: String): MediaPlayerController? {
 	this.entries.forEach { entry ->
 		val player = entry.value.findById(playerId)
 		if (player != null)

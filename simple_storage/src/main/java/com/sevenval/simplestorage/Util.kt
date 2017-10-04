@@ -7,7 +7,7 @@ package com.sevenval.simplestorage
 /**
  * Calls the specified function [block] with `this` value as its argument and returns `this`
  */
-inline fun <T, R> T.letThis(block: (T) -> R): T {
+internal inline fun <T, R> T.letThis(block: (T) -> R): T {
 	block(this)
 	return this
 }

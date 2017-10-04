@@ -12,11 +12,13 @@
 	<string name="all_delete">Löschen</string>
 	<string name="all_CurrentNameIs">Aktueller Name: {STR}</string>
 	<string name="all_ErrorNameMustNotBeEmpty">Der Name darf nicht leer sein</string>
+	<string name="all_NewFileName">Neuer Dateiname</string>
 
 	<!-- SoundActivity -->
 	<string name="soundactivity_ToastCloseAppOnBackPress">Zum Beenden erneut drücken</string>
 
 	<!-- GenericRenameDialog -->
+	<string name="genericrename_SoundTitle">Name der Sounddatei?</string>
 	<string name="genericrename_SoundSheetTitle">Name der Soundliste?</string>
 	<string name="genericrename_SoundLayoutTitle">Abenteuer umbenennen</string>
 
@@ -38,10 +40,13 @@
 	<string name="genericconfirm_DeleteSoundSheetMessage">Soll diese Soundgruppe entfernt werden?</string>
 
 	<!-- permissions -->
-	<string name="request_permission_title">Berechtigung erforderlich</string>
-	<string name="request_permission_read_phone_state_message">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
-	<string name="request_permission_read_storage_message">Die Berechtigung vom Dateisystem zu lesen ist erforderlich um Sounddateien zum Abspielen zu laden. Die App wird ohne diese Berechtigung beendet.</string>
-	<string name="request_permission_write_storage_message">Die Berechtigung auf das Dateisystem zu schreiben wird unter anderem benötigt um die Sound Zusammenstellung abzuspeichern. Die App wird ohne diese Berechtigung beendet.</string>
+	<string name="dialogexplainpermissions_title">Berechtigung erforderlich</string>
+	<string name="dialogexplainpermissions_message">Um alle Features der App nutzen zu können, sind ein paar Berechtigungen erforderlich.</string>
+	<string name="dialogexplainpermissions_explainreadphonestate">Die Berrechtigung den Telefonstatus auszulesen ist erforderlich um laufende Sounds im Falle eines eingehenden Anrufes zu pausieren. Ohne diese Berrechtigung wird auch während eines Anrufes, dass Spielen der Sounds fortgesetzt.</string>
+	<string name="dialogexplainpermissions_explainstorage">Die Berechtigung für den Zugriff auf das Dateisystem ist erforderlich um Sounddateien zum Abspielen zu laden. Die App kann ohne diese Berechtigung nicht funktionieren.</string>
+
+	<!-- AppClosingInfoDialog -->
+	<string name="dialogappclosing_message">Ohne die erforderliche Berechtigung wird die App jetzt beendet.</string>
 
 	<!-- soundmanagement -->
 	<string name="music_service_loading_sound_failed">Eine Sound konnte nicht geladen werden:</string>
@@ -55,6 +60,11 @@
 	<string name="navigation_drawer_add">Hinzufügen</string>
 	<string name="navigation_drawer_delete">Löschen</string>
 	<string name="navigation_drawer_delete_selected">Alle markierten löschen</string>
+
+	<string name="deletiontoolbar_contentdescriptioncancel">Beendet den Löschvorgang. Es werden keine Elemente gelöscht</string>
+	<string name="deletiontoolbar_titledeletesoundsheets">Kategorien zum löschen markieren</string>
+	<string name="deletiontoolbar_titledeleteplaylistsounds">Sounds zum löschen markieren</string>
+	<string name="deletiontoolbar_titledeletesoundlayouts">Soundlayouts zum löschen markieren</string>
 
 	<string name="tab_sound_sheets">Gruppen</string>
 	<string name="tab_sound_sheets_content_description_selected">Aktuell geöffnete Sound Kategorie</string>
@@ -77,11 +87,6 @@
 	<string name="action_load_sound_sheets">Soundlayout importieren</string>
 	<string name="action_preferences">Einstellungen</string>
 	<string name="action_about">Über</string>
-
-	<string name="cab_content_description_cancel">Beendet den Löschvorgang. Es werden keine Elemente gelöscht</string>
-	<string name="cab_title_delete_sound_sheets">Kategorien zum löschen markieren</string>
-	<string name="cab_title_delete_play_list_sounds">Sounds zum löschen markieren</string>
-	<string name="cab_title_delete_sound_layouts">Soundlayouts zum löschen markieren</string>
 
 	<!-- sound control -->
 	<string name="sound_control_deletion_pending_single">Sound gelöscht</string>

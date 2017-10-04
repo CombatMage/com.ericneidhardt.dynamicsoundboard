@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="style_all_subheader" parent="TextAppearance.AppCompat.Subhead">
+	</style>
+</resources>

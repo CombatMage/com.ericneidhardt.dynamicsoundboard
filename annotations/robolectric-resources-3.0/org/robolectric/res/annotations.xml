@@ -170,7 +170,7 @@
     <item name='org.robolectric.res.OpaqueFileLoader void processResourceXml(org.robolectric.res.FsFile, org.robolectric.res.XpathResourceXmlLoader.XmlNode, org.robolectric.res.XmlLoader.XmlContext) 2'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='org.robolectric.res.ResBunch org.robolectric.res.TypedResource get(org.robolectric.res.ResName, java.lang.String) 0'>
+    <item name='org.robolectric.res.ResBunch org.robolectric.res.TypedResource getAsync(org.robolectric.res.ResName, java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='org.robolectric.res.Attribute value'>

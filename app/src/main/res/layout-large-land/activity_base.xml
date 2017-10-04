@@ -1,57 +1,52 @@
-<layout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools"
-		>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fitsSystemWindows="true">
 
-	<android.support.design.widget.CoordinatorLayout
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+		<android.support.design.widget.AppBarLayout
+			android:id="@+id/appbarlayout_main"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:fitsSystemWindows="true">
+			android:layout_height="wrap_content">
 
-		<LinearLayout
+			<include
+				android:id="@+id/toolbar_soundactivity"
+				layout="@layout/layout_toolbar"/>
+
+		</android.support.design.widget.AppBarLayout>
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<fragment
+				android:id="@+id/navigation_drawer_fragment"
+				android:name="org.neidhardt.dynamicsoundboard.navigationdrawerfragment.NavigationDrawerFragment"
+				android:layout_width="@dimen/width_navigation_drawer_landscape"
+				android:layout_height="match_parent"
+				tools:layout="@layout/fragment_navigation_drawer"/>
+
+			<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:orientation="vertical">
-
-			<android.support.design.widget.AppBarLayout
-					android:id="@+id/abl_main"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
-
-				<include
-						android:id="@+id/layout_toolbar"
-						layout="@layout/layout_toolbar"/>
-
-			</android.support.design.widget.AppBarLayout>
-
-			<RelativeLayout
-					android:layout_width="match_parent"
-					android:layout_height="match_parent">
-
-				<fragment
-						android:id="@+id/navigation_drawer_fragment"
-						android:name="org.neidhardt.dynamicsoundboard.navigationdrawer.NavigationDrawerFragment"
-						android:layout_width="@dimen/width_navigation_drawer_landscape"
-						android:layout_height="match_parent"
-						tools:layout="@layout/fragment_navigation_drawer"/>
+				android:layout_toEndOf="@id/navigation_drawer_fragment">
 
 				<FrameLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:layout_toEndOf="@id/navigation_drawer_fragment">
+					android:id="@+id/main_frame"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/background"/>
 
-					<FrameLayout
-							android:id="@+id/main_frame"
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:background="@color/background"/>
+				<include layout="@layout/layout_progressbar"/>
 
-					<include layout="@layout/layout_progressbar"/>
+			</FrameLayout>
 
-				</FrameLayout>
-
-			</RelativeLayout>
-		</LinearLayout>
-
-	</android.support.design.widget.CoordinatorLayout>
-</layout>
+		</RelativeLayout>
+	</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

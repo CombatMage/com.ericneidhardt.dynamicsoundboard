@@ -4,7 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import com.github.clans.fab.FloatingActionButton
-import org.greenrobot.eventbus.EventBus
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.animations.AnimationUtils
@@ -15,21 +16,15 @@ import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import rx.android.schedulers.AndroidSchedulers
-import rx.subscriptions.CompositeSubscription
 
 /**
  * File created by Eric Neidhardt on 12.11.2014.
  */
 private val PAUSE_STATE = intArrayOf(R.attr.state_pause)
 
-class FabClickedEvent
-
 class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventListener {
 
-	private val eventBus = EventBus.getDefault()
-
-	private var subscriptions = CompositeSubscription()
+	private var subscriptions = CompositeDisposable()
 	private var manager: SoundLayoutManager? = null
 	private var presenter: AddPauseFloatingActionButtonPresenter? = null
 
@@ -51,13 +46,12 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 
 	override fun onFinishInflate() {
 		super.onFinishInflate()
-		this.setOnClickListener { this.eventBus.post(FabClickedEvent()) }
 		this.presenter?.init(this)
 	}
 
 	override fun onAttachedToWindow() {
 		super.onAttachedToWindow()
-		this.subscriptions = CompositeSubscription()
+		this.subscriptions = CompositeDisposable()
 
 		this.presenter?.start()
 		this.setPresenterState()
@@ -69,7 +63,7 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 
 	override fun onDetachedFromWindow() {
 		this.presenter?.stop()
-		this.subscriptions.unsubscribe()
+		this.subscriptions.dispose()
 		super.onDetachedFromWindow()
 	}
 
@@ -108,10 +102,6 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 					AddPauseFloatingAction.State.PLAY
 				else
 					AddPauseFloatingAction.State.ADD
-	}
-
-	interface FabEventListener {
-		fun onFabClickedEvent(event: FabClickedEvent)
 	}
 }
 

@@ -3,14 +3,14 @@ package org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import com.jakewharton.rxbinding2.view.RxView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySorted
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySortedAsync
 import org.neidhardt.utils.Tuple
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import java.io.File
 
 /**
@@ -41,7 +41,6 @@ abstract class FileExplorerDialog : BaseDialog() {
 		}
 
 		this.adapter.clicksFileEntry
-				.bindToLifecycle(this)
 				.filter(File::isDirectory)
 				.doOnNext { dir ->
 					this.displayRootDirectory(dir)
@@ -53,7 +52,6 @@ abstract class FileExplorerDialog : BaseDialog() {
 				.subscribe { tupleRootFiles -> this.displayFilesInDirectory(tupleRootFiles.first, tupleRootFiles.second) }
 
 		this.adapter.selectsFileEntry
-				.bindToLifecycle(this)
 				.filter { viewHolder -> viewHolder.file != adapter.rootDirectory }
 				.filter { viewHolder -> this.canBeFileSelected(viewHolder.file) }
 				.subscribe { viewHolder ->
@@ -69,7 +67,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 								this.selectedFiles.add(file)
 							}
 							else {
-								this.selectedFiles.forEach { file -> this.adapter.notifyItemChanged(file) }
+								this.selectedFiles.forEach { this.adapter.notifyItemChanged(it) }
 								this.selectedFiles.clear()
 								this.selectedFiles.add(file)
 							}
@@ -131,7 +129,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 			val externalFileStoragePath = externalFileStorage.absolutePath.split('/')
 			val rootDirectoryPath = rootDirectory.absolutePath.split('/')
 
-			if (externalFileStoragePath.size < rootDirectoryPath.size) {
+			if (externalFileStoragePath.size <= rootDirectoryPath.size) {
 				this.adapter.rootDirectory = rootDirectory
 				this.adapter.displayedFiles.add(rootDirectory)
 				this.adapter.notifyItemInserted(0)

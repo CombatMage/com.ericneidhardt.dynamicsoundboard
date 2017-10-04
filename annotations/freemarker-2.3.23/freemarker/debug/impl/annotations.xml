@@ -1,23 +1,23 @@
 <root>
-    <item name='freemarker.debug.impl.RmiDebugModelImpl_Stub freemarker.debug.DebugModel[] get(java.lang.String[]) 0'>
+    <item name='freemarker.debug.impl.RmiDebugModelImpl_Stub freemarker.debug.DebugModel[] getAsync(java.lang.String[]) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='freemarker.debug.impl.RmiDebugModelImpl_Stub freemarker.debug.DebugModel get(java.lang.String) 0'>
+    <item name='freemarker.debug.impl.RmiDebugModelImpl_Stub freemarker.debug.DebugModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='freemarker.debug.impl.RmiDebuggedEnvironmentImpl_Stub freemarker.debug.DebugModel[] get(java.lang.String[]) 0'>
+    <item name='freemarker.debug.impl.RmiDebuggedEnvironmentImpl_Stub freemarker.debug.DebugModel[] getAsync(java.lang.String[]) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='freemarker.debug.impl.RmiDebuggedEnvironmentImpl_Stub freemarker.debug.DebugModel get(java.lang.String) 0'>
+    <item name='freemarker.debug.impl.RmiDebuggedEnvironmentImpl_Stub freemarker.debug.DebugModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>

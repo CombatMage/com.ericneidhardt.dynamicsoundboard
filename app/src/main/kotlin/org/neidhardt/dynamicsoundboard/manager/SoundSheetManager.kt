@@ -1,17 +1,15 @@
 package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
+import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.persistance.model.NewSoundSheet
-import rx.Observable
-import rx.lang.kotlin.add
-import java.util.*
+import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
 */
-class SoundSheetManager(private val context: Context) {
+open class SoundSheetManager(private val context: Context) {
 
 	companion object {
 		fun getNewFragmentTagForLabel(label: String): String {
@@ -19,30 +17,30 @@ class SoundSheetManager(private val context: Context) {
 		}
 	}
 
-	internal var onSoundSheetsChangedListener = ArrayList<((List<NewSoundSheet>) -> Unit)>()
+	internal var onSoundSheetsChangedListener = ArrayList<((List<SoundSheet>) -> Unit)>()
 
-	internal var mSoundSheets: MutableList<NewSoundSheet>? = null
+	internal var mSoundSheets: MutableList<SoundSheet>? = null
 
-	val soundSheets: List<NewSoundSheet> get() = this.mSoundSheets as List<NewSoundSheet>
+	val soundSheets: List<SoundSheet> get() = this.mSoundSheets as List<SoundSheet>
 
-	fun set(soundSheets: MutableList<NewSoundSheet>) {
+	fun set(soundSheets: MutableList<SoundSheet>) {
 		this.mSoundSheets = soundSheets
 		this.invokeListeners()
 	}
 
-	fun remove(soundSheets: List<NewSoundSheet>) {
+	fun remove(soundSheets: List<SoundSheet>) {
 		if (this.mSoundSheets == null) throw IllegalStateException("sound sheet init not done")
 		this.mSoundSheets?.removeAll(soundSheets)
 		this.invokeListeners()
 	}
 
-	fun add(soundSheet: NewSoundSheet) {
+	fun add(soundSheet: SoundSheet) {
 		if (this.mSoundSheets == null) throw IllegalStateException("sound sheet init not done")
 		this.mSoundSheets?.add(soundSheet)
 		this.invokeListeners()
 	}
 
-	fun setSelected(soundSheet: NewSoundSheet) {
+	fun setSelected(soundSheet: SoundSheet) {
 		if (this.mSoundSheets == null) throw IllegalStateException("sound sheet init not done")
 		if (!this.soundSheets.contains(soundSheet)) throw IllegalArgumentException("given layout not found in dataset")
 
@@ -50,7 +48,7 @@ class SoundSheetManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	fun notifyHasChanged(soundSheet: NewSoundSheet) {
+	fun notifyHasChanged(soundSheet: SoundSheet) {
 		if (this.mSoundSheets == null) throw IllegalStateException("sound sheet init not done")
 		if (!this.soundSheets.contains(soundSheet)) throw IllegalArgumentException("given layout not found in dataset")
 		this.invokeListeners()
@@ -64,23 +62,23 @@ class SoundSheetManager(private val context: Context) {
 }
 
 object RxNewSoundSheetManager {
-	fun soundSheetsChanged(manager: SoundSheetManager): Observable<List<NewSoundSheet>> {
+	fun soundSheetsChanged(manager: SoundSheetManager): Observable<List<SoundSheet>> {
 		return Observable.create { subscriber ->
-			val listener: (List<NewSoundSheet>) -> Unit = {
+			val listener: (List<SoundSheet>) -> Unit = {
 				subscriber.onNext(it)
 			}
-			subscriber.add {
-				manager.onSoundSheetsChangedListener.remove(listener)
-			}
+			//subscriber.add(Subscriptions.create {
+			//	manager.onSoundSheetsChangedListener.remove(listener)
+			//})
 			manager.mSoundSheets?.let { subscriber.onNext(it) }
 			manager.onSoundSheetsChangedListener.add(listener)
 		}
 	}
 }
 
-val List<NewSoundSheet>.selectedSoundSheet: NewSoundSheet?
+val List<SoundSheet>.selectedSoundSheet: SoundSheet?
 	get() = this.firstOrNull { it.isSelected }
 
-fun List<NewSoundSheet>.findByFragmentTag(fragmentTag: String): NewSoundSheet? {
+fun List<SoundSheet>.findByFragmentTag(fragmentTag: String): SoundSheet? {
 	return this.firstOrNull { it.fragmentTag == fragmentTag }
 }

@@ -2,28 +2,21 @@ package org.neidhardt.android_utils
 
 import android.app.FragmentManager
 import android.os.Bundle
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity
+import android.support.v7.app.AppCompatActivity
 import java.util.*
+
 
 /**
  * Project created by Eric Neidhardt on 30.08.2014.
  */
-open class EnhancedAppCompatActivity : RxAppCompatActivity() {
+open class EnhancedAppCompatActivity : AppCompatActivity() {
 
 	private val TAG = javaClass.name
 
-	private var isResumed = false
-
-	private val queueOnResume = ArrayList<(activity: EnhancedAppCompatActivity) -> Unit>()
-
 	val isActivityResumed: Boolean get() = this.isResumed
 
-	fun postAfterOnResume(action: (activity: EnhancedAppCompatActivity) -> Unit) {
-		if (this.isResumed)
-			action.invoke(this)
-		else
-			this.queueOnResume.push(action)
-	}
+	private var isResumed = false
+	private val queueOnResume = ArrayList<(activity: EnhancedAppCompatActivity) -> Unit>()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -31,15 +24,22 @@ open class EnhancedAppCompatActivity : RxAppCompatActivity() {
 		this.queueOnResume.clear()
 	}
 
-	override fun onPostResume() {
-		super.onPostResume()
+	override fun onResume() {
+		super.onResume()
 		this.isResumed = true
 		while (this.queueOnResume.isNotEmpty()) this.queueOnResume.pop().invoke(this)
 	}
 
 	override fun onPause() {
-		this.isResumed = false
 		super.onPause()
+		this.isResumed = false
+	}
+
+	fun postAfterOnResume(action: (activity: EnhancedAppCompatActivity) -> Unit) {
+		if (this.isResumed)
+			action.invoke(this)
+		else
+			this.queueOnResume.push(action)
 	}
 
 	override fun getFragmentManager(): FragmentManager? {

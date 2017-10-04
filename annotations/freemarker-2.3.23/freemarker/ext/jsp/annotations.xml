@@ -2,7 +2,7 @@
     <item name='freemarker.ext.jsp.EventForwarding void contextInitialized(javax.servlet.ServletContextEvent) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.jsp.TaglibFactory freemarker.template.TemplateModel get(java.lang.String)'>
+    <item name='freemarker.ext.jsp.TaglibFactory freemarker.template.TemplateModel getAsync(java.lang.String)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='freemarker.ext.jsp._FreeMarkerPageContext21 javax.servlet.jsp.el.VariableResolver getVariableResolver()'>
@@ -23,7 +23,7 @@
     <item name='freemarker.ext.jsp.TaglibFactory.WebInfPerLibJarMetaInfTldSource INSTANCE'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.jsp.TaglibFactory freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.jsp.TaglibFactory freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>

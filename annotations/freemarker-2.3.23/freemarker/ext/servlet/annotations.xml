@@ -2,7 +2,7 @@
     <item name='freemarker.ext.servlet.FreemarkerServlet freemarker.ext.jsp.TaglibFactory createTaglibFactory(freemarker.template.ObjectWrapper, javax.servlet.ServletContext)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.servlet.AllHttpScopesHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.servlet.AllHttpScopesHashModel freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
@@ -59,7 +59,7 @@
     <item name='freemarker.ext.servlet.FreemarkerServlet INIT_PARAM_NO_CACHE'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.servlet.HttpSessionHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.servlet.HttpSessionHashModel freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
@@ -92,7 +92,7 @@
     <item name='freemarker.ext.servlet.FreemarkerServlet KEY_INCLUDE'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.servlet.HttpRequestHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.servlet.HttpRequestHashModel freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
@@ -107,7 +107,7 @@
     <item name='freemarker.ext.servlet.HttpRequestParametersHashModel freemarker.template.TemplateCollectionModel keys()'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.servlet.ServletContextHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.servlet.ServletContextHashModel freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
@@ -122,7 +122,7 @@
     <item name='freemarker.ext.servlet.FreemarkerServlet META_INF_TLD_LOCATION_CLASSPATH'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='freemarker.ext.servlet.HttpRequestParametersHashModel freemarker.template.TemplateModel get(java.lang.String) 0'>
+    <item name='freemarker.ext.servlet.HttpRequestParametersHashModel freemarker.template.TemplateModel getAsync(java.lang.String) 0'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
         <annotation name='org.jetbrains.kannotator.runtime.annotations.Propagated'>
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>

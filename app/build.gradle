@@ -8,8 +8,6 @@ buildscript {
 	}
 }
 
-// for unkown reason greendao needs to be on first position
-apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -18,11 +16,6 @@ android {
 
 	compileSdkVersion rootProject.ext.compileSdkVersion
 	buildToolsVersion rootProject.ext.buildToolsVersion
-
-	dataBinding {
-		enabled = true
-		version = "2.1.0"
-	}
 
 	dexOptions {
 		javaMaxHeapSize "4g"
@@ -48,8 +41,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion project.projectMinSdkVersion
 		targetSdkVersion project.projectTargetSdkVersion
-		versionCode 22905
-		versionName "2.29.5"
+		versionCode 23102
+		versionName "2.31.2"
 		resConfigs "de"
 		multiDexEnabled true
 	}
@@ -82,28 +75,16 @@ android {
 	}
 }
 
-kapt {
-	generateStubs = true
-}
-
-greendao {
-	schemaVersion 15
-}
-
 dependencies {
-	kapt "com.android.databinding:compiler:$android.dataBinding.version"
-
 	compile fileTree(include: ['*.jar'], dir: 'libs')
 	compile project(':enhanced_handler')
 	compile project(':app_utils')
-	compile project(':eventbus_utils')
 	compile project(':android_utils')
 	compile project(':simple_storage')
 	compile project(':value_holder')
+	compile project(':viewpager_dialog')
 
 	debugCompile rootProject.ext.libraries.leakCanary
-
-	testCompile project(':test_utils')
 
 	compile rootProject.ext.libraries.kotlin
 
@@ -111,6 +92,7 @@ dependencies {
 	compile rootProject.ext.libraries.rxKotlin
 	compile rootProject.ext.libraries.rxJava
 	compile rootProject.ext.libraries.rxBinding
+	compile rootProject.ext.libraries.rxBindingDesign
 
 	compile rootProject.ext.libraries.multidex
 
@@ -120,11 +102,6 @@ dependencies {
 	compile rootProject.ext.libraries.supportAppCompat
 	compile rootProject.ext.libraries.supportDesign
 
-	compile rootProject.ext.libraries.anko
-	compile rootProject.ext.libraries.ankoSupportAppCompat
-
-	compile rootProject.ext.libraries.greendao
-
 	compile rootProject.ext.libraries.greenRobotCommons
 
 	compile rootProject.ext.libraries.exoplayer
@@ -132,9 +109,16 @@ dependencies {
 	compile rootProject.ext.libraries.gson
 
 	compile rootProject.ext.libraries.floatingActionButton
+
 	compile rootProject.ext.libraries.materialProgressBar
 
 	compile rootProject.ext.libraries.recyclerViewAnimator
 
 	compile rootProject.ext.libraries.acra
+
+	testCompile rootProject.ext.libraries.junit
+	testCompile rootProject.ext.libraries.mockito
+	testCompile rootProject.ext.libraries.robolectric
+	testCompile rootProject.ext.libraries.robolectricMultidex
+	testCompile rootProject.ext.libraries.robolectricSupportV4
 }

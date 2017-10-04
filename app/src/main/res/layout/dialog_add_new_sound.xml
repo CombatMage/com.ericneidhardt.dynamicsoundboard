@@ -26,15 +26,13 @@
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="match_parent"
-				android:layout_toLeftOf="@id/b_add_another_sound"
 				android:layout_toStartOf="@id/b_add_another_sound"
 				android:layout_gravity="center_vertical"
 				android:gravity="center_vertical"
 				android:layout_alignParentStart="true"
-				android:layout_alignParentLeft="true"
 				android:layout_alignTop="@id/b_add_another_sound"
 				android:layout_alignBottom="@id/b_add_another_sound"
-				style="@style/Theme.TextView.Body1"
+				style="@style/style_all_body1"
 				android:text="@string/dialog_add_new_sound_message"/>
 
 	</RelativeLayout>

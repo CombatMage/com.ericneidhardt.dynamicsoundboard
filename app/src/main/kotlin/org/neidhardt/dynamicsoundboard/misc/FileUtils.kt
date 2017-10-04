@@ -4,9 +4,9 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import rx.Observable
-import rx.schedulers.Schedulers
 import java.io.File
 import kotlin.comparisons.compareByDescending
 import kotlin.comparisons.thenBy
@@ -92,21 +92,21 @@ object FileUtils {
 			throw NullPointerException(TAG + ": cannot create new file name, either old name or new name is null")
 
 		val segments = fileName.split("\\.".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
-		if (segments.size > 1) {
+		return if (segments.size > 1) {
 			var strippedName = segments[0]
-			for (i in 1..segments.size - 1 - 1)
+			for (i in 1 until segments.size - 1)
 				strippedName += "." + segments[i]
-			return strippedName
-		} else
-			return segments[0]
+			strippedName
+		} else {
+			segments[0]
+		}
 	}
 
-	fun getFileNameFromUri(context: Context, uriString: String): String {
-		return getFileNameFromUri(context, Uri.parse(uriString))
-	}
+	fun getFileNameFromUri(context: Context, uriString: String): String =
+			getFileNameFromUri(context, Uri.parse(uriString))
 
 	fun getFileNameFromUri(context: Context, uri: Uri): String {
-		var fileName: String = "" // default fileName
+		var fileName = "" // default fileName
 		var filePathUri = uri
 		if (uri.scheme != null && uri.scheme == SCHEME_CONTENT_URI) {
 			context.contentResolver.query(uri, null, null, null, null).use { cursor ->

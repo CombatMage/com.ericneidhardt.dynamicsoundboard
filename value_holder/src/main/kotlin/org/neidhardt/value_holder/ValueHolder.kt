@@ -3,7 +3,7 @@
 package org.neidhardt.value_holder
 
 import android.support.annotation.CheckResult
-import rx.Observable
+import io.reactivex.Observable
 
 /**
  * Created by eric.neidhardt on 24.11.2016.

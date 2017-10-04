@@ -1,45 +1,46 @@
 package com.sevenval.simplestorage
 
-import com.sevenval.testutils.BaseRobolectricTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import kotlin.properties.Delegates
 
 /**
  * Created by eric.neidhardt on 28.11.2016.
  */
-class SimpleStorageTest : BaseRobolectricTest() {
+@RunWith(RobolectricTestRunner::class)
+class SimpleStorageTest {
 
 	private var unitUnderTest: SimpleStorage<Int> by Delegates.notNull<SimpleStorage<Int>>()
 
 	@Before
 	fun setUp() {
-		this.unitUnderTest = SimpleStorage(RuntimeEnvironment.application, Int::class.java)
+		this.unitUnderTest = SimpleStorage(RuntimeEnvironment.application.applicationContext, Int::class.java)
 		this.unitUnderTest.clear()
 	}
 
 	@Test
 	fun precondition() {
 		assertNotNull(this.unitUnderTest.storageKey)
-		assertEquals(null, firstItem)
+		assertNull(this.readFirstItem())
 	}
 
 	@Test
 	fun saveAndGet() {
-		this.unitUnderTest.save(42).toBlocking().subscribe()
-		assertEquals(42, firstItem)
+		this.unitUnderTest.save(42).blockingSubscribe()
+		assertEquals(42, this.readFirstItem())
 	}
 
 	@Test
 	fun clear() {
-		this.unitUnderTest.save(42).toBlocking().subscribe()
-		assertEquals(42, firstItem)
+		this.unitUnderTest.save(42).blockingSubscribe()
+		assertEquals(42, this.readFirstItem())
 
 		this.unitUnderTest.clear()
-		assertEquals(null, firstItem)
+		assertNull(this.readFirstItem())
 	}
 
 	@Test
@@ -47,12 +48,18 @@ class SimpleStorageTest : BaseRobolectricTest() {
 		val testStorage = SimpleStorage(RuntimeEnvironment.application, TestUser::class.java)
 		val testData = TestUser("user", listOf("item_1", "item_2"))
 
-		testStorage.save(testData).toBlocking().subscribe()
-		val retrievedData = testStorage.get().toBlocking().toIterable().first()
-		assertEquals(testData, retrievedData)
+		testStorage.save(testData).blockingSubscribe()
+		val result = testStorage.get().blockingIterable().first().item
+		
+		assertEquals(testData, result)
 	}
 
-	private val firstItem: Int? get() = this.unitUnderTest.get().toBlocking().toIterable().first()
+	private fun readFirstItem(): Int? {
+		val entry = this.unitUnderTest.get().blockingIterable().first()
+		if (entry.isEmpty)
+			return null
+		return entry.item
+	}
 
 	private data class TestUser(val name: String, val inventory: List<String>)
 }

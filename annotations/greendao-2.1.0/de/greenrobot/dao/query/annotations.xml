@@ -110,7 +110,7 @@
     <item name='de.greenrobot.dao.query.LazyList E loadEntity(int)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
-    <item name='de.greenrobot.dao.query.LazyList E get(int)'>
+    <item name='de.greenrobot.dao.query.LazyList E getAsync(int)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='de.greenrobot.dao.query.Query de.greenrobot.dao.query.LazyList&lt;T&gt; listLazyUncached()'>

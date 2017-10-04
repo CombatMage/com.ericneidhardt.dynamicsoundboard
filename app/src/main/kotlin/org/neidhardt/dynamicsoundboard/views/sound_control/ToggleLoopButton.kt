@@ -2,11 +2,11 @@ package org.neidhardt.dynamicsoundboard.views.sound_control
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
-import org.jetbrains.anko.*
+import kotlinx.android.synthetic.main.layout_toggleloopbutton.view.*
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.views.selectableItemBackgroundBorderlessResource
 
 /**
  * Created by eric.neidhardt@gmail.com on 30.01.2017.
@@ -18,40 +18,28 @@ class ToggleLoopButton : FrameLayout {
 		LOOP_DISABLE
 	}
 
-	constructor(context: Context?) : super(context) {
-		init()
+	private lateinit var icon: ImageView
+
+	constructor(context: Context?) : super(context) { this.init() }
+	constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) { this.init() }
+	constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { this.init() }
+
+	private fun init() {
+		LayoutInflater.from(context).inflate(R.layout.layout_toggleloopbutton, this, true)
+		this.icon = this.imageview_toggleloopbutton
+
+		this.state = ToggleLoopButton.State.LOOP_ENABLE
 	}
 
-	constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-		init()
-	}
-
-	constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-		init()
-	}
-
-	private var icon: ImageView? = null
-
-	private fun init() = AnkoContext.createDelegate(this).apply {
-		icon = imageView {
-			this.padding = dip(12)
-			this.scaleType = ImageView.ScaleType.CENTER_CROP
-			this.backgroundResource = selectableItemBackgroundBorderlessResource
-			this.contentDescription = resources.getString(R.string.sound_control_content_description_loop)
-		}
-		isClickable = true
-		state = State.LOOP_ENABLE
-	}
-
-	var state: State = State.LOOP_DISABLE
+	var state: ToggleLoopButton.State = ToggleLoopButton.State.LOOP_DISABLE
 		set(newState) {
 			field = newState
 			when (newState) {
 				State.LOOP_ENABLE -> {
-					this.icon?.imageResource = R.drawable.ic_loop_checked
+					this.icon.setImageResource(R.drawable.ic_loop_checked)
 				}
 				State.LOOP_DISABLE -> {
-					this.icon?.imageResource = R.drawable.ic_loop
+					this.icon.setImageResource(R.drawable.ic_loop)
 				}
 			}
 		}

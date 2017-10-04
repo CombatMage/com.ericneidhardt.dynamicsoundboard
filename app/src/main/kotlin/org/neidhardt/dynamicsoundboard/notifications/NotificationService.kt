@@ -18,13 +18,12 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.Logger
-import org.neidhardt.dynamicsoundboard.preferences.SoundboardPreferences
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
-import org.neidhardt.dynamicsoundboard.soundcontrol.PauseSoundOnCallListener
-import org.neidhardt.dynamicsoundboard.soundcontrol.registerPauseSoundOnCallListener
-import org.neidhardt.dynamicsoundboard.soundcontrol.unregisterPauseSoundOnCallListener
-import org.neidhardt.eventbus_utils.registerIfRequired
+import org.neidhardt.dynamicsoundboard.misc.PauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.misc.registerPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.misc.unregisterPauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 
 /**
  * @author eric.neidhardt on 15.06.2016.
@@ -43,6 +42,8 @@ class NotificationService : Service(),
 
 	private val TAG: String = javaClass.name
 
+	private val preferences = SoundboardApplication.preferenceRepository
+
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
@@ -50,9 +51,9 @@ class NotificationService : Service(),
 
 	private val eventBus = EventBus.getDefault()
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
-	private val notificationActionReceiver: BroadcastReceiver = NotificationActionReceiver({ action, playerId, notificationId ->
-		this.onNotificationAction(action, playerId, notificationId)
-	})
+	private val notificationActionReceiver: BroadcastReceiver = NotificationActionReceiver(
+			{ action, playerId, notificationId ->
+				this.onNotificationAction(action, playerId, notificationId) })
 
 	private var notificationHandler: INotificationHandler? = null
 
@@ -72,8 +73,10 @@ class NotificationService : Service(),
 				soundLayoutManager = this.soundLayoutManager)
 
 		this.eventBus.registerIfRequired(this)
-		SoundboardPreferences.registerSharedPreferenceChangedListener(this)
+
+		this.preferences.registerSharedPreferenceChangedListener(this)
 		this.registerReceiver(this.notificationActionReceiver, PendingSoundNotification.getNotificationIntentFilter())
+		this.registerPauseSoundOnCallListener(this.phoneStateListener)
 	}
 
 	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -86,7 +89,7 @@ class NotificationService : Service(),
 		Logger.d(TAG, "onDestroy")
 
 		this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
-		SoundboardPreferences.unregisterSharedPreferenceChangedListener(this)
+		this.preferences.unregisterSharedPreferenceChangedListener(this)
 		this.unregisterReceiver(this.notificationActionReceiver)
 		this.eventBus.unregister(this)
 
@@ -123,7 +126,7 @@ class NotificationService : Service(),
 
 	override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
 		if (key == this.getString(R.string.preferences_enable_notifications_key)) {
-			val areNotificationsEnabledEnabled = SoundboardPreferences.areNotificationsEnabled()
+			val areNotificationsEnabledEnabled = this.preferences.isNotificationEnabled
 			Logger.d(TAG, "onSharedPreferenceChanged $key to $areNotificationsEnabledEnabled")
 
 			if (areNotificationsEnabledEnabled)
@@ -139,14 +142,10 @@ class NotificationService : Service(),
 	override fun onEvent(event: ActivityStateChangedEvent) {
 		if (event.isActivityClosed) {
 			this.isActivityVisible = false
-
-			this.registerPauseSoundOnCallListener(this.phoneStateListener)
 			if (this.soundLayoutManager.currentlyPlayingSounds.isEmpty())
 				this.stopSelf()
 		}
 		else if (event.isActivityResumed) {
-			this.unregisterPauseSoundOnCallListener(this.phoneStateListener)
-
 			this.isActivityVisible = true
 			this.removeNotificationForPausedSounds()
 		}
@@ -179,7 +178,7 @@ class NotificationService : Service(),
 	override fun onEvent(event: MediaPlayerStateChangedEvent) {
 		Logger.d(TAG, event.toString())
 
-		val areNotificationsEnabled = SoundboardPreferences.areNotificationsEnabled()
+		val areNotificationsEnabled = this.preferences.isNotificationEnabled
 		if (!areNotificationsEnabled)
 			return
 
