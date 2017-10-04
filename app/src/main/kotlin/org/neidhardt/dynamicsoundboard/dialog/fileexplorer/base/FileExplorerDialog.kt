@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
-import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -41,7 +41,6 @@ abstract class FileExplorerDialog : BaseDialog() {
 		}
 
 		this.adapter.clicksFileEntry
-				.bindToLifecycle(this)
 				.filter(File::isDirectory)
 				.doOnNext { dir ->
 					this.displayRootDirectory(dir)
@@ -53,7 +52,6 @@ abstract class FileExplorerDialog : BaseDialog() {
 				.subscribe { tupleRootFiles -> this.displayFilesInDirectory(tupleRootFiles.first, tupleRootFiles.second) }
 
 		this.adapter.selectsFileEntry
-				.bindToLifecycle(this)
 				.filter { viewHolder -> viewHolder.file != adapter.rootDirectory }
 				.filter { viewHolder -> this.canBeFileSelected(viewHolder.file) }
 				.subscribe { viewHolder ->

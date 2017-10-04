@@ -41,8 +41,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion project.projectMinSdkVersion
 		targetSdkVersion project.projectTargetSdkVersion
-		versionCode 23101
-		versionName "2.31.1"
+		versionCode 23102
+		versionName "2.31.2"
 		resConfigs "de"
 		multiDexEnabled true
 	}
@@ -93,8 +93,6 @@ dependencies {
 	compile rootProject.ext.libraries.rxJava
 	compile rootProject.ext.libraries.rxBinding
 	compile rootProject.ext.libraries.rxBindingDesign
-	compile rootProject.ext.libraries.rxlifecycleNavi
-	compile rootProject.ext.libraries.rxNavi
 
 	compile rootProject.ext.libraries.multidex
 

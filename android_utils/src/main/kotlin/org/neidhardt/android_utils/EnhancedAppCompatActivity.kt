@@ -2,14 +2,14 @@ package org.neidhardt.android_utils
 
 import android.app.FragmentManager
 import android.os.Bundle
-import com.trello.navi2.component.support.NaviAppCompatActivity
+import android.support.v7.app.AppCompatActivity
 import java.util.*
 
 
 /**
  * Project created by Eric Neidhardt on 30.08.2014.
  */
-open class EnhancedAppCompatActivity : NaviAppCompatActivity() {
+open class EnhancedAppCompatActivity : AppCompatActivity() {
 
 	private val TAG = javaClass.name
 

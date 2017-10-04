@@ -12,14 +12,6 @@ ext.libraries = [
 		rxBinding            : 'com.jakewharton.rxbinding2:rxbinding:2.0.0',
 		rxBindingDesign      : 'com.jakewharton.rxbinding2:rxbinding-design:2.0.0',
 
-		rxlifecycle          : 'com.trello.rxlifecycle2:rxlifecycle:2.0.1',
-		rxlifecycleAndroid   : 'com.trello.rxlifecycle2:rxlifecycle-android:2.0.1',
-		rxlifecycleKotlin    : 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.0.1',
-		rxlifecycleNavi      : 'com.trello.rxlifecycle2:rxlifecycle-navi:2.0.1',
-		rxlifecycleComponents: 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1',
-
-		rxNavi               : 'com.trello.navi2:navi:2.0',
-
 		multidex             : "com.android.support:multidex:1.0.1",
 		supportV4            : "com.android.support:support-v4:$versions.supportLibs",
 		supportV13           : "com.android.support:support-v13:$versions.supportLibs",
