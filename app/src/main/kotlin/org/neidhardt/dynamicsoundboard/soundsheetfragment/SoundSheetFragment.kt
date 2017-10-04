@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_soundsheet.*
 import kotlinx.android.synthetic.main.fragment_soundsheet.view.*
 import kotlinx.android.synthetic.main.layout_fab.*
 import kotlinx.android.synthetic.main.layout_fab.view.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
@@ -32,6 +33,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.*
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.ItemTouchCallback
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.PendingDeletionHandler
@@ -65,13 +67,14 @@ class SoundSheetFragment : BaseFragment(),
 
 	private val KEY_STATE_RECYCLER_VIEW get() = "${this.fragmentTag}_recycler_view_state"
 
+	private val eventBus = EventBus.getDefault()
+
 	private val preferences = SoundboardApplication.preferenceRepository
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
 
 	private val adapterSounds = SoundAdapter()
-
 	private val deletionHandler by lazy {
 		PendingDeletionHandler(
 				soundSheet = this.soundSheet,
@@ -252,6 +255,16 @@ class SoundSheetFragment : BaseFragment(),
 	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		this.presenter.viewCreated()
+	}
+
+	override fun onResume() {
+		super.onResume()
+		this.eventBus.registerIfRequired(this)
+	}
+
+	override fun onPause() {
+		super.onPause()
+		this.eventBus.unregister(this)
 	}
 
 	override fun onRestoreState(savedInstanceState: Bundle) {
