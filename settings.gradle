@@ -1,7 +1,5 @@
 include ':app',
-        ':enhanced_handler',
         ':app_utils',
         ':android_utils',
-        ':simple_storage',
         ':value_holder',
         ':viewpager_dialog'
