@@ -1,9 +1,8 @@
-package org.neihdardt.viewpagerdialog
+package org.neidhardt.viewpagerdialog.viewhelper
 
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import org.neihdardt.viewpagerdialog.viewhelper.ViewPagerDialogBuilder
 
 /**
  * Created by eric.neidhardt@gmail.com on 08.09.2017.
