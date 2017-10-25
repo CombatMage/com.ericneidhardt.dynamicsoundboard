@@ -82,7 +82,7 @@ dependencies {
 	compile project(':value_holder')
 	compile project(':viewpager_dialog')
 
-	compile 'org.neidhardt:enhanced-handler:1.0.2'
+	compile 'org.neidhardt:enhanced-handler:1.0.7'
 	compile 'org.neidhardt:simple-storage:1.0.0'
 
 	debugCompile rootProject.ext.libraries.leakCanary

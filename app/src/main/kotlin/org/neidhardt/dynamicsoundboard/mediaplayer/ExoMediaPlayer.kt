@@ -24,6 +24,8 @@ import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.enhancedhandler.EnhancedHandler
+import org.neidhardt.enhancedhandler.KillableRunnable
+import org.neidhardt.utils.letThis
 import java.io.File
 import kotlin.properties.Delegates
 

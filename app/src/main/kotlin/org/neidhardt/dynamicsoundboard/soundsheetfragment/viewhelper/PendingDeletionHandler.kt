@@ -3,8 +3,8 @@ package org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import org.neidhardt.util.enhanced_handler.EnhancedHandler
-import org.neidhardt.util.enhanced_handler.KillableRunnable
+import org.neidhardt.enhancedhandler.EnhancedHandler
+import org.neidhardt.enhancedhandler.KillableRunnable
 import java.util.*
 
 /**
@@ -24,8 +24,7 @@ class PendingDeletionHandler (
 
 	val countPendingDeletions: Int get() = this.pendingDeletions.size
 
-	fun requestItemDeletion(item: MediaPlayerController)
-	{
+	fun requestItemDeletion(item: MediaPlayerController) {
 		this.deletionTask?.let { this.handler.removeCallbacks(it) }
 
 		item.isDeletionPending = true
@@ -38,15 +37,13 @@ class PendingDeletionHandler (
 		this.onItemDeletionRequested(this, DELETION_TIMEOUT)
 	}
 
-	private fun deletePendingItems()
-	{
+	private fun deletePendingItems() {
 		this.deletionTask?.let { this.handler.removeCallbacks(it) }
 		this.manager.remove(this.soundSheet, this.pendingDeletions)
 		this.pendingDeletions.clear()
 	}
 
-	fun restoreDeletedItems()
-	{
+	fun restoreDeletedItems() {
 		this.deletionTask?.let { this.handler.removeCallbacks(it) }
 		this.pendingDeletions.map { item ->
 			item.isDeletionPending = false
