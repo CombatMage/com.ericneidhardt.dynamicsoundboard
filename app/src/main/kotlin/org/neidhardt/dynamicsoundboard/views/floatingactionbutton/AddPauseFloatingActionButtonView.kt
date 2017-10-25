@@ -53,7 +53,6 @@ class AddPauseFloatingActionButtonView : FloatingActionButton, MediaPlayerEventL
 		super.onAttachedToWindow()
 		this.subscriptions = CompositeDisposable()
 
-		this.presenter?.start()
 		this.setPresenterState()
 		this.subscriptions.add(RxNewSoundLayoutManager.changesPlayingSounds(this.manager!!)
 				.observeOn(AndroidSchedulers.mainThread())

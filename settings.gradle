@@ -1,5 +1,4 @@
 include ':app',
         ':app_utils',
         ':android_utils',
-        ':value_holder',
         ':viewpager_dialog'

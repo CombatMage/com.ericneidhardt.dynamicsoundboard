@@ -79,7 +79,6 @@ dependencies {
 	compile fileTree(include: ['*.jar'], dir: 'libs')
 	compile project(':app_utils')
 	compile project(':android_utils')
-	compile project(':value_holder')
 	compile project(':viewpager_dialog')
 
 	compile 'org.neidhardt:enhanced-handler:1.0.7'

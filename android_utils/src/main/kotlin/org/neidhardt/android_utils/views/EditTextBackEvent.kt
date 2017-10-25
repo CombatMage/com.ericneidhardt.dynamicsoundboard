@@ -9,6 +9,7 @@ import android.widget.EditText
  * Project created by eric.neidhardt on 08.09.2014.
  */
 class EditTextBackEvent : EditText {
+
 	var onImeBackListener: EditTextImeBackListener? = null
 
 	@SuppressWarnings("unused")
