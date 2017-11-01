@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package org.neidhardt.value_holder
+package org.neidhardt.utils
 
 import android.support.annotation.CheckResult
 import io.reactivex.Observable

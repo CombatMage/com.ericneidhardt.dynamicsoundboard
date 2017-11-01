@@ -1,13 +1,13 @@
 package org.neidhardt.dynamicsoundboard.manager
 
 import android.content.Context
-import com.sevenval.simplestorage.Optional
 import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.model.AppData
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
+import org.neidhardt.simplestorage.Optional
 
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
