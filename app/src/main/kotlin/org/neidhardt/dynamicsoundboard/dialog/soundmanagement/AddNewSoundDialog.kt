@@ -234,13 +234,13 @@ private class AddNewSoundDialogPresenter(
 	}
 
 	private fun addAnotherSound() {
-		if (this.preferenceRepository.useSystemBrowserForFiles) {
+		if (this.preferenceRepository.useBuildInBrowserForFiles) {
+			GetNewSoundFromDirectoryDialog(this.dialog.fragmentManager, AddNewSoundDialog.TAG)
+		}
+		else {
 			val intent = Intent(Intent.ACTION_GET_CONTENT)
 			intent.type = FileUtils.MIME_AUDIO
 			this.dialog.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
-		}
-		else {
-			GetNewSoundFromDirectoryDialog(this.dialog.fragmentManager, AddNewSoundDialog.TAG)
 		}
 	}
 

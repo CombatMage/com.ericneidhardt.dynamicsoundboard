@@ -115,8 +115,9 @@
 	<string name="preferences_enable_one_swipe_delete_title">Löschen ohne Bestätigung</string>
 	<string name="preferences_enable_one_swipe_delete_summary">Mit dieser Option können Sounds ohne eine zweite Bestätigung gelöscht werden.</string>
 	<string name="preferences_use_system_file_browser_title">Eigenen Dateibrowser verwenden</string>
-	<string name="preferences_use_system_file_browser_summary">Wenn diese Option angeschaltet ist, wird der auf dem Telefon normalerweise installierte Dateibrowser verwendet um einzelne Dateien auszuwählen. 
-		Ansonsten wird der Browser der App verwendet (empfohlen).</string>
+	<string name="preferences_use_system_file_browser_summary">
+		Deaktiviere diese Option um den regulären Dateibrowser des Telefons zu verwenden, anstatt des Dateibrowsers der App.
+	</string>
 
 	<string name="about">Über</string>
 	<string name="about_author_title">Autor</string>
