@@ -321,12 +321,12 @@ class SoundSheetFragment : BaseFragment(),
 	}
 
 	override fun openDialogForNewSound() {
-		if (this.preferences.useSystemBrowserForFiles) {
+		if (this.preferences.useBuildInBrowserForFiles) {
+			AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, this.fragmentTag)
+		} else {
 			val intent = Intent(Intent.ACTION_GET_CONTENT)
 			intent.type = FileUtils.MIME_AUDIO
 			this.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
-		} else {
-			AddNewSoundFromDirectoryDialog.showInstance(this.fragmentManager, this.fragmentTag)
 		}
 	}
 

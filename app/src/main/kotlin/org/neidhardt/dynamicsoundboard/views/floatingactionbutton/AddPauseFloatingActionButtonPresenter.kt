@@ -1,7 +1,5 @@
 package org.neidhardt.dynamicsoundboard.views.floatingactionbutton
 
-import org.neidhardt.android_utils.view_utils.ViewPresenter
-
 /**
  * File created by eric.neidhardt on 21.05.2015.
  */
@@ -12,7 +10,7 @@ interface AddPauseFloatingAction {
 	enum class State { PLAY, ADD }
 }
 
-class AddPauseFloatingActionButtonPresenter : AddPauseFloatingAction, ViewPresenter {
+class AddPauseFloatingActionButtonPresenter : AddPauseFloatingAction {
 
 	private var fab: AddPauseFloatingActionButtonView? = null
 
@@ -36,8 +34,7 @@ class AddPauseFloatingActionButtonPresenter : AddPauseFloatingAction, ViewPresen
 		}
 	}
 
-	override fun stop() {
-		super.stop()
+	fun stop() {
 		this.fab = null
 	}
 }

@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.misc.hasPermissionPhoneState
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
 import org.neidhardt.dynamicsoundboard.splashactivity.viewhelper.AppClosingInfoDialog
-import org.neihdardt.viewpagerdialog.ViewPagerDialog
+import org.neidhardt.viewpagerdialog.viewhelper.ViewPagerDialog
 import java.util.*
 
 

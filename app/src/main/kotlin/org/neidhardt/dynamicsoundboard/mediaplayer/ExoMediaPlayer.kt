@@ -23,8 +23,8 @@ import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
-import org.neidhardt.util.enhanced_handler.EnhancedHandler
-import org.neidhardt.util.enhanced_handler.KillableRunnable
+import org.neidhardt.enhancedhandler.EnhancedHandler
+import org.neidhardt.enhancedhandler.KillableRunnable
 import org.neidhardt.utils.letThis
 import java.io.File
 import kotlin.properties.Delegates
@@ -55,12 +55,11 @@ object MediaPlayerFactory {
 		}
 	}
 
-	fun getNewMediaPlayerController(context: Context,
-									eventBus: EventBus,
-									mediaPlayerData: MediaPlayerData,
-									manager: SoundLayoutManager): MediaPlayerController {
-		return ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
-	}
+	private fun getNewMediaPlayerController(context: Context,
+											eventBus: EventBus,
+											mediaPlayerData: MediaPlayerData,
+											manager: SoundLayoutManager): MediaPlayerController =
+			ExoMediaPlayer(context, eventBus, manager, mediaPlayerData)
 
 	fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): MediaPlayerData {
 		val data = MediaPlayerData()

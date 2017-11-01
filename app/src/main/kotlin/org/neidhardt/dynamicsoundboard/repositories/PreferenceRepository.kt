@@ -24,7 +24,7 @@ class PreferenceRepository(private val context: Context) {
 				false)
 	}
 
-	val useSystemBrowserForFiles: Boolean get() {
+	val useBuildInBrowserForFiles: Boolean get() {
 		return this.preferenceManager.getBoolean(
 				this.context.getString(R.string.preferences_use_system_file_browser_key),
 				false)

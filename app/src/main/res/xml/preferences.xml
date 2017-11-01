@@ -17,6 +17,6 @@
 			android:key="@string/preferences_use_system_file_browser_key"
 			android:title="@string/preferences_use_system_file_browser_title"
 			android:summary="@string/preferences_use_system_file_browser_summary"
-			android:defaultValue="false"/>
+			android:defaultValue="true"/>
 
 </PreferenceScreen>

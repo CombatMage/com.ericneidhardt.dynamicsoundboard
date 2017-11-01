@@ -8,8 +8,8 @@ import android.view.MotionEvent
 /**
 * Created by ericn on 06.03.2016.
 */
-class NonTouchableCoordinatorLayout : CoordinatorLayout
-{
+class NonTouchableCoordinatorLayout : CoordinatorLayout {
+
 	var isScrollingEnabled: Boolean = true
 
 	constructor(context: Context?) : super(context)
