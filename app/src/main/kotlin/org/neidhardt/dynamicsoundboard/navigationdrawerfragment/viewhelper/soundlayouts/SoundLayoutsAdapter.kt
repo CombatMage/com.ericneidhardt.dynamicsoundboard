@@ -7,10 +7,8 @@ import io.reactivex.subjects.PublishSubject
 import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
-import org.neidhardt.utils.longHash
+import org.neidhardt.app_utils.longHash
 
 /**
  * File created by eric.neidhardt on 08.03.2015.

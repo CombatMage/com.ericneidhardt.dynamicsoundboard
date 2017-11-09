@@ -1,4 +1,4 @@
-package org.neidhardt.utils
+package org.neidhardt.app_utils
 
 import java.util.*
 

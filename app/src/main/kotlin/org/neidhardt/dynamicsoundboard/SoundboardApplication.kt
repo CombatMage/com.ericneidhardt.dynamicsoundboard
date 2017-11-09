@@ -10,7 +10,7 @@ import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.repositories.AppDataStorage
 import org.neidhardt.dynamicsoundboard.repositories.PreferenceRepository
-import org.neidhardt.utils.ValueHolder
+import org.neidhardt.app_utils.ValueHolder
 import java.util.*
 
 open class SoundboardApplication : MultiDexApplication() {

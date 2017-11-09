@@ -1,4 +1,4 @@
-package org.neidhardt.utils
+package org.neidhardt.app_utils
 
 /**
  * Project created by Eric Neidhardt on 30.08.2014.

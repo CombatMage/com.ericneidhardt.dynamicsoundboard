@@ -8,7 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.utils.ValueHolder
+import org.neidhardt.app_utils.ValueHolder
 import kotlin.properties.Delegates
 
 /**

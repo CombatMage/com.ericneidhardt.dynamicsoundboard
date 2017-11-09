@@ -15,7 +15,7 @@ import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import org.neidhardt.utils.letThis
+import org.neidhardt.app_utils.letThis
 import java.util.*
 import kotlin.properties.Delegates
 

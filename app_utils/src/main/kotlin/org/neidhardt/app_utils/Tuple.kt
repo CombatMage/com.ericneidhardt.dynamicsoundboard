@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package org.neidhardt.utils
+package org.neidhardt.app_utils
 
 /**
  * Created by eric.neidhardt@gmail.com on 15.02.2017.

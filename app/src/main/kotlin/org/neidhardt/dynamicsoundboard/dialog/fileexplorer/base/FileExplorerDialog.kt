@@ -3,14 +3,13 @@ package org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
-import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySorted
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySortedAsync
-import org.neidhardt.utils.Tuple
+import org.neidhardt.app_utils.Tuple
 import java.io.File
 
 /**

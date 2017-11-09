@@ -6,7 +6,7 @@ import org.neidhardt.dynamicsoundboard.manager.findById
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import org.neidhardt.utils.getCopyList
+import org.neidhardt.app_utils.getCopyList
 
 /**
  * Created by eric.neidhardt@gmail.com on 08.05.2017.
