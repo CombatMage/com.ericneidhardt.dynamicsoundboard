@@ -16,8 +16,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
+import kotlinx.android.synthetic.main.dialog_add_new_sound.view.*
+import kotlinx.android.synthetic.main.view_add_sound_list_item.view.*
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
@@ -78,8 +78,8 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler {
 				soundManager = this.soundManager,
 				soundSheetManager = this.soundSheetManager,
 				playlistManager = SoundboardApplication.playlistManager,
-				addAnotherSound = view.findViewById(R.id.b_add_another_sound),
-				addedSoundsLayout = view.findViewById(R.id.rv_dialog) as RecyclerView)
+				addAnotherSound = view.b_add_another_sound,
+				addedSoundsLayout = view.rv_dialog)
 
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(org.neidhardt.dynamicsoundboard.R.string.dialog_add_new_sound_title)
@@ -261,8 +261,8 @@ private class NewSoundData(var uri: Uri, var label: String) {
 
 private class NewSoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), TextWatcher {
 
-	private val soundPath = itemView.findViewById(R.id.tv_path) as TextView
-	private val soundName = itemView.findViewById(R.id.et_name_file) as EditText
+	private val soundPath = itemView.tv_path
+	private val soundName = itemView.et_name_file
 
 	private var data: NewSoundData? = null
 
