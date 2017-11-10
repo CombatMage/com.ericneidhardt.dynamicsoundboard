@@ -41,8 +41,8 @@ android {
 		applicationId "org.neidhardt.dynamicsoundboard"
 		minSdkVersion project.projectMinSdkVersion
 		targetSdkVersion project.projectTargetSdkVersion
-		versionCode 23203
-		versionName "2.32.3"
+		versionCode 23204
+		versionName "2.32.4"
 		resConfigs "de"
 		multiDexEnabled true
 	}
