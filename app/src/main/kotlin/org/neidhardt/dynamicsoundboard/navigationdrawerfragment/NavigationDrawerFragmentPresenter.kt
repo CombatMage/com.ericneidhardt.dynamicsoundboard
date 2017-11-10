@@ -206,10 +206,12 @@ class NavigationDrawerFragmentPresenter(
 			this.view.setSelectedItemCount(selectedCount, items.size)
 			this.view.displayedSoundLayouts = items
 		} else {
-			this.view.setHeaderTitle(soundLayout.label)
 			this.currentList = List.SoundSheet
+			this.view.setTapBarState(NavigationDrawerFragmentContract.View.TapBarState.NORMAL)
 			this.view.showSoundSheets()
 			this.view.animateHeaderArrow(NavigationDrawerFragmentContract.View.AnimationDirection.DOWN)
+
+			this.view.setHeaderTitle(soundLayout.label)
 			this.view.closeNavigationDrawer()
 			this.model.setSoundLayoutSelected(soundLayout)
 		}
