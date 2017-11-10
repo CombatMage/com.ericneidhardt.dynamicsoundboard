@@ -66,11 +66,18 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 		this.directories?.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(TAG)
-		if (previousPath != null)
-			super.setStartDirectoryForAdapter(File(previousPath))
-		else {
-			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
-			super.setStartDirectoryForAdapter(file)
+		val musicDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
+
+		// use previous dir if still valid, else fallback
+		if (previousPath == null) {
+			super.setStartDirectoryForAdapter(musicDir)
+		} else {
+			val previousMusicDir = File(previousPath)
+			if (previousMusicDir.exists()) {
+				super.setStartDirectoryForAdapter(previousMusicDir)
+			} else {
+				super.setStartDirectoryForAdapter(musicDir)
+			}
 		}
 
 		return AlertDialog.Builder(this.activity).apply {

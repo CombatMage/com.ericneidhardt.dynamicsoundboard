@@ -46,11 +46,18 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog {
 		this.directories?.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
-		if (previousPath != null)
-			super.setStartDirectoryForAdapter(File(previousPath))
-		else {
-			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-			super.setStartDirectoryForAdapter(file)
+		val documentDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+
+		// use previous dir if still valid, else fallback
+		if (previousPath == null) {
+			super.setStartDirectoryForAdapter(documentDir)
+		} else {
+			val previousMusicDir = File(previousPath)
+			if (previousMusicDir.exists()) {
+				super.setStartDirectoryForAdapter(previousMusicDir)
+			} else {
+				super.setStartDirectoryForAdapter(documentDir)
+			}
 		}
 
 		return AlertDialog.Builder(this.activity).apply {

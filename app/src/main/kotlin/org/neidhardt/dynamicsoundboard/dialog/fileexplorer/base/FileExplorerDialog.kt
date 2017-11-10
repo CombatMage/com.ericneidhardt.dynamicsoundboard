@@ -35,7 +35,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 
 		savedInstanceState?.let { previousState ->
 			previousState.getString(KEY_PARENT_FILE)?.let { path ->
-				this.setStartDirectoryForAdapter(java.io.File(path))
+				this.setStartDirectoryForAdapter(File(path))
 			}
 		}
 
