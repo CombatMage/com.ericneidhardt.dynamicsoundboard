@@ -1,12 +1,10 @@
 package org.neidhardt.dynamicsoundboard.soundsheetfragment
 
 import android.net.Uri
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.manager.findById
+import org.neidhardt.app_utils.getCopyList
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import org.neidhardt.app_utils.getCopyList
 
 /**
  * Created by eric.neidhardt@gmail.com on 08.05.2017.
@@ -15,10 +13,6 @@ class SoundSheetFragmentPresenter(
 		private val view: SoundSheetFragmentContract.View,
 		private val model: SoundSheetFragmentContract.Model
 ) : SoundSheetFragmentContract.Presenter {
-
-	private val soundManager = SoundboardApplication.soundManager
-	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
-	private val playlistManager = SoundboardApplication.playlistManager
 
 	override fun viewCreated() {
 		this.model.playList.subscribe { playList ->
@@ -34,11 +28,13 @@ class SoundSheetFragmentPresenter(
 	}
 
 	override fun onUserClicksFab() {
-		val currentlyPlayingSounds = this.soundLayoutManager.currentlyPlayingSounds
+		val currentlyPlayingSounds = this.model.getCurrentlyPlayingSounds()
+
 		if (currentlyPlayingSounds.isNotEmpty()) {
 			val copyCurrentlyPlayingSounds = currentlyPlayingSounds.getCopyList()
-			for (sound in copyCurrentlyPlayingSounds)
+			for (sound in copyCurrentlyPlayingSounds) {
 				sound.pauseSound()
+			}
 		}
 		else {
 			this.view.openDialogForNewSound()
@@ -58,9 +54,15 @@ class SoundSheetFragmentPresenter(
 	}
 
 	override fun onUserTogglePlaylist(player: MediaPlayerController) {
-		val playerData = player.mediaPlayerData
-		val isInPlaylist = this.playlistManager.playlist.findById(playerData.playerId) != null
-		this.playlistManager.togglePlaylistSound(playerData, !isInPlaylist)
+		val isInPlaylist = this.model.isSoundInPlayList(player)
+		val action = if (isInPlaylist){
+			SoundSheetFragmentContract.Model.TogglePlayListAction.REMOVE_FROM_PLAYLIST
+		} else {
+			SoundSheetFragmentContract.Model.TogglePlayListAction.ADD_TO_PLAYLIST
+		}
+		this.model.togglePlayerInPlayList(
+				player,
+				action)
 	}
 
 	override fun onUserTogglePlayerLooping(player: MediaPlayerController) {
@@ -74,7 +76,8 @@ class SoundSheetFragmentPresenter(
 	override fun onUserAddsNewPlayer(soundUri: Uri, label: String, soundSheet: SoundSheet) {
 		val playerData = MediaPlayerFactory.getNewMediaPlayerData(
 				soundSheet.fragmentTag, soundUri, label)
-		this.soundManager.add(soundSheet, playerData)
+
+		this.model.addMediaPlayerToSoundSheet(soundSheet, playerData)
 	}
 
 	override fun onUserDeletesSound() {

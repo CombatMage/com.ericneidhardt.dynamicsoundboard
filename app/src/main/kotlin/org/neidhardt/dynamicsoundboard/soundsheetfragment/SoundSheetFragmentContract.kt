@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetfragment
 import android.net.Uri
 import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.model.SoundLayout
+import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
@@ -34,7 +34,16 @@ interface SoundSheetFragmentContract {
 		fun onMediaPlayerFailed(player: MediaPlayerController)
 	}
 	interface Model {
+		enum class TogglePlayListAction {
+			ADD_TO_PLAYLIST,
+			REMOVE_FROM_PLAYLIST
+		}
+
 		val sounds: Observable<List<MediaPlayerController>>
 		val playList: Observable<List<MediaPlayerController>>
+		fun togglePlayerInPlayList(player: MediaPlayerController, action: TogglePlayListAction)
+		fun isSoundInPlayList(player: MediaPlayerController): Boolean
+		fun addMediaPlayerToSoundSheet(soundSheet: SoundSheet, playerData: MediaPlayerData)
+		fun getCurrentlyPlayingSounds(): List<MediaPlayerController>
 	}
 }

@@ -54,9 +54,8 @@ class SoundSheetFragment : BaseFragment(),
 		private const val KEY_FRAGMENT_TAG = "SoundSheetFragment.KEY_FRAGMENT_TAG"
 
 		fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment {
+			val args = Bundle().apply { this.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag) }
 			val fragment = SoundSheetFragment()
-			val args = Bundle()
-			args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
 			fragment.arguments = args
 			return fragment
 		}
@@ -71,6 +70,7 @@ class SoundSheetFragment : BaseFragment(),
 	private val eventBus = EventBus.getDefault()
 
 	private val preferences = SoundboardApplication.preferenceRepository
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
@@ -118,10 +118,10 @@ class SoundSheetFragment : BaseFragment(),
 				?: throw NullPointerException(fragmentTag + ": cannot create fragment, given fragmentTag is null")
 
 		this.model = SoundSheetFragmentModel(
+				this.soundLayoutManager,
 				this.soundSheet,
 				this.soundManager,
-				this.playlistManager
-		)
+				this.playlistManager)
 
 		this.presenter = SoundSheetFragmentPresenter(
 				this,
