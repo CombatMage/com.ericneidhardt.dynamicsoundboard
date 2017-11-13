@@ -31,7 +31,7 @@ class SoundActivityModelTest {
 	}
 
 	@Test
-	fun saveData() {
+	fun startServiceToStore() {
 		// action
 		this.unit.saveData()
 
@@ -39,8 +39,9 @@ class SoundActivityModelTest {
 		verify(this.context).startService(Intent(this.context, SaveDataIntentService::class.java))
 	}
 
+	// TEST Fails: because Mockito does not mock correct
 	@Test
-	fun getSoundSheets() {
+	fun getSoundSheetsReturnsDataFromStorage() {
 		// arrange
 		val testData = listOf(SoundSheet(), SoundSheet())
 		`when`(this.soundSheetManager.soundSheets).thenReturn(testData)
@@ -52,8 +53,9 @@ class SoundActivityModelTest {
 		assert(result.size == 2)
 	}
 
+	// TEST Fails: because Mockito does not mock correct
 	@Test
-	fun getNameForNewSoundSheet() {
+	fun getNameForNewSoundSheetReturnsNameFromManager() {
 		// arrange
 		`when`(this.soundSheetManager.suggestedName).thenReturn("test")
 

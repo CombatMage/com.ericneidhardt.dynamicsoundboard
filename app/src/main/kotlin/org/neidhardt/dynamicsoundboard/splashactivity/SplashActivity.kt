@@ -38,8 +38,15 @@ class SplashActivity :
 		this.finish()
 	}
 
-	override fun finishActivity() {
-		this.finish()
+	override fun closeApplication(showClosingInfo: Boolean) {
+		if (!showClosingInfo) {
+			this.finish()
+		} else {
+			// could be called before onResume, because it is usually triggered by onRequestPermissionsResult
+			this.postAfterOnResume {
+				AppClosingInfoDialog.show(this.supportFragmentManager)
+			}
+		}
 	}
 
 	override fun explainPermissions(permissions: Array<String>) {
@@ -65,7 +72,8 @@ class SplashActivity :
 	override fun onRequestPermissionsResult(
 			requestCode: Int,
 			permissions: Array<out String>,
-			grantResults: IntArray) {
+			grantResults: IntArray
+	) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 		when (requestCode) {
 			IntentRequest.REQUEST_PERMISSIONS -> { this.presenter.onUserHasChangedPermissions() }
@@ -98,11 +106,5 @@ class SplashActivity :
 
 	override fun onViewPagerDialogBackPressed() {
 		this.presenter.onExplainPermissionDialogClosed()
-	}
-
-	override fun showAppClosingInfo() {
-		this.postAfterOnResume {
-			AppClosingInfoDialog.show(this.supportFragmentManager)
-		}
 	}
 }

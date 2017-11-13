@@ -25,7 +25,7 @@ class SplashActivityPresenterTest {
 	}
 
 	@Test
-	fun onCreated__normalStart() {
+	fun openSoundActivityOnNormalStart() {
 		// arrange
 		Mockito.`when`(this.view.getMissingPermissions()).thenReturn(emptyArray())
 
@@ -37,7 +37,7 @@ class SplashActivityPresenterTest {
 	}
 
 	@Test
-	fun onCreated__withMissingPermissions() {
+	fun explainPermissionsIfMissingOnStart() {
 		// arrange
 		val missingPermissions = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray()
 		Mockito.`when`(this.view.getMissingPermissions()).thenReturn(missingPermissions)
@@ -50,7 +50,7 @@ class SplashActivityPresenterTest {
 	}
 
 	@Test
-	fun onUserHasChangedPermissions__mandatoryPermissionMissing() {
+	fun closeAppIfMandatoryPermissionsWhereRefused() {
 		// arrange
 		Mockito.`when`(this.view.getMissingPermissions()).thenReturn(
 				Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray())
@@ -59,11 +59,11 @@ class SplashActivityPresenterTest {
 		this.unit.onUserHasChangedPermissions()
 
 		// verify
-		verify(this.view).finishActivity()
+		verify(this.view).closeApplication(true)
 	}
 
 	@Test
-	fun onUserHasChangedPermissions__noMandatoryPermissionMissing() {
+	fun openSoundActivityIfMandatoryPermissionsWhereGranted() {
 		// arrange
 		Mockito.`when`(this.view.getMissingPermissions()).thenReturn(
 				Arrays.asList(Manifest.permission.READ_PHONE_STATE).toTypedArray())
