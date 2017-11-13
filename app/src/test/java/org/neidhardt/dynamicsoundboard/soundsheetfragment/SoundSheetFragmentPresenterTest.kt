@@ -1,9 +1,7 @@
 package org.neidhardt.dynamicsoundboard.soundsheetfragment
 
-import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
@@ -30,7 +28,7 @@ class SoundSheetFragmentPresenterTest {
 	}
 
 	@Test
-	fun onUserClicksFabShouldPauseSoundsIfRunning() {
+	fun userClicksFabShouldPauseSoundsIfRunning() {
 		// arrange
 		val testData = listOf(Mockito.mock(MediaPlayerController::class.java))
 		`when`(this.model.getCurrentlyPlayingSounds()).thenReturn(testData)
@@ -40,5 +38,17 @@ class SoundSheetFragmentPresenterTest {
 
 		// verify
 		testData.forEach { verify(it).pauseSound() }
+	}
+
+	@Test
+	fun userClicksFabShouldOpenDialogIfNoSoundsArePlaying() {
+		// arrange
+		`when`(this.model.getCurrentlyPlayingSounds()).thenReturn(emptyList())
+
+		// action
+		this.unit.onUserClicksFab()
+
+		// verify
+		verify(this.view).openDialogForNewSound()
 	}
 }
