@@ -51,7 +51,8 @@ class SoundSheetFragment : BaseFragment(),
 		MediaPlayerFailedEventListener {
 
 	companion object {
-		internal val KEY_FRAGMENT_TAG = "SoundSheetFragment.KEY_FRAGMENT_TAG"
+		private const val KEY_FRAGMENT_TAG = "SoundSheetFragment.KEY_FRAGMENT_TAG"
+
 		fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment {
 			val fragment = SoundSheetFragment()
 			val args = Bundle()
@@ -90,7 +91,8 @@ class SoundSheetFragment : BaseFragment(),
 	private lateinit var model: SoundSheetFragmentContract.Model
 
 	private lateinit var recyclerView: RecyclerView
-	private lateinit var snackbar: Snackbar
+
+	private var snackbar: Snackbar? = null
 
 	override var displayedSounds: List<MediaPlayerController>
 		get() = this.adapterSounds.values
@@ -335,10 +337,10 @@ class SoundSheetFragment : BaseFragment(),
 		val message = "${resources.getString(R.string.sound_control_error_during_playback)}: " +
 				player.mediaPlayerData.label
 
-		this.snackbar.dismiss()
+		this.snackbar?.dismiss()
 		this.snackbar = Snackbar.make(
 				this.cl_fragment_sound_sheet, message, Snackbar.LENGTH_INDEFINITE)
-		this.snackbar.show()
+		this.snackbar?.show()
 	}
 
 	override fun showSnackbarForRestoreSound() {
@@ -352,15 +354,16 @@ class SoundSheetFragment : BaseFragment(),
 			resources.getString(R.string.sound_control_deletion_pending).replace("{%s0}",
 					count.toString())
 
-		this.snackbar.dismiss()
+		this.snackbar?.dismiss()
 		this.snackbar = Snackbar.make(
-				this.cl_fragment_sound_sheet, message, timeTillDeletion).apply {
+				this.cl_fragment_sound_sheet, message, timeTillDeletion
+		).apply {
 			this.setAction(
 					R.string.sound_control_deletion_pending_undo,
 					{ deletionHandler.restoreDeletedItems() }
 			)
 		}
-		this.snackbar.show()
+		this.snackbar?.show()
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

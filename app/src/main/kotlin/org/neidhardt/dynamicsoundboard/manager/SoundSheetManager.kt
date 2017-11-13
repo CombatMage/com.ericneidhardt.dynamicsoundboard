@@ -12,9 +12,8 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
 open class SoundSheetManager(private val context: Context) {
 
 	companion object {
-		fun getNewFragmentTagForLabel(label: String): String {
-			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
-		}
+		fun getNewFragmentTagForLabel(label: String): String =
+				Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
 	}
 
 	internal var onSoundSheetsChangedListener = ArrayList<((List<SoundSheet>) -> Unit)>()
@@ -54,7 +53,8 @@ open class SoundSheetManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	val suggestedName: String get() = this.context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
+	val suggestedName: String get() =
+		this.context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
 
 	private fun invokeListeners() {
 		this.onSoundSheetsChangedListener.forEach { it.invoke(this.soundSheets) }

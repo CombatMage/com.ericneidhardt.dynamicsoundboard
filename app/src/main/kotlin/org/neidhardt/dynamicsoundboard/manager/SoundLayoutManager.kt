@@ -53,7 +53,7 @@ class SoundLayoutManager(
 	fun init(loadingAppData: Observable<AppData?>) {
 		loadingAppData.subscribe { appData ->
 			this.mSoundLayouts = ArrayList()
-			appData.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
+			appData?.soundLayouts?.let { this.mSoundLayouts?.addAll(it) }
 			if (this.mSoundLayouts?.isEmpty() == true)
 				this.mSoundLayouts?.add(this.getDefaultSoundLayout())
 
