@@ -103,10 +103,12 @@ class NotificationService : Service(),
 
 	private fun onNotificationAction(action: String, playerId: String, notificationId: Int) {
 		val player: MediaPlayerController? =
-				if (notificationId == NotificationConstants.NOTIFICATION_ID_PLAYLIST)
+				if (notificationId == NotificationConstants.NOTIFICATION_ID_PLAYLIST) {
 					this.playlistManager.playlist.findById(playerId)
-				else
+				}
+				else {
 					this.soundManager.sounds.findById(playerId)
+				}
 
 		player?.let {
 			when (action) {
@@ -182,8 +184,8 @@ class NotificationService : Service(),
 		if (!areNotificationsEnabled)
 			return
 
-		val playerId = event.playerId
-		val fragmentTag = event.fragmentTag
+		val playerId = event.player.mediaPlayerData.playerId
+		val fragmentTag = event.player.mediaPlayerData.fragmentTag
 		val isAlive = event.isAlive
 
 		// update special playlist notification

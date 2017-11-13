@@ -13,13 +13,9 @@ data class MediaPlayerFailedEvent(
 		val failingAction: PlayerAction,
 		val message: String)
 
-data class MediaPlayerStateChangedEvent(val player: MediaPlayerController, val isAlive: Boolean) {
-	val playerId: String
-		get() = this.player.mediaPlayerData.playerId
-
-	val fragmentTag: String
-		get() = this.player.mediaPlayerData.fragmentTag
-}
+data class MediaPlayerStateChangedEvent(
+		val player: MediaPlayerController,
+		val isAlive: Boolean)
 
 interface MediaPlayerEventListener {
 	/**

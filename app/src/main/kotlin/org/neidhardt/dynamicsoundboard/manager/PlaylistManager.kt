@@ -128,7 +128,7 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerStateChangedEvent) {
-		if (event.fragmentTag != PLAYLIST_TAG) return
+		if (event.player.mediaPlayerData.fragmentTag != PLAYLIST_TAG) return
 		if (!event.isAlive) {
 			this.remove(listOf(event.player))
 		}

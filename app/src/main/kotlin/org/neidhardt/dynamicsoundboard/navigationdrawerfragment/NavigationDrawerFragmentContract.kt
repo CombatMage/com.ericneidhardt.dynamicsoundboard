@@ -29,6 +29,7 @@ interface NavigationDrawerFragmentContract {
 		fun setTapBarState(newState: TapBarState)
 		fun setHeaderTitle(text: String)
 		fun animateHeaderArrow(direction: AnimationDirection)
+		fun refreshDisplayedPlaylist()
 		fun showSoundSheets()
 		fun showPlaylist()
 		fun showSoundLayouts()

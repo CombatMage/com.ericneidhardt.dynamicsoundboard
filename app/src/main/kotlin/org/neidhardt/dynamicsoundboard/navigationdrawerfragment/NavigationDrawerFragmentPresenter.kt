@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 
-import android.util.Log
 import org.neidhardt.dynamicsoundboard.manager.selectedLayout
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
@@ -17,8 +16,6 @@ class NavigationDrawerFragmentPresenter(
 		private val view: NavigationDrawerFragmentContract.View,
 		private val model: NavigationDrawerFragmentContract.Model
 ) : NavigationDrawerFragmentContract.Presenter {
-
-	private val logTag = javaClass.name
 
 	private enum class List {
 		SoundSheet,
@@ -44,7 +41,7 @@ class NavigationDrawerFragmentPresenter(
 
 		this.model.mediaPlayerStateChangedEvents
 				.filter { (player) -> player.mediaPlayerData.fragmentTag == PLAYLIST_TAG }
-				.subscribe { (player, isAlive) -> this.onPlayListPlayerStateChanged(player, isAlive) }
+				.subscribe { (_, _) -> this.view.refreshDisplayedPlaylist() }
 
 		this.model.mediaPlayerCompletedEvents
 				.map { (player) -> player }
@@ -263,11 +260,6 @@ class NavigationDrawerFragmentPresenter(
 		this.view.displayedPlaylist = currentPlayList // set playlist to display
 	}
 
-	private fun onPlayListPlayerStateChanged(player: MediaPlayerController, isPlayerRemoved: Boolean) {
-		Log.d(this.logTag, "onPlayListPlayerStateChanged($player, $isPlayerRemoved)")
-		// TODO should update UI
-	}
-
 	private fun onPlayListPlayerCompleted(player: MediaPlayerController) {
 		val currentPlayList = this.view.displayedPlaylist // get current playlist
 
@@ -287,6 +279,6 @@ class NavigationDrawerFragmentPresenter(
 			currentPlayList[this.currentPlayListItemIndex].playSound()
 		}
 
-		this.view.displayedPlaylist = currentPlayList // set playlist to display
+		this.view.refreshDisplayedPlaylist()
 	}
 }

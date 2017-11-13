@@ -289,6 +289,10 @@ class NavigationDrawerFragment :
 		}
 	}
 
+	override fun refreshDisplayedPlaylist() {
+		this.adapterPlaylist.notifyDataSetChanged()
+	}
+
 	override fun showSoundSheets() {
 		this.recyclerView.adapter = this.adapterSoundSheets
 	}
