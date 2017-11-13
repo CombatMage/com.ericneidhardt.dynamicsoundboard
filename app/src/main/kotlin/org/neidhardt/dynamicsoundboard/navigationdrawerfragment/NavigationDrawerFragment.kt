@@ -16,11 +16,11 @@ import kotlinx.android.synthetic.main.fragment_navigation_drawer.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_header.view.*
+import org.neidhardt.android_utils.EnhancedSupportFragment
 import org.neidhardt.android_utils.animations.setOnAnimationEndedListener
 import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
@@ -32,12 +32,13 @@ import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playl
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts.SoundLayoutsAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundsheets.SoundSheetsAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.PaddingDecorator
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 
 /**
  * Created by eric.neidhardt@gmail.com on 01.09.2017.
  */
 class NavigationDrawerFragment :
-		BaseFragment(),
+		EnhancedSupportFragment(),
 		NavigationDrawerFragmentContract.View {
 
 	private val soundManager = SoundboardApplication.soundManager
@@ -317,6 +318,6 @@ class NavigationDrawerFragment :
 	}
 
 	override fun closeNavigationDrawer() {
-		this.baseActivity.closeNavigationDrawer()
+		(this.activity as SoundActivity).closeNavigationDrawer()
 	}
 }

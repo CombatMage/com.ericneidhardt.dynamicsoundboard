@@ -23,7 +23,6 @@ import org.greenrobot.eventbus.ThreadMode
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
@@ -37,6 +36,7 @@ import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.ItemTouchCallback
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.PendingDeletionHandler
+import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.RecyclerViewFragment
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.SoundAdapter
 import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
 import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
@@ -45,7 +45,7 @@ import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 /**
  * Created by eric.neidhardt@gmail.com on 08.05.2017.
  */
-class SoundSheetFragment : BaseFragment(),
+class SoundSheetFragment : RecyclerViewFragment(),
 		SoundSheetFragmentContract.View,
 		MediaPlayerEventListener,
 		MediaPlayerFailedEventListener {
@@ -64,8 +64,6 @@ class SoundSheetFragment : BaseFragment(),
 	private val soundSheet: SoundSheet get() =
 		this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
 				?: throw IllegalStateException("no match for fragmentTag found")
-
-	private val KEY_STATE_RECYCLER_VIEW get() = "${this.fragmentTag}_recycler_view_state"
 
 	private val eventBus = EventBus.getDefault()
 
@@ -90,7 +88,7 @@ class SoundSheetFragment : BaseFragment(),
 	private lateinit var presenter: SoundSheetFragmentContract.Presenter
 	private lateinit var model: SoundSheetFragmentContract.Model
 
-	private lateinit var recyclerView: RecyclerView
+	override lateinit var recyclerView: RecyclerView
 
 	private var snackbar: Snackbar? = null
 
@@ -267,23 +265,6 @@ class SoundSheetFragment : BaseFragment(),
 	override fun onPause() {
 		super.onPause()
 		this.eventBus.unregister(this)
-	}
-
-	override fun onRestoreState(savedInstanceState: Bundle) {
-		super.onRestoreState(savedInstanceState)
-		this.rv_fragment_sound_sheet_sounds?.layoutManager?.let { layoutManager ->
-			savedInstanceState.putParcelable(
-					KEY_STATE_RECYCLER_VIEW,
-					layoutManager.onSaveInstanceState()
-			)
-		}
-	}
-
-	override fun onSaveState(outState: Bundle) {
-		super.onSaveState(outState)
-		this.rv_fragment_sound_sheet_sounds?.layoutManager?.onRestoreInstanceState(
-				outState.getParcelable(KEY_STATE_RECYCLER_VIEW)
-		)
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
