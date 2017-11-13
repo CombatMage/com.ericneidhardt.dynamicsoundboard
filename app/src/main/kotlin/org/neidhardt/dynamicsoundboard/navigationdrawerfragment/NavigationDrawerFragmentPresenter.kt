@@ -11,13 +11,14 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
 /**
  * Created by eric.neidhardt@gmail.com on 01.09.2017.
  */
+private const val INDEX_NOT_SET = -1
+
 class NavigationDrawerFragmentPresenter(
 		private val view: NavigationDrawerFragmentContract.View,
 		private val model: NavigationDrawerFragmentContract.Model
 ) : NavigationDrawerFragmentContract.Presenter {
 
-	private val TAG = javaClass.name
-	private val INDEX_NOT_SET = -1
+	private val logTag = javaClass.name
 
 	private enum class List {
 		SoundSheet,
@@ -253,16 +254,18 @@ class NavigationDrawerFragmentPresenter(
 				.filter { it != nextActivePlayer && it.isPlayingSound }
 				.forEach { it.stopSound() }
 
-		if (nextActivePlayer.isPlayingSound)
+		if (nextActivePlayer.isPlayingSound) {
 			nextActivePlayer.stopSound()
-		else
+		} else {
 			nextActivePlayer.playSound()
+		}
 
 		this.view.displayedPlaylist = currentPlayList // set playlist to display
 	}
 
 	private fun onPlayListPlayerStateChanged(player: MediaPlayerController, isPlayerRemoved: Boolean) {
-		Log.d(TAG, "onPlayListPlayerStateChanged($player, $isPlayerRemoved)")
+		Log.d(this.logTag, "onPlayListPlayerStateChanged($player, $isPlayerRemoved)")
+		// TODO should update UI
 	}
 
 	private fun onPlayListPlayerCompleted(player: MediaPlayerController) {
