@@ -6,6 +6,8 @@ import java.util.concurrent.atomic.AtomicBoolean
 /**
  * Created by eric.neidhardt@sevenval.com on 21.11.2016.
  */
+private const val UPDATE_INTERVAL: Long = 500
+
 class ProgressMonitor(private val exoPlayer: ExoMediaPlayer) {
 
 	var onProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener? = null

@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
@@ -80,7 +80,7 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 			val newPlayerData = MediaPlayerData().apply {
 				this.playerId = mediaPlayerData.playerId
-				this.fragmentTag = PlaylistTAG
+				this.fragmentTag = PLAYLIST_TAG
 				this.isLoop = false
 				this.label = mediaPlayerData.label
 				this.uri = mediaPlayerData.uri
@@ -128,7 +128,7 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerStateChangedEvent) {
-		if (event.fragmentTag != PlaylistTAG) return
+		if (event.fragmentTag != PLAYLIST_TAG) return
 		if (!event.isAlive) {
 			this.remove(listOf(event.player))
 		}
@@ -138,7 +138,7 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerCompletedEvent) {
-		if (event.player.mediaPlayerData.fragmentTag != PlaylistTAG) return
+		if (event.player.mediaPlayerData.fragmentTag != PLAYLIST_TAG) return
 		this.onPlaylistPlayerCompletedListener.forEach { it.invoke(event) }
 	}
 }

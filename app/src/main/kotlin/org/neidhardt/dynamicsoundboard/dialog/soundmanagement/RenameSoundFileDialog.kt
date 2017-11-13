@@ -17,7 +17,7 @@ import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
@@ -134,7 +134,7 @@ private class RenameSoundFileDialogPresenter (
 				player.mediaPlayerData.label = newFileLabel
 			}
 
-			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
+			if (player.mediaPlayerData.fragmentTag == PLAYLIST_TAG)
 				this.playlistManager.notifyHasChanged(player)
 			else
 				this.soundsManager.notifyHasChanged(player)
@@ -180,7 +180,7 @@ private class RenameSoundFileDialogPresenter (
 				player.mediaPlayerData.label = newFileLabel
 			}
 
-			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
+			if (player.mediaPlayerData.fragmentTag == PLAYLIST_TAG)
 				this.playlistManager.notifyHasChanged(player)
 			else
 				this.soundsManager.notifyHasChanged(player)
@@ -218,7 +218,7 @@ private class RenameSoundFileDialogPresenter (
 		}
 		catch (e: IOException) {
 			Logger.e(TAG, e.message)
-			if (player.mediaPlayerData.fragmentTag == PlaylistTAG)
+			if (player.mediaPlayerData.fragmentTag == PLAYLIST_TAG)
 				this.playlistManager.remove(listOf(player))
 			else {
 				val soundSheet = this.soundSheetManager.soundSheets.findByFragmentTag(player.mediaPlayerData.fragmentTag!!)

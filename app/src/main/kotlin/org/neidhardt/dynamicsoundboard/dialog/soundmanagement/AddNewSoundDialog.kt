@@ -27,7 +27,7 @@ import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
@@ -207,7 +207,7 @@ private class AddNewSoundDialogPresenter(
 				renamedPlayers.add(playerData)
 		}
 
-		if (this.dialog.callingFragmentTag == PlaylistTAG) {
+		if (this.dialog.callingFragmentTag == PLAYLIST_TAG) {
 			for (playerData in playersData)
 				this.playlistManager.add(playerData)
 		} else {

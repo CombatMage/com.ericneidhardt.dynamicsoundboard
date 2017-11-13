@@ -25,7 +25,7 @@ import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist.PlaylistAdapter
@@ -314,7 +314,7 @@ class NavigationDrawerFragment :
 	}
 
 	override fun showDialogAddSoundToPlaylist() {
-		AddNewSoundDialog.show(fragmentManager, PlaylistTAG)
+		AddNewSoundDialog.show(fragmentManager, PLAYLIST_TAG)
 	}
 
 	override fun closeNavigationDrawer() {

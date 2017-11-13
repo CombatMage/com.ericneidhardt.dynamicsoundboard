@@ -20,7 +20,7 @@
             <val name="value" val="{org.jetbrains.kannotator.controlFlow.builder.analysis.NullabilityKey.class}"/>
         </annotation>
     </item>
-    <item name='android.support.v7.widget.StaggeredGridLayoutManager TAG'>
+    <item name='android.support.v7.widget.StaggeredGridLayoutManager logTag'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
     <item name='android.support.v7.widget.RecyclerView.ItemDecoration void getItemOffsets(android.graphics.Rect, android.view.View, android.support.v7.widget.RecyclerView, android.support.v7.widget.RecyclerView.State) 1'>

@@ -3,7 +3,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 import android.util.Log
 import org.neidhardt.dynamicsoundboard.manager.selectedLayout
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
@@ -43,12 +43,12 @@ class NavigationDrawerFragmentPresenter(
 				}
 
 		this.model.mediaPlayerStateChangedEvents
-				.filter { (player) -> player.mediaPlayerData.fragmentTag == PlaylistTAG }
+				.filter { (player) -> player.mediaPlayerData.fragmentTag == PLAYLIST_TAG }
 				.subscribe { (player, isAlive) -> this.onPlayListPlayerStateChanged(player, isAlive) }
 
 		this.model.mediaPlayerCompletedEvents
 				.map { (player) -> player }
-				.filter { player -> player.mediaPlayerData.fragmentTag == PlaylistTAG }
+				.filter { player -> player.mediaPlayerData.fragmentTag == PLAYLIST_TAG }
 				.subscribe { player -> this.onPlayListPlayerCompleted(player) }
 
 		this.view.setTapBarState(NavigationDrawerFragmentContract.View.TapBarState.NORMAL)

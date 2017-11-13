@@ -13,7 +13,7 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.manager.findById
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
@@ -187,7 +187,7 @@ class NotificationService : Service(),
 		val isAlive = event.isAlive
 
 		// update special playlist notification
-		if (fragmentTag == PlaylistTAG)
+		if (fragmentTag == PLAYLIST_TAG)
 			this.handlePlaylistPlayerStateChanged(playerId, isAlive)
 		else // check if there is a generic notification to update
 			this.handlerPlayerStateChanged(playerId, isAlive)
