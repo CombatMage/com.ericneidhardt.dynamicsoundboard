@@ -1,5 +1,5 @@
 ext.versions = [
-		supportLibs : '25.0.0'
+		supportLibs : '25.4.0'
 ]
 
 ext.libraries = [
@@ -12,7 +12,7 @@ ext.libraries = [
 		rxBinding            : 'com.jakewharton.rxbinding2:rxbinding:2.0.0',
 		rxBindingDesign      : 'com.jakewharton.rxbinding2:rxbinding-design:2.0.0',
 
-		multidex             : "com.android.support:multidex:1.0.1",
+		multidex             : "com.android.support:multidex:1.0.2",
 		supportV4            : "com.android.support:support-v4:$versions.supportLibs",
 		supportV13           : "com.android.support:support-v13:$versions.supportLibs",
 		supportAppCompat     : "com.android.support:appcompat-v7:$versions.supportLibs",
