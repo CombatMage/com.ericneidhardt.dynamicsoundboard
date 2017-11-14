@@ -27,7 +27,7 @@ class PreferenceRepository(private val context: Context) {
 	val useBuildInBrowserForFiles: Boolean get() {
 		return this.preferenceManager.getBoolean(
 				this.context.getString(R.string.preferences_use_system_file_browser_key),
-				false)
+				true)
 	}
 
 	fun registerSharedPreferenceChangedListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
