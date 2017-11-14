@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_add_new_sound.view.*
 import kotlinx.android.synthetic.main.view_add_sound_list_item.view.*
+import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
@@ -37,10 +38,10 @@ import java.util.*
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
-class AddNewSoundDialog : BaseDialog(), FileResultHandler {
+private const val KEY_SOUNDS_URI = "KEY_SOUNDS_URI"
+private const val KEY_SOUNDS_LABEL = "KEY_SOUNDS_LABEL"
 
-	private val KEY_SOUNDS_URI = "KEY_SOUNDS_URI"
-	private val KEY_SOUNDS_LABEL = "KEY_SOUNDS_LABEL"
+class AddNewSoundDialog : BaseDialog(), FileResultHandler {
 
 	private val soundManager = SoundboardApplication.soundManager
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
@@ -54,7 +55,7 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler {
 
 		fun show(fragmentManager: FragmentManager, callingFragmentTag: String) {
 			val args = Bundle().apply {
-				this.putString(org.neidhardt.dynamicsoundboard.base.BaseDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+				this.putString(BaseDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
 			}
 			val dialog = AddNewSoundDialog().apply {
 				this.arguments = args
@@ -82,13 +83,13 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler {
 				addedSoundsLayout = view.rv_dialog)
 
 		return AlertDialog.Builder(context).apply {
-			this.setTitle(org.neidhardt.dynamicsoundboard.R.string.dialog_add_new_sound_title)
+			this.setTitle(R.string.dialog_add_new_sound_title)
 			this.setView(view)
-			this.setPositiveButton(org.neidhardt.dynamicsoundboard.R.string.all_add, { _, _ ->
+			this.setPositiveButton(R.string.all_add, { _, _ ->
 				presenter?.addSoundsToSoundSheet()
 				dismiss()
 			})
-			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.all_cancel, { _, _ ->
+			this.setNegativeButton(R.string.all_cancel, { _, _ ->
 				dismiss()
 			})
 		}.create()
@@ -177,7 +178,7 @@ private class AddNewSoundDialogPresenter(
 		this.addAnotherSound.setOnClickListener({ this.addAnotherSound() })
 
 		this.addedSoundsLayout.apply {
-			this.addItemDecoration(org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration(this.context, org.neidhardt.dynamicsoundboard.R.color.background, org.neidhardt.dynamicsoundboard.R.color.divider))
+			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
 		}
@@ -208,14 +209,13 @@ private class AddNewSoundDialogPresenter(
 		}
 
 		if (this.dialog.callingFragmentTag == PLAYLIST_TAG) {
-			for (playerData in playersData)
-				this.playlistManager.add(playerData)
+			playersData.forEach { this.playlistManager.add(it) }
 		} else {
 			val soundSheet =
 					this.soundSheetManager.soundSheets.findByFragmentTag(this.dialog.callingFragmentTag)
 							?: throw IllegalStateException("no soundSheet for fragmentTag was found")
-			for (playerData in playersData)
-				this.soundManager.add(soundSheet, playerData)
+
+			playersData.forEach { this.soundManager.add(soundSheet, it) }
 		}
 
 		this.showRenameDialog(renamedPlayers) // show the renameFileAndPlayer dialog for all altered players
@@ -243,8 +243,8 @@ private class AddNewSoundDialogPresenter(
 	}
 }
 
-private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter) : RecyclerView.Adapter<NewSoundViewHolder>()
-{
+private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter) : RecyclerView.Adapter<NewSoundViewHolder>() {
+
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewSoundViewHolder {
 		val view = LayoutInflater.from(parent.context).inflate(R.layout.view_add_sound_list_item, parent, false)
 		return NewSoundViewHolder(view)
@@ -263,8 +263,8 @@ private class NewSoundData(var uri: Uri, var label: String) {
 
 private class NewSoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), TextWatcher {
 
-	private val soundPath = itemView.tv_path
-	private val soundName = itemView.et_name_file
+	private val soundPath = itemView.textview_addsoundlistitem_filepath
+	private val soundName = itemView.edittext_addsoundlistitem_name
 
 	private var data: NewSoundData? = null
 
