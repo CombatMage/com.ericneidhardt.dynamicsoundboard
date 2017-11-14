@@ -34,6 +34,9 @@ import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import java.io.File
 import java.util.*
+import android.view.WindowManager
+
+
 
 /**
  * File created by eric.neidhardt on 30.06.2015.
@@ -93,6 +96,13 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler {
 				dismiss()
 			})
 		}.create()
+	}
+
+	override fun onResume() {
+		super.onResume()
+		this.dialog.window.clearFlags(
+				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+						or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
