@@ -114,14 +114,14 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			val requiredHeight = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
 			val requiredWidth = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_width)
 
-			if (data != null) {
+			return if (data != null) {
 				val size = getBitmapSize(data)
 				val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
-				return getBitmapFromBytes(data, sampleSize)
+				getBitmapFromBytes(data, sampleSize)
 			} else {
 				val size = getBitmapSize(resources, R.drawable.ic_notification_large)
 				val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
-				return getBitmapFromAsset(context, R.drawable.ic_notification_large, sampleSize)
+				getBitmapFromAsset(context, R.drawable.ic_notification_large, sampleSize)
 			}
 		}
 
@@ -131,12 +131,12 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			val requiredHeight = 400
 			val requiredWidth = 400
 
-			if (data != null) {
+			return if (data != null) {
 				val size = getBitmapSize(data)
 				val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
-				return getBitmapFromBytes(data, sampleSize)
+				getBitmapFromBytes(data, sampleSize)
 			} else {
-				return getBitmapFromAsset(context, R.drawable.ic_notification_background_wear, 1)
+				getBitmapFromAsset(context, R.drawable.ic_notification_background_wear, 1)
 			}
 		}
 

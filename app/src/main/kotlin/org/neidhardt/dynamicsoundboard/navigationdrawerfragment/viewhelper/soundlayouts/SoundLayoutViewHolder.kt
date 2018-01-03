@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.view_sound_layout_item.view.*
-import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 
 /**
