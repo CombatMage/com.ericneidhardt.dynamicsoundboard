@@ -1,23 +1,13 @@
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
-	}
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-	compileSdkVersion rootProject.ext.compileSdkVersion
-	buildToolsVersion rootProject.ext.buildToolsVersion
+	compileSdkVersion rootProject.ext.compileSDK
+	buildToolsVersion rootProject.ext.buildTools
 
 	defaultConfig {
-		minSdkVersion project.projectMinSdkVersion
-		targetSdkVersion project.projectTargetSdkVersion
+		minSdkVersion project.projectMinSDK
+		targetSdkVersion project.projectTargetSDK
 		versionCode 1
 		versionName "1.0"
 	}
@@ -35,8 +25,11 @@ android {
 
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
+
+	// kotlin
 	compile rootProject.ext.libraries.kotlin
 
+	// rx
 	compile rootProject.ext.libraries.rxAndroid
 	compile rootProject.ext.libraries.rxKotlin
 	compile rootProject.ext.libraries.rxJava

@@ -1,21 +1,10 @@
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
-	}
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-
-	compileSdkVersion rootProject.ext.compileSdkVersion
-	buildToolsVersion rootProject.ext.buildToolsVersion
+	compileSdkVersion rootProject.ext.compileSDK
+	buildToolsVersion rootProject.ext.buildTools
 
 	dexOptions {
 		javaMaxHeapSize "4g"
@@ -39,8 +28,8 @@ android {
 	
 	defaultConfig {
 		applicationId "org.neidhardt.dynamicsoundboard"
-		minSdkVersion project.projectMinSdkVersion
-		targetSdkVersion project.projectTargetSdkVersion
+		minSdkVersion project.projectMinSDK
+		targetSdkVersion project.projectTargetSDK
 		versionCode 23206
 		versionName "2.32.6"
 		resConfigs "de"
@@ -76,49 +65,55 @@ android {
 }
 
 dependencies {
-	compile fileTree(include: ['*.jar'], dir: 'libs')
-	compile project(':app_utils')
-	compile project(':android_utils')
+	implementation fileTree(include: ['*.jar'], dir: 'libs')
+	implementation project(':app_utils')
+	implementation project(':android_utils')
 
-	compile 'org.neidhardt:enhanced-handler:1.0.7'
-	compile 'org.neidhardt:simple-storage:1.0.2'
-	compile 'org.neidhardt:viewpager-dialog:1.0.3'
+	implementation 'org.neidhardt:enhanced-handler:1.0.7'
+	implementation 'org.neidhardt:simple-storage:1.0.2'
+	implementation 'org.neidhardt:viewpager-dialog:1.0.3'
 
-	debugCompile rootProject.ext.libraries.leakCanary
+	// kotlin
+	implementation rootProject.ext.libraries.kotlin
 
-	compile rootProject.ext.libraries.kotlin
+	// rx
+	implementation rootProject.ext.libraries.rxAndroid
+	implementation rootProject.ext.libraries.rxKotlin
+	implementation rootProject.ext.libraries.rxJava
+	implementation rootProject.ext.libraries.rxBinding
+	implementation rootProject.ext.libraries.rxBindingDesign
 
-	compile rootProject.ext.libraries.rxAndroid
-	compile rootProject.ext.libraries.rxKotlin
-	compile rootProject.ext.libraries.rxJava
-	compile rootProject.ext.libraries.rxBinding
-	compile rootProject.ext.libraries.rxBindingDesign
+	// multidex support
+	implementation rootProject.ext.libraries.multidex
 
-	compile rootProject.ext.libraries.multidex
+	// android support
+	implementation rootProject.ext.libraries.supportV4
+	implementation rootProject.ext.libraries.supportV13
+	implementation rootProject.ext.libraries.supportRecyclerView
+	implementation rootProject.ext.libraries.supportAppCompat
+	implementation rootProject.ext.libraries.supportDesign
 
-	compile rootProject.ext.libraries.supportV4
-	compile rootProject.ext.libraries.supportV13
-	compile rootProject.ext.libraries.supportRecyclerView
-	compile rootProject.ext.libraries.supportAppCompat
-	compile rootProject.ext.libraries.supportDesign
+	// media player
+	implementation rootProject.ext.libraries.exoplayer
 
-	compile rootProject.ext.libraries.greenRobotCommons
+	// misc
+	implementation rootProject.ext.libraries.greenRobotCommons
+	implementation rootProject.ext.libraries.eventBus
+	implementation rootProject.ext.libraries.gson
 
-	compile rootProject.ext.libraries.exoplayer
+	// ui widgets
+	implementation rootProject.ext.libraries.floatingActionButton
+	implementation rootProject.ext.libraries.materialProgressBar
+	implementation rootProject.ext.libraries.recyclerViewAnimator
 
-	compile rootProject.ext.libraries.gson
+	// debug
+	debugImplementation rootProject.ext.libraries.leakCanary
+	implementation rootProject.ext.libraries.acra
 
-	compile rootProject.ext.libraries.floatingActionButton
-
-	compile rootProject.ext.libraries.materialProgressBar
-
-	compile rootProject.ext.libraries.recyclerViewAnimator
-
-	compile rootProject.ext.libraries.acra
-
-	testCompile rootProject.ext.libraries.junit
-	testCompile rootProject.ext.libraries.mockito
-	testCompile rootProject.ext.libraries.robolectric
-	testCompile rootProject.ext.libraries.robolectricMultidex
-	testCompile rootProject.ext.libraries.robolectricSupportV4
+	// testing
+	testImplementation rootProject.ext.libraries.junit
+	testImplementation rootProject.ext.libraries.mockito
+	testImplementation rootProject.ext.libraries.robolectric
+	testImplementation rootProject.ext.libraries.robolectricMultidex
+	testImplementation rootProject.ext.libraries.robolectricSupportV4
 }
