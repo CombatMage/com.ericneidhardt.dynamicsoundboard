@@ -27,17 +27,17 @@ dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
 	// kotlin
-	implementation rootProject.ext.libraries.kotlin
+	compile rootProject.ext.libraries.kotlin
 
 	// misc
-	implementation rootProject.ext.libraries.eventBus
+	compile rootProject.ext.libraries.eventBus
 
 	// android support
-	implementation rootProject.ext.libraries.supportDesign
+	compile rootProject.ext.libraries.supportDesign
 
 	// rx
-	implementation rootProject.ext.libraries.rxAndroid
-	implementation rootProject.ext.libraries.rxKotlin
-	implementation rootProject.ext.libraries.rxJava
-	implementation rootProject.ext.libraries.rxBinding
+	compile rootProject.ext.libraries.rxAndroid
+	compile rootProject.ext.libraries.rxKotlin
+	compile rootProject.ext.libraries.rxJava
+	compile rootProject.ext.libraries.rxBinding
 }

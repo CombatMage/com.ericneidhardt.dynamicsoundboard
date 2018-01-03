@@ -24,14 +24,14 @@ android {
 }
 
 dependencies {
-	compile fileTree(dir: 'libs', include: ['*.jar'])
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 	// kotlin
-	compile rootProject.ext.libraries.kotlin
+	implementation rootProject.ext.libraries.kotlin
 
 	// rx
-	compile rootProject.ext.libraries.rxAndroid
-	compile rootProject.ext.libraries.rxKotlin
-	compile rootProject.ext.libraries.rxJava
-	compile rootProject.ext.libraries.rxBinding
+	implementation rootProject.ext.libraries.rxAndroid
+	implementation rootProject.ext.libraries.rxKotlin
+	implementation rootProject.ext.libraries.rxJava
+	implementation rootProject.ext.libraries.rxBinding
 }

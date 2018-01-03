@@ -27,7 +27,7 @@ allprojects {
         buildTools = "26.0.2"
         projectMinSDK = 21
         projectTargetSDK = 26
-        compileSDK = 26
+        compileSDK = 25
     }
 }
 
