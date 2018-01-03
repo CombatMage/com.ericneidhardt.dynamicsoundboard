@@ -2,9 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soun
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import org.neidhardt.dynamicsoundboard.R
+import kotlinx.android.synthetic.main.view_sound_sheet_item.view.*
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
 /**
@@ -12,11 +10,11 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
  */
 class SoundSheetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-	private val label = itemView.findViewById(R.id.tv_label) as TextView
-	private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
-	private val soundCount = itemView.findViewById(R.id.tv_sound_count) as TextView
-	private val soundCountLabel = itemView.findViewById(R.id.tv_sound_count_label)
-	private val divider = itemView.findViewById(R.id.v_divider)
+	private val label = itemView.tv_label
+	private val selectionIndicator = itemView.iv_selected
+	private val soundCount = itemView.tv_sound_count
+	private val soundCountLabel = itemView.tv_sound_count_label
+	private val divider = itemView.v_divider
 
 	var data: SoundSheet? = null
 

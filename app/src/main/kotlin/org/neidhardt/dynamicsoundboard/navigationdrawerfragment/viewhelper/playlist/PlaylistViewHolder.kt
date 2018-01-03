@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import kotlinx.android.synthetic.main.view_playlist_item.view.*
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 
@@ -13,10 +14,10 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
  */
 class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-	private val label = itemView.findViewById(R.id.tv_label) as TextView
-	private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
-	private val timePosition = itemView.findViewById(R.id.sb_progress) as SeekBar
-	private val divider = itemView.findViewById(R.id.v_divider)
+	private val label = itemView.tv_label
+	private val selectionIndicator = itemView.tv_label
+	private val timePosition = itemView.sb_progress
+	private val divider = itemView.v_divider
 
 	var player: MediaPlayerController? = null
 

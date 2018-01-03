@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.dialog_store_sound_sheets.view.*
 import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -36,11 +37,11 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_store_sound_sheets, null)
-		view.findViewById(R.id.b_add).setOnClickListener(this)
+		view.b_add.setOnClickListener(this)
 
-		this.inputFileName = view.findViewById(R.id.et_name_file) as EditText
+		this.inputFileName = view.et_name_file
 
-		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
+		this.directories = view.rv_dialog.apply {
 			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()

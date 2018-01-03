@@ -6,6 +6,7 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.view_directory_item.view.*
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.containsAudioFiles
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
@@ -14,14 +15,13 @@ import java.io.File
 /**
  * Created by eric.neidhardt@gmail.com on 10.02.2017.
  */
-class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-		Animator.AnimatorListener {
+class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Animator.AnimatorListener {
 
 	var file: File? = null
 
-	private val fileType = itemView.findViewById(R.id.iv_file_type) as ImageView
-	private val selectionIndicator = itemView.findViewById(R.id.iv_selected) as ImageView
-	private val fileName = itemView.findViewById(R.id.tv_label) as TextView
+	private val fileType = itemView.iv_file_type
+	private val selectionIndicator = itemView.iv_selected
+	private val fileName = itemView.tv_label
 
 	fun bindData(file: File, isSelected: Boolean, isRootDir: Boolean) {
 		this.file = file

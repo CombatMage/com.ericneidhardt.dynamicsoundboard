@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.EditText
+import kotlinx.android.synthetic.main.dialog_add_new_sound_from_intent_to_sound_sheet.view.*
 import org.neidhardt.android_utils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
@@ -60,8 +61,8 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater
 				.inflate(R.layout.dialog_add_new_sound_from_intent, null)
 
-		this.soundName = view.findViewById(R.id.et_name_file) as EditText
-		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as EditText
+		this.soundName = view.et_name_file
+		this.soundSheetName = view.et_name_new_sound_sheet
 
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_add_new_sound_from_intent_title)
@@ -78,10 +79,10 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater
 				.inflate(R.layout.dialog_add_new_sound_from_intent_to_sound_sheet, null)
 
-		this.soundName = view.findViewById(R.id.et_name_file) as EditText
-		this.soundSheetName = view.findViewById(R.id.et_name_new_sound_sheet) as EditText
-		this.soundSheetSpinner = view.findViewById(R.id.s_sound_sheets) as SimpleSpinner
-		this.addNewSoundSheet = view.findViewById(R.id.cb_add_new_sound_sheet) as CheckBox
+		this.soundName = view.et_name_file
+		this.soundSheetName = view.et_name_new_sound_sheet
+		this.soundSheetSpinner = view.s_sound_sheets
+		this.addNewSoundSheet = view.cb_add_new_sound_sheet
 
 		this.addNewSoundSheet!!.setOnCheckedChangeListener(this)
 
