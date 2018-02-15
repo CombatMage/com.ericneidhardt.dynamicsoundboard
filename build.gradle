@@ -2,7 +2,7 @@
 apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
-    ext.kotlin_version = '1.1.51'
+    ext.kotlin_version = '1.2.21'
 	repositories {
 		jcenter()
 		mavenCentral()
@@ -27,7 +27,7 @@ allprojects {
         buildTools = "26.0.2"
         projectMinSDK = 21
         projectTargetSDK = 26
-        compileSDK = 25
+        compileSDK = 26
     }
 }
 
