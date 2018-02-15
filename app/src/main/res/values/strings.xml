@@ -101,6 +101,7 @@
 	<string name="sound_control_error_during_playback">Wiedergabe Fehler</string>
 
 	<!-- notification -->
+	<string name="notificationchannel_name">Spielende Sounds</string>
 	<string name="notification_pause_sound">Sound pausieren</string>
 	<string name="notification_stop_sound">Sound stoppen</string>
 	<string name="notification_play_sound">Sound abspielen</string>

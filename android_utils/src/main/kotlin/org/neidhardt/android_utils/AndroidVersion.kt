@@ -7,4 +7,6 @@ import android.os.Build
  */
 object AndroidVersion {
 	val IS_LOLLIPOP_AVAILABLE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+
+	val IS_OREO_AVAILABLE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 }

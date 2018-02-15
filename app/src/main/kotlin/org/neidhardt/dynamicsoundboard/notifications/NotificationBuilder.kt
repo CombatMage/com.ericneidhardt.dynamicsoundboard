@@ -65,7 +65,6 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 				notificationId: Int,
 				isPlaylistNotification: Boolean
 		): NotificationCompat.Builder {
-
 			val playerName = player.mediaPlayerData.label
 			val soundSheetName =
 					if (isPlaylistNotification)
@@ -79,7 +78,7 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			}
 			val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
 
-			val builder = android.support.v7.app.NotificationCompat.Builder(context)
+			val builder = NotificationCompat.Builder(context, NotificationChannelBuilder.ID_NOTIFICATION_CHANNEL_PENDING_SOUNDS)
 					.setContentTitle(playerName)
 					.setContentText(soundSheetName)
 					.setSmallIcon(R.drawable.ic_stat_pending_sounds)
