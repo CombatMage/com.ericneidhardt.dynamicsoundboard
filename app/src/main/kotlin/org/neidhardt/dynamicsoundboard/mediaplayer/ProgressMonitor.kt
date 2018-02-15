@@ -18,8 +18,9 @@ class ProgressMonitor(private val exoPlayer: ExoMediaPlayer) {
 	private val triggerProgressChanged: Runnable = Runnable {
 		val progress = this.exoPlayer.progress
 
-		if (!this.exoPlayer.isDeletionPending)
-			this.onProgressChangedEventListener?.onProgressChanged(progress, exoPlayer.trackDuration)
+		if (!this.exoPlayer.isDeletionPending) {
+			this.onProgressChangedEventListener?.onProgressChanged(this.exoPlayer, progress, exoPlayer.trackDuration)
+		}
 
 		this.hasTimerStarted.set(false)
 		this.startProgressUpdateTimer()

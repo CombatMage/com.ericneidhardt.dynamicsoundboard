@@ -25,9 +25,9 @@ class SoundSheetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		this.setSoundCount(data.mediaPlayers?.size ?: 0)
 
 		this.label.isSelected = data.isSelected
-		this.selectionIndicator.visibility = if (data.isSelected) View.VISIBLE else View.INVISIBLE
-
 		this.label.isActivated = data.isSelectedForDeletion
+
+		this.selectionIndicator.visibility = if (data.isSelected) View.VISIBLE else View.INVISIBLE
 		this.itemView.isSelected = data.isSelectedForDeletion
 
 		this.divider.visibility = if (isLastItem) View.INVISIBLE else View.VISIBLE

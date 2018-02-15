@@ -41,13 +41,13 @@ interface MediaPlayerController
 	var mOnProgressChangedEventListener: MediaPlayerController.OnProgressChangedEventListener?
 
 	interface OnProgressChangedEventListener {
-		fun onProgressChanged(progress: Int, trackDuration: Int)
+		fun onProgressChanged(player: MediaPlayerController, progress: Int, trackDuration: Int)
 	}
 
-	fun setOnProgressChangedEventListener(listener: (progress: Int, trackDuration: Int) -> Unit) {
+	fun setOnProgressChangedEventListener(listener: (player: MediaPlayerController, progress: Int, trackDuration: Int) -> Unit) {
 		this.mOnProgressChangedEventListener = object : OnProgressChangedEventListener {
-			override fun onProgressChanged(progress: Int, trackDuration: Int) {
-				listener.invoke(progress, trackDuration)
+			override fun onProgressChanged(player: MediaPlayerController, progress: Int, trackDuration: Int) {
+				listener.invoke(player, progress, trackDuration)
 			}
 		}
 	}

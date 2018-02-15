@@ -2,11 +2,7 @@ package org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.play
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.ImageView
-import android.widget.SeekBar
-import android.widget.TextView
 import kotlinx.android.synthetic.main.view_playlist_item.view.*
-import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 
 /**
@@ -27,20 +23,22 @@ class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		this.timePosition.visibility = if (player.isPlayingSound) View.VISIBLE else View.INVISIBLE
 		this.timePosition.max = player.trackDuration
 		this.label.text = player.mediaPlayerData.label
-		this.selectionIndicator.visibility = if (player.isPlayingSound) View.VISIBLE else View.INVISIBLE
 
 		this.label.isActivated = player.mediaPlayerData.isSelectedForDeletion
 		this.itemView.isSelected = player.mediaPlayerData.isSelectedForDeletion
+
+		this.selectionIndicator.visibility = if (player.isPlayingSound) View.VISIBLE else View.INVISIBLE
+
 		this.divider.visibility = if (isLastItem) View.INVISIBLE else View.VISIBLE
 
-		player.setOnProgressChangedEventListener { progress, _ ->
-			if (player.isPlayingSound) {
-				this.timePosition.max = player.trackDuration
+		player.setOnProgressChangedEventListener { innerPlayer, progress, trackDuration ->
+			if (innerPlayer.isPlayingSound) {
+				this.timePosition.max = trackDuration
 				this.timePosition.progress = progress
 				this.timePosition.visibility = View.VISIBLE
-			}
-			else
+			} else {
 				timePosition.visibility = View.INVISIBLE
+			}
 		}
 	}
 }

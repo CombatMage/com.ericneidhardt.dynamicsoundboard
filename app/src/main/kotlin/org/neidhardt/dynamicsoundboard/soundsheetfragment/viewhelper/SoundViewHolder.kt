@@ -34,8 +34,8 @@ class SoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	fun bindData(player: MediaPlayerController, isInPlaylist: Boolean) {
 		this.player = player
 
-		player.setOnProgressChangedEventListener { progress, _ ->
-			this.timePosition.max = player.trackDuration
+		player.setOnProgressChangedEventListener { _, progress, trackDuration ->
+			this.timePosition.max = trackDuration
 			this.timePosition.progress = progress
 		}
 
