@@ -1,4 +1,4 @@
-package org.neidhardt.android_utils
+package org.neidhardt.androidutils
 
 import android.app.FragmentManager
 import android.os.Bundle
@@ -10,8 +10,6 @@ import java.util.*
  * Project created by Eric Neidhardt on 30.08.2014.
  */
 open class EnhancedAppCompatActivity : AppCompatActivity() {
-
-	private val TAG = javaClass.name
 
 	val isActivityResumed: Boolean get() = this.isResumed
 
@@ -42,9 +40,6 @@ open class EnhancedAppCompatActivity : AppCompatActivity() {
 			this.queueOnResume.push(action)
 	}
 
-	override fun getFragmentManager(): FragmentManager? {
-		throw IllegalAccessException("$TAG: Do not use default getFragmentManager, use getSupportFragmentManager instead")
-	}
 }
 
 private fun <T> ArrayList<T>.push(item: T) {

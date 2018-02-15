@@ -12,7 +12,7 @@ import android.support.v7.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_add_new_sound.view.*
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import org.neidhardt.androidutils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog

@@ -5,7 +5,7 @@ import android.content.Context
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
-import org.neidhardt.android_utils.AndroidVersion
+import org.neidhardt.androidutils.AndroidVersion
 import org.neidhardt.dynamicsoundboard.R
 
 

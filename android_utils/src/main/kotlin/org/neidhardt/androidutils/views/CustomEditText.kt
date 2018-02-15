@@ -1,4 +1,4 @@
-package org.neidhardt.android_utils.views
+package org.neidhardt.androidutils.views
 
 import android.content.Context
 import android.os.Parcel
@@ -14,7 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.TextView
 import io.reactivex.Observable
-import org.neidhardt.android_utils.R
+import org.neidhardt.androidutils.R
 
 abstract class CustomEditText(context: Context, attrs: AttributeSet) :
 		FrameLayout(context, attrs),

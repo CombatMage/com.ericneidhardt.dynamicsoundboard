@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.layout_fab.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import org.neidhardt.androidutils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs

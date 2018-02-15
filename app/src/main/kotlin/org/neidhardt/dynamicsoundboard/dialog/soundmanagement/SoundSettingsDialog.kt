@@ -8,8 +8,8 @@ import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.CheckBox
 import kotlinx.android.synthetic.main.dialog_sound_settings_layout.view.*
-import org.neidhardt.android_utils.views.CustomEditText
-import org.neidhardt.android_utils.views.SimpleSpinner
+import org.neidhardt.androidutils.views.CustomEditText
+import org.neidhardt.androidutils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController

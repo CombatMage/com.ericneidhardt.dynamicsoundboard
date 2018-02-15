@@ -11,7 +11,7 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.EditText
 import kotlinx.android.synthetic.main.dialog_add_new_sound_from_intent_to_sound_sheet.view.*
-import org.neidhardt.android_utils.views.SimpleSpinner
+import org.neidhardt.androidutils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog

@@ -1,4 +1,4 @@
-package org.neidhardt.android_utils.recyclerview_utils.adapter
+package org.neidhardt.androidutils.recyclerview_utils.adapter
 
 import android.support.v7.widget.RecyclerView
 

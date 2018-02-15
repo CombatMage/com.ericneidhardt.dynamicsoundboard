@@ -1,4 +1,4 @@
-package org.neidhardt.android_utils.recyclerview_utils.adapter
+package org.neidhardt.androidutils.recyclerview_utils.adapter
 
 /**
  * File created by eric.neidhardt on 10.06.2015.

@@ -7,7 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.support.v4.app.NotificationCompat
-import org.neidhardt.android_utils.AndroidVersion
+import org.neidhardt.androidutils.AndroidVersion
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
@@ -66,14 +66,11 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 				isPlaylistNotification: Boolean
 		): NotificationCompat.Builder {
 			val playerName = player.mediaPlayerData.label
-			val soundSheetName =
-					if (isPlaylistNotification)
-						context.resources.getString(R.string.notification_playlist)
-					else
-						soundSheet?.label
+			val soundSheetName = if (isPlaylistNotification) context.resources.getString(R.string.notification_playlist) else soundSheet?.label
 
 			val playerId = player.mediaPlayerData.playerId
-			val style = android.support.v7.app.NotificationCompat.MediaStyle().apply {
+
+			val style = android.support.v4.media.app.NotificationCompat.MediaStyle().apply {
 				this.setShowActionsInCompactView(0, 1)
 			}
 			val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
@@ -92,10 +89,11 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 					.setStyle(style)
 					.setActionStop(context, isLollipopStyleAvailable, notificationId, playerId)
 
-			if (player.isPlayingSound)
+			if (player.isPlayingSound) {
 				builder.setActionFadeOut(context, isLollipopStyleAvailable, notificationId, playerId)
-			else
+			} else {
 				builder.setActionPlay(context, isLollipopStyleAvailable, notificationId, playerId)
+			}
 
 			val wearableExtender = NotificationCompat.WearableExtender()
 					.setHintHideIcon(true)

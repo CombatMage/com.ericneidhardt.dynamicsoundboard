@@ -1,4 +1,4 @@
-package org.neidhardt.android_utils
+package org.neidhardt.androidutils
 
 import android.os.Build
 

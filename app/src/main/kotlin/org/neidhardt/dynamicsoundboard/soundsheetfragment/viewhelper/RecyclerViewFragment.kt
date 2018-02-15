@@ -2,7 +2,7 @@ package org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper
 
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
-import org.neidhardt.android_utils.EnhancedSupportFragment
+import org.neidhardt.androidutils.EnhancedSupportFragment
 
 /**
  * Created by eric.neidhardt@gmail.com on 13.11.2017.

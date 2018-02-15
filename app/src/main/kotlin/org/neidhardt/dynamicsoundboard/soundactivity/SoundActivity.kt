@@ -17,7 +17,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.layout_toolbar_content.view.*
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.android_utils.EnhancedAppCompatActivity
+import org.neidhardt.androidutils.EnhancedAppCompatActivity
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs

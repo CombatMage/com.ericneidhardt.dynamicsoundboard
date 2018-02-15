@@ -1,11 +1,11 @@
-package org.neidhardt.android_utils.animations
+package org.neidhardt.androidutils.animations
 
 import android.animation.Animator
 import android.annotation.TargetApi
 import android.os.Build
 import android.view.View
 import android.view.ViewAnimationUtils
-import org.neidhardt.android_utils.AndroidVersion
+import org.neidhardt.androidutils.AndroidVersion
 
 /**
  * Created by eric.neidhardt on 30.11.2016.

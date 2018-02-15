@@ -1,4 +1,4 @@
-package org.neidhardt.android_utils.recyclerview_utils.decoration
+package org.neidhardt.androidutils.recyclerview_utils.decoration
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,7 +7,7 @@ import android.graphics.Rect
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import org.neidhardt.android_utils.R
+import org.neidhardt.androidutils.R
 
 class DividerItemDecoration(
 	context: Context,

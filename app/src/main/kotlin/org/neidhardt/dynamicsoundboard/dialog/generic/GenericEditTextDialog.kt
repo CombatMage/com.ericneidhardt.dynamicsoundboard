@@ -10,7 +10,7 @@ import android.widget.EditText
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import kotlinx.android.synthetic.main.dialog_genericrename.view.*
-import org.neidhardt.android_utils.views.showKeyboard
+import org.neidhardt.androidutils.views.showKeyboard
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 

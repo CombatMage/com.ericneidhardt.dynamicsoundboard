@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package org.neidhardt.android_utils
+package org.neidhardt.androidutils
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

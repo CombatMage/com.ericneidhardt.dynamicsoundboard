@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxSeekBar
 import io.reactivex.subjects.PublishSubject
-import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
+import org.neidhardt.androidutils.recyclerview_utils.adapter.BaseAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController

@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.view_no_underscore_edittext.view.*
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.android_utils.views.CustomEditText
-import org.neidhardt.android_utils.views.EditTextBackEvent
+import org.neidhardt.androidutils.views.CustomEditText
+import org.neidhardt.androidutils.views.EditTextBackEvent
 
 
 class NoUnderscoreEditText(context: Context, attrs: AttributeSet) : CustomEditText(context, attrs) {

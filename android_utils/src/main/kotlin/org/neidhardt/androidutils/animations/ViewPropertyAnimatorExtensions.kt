@@ -1,4 +1,4 @@
-package org.neidhardt.android_utils.animations
+package org.neidhardt.androidutils.animations
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

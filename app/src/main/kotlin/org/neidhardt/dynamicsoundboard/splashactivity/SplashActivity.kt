@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import org.neidhardt.android_utils.EnhancedAppCompatActivity
+import org.neidhardt.androidutils.EnhancedAppCompatActivity
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionPhoneState

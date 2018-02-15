@@ -18,7 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_add_new_sound.view.*
 import kotlinx.android.synthetic.main.view_add_sound_list_item.view.*
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import org.neidhardt.androidutils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog

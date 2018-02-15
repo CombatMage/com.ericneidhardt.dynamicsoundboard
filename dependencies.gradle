@@ -1,5 +1,5 @@
 ext.versions = [
-		supportLibs : '26.0.2'
+		supportLibs : '26.1.0'
 ]
 
 ext.libraries = [

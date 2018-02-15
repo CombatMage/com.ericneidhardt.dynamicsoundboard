@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.subjects.PublishSubject
-import org.neidhardt.android_utils.recyclerview_utils.adapter.BaseAdapter
-import org.neidhardt.android_utils.recyclerview_utils.adapter.ListAdapter
+import org.neidhardt.androidutils.recyclerview_utils.adapter.BaseAdapter
+import org.neidhardt.androidutils.recyclerview_utils.adapter.ListAdapter
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.app_utils.longHash

@@ -1,4 +1,4 @@
-package org.neidhardt.android_utils.views
+package org.neidhardt.androidutils.views
 
 import android.content.Context
 import android.content.res.Resources
