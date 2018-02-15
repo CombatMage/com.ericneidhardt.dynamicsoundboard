@@ -278,7 +278,7 @@ class NavigationDrawerFragment :
 	}
 
 	override fun setSelectedItemCount(selectedCount: Int, maxCount: Int) {
-		this.deletionToolbarSubTitle.text = "$selectedCount/$maxCount"
+		this.deletionToolbarSubTitle.text = this.getString(R.string.navigationdrawer_selectioncountlabel, selectedCount, maxCount)
 	}
 
 	override fun setTapBarState(newState: NavigationDrawerFragmentContract.View.TapBarState) {

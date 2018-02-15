@@ -329,12 +329,11 @@ class SoundSheetFragment : RecyclerViewFragment(),
 		val timeTillDeletion = this.deletionHandler.DELETION_TIMEOUT
 
 		val count = deletionHandler.countPendingDeletions
-		val message = if (count == 1)
+		val message = if (count == 1) {
 			resources.getString(R.string.sound_control_deletion_pending_single)
-		else
-			resources.getString(R.string.sound_control_deletion_pending).replace("{%s0}",
-					count.toString())
-
+		} else {
+			resources.getString(R.string.sound_control_deletion_pending, count)
+		}
 		this.snackbar?.dismiss()
 		this.snackbar = Snackbar.make(
 				this.cl_fragment_sound_sheet, message, timeTillDeletion

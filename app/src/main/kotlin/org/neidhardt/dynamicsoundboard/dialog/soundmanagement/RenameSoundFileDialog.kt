@@ -30,8 +30,8 @@ import kotlin.properties.Delegates
  * File created by eric.neidhardt on 06.07.2015.
  */
 class RenameSoundFileDialog : SoundSettingsBaseDialog() {
-	override var player: MediaPlayerController by Delegates.notNull<MediaPlayerController>()
-	override var fragmentTag: String by Delegates.notNull<String>()
+	override var player: MediaPlayerController by Delegates.notNull()
+	override var fragmentTag: String by Delegates.notNull()
 	override var soundSheet: SoundSheet? = null
 
 	companion object {
@@ -86,7 +86,7 @@ private class RenameSoundFileDialogPresenter (
 		private val currentName : TextView,
 		private val renameAllOccurrences: CheckBox
 ) {
-	private val TAG = javaClass.name
+	private val logTag = javaClass.name
 
 	private var playersWithMatchingUri: List<MediaPlayerController>? = null
 
@@ -94,11 +94,15 @@ private class RenameSoundFileDialogPresenter (
 		this.playersWithMatchingUri = this.getPlayersWithMatchingUri(this.playerData.uri!!)
 		if (playersWithMatchingUri!!.size > 1) {
 			this.renameAllOccurrences.visibility = View.VISIBLE
-			this.renameAllOccurrences.text = this.renameAllOccurrences.text.toString()
-					.replace("{%s0}", Integer.toString(playersWithMatchingUri!!.size))
-		}
-		else
+			this.renameAllOccurrences.text = this.renameAllOccurrences
+					.resources
+					.getString(
+							R.string.dialog_rename_sound_file_all_occurrences_message,
+							playersWithMatchingUri!!.size
+					)
+		} else {
 			this.renameAllOccurrences.visibility = View.GONE
+		}
 
 		val currentFile = Uri.parse(this.playerData.uri).getFileForUri()
 		val currentFileName = currentFile?.name
@@ -159,7 +163,7 @@ private class RenameSoundFileDialogPresenter (
 				this.appendFileTypeToNewPath(newFileLabel, fileToRename.name)
 
 		if (newFilePath == fileToRename.absolutePath) {
-			Logger.d(TAG, "old name and new name are equal, nothing to be done")
+			Logger.d(logTag, "old name and new name are equal, nothing to be done")
 			return
 		}
 
@@ -199,7 +203,7 @@ private class RenameSoundFileDialogPresenter (
 
 	private fun appendFileTypeToNewPath(newNameFilePath: String?, oldFilePath: String?): String {
 		if (newNameFilePath == null || oldFilePath == null)
-			throw NullPointerException(TAG + ": cannot create new file name, " +
+			throw NullPointerException(logTag + ": cannot create new file name, " +
 					"either old name or new name is null")
 
 		val segments = oldFilePath.split("\\.".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
@@ -212,12 +216,12 @@ private class RenameSoundFileDialogPresenter (
 	}
 
 	private fun setUriForPlayer(player: MediaPlayerController, uri: String): Boolean {
-		try {
+		return try {
 			player.setSoundUri(uri)
-			return true
+			true
 		}
 		catch (e: IOException) {
-			Logger.e(TAG, e.message)
+			Logger.e(logTag, e.message)
 			if (player.mediaPlayerData.fragmentTag == PLAYLIST_TAG)
 				this.playlistManager.remove(listOf(player))
 			else {
@@ -225,7 +229,7 @@ private class RenameSoundFileDialogPresenter (
 						?: throw IllegalArgumentException("no soundSheet for given fragmentTag was found")
 				this.soundsManager.remove(soundSheet, listOf(player))
 			}
-			return false
+			false
 		}
 	}
 }
