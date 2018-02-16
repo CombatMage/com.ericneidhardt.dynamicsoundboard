@@ -38,14 +38,19 @@ class ItemTouchCallback(
 
 	override fun canDropOver(recyclerView: RecyclerView, current: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
 		val targetPosition = target.adapterPosition
-		if (targetPosition != RecyclerView.NO_POSITION) recyclerView.scrollToPosition(targetPosition)
+		if (targetPosition != RecyclerView.NO_POSITION) {
+			// scroll the recycler during drag
+			recyclerView.scrollToPosition(targetPosition)
+		}
 		return super.canDropOver(recyclerView, current, target)
 	}
 
 	override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
 		val from = viewHolder.adapterPosition
 		val to = target.adapterPosition
-		if (from == RecyclerView.NO_POSITION || to == RecyclerView.NO_POSITION) return false
+		if (from == RecyclerView.NO_POSITION || to == RecyclerView.NO_POSITION) {
+			return false
+		}
 		this.soundManager.move(this.soundSheet, from, to)
 		return true
 	}
@@ -55,12 +60,13 @@ class ItemTouchCallback(
 		if (position != RecyclerView.NO_POSITION) {
 			val item = this.adapter.values[position]
 
-			if (this.oneSwipeToDelete)
+			if (this.oneSwipeToDelete) {
 				this.handler.postDelayed({
 					this.soundManager.remove(this.soundSheet, listOf(item))
 				}, 200) // give animation some time to settle
-			else
+			} else {
 				this.deletionHandler.requestItemDeletion(item)
+			}
 		}
 	}
 
@@ -78,8 +84,15 @@ class ItemTouchCallback(
 		this.textAlign = Paint.Align.LEFT
 	}
 
-	override fun onChildDraw(canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-							 dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+	override fun onChildDraw(
+			canvas: Canvas,
+			recyclerView: RecyclerView,
+			viewHolder: RecyclerView.ViewHolder,
+			dX: Float,
+			dY: Float,
+			actionState: Int,
+			isCurrentlyActive: Boolean
+	) {
 		super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
 		val view = viewHolder.itemView
@@ -97,12 +110,12 @@ class ItemTouchCallback(
 			canvas.drawRect(left, top, width, top + height, backgroundPaint)
 			canvas.drawText(resources.getString(R.string.sound_control_deletion_pending_single), margin, top + heightText, textPaint)
 		} else if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-			if (dX > 0) // swiping right
-			{
+			if (dX > 0) {
+				// swiping right
 				canvas.drawRect(left, top, dX, top + height, backgroundPaint)
 				canvas.drawBitmap(bitmap, margin, top + heightBitmap, null)
-			} else // swiping left
-			{
+			} else  {
+				// swiping left
 				canvas.drawRect(width + dX, top, width, top + height, backgroundPaint)
 				canvas.drawBitmap(bitmap, (width - bitmap.width) - margin, top + heightBitmap, null)
 			}

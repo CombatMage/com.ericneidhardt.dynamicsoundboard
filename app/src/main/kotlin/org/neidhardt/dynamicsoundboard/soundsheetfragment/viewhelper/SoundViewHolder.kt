@@ -14,8 +14,8 @@ import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
-class SoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-{
+class SoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
 	val reorder: View = itemView.ib_view_sound_control_item_reorder
 
 	val name: TextView = itemView.textview_soundcontrolitem_soundname
@@ -45,8 +45,7 @@ class SoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 		when {
 			player.isFadingOut -> this.playButton.state = PlayButton.State.FADE
-			player.isPlayingSound // if already playing, we enable pause
-			-> this.playButton.state = PlayButton.State.PAUSE
+			player.isPlayingSound -> this.playButton.state = PlayButton.State.PAUSE // if already playing, we enable pause
 			else -> this.playButton.state = PlayButton.State.PLAY
 		}
 
