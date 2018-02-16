@@ -56,10 +56,8 @@
 				android:layout_toStartOf="@id/tv_sound_count_label"
 				android:layout_centerVertical="true"
 				android:layout_alignParentStart="true"
-				android:textSize="@dimen/text_body"
-				android:textColor="@color/selector_text_content_primary"
-				tools:text="@string/suggested_sound_sheet_name"
-				android:fontFamily="sans-serif-medium"/>
+				style="@style/style_listitem_label"
+				tools:text="@string/suggested_sound_sheet_name"/>
 
 	</RelativeLayout>
 
