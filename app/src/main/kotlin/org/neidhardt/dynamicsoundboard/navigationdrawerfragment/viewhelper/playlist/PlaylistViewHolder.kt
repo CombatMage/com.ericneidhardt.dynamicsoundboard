@@ -11,7 +11,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 	private val label = itemView.tv_label
-	private val selectionIndicator = itemView.tv_label
+	private val selectionIndicator = itemView.iv_selected
 	private val timePosition = itemView.sb_progress
 	private val divider = itemView.v_divider
 
