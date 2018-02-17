@@ -1,0 +1,330 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:2:1-67:12
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:2:1-67:12
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:2:1-67:12
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:2:1-67:12
+MERGED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:2:1-67:12
+MERGED from [:app_utils] C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app_utils\build\intermediates\manifests\full\release\AndroidManifest.xml:2:1-12:12
+MERGED from [:android_utils] C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\android_utils\build\intermediates\manifests\full\release\AndroidManifest.xml:2:1-12:12
+MERGED from [org.neidhardt:enhanced-handler:1.0.7] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\enhanced-handler-1.0.7.aar\b472686d2e33edc3502ac2bca46a52f4\AndroidManifest.xml:2:1-10:12
+MERGED from [org.neidhardt:simple-storage:1.0.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\simple-storage-1.0.2.aar\e904975bad167ec3a750cb2b1701d9f3\AndroidManifest.xml:2:1-10:12
+MERGED from [org.neidhardt:viewpager-dialog:1.0.3] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\viewpager-dialog-1.0.3.aar\2914ea42529845e9c3ee4cb50d30220d\AndroidManifest.xml:2:1-10:12
+MERGED from [com.jakewharton.rxbinding2:rxbinding-design:2.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\rxbinding-design-2.0.0.aar\b0b58f0b51ab1f739e52ec0f53181e72\AndroidManifest.xml:2:1-8:12
+MERGED from [com.jakewharton.rxbinding2:rxbinding:2.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\rxbinding-2.0.0.aar\6290718fb7a581e393161cd7d343fae8\AndroidManifest.xml:2:1-8:12
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.1] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\rxandroid-2.0.1.aar\077570bb37b07ee9ef5e1e7f72c75abe\AndroidManifest.xml:15:1-21:12
+MERGED from [com.android.support:multidex:1.0.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\multidex-1.0.2.aar\1ad13445e7ead758e843b74d500f494f\AndroidManifest.xml:17:1-22:12
+MERGED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:10:6-44:12
+MERGED from [me.zhanghai.android.materialprogressbar:library:1.3.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\library-1.3.0.aar\0966e27061976b91147f08d177c0d787\AndroidManifest.xml:6:1-16:12
+MERGED from [jp.wasabeef:recyclerview-animators:2.2.6] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-animators-2.2.6.aar\60eba7968f4a3dee485dea4d93d2fb63\AndroidManifest.xml:2:1-12:12
+MERGED from [com.android.support:design:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\d6d75ec4c5cba4ff789e641b9c954d1c\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\a61a4452662b0cf2e77d6063517338dd\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-v13:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v13-26.1.0.aar\192f3465284d0015955472458ad37ac6\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:transition:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\transition-26.1.0.aar\112b659d376d432a8e681cd9392220a2\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\a6877769bea2c262737c39e7d880a15a\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:recyclerview-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-26.1.0.aar\edfbbc34a0c6421e43215795ec88f76c\AndroidManifest.xml:17:1-28:12
+MERGED from [com.google.android.exoplayer:exoplayer:r2.0.3] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\exoplayer-r2.0.3.aar\b2d396505f1a6824035b31ed4bde1afd\AndroidManifest.xml:17:1-25:12
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\328ab246befaa13d7eab19c6674f67af\AndroidManifest.xml:2:1-14:12
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\33a91a91ed3b0c8b6337e90dd419fade\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\9f6f252c75138671e53b8aa39b3393ce\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\35cad7bcd0025b73dd4c8d5c77c303fc\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\dbf4c12f902d500a9935744e893e4855\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\1e5562d849ac85b82af3169ff3096ec1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\bfd19f8ff91145ad619380e694c4938c\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\8243ba01b35a46e2fb637d3ac328a927\AndroidManifest.xml:17:1-31:12
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\cd59d59ba4503d36c5622fdf7b83f332\AndroidManifest.xml:17:1-30:12
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml:2:1-13:12
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml:2:1-13:12
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml:2:1-13:12
+	package
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:4:3-44
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:2:1-67:12
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml:4:3-49
+	android:versionCode
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:2:1-67:12
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:3:3-61
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:6:2-63
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:6:19-61
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:7:2-77
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:7:19-75
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:8:2-76
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:8:19-74
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:9:2-71
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:9:19-69
+application
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:11:2-65:16
+MERGED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:11:2-65:16
+MERGED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:11:2-65:16
+MERGED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:39:5-43:19
+MERGED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:39:5-43:19
+MERGED from [com.android.support:design:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\d6d75ec4c5cba4ff789e641b9c954d1c\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:design:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\d6d75ec4c5cba4ff789e641b9c954d1c\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\a61a4452662b0cf2e77d6063517338dd\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\a61a4452662b0cf2e77d6063517338dd\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-v13:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v13-26.1.0.aar\192f3465284d0015955472458ad37ac6\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-v13:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v13-26.1.0.aar\192f3465284d0015955472458ad37ac6\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:transition:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\transition-26.1.0.aar\112b659d376d432a8e681cd9392220a2\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:transition:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\transition-26.1.0.aar\112b659d376d432a8e681cd9392220a2\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\a6877769bea2c262737c39e7d880a15a\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\a6877769bea2c262737c39e7d880a15a\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:recyclerview-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-26.1.0.aar\edfbbc34a0c6421e43215795ec88f76c\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:recyclerview-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-26.1.0.aar\edfbbc34a0c6421e43215795ec88f76c\AndroidManifest.xml:22:5-26:19
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\328ab246befaa13d7eab19c6674f67af\AndroidManifest.xml:12:5-20
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\328ab246befaa13d7eab19c6674f67af\AndroidManifest.xml:12:5-20
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\33a91a91ed3b0c8b6337e90dd419fade\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\33a91a91ed3b0c8b6337e90dd419fade\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\9f6f252c75138671e53b8aa39b3393ce\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\9f6f252c75138671e53b8aa39b3393ce\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\35cad7bcd0025b73dd4c8d5c77c303fc\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\35cad7bcd0025b73dd4c8d5c77c303fc\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\dbf4c12f902d500a9935744e893e4855\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\dbf4c12f902d500a9935744e893e4855\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\1e5562d849ac85b82af3169ff3096ec1\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\1e5562d849ac85b82af3169ff3096ec1\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\bfd19f8ff91145ad619380e694c4938c\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\bfd19f8ff91145ad619380e694c4938c\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\8243ba01b35a46e2fb637d3ac328a927\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\8243ba01b35a46e2fb637d3ac328a927\AndroidManifest.xml:25:5-29:19
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\cd59d59ba4503d36c5622fdf7b83f332\AndroidManifest.xml:24:5-28:19
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\cd59d59ba4503d36c5622fdf7b83f332\AndroidManifest.xml:24:5-28:19
+	android:label
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:17:4-36
+		REJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:17:4-36
+	android:largeHeap
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:14:4-28
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:14:4-28
+	android:icon
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:15:4-40
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:15:4-40
+	android:allowBackup
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:13:4-30
+	android:theme
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:16:4-41
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:16:4-41
+	tools:replace
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml:11:4-33
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:12:4-48
+activity#org.neidhardt.dynamicsoundboard.splashactivity.SplashActivity
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:19:3-25:14
+	android:theme
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:20:7-41
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:19:13-58
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:21:4-24:20
+action#android.intent.action.MAIN
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:22:5-56
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:22:13-54
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:23:5-64
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:23:15-62
+activity#org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:27:3-49:14
+	android:launchMode
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:30:5-35
+	android:windowSoftInputMode
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:29:5-62
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:28:5-48
+intent-filter#android.intent.action.VIEW+android.intent.category.DEFAULT
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:31:4-39:20
+action#android.intent.action.VIEW
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:32:5-56
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:32:13-54
+category#android.intent.category.DEFAULT
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:33:5-63
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:33:15-61
+data
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:35:5-34
+	android:scheme
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:35:11-32
+intent-filter#android.intent.action.SEARCH
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:41:4-43:20
+action#android.intent.action.SEARCH
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:42:5-58
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:42:13-56
+meta-data#android.app.searchable
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:45:4-47:42
+	android:resource
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:47:6-40
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:46:6-43
+activity#org.neidhardt.dynamicsoundboard.preferenceactivity.PreferenceActivity
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:51:3-53:66
+	android:parentActivityName
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:53:7-64
+	android:label
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:52:7-42
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:51:13-66
+activity#org.neidhardt.dynamicsoundboard.infoactivity.InfoActivity
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:55:3-57:66
+	android:parentActivityName
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:57:7-64
+	android:label
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:56:7-36
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:55:13-54
+service#org.neidhardt.dynamicsoundboard.repositories.SaveDataIntentService
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:59:3-60:32
+	android:exported
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:60:6-30
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:59:12-62
+service#org.neidhardt.dynamicsoundboard.notifications.NotificationService
+ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:62:3-63:32
+	android:exported
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:63:6-30
+	android:name
+		ADDED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml:62:12-61
+uses-sdk
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml
+MERGED from [:app_utils] C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app_utils\build\intermediates\manifests\full\release\AndroidManifest.xml:8:5-10:41
+MERGED from [:app_utils] C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app_utils\build\intermediates\manifests\full\release\AndroidManifest.xml:8:5-10:41
+MERGED from [:android_utils] C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\android_utils\build\intermediates\manifests\full\release\AndroidManifest.xml:8:5-10:41
+MERGED from [:android_utils] C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\android_utils\build\intermediates\manifests\full\release\AndroidManifest.xml:8:5-10:41
+MERGED from [org.neidhardt:enhanced-handler:1.0.7] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\enhanced-handler-1.0.7.aar\b472686d2e33edc3502ac2bca46a52f4\AndroidManifest.xml:6:5-8:41
+MERGED from [org.neidhardt:enhanced-handler:1.0.7] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\enhanced-handler-1.0.7.aar\b472686d2e33edc3502ac2bca46a52f4\AndroidManifest.xml:6:5-8:41
+MERGED from [org.neidhardt:simple-storage:1.0.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\simple-storage-1.0.2.aar\e904975bad167ec3a750cb2b1701d9f3\AndroidManifest.xml:6:5-8:41
+MERGED from [org.neidhardt:simple-storage:1.0.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\simple-storage-1.0.2.aar\e904975bad167ec3a750cb2b1701d9f3\AndroidManifest.xml:6:5-8:41
+MERGED from [org.neidhardt:viewpager-dialog:1.0.3] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\viewpager-dialog-1.0.3.aar\2914ea42529845e9c3ee4cb50d30220d\AndroidManifest.xml:6:5-8:41
+MERGED from [org.neidhardt:viewpager-dialog:1.0.3] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\viewpager-dialog-1.0.3.aar\2914ea42529845e9c3ee4cb50d30220d\AndroidManifest.xml:6:5-8:41
+MERGED from [com.jakewharton.rxbinding2:rxbinding-design:2.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\rxbinding-design-2.0.0.aar\b0b58f0b51ab1f739e52ec0f53181e72\AndroidManifest.xml:6:5-44
+MERGED from [com.jakewharton.rxbinding2:rxbinding-design:2.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\rxbinding-design-2.0.0.aar\b0b58f0b51ab1f739e52ec0f53181e72\AndroidManifest.xml:6:5-44
+MERGED from [com.jakewharton.rxbinding2:rxbinding:2.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\rxbinding-2.0.0.aar\6290718fb7a581e393161cd7d343fae8\AndroidManifest.xml:6:5-44
+MERGED from [com.jakewharton.rxbinding2:rxbinding:2.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\rxbinding-2.0.0.aar\6290718fb7a581e393161cd7d343fae8\AndroidManifest.xml:6:5-44
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.1] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\rxandroid-2.0.1.aar\077570bb37b07ee9ef5e1e7f72c75abe\AndroidManifest.xml:19:5-43
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.1] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\rxandroid-2.0.1.aar\077570bb37b07ee9ef5e1e7f72c75abe\AndroidManifest.xml:19:5-43
+MERGED from [com.android.support:multidex:1.0.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\multidex-1.0.2.aar\1ad13445e7ead758e843b74d500f494f\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:multidex:1.0.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\multidex-1.0.2.aar\1ad13445e7ead758e843b74d500f494f\AndroidManifest.xml:20:5-43
+MERGED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:37:5-42
+MERGED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:37:5-42
+MERGED from [me.zhanghai.android.materialprogressbar:library:1.3.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\library-1.3.0.aar\0966e27061976b91147f08d177c0d787\AndroidManifest.xml:12:5-14:41
+MERGED from [me.zhanghai.android.materialprogressbar:library:1.3.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\library-1.3.0.aar\0966e27061976b91147f08d177c0d787\AndroidManifest.xml:12:5-14:41
+MERGED from [jp.wasabeef:recyclerview-animators:2.2.6] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-animators-2.2.6.aar\60eba7968f4a3dee485dea4d93d2fb63\AndroidManifest.xml:8:5-10:41
+MERGED from [jp.wasabeef:recyclerview-animators:2.2.6] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-animators-2.2.6.aar\60eba7968f4a3dee485dea4d93d2fb63\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:design:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\d6d75ec4c5cba4ff789e641b9c954d1c\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:design:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\d6d75ec4c5cba4ff789e641b9c954d1c\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\a61a4452662b0cf2e77d6063517338dd\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\a61a4452662b0cf2e77d6063517338dd\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v13:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v13-26.1.0.aar\192f3465284d0015955472458ad37ac6\AndroidManifest.xml:21:5-23:55
+MERGED from [com.android.support:support-v13:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v13-26.1.0.aar\192f3465284d0015955472458ad37ac6\AndroidManifest.xml:21:5-23:55
+MERGED from [com.android.support:transition:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\transition-26.1.0.aar\112b659d376d432a8e681cd9392220a2\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\transition-26.1.0.aar\112b659d376d432a8e681cd9392220a2\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\a6877769bea2c262737c39e7d880a15a\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\a6877769bea2c262737c39e7d880a15a\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:recyclerview-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-26.1.0.aar\edfbbc34a0c6421e43215795ec88f76c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-26.1.0.aar\edfbbc34a0c6421e43215795ec88f76c\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.exoplayer:exoplayer:r2.0.3] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\exoplayer-r2.0.3.aar\b2d396505f1a6824035b31ed4bde1afd\AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer:r2.0.3] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\exoplayer-r2.0.3.aar\b2d396505f1a6824035b31ed4bde1afd\AndroidManifest.xml:21:5-23:41
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\328ab246befaa13d7eab19c6674f67af\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\328ab246befaa13d7eab19c6674f67af\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\33a91a91ed3b0c8b6337e90dd419fade\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\33a91a91ed3b0c8b6337e90dd419fade\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\9f6f252c75138671e53b8aa39b3393ce\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\9f6f252c75138671e53b8aa39b3393ce\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\35cad7bcd0025b73dd4c8d5c77c303fc\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\35cad7bcd0025b73dd4c8d5c77c303fc\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\dbf4c12f902d500a9935744e893e4855\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\dbf4c12f902d500a9935744e893e4855\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\1e5562d849ac85b82af3169ff3096ec1\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\1e5562d849ac85b82af3169ff3096ec1\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\bfd19f8ff91145ad619380e694c4938c\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\bfd19f8ff91145ad619380e694c4938c\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\8243ba01b35a46e2fb637d3ac328a927\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\8243ba01b35a46e2fb637d3ac328a927\AndroidManifest.xml:21:5-23:58
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\cd59d59ba4503d36c5622fdf7b83f332\AndroidManifest.xml:20:5-22:41
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\cd59d59ba4503d36c5622fdf7b83f332\AndroidManifest.xml:20:5-22:41
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml
+INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\d6d75ec4c5cba4ff789e641b9c954d1c\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ericn\Documents\Projekte\Android\dynamic-soundboard\app\src\release\AndroidManifest.xml
+activity#org.acra.dialog.CrashReportDialog
+ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:40:9-241
+	android:process
+		ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:40:172-195
+	android:excludeFromRecents
+		ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:40:19-52
+	android:launchMode
+		ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:40:87-122
+	android:theme
+		ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:40:196-239
+	android:finishOnTaskLaunch
+		ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:40:53-86
+	android:name
+		ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:40:123-171
+service#org.acra.sender.SenderService
+ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:42:9-113
+	android:process
+		ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:42:88-111
+	android:exported
+		ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:42:18-42
+	android:name
+		ADDED from [ch.acra:acra:4.9.2] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\acra-4.9.2.aar\f527bf96197386ab89f26c2cc4ac1889\AndroidManifest.xml:42:43-87
+meta-data#android.support.VERSION
+ADDED from [com.android.support:design:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\d6d75ec4c5cba4ff789e641b9c954d1c\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\a61a4452662b0cf2e77d6063517338dd\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\a61a4452662b0cf2e77d6063517338dd\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-v13:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v13-26.1.0.aar\192f3465284d0015955472458ad37ac6\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-v13:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v13-26.1.0.aar\192f3465284d0015955472458ad37ac6\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:transition:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\transition-26.1.0.aar\112b659d376d432a8e681cd9392220a2\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:transition:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\transition-26.1.0.aar\112b659d376d432a8e681cd9392220a2\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\a6877769bea2c262737c39e7d880a15a\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\a6877769bea2c262737c39e7d880a15a\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:recyclerview-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-26.1.0.aar\edfbbc34a0c6421e43215795ec88f76c\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:recyclerview-v7:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-26.1.0.aar\edfbbc34a0c6421e43215795ec88f76c\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\33a91a91ed3b0c8b6337e90dd419fade\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\33a91a91ed3b0c8b6337e90dd419fade\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\9f6f252c75138671e53b8aa39b3393ce\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\9f6f252c75138671e53b8aa39b3393ce\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\35cad7bcd0025b73dd4c8d5c77c303fc\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\35cad7bcd0025b73dd4c8d5c77c303fc\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\dbf4c12f902d500a9935744e893e4855\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\dbf4c12f902d500a9935744e893e4855\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\1e5562d849ac85b82af3169ff3096ec1\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\1e5562d849ac85b82af3169ff3096ec1\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\bfd19f8ff91145ad619380e694c4938c\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\bfd19f8ff91145ad619380e694c4938c\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\8243ba01b35a46e2fb637d3ac328a927\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\8243ba01b35a46e2fb637d3ac328a927\AndroidManifest.xml:26:9-28:38
+	android:value
+		ADDED from [com.android.support:design:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\d6d75ec4c5cba4ff789e641b9c954d1c\AndroidManifest.xml:28:13-35
+	android:name
+		ADDED from [com.android.support:design:26.1.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\d6d75ec4c5cba4ff789e641b9c954d1c\AndroidManifest.xml:27:13-51
+meta-data#android.arch.lifecycle.VERSION
+ADDED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\cd59d59ba4503d36c5622fdf7b83f332\AndroidManifest.xml:25:9-27:47
+	android:value
+		ADDED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\cd59d59ba4503d36c5622fdf7b83f332\AndroidManifest.xml:27:13-44
+	android:name
+		ADDED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ericn\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\cd59d59ba4503d36c5622fdf7b83f332\AndroidManifest.xml:26:13-58
