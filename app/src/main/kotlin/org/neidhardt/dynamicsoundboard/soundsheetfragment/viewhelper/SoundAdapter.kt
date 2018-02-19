@@ -1,15 +1,16 @@
 package org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper
 
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxSeekBar
 import io.reactivex.subjects.PublishSubject
 import org.neidhardt.androidutils.recyclerview_utils.adapter.BaseAdapter
+import org.neidhardt.app_utils.longHash
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.containsPlayerWithId
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.app_utils.longHash
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
@@ -46,8 +47,14 @@ class SoundAdapter : BaseAdapter<MediaPlayerController, SoundViewHolder>() {
 
 		RxView.touches(itemView)
 				.takeUntil(parentIsDetached)
+				.filter { _ ->
+					// only start swipe if recyclerView is not scrolling (or else busy)
+					(parent as RecyclerView).scrollState == RecyclerView.SCROLL_STATE_IDLE
+				}
 				.map { viewHolder }
-				.subscribe { this.startsSwipe.onNext(it) }
+				.subscribe {
+					this.startsSwipe.onNext(it)
+				}
 
 		RxView.clicks(viewHolder.playButton)
 				.takeUntil(parentIsDetached)
