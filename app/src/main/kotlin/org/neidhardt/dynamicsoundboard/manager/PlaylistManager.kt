@@ -25,7 +25,7 @@ import org.neidhardt.app_utils.getCopyList
  */
 class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
-	private val TAG = javaClass.name
+	private val logTag = javaClass.name
 	private val eventBus = EventBus.getDefault()
 
 	internal var onPlaylistChangedListener = ArrayList<((List<MediaPlayerController>) -> Unit)>()
@@ -43,6 +43,13 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 		this.mMediaPlayers = ArrayList()
 		// copy list to prevent concurrent modification exception
 		val copyList = mediaPlayerData.getCopyList()
+
+		// if data is empty, we just notify our listeners
+		if (copyList.isEmpty()) {
+			this.invokeListeners()
+			return
+		}
+
 		SoundboardApplication.taskCounter.value += 1
 		Observable.just(copyList)
 				.flatMapIterable { it -> it }
@@ -51,10 +58,10 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 					this.createPlayerAndAddToPlaylist(playerData)
 					this.invokeListeners()
 				}, { error ->
-					Logger.e(TAG, "Error while loading playlist: ${error.message}")
+					Logger.e(logTag, "Error while loading playlist: ${error.message}")
 					SoundboardApplication.taskCounter.value -= 1
 				}, {
-					Logger.d(TAG, "Loading playlist completed")
+					Logger.d(logTag, "Loading playlist completed")
 					SoundboardApplication.taskCounter.value -= 1
 				})
 	}
