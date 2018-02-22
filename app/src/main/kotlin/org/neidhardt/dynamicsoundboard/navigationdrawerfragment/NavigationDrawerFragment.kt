@@ -37,6 +37,9 @@ import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 /**
  * Created by eric.neidhardt@gmail.com on 01.09.2017.
  */
+private const val TAB_SOUND_SHEETS: Int = 0
+private const val TAB_PLAYLIST: Int = 1
+
 class NavigationDrawerFragment :
 		EnhancedSupportFragment(),
 		NavigationDrawerFragmentContract.View {
@@ -139,9 +142,9 @@ class NavigationDrawerFragment :
 		RxTabLayout.selections(this.tabLayout)
 				.takeUntil(RxView.detaches(this.tabLayout))
 				.subscribe { tab ->
-					if (tab.position == 0) {
+					if (tab.position == TAB_SOUND_SHEETS) {
 						this.presenter.userClicksTabSoundSheets()
-					} else if (tab.position == 1) {
+					} else if (tab.position == TAB_PLAYLIST) {
 						this.presenter.userClicksTabPlaylist()
 					}
 				}
@@ -295,10 +298,12 @@ class NavigationDrawerFragment :
 
 	override fun showSoundSheets() {
 		this.recyclerView.adapter = this.adapterSoundSheets
+		this.tabLayout.getTabAt(TAB_SOUND_SHEETS)?.select() // make sure correct tab is selected
 	}
 
 	override fun showPlaylist() {
 		this.recyclerView.adapter = this.adapterPlaylist
+		this.tabLayout.getTabAt(TAB_PLAYLIST)?.select() // make sure correct tab is selected
 	}
 
 	override fun showSoundLayouts() {
