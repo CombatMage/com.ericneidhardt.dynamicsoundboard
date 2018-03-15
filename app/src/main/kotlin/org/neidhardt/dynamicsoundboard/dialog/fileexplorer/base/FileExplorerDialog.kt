@@ -161,7 +161,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 	}
 
 	fun storePathToSharedPreferences(key: String, path: String) {
-		val context = SoundboardApplication.context
+		val context = this.context.applicationContext
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		val editor = preferences.edit()
 		editor.putString(key, path)
@@ -169,7 +169,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 	}
 
 	fun getPathFromSharedPreferences(key: String): String? {
-		val context = SoundboardApplication.context
+		val context = this.context.applicationContext
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		return preferences.getString(key, null)
 	}
