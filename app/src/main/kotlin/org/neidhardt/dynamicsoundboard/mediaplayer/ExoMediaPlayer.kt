@@ -19,7 +19,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.logger.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData

@@ -12,7 +12,7 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.logger.Logger
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.app_utils.getCopyList

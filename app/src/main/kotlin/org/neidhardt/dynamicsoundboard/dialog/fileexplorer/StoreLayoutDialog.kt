@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -20,7 +21,6 @@ import org.neidhardt.androidutils.recyclerview_utils.decoration.DividerItemDecor
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import java.io.File
 import java.io.IOException
 
@@ -145,7 +145,7 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 		.subscribe({
 			// nothing to do
 		}, { error ->
-			Logger.e(TAG, error.toString())
+			Log.e(TAG, error.toString())
 			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_store_layout,
 					Toast.LENGTH_SHORT).show()
 			this.dismiss()

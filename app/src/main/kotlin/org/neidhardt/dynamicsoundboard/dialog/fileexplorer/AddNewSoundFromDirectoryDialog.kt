@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_add_new_sound.view.*
@@ -18,7 +19,6 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import java.io.File
 
 /**
@@ -148,7 +148,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 				.subscribe({ playerData ->
 					soundManager.add(soundSheet, playerData)
 				}, { error ->
-					Logger.e(TAG, error.toString())
+					Log.e(TAG, error.toString())
 					this@AddNewSoundFromDirectoryDialog.dismiss()
 				}, {
 					this@AddNewSoundFromDirectoryDialog.dismiss()

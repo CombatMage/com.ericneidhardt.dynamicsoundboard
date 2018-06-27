@@ -16,7 +16,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.logger.Logger
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.app_utils.getCopyList
 

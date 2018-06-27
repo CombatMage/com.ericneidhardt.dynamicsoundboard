@@ -17,7 +17,7 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.logger.Logger
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
 import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
 import org.neidhardt.dynamicsoundboard.misc.PauseSoundOnCallListener

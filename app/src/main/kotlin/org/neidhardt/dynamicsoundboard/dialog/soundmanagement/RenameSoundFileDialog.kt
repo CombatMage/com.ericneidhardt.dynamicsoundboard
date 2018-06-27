@@ -12,13 +12,13 @@ import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.dialog_rename_sound_file_layout.view.*
 import org.neidhardt.dynamicsoundboard.R
+import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
@@ -30,6 +30,7 @@ import kotlin.properties.Delegates
  * File created by eric.neidhardt on 06.07.2015.
  */
 class RenameSoundFileDialog : SoundSettingsBaseDialog() {
+
 	override var player: MediaPlayerController by Delegates.notNull()
 	override var fragmentTag: String by Delegates.notNull()
 	override var soundSheet: SoundSheet? = null
@@ -86,6 +87,7 @@ private class RenameSoundFileDialogPresenter (
 		private val currentName : TextView,
 		private val renameAllOccurrences: CheckBox
 ) {
+	private val logger = SoundboardApplication.logger
 	private val logTag = javaClass.name
 
 	private var playersWithMatchingUri: List<MediaPlayerController>? = null
@@ -163,7 +165,7 @@ private class RenameSoundFileDialogPresenter (
 				this.appendFileTypeToNewPath(newFileLabel, fileToRename.name)
 
 		if (newFilePath == fileToRename.absolutePath) {
-			Logger.d(logTag, "old name and new name are equal, nothing to be done")
+			logger.d(logTag, "old name and new name are equal, nothing to be done")
 			return
 		}
 
@@ -209,7 +211,7 @@ private class RenameSoundFileDialogPresenter (
 		val segments = oldFilePath.split("\\.".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
 		if (segments.size > 1) {
 			val fileType = segments[segments.size - 1]
-			return newNameFilePath + "." + fileType
+			return "$newNameFilePath.$fileType"
 		}
 
 		return newNameFilePath
@@ -221,7 +223,7 @@ private class RenameSoundFileDialogPresenter (
 			true
 		}
 		catch (e: IOException) {
-			Logger.e(logTag, e.message)
+			logger.e(logTag, e.message)
 			if (player.mediaPlayerData.fragmentTag == PLAYLIST_TAG)
 				this.playlistManager.remove(listOf(player))
 			else {

@@ -5,7 +5,7 @@
 		package="org.neidhardt.dynamicsoundboard">
 
 	<application
-			android:name=".DynamicSoundboardApplication"
+			android:name=".SoundboardApplication"
 			android:allowBackup="true"
 			android:label="Dynamic Soundboard"
 			tools:replace="android:label"/>
