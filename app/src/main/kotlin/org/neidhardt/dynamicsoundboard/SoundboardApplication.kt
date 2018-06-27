@@ -16,7 +16,6 @@ import java.util.*
 open class SoundboardApplication : MultiDexApplication() {
 
 	companion object {
-
 		private var staticContext: Context? = null
 		val context: Context get() = this.staticContext as Context
 
@@ -41,11 +40,10 @@ open class SoundboardApplication : MultiDexApplication() {
 
 	override fun onCreate() {
 		super.onCreate()
+
 		staticContext = this.applicationContext
 
 		soundLayoutManager.initIfRequired(storage.get())
-
-		val eventBus = EventBus.getDefault()
-		eventBus.registerIfRequired(playlistManager)
+		EventBus.getDefault().registerIfRequired(playlistManager)
 	}
 }
