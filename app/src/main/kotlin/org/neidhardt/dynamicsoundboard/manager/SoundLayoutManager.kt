@@ -12,7 +12,7 @@ import org.neidhardt.simplestorage.Optional
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
 */
-val DB_DEFAULT = "Soundboard_db"
+const val DB_DEFAULT = "Soundboard_db"
 
 class SoundLayoutManager(
 		private val context: Context,
