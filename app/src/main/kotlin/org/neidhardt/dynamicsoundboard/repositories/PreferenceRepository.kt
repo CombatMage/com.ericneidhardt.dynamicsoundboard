@@ -8,25 +8,29 @@ import org.neidhardt.dynamicsoundboard.R
 /**
  * Created by eric.neidhardt@gmail.com on 31.08.2017.
  */
-class PreferenceRepository(private val context: Context) {
+class PreferenceRepository(context: Context) {
 
 	private val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
 
+	private val keyNotifications = context.getString(R.string.preferences_enable_notifications_key)
+	private val keySwipeToDelete = context.getString(R.string.preferences_enable_one_swipe_delete_key)
+	private val keyUseSystemBrowser = context.getString(R.string.preferences_use_system_file_browser_key)
+
 	val isNotificationEnabled: Boolean get() {
 		return this.preferenceManager.getBoolean(
-				this.context.getString(R.string.preferences_enable_notifications_key),
+				this.keyNotifications,
 				true)
 	}
 
 	val isOneSwipeToDeleteEnabled: Boolean get() {
 		return this.preferenceManager.getBoolean(
-				this.context.getString(R.string.preferences_enable_one_swipe_delete_key),
+				this.keySwipeToDelete,
 				false)
 	}
 
 	val useBuildInBrowserForFiles: Boolean get() {
 		return this.preferenceManager.getBoolean(
-				this.context.getString(R.string.preferences_use_system_file_browser_key),
+				this.keyUseSystemBrowser,
 				true)
 	}
 
