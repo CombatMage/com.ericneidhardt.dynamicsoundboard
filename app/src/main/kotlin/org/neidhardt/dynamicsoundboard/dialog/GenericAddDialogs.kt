@@ -23,29 +23,29 @@ object GenericAddDialogs {
 				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, name),
 				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericadd_SoundLayoutTitle,
 						R.string.genericadd_SoundLayoutMessage),
-				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { _, input ->
+				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add) { _, input ->
 					val layout = SoundLayout().apply {
 						this.isSelected = false
 						this.databaseId = SoundLayoutManager.getNewDatabaseIdForLabel(input)
 						this.label = input
 					}
 					SoundboardApplication.soundLayoutManager.add(layout)
-				}),
-				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { _, _ ->
-				})
+				},
+				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel) { _, _ ->
+				}
 		)
 	}
 
 	fun showAddSoundSheetDialog(fragmentManager: FragmentManager) {
 		val hint = SoundboardApplication.context.getString(R.string.genericadd_SoundSheetHint)
-		val name = SoundboardApplication.soundSheetManager.suggestedName
+		val name = SoundboardApplication.soundSheetManager.getSuggestedName(SoundboardApplication.context)
 		GenericEditTextDialog.showInstance(
 				fragmentManager = fragmentManager,
 				fragmentTag = "AddSoundSheetDialog",
 				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, name),
 				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericrename_SoundSheetTitle,
 						R.string.genericadd_SoundSheetMessage),
-				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add, { _, input ->
+				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_add) { _, input ->
 					val manager = SoundboardApplication.soundSheetManager
 					val soundSheet = SoundSheet().apply {
 						this.label = input
@@ -53,9 +53,9 @@ object GenericAddDialogs {
 					}
 					manager.add(soundSheet)
 					manager.setSelected(soundSheet)
-				}),
-				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { _, _ ->
-				})
+				},
+				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel) { _, _ ->
+				}
 		)
 	}
 }

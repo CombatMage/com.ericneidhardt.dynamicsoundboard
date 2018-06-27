@@ -29,7 +29,7 @@ class SoundboardApplication : MultiDexApplication() {
 		val appDataRepository by lazy { AppDataRepository(this.context) }
 		val userSettingsRepository by lazy { UserPreferenceRepository(this.context) }
 
-		val soundSheetManager by lazy { SoundSheetManager(this.context) }
+		val soundSheetManager by lazy { SoundSheetManager() }
 		val soundManager by lazy { SoundManager(this.context) }
 		val playlistManager by lazy { PlaylistManager(this.context) }
 		val soundLayoutManager by lazy {

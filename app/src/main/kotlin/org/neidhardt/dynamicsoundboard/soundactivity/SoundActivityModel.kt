@@ -34,7 +34,7 @@ class SoundActivityModel(
 
 	override fun getSoundSheets(): List<SoundSheet> = this.soundSheetManager.soundSheets
 
-	override fun getNameForNewSoundSheet(): String = this.soundSheetManager.suggestedName
+	override fun getNameForNewSoundSheet(): String = this.soundSheetManager.getSuggestedName(this.context)
 
 	override fun saveData() {
 		this.appDataRepository.save(this.soundLayoutManager.soundLayouts).subscribe()

@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
 */
-open class SoundSheetManager(private val context: Context) {
+open class SoundSheetManager {
 
 	companion object {
 		fun getNewFragmentTagForLabel(label: String): String =
@@ -53,8 +53,9 @@ open class SoundSheetManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	val suggestedName: String get() =
-		this.context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
+	fun getSuggestedName(context: Context): String {
+		return context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
+	}
 
 	private fun invokeListeners() {
 		this.onSoundSheetsChangedListener.forEach { it.invoke(this.soundSheets) }
