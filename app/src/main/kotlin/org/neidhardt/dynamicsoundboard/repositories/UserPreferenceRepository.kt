@@ -8,7 +8,7 @@ import org.neidhardt.dynamicsoundboard.R
 /**
  * Created by eric.neidhardt@gmail.com on 31.08.2017.
  */
-class PreferenceRepository(context: Context) {
+class UserPreferenceRepository(context: Context) {
 
 	private val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
 

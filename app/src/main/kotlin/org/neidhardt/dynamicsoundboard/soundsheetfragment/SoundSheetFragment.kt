@@ -67,7 +67,7 @@ class SoundSheetFragment : RecyclerViewFragment(),
 
 	private val eventBus = EventBus.getDefault()
 
-	private val preferences = SoundboardApplication.preferenceRepository
+	private val preferences = SoundboardApplication.userSettingsRepository
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager

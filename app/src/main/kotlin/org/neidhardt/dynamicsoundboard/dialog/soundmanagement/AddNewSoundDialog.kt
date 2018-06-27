@@ -176,7 +176,7 @@ private class AddNewSoundDialogPresenter(
 		private val soundManager: SoundManager
 ) {
 
-	private val preferenceRepository = SoundboardApplication.preferenceRepository
+	private val preferenceRepository = SoundboardApplication.userSettingsRepository
 
 	private val soundsToAdd = ArrayList<NewSoundData>()
 	val values: List<NewSoundData>

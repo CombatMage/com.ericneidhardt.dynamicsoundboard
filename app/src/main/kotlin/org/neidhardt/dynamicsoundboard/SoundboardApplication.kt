@@ -9,8 +9,8 @@ import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
-import org.neidhardt.dynamicsoundboard.repositories.AppDataStorage
-import org.neidhardt.dynamicsoundboard.repositories.PreferenceRepository
+import org.neidhardt.dynamicsoundboard.repositories.AppDataRepository
+import org.neidhardt.dynamicsoundboard.repositories.UserPreferenceRepository
 import org.neidhardt.app_utils.ValueHolder
 import org.neidhardt.dynamicsoundboard.logger.ILogger
 import java.util.*
@@ -26,8 +26,8 @@ class SoundboardApplication : MultiDexApplication() {
 
 		private val random = Random()
 
-		val storage by lazy { AppDataStorage(this.context) }
-		val preferenceRepository by lazy { PreferenceRepository(this.context) }
+		val appDataRepository by lazy { AppDataRepository(this.context) }
+		val userSettingsRepository by lazy { UserPreferenceRepository(this.context) }
 
 		val soundSheetManager by lazy { SoundSheetManager(this.context) }
 		val soundManager by lazy { SoundManager(this.context) }
@@ -53,7 +53,7 @@ class SoundboardApplication : MultiDexApplication() {
 		staticContext = this.applicationContext
 		staticLogger = Logger(this)
 
-		soundLayoutManager.initIfRequired(storage.get())
+		soundLayoutManager.initIfRequired(appDataRepository.get())
 		EventBus.getDefault().registerIfRequired(playlistManager)
 	}
 }

@@ -19,6 +19,6 @@ class SaveDataIntentService : IntentService(SaveDataIntentService::class.java.na
 
 	override fun onHandleIntent(intent: Intent?) {
 		val soundLayouts = SoundboardApplication.soundLayoutManager.soundLayouts
-		SoundboardApplication.storage.save(soundLayouts).subscribe()
+		SoundboardApplication.appDataRepository.save(soundLayouts).subscribe()
 	}
 }

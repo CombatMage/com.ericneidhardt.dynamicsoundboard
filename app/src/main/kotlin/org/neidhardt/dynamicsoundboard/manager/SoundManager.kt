@@ -92,7 +92,7 @@ class SoundManager(private val context: Context) {
 				.subscribe({
 					this.invokeListeners()
 				}, { error ->
-					Logger.e(TAG, "Error while adding players " + error)
+					Logger.e(TAG, "Error while adding players $error")
 					SoundboardApplication.taskCounter.value--
 					this.invokeListeners()
 				}, {

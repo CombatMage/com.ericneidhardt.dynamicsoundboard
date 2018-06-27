@@ -140,7 +140,7 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 	private fun saveDataAndDismiss() {
 		val file = super.adapter.selectedFiles.elementAt(0)
-		SoundboardApplication.storage.saveToFile(file, this.soundLayoutManager.soundLayouts)
+		SoundboardApplication.appDataRepository.saveToFile(file, this.soundLayoutManager.soundLayouts)
 		.observeOn(AndroidSchedulers.mainThread())
 		.subscribe({
 			// nothing to do

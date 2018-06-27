@@ -87,7 +87,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 		val externalFileStorage = Environment.getExternalStorageDirectory()
 		val rootDirectory = directory.parentFile
 
-		// clicked directory is already root ( / ) our outside of external storage path
+		// clicked directory is already root ( / ) our outside of external appDataRepository path
 		if (rootDirectory == null
 				|| rootDirectory.absolutePath.length < externalFileStorage.absolutePath.length) {
 			this.adapter.rootDirectory = null

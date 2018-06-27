@@ -9,7 +9,7 @@ import org.neidhardt.dynamicsoundboard.splashactivity.SplashActivity
  */
 abstract class BaseDialog : DialogFragment() {
 	companion object {
-		val KEY_CALLING_FRAGMENT_TAG: String = "KEY_CALLING_FRAGMENT_TAG"
+		const val KEY_CALLING_FRAGMENT_TAG: String = "KEY_CALLING_FRAGMENT_TAG"
 	}
 
 	val soundActivity: SoundActivity

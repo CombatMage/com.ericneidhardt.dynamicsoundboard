@@ -41,7 +41,7 @@ class NotificationService : Service(),
 
 	private val logTag: String = javaClass.name
 
-	private val preferences = SoundboardApplication.preferenceRepository
+	private val preferences = SoundboardApplication.userSettingsRepository
 
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager

@@ -70,7 +70,7 @@ dependencies {
 	implementation project(':android_utils')
 
 	implementation 'org.neidhardt:enhanced-handler:1.0.7'
-	implementation 'org.neidhardt:simple-storage:1.0.2'
+	implementation 'org.neidhardt:simple-appDataRepository:1.0.2'
 	implementation 'org.neidhardt:viewpager-dialog:1.0.3'
 
 	// kotlin
