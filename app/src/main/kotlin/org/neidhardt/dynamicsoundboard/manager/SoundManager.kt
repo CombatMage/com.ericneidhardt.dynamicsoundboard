@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
 */
 class SoundManager(private val context: Context) {
 
-	private val TAG = javaClass.name
+	private val logTag = javaClass.name
 
 	companion object {
 		fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): MediaPlayerData {
@@ -66,10 +66,10 @@ class SoundManager(private val context: Context) {
 					soundCopyList.forEach { this.createPlayerAndAddToSounds(soundSheet, it) }
 					this.invokeListeners()
 				}, { error ->
-					Logger.e(TAG, "Error while loading playlist: ${error.message}")
+					Logger.e(logTag, "Error while loading playlist: ${error.message}")
 					SoundboardApplication.taskCounter.value -= 1
 				}, {
-					Logger.d(TAG, "Loading playlist completed")
+					Logger.d(logTag, "Loading playlist completed")
 					SoundboardApplication.taskCounter.value -= 1
 				})
 	}
@@ -92,11 +92,11 @@ class SoundManager(private val context: Context) {
 				.subscribe({
 					this.invokeListeners()
 				}, { error ->
-					Logger.e(TAG, "Error while adding players $error")
+					Logger.e(logTag, "Error while adding players $error")
 					SoundboardApplication.taskCounter.value--
 					this.invokeListeners()
 				}, {
-					Logger.d(TAG, "Adding players finished")
+					Logger.d(logTag, "Adding players finished")
 					SoundboardApplication.taskCounter.value--
 					this.invokeListeners()
 				})
@@ -147,7 +147,7 @@ class SoundManager(private val context: Context) {
 	}
 
 	private fun createPlayerAndAddToSounds(soundSheet: SoundSheet, playerData: MediaPlayerData) {
-		val soundsForSoundSheet = this.mMediaPlayers?.getOrPut(soundSheet, { ArrayList() })
+		val soundsForSoundSheet = this.mMediaPlayers?.getOrPut(soundSheet) { ArrayList() }
 				?: throw IllegalStateException("sound manager is not init")
 
 		if (soundsForSoundSheet.containsPlayerWithId(playerData.playerId))

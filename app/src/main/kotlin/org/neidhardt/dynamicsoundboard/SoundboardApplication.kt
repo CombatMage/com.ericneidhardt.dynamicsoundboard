@@ -22,7 +22,7 @@ class SoundboardApplication : MultiDexApplication() {
 
 	companion object {
 		private lateinit var staticContext: Context
-		val context: Context get() = this.staticContext as Context
+		val context: Context get() = this.staticContext
 
 		private val random = Random()
 

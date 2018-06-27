@@ -45,6 +45,9 @@ class SoundActivity :
 
 	// this view does not exists in tablet layout
 	private val drawerLayout: DrawerLayout? get() = this.drawerlayout_soundactivity
+
+	private val appDataRepository = SoundboardApplication.appDataRepository
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 
 	private var drawerToggle: ActionBarDrawerToggle? = null
@@ -81,8 +84,9 @@ class SoundActivity :
 				this,
 				SoundActivityModel(
 						this.applicationContext,
-						this.soundSheetManager)
-		)
+						this.appDataRepository,
+						this.soundLayoutManager,
+						this.soundSheetManager))
 	}
 
 	private fun configureToolbar(toolbar: Toolbar) {

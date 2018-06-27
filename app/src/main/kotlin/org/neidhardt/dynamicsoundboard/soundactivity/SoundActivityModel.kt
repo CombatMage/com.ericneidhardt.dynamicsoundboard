@@ -4,10 +4,11 @@ import android.content.Context
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.neidhardt.dynamicsoundboard.manager.RxNewSoundSheetManager
+import org.neidhardt.dynamicsoundboard.manager.SoundLayoutManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.notifications.NotificationService
-import org.neidhardt.dynamicsoundboard.repositories.SaveDataIntentService
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
+import org.neidhardt.dynamicsoundboard.repositories.AppDataRepository
 
 
 /**
@@ -15,6 +16,8 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
  */
 class SoundActivityModel(
 		private val context: Context,
+		private val appDataRepository: AppDataRepository,
+		private val soundLayoutManager: SoundLayoutManager,
 		private val soundSheetManager: SoundSheetManager)
 : SoundActivityContract.Model {
 
@@ -34,6 +37,6 @@ class SoundActivityModel(
 	override fun getNameForNewSoundSheet(): String = this.soundSheetManager.suggestedName
 
 	override fun saveData() {
-		SaveDataIntentService.writeBack(this.context)
+		this.appDataRepository.save(this.soundLayoutManager.soundLayouts).subscribe()
 	}
 }
