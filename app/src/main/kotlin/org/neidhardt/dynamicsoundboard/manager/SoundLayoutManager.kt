@@ -14,7 +14,7 @@ import org.neidhardt.simplestorage.Optional
 */
 const val DB_DEFAULT = "Soundboard_db"
 
-class SoundLayoutManager(
+open class SoundLayoutManager(
 		private val context: Context,
 		private val soundSheetManager: SoundSheetManager,
 		private val playlistManager: PlaylistManager,

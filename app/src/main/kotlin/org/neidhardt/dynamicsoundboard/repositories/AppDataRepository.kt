@@ -12,7 +12,7 @@ import java .io.File
 /**
  * Created by eric.neidhardt@gmail.com on 19.12.2016.
  */
-class AppDataRepository(context: Context) : SimpleStorage<AppData>(context, AppData::class.java) {
+open class AppDataRepository(context: Context) : SimpleStorage<AppData>(context, AppData::class.java) {
 
 	private val converter = Gson()
 
