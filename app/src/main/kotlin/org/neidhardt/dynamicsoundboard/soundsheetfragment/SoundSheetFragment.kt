@@ -38,9 +38,9 @@ import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.ItemTouchCa
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.PendingDeletionHandler
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.RecyclerViewFragment
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.SoundAdapter
-import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
-import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
-import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.PlayButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.ToggleLoopButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.TogglePlaylistButton
 
 /**
  * Created by eric.neidhardt@gmail.com on 08.05.2017.
@@ -113,7 +113,7 @@ class SoundSheetFragment : RecyclerViewFragment(),
 		this.setHasOptionsMenu(true)
 
 		this.fragmentTag = this.arguments.getString(KEY_FRAGMENT_TAG)
-				?: throw NullPointerException(fragmentTag + ": cannot create fragment, given fragmentTag is null")
+				?: throw NullPointerException("$fragmentTag: cannot create fragment, given fragmentTag is null")
 
 		this.model = SoundSheetFragmentModel(
 				this.soundLayoutManager,

@@ -5,7 +5,6 @@ import android.os.Environment
 import android.preference.PreferenceManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySorted
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySortedAsync

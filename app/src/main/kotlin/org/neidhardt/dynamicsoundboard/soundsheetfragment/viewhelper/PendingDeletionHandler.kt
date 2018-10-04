@@ -31,7 +31,7 @@ class PendingDeletionHandler (
 		if (item.isPlayingSound) item.stopSound()
 
 		this.pendingDeletions.add(item)
-		this.deletionTask = KillableRunnable({ deletePendingItems() })
+		this.deletionTask = KillableRunnable { deletePendingItems() }
 		this.deletionTask?.let { this.handler.postDelayed(it, DELETION_TIMEOUT.toLong()) }
 
 		this.onItemDeletionRequested(this, DELETION_TIMEOUT)

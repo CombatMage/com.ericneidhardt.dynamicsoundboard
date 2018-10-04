@@ -220,14 +220,14 @@ class ExoMediaPlayer(
 	}
 
 	override fun pauseSound(): Boolean {
-		this.releasePlayerSchedule = KillableRunnable({
+		this.releasePlayerSchedule = KillableRunnable {
 			val position = progress // remember the paused position so it can reused later
 			exoPlayer.release()
 
 			init() // init sets lastPosition to 0, therefore we set the position after ini
 			lastPosition = position
 			postStateChangedEvent(true)
-		}).letThis { this.enhancedHandler.postDelayed(it, RELEASE_DELAY) }
+		}.letThis { this.enhancedHandler.postDelayed(it, RELEASE_DELAY) }
 
 		this.exoPlayer.playWhenReady = false
 

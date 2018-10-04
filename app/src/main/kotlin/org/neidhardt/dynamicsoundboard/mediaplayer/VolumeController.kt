@@ -7,11 +7,11 @@ import org.neidhardt.app_utils.letThis
 /**
  * File created by eric.neidhardt on 11.04.2016.
  */
-private val FADE_OUT_DURATION = 100.toLong()
-private val INT_VOLUME_MAX = 100
-private val INT_VOLUME_MIN = 0
-private val FLOAT_VOLUME_MAX = 1f
-private val FLOAT_VOLUME_MIN = 0f
+private const val FADE_OUT_DURATION = 100.toLong()
+private const val INT_VOLUME_MAX = 100
+private const val INT_VOLUME_MIN = 0
+private const val FLOAT_VOLUME_MAX = 1f
+private const val FLOAT_VOLUME_MIN = 0f
 
 class VolumeController(private val mediaPlayerController: MediaPlayerController) {
 
@@ -40,9 +40,9 @@ class VolumeController(private val mediaPlayerController: MediaPlayerController)
 	private fun scheduleNextVolumeChange() {
 		val delay = FADE_OUT_DURATION / INT_VOLUME_MAX
 
-		this.fadeOutSchedule = KillableRunnable({
+		this.fadeOutSchedule = KillableRunnable {
 			scheduleNexFadeOutIteration()
-		}).letThis { this.handler.postDelayed(it, delay) }
+		}.letThis { this.handler.postDelayed(it, delay) }
 	}
 
 	private fun scheduleNexFadeOutIteration() {

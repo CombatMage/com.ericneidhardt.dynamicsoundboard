@@ -7,9 +7,9 @@ import android.widget.SeekBar
 import android.widget.TextView
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
-import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
-import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.PlayButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.ToggleLoopButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.TogglePlaylistButton
 
 /**
  * File created by eric.neidhardt on 29.06.2015.

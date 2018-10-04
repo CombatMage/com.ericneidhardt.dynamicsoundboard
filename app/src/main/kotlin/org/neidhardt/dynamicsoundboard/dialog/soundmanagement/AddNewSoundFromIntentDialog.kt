@@ -67,11 +67,11 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_add_new_sound_from_intent_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.all_add, { _, _ ->
+			this.setPositiveButton(R.string.all_add) { _, _ ->
 				deliverResult()
 				dismiss()
-			})
-			this.setNegativeButton(R.string.all_cancel, { _, _ -> dismiss()})
+			}
+			this.setNegativeButton(R.string.all_cancel) { _, _ -> dismiss()}
 		}.create()
 	}
 
@@ -89,11 +89,11 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_add_new_sound_from_intent_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.all_add, { _, _ ->
+			this.setPositiveButton(R.string.all_add) { _, _ ->
 				deliverResult()
 				dismiss()
-			})
-			this.setNegativeButton(R.string.all_cancel, { _, _ -> dismiss()})
+			}
+			this.setNegativeButton(R.string.all_cancel) { _, _ -> dismiss()}
 		}.create()
 	}
 
@@ -127,11 +127,10 @@ class AddNewSoundFromIntentDialog : BaseDialog(), CompoundButton.OnCheckedChange
 		if (newSoundSheetLabel.isEmpty())
 			newSoundSheetLabel = this.suggestedName as String
 
-		val soundSheetFragmentTag: String
-		if (this.availableSoundSheetLabels == null || this.addNewSoundSheet!!.isChecked)
-			soundSheetFragmentTag = this.addNewSoundSheet(newSoundSheetLabel)
+		val soundSheetFragmentTag = if (this.availableSoundSheetLabels == null || this.addNewSoundSheet!!.isChecked)
+			this.addNewSoundSheet(newSoundSheetLabel)
 		else
-			soundSheetFragmentTag = this.availableSoundSheetIds!![this.soundSheetSpinner!!.selectedItemPosition]
+			this.availableSoundSheetIds!![this.soundSheetSpinner!!.selectedItemPosition]
 
 		val soundLabel = this.soundName!!.text.toString()
 		val soundUri = this.uri ?: return

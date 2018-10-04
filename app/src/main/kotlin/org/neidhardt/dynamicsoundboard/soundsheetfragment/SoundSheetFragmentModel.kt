@@ -2,7 +2,6 @@ package org.neidhardt.dynamicsoundboard.soundsheetfragment
 
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.manager.*
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData

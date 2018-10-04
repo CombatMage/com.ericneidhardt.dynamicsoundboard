@@ -50,9 +50,9 @@ class NotificationService : Service(),
 
 	private val eventBus = EventBus.getDefault()
 	private val phoneStateListener: PauseSoundOnCallListener = PauseSoundOnCallListener()
-	private val notificationActionReceiver: BroadcastReceiver = NotificationActionReceiver({
-		action, playerId, notificationId -> this.onNotificationAction(action, playerId, notificationId)
-	})
+	private val notificationActionReceiver: BroadcastReceiver = NotificationActionReceiver { action, playerId, notificationId ->
+		this.onNotificationAction(action, playerId, notificationId)
+	}
 
 	private var notificationHandler: INotificationHandler? = null
 

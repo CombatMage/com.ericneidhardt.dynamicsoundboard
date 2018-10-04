@@ -9,7 +9,7 @@ import org.neidhardt.androidutils.EnhancedSupportFragment
  */
 abstract class RecyclerViewFragment : EnhancedSupportFragment() {
 
-	private val KeyStateRecyclerView get() = "${this.fragmentTag}_recycler_view_state"
+	private val keyStateRecyclerView get() = "${this.fragmentTag}_recycler_view_state"
 
 	abstract var recyclerView: RecyclerView
 
@@ -19,7 +19,7 @@ abstract class RecyclerViewFragment : EnhancedSupportFragment() {
 		val layoutManager = this.recyclerView.layoutManager
 		if (layoutManager != null) {
 			savedInstanceState.putParcelable(
-					KeyStateRecyclerView,
+					keyStateRecyclerView,
 					layoutManager.onSaveInstanceState())
 		}
 	}
@@ -28,6 +28,6 @@ abstract class RecyclerViewFragment : EnhancedSupportFragment() {
 		super.onSaveState(outState)
 
 		val layoutManager = this.recyclerView.layoutManager
-		layoutManager?.onRestoreInstanceState(outState.getParcelable(KeyStateRecyclerView))
+		layoutManager?.onRestoreInstanceState(outState.getParcelable(keyStateRecyclerView))
 	}
 }

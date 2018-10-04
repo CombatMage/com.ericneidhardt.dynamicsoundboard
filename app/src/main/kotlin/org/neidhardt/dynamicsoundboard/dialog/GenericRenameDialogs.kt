@@ -25,15 +25,15 @@ object GenericRenameDialogs {
 				fragmentTag = "RenameSoundDialog",
 				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericrename_SoundTitle, 0),
 				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, label),
-				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_rename, { _, input ->
+				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_rename) { _, input ->
 					val currentLabel = playerData.label
 					if (currentLabel != input) {
 						playerData.label = input
 						RenameSoundFileDialog.show(fragmentManager, playerData)
 					}
-				}),
-				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { _, _ ->
-				})
+				},
+				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel) { _, _ ->
+				}
 		)
 	}
 
@@ -48,12 +48,12 @@ object GenericRenameDialogs {
 				fragmentTag = "RenameSoundSheetDialog",
 				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericrename_SoundSheetTitle, 0),
 				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, label),
-				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_rename, { _, input ->
+				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_rename) { _, input ->
 					soundSheet.label = input
 					SoundboardApplication.soundSheetManager.notifyHasChanged(soundSheet)
-				}),
-				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { _, _ ->
-				})
+				},
+				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel) { _, _ ->
+				}
 		)
 	}
 
@@ -69,11 +69,11 @@ object GenericRenameDialogs {
 				fragmentTag = "RenameSoundLayoutDialog",
 				dialogConfig = GenericEditTextDialog.DialogConfig(R.string.genericrename_SoundLayoutTitle, 0),
 				editTextConfig = GenericEditTextDialog.EditTextConfig(hint, label),
-				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_rename, { _, input ->
+				positiveButton = GenericEditTextDialog.ButtonConfig(R.string.all_rename) { _, input ->
 					soundLayout.label = input
 					SoundboardApplication.soundLayoutManager.notifyHasChanged(soundLayout)
-				}),
-				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel, { _, _ -> })
+				},
+				negativeButton = GenericEditTextDialog.ButtonConfig(R.string.all_cancel) { _, _ -> }
 		)
 
 	}

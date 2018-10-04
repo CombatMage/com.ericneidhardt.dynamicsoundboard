@@ -88,13 +88,13 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler {
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_add_new_sound_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.all_add, { _, _ ->
+			this.setPositiveButton(R.string.all_add) { _, _ ->
 				presenter?.addSoundsToSoundSheet()
 				dismiss()
-			})
-			this.setNegativeButton(R.string.all_cancel, { _, _ ->
+			}
+			this.setNegativeButton(R.string.all_cancel) { _, _ ->
 				dismiss()
-			})
+			}
 		}.create()
 	}
 
@@ -185,7 +185,7 @@ private class AddNewSoundDialogPresenter(
 	val adapter = NewSoundAdapter(this)
 
 	init {
-		this.addAnotherSound.setOnClickListener({ this.addAnotherSound() })
+		this.addAnotherSound.setOnClickListener { this.addAnotherSound() }
 
 		this.addedSoundsLayout.apply {
 			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))

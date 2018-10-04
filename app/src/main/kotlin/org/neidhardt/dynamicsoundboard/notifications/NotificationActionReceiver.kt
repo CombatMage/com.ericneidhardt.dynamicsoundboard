@@ -3,7 +3,6 @@ package org.neidhardt.dynamicsoundboard.notifications
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import org.neidhardt.dynamicsoundboard.notifications.NotificationConstants
 
 /**
  * @author eric.neidhardt on 15.06.2016.

@@ -1,4 +1,4 @@
-package org.neidhardt.dynamicsoundboard.views.sound_control
+package org.neidhardt.dynamicsoundboard.views.soundcontrol
 
 import android.content.Context
 import android.util.AttributeSet

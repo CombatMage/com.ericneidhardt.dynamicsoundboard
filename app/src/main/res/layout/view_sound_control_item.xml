@@ -8,7 +8,7 @@
 		android:background="@color/background"
 		tools:background="#00ff00">
 
-	<org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
+	<org.neidhardt.dynamicsoundboard.views.soundcontrol.PlayButton
 			android:id="@+id/ib_view_sound_control_item_play"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -70,12 +70,12 @@
 				android:src="@drawable/ic_stop"
 				style="@style/Theme.ImageButton.SoundControl"/>
 
-		<org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
+		<org.neidhardt.dynamicsoundboard.views.soundcontrol.ToggleLoopButton
 				android:id="@+id/ib_view_sound_control_item_loop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>
 
-		<org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
+		<org.neidhardt.dynamicsoundboard.views.soundcontrol.TogglePlaylistButton
 				android:id="@+id/ib_view_sound_control_item_add_to_playlist"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>
