@@ -1,3 +1,3 @@
 # Dynamic Soundboard
 
-TODO write readme
+Android App for creating your own soundboard.
