@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.manager
 
+import android.annotation.SuppressLint
 import android.content.Context
 import io.reactivex.Observable
 import org.neidhardt.dynamicsoundboard.R
@@ -30,6 +31,7 @@ open class SoundLayoutManager(
 	internal val mCurrentlyPlayingSounds = ArrayList<MediaPlayerController>()
 	val currentlyPlayingSounds: List<MediaPlayerController> get() = this.mCurrentlyPlayingSounds
 
+	@SuppressLint("CheckResult")
 	@Synchronized
 	fun initIfRequired(loadingAppData: Observable<Optional<AppData>>) {
 		if (mSoundLayouts == null) {
@@ -49,6 +51,7 @@ open class SoundLayoutManager(
 		}
 	}
 
+	@SuppressLint("CheckResult")
 	@Synchronized
 	fun init(loadingAppData: Observable<AppData?>) {
 		loadingAppData.subscribe { appData ->
@@ -152,45 +155,32 @@ open class SoundLayoutManager(
 object RxNewSoundLayoutManager {
 
 	fun soundLayoutsChanges(manager: SoundLayoutManager): Observable<List<SoundLayout>> {
-		return Observable.create { subscriber ->
+		return Observable.create { emitter ->
 			val listener: (List<SoundLayout>) -> Unit = {
-				subscriber.onNext(it)
+				emitter.onNext(it)
 			}
-			//subscriber.add(Subscriptions.create {
-			//	manager.onSoundLayoutsChangedListener.remove(listener)
-			//})
-			manager.mSoundLayouts?.let { subscriber.onNext(it) }
+
+			emitter.setCancellable {
+				manager.onSoundLayoutsChangedListener.remove(listener)
+			}
+
+			manager.mSoundLayouts?.let { emitter.onNext(it) }
 			manager.onSoundLayoutsChangedListener.add(listener)
 		}
 	}
 
 	fun changesPlayingSounds(manager: SoundLayoutManager): Observable<List<MediaPlayerController>> {
-		return Observable.create { subscriber ->
+		return Observable.create { emitter ->
 			val listener: (List<MediaPlayerController>) -> Unit = {
-				subscriber.onNext(it)
+				emitter.onNext(it)
 			}
-			//subscriber.add(Subscriptions.create {
-			//	manager.onPlayingSoundsChangedListener.remove(listener)
-			//})
-			manager.mCurrentlyPlayingSounds.let{ subscriber.onNext(it) }
-			manager.onPlayingSoundsChangedListener.add(listener)
-		}
-	}
 
-	fun completesLoading(manager: SoundLayoutManager): Observable<List<SoundLayout>> {
-		return Observable.create { subscriber ->
-			val listener: (List<SoundLayout>) -> Unit = {
-				subscriber.onNext(it)
-				subscriber.onComplete()
+			emitter.setCancellable {
+				manager.onPlayingSoundsChangedListener.remove(listener)
 			}
-			//subscriber.add(Subscriptions.create {
-			//	manager.onLoadingCompletedListener.remove(listener)
-			//})
-			manager.mSoundLayouts?.let {
-				subscriber.onNext(it)
-				subscriber.onComplete()
-			}
-			manager.onLoadingCompletedListener.add(listener)
+
+			manager.mCurrentlyPlayingSounds.let{ emitter.onNext(it) }
+			manager.onPlayingSoundsChangedListener.add(listener)
 		}
 	}
 }

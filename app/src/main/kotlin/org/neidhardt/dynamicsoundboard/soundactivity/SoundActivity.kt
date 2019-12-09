@@ -113,8 +113,8 @@ class SoundActivity :
 	override fun onNewIntent(intent: Intent?) {
 		super.onNewIntent(intent)
 		if (intent == null) return
-		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-			this.presenter.userOpenSoundFileWithApp(intent.data)
+		if (intent.action == Intent.ACTION_VIEW) {
+			intent.data?.let { this.presenter.userOpenSoundFileWithApp(it) }
 		}
 	}
 

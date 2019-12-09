@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.manager
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import io.reactivex.Observable
@@ -37,6 +38,7 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 	val playlist: List<MediaPlayerController> get() = this.mMediaPlayers as List<MediaPlayerController>
 
+	@SuppressLint("CheckResult")
 	fun set(mediaPlayerData: MutableList<MediaPlayerData>) {
 		this.mMediaPlayers?.forEach { it.destroy(false) }
 		this.mMediaPlayersData = mediaPlayerData
@@ -52,7 +54,7 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 		SoundboardApplication.taskCounter.value += 1
 		Observable.just(copyList)
-				.flatMapIterable { it -> it }
+				.flatMapIterable { it }
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ playerData ->
 					this.createPlayerAndAddToPlaylist(playerData)

@@ -12,8 +12,7 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
 open class SoundSheetManager {
 
 	companion object {
-		fun getNewFragmentTagForLabel(label: String): String =
-				Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
+		fun getNewFragmentTagForLabel(label: String): String = (label + SoundboardApplication.randomNumber).hashCode().toString()
 	}
 
 	internal var onSoundSheetsChangedListener = ArrayList<((List<SoundSheet>) -> Unit)>()
@@ -64,14 +63,16 @@ open class SoundSheetManager {
 
 object RxNewSoundSheetManager {
 	fun soundSheetsChanged(manager: SoundSheetManager): Observable<List<SoundSheet>> {
-		return Observable.create { subscriber ->
+		return Observable.create { emitter ->
 			val listener: (List<SoundSheet>) -> Unit = {
-				subscriber.onNext(it)
+				emitter.onNext(it)
 			}
-			//subscriber.add(Subscriptions.create {
-			//	manager.onSoundSheetsChangedListener.remove(listener)
-			//})
-			manager.mSoundSheets?.let { subscriber.onNext(it) }
+
+			emitter.setCancellable {
+				manager.onSoundSheetsChangedListener.remove(listener)
+			}
+
+			manager.mSoundSheets?.let { emitter.onNext(it) }
 			manager.onSoundSheetsChangedListener.add(listener)
 		}
 	}

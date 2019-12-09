@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.manager
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
@@ -28,7 +29,7 @@ class SoundManager(private val context: Context) {
 	companion object {
 		fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): MediaPlayerData {
 			val data = MediaPlayerData()
-			data.playerId = Integer.toString((uri.toString() + SoundboardApplication.randomNumber).hashCode())
+			data.playerId = (uri.toString() + SoundboardApplication.randomNumber).hashCode().toString()
 			data.fragmentTag = fragmentTag
 			data.label = label
 			data.uri = uri.toString()
@@ -48,6 +49,7 @@ class SoundManager(private val context: Context) {
 	val sounds: Map<SoundSheet, List<MediaPlayerController>> get() =
 			this.mMediaPlayers as Map<SoundSheet, List<MediaPlayerController>>
 
+	@SuppressLint("CheckResult")
 	fun set(soundSheets: MutableList<SoundSheet>) {
 		this.mMediaPlayers?.values?.forEach { it.forEach { it.destroy(false) } }
 		this.mSoundSheets = soundSheets
@@ -79,6 +81,7 @@ class SoundManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
+	@SuppressLint("CheckResult")
 	fun add(soundSheet: SoundSheet, playerData: List<MediaPlayerData>) {
 		SoundboardApplication.taskCounter.value++
 		Observable.just(playerData)
@@ -178,14 +181,16 @@ class SoundManager(private val context: Context) {
 
 object RxSoundManager {
 	fun changesSoundList(manager: SoundManager): Observable<Map<SoundSheet, List<MediaPlayerController>>> {
-		return Observable.create { subscriber ->
+		return Observable.create { emitter ->
 			val listener: (Map<SoundSheet, List<MediaPlayerController>>) -> Unit = {
-				subscriber.onNext(manager.sounds)
+				emitter.onNext(manager.sounds)
 			}
-			//subscriber.add(Subscriptions.create {
-			//	manager.onSoundListChangedListener.remove(listener)
-			//})
-			manager.mMediaPlayers?.let { subscriber.onNext(it) }
+
+			emitter.setCancellable {
+				manager.onSoundListChangedListener.remove(listener)
+			}
+
+			manager.mMediaPlayers?.let { emitter.onNext(it) }
 			manager.onSoundListChangedListener.add(listener)
 		}
 	}
