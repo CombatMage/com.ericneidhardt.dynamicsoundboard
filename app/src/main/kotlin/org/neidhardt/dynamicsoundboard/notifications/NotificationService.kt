@@ -115,8 +115,11 @@ class NotificationService : Service(),
 		player?.let {
 			when (action) {
 				NotificationConstants.ACTION_DISMISS -> {
-					if (!this.isActivityVisible) player.destroy(false)
-					else {}
+					if (!this.isActivityVisible) {
+						player.destroy(false)
+					} else {
+						Logger.d(logTag, "activity visible, nothing to do")
+					}
 				}
 				NotificationConstants.ACTION_STOP -> player.stopSound()
 				NotificationConstants.ACTION_PLAY -> player.playSound()

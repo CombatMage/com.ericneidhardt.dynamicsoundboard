@@ -11,7 +11,7 @@ buildscript {
 	dependencies {
 		classpath 'com.android.tools.build:gradle:3.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-		classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+		classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
 	}
 }
 
@@ -23,12 +23,12 @@ allprojects {
 		mavenCentral()
 		google()
 	}
-    project.ext {
-        buildTools = "28.0.2"
-        projectMinSDK = 21
-        projectTargetSDK = 26
-        compileSDK = 26
-    }
+	project.ext {
+		buildTools = "28.0.2"
+		projectMinSDK = 26
+		projectTargetSDK = 28
+		compileSDK = 26
+	}
 }
 
 task clean(type: Delete) {
