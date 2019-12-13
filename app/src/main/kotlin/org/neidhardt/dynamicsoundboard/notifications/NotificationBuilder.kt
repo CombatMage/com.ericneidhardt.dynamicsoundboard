@@ -134,8 +134,12 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 				getBitmapFromAsset(context, R.drawable.ic_notification_background_wear, 1)
 			}
 		}
-
 	}
+
+	override fun toString(): String {
+		return "PendingSoundNotification(notificationId=$notificationId, playerId='$playerId', notification=$notification, isPlaylistNotification=$isPlaylistNotification)"
+	}
+
 }
 
 private fun NotificationCompat.Builder.setActionStop(context: Context, isLollipopStyleAvailable: Boolean, notificationId: Int, playerId: String): NotificationCompat.Builder {

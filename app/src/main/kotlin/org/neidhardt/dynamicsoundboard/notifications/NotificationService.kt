@@ -1,6 +1,5 @@
 package org.neidhardt.dynamicsoundboard.notifications
 
-import android.app.Notification
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -68,13 +67,11 @@ class NotificationService : Service(),
 	override fun onCreate() {
 		super.onCreate()
 
-		val notification: Notification = NotificationCompat.Builder(this, ChannelId.PENDING_SOUNDS)
-					.setContentTitle("Sounds still playing")
-					.setContentText("Set message").build()
-			startForeground(1, notification)
-
-
+		// create new notification channel for all pending sounds
 		NotificationChannelBuilder.createNotificationChannelForPendingSounds(this)
+
+		// setting a notification after creation is require to use foreground service
+		startForeground(1, NotificationCompat.Builder(this, ChannelId.PENDING_SOUNDS).build())
 
 		this.notificationHandler = NotificationHandler(
 				service = this,
@@ -116,7 +113,7 @@ class NotificationService : Service(),
 	}
 
 	private fun onNotificationAction(action: String, playerId: String, notificationId: Int) {
-		Logger.d(logTag, "onNotificationAction")
+		Logger.d(logTag, "onNotificationAction($action, $playerId, $notificationId)")
 
 		val player: MediaPlayerController? =
 				if (notificationId == NotificationId.PLAYLIST) {
@@ -134,6 +131,7 @@ class NotificationService : Service(),
 					} else {
 						Logger.d(logTag, "activity visible, nothing to do")
 					}
+					this.notificationHandler?.dismissNotification(notificationId)
 				}
 				NotificationAction.STOP -> player.stopSound()
 				NotificationAction.PLAY -> player.playSound()
