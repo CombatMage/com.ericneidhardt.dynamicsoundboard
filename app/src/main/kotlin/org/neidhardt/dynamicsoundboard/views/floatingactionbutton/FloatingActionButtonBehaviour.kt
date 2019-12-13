@@ -12,7 +12,7 @@ import com.github.clans.fab.FloatingActionButton
 /**
  * File created by eric.neidhardt on 24.09.2015.
  */
-private val SCROLL_THRESHOLD = 4
+private const val SCROLL_THRESHOLD = 4
 
 interface SnackbarBehaviour
 {

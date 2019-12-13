@@ -7,15 +7,15 @@ import android.widget.SeekBar
 import android.widget.TextView
 import kotlinx.android.synthetic.main.view_sound_control_item.view.*
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
-import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
-import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.PlayButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.ToggleLoopButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.TogglePlaylistButton
 
 /**
  * File created by eric.neidhardt on 29.06.2015.
  */
-class SoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-{
+class SoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
 	val reorder: View = itemView.ib_view_sound_control_item_reorder
 
 	val name: TextView = itemView.textview_soundcontrolitem_soundname
@@ -34,8 +34,8 @@ class SoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	fun bindData(player: MediaPlayerController, isInPlaylist: Boolean) {
 		this.player = player
 
-		player.setOnProgressChangedEventListener { progress, _ ->
-			this.timePosition.max = player.trackDuration
+		player.setOnProgressChangedEventListener { _, progress, trackDuration ->
+			this.timePosition.max = trackDuration
 			this.timePosition.progress = progress
 		}
 
@@ -45,8 +45,7 @@ class SoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 		when {
 			player.isFadingOut -> this.playButton.state = PlayButton.State.FADE
-			player.isPlayingSound // if already playing, we enable pause
-			-> this.playButton.state = PlayButton.State.PAUSE
+			player.isPlayingSound -> this.playButton.state = PlayButton.State.PAUSE // if already playing, we enable pause
 			else -> this.playButton.state = PlayButton.State.PLAY
 		}
 

@@ -8,14 +8,14 @@ import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.CheckBox
 import kotlinx.android.synthetic.main.dialog_sound_settings_layout.view.*
-import org.neidhardt.android_utils.views.CustomEditText
-import org.neidhardt.android_utils.views.SimpleSpinner
+import org.neidhardt.androidutils.views.CustomEditText
+import org.neidhardt.androidutils.views.SimpleSpinner
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import org.neidhardt.utils.letThis
+import org.neidhardt.app_utils.letThis
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -24,8 +24,8 @@ import kotlin.properties.Delegates
  */
 class SoundSettingsDialog : SoundSettingsBaseDialog() {
 
-	override var fragmentTag: String by Delegates.notNull<String>()
-	override var player: MediaPlayerController by Delegates.notNull<MediaPlayerController>()
+	override var fragmentTag: String by Delegates.notNull()
+	override var player: MediaPlayerController by Delegates.notNull()
 	override var soundSheet: SoundSheet? = null
 
 	private var soundName: CustomEditText? = null
@@ -42,7 +42,7 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 			it.text = this.player.mediaPlayerData.label
 		}
 		this.soundSheetName = view.et_name_new_sound_sheet.letThis {
-			it.text = this.soundSheetManager.suggestedName
+			it.text = this.soundSheetManager.getSuggestedName(it.context)
 			it.visibility = View.GONE
 		}
 		this.soundSheetSpinner = view.s_sound_sheets?.letThis {
@@ -58,14 +58,14 @@ class SoundSettingsDialog : SoundSettingsBaseDialog() {
 		return AlertDialog.Builder(context).apply {
 			this.setTitle(R.string.dialog_sound_settings_title)
 			this.setView(view)
-			this.setPositiveButton(R.string.dialog_save, { _, _ ->
+			this.setPositiveButton(R.string.dialog_save) { _, _ ->
 				val hasLabelChanged = player.mediaPlayerData.label != soundName!!.displayedText
 				deliverResult()
 				dismiss()
 				if (hasLabelChanged)
 					RenameSoundFileDialog.show(fragmentManager, player.mediaPlayerData)
-			})
-			this.setNegativeButton(R.string.all_cancel, { _, _ -> dismiss()})
+			}
+			this.setNegativeButton(R.string.all_cancel) { _, _ -> dismiss()}
 		}.create()
 	}
 

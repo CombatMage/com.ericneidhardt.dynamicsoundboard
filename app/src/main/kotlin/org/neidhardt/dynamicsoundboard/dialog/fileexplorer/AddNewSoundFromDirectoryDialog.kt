@@ -9,15 +9,16 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import kotlinx.android.synthetic.main.dialog_add_new_sound.view.*
+import org.neidhardt.androidutils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import java.io.File
 
 /**
@@ -58,7 +59,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 		@SuppressLint("InflateParams")
 		val view = this.activity.layoutInflater.inflate(R.layout.dialog_add_new_sound_from_directory, null)
 
-		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
+		this.directories = view.rv_dialog.apply {
 			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
@@ -66,11 +67,18 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 		this.directories?.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(TAG)
-		if (previousPath != null)
-			super.setStartDirectoryForAdapter(File(previousPath))
-		else {
-			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
-			super.setStartDirectoryForAdapter(file)
+		val musicDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
+
+		// use previous dir if still valid, else fallback
+		if (previousPath == null) {
+			super.setStartDirectoryForAdapter(musicDir)
+		} else {
+			val previousMusicDir = File(previousPath)
+			if (previousMusicDir.exists()) {
+				super.setStartDirectoryForAdapter(previousMusicDir)
+			} else {
+				super.setStartDirectoryForAdapter(musicDir)
+			}
 		}
 
 		return AlertDialog.Builder(this.activity).apply {
@@ -140,7 +148,7 @@ open class AddNewSoundFromDirectoryDialog : FileExplorerDialog() {
 				.subscribe({ playerData ->
 					soundManager.add(soundSheet, playerData)
 				}, { error ->
-					Logger.e(TAG, error.toString())
+					Log.e(TAG, error.toString())
 					this@AddNewSoundFromDirectoryDialog.dismiss()
 				}, {
 					this@AddNewSoundFromDirectoryDialog.dismiss()

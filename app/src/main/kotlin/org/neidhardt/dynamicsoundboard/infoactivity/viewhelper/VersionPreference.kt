@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.preference.Preference
 import android.util.AttributeSet
 import org.neidhardt.dynamicsoundboard.R
-import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.logger.Logger
 
 /**
  * File created by eric.neidhardt on 17.02.2015.

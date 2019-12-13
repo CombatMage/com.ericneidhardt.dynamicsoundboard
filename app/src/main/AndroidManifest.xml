@@ -7,9 +7,10 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
 	<application
-			android:name=".DynamicSoundboardApplication"
+			android:name="SoundboardApplication"
 			android:allowBackup="true"
 			android:largeHeap="true"
 			android:icon="@drawable/ic_launcher"
@@ -55,9 +56,6 @@
 		<activity android:name=".infoactivity.InfoActivity"
 				  android:label="@string/about"
 				  android:parentActivityName=".soundactivity.SoundActivity"/>
-
-		<service android:name=".repositories.SaveDataIntentService"
-				 android:exported="false"/>
 
 		<service android:name=".notifications.NotificationService"
 				 android:exported="false"/>

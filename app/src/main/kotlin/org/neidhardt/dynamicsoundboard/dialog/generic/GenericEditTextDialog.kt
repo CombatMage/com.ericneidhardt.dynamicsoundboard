@@ -10,7 +10,7 @@ import android.widget.EditText
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import kotlinx.android.synthetic.main.dialog_genericrename.view.*
-import org.neidhardt.android_utils.views.showKeyboard
+import org.neidhardt.androidutils.views.showKeyboard
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 
@@ -66,10 +66,12 @@ open class GenericEditTextDialog : BaseDialog() {
 		val dialogBuilder = AlertDialog.Builder(context)
 
 		this.dialogConfig?.let { config ->
-			if (config.titleId != 0)
+			if (config.titleId != 0) {
 				dialogBuilder.setTitle(config.titleId)
-			if (config.messageId != 0)
+			}
+			if (config.messageId != 0) {
 				dialogBuilder.setMessage(config.messageId)
+			}
 		}
 		dialogBuilder.setView(view)
 
@@ -89,7 +91,7 @@ open class GenericEditTextDialog : BaseDialog() {
 		this.editText?.showKeyboard()
 
 		val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
-		val errorText = context.resources.getString(R.string.all_ErrorNameMustNotBeEmpty)
+		val errorText = this.context.resources.getString(R.string.all_ErrorNameMustNotBeEmpty)
 
 		// empty label is not allowed
 		RxTextView.afterTextChangeEvents(this.editText!!)

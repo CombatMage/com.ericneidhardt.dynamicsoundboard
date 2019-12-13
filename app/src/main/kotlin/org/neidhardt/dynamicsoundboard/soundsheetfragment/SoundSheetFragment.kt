@@ -20,10 +20,9 @@ import kotlinx.android.synthetic.main.layout_fab.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import org.neidhardt.androidutils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericConfirmDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.AddNewSoundFromDirectoryDialog
@@ -37,25 +36,26 @@ import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.ItemTouchCallback
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.PendingDeletionHandler
+import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.RecyclerViewFragment
 import org.neidhardt.dynamicsoundboard.soundsheetfragment.viewhelper.SoundAdapter
-import org.neidhardt.dynamicsoundboard.views.sound_control.PlayButton
-import org.neidhardt.dynamicsoundboard.views.sound_control.ToggleLoopButton
-import org.neidhardt.dynamicsoundboard.views.sound_control.TogglePlaylistButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.PlayButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.ToggleLoopButton
+import org.neidhardt.dynamicsoundboard.views.soundcontrol.TogglePlaylistButton
 
 /**
  * Created by eric.neidhardt@gmail.com on 08.05.2017.
  */
-class SoundSheetFragment : BaseFragment(),
+class SoundSheetFragment : RecyclerViewFragment(),
 		SoundSheetFragmentContract.View,
 		MediaPlayerEventListener,
 		MediaPlayerFailedEventListener {
 
 	companion object {
-		internal val KEY_FRAGMENT_TAG = "SoundSheetFragment.KEY_FRAGMENT_TAG"
+		private const val KEY_FRAGMENT_TAG = "SoundSheetFragment.KEY_FRAGMENT_TAG"
+
 		fun getNewInstance(soundSheet: SoundSheet): SoundSheetFragment {
+			val args = Bundle().apply { this.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag) }
 			val fragment = SoundSheetFragment()
-			val args = Bundle()
-			args.putString(KEY_FRAGMENT_TAG, soundSheet.fragmentTag)
 			fragment.arguments = args
 			return fragment
 		}
@@ -65,11 +65,10 @@ class SoundSheetFragment : BaseFragment(),
 		this.soundSheetManager.soundSheets.findByFragmentTag(this.fragmentTag)
 				?: throw IllegalStateException("no match for fragmentTag found")
 
-	private val KEY_STATE_RECYCLER_VIEW get() = "${this.fragmentTag}_recycler_view_state"
-
 	private val eventBus = EventBus.getDefault()
 
-	private val preferences = SoundboardApplication.preferenceRepository
+	private val preferences = SoundboardApplication.userSettingsRepository
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 	private val soundManager = SoundboardApplication.soundManager
 	private val playlistManager = SoundboardApplication.playlistManager
@@ -89,8 +88,9 @@ class SoundSheetFragment : BaseFragment(),
 	private lateinit var presenter: SoundSheetFragmentContract.Presenter
 	private lateinit var model: SoundSheetFragmentContract.Model
 
-	private lateinit var recyclerView: RecyclerView
-	private lateinit var snackbar: Snackbar
+	override lateinit var recyclerView: RecyclerView
+
+	private var snackbar: Snackbar? = null
 
 	override var displayedSounds: List<MediaPlayerController>
 		get() = this.adapterSounds.values
@@ -113,13 +113,13 @@ class SoundSheetFragment : BaseFragment(),
 		this.setHasOptionsMenu(true)
 
 		this.fragmentTag = this.arguments.getString(KEY_FRAGMENT_TAG)
-				?: throw NullPointerException(fragmentTag + ": cannot create fragment, given fragmentTag is null")
+				?: throw NullPointerException("$fragmentTag: cannot create fragment, given fragmentTag is null")
 
 		this.model = SoundSheetFragmentModel(
+				this.soundLayoutManager,
 				this.soundSheet,
 				this.soundManager,
-				this.playlistManager
-		)
+				this.playlistManager)
 
 		this.presenter = SoundSheetFragmentPresenter(
 				this,
@@ -267,23 +267,6 @@ class SoundSheetFragment : BaseFragment(),
 		this.eventBus.unregister(this)
 	}
 
-	override fun onRestoreState(savedInstanceState: Bundle) {
-		super.onRestoreState(savedInstanceState)
-		this.rv_fragment_sound_sheet_sounds?.layoutManager?.let { layoutManager ->
-			savedInstanceState.putParcelable(
-					KEY_STATE_RECYCLER_VIEW,
-					layoutManager.onSaveInstanceState()
-			)
-		}
-	}
-
-	override fun onSaveState(outState: Bundle) {
-		super.onSaveState(outState)
-		this.rv_fragment_sound_sheet_sounds?.layoutManager?.onRestoreInstanceState(
-				outState.getParcelable(KEY_STATE_RECYCLER_VIEW)
-		)
-	}
-
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		super.onActivityResult(requestCode, resultCode, data)
 		if (resultCode == Activity.RESULT_OK) {
@@ -335,10 +318,10 @@ class SoundSheetFragment : BaseFragment(),
 		val message = "${resources.getString(R.string.sound_control_error_during_playback)}: " +
 				player.mediaPlayerData.label
 
-		this.snackbar.dismiss()
+		this.snackbar?.dismiss()
 		this.snackbar = Snackbar.make(
 				this.cl_fragment_sound_sheet, message, Snackbar.LENGTH_INDEFINITE)
-		this.snackbar.show()
+		this.snackbar?.show()
 	}
 
 	override fun showSnackbarForRestoreSound() {
@@ -346,21 +329,21 @@ class SoundSheetFragment : BaseFragment(),
 		val timeTillDeletion = this.deletionHandler.DELETION_TIMEOUT
 
 		val count = deletionHandler.countPendingDeletions
-		val message = if (count == 1)
+		val message = if (count == 1) {
 			resources.getString(R.string.sound_control_deletion_pending_single)
-		else
-			resources.getString(R.string.sound_control_deletion_pending).replace("{%s0}",
-					count.toString())
-
-		this.snackbar.dismiss()
+		} else {
+			resources.getString(R.string.sound_control_deletion_pending, count)
+		}
+		this.snackbar?.dismiss()
 		this.snackbar = Snackbar.make(
-				this.cl_fragment_sound_sheet, message, timeTillDeletion).apply {
+				this.cl_fragment_sound_sheet, message, timeTillDeletion
+		).apply {
 			this.setAction(
 					R.string.sound_control_deletion_pending_undo,
 					{ deletionHandler.restoreDeletedItems() }
 			)
 		}
-		this.snackbar.show()
+		this.snackbar?.show()
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

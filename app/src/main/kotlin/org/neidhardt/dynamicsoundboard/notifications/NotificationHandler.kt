@@ -3,6 +3,7 @@ package org.neidhardt.dynamicsoundboard.notifications
 import android.support.v4.app.NotificationManagerCompat
 import org.neidhardt.dynamicsoundboard.manager.*
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
+import org.neidhardt.dynamicsoundboard.logger.Logger
 import java.util.*
 
 /**
@@ -36,24 +37,27 @@ class NotificationHandler(
 		private val soundLayoutManager: SoundLayoutManager
 ) : INotificationHandler {
 
-	private val notifications = ArrayList<PendingSoundNotification>()
-	override val pendingNotifications: Collection<PendingSoundNotification>
-		get() = this.notifications
+	private val logTag: String = javaClass.name
+
+	override val pendingNotifications = ArrayList<PendingSoundNotification>()
 
 	override fun dismissNotifications() {
-		this.notifications.forEach { notification -> this.notificationManager.cancel(notification.notificationId) }
-		this.notifications.clear()
+		this.pendingNotifications.forEach { notification -> this.notificationManager.cancel(notification.notificationId) }
+		this.pendingNotifications.clear()
 	}
 
 	override fun dismissNotification(notificationId: Int) {
-		this.notifications.dropLastWhile { it.notificationId == notificationId }
+		Logger.d(logTag, "dismissNotification: $notificationId")
+		this.pendingNotifications.removeIf { it.notificationId == notificationId }
 	}
 
 	override fun dismissNotificationForPlaylist() {
+		Logger.d(logTag, "dismissNotificationForPlaylist")
 		this.findPlaylistNotification()?.let { this.notificationManager.cancel(it.notificationId) }
 	}
 
 	override fun dismissNotificationForPlayer(playerId: String) {
+		Logger.d(logTag, "dismissNotificationForPlayer: $playerId")
 		this.findNotificationForPendingPlayer(playerId)?.let { this.notificationManager.cancel(it.notificationId) }
 	}
 
@@ -78,7 +82,7 @@ class NotificationHandler(
 	}
 
 	private fun addNotification(notification: PendingSoundNotification) {
-		this.notifications.add(notification)
+		this.pendingNotifications.add(notification)
 		this.notificationManager.notify(notification.notificationId, notification.notification)
 	}
 
@@ -138,8 +142,8 @@ class NotificationHandler(
 	}
 
 	private fun findNotificationForPendingPlayer(playerId: String): PendingSoundNotification?
-			= this.notifications.firstOrNull { notification -> !notification.isPlaylistNotification && notification.playerId == playerId }
+			= this.pendingNotifications.firstOrNull { notification -> !notification.isPlaylistNotification && notification.playerId == playerId }
 
 	private fun findPlaylistNotification(): PendingSoundNotification?
-			= this.notifications.firstOrNull { notification -> notification.isPlaylistNotification }
+			= this.pendingNotifications.firstOrNull { notification -> notification.isPlaylistNotification }
 }

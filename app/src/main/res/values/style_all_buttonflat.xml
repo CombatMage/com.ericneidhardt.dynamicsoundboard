@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<style name="style_all_buttonflat" parent="@style/Widget.AppCompat.Button.Borderless">
-		<item name="android:theme">@style/theme_buttonflat</item>
-	</style>
-
-	<style name="theme_buttonflat" parent="ThemeOverlay.AppCompat.Light">
 		<item name="colorControlHighlight">@color/color_buttonflat_colorpressedstate</item> <!-- pressed button state -->
 
 		<item name="android:textColor">@color/text_body_primary</item>

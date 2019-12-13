@@ -29,7 +29,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun onResumed() {
+	fun updateUiStateForStoredSoundSheets() {
 		// arrange
 		val testData = asList(SoundSheet())
 		`when`(this.model.loadSoundSheets()).thenReturn(Observable.just(testData))
@@ -42,7 +42,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun onPaused() {
+	fun saveDataOnPause() {
 		// action
 		this.unit.onPaused()
 
@@ -51,7 +51,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksSoundSheetTitle() {
+	fun userClicksSoundSheetTitleShouldOpenRenameDialog() {
 		// action
 		this.unit.userClicksSoundSheetTitle()
 
@@ -60,7 +60,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksAddSoundSheet() {
+	fun userClicksAddSoundSheetShouldOpenDialog() {
 		// action
 		this.unit.userClicksAddSoundSheet()
 
@@ -69,7 +69,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksAddSound() {
+	fun userClicksAddSoundShouldOpenDialog() {
 		// action
 		this.unit.userClicksAddSound()
 
@@ -78,7 +78,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksAddSounds() {
+	fun userClicksAddSoundsShouldOpenDialog() {
 		// action
 		this.unit.userClicksAddSounds()
 
@@ -87,7 +87,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userOpenSoundFileWithApp() {
+	fun userOpenSoundFileWithAppShouldOpenDialog() {
 		// arrange
 		`when`(this.model.getNameForNewSoundSheet()).thenReturn("test")
 		`when`(this.model.getSoundSheets()).thenReturn(emptyList())
@@ -101,7 +101,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksLoadLayout() {
+	fun userClicksLoadLayoutShouldOpenDialog() {
 		// action
 		this.unit.userClicksLoadLayout()
 
@@ -110,7 +110,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksStoreLayout() {
+	fun userClicksStoreLayoutShouldOpenDialog() {
 		// action
 		this.unit.userClicksStoreLayout()
 
@@ -119,7 +119,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksPreferences() {
+	fun userClicksPreferencesOpenPreferenceActivity() {
 		// action
 		this.unit.userClicksPreferences()
 
@@ -128,7 +128,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksInfoAbout() {
+	fun userClicksInfoAboutShouldOpenInfoActivity() {
 		// action
 		this.unit.userClicksInfoAbout()
 
@@ -137,7 +137,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClicksClearSoundSheets() {
+	fun userClicksClearSoundSheetsShouldOpenConfirmDialog() {
 		// action
 		this.unit.userClicksClearSoundSheets()
 
@@ -146,7 +146,7 @@ class SoundActivityPresenterTest {
 	}
 
 	@Test
-	fun userClickClearPlaylist() {
+	fun userClickClearPlaylistShouldOpenConfirmDialog() {
 		// action
 		this.unit.userClickClearPlaylist()
 

@@ -60,7 +60,7 @@
 	<string name="navigation_drawer_add">Hinzufügen</string>
 	<string name="navigation_drawer_delete">Löschen</string>
 	<string name="navigation_drawer_delete_selected">Alle markierten löschen</string>
-
+	<string name="navigationdrawer_selectioncountlabel">%d/%d</string>
 	<string name="deletiontoolbar_contentdescriptioncancel">Beendet den Löschvorgang. Es werden keine Elemente gelöscht</string>
 	<string name="deletiontoolbar_titledeletesoundsheets">Kategorien zum löschen markieren</string>
 	<string name="deletiontoolbar_titledeleteplaylistsounds">Sounds zum löschen markieren</string>
@@ -90,7 +90,7 @@
 
 	<!-- sound control -->
 	<string name="sound_control_deletion_pending_single">Sound gelöscht</string>
-	<string name="sound_control_deletion_pending">{%s0} Sounds gelöscht</string>
+	<string name="sound_control_deletion_pending">%d Sounds gelöscht</string>
 	<string name="sound_control_deletion_pending_undo">Rückgängig machen</string>
 	<string name="sound_control_content_description_stop">Setzt den Sound zurück</string>
 	<string name="sound_control_content_description_play">Startet oder Pausiert den Sound</string>
@@ -101,6 +101,7 @@
 	<string name="sound_control_error_during_playback">Wiedergabe Fehler</string>
 
 	<!-- notification -->
+	<string name="notificationchannel_name">Spielende Sounds</string>
 	<string name="notification_pause_sound">Sound pausieren</string>
 	<string name="notification_stop_sound">Sound stoppen</string>
 	<string name="notification_play_sound">Sound abspielen</string>
@@ -192,7 +193,7 @@
 	<string name="dialog_rename_sound_file_message">Soll die zugehörige Musikdatei ebenfalls umbenannt werden?</string>
 	<string name="dialog_rename_sound_file_current_name">Aktueller Name:</string>
 	<string name="dialog_rename_sound_file_new_name">Neuer Name:</string>
-	<string name="dialog_rename_sound_file_all_occurrences_message">Sollen alle geladenen Sounds die diese Datei benutzen auch umbenannt werden? ({%s0} Sounds)</string>
+	<string name="dialog_rename_sound_file_all_occurrences_message">Sollen alle geladenen Sounds die diese Datei benutzen auch umbenannt werden? (%d Sounds)</string>
 	<string name="dialog_rename_sound_toast_file_not_found">Die Sounddatei konnte leider nicht umbenannt werden</string>
 	<string name="dialog_rename_sound_toast_player_not_updated">Die Änderung konnte nicht für alle Sounds übernommen werden. Ein paar Sounds mussten leider entfernt werden.</string>
 </resources>

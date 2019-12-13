@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import kotlinx.android.synthetic.main.toolbar_preferences.*
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.infoactivity.viewhelper.SoundboardInfoFragment
 
@@ -26,8 +26,8 @@ class InfoActivity : AppCompatActivity() {
 				.commit()
 	}
 
-	fun configureToolbar() {
-		val toolbar = this.findViewById(R.id.toolbar) as Toolbar
+	private fun configureToolbar() {
+		val toolbar = this.toolbar_preferences
 		toolbar.setTitle(R.string.about)
 		this.setSupportActionBar(toolbar)
 		if (this.supportActionBar != null)

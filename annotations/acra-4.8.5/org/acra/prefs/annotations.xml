@@ -1,5 +1,0 @@
-<root>
-    <item name='org.acra.prefs.PrefUtils void saveAsync(android.content.SharedPreferences.Editor) 0'>
-        <annotation name='org.jetbrains.annotations.NotNull'/>
-    </item>
-</root>

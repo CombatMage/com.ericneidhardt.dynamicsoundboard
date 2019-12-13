@@ -1,18 +1,17 @@
 ext.versions = [
-		supportLibs : '25.0.0'
+		supportLibs : '26.1.0'
 ]
 
 ext.libraries = [
-
 		kotlin               : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
 
-		rxJava               : 'io.reactivex.rxjava2:rxjava:2.0.8',
-		rxKotlin             : 'io.reactivex.rxjava2:rxkotlin:2.0.0',
+		rxJava               : 'io.reactivex.rxjava2:rxjava:2.1.6',
+		rxKotlin             : 'io.reactivex.rxjava2:rxkotlin:2.1.0',
 		rxAndroid            : 'io.reactivex.rxjava2:rxandroid:2.0.1',
 		rxBinding            : 'com.jakewharton.rxbinding2:rxbinding:2.0.0',
 		rxBindingDesign      : 'com.jakewharton.rxbinding2:rxbinding-design:2.0.0',
 
-		multidex             : "com.android.support:multidex:1.0.1",
+		multidex             : "com.android.support:multidex:1.0.2",
 		supportV4            : "com.android.support:support-v4:$versions.supportLibs",
 		supportV13           : "com.android.support:support-v13:$versions.supportLibs",
 		supportAppCompat     : "com.android.support:appcompat-v7:$versions.supportLibs",
@@ -21,9 +20,9 @@ ext.libraries = [
 		supportConstraints   : 'com.android.support.constraint:constraint-layout:1.0.2',
 
 		greenRobotCommons    : "de.greenrobot:java-common:2.3.1",
-		eventBus             : "org.greenrobot:eventbus:3.0.0",
+		eventBus             : "org.greenrobot:eventbus:3.1.1",
 
-		leakCanary           : "com.squareup.leakcanary:leakcanary-android:1.5",
+		leakCanary           : "com.squareup.leakcanary:leakcanary-android:1.5.4",
 
 		exoplayer            : "com.google.android.exoplayer:exoplayer:r2.0.3",
 
@@ -39,7 +38,7 @@ ext.libraries = [
 
 		junit                : 'junit:junit:4.12',
 		mockito              : 'org.mockito:mockito-core:2.8.47',
-		robolectric          : 'org.robolectric:robolectric:3.3.2',
-		robolectricMultidex  : 'org.robolectric:shadows-multidex:3.3.2',
+		robolectric          : 'org.robolectric:robolectric:3.5.1',
+		robolectricMultidex  : 'org.robolectric:shadows-multidex:3.5.1',
 		robolectricSupportV4 : 'org.robolectric:shadows-support-v4:3.3.2'
 ]

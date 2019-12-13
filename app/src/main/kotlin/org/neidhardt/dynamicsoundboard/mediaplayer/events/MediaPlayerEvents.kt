@@ -13,17 +13,11 @@ data class MediaPlayerFailedEvent(
 		val failingAction: PlayerAction,
 		val message: String)
 
-data class MediaPlayerStateChangedEvent(val player: MediaPlayerController, val isAlive: Boolean)
-{
-	val playerId: String
-		get() = this.player.mediaPlayerData.playerId
+data class MediaPlayerStateChangedEvent(
+		val player: MediaPlayerController,
+		val isAlive: Boolean)
 
-	val fragmentTag: String
-		get() = this.player.mediaPlayerData.fragmentTag
-}
-
-interface MediaPlayerEventListener
-{
+interface MediaPlayerEventListener {
 	/**
 	 * This is called by greenRobot EventBus in case a MediaPlayer changed his state (ie. start or stops playing).
 	 * @param event delivered MediaPlayerStateChangedEvent
@@ -37,8 +31,7 @@ interface MediaPlayerEventListener
 	fun onEvent(event: MediaPlayerCompletedEvent)
 }
 
-interface MediaPlayerFailedEventListener
-{
+interface MediaPlayerFailedEventListener {
 	/**
 	 * this is called by greenrobot eventbus in case a mediaplayer has thrown an exception.
 	 * @param event delivered mediaplayerfailedevent

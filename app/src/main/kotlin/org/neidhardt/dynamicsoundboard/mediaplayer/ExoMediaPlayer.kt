@@ -19,13 +19,13 @@ import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEv
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerFailedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.logger.Logger
 import org.neidhardt.dynamicsoundboard.misc.getFileForUri
 import org.neidhardt.dynamicsoundboard.misc.isAudioFile
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.enhancedhandler.EnhancedHandler
 import org.neidhardt.enhancedhandler.KillableRunnable
-import org.neidhardt.utils.letThis
+import org.neidhardt.app_utils.letThis
 import java.io.File
 import kotlin.properties.Delegates
 
@@ -81,34 +81,28 @@ object MediaPlayerFactory {
 	}
 }
 
-
-val PlaylistTAG = "PlaylistTAG"
-
-private val RELEASE_DELAY = 10000.toLong()
-
-private val PROGRESS_DIVIDER = 1000
-
-enum class PlayerAction
-{
+enum class PlayerAction {
 	PLAY,
 	PAUSE,
 	PROGRESS,
 	UNDEFINED
 }
 
-val UPDATE_INTERVAL: Long = 500
 
-class ExoMediaPlayer
-(
+const val PLAYLIST_TAG = "PLAYLIST_TAG"
+
+private const val RELEASE_DELAY = 10000.toLong()
+private const val PROGRESS_DIVIDER = 1000
+private const val TIME_UNKNOWN = C.TIME_UNSET
+
+class ExoMediaPlayer(
 		private val context: Context,
 		private val eventBus: EventBus,
 		private val manager: SoundLayoutManager,
 		override val mediaPlayerData: MediaPlayerData
-) : MediaPlayerController, ExoPlayer.EventListener
-{
-	private val TAG = javaClass.name
+) : MediaPlayerController, ExoPlayer.EventListener {
 
-	private val TIME_UNKNOWN = C.TIME_UNSET
+	private val logTag = javaClass.name
 
 	private val enhancedHandler = EnhancedHandler()
 	private val handler = Handler()
@@ -131,7 +125,7 @@ class ExoMediaPlayer
 	private fun init() {
 		this.lastPosition = null
 
-		val uriString = this.mediaPlayerData.uri ?: throw NullPointerException("$TAG: cannot init ExoMediaPlayer, given uri is null")
+		val uriString = this.mediaPlayerData.uri ?: throw NullPointerException("$logTag: cannot init ExoMediaPlayer, given uri is null")
 		val uri = Uri.parse(uriString)
 
 		val dataSourceFactory = DefaultDataSourceFactory(this.context, context.getString(R.string.app_name), DefaultBandwidthMeter())
@@ -226,14 +220,14 @@ class ExoMediaPlayer
 	}
 
 	override fun pauseSound(): Boolean {
-		this.releasePlayerSchedule = KillableRunnable({
+		this.releasePlayerSchedule = KillableRunnable {
 			val position = progress // remember the paused position so it can reused later
 			exoPlayer.release()
 
 			init() // init sets lastPosition to 0, therefore we set the position after ini
 			lastPosition = position
 			postStateChangedEvent(true)
-		}).letThis { this.enhancedHandler.postDelayed(it, RELEASE_DELAY) }
+		}.letThis { this.enhancedHandler.postDelayed(it, RELEASE_DELAY) }
 
 		this.exoPlayer.playWhenReady = false
 
@@ -272,14 +266,14 @@ class ExoMediaPlayer
 	}
 
 	override fun onPlayerError(error: ExoPlaybackException) {
-		Logger.e(TAG, "onPlayerError for $this with exception $error")
+		Logger.e(logTag, "onPlayerError for $this with exception $error")
 		this.init()
 		this.eventBus.post(MediaPlayerFailedEvent(this, PlayerAction.UNDEFINED, error.message ?: ""))
 		this.progressMonitor.stopProgressUpdateTimer()
 	}
 
 	override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-		Logger.d(TAG, "onPlayerStateChanged($playWhenReady, $playbackState)")
+		Logger.d(logTag, "onPlayerStateChanged($playWhenReady, $playbackState)")
 			if (playbackState == ExoPlayer.STATE_ENDED) {
 			if (this.isLoopingEnabled) {
 				this.progress = 0
@@ -295,11 +289,11 @@ class ExoMediaPlayer
 		this.enhancedHandler.postDelayed({ this.postStateChangedEvent(true) }, 100)
 	}
 
-	private fun postStateChangedEvent(isAlive: Boolean): Unit =
+	private fun postStateChangedEvent(isAlive: Boolean) =
 			this.eventBus.post(MediaPlayerStateChangedEvent(this, isAlive))
 
 	override fun toString(): String =
-		"ExoMediaPlayer(TAG='$TAG', " +
+		"ExoMediaPlayer(logTag='$logTag', " +
 				"mediaPlayerData=$mediaPlayerData, " +
 				"exoPlayer=$exoPlayer, lastPosition=$lastPosition, isDeletionPending=$isDeletionPending)"
 

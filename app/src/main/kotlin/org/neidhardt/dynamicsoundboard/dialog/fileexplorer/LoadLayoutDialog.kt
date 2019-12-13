@@ -10,7 +10,8 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import kotlinx.android.synthetic.main.dialog_add_new_sound.view.*
+import org.neidhardt.androidutils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
@@ -21,7 +22,7 @@ import java.io.File
  */
 class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog {
 
-	private val storage = SoundboardApplication.storage
+	private val storage = SoundboardApplication.appDataRepository
 	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 
 	private var directories: RecyclerView? = null
@@ -38,7 +39,7 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog {
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_load_sound_sheets, null)
 
-		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
+		this.directories = view.rv_dialog.apply {
 			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
@@ -46,11 +47,18 @@ class LoadLayoutDialog : FileExplorerDialog(), LayoutStorageDialog {
 		this.directories?.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
-		if (previousPath != null)
-			super.setStartDirectoryForAdapter(File(previousPath))
-		else {
-			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-			super.setStartDirectoryForAdapter(file)
+		val documentDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+
+		// use previous dir if still valid, else fallback
+		if (previousPath == null) {
+			super.setStartDirectoryForAdapter(documentDir)
+		} else {
+			val previousMusicDir = File(previousPath)
+			if (previousMusicDir.exists()) {
+				super.setStartDirectoryForAdapter(previousMusicDir)
+			} else {
+				super.setStartDirectoryForAdapter(documentDir)
+			}
 		}
 
 		return AlertDialog.Builder(this.activity).apply {

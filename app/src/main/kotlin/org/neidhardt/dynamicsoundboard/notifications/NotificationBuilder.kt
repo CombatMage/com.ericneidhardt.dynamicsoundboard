@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.support.v4.app.NotificationCompat
-import org.neidhardt.android_utils.AndroidVersion
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
@@ -19,15 +18,15 @@ import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
  */
 class PendingSoundNotification(val notificationId: Int, var playerId: String, var notification: Notification) {
 
-	val isPlaylistNotification: Boolean = this.notificationId == NotificationConstants.NOTIFICATION_ID_PLAYLIST
+	val isPlaylistNotification: Boolean = this.notificationId == NotificationId.PLAYLIST
 
 	companion object {
 		fun getNotificationIntentFilter(): IntentFilter {
 			val filter = IntentFilter()
-			filter.addAction(NotificationConstants.ACTION_DISMISS)
-			filter.addAction(NotificationConstants.ACTION_PLAY)
-			filter.addAction(NotificationConstants.ACTION_STOP)
-			filter.addAction(NotificationConstants.ACTION_FADE_OUT)
+			filter.addAction(NotificationAction.DISMISS)
+			filter.addAction(NotificationAction.PLAY)
+			filter.addAction(NotificationAction.STOP)
+			filter.addAction(NotificationAction.FADE_OUT)
 			return filter
 		}
 
@@ -39,7 +38,7 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 		): PendingSoundNotification {
 			val notificationId =
 					if (isPlaylistNotification)
-						NotificationConstants.NOTIFICATION_ID_PLAYLIST
+						NotificationId.PLAYLIST
 					else
 						player.mediaPlayerData.playerId.hashCode()
 			val builder = this.getDefaultNotification(
@@ -65,21 +64,16 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 				notificationId: Int,
 				isPlaylistNotification: Boolean
 		): NotificationCompat.Builder {
-
 			val playerName = player.mediaPlayerData.label
-			val soundSheetName =
-					if (isPlaylistNotification)
-						context.resources.getString(R.string.notification_playlist)
-					else
-						soundSheet?.label
+			val soundSheetName = if (isPlaylistNotification) context.resources.getString(R.string.notification_playlist) else soundSheet?.label
 
 			val playerId = player.mediaPlayerData.playerId
-			val style = android.support.v7.app.NotificationCompat.MediaStyle().apply {
+
+			val style = android.support.v4.media.app.NotificationCompat.MediaStyle().apply {
 				this.setShowActionsInCompactView(0, 1)
 			}
-			val isLollipopStyleAvailable = AndroidVersion.IS_LOLLIPOP_AVAILABLE
 
-			val builder = android.support.v7.app.NotificationCompat.Builder(context)
+			val builder = NotificationCompat.Builder(context, ChannelId.PENDING_SOUNDS)
 					.setContentTitle(playerName)
 					.setContentText(soundSheetName)
 					.setSmallIcon(R.drawable.ic_stat_pending_sounds)
@@ -91,12 +85,13 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 					.setContentIntent(getOpenActivityIntent(context))
 					.setLargeIcon(this.getLargeIcon(context, player))
 					.setStyle(style)
-					.setActionStop(context, isLollipopStyleAvailable, notificationId, playerId)
+					.setActionStop(context, true, notificationId, playerId)
 
-			if (player.isPlayingSound)
-				builder.setActionFadeOut(context, isLollipopStyleAvailable, notificationId, playerId)
-			else
-				builder.setActionPlay(context, isLollipopStyleAvailable, notificationId, playerId)
+			if (player.isPlayingSound) {
+				builder.setActionFadeOut(context, true, notificationId, playerId)
+			} else {
+				builder.setActionPlay(context, true, notificationId, playerId)
+			}
 
 			val wearableExtender = NotificationCompat.WearableExtender()
 					.setHintHideIcon(true)
@@ -114,14 +109,14 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			val requiredHeight = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
 			val requiredWidth = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_width)
 
-			if (data != null) {
+			return if (data != null) {
 				val size = getBitmapSize(data)
 				val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
-				return getBitmapFromBytes(data, sampleSize)
+				getBitmapFromBytes(data, sampleSize)
 			} else {
 				val size = getBitmapSize(resources, R.drawable.ic_notification_large)
 				val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
-				return getBitmapFromAsset(context, R.drawable.ic_notification_large, sampleSize)
+				getBitmapFromAsset(context, R.drawable.ic_notification_large, sampleSize)
 			}
 		}
 
@@ -131,16 +126,20 @@ class PendingSoundNotification(val notificationId: Int, var playerId: String, va
 			val requiredHeight = 400
 			val requiredWidth = 400
 
-			if (data != null) {
+			return if (data != null) {
 				val size = getBitmapSize(data)
 				val sampleSize = getSampleFactor(size.x, size.y, requiredWidth, requiredHeight)
-				return getBitmapFromBytes(data, sampleSize)
+				getBitmapFromBytes(data, sampleSize)
 			} else {
-				return getBitmapFromAsset(context, R.drawable.ic_notification_background_wear, 1)
+				getBitmapFromAsset(context, R.drawable.ic_notification_background_wear, 1)
 			}
 		}
-
 	}
+
+	override fun toString(): String {
+		return "PendingSoundNotification(notificationId=$notificationId, playerId='$playerId', notification=$notification, isPlaylistNotification=$isPlaylistNotification)"
+	}
+
 }
 
 private fun NotificationCompat.Builder.setActionStop(context: Context, isLollipopStyleAvailable: Boolean, notificationId: Int, playerId: String): NotificationCompat.Builder {
@@ -149,7 +148,7 @@ private fun NotificationCompat.Builder.setActionStop(context: Context, isLollipo
 				context.getString(R.string.notification_stop_sound)
 			else
 				""
-			, getPendingIntent(context, NotificationConstants.ACTION_STOP, notificationId, playerId))
+			, getPendingIntent(context, NotificationAction.STOP, notificationId, playerId))
 	)
 }
 
@@ -159,7 +158,7 @@ private fun NotificationCompat.Builder.setActionPlay(context: Context, isLollipo
 				context.getString(R.string.notification_play_sound)
 			else
 				""
-			, getPendingIntent(context, NotificationConstants.ACTION_PLAY, notificationId, playerId))
+			, getPendingIntent(context, NotificationAction.PLAY, notificationId, playerId))
 	)
 }
 
@@ -169,7 +168,7 @@ private fun NotificationCompat.Builder.setActionFadeOut(context: Context, isLoll
 				context.getString(R.string.notification_pause_sound)
 			else
 				""
-			, getPendingIntent(context, NotificationConstants.ACTION_FADE_OUT, notificationId, playerId))
+			, getPendingIntent(context, NotificationAction.FADE_OUT, notificationId, playerId))
 	)
 }
 
@@ -177,12 +176,12 @@ private fun buildAction(iconId: Int, label: String, intent: PendingIntent): Noti
 		NotificationCompat.Action.Builder(iconId, label, intent).build()
 
 private fun NotificationCompat.Builder.setDismissPlayerIntent(context: Context, notificationId: Int, playerId: String): NotificationCompat.Builder =
-		this.setDeleteIntent(getPendingIntent(context, NotificationConstants.ACTION_DISMISS, notificationId, playerId))
+		this.setDeleteIntent(getPendingIntent(context, NotificationAction.DISMISS, notificationId, playerId))
 
 private fun getPendingIntent(context: Context, action: String, notificationId: Int, playerId: String): PendingIntent {
 	val intent = Intent(action)
-	intent.putExtra(NotificationConstants.KEY_PLAYER_ID, playerId)
-	intent.putExtra(NotificationConstants.KEY_NOTIFICATION_ID, notificationId)
+	intent.putExtra(NotificationExtra.PLAYER_ID, playerId)
+	intent.putExtra(NotificationExtra.NOTIFICATION_ID, notificationId)
 	return PendingIntent.getBroadcast(context, getRequestCode(notificationId, playerId), intent, 0)
 }
 
@@ -192,7 +191,7 @@ private fun getOpenActivityIntent(context: Context): PendingIntent {
 }
 
 private fun getRequestCode(notificationId: Int, playerId: String): Int {
-	if (notificationId != NotificationConstants.NOTIFICATION_ID_PLAYLIST)
+	if (notificationId != NotificationId.PLAYLIST)
 		return notificationId
-	return Integer.toString(notificationId + playerId.hashCode()).hashCode()
+	return (notificationId + playerId.hashCode()).toString().hashCode()
 }

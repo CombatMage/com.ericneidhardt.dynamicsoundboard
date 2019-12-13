@@ -1,9 +1,8 @@
 package org.neidhardt.dynamicsoundboard.navigationdrawerfragment
 
-import android.util.Log
 import org.neidhardt.dynamicsoundboard.manager.selectedLayout
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 
@@ -11,13 +10,12 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
 /**
  * Created by eric.neidhardt@gmail.com on 01.09.2017.
  */
+private const val INDEX_NOT_SET = -1
+
 class NavigationDrawerFragmentPresenter(
 		private val view: NavigationDrawerFragmentContract.View,
 		private val model: NavigationDrawerFragmentContract.Model
 ) : NavigationDrawerFragmentContract.Presenter {
-
-	private val TAG = javaClass.name
-	private val INDEX_NOT_SET = -1
 
 	private enum class List {
 		SoundSheet,
@@ -42,12 +40,12 @@ class NavigationDrawerFragmentPresenter(
 				}
 
 		this.model.mediaPlayerStateChangedEvents
-				.filter { (player) -> player.mediaPlayerData.fragmentTag == PlaylistTAG }
-				.subscribe { (player, isAlive) -> this.onPlayListPlayerStateChanged(player, isAlive) }
+				.filter { (player) -> player.mediaPlayerData.fragmentTag == PLAYLIST_TAG }
+				.subscribe { (_, _) -> this.view.refreshDisplayedPlaylist() }
 
 		this.model.mediaPlayerCompletedEvents
 				.map { (player) -> player }
-				.filter { player -> player.mediaPlayerData.fragmentTag == PlaylistTAG }
+				.filter { player -> player.mediaPlayerData.fragmentTag == PLAYLIST_TAG }
 				.subscribe { player -> this.onPlayListPlayerCompleted(player) }
 
 		this.view.setTapBarState(NavigationDrawerFragmentContract.View.TapBarState.NORMAL)
@@ -206,10 +204,12 @@ class NavigationDrawerFragmentPresenter(
 			this.view.setSelectedItemCount(selectedCount, items.size)
 			this.view.displayedSoundLayouts = items
 		} else {
-			this.view.setHeaderTitle(soundLayout.label)
 			this.currentList = List.SoundSheet
+			this.view.setTapBarState(NavigationDrawerFragmentContract.View.TapBarState.NORMAL)
 			this.view.showSoundSheets()
 			this.view.animateHeaderArrow(NavigationDrawerFragmentContract.View.AnimationDirection.DOWN)
+
+			this.view.setHeaderTitle(soundLayout.label)
 			this.view.closeNavigationDrawer()
 			this.model.setSoundLayoutSelected(soundLayout)
 		}
@@ -251,16 +251,13 @@ class NavigationDrawerFragmentPresenter(
 				.filter { it != nextActivePlayer && it.isPlayingSound }
 				.forEach { it.stopSound() }
 
-		if (nextActivePlayer.isPlayingSound)
+		if (nextActivePlayer.isPlayingSound) {
 			nextActivePlayer.stopSound()
-		else
+		} else {
 			nextActivePlayer.playSound()
+		}
 
 		this.view.displayedPlaylist = currentPlayList // set playlist to display
-	}
-
-	private fun onPlayListPlayerStateChanged(player: MediaPlayerController, isPlayerRemoved: Boolean) {
-		Log.d(TAG, "onPlayListPlayerStateChanged($player, $isPlayerRemoved)")
 	}
 
 	private fun onPlayListPlayerCompleted(player: MediaPlayerController) {
@@ -282,6 +279,6 @@ class NavigationDrawerFragmentPresenter(
 			currentPlayList[this.currentPlayListItemIndex].playSound()
 		}
 
-		this.view.displayedPlaylist = currentPlayList // set playlist to display
+		this.view.refreshDisplayedPlaylist()
 	}
 }

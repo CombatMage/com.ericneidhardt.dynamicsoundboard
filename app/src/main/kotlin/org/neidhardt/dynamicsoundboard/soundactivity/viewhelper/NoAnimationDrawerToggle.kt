@@ -25,7 +25,4 @@ class NoAnimationDrawerToggle(
 		super.onDrawerSlide(drawerView, 0f)
 	}
 
-	override fun onDrawerClosed(drawerView: View?) {
-		super.onDrawerClosed(drawerView)
-	}
 }

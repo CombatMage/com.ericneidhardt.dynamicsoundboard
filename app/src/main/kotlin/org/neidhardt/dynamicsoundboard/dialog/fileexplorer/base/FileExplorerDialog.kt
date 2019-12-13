@@ -3,14 +3,12 @@ package org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
-import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySorted
 import org.neidhardt.dynamicsoundboard.misc.getFilesInDirectorySortedAsync
-import org.neidhardt.utils.Tuple
+import org.neidhardt.app_utils.Tuple
 import java.io.File
 
 /**
@@ -36,7 +34,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 
 		savedInstanceState?.let { previousState ->
 			previousState.getString(KEY_PARENT_FILE)?.let { path ->
-				this.setStartDirectoryForAdapter(java.io.File(path))
+				this.setStartDirectoryForAdapter(File(path))
 			}
 		}
 
@@ -88,7 +86,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 		val externalFileStorage = Environment.getExternalStorageDirectory()
 		val rootDirectory = directory.parentFile
 
-		// clicked directory is already root ( / ) our outside of external storage path
+		// clicked directory is already root ( / ) our outside of external appDataRepository path
 		if (rootDirectory == null
 				|| rootDirectory.absolutePath.length < externalFileStorage.absolutePath.length) {
 			this.adapter.rootDirectory = null
@@ -162,7 +160,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 	}
 
 	fun storePathToSharedPreferences(key: String, path: String) {
-		val context = SoundboardApplication.context
+		val context = this.context.applicationContext
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		val editor = preferences.edit()
 		editor.putString(key, path)
@@ -170,7 +168,7 @@ abstract class FileExplorerDialog : BaseDialog() {
 	}
 
 	fun getPathFromSharedPreferences(key: String): String? {
-		val context = SoundboardApplication.context
+		val context = this.context.applicationContext
 		val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 		return preferences.getString(key, null)
 	}

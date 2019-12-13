@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.manager
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
@@ -12,10 +13,10 @@ import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.logger.Logger
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
-import org.neidhardt.utils.getCopyList
+import org.neidhardt.app_utils.getCopyList
 import java.util.concurrent.TimeUnit
 
 /**
@@ -23,12 +24,12 @@ import java.util.concurrent.TimeUnit
 */
 class SoundManager(private val context: Context) {
 
-	private val TAG = javaClass.name
+	private val logTag = javaClass.name
 
 	companion object {
 		fun getNewMediaPlayerData(fragmentTag: String, uri: Uri, label: String): MediaPlayerData {
 			val data = MediaPlayerData()
-			data.playerId = Integer.toString((uri.toString() + SoundboardApplication.randomNumber).hashCode())
+			data.playerId = (uri.toString() + SoundboardApplication.randomNumber).hashCode().toString()
 			data.fragmentTag = fragmentTag
 			data.label = label
 			data.uri = uri.toString()
@@ -48,6 +49,7 @@ class SoundManager(private val context: Context) {
 	val sounds: Map<SoundSheet, List<MediaPlayerController>> get() =
 			this.mMediaPlayers as Map<SoundSheet, List<MediaPlayerController>>
 
+	@SuppressLint("CheckResult")
 	fun set(soundSheets: MutableList<SoundSheet>) {
 		this.mMediaPlayers?.values?.forEach { it.forEach { it.destroy(false) } }
 		this.mSoundSheets = soundSheets
@@ -66,10 +68,10 @@ class SoundManager(private val context: Context) {
 					soundCopyList.forEach { this.createPlayerAndAddToSounds(soundSheet, it) }
 					this.invokeListeners()
 				}, { error ->
-					Logger.e(TAG, "Error while loading playlist: ${error.message}")
+					Logger.e(logTag, "Error while loading playlist: ${error.message}")
 					SoundboardApplication.taskCounter.value -= 1
 				}, {
-					Logger.d(TAG, "Loading playlist completed")
+					Logger.d(logTag, "Loading playlist completed")
 					SoundboardApplication.taskCounter.value -= 1
 				})
 	}
@@ -79,6 +81,7 @@ class SoundManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
+	@SuppressLint("CheckResult")
 	fun add(soundSheet: SoundSheet, playerData: List<MediaPlayerData>) {
 		SoundboardApplication.taskCounter.value++
 		Observable.just(playerData)
@@ -92,11 +95,11 @@ class SoundManager(private val context: Context) {
 				.subscribe({
 					this.invokeListeners()
 				}, { error ->
-					Logger.e(TAG, "Error while adding players " + error)
+					Logger.e(logTag, "Error while adding players $error")
 					SoundboardApplication.taskCounter.value--
 					this.invokeListeners()
 				}, {
-					Logger.d(TAG, "Adding players finished")
+					Logger.d(logTag, "Adding players finished")
 					SoundboardApplication.taskCounter.value--
 					this.invokeListeners()
 				})
@@ -147,7 +150,7 @@ class SoundManager(private val context: Context) {
 	}
 
 	private fun createPlayerAndAddToSounds(soundSheet: SoundSheet, playerData: MediaPlayerData) {
-		val soundsForSoundSheet = this.mMediaPlayers?.getOrPut(soundSheet, { ArrayList() })
+		val soundsForSoundSheet = this.mMediaPlayers?.getOrPut(soundSheet) { ArrayList() }
 				?: throw IllegalStateException("sound manager is not init")
 
 		if (soundsForSoundSheet.containsPlayerWithId(playerData.playerId))
@@ -178,14 +181,16 @@ class SoundManager(private val context: Context) {
 
 object RxSoundManager {
 	fun changesSoundList(manager: SoundManager): Observable<Map<SoundSheet, List<MediaPlayerController>>> {
-		return Observable.create { subscriber ->
+		return Observable.create { emitter ->
 			val listener: (Map<SoundSheet, List<MediaPlayerController>>) -> Unit = {
-				subscriber.onNext(manager.sounds)
+				emitter.onNext(manager.sounds)
 			}
-			//subscriber.add(Subscriptions.create {
-			//	manager.onSoundListChangedListener.remove(listener)
-			//})
-			manager.mMediaPlayers?.let { subscriber.onNext(it) }
+
+			emitter.setCancellable {
+				manager.onSoundListChangedListener.remove(listener)
+			}
+
+			manager.mMediaPlayers?.let { emitter.onNext(it) }
 			manager.onSoundListChangedListener.add(listener)
 		}
 	}

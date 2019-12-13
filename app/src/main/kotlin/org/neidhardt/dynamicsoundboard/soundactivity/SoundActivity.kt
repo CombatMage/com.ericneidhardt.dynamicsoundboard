@@ -17,7 +17,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.layout_toolbar_content.view.*
 import org.greenrobot.eventbus.EventBus
-import org.neidhardt.android_utils.EnhancedAppCompatActivity
+import org.neidhardt.androidutils.EnhancedAppCompatActivity
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
@@ -45,6 +45,9 @@ class SoundActivity :
 
 	// this view does not exists in tablet layout
 	private val drawerLayout: DrawerLayout? get() = this.drawerlayout_soundactivity
+
+	private val appDataRepository = SoundboardApplication.appDataRepository
+	private val soundLayoutManager = SoundboardApplication.soundLayoutManager
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
 
 	private var drawerToggle: ActionBarDrawerToggle? = null
@@ -81,8 +84,9 @@ class SoundActivity :
 				this,
 				SoundActivityModel(
 						this.applicationContext,
-						this.soundSheetManager)
-		)
+						this.appDataRepository,
+						this.soundLayoutManager,
+						this.soundSheetManager))
 	}
 
 	private fun configureToolbar(toolbar: Toolbar) {
@@ -109,8 +113,8 @@ class SoundActivity :
 	override fun onNewIntent(intent: Intent?) {
 		super.onNewIntent(intent)
 		if (intent == null) return
-		if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
-			this.presenter.userOpenSoundFileWithApp(intent.data)
+		if (intent.action == Intent.ACTION_VIEW) {
+			intent.data?.let { this.presenter.userOpenSoundFileWithApp(it) }
 		}
 	}
 

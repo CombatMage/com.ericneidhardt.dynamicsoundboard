@@ -9,12 +9,10 @@ import org.neidhardt.dynamicsoundboard.model.SoundSheet
 /**
 * @author Eric.Neidhardt@GMail.com on 19.12.2016.
 */
-open class SoundSheetManager(private val context: Context) {
+open class SoundSheetManager {
 
 	companion object {
-		fun getNewFragmentTagForLabel(label: String): String {
-			return Integer.toString((label + SoundboardApplication.randomNumber).hashCode())
-		}
+		fun getNewFragmentTagForLabel(label: String): String = (label + SoundboardApplication.randomNumber).hashCode().toString()
 	}
 
 	internal var onSoundSheetsChangedListener = ArrayList<((List<SoundSheet>) -> Unit)>()
@@ -54,7 +52,9 @@ open class SoundSheetManager(private val context: Context) {
 		this.invokeListeners()
 	}
 
-	val suggestedName: String get() = this.context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
+	fun getSuggestedName(context: Context): String {
+		return context.resources.getString(R.string.suggested_sound_sheet_name) + this.soundSheets.size
+	}
 
 	private fun invokeListeners() {
 		this.onSoundSheetsChangedListener.forEach { it.invoke(this.soundSheets) }
@@ -63,14 +63,16 @@ open class SoundSheetManager(private val context: Context) {
 
 object RxNewSoundSheetManager {
 	fun soundSheetsChanged(manager: SoundSheetManager): Observable<List<SoundSheet>> {
-		return Observable.create { subscriber ->
+		return Observable.create { emitter ->
 			val listener: (List<SoundSheet>) -> Unit = {
-				subscriber.onNext(it)
+				emitter.onNext(it)
 			}
-			//subscriber.add(Subscriptions.create {
-			//	manager.onSoundSheetsChangedListener.remove(listener)
-			//})
-			manager.mSoundSheets?.let { subscriber.onNext(it) }
+
+			emitter.setCancellable {
+				manager.onSoundSheetsChangedListener.remove(listener)
+			}
+
+			manager.mSoundSheets?.let { emitter.onNext(it) }
 			manager.onSoundSheetsChangedListener.add(listener)
 		}
 	}

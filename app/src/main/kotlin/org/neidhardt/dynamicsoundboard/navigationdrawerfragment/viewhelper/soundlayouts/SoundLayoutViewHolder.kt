@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import org.neidhardt.dynamicsoundboard.R
+import kotlinx.android.synthetic.main.view_sound_layout_item.view.*
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 
 /**
@@ -12,11 +12,11 @@ import org.neidhardt.dynamicsoundboard.model.SoundLayout
  */
 class SoundLayoutViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-	private val label: TextView = itemView.findViewById(R.id.tv_view_sound_layout_item_name) as TextView
-	private val selectionIndicator: ImageView = itemView.findViewById(R.id.iv_view_sound_layout_item_selected) as ImageView
-	private val divider = itemView.findViewById(R.id.v_divider)
+	private val label: TextView = itemView.tv_view_sound_layout_item_name
+	private val selectionIndicator: ImageView = itemView.iv_view_sound_layout_item_selected
+	private val divider = itemView.v_divider
 
-	val openSettings: View = itemView.findViewById(R.id.ib_view_sound_layout_item_settings)
+	val openSettings: View = itemView.ib_view_sound_layout_item_settings
 
 	var data: SoundLayout? = null
 

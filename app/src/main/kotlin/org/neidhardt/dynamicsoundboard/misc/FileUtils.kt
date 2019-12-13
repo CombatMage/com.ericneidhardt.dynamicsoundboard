@@ -17,9 +17,9 @@ import kotlin.comparisons.thenByDescending
  */
 private val TAG = FileUtils::class.java.name
 
-private val AUDIO = "audio"
+private const val AUDIO = "audio"
+private const val SCHEME_CONTENT_URI = "content"
 private val MIME_AUDIO_TYPES = arrayOf("audio/*", "application/ogg", "application/x-ogg")
-private val SCHEME_CONTENT_URI = "content"
 
 fun File.getFilesInDirectorySortedAsync(): Observable<List<File>> {
 	val content = this.listFiles()
@@ -85,11 +85,12 @@ val File.containsAudioFiles: Boolean
 	}
 
 object FileUtils {
-	val MIME_AUDIO = "audio/*|application/ogg|application/x-ogg"
+	const val MIME_AUDIO = "audio/*|application/ogg|application/x-ogg"
 
 	fun stripFileTypeFromName(fileName: String?): String {
-		if (fileName == null)
-			throw NullPointerException(TAG + ": cannot create new file name, either old name or new name is null")
+		if (fileName == null) {
+			throw NullPointerException("$TAG: cannot create new file name, either old name or new name is null")
+		}
 
 		val segments = fileName.split("\\.".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
 		return if (segments.size > 1) {
@@ -111,8 +112,8 @@ object FileUtils {
 		if (uri.scheme != null && uri.scheme == SCHEME_CONTENT_URI) {
 			context.contentResolver.query(uri, null, null, null, null).use { cursor ->
 				if (cursor.moveToFirst()) {
-					val column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
-					filePathUri = Uri.parse(cursor.getString(column_index))
+					val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+					filePathUri = Uri.parse(cursor.getString(columnIndex))
 					fileName = filePathUri.lastPathSegment
 				}
 			}
@@ -127,8 +128,8 @@ object FileUtils {
 		if (uri.scheme != null && uri.scheme == SCHEME_CONTENT_URI) {
 			context.contentResolver.query(uri, null, null, null, null).use { cursor ->
 				if (cursor.moveToFirst()) {
-					val column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
-					filePathUri = Uri.parse(cursor.getString(column_index))
+					val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+					filePathUri = Uri.parse(cursor.getString(columnIndex))
 				}
 			}
 		}

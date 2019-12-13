@@ -9,8 +9,7 @@ interface SplashActivityContract {
 		fun requestPermissions(permissions: Array<String>)
 		fun getMissingPermissions(): Array<String>
 		fun explainPermissions(permissions: Array<String>)
-		fun showAppClosingInfo()
-		fun finishActivity()
+		fun closeApplication(showClosingInfo: Boolean)
 	}
 	interface Presenter {
 		fun onCreated()

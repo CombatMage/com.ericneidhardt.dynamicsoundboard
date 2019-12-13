@@ -2,11 +2,10 @@ package org.neidhardt.dynamicsoundboard.preferenceactivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceFragment
 import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import kotlinx.android.synthetic.main.toolbar_preferences.*
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.preferenceactivity.viewhelper.SoundboardPreferenceFragment
 
@@ -28,7 +27,7 @@ class PreferenceActivity : AppCompatActivity() {
 	}
 
 	private fun configureToolbar() {
-		val toolbar = this.findViewById(R.id.toolbar) as Toolbar
+		val toolbar = this.toolbar_preferences
 		this.setSupportActionBar(toolbar)
 		val actionBar = this.supportActionBar
 		actionBar?.setDisplayHomeAsUpEnabled(true)

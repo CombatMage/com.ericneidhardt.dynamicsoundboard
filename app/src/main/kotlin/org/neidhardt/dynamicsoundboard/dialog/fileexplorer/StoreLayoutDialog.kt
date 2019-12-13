@@ -10,16 +10,17 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration
+import kotlinx.android.synthetic.main.dialog_store_sound_sheets.view.*
+import org.neidhardt.androidutils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.dialog.fileexplorer.base.FileExplorerDialog
-import org.neidhardt.dynamicsoundboard.misc.Logger
 import java.io.File
 import java.io.IOException
 
@@ -36,11 +37,11 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
 		@SuppressLint("InflateParams") val view = this.activity.layoutInflater.inflate(R.layout.dialog_store_sound_sheets, null)
-		view.findViewById(R.id.b_add).setOnClickListener(this)
+		view.b_add.setOnClickListener(this)
 
-		this.inputFileName = view.findViewById(R.id.et_name_file) as EditText
+		this.inputFileName = view.et_name_file
 
-		this.directories = (view.findViewById(R.id.rv_dialog) as RecyclerView).apply {
+		this.directories = view.rv_dialog.apply {
 			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
@@ -48,11 +49,18 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 		this.directories?.adapter = super.adapter
 
 		val previousPath = this.getPathFromSharedPreferences(LayoutStorageDialog.KEY_PATH_STORAGE)
-		if (previousPath != null)
-			super.setStartDirectoryForAdapter(File(previousPath))
-		else {
-			val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-			super.setStartDirectoryForAdapter(file)
+		val documentDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+
+		// use previous dir if still valid, else fallback
+		if (previousPath == null) {
+			super.setStartDirectoryForAdapter(documentDir)
+		} else {
+			val previousMusicDir = File(previousPath)
+			if (previousMusicDir.exists()) {
+				super.setStartDirectoryForAdapter(previousMusicDir)
+			} else {
+				super.setStartDirectoryForAdapter(documentDir)
+			}
 		}
 
 		return AlertDialog.Builder(this.activity).apply {
@@ -132,12 +140,12 @@ class StoreLayoutDialog : FileExplorerDialog(), LayoutStorageDialog, View.OnClic
 
 	private fun saveDataAndDismiss() {
 		val file = super.adapter.selectedFiles.elementAt(0)
-		SoundboardApplication.storage.saveToFile(file, this.soundLayoutManager.soundLayouts)
+		SoundboardApplication.appDataRepository.saveToFile(file, this.soundLayoutManager.soundLayouts)
 		.observeOn(AndroidSchedulers.mainThread())
 		.subscribe({
 			// nothing to do
 		}, { error ->
-			Logger.e(TAG, error.toString())
+			Log.e(TAG, error.toString())
 			Toast.makeText(this.activity, R.string.dialog_store_layout_failed_store_layout,
 					Toast.LENGTH_SHORT).show()
 			this.dismiss()

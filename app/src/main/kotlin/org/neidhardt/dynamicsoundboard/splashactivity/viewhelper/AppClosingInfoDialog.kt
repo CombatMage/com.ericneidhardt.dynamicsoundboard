@@ -30,10 +30,10 @@ class AppClosingInfoDialog : DialogFragment() {
 		val builder = AlertDialog.Builder(this.context)
 
 		builder.setMessage(R.string.dialogappclosing_message)
-		builder.setPositiveButton(R.string.dialog_ok, { _, _ ->
+		builder.setPositiveButton(R.string.dialog_ok) { _, _ ->
 			this.dismiss()
 			this.activity?.finish()
-		})
+		}
 
 		return builder.create()
 	}

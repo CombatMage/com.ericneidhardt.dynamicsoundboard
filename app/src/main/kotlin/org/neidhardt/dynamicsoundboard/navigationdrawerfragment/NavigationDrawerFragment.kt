@@ -16,28 +16,32 @@ import kotlinx.android.synthetic.main.fragment_navigation_drawer.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_button_bar.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_deletion_header.view.*
 import kotlinx.android.synthetic.main.layout_navigation_drawer_header.view.*
-import org.neidhardt.android_utils.animations.setOnAnimationEndedListener
-import org.neidhardt.android_utils.views.NonTouchableCoordinatorLayout
+import org.neidhardt.androidutils.EnhancedSupportFragment
+import org.neidhardt.androidutils.animations.setOnAnimationEndedListener
+import org.neidhardt.androidutils.views.NonTouchableCoordinatorLayout
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
-import org.neidhardt.dynamicsoundboard.base.BaseFragment
 import org.neidhardt.dynamicsoundboard.dialog.GenericAddDialogs
 import org.neidhardt.dynamicsoundboard.dialog.GenericRenameDialogs
 import org.neidhardt.dynamicsoundboard.dialog.soundmanagement.AddNewSoundDialog
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.model.SoundLayout
 import org.neidhardt.dynamicsoundboard.model.SoundSheet
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.playlist.PlaylistAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundlayouts.SoundLayoutsAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.soundsheets.SoundSheetsAdapter
 import org.neidhardt.dynamicsoundboard.navigationdrawerfragment.viewhelper.PaddingDecorator
+import org.neidhardt.dynamicsoundboard.soundactivity.SoundActivity
 
 /**
  * Created by eric.neidhardt@gmail.com on 01.09.2017.
  */
+private const val TAB_SOUND_SHEETS: Int = 0
+private const val TAB_PLAYLIST: Int = 1
+
 class NavigationDrawerFragment :
-		BaseFragment(),
+		EnhancedSupportFragment(),
 		NavigationDrawerFragmentContract.View {
 
 	private val soundManager = SoundboardApplication.soundManager
@@ -138,9 +142,9 @@ class NavigationDrawerFragment :
 		RxTabLayout.selections(this.tabLayout)
 				.takeUntil(RxView.detaches(this.tabLayout))
 				.subscribe { tab ->
-					if (tab.position == 0) {
+					if (tab.position == TAB_SOUND_SHEETS) {
 						this.presenter.userClicksTabSoundSheets()
-					} else if (tab.position == 1) {
+					} else if (tab.position == TAB_PLAYLIST) {
 						this.presenter.userClicksTabPlaylist()
 					}
 				}
@@ -277,7 +281,7 @@ class NavigationDrawerFragment :
 	}
 
 	override fun setSelectedItemCount(selectedCount: Int, maxCount: Int) {
-		this.deletionToolbarSubTitle.text = "$selectedCount/$maxCount"
+		this.deletionToolbarSubTitle.text = this.getString(R.string.navigationdrawer_selectioncountlabel, selectedCount, maxCount)
 	}
 
 	override fun setTapBarState(newState: NavigationDrawerFragmentContract.View.TapBarState) {
@@ -288,12 +292,18 @@ class NavigationDrawerFragment :
 		}
 	}
 
+	override fun refreshDisplayedPlaylist() {
+		this.adapterPlaylist.notifyDataSetChanged()
+	}
+
 	override fun showSoundSheets() {
 		this.recyclerView.adapter = this.adapterSoundSheets
+		this.tabLayout.getTabAt(TAB_SOUND_SHEETS)?.select() // make sure correct tab is selected
 	}
 
 	override fun showPlaylist() {
 		this.recyclerView.adapter = this.adapterPlaylist
+		this.tabLayout.getTabAt(TAB_PLAYLIST)?.select() // make sure correct tab is selected
 	}
 
 	override fun showSoundLayouts() {
@@ -313,10 +323,10 @@ class NavigationDrawerFragment :
 	}
 
 	override fun showDialogAddSoundToPlaylist() {
-		AddNewSoundDialog.show(fragmentManager, PlaylistTAG)
+		AddNewSoundDialog.show(fragmentManager, PLAYLIST_TAG)
 	}
 
 	override fun closeNavigationDrawer() {
-		this.baseActivity.closeNavigationDrawer()
+		(this.activity as SoundActivity).closeNavigationDrawer()
 	}
 }

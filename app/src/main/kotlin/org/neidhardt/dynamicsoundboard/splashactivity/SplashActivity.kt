@@ -4,14 +4,14 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import org.neidhardt.android_utils.EnhancedAppCompatActivity
+import org.neidhardt.androidutils.EnhancedAppCompatActivity
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionPhoneState
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionReadStorage
 import org.neidhardt.dynamicsoundboard.misc.hasPermissionWriteStorage
 import org.neidhardt.dynamicsoundboard.splashactivity.viewhelper.AppClosingInfoDialog
-import org.neidhardt.viewpagerdialog.viewhelper.ViewPagerDialog
+import org.neidhardt.viewpagerdialog.ViewPagerDialog
 import java.util.*
 
 
@@ -38,8 +38,15 @@ class SplashActivity :
 		this.finish()
 	}
 
-	override fun finishActivity() {
-		this.finish()
+	override fun closeApplication(showClosingInfo: Boolean) {
+		if (!showClosingInfo) {
+			this.finish()
+		} else {
+			// could be called before onResume, because it is usually triggered by onRequestPermissionsResult
+			this.postAfterOnResume {
+				AppClosingInfoDialog.show(this.supportFragmentManager)
+			}
+		}
 	}
 
 	override fun explainPermissions(permissions: Array<String>) {
@@ -65,7 +72,8 @@ class SplashActivity :
 	override fun onRequestPermissionsResult(
 			requestCode: Int,
 			permissions: Array<out String>,
-			grantResults: IntArray) {
+			grantResults: IntArray
+	) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 		when (requestCode) {
 			IntentRequest.REQUEST_PERMISSIONS -> { this.presenter.onUserHasChangedPermissions() }
@@ -98,11 +106,5 @@ class SplashActivity :
 
 	override fun onViewPagerDialogBackPressed() {
 		this.presenter.onExplainPermissionDialogClosed()
-	}
-
-	override fun showAppClosingInfo() {
-		this.postAfterOnResume {
-			AppClosingInfoDialog.show(this.supportFragmentManager)
-		}
 	}
 }

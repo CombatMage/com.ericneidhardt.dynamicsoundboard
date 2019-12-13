@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:tools="http://schemas.android.com/tools"
-			  android:orientation="vertical"
-			  android:layout_width="wrap_content"
-			  android:layout_height="wrap_content"
-			  android:padding="@dimen/padding_dialog"
-			  tools:background="@color/background_secondary">
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="@dimen/padding_dialog"
+	tools:background="@color/background_secondary">
 
 	<RelativeLayout
-			android:id="@+id/layout_controls"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+		android:id="@+id/layout_controls"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
 
 		<ImageButton
-				android:id="@+id/b_add_another_sound"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentEnd="true"
-				android:layout_alignParentRight="true"
-				android:layout_gravity="center_vertical|end"
-				android:background="@android:color/transparent"
-				android:contentDescription="@string/dialog_add_new_sound_content_description"
-				android:src="@drawable/selector_ic_add_sound_dialog"/>
+			android:id="@+id/b_add_another_sound"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:layout_gravity="center_vertical|end"
+			android:background="@android:color/transparent"
+			android:contentDescription="@string/dialog_add_new_sound_content_description"
+			android:src="@drawable/selector_ic_add_sound_dialog"/>
 
 		<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="match_parent"
-				android:layout_toStartOf="@id/b_add_another_sound"
-				android:layout_gravity="center_vertical"
-				android:gravity="center_vertical"
-				android:layout_alignParentStart="true"
-				android:layout_alignTop="@id/b_add_another_sound"
-				android:layout_alignBottom="@id/b_add_another_sound"
-				style="@style/style_all_body1"
-				android:text="@string/dialog_add_new_sound_message"/>
+			style="@style/style_all_body1"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignBottom="@id/b_add_another_sound"
+			android:layout_alignParentStart="true"
+			android:layout_alignTop="@id/b_add_another_sound"
+			android:layout_gravity="center_vertical"
+			android:layout_toStartOf="@id/b_add_another_sound"
+			android:gravity="center_vertical"
+			android:text="@string/dialog_add_new_sound_message"/>
 
 	</RelativeLayout>
 
 	<android.support.v7.widget.RecyclerView
-			android:id="@+id/rv_dialog"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:overScrollMode="never"
-			tools:listitem="@layout/view_add_sound_list_item"/>
+		android:id="@+id/rv_dialog"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:overScrollMode="never"
+		tools:listitem="@layout/view_add_sound_list_item"/>
 
 </LinearLayout>

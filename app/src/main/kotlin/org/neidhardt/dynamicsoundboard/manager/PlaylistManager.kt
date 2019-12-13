@@ -1,5 +1,6 @@
 package org.neidhardt.dynamicsoundboard.manager
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import io.reactivex.Observable
@@ -11,21 +12,21 @@ import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerFactory
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
-import org.neidhardt.dynamicsoundboard.misc.Logger
+import org.neidhardt.dynamicsoundboard.logger.Logger
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
-import org.neidhardt.utils.getCopyList
+import org.neidhardt.app_utils.getCopyList
 
 /**
  * Created by eric.neidhardt@gmail.com on 19.12.2016.
  */
 class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
-	private val TAG = javaClass.name
+	private val logTag = javaClass.name
 	private val eventBus = EventBus.getDefault()
 
 	internal var onPlaylistChangedListener = ArrayList<((List<MediaPlayerController>) -> Unit)>()
@@ -37,24 +38,32 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 	val playlist: List<MediaPlayerController> get() = this.mMediaPlayers as List<MediaPlayerController>
 
+	@SuppressLint("CheckResult")
 	fun set(mediaPlayerData: MutableList<MediaPlayerData>) {
 		this.mMediaPlayers?.forEach { it.destroy(false) }
 		this.mMediaPlayersData = mediaPlayerData
 		this.mMediaPlayers = ArrayList()
 		// copy list to prevent concurrent modification exception
 		val copyList = mediaPlayerData.getCopyList()
+
+		// if data is empty, we just notify our listeners
+		if (copyList.isEmpty()) {
+			this.invokeListeners()
+			return
+		}
+
 		SoundboardApplication.taskCounter.value += 1
 		Observable.just(copyList)
-				.flatMapIterable { it -> it }
+				.flatMapIterable { it }
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ playerData ->
 					this.createPlayerAndAddToPlaylist(playerData)
 					this.invokeListeners()
 				}, { error ->
-					Logger.e(TAG, "Error while loading playlist: ${error.message}")
+					Logger.e(logTag, "Error while loading playlist: ${error.message}")
 					SoundboardApplication.taskCounter.value -= 1
 				}, {
-					Logger.d(TAG, "Loading playlist completed")
+					Logger.d(logTag, "Loading playlist completed")
 					SoundboardApplication.taskCounter.value -= 1
 				})
 	}
@@ -80,7 +89,7 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 			val newPlayerData = MediaPlayerData().apply {
 				this.playerId = mediaPlayerData.playerId
-				this.fragmentTag = PlaylistTAG
+				this.fragmentTag = PLAYLIST_TAG
 				this.isLoop = false
 				this.label = mediaPlayerData.label
 				this.uri = mediaPlayerData.uri
@@ -128,7 +137,7 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerStateChangedEvent) {
-		if (event.fragmentTag != PlaylistTAG) return
+		if (event.player.mediaPlayerData.fragmentTag != PLAYLIST_TAG) return
 		if (!event.isAlive) {
 			this.remove(listOf(event.player))
 		}
@@ -138,7 +147,7 @@ class PlaylistManager(private val context: Context) : MediaPlayerEventListener {
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	override fun onEvent(event: MediaPlayerCompletedEvent) {
-		if (event.player.mediaPlayerData.fragmentTag != PlaylistTAG) return
+		if (event.player.mediaPlayerData.fragmentTag != PLAYLIST_TAG) return
 		this.onPlaylistPlayerCompletedListener.forEach { it.invoke(event) }
 	}
 }

@@ -16,8 +16,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
+import kotlinx.android.synthetic.main.dialog_add_new_sound.view.*
+import kotlinx.android.synthetic.main.view_add_sound_list_item.view.*
+import org.neidhardt.androidutils.recyclerview_utils.decoration.DividerItemDecoration
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
 import org.neidhardt.dynamicsoundboard.base.BaseDialog
@@ -27,20 +28,23 @@ import org.neidhardt.dynamicsoundboard.manager.PlaylistManager
 import org.neidhardt.dynamicsoundboard.manager.SoundManager
 import org.neidhardt.dynamicsoundboard.manager.SoundSheetManager
 import org.neidhardt.dynamicsoundboard.manager.findByFragmentTag
-import org.neidhardt.dynamicsoundboard.mediaplayer.PlaylistTAG
+import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.misc.FileUtils
 import org.neidhardt.dynamicsoundboard.misc.IntentRequest
 import org.neidhardt.dynamicsoundboard.model.MediaPlayerData
 import java.io.File
 import java.util.*
+import android.view.WindowManager
+
+
 
 /**
  * File created by eric.neidhardt on 30.06.2015.
  */
-class AddNewSoundDialog : BaseDialog(), FileResultHandler
-{
-	private val KEY_SOUNDS_URI = "KEY_SOUNDS_URI"
-	private val KEY_SOUNDS_LABEL = "KEY_SOUNDS_LABEL"
+private const val KEY_SOUNDS_URI = "KEY_SOUNDS_URI"
+private const val KEY_SOUNDS_LABEL = "KEY_SOUNDS_LABEL"
+
+class AddNewSoundDialog : BaseDialog(), FileResultHandler {
 
 	private val soundManager = SoundboardApplication.soundManager
 	private val soundSheetManager = SoundboardApplication.soundSheetManager
@@ -54,7 +58,7 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 
 		fun show(fragmentManager: FragmentManager, callingFragmentTag: String) {
 			val args = Bundle().apply {
-				this.putString(org.neidhardt.dynamicsoundboard.base.BaseDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
+				this.putString(BaseDialog.KEY_CALLING_FRAGMENT_TAG, callingFragmentTag)
 			}
 			val dialog = AddNewSoundDialog().apply {
 				this.arguments = args
@@ -63,8 +67,7 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 		}
 	}
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		val args = this.arguments
 		if (args != null)
@@ -79,18 +82,27 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 				soundManager = this.soundManager,
 				soundSheetManager = this.soundSheetManager,
 				playlistManager = SoundboardApplication.playlistManager,
-				addAnotherSound = view.findViewById(R.id.b_add_another_sound),
-				addedSoundsLayout = view.findViewById(R.id.rv_dialog) as RecyclerView)
+				addAnotherSound = view.b_add_another_sound,
+				addedSoundsLayout = view.rv_dialog)
 
 		return AlertDialog.Builder(context).apply {
-			this.setTitle(org.neidhardt.dynamicsoundboard.R.string.dialog_add_new_sound_title)
+			this.setTitle(R.string.dialog_add_new_sound_title)
 			this.setView(view)
-			this.setPositiveButton(org.neidhardt.dynamicsoundboard.R.string.all_add, { _, _ ->
+			this.setPositiveButton(R.string.all_add) { _, _ ->
 				presenter?.addSoundsToSoundSheet()
 				dismiss()
-			})
-			this.setNegativeButton(org.neidhardt.dynamicsoundboard.R.string.all_cancel, { _, _ -> dismiss() })
+			}
+			this.setNegativeButton(R.string.all_cancel) { _, _ ->
+				dismiss()
+			}
 		}.create()
+	}
+
+	override fun onResume() {
+		super.onResume()
+		this.dialog.window.clearFlags(
+				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+						or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -101,11 +113,9 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 		if (savedInstanceState != null) {
 			val labels = savedInstanceState.getStringArrayList(KEY_SOUNDS_LABEL)
 			val uris = savedInstanceState.getStringArrayList(KEY_SOUNDS_URI)
-			if (labels != null && uris != null)
-			{
+			if (labels != null && uris != null) {
 				val count = labels.size
-				for (i in 0..count - 1)
-				{
+				for (i in 0 until count) {
 					val uri = Uri.parse(uris[i])
 					val label = labels[i]
 
@@ -124,8 +134,7 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 		val uris = ArrayList<String>(count)
 		val labels = ArrayList<String>(count)
 
-		for (i in 0..count - 1)
-		{
+		for (i in 0 until count) {
 			val data = presenter.values[i]
 
 			labels.add(i, data.label)
@@ -136,10 +145,8 @@ class AddNewSoundDialog : BaseDialog(), FileResultHandler
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-		if (resultCode == Activity.RESULT_OK)
-		{
-			if (requestCode == IntentRequest.GET_AUDIO_FILE)
-			{
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == IntentRequest.GET_AUDIO_FILE) {
 				val soundUri = data!!.data
 				val label = FileUtils.stripFileTypeFromName(FileUtils.getFileNameFromUri(this.activity, soundUri))
 				presenter?.addNewSound(NewSoundData(soundUri, label))
@@ -167,9 +174,9 @@ private class AddNewSoundDialogPresenter(
 		private val playlistManager: PlaylistManager,
 		private val soundSheetManager: SoundSheetManager,
 		private val soundManager: SoundManager
-)
-{
-	private val preferenceRepository = SoundboardApplication.preferenceRepository
+) {
+
+	private val preferenceRepository = SoundboardApplication.userSettingsRepository
 
 	private val soundsToAdd = ArrayList<NewSoundData>()
 	val values: List<NewSoundData>
@@ -178,20 +185,18 @@ private class AddNewSoundDialogPresenter(
 	val adapter = NewSoundAdapter(this)
 
 	init {
-		this.addAnotherSound.setOnClickListener({ this.addAnotherSound() })
+		this.addAnotherSound.setOnClickListener { this.addAnotherSound() }
 
 		this.addedSoundsLayout.apply {
-			this.addItemDecoration(org.neidhardt.android_utils.recyclerview_utils.decoration.DividerItemDecoration(this.context, org.neidhardt.dynamicsoundboard.R.color.background, org.neidhardt.dynamicsoundboard.R.color.divider))
+			this.addItemDecoration(DividerItemDecoration(this.context, R.color.background, R.color.divider))
 			this.layoutManager = LinearLayoutManager(this.context)
 			this.itemAnimator = DefaultItemAnimator()
 		}
 		this.addedSoundsLayout.adapter = adapter
 	}
 
-	fun addSoundsToSoundSheet()
-	{
-		if (soundsToAdd.size > 0)
-		{
+	fun addSoundsToSoundSheet() {
+		if (soundsToAdd.size > 0) {
 			this.returnResultsToCallingFragment()
 			this.dialog.dismiss()
 		}
@@ -201,7 +206,7 @@ private class AddNewSoundDialogPresenter(
 		val count = this.soundsToAdd.size
 		val playersData = ArrayList<MediaPlayerData>(count)
 		val renamedPlayers = ArrayList<MediaPlayerData>()
-		for (i in 0..count - 1) {
+		for (i in 0 until count) {
 			val item = this.values[i]
 
 			val soundUri = item.uri
@@ -213,31 +218,29 @@ private class AddNewSoundDialogPresenter(
 				renamedPlayers.add(playerData)
 		}
 
-		if (this.dialog.callingFragmentTag == PlaylistTAG) {
-			for (playerData in playersData)
-				this.playlistManager.add(playerData)
-		}
-		else {
+		if (this.dialog.callingFragmentTag == PLAYLIST_TAG) {
+			playersData.forEach { this.playlistManager.add(it) }
+		} else {
 			val soundSheet =
 					this.soundSheetManager.soundSheets.findByFragmentTag(this.dialog.callingFragmentTag)
 							?: throw IllegalStateException("no soundSheet for fragmentTag was found")
-			for (playerData in playersData)
-				this.soundManager.add(soundSheet, playerData)
+
+			playersData.forEach { this.soundManager.add(soundSheet, it) }
 		}
 
 		this.showRenameDialog(renamedPlayers) // show the renameFileAndPlayer dialog for all altered players
 	}
 
 	private fun showRenameDialog(renamedMediaPlayers: List<MediaPlayerData>) {
-		for (data in renamedMediaPlayers)
-			RenameSoundFileDialog.show(this.dialog.fragmentManager, data)
+		renamedMediaPlayers.forEach {
+			RenameSoundFileDialog.show(this.dialog.fragmentManager, it)
+		}
 	}
 
 	private fun addAnotherSound() {
 		if (this.preferenceRepository.useBuildInBrowserForFiles) {
 			GetNewSoundFromDirectoryDialog(this.dialog.fragmentManager, AddNewSoundDialog.TAG)
-		}
-		else {
+		} else {
 			val intent = Intent(Intent.ACTION_GET_CONTENT)
 			intent.type = FileUtils.MIME_AUDIO
 			this.dialog.startActivityForResult(intent, IntentRequest.GET_AUDIO_FILE)
@@ -250,16 +253,14 @@ private class AddNewSoundDialogPresenter(
 	}
 }
 
-private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter) : RecyclerView.Adapter<NewSoundViewHolder>()
-{
+private class NewSoundAdapter(private val presenter: AddNewSoundDialogPresenter) : RecyclerView.Adapter<NewSoundViewHolder>() {
+
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewSoundViewHolder {
 		val view = LayoutInflater.from(parent.context).inflate(R.layout.view_add_sound_list_item, parent, false)
 		return NewSoundViewHolder(view)
 	}
 
-	override fun getItemCount(): Int {
-		return this.presenter.values.size
-	}
+	override fun getItemCount(): Int = this.presenter.values.size
 
 	override fun onBindViewHolder(holder: NewSoundViewHolder, position: Int) {
 		holder.bindData(this.presenter.values[position])
@@ -272,14 +273,12 @@ private class NewSoundData(var uri: Uri, var label: String) {
 
 private class NewSoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), TextWatcher {
 
-	private val soundPath = itemView.findViewById(R.id.tv_path) as TextView
-	private val soundName = itemView.findViewById(R.id.et_name_file) as EditText
+	private val soundPath = itemView.textview_addsoundlistitem_filepath
+	private val soundName = itemView.edittext_addsoundlistitem_name
 
 	private var data: NewSoundData? = null
 
-	init {
-		this.soundName.addTextChangedListener(this)
-	}
+	init { this.soundName.addTextChangedListener(this) }
 
 	internal fun bindData(data: NewSoundData) {
 		this.data = data
@@ -288,8 +287,7 @@ private class NewSoundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 	}
 
 	override fun afterTextChanged(newLabel: Editable) {
-		if (newLabel.toString() != this.data?.label)
-		{
+		if (newLabel.toString() != this.data?.label) {
 			this.data?.label = newLabel.toString()
 			this.data?.wasSoundRenamed = true
 		}
