@@ -4,6 +4,7 @@ import android.support.v4.app.NotificationManagerCompat
 import org.neidhardt.dynamicsoundboard.manager.*
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import java.util.*
+import java.util.logging.Logger
 
 /**
  * @author eric.neidhardt on 15.06.2016.

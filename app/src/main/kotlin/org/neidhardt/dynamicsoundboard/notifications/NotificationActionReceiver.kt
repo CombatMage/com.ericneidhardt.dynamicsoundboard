@@ -13,8 +13,8 @@ class NotificationActionReceiver(
 
 	override fun onReceive(context: Context, intent: Intent) {
 		val action = intent.action ?: return
-		val playerId = intent.getStringExtra(NotificationConstants.KEY_PLAYER_ID) ?: return
-		val notificationId = intent.getIntExtra(NotificationConstants.KEY_NOTIFICATION_ID, 0)
+		val playerId = intent.getStringExtra(NotificationExtra.PLAYER_ID) ?: return
+		val notificationId = intent.getIntExtra(NotificationExtra.NOTIFICATION_ID, 0)
 
 		this.onActionReceived(action, playerId, notificationId)
 	}

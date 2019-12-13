@@ -15,13 +15,11 @@ import org.neidhardt.dynamicsoundboard.R
  */
 object NotificationChannelBuilder {
 
-	const val ID_NOTIFICATION_CHANNEL_PENDING_SOUNDS = "pendingSoundsNotificationChannel"
-
 	@TargetApi(Build.VERSION_CODES.O)
 	fun createNotificationChannelForPendingSounds(context: Context) {
 		val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-		val channelId = ID_NOTIFICATION_CHANNEL_PENDING_SOUNDS
+		val channelId = ChannelId.PENDING_SOUNDS
 		val channelName = context.getString(R.string.notificationchannel_name)
 		val importance = NotificationManager.IMPORTANCE_LOW
 

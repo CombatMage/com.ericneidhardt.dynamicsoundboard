@@ -1,29 +1,33 @@
 package org.neidhardt.dynamicsoundboard.notifications
 
+import android.app.Notification
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.IBinder
+import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import android.support.v4.content.ContextCompat
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.neidhardt.dynamicsoundboard.R
 import org.neidhardt.dynamicsoundboard.SoundboardApplication
+import org.neidhardt.dynamicsoundboard.logger.Logger
 import org.neidhardt.dynamicsoundboard.manager.findById
 import org.neidhardt.dynamicsoundboard.mediaplayer.MediaPlayerController
 import org.neidhardt.dynamicsoundboard.mediaplayer.PLAYLIST_TAG
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerCompletedEvent
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerEventListener
 import org.neidhardt.dynamicsoundboard.mediaplayer.events.MediaPlayerStateChangedEvent
-import org.neidhardt.dynamicsoundboard.logger.Logger
-import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
-import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
 import org.neidhardt.dynamicsoundboard.misc.PauseSoundOnCallListener
+import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
 import org.neidhardt.dynamicsoundboard.misc.registerPauseSoundOnCallListener
 import org.neidhardt.dynamicsoundboard.misc.unregisterPauseSoundOnCallListener
-import org.neidhardt.dynamicsoundboard.misc.registerIfRequired
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEvent
+import org.neidhardt.dynamicsoundboard.soundactivity.events.ActivityStateChangedEventListener
+
 
 /**
  * @author eric.neidhardt on 15.06.2016.
@@ -35,7 +39,7 @@ class NotificationService : Service(),
 
 	companion object {
 		fun start(context: Context) {
-			context.startService(Intent(context, NotificationService::class.java))
+			ContextCompat.startForegroundService(context, Intent(context, NotificationService::class.java))
 		}
 	}
 
@@ -63,6 +67,12 @@ class NotificationService : Service(),
 
 	override fun onCreate() {
 		super.onCreate()
+
+		val notification: Notification = NotificationCompat.Builder(this, ChannelId.PENDING_SOUNDS)
+					.setContentTitle("Sounds still playing")
+					.setContentText("Set message").build()
+			startForeground(1, notification)
+
 
 		NotificationChannelBuilder.createNotificationChannelForPendingSounds(this)
 
@@ -99,13 +109,17 @@ class NotificationService : Service(),
 	}
 
 	private fun stopIfNotRequired() {
+		Logger.d(logTag, "stopIfNotRequired")
+
 		if (!this.isActivityVisible && this.notificationHandler?.pendingNotifications?.size == 0)
 			this.stopSelf()
 	}
 
 	private fun onNotificationAction(action: String, playerId: String, notificationId: Int) {
+		Logger.d(logTag, "onNotificationAction")
+
 		val player: MediaPlayerController? =
-				if (notificationId == NotificationConstants.NOTIFICATION_ID_PLAYLIST) {
+				if (notificationId == NotificationId.PLAYLIST) {
 					this.playlistManager.playlist.findById(playerId)
 				}
 				else {
@@ -114,16 +128,16 @@ class NotificationService : Service(),
 
 		player?.let {
 			when (action) {
-				NotificationConstants.ACTION_DISMISS -> {
+				NotificationAction.DISMISS -> {
 					if (!this.isActivityVisible) {
 						player.destroy(false)
 					} else {
 						Logger.d(logTag, "activity visible, nothing to do")
 					}
 				}
-				NotificationConstants.ACTION_STOP -> player.stopSound()
-				NotificationConstants.ACTION_PLAY -> player.playSound()
-				NotificationConstants.ACTION_FADE_OUT -> player.fadeOutSound()
+				NotificationAction.STOP -> player.stopSound()
+				NotificationAction.PLAY -> player.playSound()
+				NotificationAction.FADE_OUT -> player.fadeOutSound()
 				else -> Logger.e(logTag, "unknown notification action received")
 			}
 		}
